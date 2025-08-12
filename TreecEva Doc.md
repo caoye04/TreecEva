@@ -32,7 +32,7 @@ TreecEva
   - 布尔运算 [ Boolean ] （比较运算、逻辑运算、短路求值）
   - API/函数调用 [ API/Function Call ] （内置函数、数学库、字符串操作、容器操作）
   - 变量赋值 [ Assignment ] （简单赋值、多重赋值、解包赋值）
-  - 常量赋值 [ Constant ] （数值常量、字符串常量、布尔常量）
+  -  
   - 大混合
 - 代码块级推理（Block-Level）
   - 线性代码块 [ Linear ]（顺序语句、独立语句、依赖语句）
