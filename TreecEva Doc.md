@@ -763,27 +763,537 @@ TreecEva
 
 ### 2 -  代码块级推理 [ Block-Level ]
 
-#### 2A - 线性代码块 [ Linear ]
+#### 2A - 线性代码块 [ Linear ]（6）
 
-> （顺序语句、独立语句、依赖语句）
+```json
+{
+    "id": "BL-LN-S001",
+    "metadata": {
+        "name": "BlockLevel-Linear-Sequential",
+        "category": "Block-Level",
+        "subcategory": "Linear",
+        "type": "seed",
+        "source": "CodeSense-krb5",
+        "language": "c",
+        "difficulty": "medium",
+        "intervention": 1
+    },
+    "task": {
+        "description": "Given the following sequential code block, what is the final value of buf->len after executing all statements?",
+        "code": "void k5_buf_init_dynamic(struct k5buf *buf) {\n    buf->buftype = K5BUF_DYNAMIC;\n    buf->space = 128;\n    buf->data = malloc(buf->space);\n    if (buf->data == NULL) {\n        set_error(buf);\n        return;\n    }\n    buf->len = 0;\n}",
+        "answer": 0
+    }
+}
+```
 
+```json
+{
+    "id": "BL-LN-S002",
+    "metadata": {
+        "name": "BlockLevel-Linear-Independent",
+        "category": "Block-Level",
+        "subcategory": "Linear",
+        "type": "seed",
+        "source": "Manual",
+        "language": "python",
+        "difficulty": "easy",
+        "intervention": 0
+    },
+    "task": {
+        "description": "Given the following independent statements block, what is the final value of max_retries?",
+        "code": "max_retries = 3\ntimeout_seconds = 30.0\nlog_level = 'INFO'\nis_debug = False\ndefault_encoding = 'utf-8'",
+        "answer": 3
+    }
+}
+```
 
+```json
+{
+    "id": "BL-LN-S003",
+    "metadata": {
+        "name": "BlockLevel-Linear-Dependent",
+        "category": "Block-Level",
+        "subcategory": "Linear",
+        "type": "seed",
+        "source": "CodeSense-util-linux",
+        "language": "c",
+        "difficulty": "hard",
+        "intervention": 2
+    },
+    "task": {
+        "description": "Given the following dependent statements block, what is the return value when blkid_do_safeprobe returns 0?",
+        "code": "static int process_file(const char *name) {\n    int rc = -1;\n    blkid_probe pr = blkid_new_probe_from_filename(name);\n    if (pr != NULL) {\n        blkid_probe_enable_partitions(pr, TRUE);\n        rc = blkid_do_safeprobe(pr) == -1 ? -1 : 0;\n    }\n    blkid_free_probe(pr);\n    return rc;\n}",
+        "answer": 0
+    }
+}
+```
 
-#### 2B - 条件代码块 [ Conditional ] 
+```json
+{
+    "id": "BL-LN-S004",
+    "metadata": {
+        "name": "BlockLevel-Linear-Chain",
+        "category": "Block-Level",
+        "subcategory": "Linear",
+        "type": "seed",
+        "source": "Manual",
+        "language": "python",
+        "difficulty": "medium",
+        "intervention": 1
+    },
+    "task": {
+        "description": "Given the following calculation chain, what is the final value of result?",
+        "code": "base = 10\nmultiplier = 3\noffset = 5\ntemp = base * multiplier\nresult = temp + offset\nprint(f\"Final result: {result}\")",
+        "answer": 35
+    }
+}
+```
 
-> （if条件块、switch条件块、嵌套条件块）
+```json
+{
+    "id": "BL-LN-S005",
+    "metadata": {
+        "name": "BlockLevel-Linear-Accumulation",
+        "category": "Block-Level",
+        "subcategory": "Linear",
+        "type": "seed",
+        "source": "Manual",
+        "language": "c",
+        "difficulty": "medium",
+        "intervention": 1
+    },
+    "task": {
+        "description": "Given the following accumulation block, what is the final value of total?",
+        "code": "int total = 0;\ntotal += 10;\ntotal += 15;\ntotal += 7;\ntotal *= 2;\nprintf(\"Total: %d\\n\", total);",
+        "answer": 64
+    }
+}
+```
 
+```json
+{
+    "id": "BL-LN-S006",
+    "metadata": {
+        "name": "BlockLevel-Linear-Transform",
+        "category": "Block-Level",
+        "subcategory": "Linear",
+        "type": "seed",
+        "source": "CodeSense-tmux",
+        "language": "c",
+        "difficulty": "hard",
+        "intervention": 2
+    },
+    "task": {
+        "description": "Given the following data transformation block, what is the final value of s->ccolour?",
+        "code": "void screen_init(struct screen *s, u_int sx, u_int sy, u_int hlimit) {\n    s->grid = grid_create(sx, sy, hlimit);\n    s->saved_grid = NULL;\n    s->cstyle = SCREEN_CURSOR_DEFAULT;\n    s->default_cstyle = SCREEN_CURSOR_DEFAULT;\n    s->ccolour = -1;\n    s->default_ccolour = -1;\n}",
+        "answer": -1
+    }
+}
+```
 
+#### 2B - 条件代码块 [ Conditional ] (8)
 
-#### 2C - 迭代代码块 [ Iterative ]
+```json
+{
+    "id": "BL-CD-S001",
+    "metadata": {
+        "name": "BlockLevel-Conditional-SimpleIf",
+        "category": "Block-Level",
+        "subcategory": "Conditional",
+        "type": "seed",
+        "source": "CodeSense-cryptsetup",
+        "language": "c",
+        "difficulty": "medium",
+        "intervention": 1
+    },
+    "task": {
+        "description": "Given the following conditional block where sysconf returns 4096, what is the return value?",
+        "code": "size_t crypt_getpagesize(void) {\n    long r = sysconf(_SC_PAGESIZE);\n    if (r <= 0) {\n        return DEFAULT_MEM_ALIGNMENT;\n    } else {\n        return (size_t)r;\n    }\n}",
+        "answer": 4096
+    }
+}
+```
 
-> （for循环块、While循环快、递归调用块）
+```json
+{
+    "id": "BL-CD-S002",
+    "metadata": {
+        "name": "BlockLevel-Conditional-NestedIf",
+        "category": "Block-Level",
+        "subcategory": "Conditional",
+        "type": "seed",
+        "source": "Manual",
+        "language": "python",
+        "difficulty": "hard",
+        "intervention": 2
+    },
+    "task": {
+        "description": "Given the following nested conditional block where score is 85, what is the final value of grade?",
+        "code": "score = 85\nif score >= 90:\n    if score >= 95:\n        grade = 'A+'\n    else:\n        grade = 'A'\nelse:\n    if score >= 80:\n        grade = 'B'\n    else:\n        grade = 'C'\nprint(f\"Grade: {grade}\")",
+        "answer": "B"
+    }
+}
+```
 
+```json
+{
+    "id": "BL-CD-S003",
+    "metadata": {
+        "name": "BlockLevel-Conditional-ElseIf",
+        "category": "Block-Level",
+        "subcategory": "Conditional",
+        "type": "seed",
+        "source": "Manual",
+        "language": "c",
+        "difficulty": "medium",
+        "intervention": 1
+    },
+    "task": {
+        "description": "Given the following else-if chain where value is 15, what is the final value of category?",
+        "code": "int value = 15;\nchar *category;\nif (value < 10) {\n    category = \"low\";\n} else if (value < 20) {\n    category = \"medium\";\n} else if (value < 30) {\n    category = \"high\";\n} else {\n    category = \"extreme\";\n}\nprintf(\"Category: %s\\n\", category);",
+        "answer": "medium"
+    }
+}
+```
 
+```json
+{
+    "id": "BL-CD-S004",
+    "metadata": {
+        "name": "BlockLevel-Conditional-Switch",
+        "category": "Block-Level",
+        "subcategory": "Conditional",
+        "type": "seed",
+        "source": "Manual",
+        "language": "c",
+        "difficulty": "medium",
+        "intervention": 1
+    },
+    "task": {
+        "description": "Given the following switch block where day is 3, what is the final value of day_name?",
+        "code": "int day = 3;\nchar *day_name;\nswitch (day) {\n    case 1: day_name = \"Monday\"; break;\n    case 2: day_name = \"Tuesday\"; break;\n    case 3: day_name = \"Wednesday\"; break;\n    case 4: day_name = \"Thursday\"; break;\n    case 5: day_name = \"Friday\"; break;\n    default: day_name = \"Weekend\";\n}\nprintf(\"Day: %s\\n\", day_name);",
+        "answer": "Wednesday"
+    }
+}
+```
 
-#### 2D - 大混合
+```json
+{
+    "id": "BL-CD-S005",
+    "metadata": {
+        "name": "BlockLevel-Conditional-SwitchFallthrough",
+        "category": "Block-Level",
+        "subcategory": "Conditional",
+        "type": "seed",
+        "source": "Manual",
+        "language": "c",
+        "difficulty": "hard",
+        "intervention": 2
+    },
+    "task": {
+        "description": "Given the following switch block with fallthrough where input is 2, what is the final value of flags?",
+        "code": "int input = 2;\nint flags = 0;\nswitch (input) {\n    case 1:\n        flags |= 0x01;\n    case 2:\n        flags |= 0x02;\n    case 3:\n        flags |= 0x04;\n        break;\n    default:\n        flags = -1;\n}\nprintf(\"Flags: 0x%02X\\n\", flags);",
+        "answer": 6
+    }
+}
+```
 
+```json
+{
+    "id": "BL-CD-S006",
+    "metadata": {
+        "name": "BlockLevel-Conditional-TernaryChain",
+        "category": "Block-Level",
+        "subcategory": "Conditional",
+        "type": "seed",
+        "source": "Manual",
+        "language": "c",
+        "difficulty": "hard",
+        "intervention": 2
+    },
+    "task": {
+        "description": "Given the following ternary conditional chain where x is 7 and y is 5, what is the final value of result?",
+        "code": "int x = 7, y = 5;\nint result = (x > y) ? ((x % 2 == 0) ? x * 2 : x + 10) : ((y % 2 == 0) ? y * 3 : y - 2);\nprintf(\"Result: %d\\n\", result);",
+        "answer": 17
+    }
+}
+```
 
+```json
+{
+    "id": "BL-CD-S007",
+    "metadata": {
+        "name": "BlockLevel-Conditional-NullCheck",
+        "category": "Block-Level",
+        "subcategory": "Conditional",
+        "type": "seed",
+        "source": "CodeSense-libssh",
+        "language": "c",
+        "difficulty": "medium",
+        "intervention": 1
+    },
+    "task": {
+        "description": "Given the following null check block where malloc succeeds, what is the final value of ptr after the block execution?",
+        "code": "ssh_poll_handle ssh_poll_new(socket_t fd, short events) {\n    ssh_poll_handle p;\n    p = malloc(sizeof(struct ssh_poll_handle_struct));\n    if (p == NULL) {\n        return NULL;\n    }\n    p->x.fd = fd;\n    p->events = events;\n    return p;\n}",
+        "answer": "valid_pointer"
+    }
+}
+```
+
+```json
+{
+    "id": "BL-CD-S008",
+    "metadata": {
+        "name": "BlockLevel-Conditional-ComplexLogic",
+        "category": "Block-Level",
+        "subcategory": "Conditional",
+        "type": "seed",
+        "source": "Manual",
+        "language": "python",
+        "difficulty": "expert",
+        "intervention": 3
+    },
+    "task": {
+        "description": "Given the following complex conditional logic where age is 25, income is 50000, and has_degree is True, what is the final value of status?",
+        "code": "age = 25\nincome = 50000\nhas_degree = True\nstatus = None\n\nif age >= 18 and age <= 65:\n    if income > 30000:\n        if has_degree:\n            status = \"approved_premium\"\n        else:\n            status = \"approved_standard\"\n    else:\n        if age >= 21 and has_degree:\n            status = \"approved_basic\"\n        else:\n            status = \"pending_review\"\nelse:\n    status = \"not_eligible\"\n\nprint(f\"Status: {status}\")",
+        "answer": "approved_premium"
+    }
+}
+```
+
+#### 2C - 迭代代码块 [ Iterative ] (8)
+
+```json
+{
+    "id": "BL-IT-S001",
+    "metadata": {
+        "name": "BlockLevel-Iterative-SimpleFor",
+        "category": "Block-Level",
+        "subcategory": "Iterative",
+        "type": "seed",
+        "source": "Manual",
+        "language": "c",
+        "difficulty": "easy",
+        "intervention": 0
+    },
+    "task": {
+        "description": "Given the following simple for loop block, what is the final value of sum?",
+        "code": "int sum = 0;\nfor (int i = 1; i <= 5; i++) {\n    sum += i;\n}\nprintf(\"Sum: %d\\n\", sum);",
+        "answer": 15
+    }
+}
+```
+
+```json
+{
+    "id": "BL-IT-S002",
+    "metadata": {
+        "name": "BlockLevel-Iterative-ArrayInit",
+        "category": "Block-Level",
+        "subcategory": "Iterative",
+        "type": "seed",
+        "source": "CodeSense-apache-httpd",
+        "language": "c",
+        "difficulty": "medium",
+        "intervention": 1
+    },
+    "task": {
+        "description": "Given the following array initialization loop where GB_SIZE is 5, what is the value of pointer_arr[3] after execution?",
+        "code": "void af_gb_init() {\n    pointer_idx = 0;\n    for (int i = 0; i < GB_SIZE; i++) {\n        pointer_arr[i] = NULL;\n    }\n}",
+        "answer": "NULL"
+    }
+}
+```
+
+```json
+{
+    "id": "BL-IT-S003",
+    "metadata": {
+        "name": "BlockLevel-Iterative-WhileLoop",
+        "category": "Block-Level",
+        "subcategory": "Iterative",
+        "type": "seed",
+        "source": "Manual",
+        "language": "c",
+        "difficulty": "medium",
+        "intervention": 1
+    },
+    "task": {
+        "description": "Given the following while loop block where initial value is 16, what is the final value of count?",
+        "code": "int value = 16;\nint count = 0;\nwhile (value > 1) {\n    value = value / 2;\n    count++;\n}\nprintf(\"Count: %d\\n\", count);",
+        "answer": 4
+    }
+}
+```
+
+```json
+{
+    "id": "BL-IT-S004",
+    "metadata": {
+        "name": "BlockLevel-Iterative-NestedLoop",
+        "category": "Block-Level",
+        "subcategory": "Iterative",
+        "type": "seed",
+        "source": "Manual",
+        "language": "python",
+        "difficulty": "hard",
+        "intervention": 2
+    },
+    "task": {
+        "description": "Given the following nested loop block, what is the final value of total?",
+        "code": "total = 0\nfor i in range(3):\n    for j in range(2):\n        total += (i + 1) * (j + 1)\nprint(f\"Total: {total}\")",
+        "answer": 18
+    }
+}
+```
+
+```json
+{
+    "id": "BL-IT-S005",
+    "metadata": {
+        "name": "BlockLevel-Iterative-BreakContinue",
+        "category": "Block-Level",
+        "subcategory": "Iterative",
+        "type": "seed",
+        "source": "Manual",
+        "language": "c",
+        "difficulty": "hard",
+        "intervention": 2
+    },
+    "task": {
+        "description": "Given the following loop with break and continue, what is the final value of sum?",
+        "code": "int sum = 0;\nfor (int i = 1; i <= 10; i++) {\n    if (i % 2 == 0) {\n        continue;\n    }\n    if (i > 7) {\n        break;\n    }\n    sum += i;\n}\nprintf(\"Sum: %d\\n\", sum);",
+        "answer": 16
+    }
+}
+```
+
+```json
+{
+    "id": "BL-IT-S006",
+    "metadata": {
+        "name": "BlockLevel-Iterative-DoWhile",
+        "category": "Block-Level",
+        "subcategory": "Iterative",
+        "type": "seed",
+        "source": "Manual",
+        "language": "c",
+        "difficulty": "medium",
+        "intervention": 1
+    },
+    "task": {
+        "description": "Given the following do-while loop where initial n is 0, what is the final value of n?",
+        "code": "int n = 0;\ndo {\n    n += 3;\n} while (n < 10);\nprintf(\"n: %d\\n\", n);",
+        "answer": 12
+    }
+}
+```
+
+```json
+{
+    "id": "BL-IT-S007",
+    "metadata": {
+        "name": "BlockLevel-Iterative-RecursiveFunction",
+        "category": "Block-Level",
+        "subcategory": "Iterative",
+        "type": "seed",
+        "source": "Manual",
+        "language": "c",
+        "difficulty": "expert",
+        "intervention": 3
+    },
+    "task": {
+        "description": "Given the following recursive function call factorial(4), what is the return value?",
+        "code": "int factorial(int n) {\n    if (n <= 1) {\n        return 1;\n    }\n    return n * factorial(n - 1);\n}\n\nint result = factorial(4);\nprintf(\"Result: %d\\n\", result);",
+        "answer": 24
+    }
+}
+```
+
+```json
+{
+    "id": "BL-IT-S008",
+    "metadata": {
+        "name": "BlockLevel-Iterative-ComplexAccumulation",
+        "category": "Block-Level",
+        "subcategory": "Iterative",
+        "type": "seed",
+        "source": "Manual",
+        "language": "python",
+        "difficulty": "expert",
+        "intervention": 3
+    },
+    "task": {
+        "description": "Given the following complex iterative accumulation with filtering, what is the final value of result?",
+        "code": "numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nresult = 0\nmultiplier = 1\n\nfor num in numbers:\n    if num % 2 == 0:\n        result += num * multiplier\n        multiplier += 1\n    else:\n        result -= num\n        \nprint(f\"Result: {result}\")",
+        "answer": 15
+    }
+}
+```
+
+#### 2D - 大混合 (2)
+
+```json
+{
+    "id": "BL-MIX-S001",
+    "metadata": {
+        "name": "BlockLevel-Mix-Comprehensive",
+        "category": "Block-Level",
+        "subcategory": "Mix",
+        "type": "seed",
+        "source": "Manual",
+        "language": "c",
+        "difficulty": "expert",
+        "intervention": 3
+    },
+    "task": {
+        "description": "Given the following comprehensive block mixing linear, conditional, and iterative patterns, what is the final value of status_code?",
+        "code": "int process_data_batch(int *data, int size) {\n    // Linear initialization\n    int processed = 0;\n    int errors = 0;\n    int status_code = 0;\n    \n    // Conditional validation\n    if (data == NULL || size <= 0) {\n        return -1;\n    }\n    \n    // Iterative processing with nested conditions\n    for (int i = 0; i < size; i++) {\n        if (data[i] < 0) {\n            errors++;\n            continue;\n        }\n        \n        // Linear computation\n        data[i] = data[i] * 2 + 1;\n        processed++;\n        \n        // Conditional break\n        if (errors > size / 2) {\n            status_code = -2;\n            break;\n        }\n    }\n    \n    // Final conditional status\n    if (status_code == 0) {\n        status_code = (processed > 0) ? 1 : 0;\n    }\n    \n    return status_code;\n}\n\n// Test case\nint test_data[] = {1, 2, 3, 4, 5};\nint result = process_data_batch(test_data, 5);",
+        "answer": 1
+    }
+}
+```
+
+```json
+{
+    "id": "BL-MIX-S002",
+    "metadata": {
+        "name": "BlockLevel-Mix-RealWorld",
+        "category": "Block-Level",
+        "subcategory": "Mix",
+        "type": "seed",
+        "source": "CodeSense-libssh",
+        "language": "c",
+        "difficulty": "expert",
+        "intervention": 3
+    },
+    "task": {
+        "description": "Given the following real-world configuration parsing block, what is the final value of parser_flags when input contains 3 lines?",
+        "code": "int ssh_bind_config_parse_string(ssh_bind bind, const char *input) {\n    char line[MAX_LINE_SIZE] = {0};\n    const char *c = input, *line_start = input;\n    unsigned int line_num = 0, line_len;\n    uint32_t parser_flags;\n    int rv;\n    \n    // Linear initialization\n    uint8_t seen[BIND_CFG_MAX] = {0};\n    parser_flags = PARSING;\n    \n    // Iterative line processing\n    while (1) {\n        line_num++;\n        line_start = c;\n        c = strchr(line_start, '\\n');\n        \n        // Conditional end detection\n        if (c == NULL) {\n            c = strchr(line_start, '\\0');\n        }\n        if (c == NULL) {\n            return SSH_ERROR;\n        }\n        \n        // Linear line processing\n        line_len = c - line_start;\n        if (line_len > MAX_LINE_SIZE - 1) {\n            return SSH_ERROR;\n        }\n        \n        // Process line\n        memcpy(line, line_start, line_len);\n        line[line_len] = '\\0';\n        \n        // Conditional parsing\n        rv = ssh_bind_config_parse_line(bind, line, line_num, &parser_flags, seen, 0);\n        if (rv < 0) {\n            return SSH_ERROR;\n        }\n        \n        // Break condition\n        if (*c == '\\0') {\n            break;\n        }\n        c++;\n    }\n    \n    return SSH_OK;\n}\n\n// Assuming input has 3 valid lines and PARSING = 1\nconst char *test_input = \"line1\\nline2\\nline3\";\nint result = ssh_bind_config_parse_string(NULL, test_input);",
+        "answer": 0
+    }
+}
+```
+
+### 3 - 代码属性推理 [ Property-Level ] 
+
+#### 3A - 循环属性 [ Loop ]
+
+> （迭代计数、变量追踪、终止条件）
+
+#### 3B - 分支属性 [ Branch ]
+
+> （条件求值、路径选择、分支效果）
+
+#### 3C - 内存属性 [ Memory ] 
+
+> （引用关系、生命周期、访问模式）
+
+#### 3D - 作用域属性 [ Scope ]
+
+> （可见性、生存期、变量遮蔽）
+
+#### 3E - 大混合
 
 
 
@@ -795,8 +1305,4 @@ TreecEva
 
 - 造代码之外还有：让AI去生成一些hint，描述代码情况
 - case和case之间散一点
-- 功能分类有一颗树，让大模型自己列《工程+算法》
 
-# DDL
-
-下周末这两块都得出一个（完成度比较高）版本，且能合在一起
