@@ -1,4 +1,4 @@
-# TreecEva （763）-》1200
+# TreecEva （1331）
 
 > CAOYE
 
@@ -32,7 +32,6 @@ TreecEva
   - 布尔运算 [ Boolean ] （比较运算、逻辑运算、短路求值）
   - API/函数调用 [ API/Function Call ] （内置函数、数学库、字符串操作、容器操作）
   - 变量赋值 [ Assignment ] （简单赋值、多重赋值、解包赋值）
-  -  
   - 大混合
 - 代码块级推理（Block-Level）
   - 线性代码块 [ Linear ]（顺序语句、独立语句、依赖语句）
@@ -17359,6 +17358,14659 @@ TreecEva
             "description": "基于BL-IT-S008的复杂累积，扩展为多路并行处理，当增加分组处理时，group_totals的总和是多少？",
             "code": "numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\ngroup_size = 3\ngroup_totals = []\ntotal_sum = 0\n\n# 按组处理数字\nfor group_start in range(0, len(numbers), group_size):\n    group = numbers[group_start:group_start + group_size]\n    group_result = 0\n    group_multiplier = 1\n    \n    # 组内处理（基于原始逻辑）\n    for num in group:\n        if num % 2 == 0:\n            group_result += num * group_multiplier\n            group_multiplier += 1\n        else:\n            group_result -= num\n    \n    group_totals.append(group_result)\n    \n    # 线性累加到总和\n    total_sum += group_result\n\nprint(f\"Total sum of group totals: {total_sum}\")",
             "answer": -9
+        }
+    }
+]
+```
+
+### 3 - 代码属性推理（283）
+
+#### 3A - 循环属性 [ Loop ] （52）
+
+> ```
+> # 循环属性推理变式生成提示词
+> 
+> ## 任务目标
+> 基于给定的循环属性推理种子任务，生成多样化的变式任务来全面测试大模型对循环结构深层属性的理解能力，包括迭代计数分析、变量状态追踪、终止条件判断等核心循环属性推理技能。
+> 
+> ## 循环属性推理特征分析
+> 循环属性推理关注循环结构的内在特性和行为模式，重点测试模型对循环执行过程中数量关系、状态变化和控制逻辑的深层理解，而非仅仅关注最终结果。
+> 
+> ## 变式生成维度
+> 
+> ### 1. 迭代计数分析变式
+> - **简单计数变式**: 基础for/while循环的迭代次数计算
+> - **嵌套计数变式**: 多层嵌套循环的总迭代次数分析
+> - **条件计数变式**: 带有条件跳过的实际执行次数
+> - **动态计数变式**: 循环边界动态变化的计数分析
+> - **递归计数变式**: 递归调用的深度和总调用次数
+> - **部分计数变式**: 特定条件下的子集迭代计数
+> 
+> ### 2. 变量状态追踪变式
+> - **累积器追踪变式**: 累积变量在特定迭代的状态值
+> - **计数器追踪变式**: 计数器变量的演变过程
+> - **状态机追踪变式**: 状态变量在迭代中的转换
+> - **数组索引追踪变式**: 数组访问索引的变化追踪
+> - **指针追踪变式**: 指针变量在循环中的移动
+> - **多变量追踪变式**: 多个相关变量的同步状态追踪
+> 
+> ### 3. 终止条件分析变式
+> - **单一条件变式**: 简单终止条件的判断分析
+> - **复合条件变式**: 多个条件组合的终止判断
+> - **动态条件变式**: 终止条件在循环中动态变化
+> - **收敛条件变式**: 数值收敛算法的终止判断
+> - **多出口条件变式**: 多个可能出口的条件分析
+> - **异常终止变式**: 异常情况导致的提前终止
+> 
+> ### 4. 循环不变量变式
+> - **数学不变量变式**: 数学关系在循环中的保持
+> - **逻辑不变量变式**: 逻辑条件在循环中的维持
+> - **数据结构不变量变式**: 数据结构性质的保持
+> - **资源不变量变式**: 资源状态的一致性维护
+> - **关系不变量变式**: 变量间关系的保持
+> - **边界不变量变式**: 边界条件的维护
+> 
+> ### 5. 循环复杂度分析变式
+> - **时间复杂度变式**: 循环的时间复杂度分析
+> - **空间复杂度变式**: 循环中内存使用的分析
+> - **嵌套复杂度变式**: 嵌套循环的复杂度计算
+> - **最坏情况变式**: 最坏执行情况的复杂度
+> - **平均情况变式**: 平均执行情况的复杂度
+> - **最优情况变式**: 最优执行情况的复杂度
+> 
+> ### 6. 循环模式识别变式
+> - **累积模式变式**: 累积计算模式的识别
+> - **搜索模式变式**: 搜索算法模式的分析
+> - **变换模式变式**: 数据变换模式的识别
+> - **过滤模式变式**: 数据过滤模式的分析
+> - **映射模式变式**: 数据映射模式的识别
+> - **归约模式变式**: 数据归约模式的分析
+> 
+> ### 7. 循环边界分析变式
+> - **边界计算变式**: 循环边界的精确计算
+> - **越界检测变式**: 数组越界的可能性分析
+> - **边界调整变式**: 循环边界的动态调整
+> - **边界优化变式**: 循环边界的优化分析
+> - **边界错误变式**: 常见边界错误的识别
+> - **边界特例变式**: 特殊边界情况的处理
+> 
+> ### 8. 循环依赖分析变式
+> - **数据依赖变式**: 循环中的数据依赖关系
+> - **控制依赖变式**: 控制流的依赖分析
+> - **循环依赖变式**: 循环迭代间的依赖关系
+> - **函数依赖变式**: 函数调用的依赖分析
+> - **内存依赖变式**: 内存访问的依赖关系
+> - **资源依赖变式**: 资源使用的依赖分析
+> 
+> ### 9. 循环优化分析变式
+> - **循环展开变式**: 循环展开的效果分析
+> - **循环合并变式**: 多个循环的合并可能性
+> - **循环交换变式**: 嵌套循环的交换优化
+> - **循环分裂变式**: 循环分裂的优化效果
+> - **循环向量化变式**: 循环向量化的可能性
+> - **循环并行化变式**: 循环并行化的分析
+> 
+> ### 10. 高级循环属性变式
+> - **循环不动点变式**: 不动点的识别和分析
+> - **循环周期性变式**: 循环行为的周期性分析
+> - **循环收敛性变式**: 数值算法的收敛性分析
+> - **循环稳定性变式**: 算法稳定性的分析
+> - **循环正确性变式**: 循环正确性的验证
+> - **循环等价性变式**: 不同循环实现的等价性
+> 
+> ## 复杂度层次设计
+> 
+> ### 简单属性 (Easy)
+> - 单层循环的基础属性分析
+> - 简单的计数和状态追踪
+> - 明确的终止条件判断
+> - 直观的循环模式识别
+> 
+> ### 中等属性 (Medium)
+> - 2层嵌套循环的属性分析
+> - 涉及条件判断的复杂计数
+> - 多变量的状态追踪
+> - 中等复杂度的终止条件
+> 
+> ### 复杂属性 (Hard)
+> - 3层以上嵌套或复杂循环结构
+> - 动态边界和复杂状态管理
+> - 多重终止条件的分析
+> - 涉及算法优化的属性分析
+> 
+> ### 专家级属性 (Expert)
+> - 极度复杂的循环属性分析
+> - 涉及高级算法和数值计算
+> - 复杂的不变量和收敛性分析
+> - 需要深度数学和算法知识
+> 
+> ## 生成策略
+> 
+> ### 种子分析策略
+> 1. **识别核心属性**: 分析种子任务关注的主要循环属性
+> 2. **提取分析模式**: 识别属性分析的方法和思路
+> 3. **确定关键参数**: 找出影响循环属性的关键参数
+> 4. **分析复杂度层次**: 评估当前任务的复杂度水平
+> 
+> ### 变式设计原则
+> 1. **属性聚焦**: 每个变式都应明确关注特定的循环属性
+> 2. **分析深度**: 注重对循环内在机制的深层分析
+> 3. **量化精确**: 提供精确的数量分析和状态描述
+> 4. **实用导向**: 关注实际编程中重要的循环属性
+> 
+> ### 质量保证
+> 1. **计算验证**: 手工验证关键计算步骤的正确性
+> 2. **属性一致性**: 确保循环属性的逻辑一致性
+> 3. **边界检查**: 验证边界条件的处理正确性
+> 4. **复杂度合理**: 确保复杂度分析的合理性
+> 
+> ## 输出格式要求
+> 
+> ```json
+> [
+>     {
+>         "id": "PL-LP-S00X-V001",
+>         "metadata": {
+>             "name": "循环属性变式名称",
+>             "category": "Property-Level",
+>             "subcategory": "Loop",
+>             "type": "variant",
+>             "source": "Generated",
+>             "language": "目标语言",
+>             "difficulty": "easy/medium/hard/expert",
+>             "intervention": 0,
+>             "variant_type": "变式类型标签",
+>             "property_focus": "iteration_count/variable_tracking/termination_condition/invariant/complexity",
+>             "analysis_type": "quantitative/qualitative/comparative"
+>         },
+>         "task": {
+>             "description": "循环属性分析任务描述（英文）",
+>             "code": "待分析的循环代码",
+>             "answer": "特定属性的分析结果"
+>         }
+>     },
+>     {下一个变式...}
+> ]
+> 特殊字段说明
+> property_focus: 标识主要关注的循环属性类型
+> analysis_type: 标识分析的类型（定量/定性/比较）
+> variant_type: 描述具体的变式类型
+> 生成目标
+> 为每个提供的种子任务生成12-18个循环属性变式，确保：
+> 
+> 每种难度等级至少包含3-4个变式
+> 涵盖至少8-10种不同的属性分析类型
+> 包含不同的分析深度和复杂度
+> 至少包含3-4个涉及高级循环属性的变式
+> 包含定量和定性分析的平衡组合
+> 重点测试场景
+> 精确计数能力: 在复杂循环结构中准确计算迭代次数
+> 状态追踪能力: 准确追踪变量在特定迭代的状态
+> 条件分析能力: 正确分析复杂终止条件的触发时机
+> 模式识别能力: 识别循环中的计算模式和数据流
+> 复杂度分析能力: 分析循环的时间和空间复杂度
+> 不变量理解: 理解和验证循环不变量
+> 常见循环属性模式
+> 线性累积: sum += i (等差数列求和)
+> 指数增长: value *= 2 (几何级数)
+> 收敛迭代: Newton方法、二分查找等
+> 条件计数: 满足特定条件的元素计数
+> 状态转换: 有限状态机的状态转换
+> 数据变换: 数组元素的逐个变换处理
+> 请基于此提示词，为给定的循环属性推理种子任务生成全面的变式集合，输出格式为包含所有变式的JSON数组。
+> ```
+
+```json
+[
+    {
+        "id": "PL-LP-S001-V001",
+        "metadata": {
+            "name": "Simple Triangle Nested Counting",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "简单计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Analyze this simple triangular nested loop structure and calculate the total number of inner loop executions.",
+            "code": "int count = 0;\nfor (int i = 1; i <= 3; i++) {\n    for (int j = 1; j <= i; j++) {\n        count++;\n        printf(\"i=%d, j=%d\\n\", i, j);\n    }\n}\nprintf(\"Total iterations: %d\\n\", count);",
+            "answer": 6
+        }
+    },
+    {
+        "id": "PL-LP-S001-V002",
+        "metadata": {
+            "name": "Dynamic Boundary Nested Counting",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "动态计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this nested loop with dynamic boundaries, calculate the total number of inner loop executions where the outer loop's upper bound changes after each iteration.",
+            "code": "int total = 0;\nint upper_bound = 5;\nfor (int i = 1; i <= upper_bound; i++) {\n    for (int j = i; j <= upper_bound; j++) {\n        total++;\n        printf(\"i=%d, j=%d\\n\", i, j);\n    }\n    upper_bound--;  // Dynamically decrease upper bound\n}\nprintf(\"Total iterations: %d\\n\", total);",
+            "answer": 9
+        }
+    },
+    {
+        "id": "PL-LP-S001-V003",
+        "metadata": {
+            "name": "Conditional Skip Counting Analysis",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "条件计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this nested loop with conditional skipping, calculate the number of times the loop body is actually executed (excluding iterations skipped by continue).",
+            "code": "int executed = 0;\nfor (int i = 1; i <= 4; i++) {\n    for (int j = 1; j <= 5; j++) {\n        if ((i + j) % 3 == 0) {\n            continue;  // Skip certain iterations\n        }\n        executed++;\n        printf(\"Executed: i=%d, j=%d\\n\", i, j);\n    }\n}\nprintf(\"Actually executed: %d\\n\", executed);",
+            "answer": 14
+        }
+    },
+    {
+        "id": "PL-LP-S001-V004",
+        "metadata": {
+            "name": "Triple Nested Complex Counting",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "嵌套计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Analyze this triple nested loop structure and determine the total number of executions of the innermost loop body.",
+            "code": "int total = 0;\nfor (int i = 1; i <= 3; i++) {\n    for (int j = i; j <= 4; j++) {\n        for (int k = 1; k <= (j - i + 1); k++) {\n            total++;\n            printf(\"i=%d, j=%d, k=%d\\n\", i, j, k);\n        }\n    }\n}\nprintf(\"Total innermost iterations: %d\\n\", total);",
+            "answer": 20
+        }
+    },
+    {
+        "id": "PL-LP-S001-V005",
+        "metadata": {
+            "name": "Recursive Iteration Counting",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "递归计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Calculate the total number of recursive calls made by this function when called with initial value n=4.",
+            "code": "int call_count = 0;\n\nint recursive_sum(int n) {\n    call_count++;\n    printf(\"Call %d: recursive_sum(%d)\\n\", call_count, n);\n    \n    if (n <= 1) {\n        return n;\n    }\n    \n    return n + recursive_sum(n-1) + recursive_sum(n-2);\n}\n\n// Called with n=4\nint result = recursive_sum(4);\nprintf(\"Total recursive calls: %d\\n\", call_count);",
+            "answer": 15
+        }
+    },
+    {
+        "id": "PL-LP-S001-V006",
+        "metadata": {
+            "name": "Matrix Diagonal Counting",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "部分计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this matrix traversal loop, how many times are diagonal elements (where i == j) processed?",
+            "code": "int diagonal_count = 0;\nint matrix[5][5];\nfor (int i = 0; i < 5; i++) {\n    for (int j = 0; j < 5; j++) {\n        if (i == j) {\n            diagonal_count++;\n            printf(\"Diagonal element at (%d,%d)\\n\", i, j);\n        }\n        printf(\"Processing element (%d,%d)\\n\", i, j);\n    }\n}\nprintf(\"Diagonal elements processed: %d\\n\", diagonal_count);",
+            "answer": 5
+        }
+    },
+    {
+        "id": "PL-LP-S001-V007",
+        "metadata": {
+            "name": "Fibonacci Loop Iteration Count",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "简单计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Calculate how many iterations this Fibonacci generation loop executes to reach the first Fibonacci number greater than 100.",
+            "code": "int a = 0, b = 1, temp;\nint iterations = 0;\n\nwhile (b <= 100) {\n    iterations++;\n    printf(\"Iteration %d: Fibonacci = %d\\n\", iterations, b);\n    temp = a + b;\n    a = b;\n    b = temp;\n}\n\nprintf(\"Total iterations: %d\\n\", iterations);\nprintf(\"First Fibonacci > 100: %d\\n\", b);",
+            "answer": 12
+        }
+    },
+    {
+        "id": "PL-LP-S001-V008",
+        "metadata": {
+            "name": "Early Break Counting Analysis",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "条件计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this nested loop with early break conditions, how many total iterations of the inner loop are executed before the break occurs?",
+            "code": "int total_inner = 0;\nint target_sum = 45;\nint current_sum = 0;\n\nfor (int i = 1; i <= 10; i++) {\n    for (int j = 1; j <= 8; j++) {\n        total_inner++;\n        current_sum += (i * j);\n        printf(\"Inner iteration %d: i=%d, j=%d, sum=%d\\n\", total_inner, i, j, current_sum);\n        \n        if (current_sum >= target_sum) {\n            printf(\"Target reached! Breaking...\\n\");\n            goto exit_loops;\n        }\n    }\n}\n\nexit_loops:\nprintf(\"Total inner iterations: %d\\n\", total_inner);",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-LP-S001-V009",
+        "metadata": {
+            "name": "Geometric Series Loop Count",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "动态计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This loop implements a geometric series with variable step size. Calculate the total number of iterations executed.",
+            "code": "double value = 1.0;\ndouble multiplier = 1.5;\nint iterations = 0;\ndouble threshold = 1000.0;\n\nwhile (value < threshold) {\n    iterations++;\n    value *= multiplier;\n    multiplier += 0.1;  // Increasing multiplier\n    printf(\"Iteration %d: value=%.2f, multiplier=%.2f\\n\", iterations, value, multiplier);\n}\n\nprintf(\"Total iterations: %d\\n\", iterations);\nprintf(\"Final value: %.2f\\n\", value);",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-LP-S002-V001",
+        "metadata": {
+            "name": "Simple Accumulator Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Track the accumulator variable 'sum' and determine its value at the start of the 4th iteration.",
+            "code": "int sum = 10;\nint multiplier = 2;\nfor (int i = 1; i <= 6; i++) {\n    printf(\"Iteration %d start: sum = %d\\n\", i, sum);\n    sum += i * multiplier;\n    multiplier++;\n    printf(\"Iteration %d end: sum = %d\\n\", i, sum);\n}",
+            "answer": 28
+        }
+    },
+    {
+        "id": "PL-LP-S002-V002",
+        "metadata": {
+            "name": "Multi-Variable State Synchronization",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "多变量追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this complex state tracking loop, what is the value of variable 'balance' at the start of the 5th iteration?",
+            "code": "double balance = 1000.0;\ndouble rate = 0.05;\nint transaction_count = 0;\ndouble fee = 2.0;\n\nfor (int month = 1; month <= 8; month++) {\n    printf(\"Month %d start: balance = %.2f\\n\", month, balance);\n    balance *= (1 + rate);  // Apply interest\n    transaction_count += month;\n    balance -= (transaction_count * fee);  // Deduct fees\n    rate -= 0.005;  // Decrease rate\n    printf(\"Month %d end: balance = %.2f\\n\", month, balance);\n}",
+            "answer": 1039.48
+        }
+    },
+    {
+        "id": "PL-LP-S002-V003",
+        "metadata": {
+            "name": "Array Index Pointer Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "数组索引追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this array processing loop, what is the value of the array element pointed to by 'ptr' during the 6th iteration?",
+            "code": "int arr[] = {5, 12, 8, 23, 16, 31, 7, 19, 25, 14};\nint *ptr = arr;\nint step = 1;\n\nfor (int i = 0; i < 8; i++) {\n    printf(\"Iteration %d: ptr points to arr[%ld] = %d\\n\", i+1, ptr-arr, *ptr);\n    ptr += step;\n    if (i % 2 == 1) step++;  // Increase step every two iterations\n}",
+            "answer": 7
+        }
+    },
+    {
+        "id": "PL-LP-S002-V004",
+        "metadata": {
+            "name": "State Machine Variable Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "状态机追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "What is the value of the 'state' variable at the start of the 7th iteration in this state machine?",
+            "code": "int state = 0;  // 0=IDLE, 1=ACTIVE, 2=PROCESSING, 3=WAITING\nint counter = 0;\nint threshold = 3;\n\nfor (int cycle = 1; cycle <= 10; cycle++) {\n    printf(\"Cycle %d start: state = %d, counter = %d\\n\", cycle, state, counter);\n    \n    switch(state) {\n        case 0:  // IDLE\n            state = 1; counter = 0; break;\n        case 1:  // ACTIVE\n            counter++;\n            if (counter >= threshold) { state = 2; counter = 0; }\n            break;\n        case 2:  // PROCESSING\n            counter++;\n            if (counter >= 2) { state = 3; counter = 0; }\n            break;\n        case 3:  // WAITING\n            counter++;\n            if (counter >= 1) { state = 0; counter = 0; }\n            break;\n    }\n}",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-LP-S002-V005",
+        "metadata": {
+            "name": "Fibonacci Sequence Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "计数器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Track the Fibonacci sequence generation and determine the value of variable 'current' at the start of the 6th iteration.",
+            "code": "int prev = 0, current = 1, next;\nint iteration = 1;\n\nwhile (iteration <= 8) {\n    printf(\"Iteration %d start: prev=%d, current=%d\\n\", iteration, prev, current);\n    next = prev + current;\n    prev = current;\n    current = next;\n    iteration++;\n    printf(\"Iteration %d end: current=%d\\n\", iteration-1, current);\n}",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-LP-S002-V006",
+        "metadata": {
+            "name": "Running Average Calculation Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this running average calculation, what is the value of 'running_avg' at the start of the 4th iteration?",
+            "code": "int data[] = {10, 25, 15, 30, 20, 35};\ndouble running_sum = 0.0;\ndouble running_avg = 0.0;\n\nfor (int i = 0; i < 6; i++) {\n    printf(\"Iteration %d start: running_avg = %.2f\\n\", i+1, running_avg);\n    running_sum += data[i];\n    running_avg = running_sum / (i + 1);\n    printf(\"Added %d, new avg = %.2f\\n\", data[i], running_avg);\n}",
+            "answer": 16.67
+        }
+    },
+    {
+        "id": "PL-LP-S002-V007",
+        "metadata": {
+            "name": "Factorial Accumulator Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Track the factorial calculation and determine the value of 'factorial' after processing the 5th iteration.",
+            "code": "long long factorial = 1;\nfor (int i = 1; i <= 7; i++) {\n    printf(\"Iteration %d start: factorial = %lld\\n\", i, factorial);\n    factorial *= i;\n    printf(\"Iteration %d end: factorial = %lld\\n\", i, factorial);\n}",
+            "answer": 120
+        }
+    },
+    {
+        "id": "PL-LP-S002-V008",
+        "metadata": {
+            "name": "Exponential Decay Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this exponential decay simulation, what is the value of 'energy' at the start of the 6th iteration?",
+            "code": "double energy = 1000.0;\ndouble decay_rate = 0.85;\nint time_step = 0;\n\nwhile (energy > 10.0 && time_step < 20) {\n    time_step++;\n    printf(\"Step %d start: energy = %.2f\\n\", time_step, energy);\n    energy *= decay_rate;\n    decay_rate -= 0.02;  // Increasing decay\n    printf(\"Step %d end: energy = %.2f, rate = %.3f\\n\", time_step, energy, decay_rate);\n}",
+            "answer": 418.21
+        }
+    },
+    {
+        "id": "PL-LP-S002-V009",
+        "metadata": {
+            "name": "Circular Buffer Index Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "数组索引追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this circular buffer implementation, what is the value of 'write_index' at the start of the 8th iteration?",
+            "code": "int buffer[5] = {0};\nint write_index = 0;\nint read_index = 0;\nint buffer_size = 5;\nint data[] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};\n\nfor (int i = 0; i < 10; i++) {\n    printf(\"Iteration %d start: write_index = %d\\n\", i+1, write_index);\n    buffer[write_index] = data[i];\n    write_index = (write_index + 1) % buffer_size;\n    \n    if (i >= 2) {  // Start reading after 3 writes\n        read_index = (read_index + 1) % buffer_size;\n    }\n    printf(\"Wrote %d, write_index now = %d\\n\", data[i], write_index);\n}",
+            "answer": 2
+        }
+    },
+    {
+        "id": "PL-LP-S002-V010",
+        "metadata": {
+            "name": "Digital Root Calculation Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Track the digital root calculation and determine the value of 'number' at the start of the 3rd iteration.",
+            "code": "int number = 9875;\nint iteration = 0;\n\nwhile (number >= 10) {\n    iteration++;\n    printf(\"Iteration %d start: number = %d\\n\", iteration, number);\n    \n    int sum = 0;\n    int temp = number;\n    while (temp > 0) {\n        sum += temp % 10;\n        temp /= 10;\n    }\n    number = sum;\n    printf(\"Iteration %d end: number = %d\\n\", iteration, number);\n}\n\nprintf(\"Digital root: %d\\n\", number);",
+            "answer": 11
+        }
+    },
+    {
+        "id": "PL-LP-S003-V001",
+        "metadata": {
+            "name": "Simple Convergence Termination",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "单一条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Analyze this simple numerical approximation loop and determine after which iteration number the loop will terminate.",
+            "code": "double x = 10.0;\ndouble target = 5.0;\ndouble tolerance = 0.1;\nint iteration = 0;\n\nwhile (fabs(x - target) > tolerance) {\n    iteration++;\n    x = (x + target) / 2.0;  // Simple averaging approach\n    printf(\"Iteration %d: x = %.3f, diff = %.3f\\n\", iteration, x, fabs(x - target));\n}\n\nprintf(\"Converged after %d iterations\\n\", iteration);",
+            "answer": 5
+        }
+    },
+    {
+        "id": "PL-LP-S003-V002",
+        "metadata": {
+            "name": "Compound Termination Condition Analysis",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "复合条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This loop has multiple termination conditions. Analyze which condition will trigger first and determine the iteration number when the loop terminates.",
+            "code": "double value = 2.0;\ndouble growth_rate = 1.15;\nint iteration = 0;\nint max_iterations = 20;\ndouble upper_limit = 50.0;\ndouble stability_threshold = 0.01;\ndouble prev_value = 0.0;\n\ndo {\n    prev_value = value;\n    value *= growth_rate;\n    growth_rate *= 0.98;  // Decreasing growth rate\n    iteration++;\n    \n    printf(\"Iteration %d: value=%.3f, growth_rate=%.3f, change=%.3f\\n\", \n           iteration, value, growth_rate, fabs(value - prev_value));\n    \n} while (iteration < max_iterations && \n         value < upper_limit && \n         fabs(value - prev_value) > stability_threshold);\n\nprintf(\"Terminated after %d iterations\\n\", iteration);",
+            "answer": 15
+        }
+    },
+    {
+        "id": "PL-LP-S003-V003",
+        "metadata": {
+            "name": "Dynamic Termination Condition Change",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "动态条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this loop with dynamic termination conditions, the termination condition itself changes during loop execution. Determine after which iteration the loop will terminate.",
+            "code": "int sum = 0;\nint threshold = 30;\nint increment = 5;\nint adjustment_frequency = 3;\nint iteration = 0;\n\nwhile (sum < threshold) {\n    iteration++;\n    sum += increment;\n    \n    // Adjust conditions every 3 iterations\n    if (iteration % adjustment_frequency == 0) {\n        threshold += 10;  // Increase threshold\n        increment += 2;   // Increase increment\n    }\n    \n    printf(\"Iteration %d: sum=%d, threshold=%d, increment=%d\\n\", \n           iteration, sum, threshold, increment);\n}\n\nprintf(\"Loop terminated after %d iterations\\n\", iteration);",
+            "answer": 7
+        }
+    },
+    {
+        "id": "PL-LP-S003-V004",
+        "metadata": {
+            "name": "Binary Search Termination Analysis",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "收敛条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Analyze this binary search loop and determine after which iteration it will terminate when searching for target value 7.",
+            "code": "int binary_search(int arr[], int size, int target) {\n    int left = 0, right = size - 1;\n    int iteration = 0;\n    \n    while (left <= right) {\n        iteration++;\n        int mid = left + (right - left) / 2;\n        printf(\"Iteration %d: left=%d, right=%d, mid=%d, arr[mid]=%d\\n\", \n               iteration, left, right, mid, arr[mid]);\n        \n        if (arr[mid] == target) {\n            printf(\"Found target after %d iterations\\n\", iteration);\n            return mid;\n        }\n        \n        if (arr[mid] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    printf(\"Target not found after %d iterations\\n\", iteration);\n    return -1;\n}\n\n// Array: [1, 3, 5, 7, 9, 11, 13, 15]\nint arr[] = {1, 3, 5, 7, 9, 11, 13, 15};\nint result = binary_search(arr, 8, 7);",
+            "answer": 2
+        }
+    },
+    {
+        "id": "PL-LP-S003-V005",
+        "metadata": {
+            "name": "Square Root Approximation Termination",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "收敛条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This square root approximation using Newton's method will terminate after how many iterations?",
+            "code": "double sqrt_newton(double n) {\n    double x = n / 2.0;  // Initial guess\n    double tolerance = 0.001;\n    int iteration = 0;\n    \n    while (1) {\n        iteration++;\n        double new_x = 0.5 * (x + n / x);\n        printf(\"Iteration %d: x = %.6f, new_x = %.6f, diff = %.6f\\n\", \n               iteration, x, new_x, fabs(new_x - x));\n        \n        if (fabs(new_x - x) < tolerance) {\n            printf(\"Converged after %d iterations\\n\", iteration);\n            return new_x;\n        }\n        x = new_x;\n    }\n}\n\n// Calculate sqrt(25)\ndouble result = sqrt_newton(25.0);",
+            "answer": 4
+        }
+    },
+    {
+        "id": "PL-LP-S003-V006",
+        "metadata": {
+            "name": "Collatz Sequence Termination",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "单一条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Calculate how many iterations the Collatz sequence takes to reach 1 when starting with n=27.",
+            "code": "int collatz_steps(int n) {\n    int steps = 0;\n    int original = n;\n    \n    while (n != 1) {\n        steps++;\n        printf(\"Step %d: n = %d\", steps, n);\n        \n        if (n % 2 == 0) {\n            n = n / 2;\n            printf(\" -> %d (even, divide by 2)\\n\", n);\n        } else {\n            n = 3 * n + 1;\n            printf(\" -> %d (odd, 3n+1)\\n\", n);\n        }\n    }\n    \n    printf(\"Collatz(%d) takes %d steps\\n\", original, steps);\n    return steps;\n}\n\n// Calculate Collatz(27)\nint result = collatz_steps(27);",
+            "answer": 111
+        }
+    },
+    {
+        "id": "PL-LP-S003-V007",
+        "metadata": {
+            "name": "Power Series Convergence",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "收敛条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This power series approximation of e^x will terminate after how many iterations when x=1 and tolerance=0.0001?",
+            "code": "double power_series_exp(double x, double tolerance) {\n    double sum = 1.0;  // First term\n    double term = 1.0;\n    int iteration = 0;\n    \n    while (1) {\n        iteration++;\n        term = term * x / iteration;  // Next term: x^n/n!\n        sum += term;\n        \n        printf(\"Iteration %d: term = %.6f, sum = %.6f\\n\", iteration, term, sum);\n        \n        if (fabs(term) < tolerance) {\n            printf(\"Converged after %d iterations\\n\", iteration);\n            return sum;\n        }\n        \n        if (iteration > 50) {  // Safety limit\n            printf(\"Reached iteration limit\\n\");\n            break;\n        }\n    }\n    \n    return sum;\n}\n\n// Calculate e^1 with tolerance 0.0001\ndouble result = power_series_exp(1.0, 0.0001);",
+            "answer": 7
+        }
+    },
+    {
+        "id": "PL-LP-S003-V008",
+        "metadata": {
+            "name": "Timeout Based Termination",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "复合条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This loop with timeout and value conditions will terminate after which iteration?",
+            "code": "int process_with_timeout() {\n    int value = 100;\n    int timeout_counter = 0;\n    int max_timeout = 15;\n    int iteration = 0;\n    \n    while (value > 10 && timeout_counter < max_timeout) {\n        iteration++;\n        value -= (iteration * 2);\n        timeout_counter += iteration;\n        \n        printf(\"Iteration %d: value=%d, timeout_counter=%d\\n\", \n               iteration, value, timeout_counter);\n    }\n    \n    printf(\"Terminated after %d iterations\\n\", iteration);\n    if (value <= 10) {\n        printf(\"Terminated due to value condition\\n\");\n    } else {\n        printf(\"Terminated due to timeout\\n\");\n    }\n    \n    return iteration;\n}\n\nint result = process_with_timeout();",
+            "answer": 4
+        }
+    },
+    {
+        "id": "PL-LP-S003-V009",
+        "metadata": {
+            "name": "Oscillating System Termination",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "动态条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This oscillating system will reach equilibrium and terminate after which iteration?",
+            "code": "double oscillating_system() {\n    double position = 10.0;\n    double velocity = 0.0;\n    double damping = 0.9;\n    double spring_constant = 0.8;\n    double equilibrium_threshold = 0.01;\n    int iteration = 0;\n    \n    while (fabs(position) > equilibrium_threshold || fabs(velocity) > equilibrium_threshold) {\n        iteration++;\n        \n        // Simple harmonic oscillator with damping\n        double acceleration = -spring_constant * position;\n        velocity = velocity * damping + acceleration;\n        position += velocity;\n        \n        printf(\"Iteration %d: pos=%.4f, vel=%.4f, acc=%.4f\\n\", \n               iteration, position, velocity, acceleration);\n               \n        if (iteration > 100) {  // Safety limit\n            printf(\"Reached iteration limit\\n\");\n            break;\n        }\n    }\n    \n    printf(\"System reached equilibrium after %d iterations\\n\", iteration);\n    return iteration;\n}\n\nint result = oscillating_system();",
+            "answer": 67
+        }
+    },
+    {
+        "id": "PL-LP-S004-V001",
+        "metadata": {
+            "name": "Basic Conditional Counting",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "简单计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this simple conditional processing loop, how many times is the variable 'even_count' incremented?",
+            "code": "numbers = [2, 7, 4, 9, 6, 13, 8, 15, 10, 17]\neven_count = 0\nodd_count = 0\n\nfor num in numbers:\n    if num % 2 == 0:\n        even_count += 1\n        print(f\"Found even number: {num}\")\n    else:\n        odd_count += 1\n        print(f\"Found odd number: {num}\")\n        \nprint(f\"Even count: {even_count}, Odd count: {odd_count}\")",
+            "answer": 5
+        }
+    },
+    {
+        "id": "PL-LP-S004-V002",
+        "metadata": {
+            "name": "Nested Conditional Counting Analysis",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "条件计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this nested conditional loop, how many times is the inner special processing executed?",
+            "code": "matrix = [[1, 4, 7], [2, 5, 8], [3, 6, 9], [10, 11, 12]]\nspecial_processing_count = 0\ntotal_sum = 0\n\nfor i, row in enumerate(matrix):\n    for j, value in enumerate(row):\n        total_sum += value\n        if value > 5:  # First level condition\n            if (i + j) % 2 == 0:  # Second level condition\n                special_processing_count += 1\n                print(f\"Special processing for value {value} at ({i},{j})\")\n            else:\n                print(f\"Regular processing for value {value} at ({i},{j})\")\n                \nprint(f\"Special processing count: {special_processing_count}\")",
+            "answer": 3
+        }
+    },
+    {
+        "id": "PL-LP-S004-V003",
+        "metadata": {
+            "name": "Prime Number Filtering Count",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "过滤模式变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this prime number filtering loop, how many numbers are identified as prime and added to the prime_count?",
+            "code": "def is_prime(n):\n    if n < 2:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nnumbers = [11, 15, 17, 21, 23, 27, 29, 33, 31, 35]\nprime_count = 0\nprime_sum = 0\n\nfor num in numbers:\n    if is_prime(num):\n        prime_count += 1\n        prime_sum += num\n        print(f\"Found prime: {num}\")\n    else:\n        print(f\"Not prime: {num}\")\n        \nprint(f\"Prime count: {prime_count}, Prime sum: {prime_sum}\")",
+            "answer": 5
+        }
+    },
+    {
+        "id": "PL-LP-S004-V004",
+        "metadata": {
+            "name": "String Pattern Matching Count",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "条件计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this string processing loop, how many words match the pattern criteria and increment the pattern_count?",
+            "code": "words = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape']\npattern_count = 0\nvowel_start_count = 0\n\nfor word in words:\n    if len(word) >= 5:  # Length condition\n        if word[0].lower() in 'aeiou':  # Starts with vowel\n            pattern_count += 1\n            print(f\"Pattern match: {word} (length={len(word)}, starts with vowel)\")\n        else:\n            print(f\"Length OK but no vowel start: {word}\")\n    elif word[0].lower() in 'aeiou':\n        vowel_start_count += 1\n        print(f\"Vowel start but short: {word}\")\n        \nprint(f\"Pattern count: {pattern_count}, Vowel start count: {vowel_start_count}\")",
+            "answer": 2
+        }
+    },
+    {
+        "id": "PL-LP-S004-V005",
+        "metadata": {
+            "name": "Temperature Range Analysis",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "简单计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Analyze this temperature data processing loop and determine how many readings fall in the 'hot' category.",
+            "code": "temperatures = [18, 25, 32, 28, 35, 22, 38, 29, 41, 26]\nhot_count = 0\nwarm_count = 0\ncool_count = 0\n\nfor temp in temperatures:\n    if temp >= 35:\n        hot_count += 1\n        print(f\"Hot day: {temp}°C\")\n    elif temp >= 25:\n        warm_count += 1\n        print(f\"Warm day: {temp}°C\")\n    else:\n        cool_count += 1\n        print(f\"Cool day: {temp}°C\")\n        \nprint(f\"Hot: {hot_count}, Warm: {warm_count}, Cool: {cool_count}\")",
+            "answer": 3
+        }
+    },
+    {
+        "id": "PL-LP-S004-V006",
+        "metadata": {
+            "name": "Grade Classification Counting",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "条件计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this grade classification system, how many students receive an 'A' grade (score >= 90)?",
+            "code": "scores = [95, 78, 82, 91, 76, 88, 93, 84, 97, 79, 85, 92]\na_grade_count = 0\nb_grade_count = 0\nc_grade_count = 0\nother_count = 0\n\nfor score in scores:\n    if score >= 90:\n        a_grade_count += 1\n        print(f\"A grade: {score}\")\n    elif score >= 80:\n        b_grade_count += 1\n        print(f\"B grade: {score}\")\n    elif score >= 70:\n        c_grade_count += 1\n        print(f\"C grade: {score}\")\n    else:\n        other_count += 1\n        print(f\"Below C: {score}\")\n        \nprint(f\"A: {a_grade_count}, B: {b_grade_count}, C: {c_grade_count}, Other: {other_count}\")",
+            "answer": 5
+        }
+    },
+    {
+        "id": "PL-LP-S004-V007",
+        "metadata": {
+            "name": "List Comprehension Alternative Count",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "条件计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this complex filtering loop, how many items satisfy all the conditions and get added to the result_count?",
+            "code": "data = [{'value': 15, 'category': 'A'}, {'value': 8, 'category': 'B'}, \n        {'value': 22, 'category': 'A'}, {'value': 12, 'category': 'C'},\n        {'value': 30, 'category': 'B'}, {'value': 5, 'category': 'A'},\n        {'value': 18, 'category': 'C'}, {'value': 25, 'category': 'B'}]\n\nresult_count = 0\ntotal_processed = 0\n\nfor item in data:\n    total_processed += 1\n    if item['value'] > 10:  # First condition\n        if item['category'] in ['A', 'B']:  # Second condition\n            if item['value'] % 2 == 0:  # Third condition: even numbers\n                result_count += 1\n                print(f\"Match: {item}\")\n            else:\n                print(f\"Odd value: {item}\")\n        else:\n            print(f\"Wrong category: {item}\")\n    else:\n        print(f\"Value too small: {item}\")\n        \nprint(f\"Result count: {result_count}, Total processed: {total_processed}\")",
+            "answer": 3
+        }
+    },
+    {
+        "id": "PL-LP-S004-V008",
+        "metadata": {
+            "name": "Sliding Window Pattern Count",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "条件计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this sliding window analysis, how many windows of size 3 have an average greater than 15?",
+            "code": "numbers = [12, 18, 14, 20, 16, 22, 11, 19, 25, 13, 17]\nwindow_size = 3\nhigh_avg_count = 0\ntotal_windows = 0\n\nfor i in range(len(numbers) - window_size + 1):\n    total_windows += 1\n    window = numbers[i:i + window_size]\n    avg = sum(window) / len(window)\n    \n    print(f\"Window {i+1}: {window} -> avg = {avg:.2f}\")\n    \n    if avg > 15:\n        high_avg_count += 1\n        print(f\"  High average window!\")\n        \nprint(f\"High average windows: {high_avg_count} out of {total_windows}\")",
+            "answer": 7
+        }
+    },
+    {
+        "id": "PL-LP-S004-V009",
+        "metadata": {
+            "name": "Palindrome Detection Count",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "条件计数变式",
+            "property_focus": "iteration_count",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Count how many strings in this list are palindromes and increment the palindrome_count.",
+            "code": "def is_palindrome(s):\n    cleaned = s.lower().replace(' ', '')\n    return cleaned == cleaned[::-1]\n\nstrings = ['level', 'hello', 'radar', 'world', 'madam', 'python', 'racecar', 'test']\npalindrome_count = 0\nnon_palindrome_count = 0\n\nfor string in strings:\n    if is_palindrome(string):\n        palindrome_count += 1\n        print(f\"Palindrome found: '{string}'\")\n    else:\n        non_palindrome_count += 1\n        print(f\"Not palindrome: '{string}'\")\n        \nprint(f\"Palindromes: {palindrome_count}, Non-palindromes: {non_palindrome_count}\")",
+            "answer": 4
+        }
+    },
+    {
+        "id": "PL-LP-S005-V001",
+        "metadata": {
+            "name": "Simple Hash Accumulation Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Track the accumulator value in this simplified hash function and determine the value of 'hash' after processing the 2nd character.",
+            "code": "unsigned int simple_hash(const char *str) {\n    unsigned int hash = 1;\n    int pos = 0;\n    char c;\n    \n    while ((c = str[pos]) != '\\0') {\n        hash = hash * 31 + (unsigned int)c;\n        pos++;\n        printf(\"After char '%c': hash = %u\\n\", c, hash);\n    }\n    \n    return hash;\n}\n\n// Called with simple_hash(\"abc\")\nunsigned int result = simple_hash(\"abc\");",
+            "answer": 3039
+        }
+    },
+    {
+        "id": "PL-LP-S005-V002",
+        "metadata": {
+            "name": "Complex Accumulation Pattern Analysis",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this complex accumulation calculation, what is the value of 'accumulator' after the 5th iteration?",
+            "code": "long long complex_accumulator(int n) {\n    long long accumulator = 1;\n    long long factor = 2;\n    \n    for (int i = 1; i <= n; i++) {\n        accumulator = accumulator * factor + i * i;\n        factor += i;\n        printf(\"Iteration %d: accumulator = %lld, factor = %lld\\n\", i, accumulator, factor);\n    }\n    \n    return accumulator;\n}\n\n// Called with complex_accumulator(7)\nlong long result = complex_accumulator(7);",
+            "answer": 7381
+        }
+    },
+    {
+        "id": "PL-LP-S005-V003",
+        "metadata": {
+            "name": "Polynomial Hash Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Track this polynomial rolling hash calculation and determine the hash value after processing the 3rd character.",
+            "code": "unsigned long polynomial_hash(const char *str, int prime, int mod) {\n    unsigned long hash = 0;\n    unsigned long prime_power = 1;\n    int pos = 0;\n    char c;\n    \n    while ((c = str[pos]) != '\\0') {\n        hash = (hash + ((unsigned long)c * prime_power)) % mod;\n        prime_power = (prime_power * prime) % mod;\n        pos++;\n        printf(\"After char '%c': hash = %lu, prime_power = %lu\\n\", c, hash, prime_power);\n    }\n    \n    return hash;\n}\n\n// Called with polynomial_hash(\"test\", 31, 1000000007)\nunsigned long result = polynomial_hash(\"test\", 31, 1000000007);",
+            "answer": 3027668
+        }
+    },
+    {
+        "id": "PL-LP-S005-V004",
+        "metadata": {
+            "name": "Checksum Calculation Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this checksum calculation loop, what is the value of 'checksum' after processing the 4th byte?",
+            "code": "unsigned char calculate_checksum(unsigned char *data, int length) {\n    unsigned char checksum = 0;\n    unsigned int temp_sum = 0;\n    \n    for (int i = 0; i < length; i++) {\n        temp_sum += data[i];\n        checksum = temp_sum & 0xFF;  // Keep only lower 8 bits\n        temp_sum >>= 8;  // Carry to next iteration\n        printf(\"Byte %d: data=%d, temp_sum=%d, checksum=%d\\n\", \n               i+1, data[i], temp_sum, checksum);\n    }\n    \n    return checksum;\n}\n\n// Data: [0x42, 0x1F, 0x8A, 0x37, 0xC5, 0x63]\nunsigned char data[] = {0x42, 0x1F, 0x8A, 0x37, 0xC5, 0x63};\nunsigned char result = calculate_checksum(data, 6);",
+            "answer": 34
+        }
+    },
+    {
+        "id": "PL-LP-S005-V005",
+        "metadata": {
+            "name": "CRC Computation Tracking",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Track the CRC calculation and determine the value of 'crc' after processing the 3rd byte.",
+            "code": "unsigned int crc8_simple(unsigned char *data, int length) {\n    unsigned int crc = 0;\n    unsigned int polynomial = 0x1D;  // x^8 + x^4 + x^3 + x^2 + 1\n    \n    for (int i = 0; i < length; i++) {\n        crc ^= data[i];\n        printf(\"After XOR with byte %d (0x%02X): crc = 0x%02X\\n\", i+1, data[i], crc);\n        \n        for (int bit = 0; bit < 8; bit++) {\n            if (crc & 0x80) {\n                crc = (crc << 1) ^ polynomial;\n            } else {\n                crc <<= 1;\n            }\n            crc &= 0xFF;\n        }\n        printf(\"After bit processing: crc = 0x%02X\\n\", crc);\n    }\n    \n    return crc;\n}\n\n// Data: [0xAB, 0xCD, 0xEF, 0x12]\nunsigned char data[] = {0xAB, 0xCD, 0xEF, 0x12};\nunsigned int result = crc8_simple(data, 4);",
+            "answer": 246
+        }
+    },
+    {
+        "id": "PL-LP-S005-V006",
+        "metadata": {
+            "name": "XOR Chain Accumulation",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this XOR chain calculation, what is the value of 'xor_result' after the 5th iteration?",
+            "code": "unsigned int xor_chain(unsigned int *values, int count) {\n    unsigned int xor_result = 0;\n    unsigned int shift_amount = 1;\n    \n    for (int i = 0; i < count; i++) {\n        xor_result ^= (values[i] << shift_amount);\n        shift_amount = (shift_amount + i) % 8;\n        printf(\"Iteration %d: value=0x%X, shifted=0x%X, xor_result=0x%X\\n\", \n               i+1, values[i], values[i] << shift_amount, xor_result);\n    }\n    \n    return xor_result;\n}\n\n// Values: [0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE]\nunsigned int values[] = {0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE};\nunsigned int result = xor_chain(values, 7);",
+            "answer": 0x2AC
+        }
+    },
+    {
+        "id": "PL-LP-S005-V007",
+        "metadata": {
+            "name": "Weighted Sum Accumulation",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Track the weighted sum calculation and determine the value of 'weighted_sum' after the 4th iteration.",
+            "code": "double weighted_sum_calc(double *values, double *weights, int count) {\n    double weighted_sum = 0.0;\n    double weight_factor = 1.0;\n    \n    for (int i = 0; i < count; i++) {\n        double contribution = values[i] * weights[i] * weight_factor;\n        weighted_sum += contribution;\n        weight_factor *= 0.9;  // Decay factor\n        printf(\"Iteration %d: value=%.2f, weight=%.2f, factor=%.3f, contribution=%.3f, sum=%.3f\\n\", \n               i+1, values[i], weights[i], weight_factor, contribution, weighted_sum);\n    }\n    \n    return weighted_sum;\n}\n\n// Values: [10.0, 15.0, 20.0, 25.0, 30.0]\n// Weights: [0.5, 0.7, 0.3, 0.8, 0.6]\ndouble values[] = {10.0, 15.0, 20.0, 25.0, 30.0};\ndouble weights[] = {0.5, 0.7, 0.3, 0.8, 0.6};\ndouble result = weighted_sum_calc(values, weights, 5);",
+            "answer": 25.37
+        }
+    },
+    {
+        "id": "PL-LP-S005-V008",
+        "metadata": {
+            "name": "Base64 Encoding Accumulation",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "累积器追踪变式",
+            "property_focus": "variable_tracking",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "In this simplified base64 encoding loop, what is the value of 'accumulator' after processing the 2nd input byte?",
+            "code": "unsigned int base64_encode_step(unsigned char *input, int length) {\n    unsigned int accumulator = 0;\n    int bit_count = 0;\n    \n    for (int i = 0; i < length; i++) {\n        accumulator = (accumulator << 8) | input[i];\n        bit_count += 8;\n        printf(\"After byte %d (0x%02X): accumulator = 0x%06X, bits = %d\\n\", \n               i+1, input[i], accumulator, bit_count);\n        \n        while (bit_count >= 6) {\n            unsigned int index = (accumulator >> (bit_count - 6)) & 0x3F;\n            printf(\"  Extracted 6-bit index: %d\\n\", index);\n            bit_count -= 6;\n            accumulator &= (1 << bit_count) - 1;\n        }\n    }\n    \n    return accumulator;\n}\n\n// Input: [0x4D, 0x61, 0x6E]  // \"Man\" in ASCII\nunsigned char input[] = {0x4D, 0x61, 0x6E};\nunsigned int result = base64_encode_step(input, 3);",
+            "answer": 0x0616E
+        }
+    },
+    {
+        "id": "PL-LP-S006-V001",
+        "metadata": {
+            "name": "Resource Threshold Exit Analysis",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "多出口条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This loop has multiple exit conditions based on resource consumption. Which specific condition will cause termination and on which iteration?",
+            "code": "int resource_manager(int initial_memory) {\n    int memory_used = 0;\n    int cpu_cycles = 0;\n    int iterations = 0;\n    int memory_increment = 15;\n    \n    while (iterations < 10) {\n        iterations++;\n        memory_used += memory_increment;\n        cpu_cycles += iterations * 2;\n        \n        printf(\"Iteration %d: memory=%d, cpu=%d\\n\", iterations, memory_used, cpu_cycles);\n        \n        // Condition 1: Memory limit\n        if (memory_used > initial_memory) {\n            printf(\"Memory limit exceeded at iteration %d\\n\", iterations);\n            return 1;\n        }\n        \n        // Condition 2: CPU cycles limit\n        if (cpu_cycles > 50) {\n            printf(\"CPU limit exceeded at iteration %d\\n\", iterations);\n            return 2;\n        }\n        \n        memory_increment += 5;\n    }\n    \n    printf(\"Completed all iterations\\n\");\n    return 0;\n}\n\n// Called with initial_memory = 80\nint result = resource_manager(80);",
+            "answer": 4
+        }
+    },
+    {
+        "id": "PL-LP-S006-V002",
+        "metadata": {
+            "name": "Data Structure Invariant Analysis",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "数据结构不变量变式",
+            "property_focus": "invariant",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "Analyze this loop that maintains a data structure invariant. Which iteration will violate the invariant condition and cause early termination?",
+            "code": "int maintain_balance(int arr[], int size) {\n    int left_sum = 0, right_sum = 0;\n    int pivot = size / 2;\n    int iterations = 0;\n    \n    for (int i = 0; i < size; i++) {\n        iterations++;\n        \n        if (i < pivot) {\n            left_sum += arr[i];\n        } else if (i > pivot) {\n            right_sum += arr[i];\n        }\n        \n        printf(\"Iteration %d: left_sum=%d, right_sum=%d, diff=%d\\n\", \n               iterations, left_sum, right_sum, abs(left_sum - right_sum));\n        \n        // Invariant: difference should not exceed 20\n        if (abs(left_sum - right_sum) > 20 && i > pivot) {\n            printf(\"Invariant violated at iteration %d\\n\", iterations);\n            return iterations;\n        }\n    }\n    \n    printf(\"Invariant maintained through all iterations\\n\");\n    return iterations;\n}\n\n// Array: [5, 8, 12, 3, 15, 25, 7]\nint test_arr[] = {5, 8, 12, 3, 15, 25, 7};\nint result = maintain_balance(test_arr, 7);",
+            "answer": 6
+        }
+    },
+    {
+        "id": "PL-LP-S006-V003",
+        "metadata": {
+            "name": "Priority Queue Exit Condition",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "异常终止变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This priority-based processing loop has multiple exit conditions. Determine which condition triggers termination and on which iteration.",
+            "code": "int priority_processor() {\n    int high_priority_count = 0;\n    int total_processed = 0;\n    int priority_queue[] = {1, 3, 2, 1, 3, 3, 2, 1, 3, 2};\n    int queue_size = 10;\n    int iterations = 0;\n    \n    for (int i = 0; i < queue_size; i++) {\n        iterations++;\n        total_processed++;\n        \n        if (priority_queue[i] == 3) {\n            high_priority_count++;\n        }\n        \n        printf(\"Iteration %d: priority=%d, high_count=%d, total=%d\\n\", \n               iterations, priority_queue[i], high_priority_count, total_processed);\n        \n        // Condition 1: Too many high priority items\n        if (high_priority_count > 4) {\n            printf(\"High priority overflow at iteration %d\\n\", iterations);\n            return 1;\n        }\n        \n        // Condition 2: Processing capacity exceeded\n        if (total_processed > 7) {\n            printf(\"Capacity exceeded at iteration %d\\n\", iterations);\n            return 2;\n        }\n    }\n    \n    printf(\"All items processed successfully\\n\");\n    return 0;\n}\n\nint result = priority_processor();",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-LP-S006-V004",
+        "metadata": {
+            "name": "Stack Overflow Detection",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "异常终止变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This stack simulation will trigger an overflow condition. On which iteration will the overflow be detected?",
+            "code": "int stack_simulation() {\n    int stack_size = 0;\n    int max_stack_size = 8;\n    int operations[] = {1, 1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1};  // 1=push, -1=pop\n    int op_count = 12;\n    int iterations = 0;\n    \n    for (int i = 0; i < op_count; i++) {\n        iterations++;\n        \n        if (operations[i] == 1) {  // Push operation\n            stack_size++;\n            printf(\"Iteration %d: PUSH, stack_size = %d\\n\", iterations, stack_size);\n            \n            if (stack_size > max_stack_size) {\n                printf(\"Stack overflow detected at iteration %d\\n\", iterations);\n                return iterations;\n            }\n        } else {  // Pop operation\n            if (stack_size > 0) {\n                stack_size--;\n                printf(\"Iteration %d: POP, stack_size = %d\\n\", iterations, stack_size);\n            } else {\n                printf(\"Stack underflow detected at iteration %d\\n\", iterations);\n                return iterations;\n            }\n        }\n    }\n    \n    printf(\"All operations completed successfully\\n\");\n    return 0;\n}\n\nint result = stack_simulation();",
+            "answer": 9
+        }
+    },
+    {
+        "id": "PL-LP-S006-V005",
+        "metadata": {
+            "name": "Memory Pool Exhaustion",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "多出口条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This memory allocation simulator has multiple failure conditions. Which iteration will trigger the first failure condition?",
+            "code": "int memory_allocator() {\n    int total_memory = 100;\n    int allocated_blocks = 0;\n    int max_blocks = 10;\n    int allocation_sizes[] = {8, 12, 15, 10, 20, 18, 7, 25, 14, 16, 22, 9};\n    int requests = 12;\n    int iterations = 0;\n    \n    for (int i = 0; i < requests; i++) {\n        iterations++;\n        int size = allocation_sizes[i];\n        \n        printf(\"Iteration %d: Requesting %d bytes, available=%d, blocks=%d\\n\", \n               iterations, size, total_memory, allocated_blocks);\n        \n        // Condition 1: Not enough memory\n        if (size > total_memory) {\n            printf(\"Out of memory at iteration %d\\n\", iterations);\n            return 1;\n        }\n        \n        // Condition 2: Too many blocks\n        if (allocated_blocks >= max_blocks) {\n            printf(\"Too many blocks at iteration %d\\n\", iterations);\n            return 2;\n        }\n        \n        // Allocate successfully\n        total_memory -= size;\n        allocated_blocks++;\n        printf(\"  Allocated successfully, remaining=%d\\n\", total_memory);\n    }\n    \n    printf(\"All allocations successful\\n\");\n    return 0;\n}\n\nint result = memory_allocator();",
+            "answer": 6
+        }
+    },
+    {
+        "id": "PL-LP-S006-V006",
+        "metadata": {
+            "name": "Network Packet Drop Analysis",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "多出口条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This network packet processing simulation will drop packets under certain conditions. On which iteration will the first packet drop occur?",
+            "code": "int packet_processor() {\n    int buffer_size = 0;\n    int max_buffer = 6;\n    int consecutive_drops = 0;\n    int max_consecutive = 3;\n    int packet_sizes[] = {2, 1, 3, 2, 4, 1, 2, 3, 5, 1};\n    int packet_count = 10;\n    int iterations = 0;\n    \n    for (int i = 0; i < packet_count; i++) {\n        iterations++;\n        int size = packet_sizes[i];\n        \n        printf(\"Iteration %d: Packet size=%d, buffer=%d\\n\", iterations, size, buffer_size);\n        \n        if (buffer_size + size > max_buffer) {\n            consecutive_drops++;\n            printf(\"  Packet dropped! Consecutive drops: %d\\n\", consecutive_drops);\n            \n            if (consecutive_drops >= max_consecutive) {\n                printf(\"Too many consecutive drops at iteration %d\\n\", iterations);\n                return iterations;\n            }\n        } else {\n            buffer_size += size;\n            consecutive_drops = 0;\n            printf(\"  Packet accepted, buffer now: %d\\n\", buffer_size);\n        }\n        \n        // Simulate buffer drain\n        buffer_size = (buffer_size > 1) ? buffer_size - 1 : 0;\n    }\n    \n    printf(\"All packets processed\\n\");\n    return 0;\n}\n\nint result = packet_processor();",
+            "answer": 9
+        }
+    },
+    {
+        "id": "PL-LP-S006-V007",
+        "metadata": {
+            "name": "Database Transaction Rollback",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "异常终止变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This database transaction simulator will trigger a rollback under certain conditions. On which iteration will the rollback be triggered?",
+            "code": "int transaction_processor() {\n    int active_transactions = 0;\n    int max_transactions = 5;\n    int failed_operations = 0;\n    int max_failures = 2;\n    int operations[] = {1, 1, 0, 1, 0, 1, 1, 0, 1, 0};  // 1=success, 0=failure\n    int op_count = 10;\n    int iterations = 0;\n    \n    for (int i = 0; i < op_count; i++) {\n        iterations++;\n        active_transactions++;\n        \n        printf(\"Iteration %d: Starting transaction %d\\n\", iterations, active_transactions);\n        \n        if (operations[i] == 0) {  // Operation failed\n            failed_operations++;\n            printf(\"  Operation failed! Total failures: %d\\n\", failed_operations);\n            \n            if (failed_operations > max_failures) {\n                printf(\"Too many failures - rollback at iteration %d\\n\", iterations);\n                return iterations;\n            }\n        } else {\n            printf(\"  Operation succeeded\\n\");\n        }\n        \n        if (active_transactions > max_transactions) {\n            printf(\"Too many active transactions at iteration %d\\n\", iterations);\n            return iterations;\n        }\n        \n        // Complete some transactions\n        if (i % 3 == 2) {\n            active_transactions = (active_transactions > 2) ? active_transactions - 2 : 0;\n        }\n    }\n    \n    printf(\"All transactions completed successfully\\n\");\n    return 0;\n}\n\nint result = transaction_processor();",
+            "answer": 5
+        }
+    },
+    {
+        "id": "PL-LP-S006-V008",
+        "metadata": {
+            "name": "Load Balancer Circuit Breaker",
+            "category": "Property-Level",
+            "subcategory": "Loop",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "复合条件变式",
+            "property_focus": "termination_condition",
+            "analysis_type": "quantitative"
+        },
+        "task": {
+            "description": "This load balancer simulation implements a circuit breaker pattern. On which iteration will the circuit breaker be triggered?",
+            "code": "int load_balancer() {\n    int successful_requests = 0;\n    int failed_requests = 0;\n    double failure_rate_threshold = 0.4;\n    int min_requests_for_check = 5;\n    int request_results[] = {1, 1, 0, 1, 0, 0, 1, 0, 0, 1};  // 1=success, 0=failure\n    int total_requests = 10;\n    int iterations = 0;\n    \n    for (int i = 0; i < total_requests; i++) {\n        iterations++;\n        \n        if (request_results[i] == 1) {\n            successful_requests++;\n            printf(\"Iteration %d: SUCCESS - Total: %d success, %d failures\\n\", \n                   iterations, successful_requests, failed_requests);\n        } else {\n            failed_requests++;\n            printf(\"Iteration %d: FAILURE - Total: %d success, %d failures\\n\", \n                   iterations, successful_requests, failed_requests);\n        }\n        \n        int total_processed = successful_requests + failed_requests;\n        \n        if (total_processed >= min_requests_for_check) {\n            double failure_rate = (double)failed_requests / total_processed;\n            printf(\"  Failure rate: %.2f\\n\", failure_rate);\n            \n            if (failure_rate > failure_rate_threshold) {\n                printf(\"Circuit breaker triggered at iteration %d\\n\", iterations);\n                return iterations;\n            }\n        }\n    }\n    \n    printf(\"All requests processed successfully\\n\");\n    return 0;\n}\n\nint result = load_balancer();",
+            "answer": 6
+        }
+    }
+]
+```
+
+#### 3B - 分支属性 [ Branch ] （62）
+
+> ```
+> ## 任务目标
+> 基于给定的分支属性推理种子任务，为每个种子生成8-12个多样化的变式任务，全面测试大模型对分支结构深层属性的理解能力，包括条件求值、路径选择和分支效果等核心分支属性推理技能。
+> 
+> ## 分支属性推理特征分析
+> 分支属性推理关注条件分支结构的内在机制和决策过程，重点测试模型对条件表达式计算、执行路径选择和分支结果影响的深层理解，强调对分支逻辑的精确分析能力。
+> 
+> ## 关键要求
+> - **描述语言**: 所有task描述必须使用英文
+> - **变式数量**: 每个种子任务严格生成8-12个变式，确保数量充足
+> - **属性聚焦**: 重点关注分支的属性分析，而非简单的执行结果
+> 
+> ## 变式生成维度
+> 
+> ### 1. 条件求值分析变式
+> - **布尔表达式求值变式**: 复杂布尔表达式的逐步求值分析
+> - **比较运算求值变式**: 多重比较运算的求值顺序和结果
+> - **算术条件求值变式**: 包含算术运算的条件表达式求值
+> - **函数调用条件变式**: 条件中包含函数调用的求值分析
+> - **类型转换条件变式**: 涉及隐式类型转换的条件求值
+> - **位运算条件变式**: 位运算结果的条件判断分析
+> 
+> ### 2. 短路求值分析变式
+> - **逻辑AND短路变式**: &&运算符的短路行为分析
+> - **逻辑OR短路变式**: ||运算符的短路行为分析
+> - **函数副作用短路变式**: 短路对函数副作用的影响分析
+> - **嵌套短路变式**: 多层嵌套的短路求值分析
+> - **条件链短路变式**: 条件链中的短路行为
+> - **复合短路变式**: 复合表达式的短路求值模式
+> 
+> ### 3. 路径选择分析变式
+> - **单一路径选择变式**: 简单if-else的路径选择分析
+> - **多路径选择变式**: if-elif-else链的路径选择
+> - **嵌套路径选择变式**: 嵌套分支的路径选择分析
+> - **switch路径选择变式**: switch-case的路径选择机制
+> - **三元运算路径变式**: 三元运算符的路径选择
+> - **条件跳转路径变式**: goto等跳转的路径分析
+> 
+> ### 4. 分支效果分析变式
+> - **变量修改效果变式**: 分支对变量状态的修改效果
+> - **累积效果变式**: 多个分支的累积效果分析
+> - **副作用分析变式**: 分支执行的副作用分析
+> - **资源影响变式**: 分支对资源状态的影响
+> - **状态转换效果变式**: 分支导致的状态转换分析
+> - **控制流效果变式**: 分支对后续控制流的影响
+> 
+> ### 5. 条件复杂度变式
+> - **简单条件变式**: 单一条件表达式的分析
+> - **复合条件变式**: 多个条件组合的复杂表达式
+> - **嵌套条件变式**: 条件表达式的嵌套结构
+> - **动态条件变式**: 运行时变化的条件表达式
+> - **递归条件变式**: 递归函数中的条件分析
+> - **条件依赖变式**: 条件之间相互依赖的分析
+> 
+> ### 6. 分支覆盖分析变式
+> - **路径覆盖变式**: 所有可能路径的覆盖分析
+> - **条件覆盖变式**: 条件真假值的覆盖分析
+> - **分支覆盖变式**: 所有分支的执行覆盖
+> - **MC/DC覆盖变式**: 修改条件/决策覆盖分析
+> - **边界覆盖变式**: 边界条件的覆盖分析
+> - **异常路径覆盖变式**: 异常情况的路径覆盖
+> 
+> ### 7. 优先级和结合性变式
+> - **运算符优先级变式**: 复杂表达式的运算优先级分析
+> - **结合性分析变式**: 同优先级运算符的结合性
+> - **括号影响变式**: 括号对运算顺序的影响
+> - **类型提升变式**: 类型提升对条件求值的影响
+> - **隐式转换变式**: 隐式类型转换的优先级
+> - **表达式求值顺序变式**: 子表达式的求值顺序
+> 
+> ### 8. 特殊分支结构变式
+> - **fallthrough分析变式**: switch语句的fallthrough行为
+> - **break/continue效果变式**: 跳转语句的分支效果
+> - **return分支变式**: 函数返回的分支分析
+> - **异常分支变式**: 异常处理的分支逻辑
+> - **goto分支变式**: goto跳转的分支分析
+> - **宏条件分支变式**: 预处理条件的分支分析
+> 
+> ### 9. 数据类型特化变式
+> - **数值比较分支变式**: 数值类型的比较分支分析
+> - **字符串分支变式**: 字符串比较的分支逻辑
+> - **指针分支变式**: 指针比较和NULL检查分支
+> - **枚举分支变式**: 枚举类型的分支处理
+> - **浮点分支变式**: 浮点数比较的特殊性分析
+> - **位字段分支变式**: 位字段操作的分支逻辑
+> 
+> ### 10. 高级分支属性变式
+> - **分支预测变式**: 分支预测对性能的影响分析
+> - **分支消除变式**: 编译器分支优化的分析
+> - **条件移动变式**: 条件移动指令的分析
+> - **分支密度变式**: 代码中分支密度的分析
+> - **分支复杂度变式**: 分支结构复杂度的量化
+> - **分支等价性变式**: 不同分支实现的等价性分析
+> 
+> ## 复杂度层次设计
+> 
+> ### 简单分支属性 (Easy)
+> - 单一条件的简单分支分析
+> - 基础的条件求值和路径选择
+> - 明确的分支效果分析
+> - 直观的逻辑推理
+> 
+> ### 中等分支属性 (Medium)
+> - 2-3个条件的复合分支分析
+> - 涉及短路求值的条件分析
+> - 多层条件嵌套的路径分析
+> - 中等复杂度的分支效果
+> 
+> ### 复杂分支属性 (Hard)
+> - 复杂的条件表达式和嵌套结构
+> - 多重短路和副作用分析
+> - 复杂的路径选择和状态管理
+> - 涉及优化和性能的分支分析
+> 
+> ### 专家级分支属性 (Expert)
+> - 极度复杂的条件逻辑分析
+> - 涉及编译器优化和架构特性
+> - 高级的分支覆盖和测试分析
+> - 需要深度计算机科学知识
+> 
+> ## 生成策略
+> 
+> ### 种子分析策略
+> 1. **识别核心属性**: 分析种子任务关注的主要分支属性
+> 2. **提取分析模式**: 识别条件求值和路径选择的模式
+> 3. **确定复杂度基准**: 评估种子任务的复杂度水平
+> 4. **分析关键变量**: 找出影响分支行为的关键因素
+> 
+> ### 变式设计原则
+> 1. **属性导向**: 每个变式都应明确关注特定的分支属性
+> 2. **英文描述**: 所有task描述必须使用标准英文
+> 3. **数量保证**: 严格确保每个种子生成8-12个变式
+> 4. **递进复杂**: 从简单到复杂的渐进式设计
+> 
+> ### 质量保证
+> 1. **逻辑验证**: 验证分支逻辑的正确性和一致性
+> 2. **路径检查**: 确保所有执行路径的分析正确
+> 3. **求值验证**: 手工验证条件求值的准确性
+> 4. **英文质量**: 确保描述的英文表达准确清晰
+> 
+> ## 输出格式要求
+> 
+> ```json
+> [
+>     {
+>         "id": "PL-BR-S00X-V001",
+>         "metadata": {
+>             "name": "PropertyLevel-Branch-VariantName",
+>             "category": "Property-Level",
+>             "subcategory": "Branch",
+>             "type": "variant",
+>             "source": "Generated",
+>             "language": "target_language",
+>             "difficulty": "easy/medium/hard/expert",
+>             "intervention": 0,
+>             "variant_type": "variant_type_label",
+>             "property_focus": "condition_evaluation/path_selection/branch_effect/short_circuit/coverage",
+>             "analysis_depth": "surface/detailed/comprehensive"
+>         },
+>         "task": {
+>             "description": "English description of the branch property analysis task",
+>             "code": "Code containing branch structures to analyze",
+>             "answer": "Expected analysis result or property value"
+>         }
+>     },
+>     {下一个变式...}
+> ]
+> 特殊字段说明
+> property_focus: 标识主要关注的分支属性类型
+> analysis_depth: 标识分析的深度层次
+> variant_type: 描述具体的变式类型
+> 生成目标
+> 为每个提供的种子任务严格生成8-12个分支属性变式，确保：
+> 
+> 每种难度等级至少包含2-3个变式
+> 涵盖至少6-8种不同的分支属性分析类型
+> 包含不同的分析深度和复杂度
+> 所有task描述使用标准英文表达
+> 所有答案必须准确且唯一
+> 平衡条件求值、路径选择和分支效果三个核心方面
+> 重点测试场景
+> 条件求值精确性: 准确分析复杂条件表达式的求值过程
+> 短路逻辑理解: 正确理解短路求值的机制和影响
+> 路径选择分析: 准确确定给定输入下的执行路径
+> 分支效果追踪: 正确分析分支对程序状态的影响
+> 覆盖分析能力: 分析分支覆盖和测试充分性
+> 优化理解: 理解编译器对分支的优化处理
+> 英文描述模板示例
+> "Analyze the condition evaluation process and determine..."
+> "Trace the path selection mechanism when..."
+> "Evaluate the branch effects on variable states..."
+> "Determine which conditions are evaluated due to short-circuit..."
+> "Calculate the final result after all branch executions..."
+> "Identify the execution path taken with the given inputs..."
+> 请基于此提示词，为给定的分支属性推理种子任务生成全面的变式集合，严格确保每个种子8-12个变式，所有描述使用英文，输出格式为包含所有变式的JSON数组。
+> ```
+
+```json
+[
+    {
+        "id": "PL-BR-S001-V001",
+        "metadata": {
+            "name": "PropertyLevel-Branch-SimpleConditionEvaluation",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_condition_evaluation",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "surface"
+        },
+        "task": {
+            "description": "Analyze the condition evaluation process and determine which branch is executed for the given input values.",
+            "code": "int check_range(int x, int y) {\n    if (x >= 0 && y <= 100) {\n        return 10;\n    } else {\n        return -10;\n    }\n}\n// What value is returned when called with check_range(5, 50)?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "PL-BR-S001-V002",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ArithmeticConditionEvaluation",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "arithmetic_condition_evaluation",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Evaluate arithmetic expressions within conditions and trace the execution path taken.",
+            "code": "int calculate_branch(int a, int b, int c) {\n    if ((a * 2) > (b + c) && (c - a) < b) {\n        return a + b;\n    } else if ((a + b) == c || (b * 2) > a) {\n        return a - c;\n    } else {\n        return b * c;\n    }\n}\n// What value is returned when called with calculate_branch(3, 7, 9)?",
+            "answer": -6
+        }
+    },
+    {
+        "id": "PL-BR-S001-V003",
+        "metadata": {
+            "name": "PropertyLevel-Branch-TypeConversionCondition",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "type_conversion_condition",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Analyze condition evaluation involving implicit type conversion and determine the execution path.",
+            "code": "int type_branch(float f, int i, double d) {\n    if (f > i && d < (i + 0.5)) {\n        return 1;\n    } else if (f <= i && (int)d == i) {\n        return 2;\n    } else {\n        return 3;\n    }\n}\n// What value is returned when called with type_branch(4.2, 4, 4.0)?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-BR-S001-V004",
+        "metadata": {
+            "name": "PropertyLevel-Branch-BitwiseConditionEvaluation",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "bitwise_condition_evaluation",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate bitwise operations within conditional expressions and trace the branch selection.",
+            "code": "int bitwise_branch(int a, int b) {\n    if ((a & 0x0F) > 5 && (b | 0x10) == b) {\n        return a ^ b;\n    } else if ((a >> 2) == (b << 1) || (~a & 0xFF) > 200) {\n        return a & b;\n    } else {\n        return a | b;\n    }\n}\n// What value is returned when called with bitwise_branch(22, 16)?",
+            "answer": 22
+        }
+    },
+    {
+        "id": "PL-BR-S001-V005",
+        "metadata": {
+            "name": "PropertyLevel-Branch-FunctionCallCondition",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "function_call_condition",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze condition evaluation when functions are called within the conditional expression.",
+            "code": "int helper(int x) { return x % 3; }\nint another(int y) { return y / 2; }\n\nint func_condition(int a, int b) {\n    if (helper(a) == 1 && another(b) > 3) {\n        return a + b;\n    } else if (helper(b) == 0 || another(a) <= 2) {\n        return a * b;\n    } else {\n        return a - b;\n    }\n}\n// What value is returned when called with func_condition(7, 8)?",
+            "answer": 56
+        }
+    },
+    {
+        "id": "PL-BR-S001-V006",
+        "metadata": {
+            "name": "PropertyLevel-Branch-NestedConditionalPath",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_conditional_path",
+            "property_focus": "path_selection",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Trace the execution path through nested conditional structures and determine the final return value.",
+            "code": "int nested_path(int x, int y, int z) {\n    if (x > 0) {\n        if (y > x) {\n            if (z > y) return 1;\n            else return 2;\n        } else {\n            if (z < x) return 3;\n            else return 4;\n        }\n    } else {\n        if (y < 0) return 5;\n        else return 6;\n    }\n}\n// What value is returned when called with nested_path(5, 3, 7)?",
+            "answer": 4
+        }
+    },
+    {
+        "id": "PL-BR-S001-V007",
+        "metadata": {
+            "name": "PropertyLevel-Branch-CompoundBooleanEvaluation",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "compound_boolean_evaluation",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate complex compound boolean expressions with multiple operators and determine the branch taken.",
+            "code": "int complex_boolean(int a, int b, int c, int d) {\n    if (((a > b) && (c < d)) || ((a + b) > (c + d)) && !((a % 2) == (b % 2))) {\n        return 100;\n    } else if ((a * b) > (c * d) || ((a ^ b) == (c ^ d)) && ((a | b) < (c | d))) {\n        return 200;\n    } else {\n        return 300;\n    }\n}\n// What value is returned when called with complex_boolean(4, 6, 3, 8)?",
+            "answer": 100
+        }
+    },
+    {
+        "id": "PL-BR-S001-V008",
+        "metadata": {
+            "name": "PropertyLevel-Branch-StringConditionEvaluation",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "string_condition_evaluation",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Analyze string comparison conditions and determine which execution path is followed.",
+            "code": "#include <string.h>\nint string_branch(char* str1, char* str2, int len) {\n    if (strlen(str1) > len && strcmp(str1, str2) > 0) {\n        return 1;\n    } else if (strlen(str2) <= len || strncmp(str1, str2, 3) == 0) {\n        return 2;\n    } else {\n        return 3;\n    }\n}\n// What value is returned when called with string_branch(\"hello\", \"world\", 4)?",
+            "answer": 2
+        }
+    },
+    {
+        "id": "PL-BR-S001-V009",
+        "metadata": {
+            "name": "PropertyLevel-Branch-PointerConditionEvaluation",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "pointer_condition_evaluation",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate pointer-based conditions and trace the execution path through the branches.",
+            "code": "int pointer_branch(int* p1, int* p2, int* p3) {\n    if (p1 != NULL && *p1 > 10) {\n        if (p2 != NULL && *p2 < *p1) return *p1 + *p2;\n        else return *p1;\n    } else if (p3 != NULL && *p3 == 0) {\n        return -1;\n    } else {\n        return 0;\n    }\n}\nint a = 15, b = 8, c = 5;\n// What value is returned when called with pointer_branch(&a, &b, &c)?",
+            "answer": 23
+        }
+    },
+    {
+        "id": "PL-BR-S001-V010",
+        "metadata": {
+            "name": "PropertyLevel-Branch-FloatingPointPrecision",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "floating_point_precision",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze floating-point comparison precision issues and determine the correct branch execution.",
+            "code": "int float_precision_branch(double a, double b, double epsilon) {\n    if ((a - b) < epsilon && (a - b) > -epsilon) {\n        return 1; // approximately equal\n    } else if (a > b) {\n        return 2; // a is greater\n    } else {\n        return 3; // b is greater\n    }\n}\n// What value is returned when called with float_precision_branch(0.1 + 0.2, 0.3, 1e-10)?",
+            "answer": 2
+        }
+    },
+    {
+        "id": "PL-BR-S002-V001",
+        "metadata": {
+            "name": "PropertyLevel-Branch-BasicShortCircuitAND",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "basic_short_circuit_and",
+            "property_focus": "short_circuit",
+            "analysis_depth": "surface"
+        },
+        "task": {
+            "description": "Analyze short-circuit evaluation in AND operations and count function executions.",
+            "code": "int count = 0;\nint func1() { count++; return 0; }\nint func2() { count++; return 1; }\n\nint result = func1() && func2();\n// What is the value of count after this expression?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-BR-S002-V002",
+        "metadata": {
+            "name": "PropertyLevel-Branch-BasicShortCircuitOR",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "basic_short_circuit_or",
+            "property_focus": "short_circuit",
+            "analysis_depth": "surface"
+        },
+        "task": {
+            "description": "Determine how many functions are called due to short-circuit evaluation in OR operations.",
+            "code": "int call_tracker = 0;\nint first() { call_tracker++; return 1; }\nint second() { call_tracker++; return 0; }\n\nint outcome = first() || second();\n// What is the value of call_tracker after this expression?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-BR-S002-V003",
+        "metadata": {
+            "name": "PropertyLevel-Branch-NestedShortCircuit",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "nested_short_circuit",
+            "property_focus": "short_circuit",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Analyze nested short-circuit evaluation and count total function invocations.",
+            "code": "int exec_count = 0;\nint f1() { exec_count++; return 1; }\nint f2() { exec_count++; return 0; }\nint f3() { exec_count++; return 1; }\nint f4() { exec_count++; return 1; }\n\nint result = (f1() && f2()) || (f3() && f4());\n// What is the value of exec_count after this expression?",
+            "answer": 4
+        }
+    },
+    {
+        "id": "PL-BR-S002-V004",
+        "metadata": {
+            "name": "PropertyLevel-Branch-SideEffectShortCircuit",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "side_effect_short_circuit",
+            "property_focus": "short_circuit",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate short-circuit behavior with side effects and determine final variable values.",
+            "code": "int global_var = 10;\nint modify_and_return(int val) { global_var += val; return val > 0; }\n\nint result = modify_and_return(-5) && modify_and_return(3) && modify_and_return(7);\n// What is the value of global_var after this expression?",
+            "answer": 5
+        }
+    },
+    {
+        "id": "PL-BR-S002-V005",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ConditionalChainShortCircuit",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "conditional_chain_short_circuit",
+            "property_focus": "short_circuit",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze short-circuit evaluation in chained conditional expressions with multiple operators.",
+            "code": "int ops = 0;\nint check1() { ops++; return 0; }\nint check2() { ops++; return 1; }\nint check3() { ops++; return 1; }\nint check4() { ops++; return 0; }\n\nint final = check1() && check2() || check3() && check4();\n// What is the value of ops after this expression?",
+            "answer": 3
+        }
+    },
+    {
+        "id": "PL-BR-S002-V006",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ArrayAccessShortCircuit",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "array_access_short_circuit",
+            "property_focus": "short_circuit",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Determine array access behavior under short-circuit evaluation conditions.",
+            "code": "int access_count = 0;\nint safe_access(int arr[], int index, int size) {\n    access_count++;\n    return (index >= 0 && index < size) ? arr[index] : -1;\n}\n\nint numbers[] = {1, 2, 3};\nint result = (0 > 1) && (safe_access(numbers, 1, 3) > 0);\n// What is the value of access_count after this expression?",
+            "answer": 0
+        }
+    },
+    {
+        "id": "PL-BR-S002-V007",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ComplexShortCircuitPattern",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "complex_short_circuit_pattern",
+            "property_focus": "short_circuit",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze complex short-circuit patterns with mixed logical operators and function calls.",
+            "code": "int counter = 0;\nint inc_and_check(int threshold) { return ++counter > threshold; }\n\nint complex_result = (inc_and_check(0) || inc_and_check(1)) && \n                    (inc_and_check(2) || inc_and_check(3)) && \n                    (inc_and_check(4) && inc_and_check(5));\n// What is the value of counter after this expression?",
+            "answer": 4
+        }
+    },
+    {
+        "id": "PL-BR-S002-V008",
+        "metadata": {
+            "name": "PropertyLevel-Branch-TernaryShortCircuit",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "ternary_short_circuit",
+            "property_focus": "short_circuit",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Evaluate short-circuit behavior within ternary operator expressions.",
+            "code": "int eval_count = 0;\nint evaluate(int val) { eval_count++; return val; }\n\nint x = 5;\nint result = (x > 0) ? evaluate(10) : (evaluate(20) && evaluate(30));\n// What is the value of eval_count after this expression?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-BR-S002-V009",
+        "metadata": {
+            "name": "PropertyLevel-Branch-RecursiveShortCircuit",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "recursive_short_circuit",
+            "property_focus": "short_circuit",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze short-circuit evaluation in recursive function calls and count total executions.",
+            "code": "int recursion_count = 0;\nint recursive_check(int n) {\n    recursion_count++;\n    if (n <= 0) return 0;\n    return (n % 2 == 0) && recursive_check(n - 1);\n}\n\nint result = recursive_check(4);\n// What is the value of recursion_count after this call?",
+            "answer": 2
+        }
+    },
+    {
+        "id": "PL-BR-S003-V001",
+        "metadata": {
+            "name": "PropertyLevel-Branch-SimpleTernaryEvaluation",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_ternary_evaluation",
+            "property_focus": "path_selection",
+            "analysis_depth": "surface"
+        },
+        "task": {
+            "description": "Evaluate a simple ternary expression and determine the selected path result.",
+            "code": "int a = 8, b = 12;\nint result = (a < b) ? a * 2 : b / 2;\n// What is the value of result?",
+            "answer": 16
+        }
+    },
+    {
+        "id": "PL-BR-S003-V002",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ChainedTernaryEvaluation",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "chained_ternary_evaluation",
+            "property_focus": "path_selection",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Trace the execution path through chained ternary operators and calculate the final result.",
+            "code": "int x = 6, y = 4, z = 2;\nint result = (x > y) ? (y > z ? x + y : x - z) : (y < z ? y + z : y - z);\n// What is the value of result?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "PL-BR-S003-V003",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ArithmeticTernaryNesting",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "arithmetic_ternary_nesting",
+            "property_focus": "path_selection",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate nested ternary expressions with complex arithmetic operations in each branch.",
+            "code": "int a = 9, b = 6, c = 3;\nint result = (a % 3 == 0) ? ((b * 2) > (c * 4) ? a / c + b : a * c - b) : \n             ((a + b) < (c * 5) ? a - b + c : a + b * c);\n// What is the value of result?",
+            "answer": 21
+        }
+    },
+    {
+        "id": "PL-BR-S003-V004",
+        "metadata": {
+            "name": "PropertyLevel-Branch-FunctionCallTernary",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "function_call_ternary",
+            "property_focus": "path_selection",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze ternary expressions containing function calls and determine which functions are executed.",
+            "code": "int double_val(int x) { return x * 2; }\nint square_val(int x) { return x * x; }\nint add_five(int x) { return x + 5; }\n\nint n = 4;\nint result = (n > 3) ? double_val(n) : (n == 2) ? square_val(n) : add_five(n);\n// What is the value of result?",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-BR-S003-V005",
+        "metadata": {
+            "name": "PropertyLevel-Branch-BitwiseTernaryOperations",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "bitwise_ternary_operations",
+            "property_focus": "path_selection",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate ternary expressions involving bitwise operations and trace the selected computation path.",
+            "code": "int x = 14, y = 7;\nint result = ((x & 0x0F) > (y << 1)) ? (x ^ y) : ((x | y) > 15) ? (x & y) : (~x & 0xFF);\n// What is the value of result?",
+            "answer": 9
+        }
+    },
+    {
+        "id": "PL-BR-S003-V006",
+        "metadata": {
+            "name": "PropertyLevel-Branch-MultiLevelTernaryNesting",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "multi_level_ternary_nesting",
+            "property_focus": "path_selection",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Navigate through deeply nested ternary expressions and calculate the final selected value.",
+            "code": "int p = 10, q = 5, r = 3, s = 1;\nint result = (p > q) ? \n             ((q > r) ? \n              ((r > s) ? p + q + r + s : p - q + r - s) : \n              ((r < s) ? p * q - r : p / q + r)) : \n             ((q < r) ? q + r - s : q - r + s);\n// What is the value of result?",
+            "answer": 19
+        }
+    },
+    {
+        "id": "PL-BR-S003-V007",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ConditionalAssignmentTernary",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "conditional_assignment_ternary",
+            "property_focus": "branch_effect",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Analyze the effect of ternary operators on variable assignments and final state.",
+            "code": "int base = 10;\nint modifier = 3;\nbase = (base > 5) ? (base + modifier) : (base - modifier);\nmodifier = (base % 2 == 1) ? modifier * 2 : modifier + 1;\n// What are the final values of base and modifier?",
+            "answer": "base=13, modifier=6"
+        }
+    },
+    {
+        "id": "PL-BR-S003-V008",
+        "metadata": {
+            "name": "PropertyLevel-Branch-TernaryWithSideEffects",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "ternary_with_side_effects",
+            "property_focus": "branch_effect",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate ternary expressions with side effects and determine both result and side effect values.",
+            "code": "int global_counter = 0;\nint increment() { return ++global_counter; }\nint decrement() { return --global_counter; }\n\nint x = 5;\nint result = (x > 0) ? increment() : (x < 0) ? decrement() : 0;\n// What are the values of result and global_counter?",
+            "answer": "result=1, global_counter=1"
+        }
+    },
+    {
+        "id": "PL-BR-S003-V009",
+        "metadata": {
+            "name": "PropertyLevel-Branch-PointerTernarySelection",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "pointer_ternary_selection",
+            "property_focus": "path_selection",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze ternary expressions involving pointer operations and determine the selected memory access.",
+            "code": "int arr1[] = {10, 20, 30};\nint arr2[] = {40, 50, 60};\nint index = 1;\nint* selected = (index > 0) ? arr1 : arr2;\nint result = (selected[index] > 25) ? selected[index] + 5 : selected[index] - 5;\n// What is the value of result?",
+            "answer": 15
+        }
+    },
+    {
+        "id": "PL-BR-S004-V001",
+        "metadata": {
+            "name": "PropertyLevel-Branch-BasicSwitchFallthrough",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "basic_switch_fallthrough",
+            "property_focus": "branch_effect",
+            "analysis_depth": "surface"
+        },
+        "task": {
+            "description": "Calculate the accumulated value through basic switch statement fallthrough behavior.",
+            "code": "int total = 0;\nint choice = 1;\nswitch (choice) {\n    case 1: total += 5;\n    case 2: total += 10;\n    case 3: total += 15;\n        break;\n    default: total = -1;\n}\n// What is the final value of total?",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-BR-S004-V002",
+        "metadata": {
+            "name": "PropertyLevel-Branch-PartialSwitchFallthrough",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "partial_switch_fallthrough",
+            "property_focus": "branch_effect",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Analyze switch statement with mixed break and fallthrough patterns and calculate final state.",
+            "code": "int accumulator = 5;\nint selector = 3;\nswitch (selector) {\n    case 1: accumulator *= 2; break;\n    case 2: accumulator += 10;\n    case 3: accumulator -= 3;\n    case 4: accumulator *= 3; break;\n    case 5: accumulator /= 2;\n    default: accumulator += 1;\n}\n// What is the final value of accumulator?",
+            "answer": 6
+        }
+    },
+    {
+        "id": "PL-BR-S004-V003",
+        "metadata": {
+            "name": "PropertyLevel-Branch-NestedSwitchFallthrough",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_switch_fallthrough",
+            "property_focus": "branch_effect",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Trace execution through nested switch statements with complex fallthrough patterns.",
+            "code": "int result = 0;\nint outer = 2, inner = 1;\nswitch (outer) {\n    case 1: result += 5; break;\n    case 2:\n        switch (inner) {\n            case 1: result += 10;\n            case 2: result += 20; break;\n            case 3: result += 30;\n        }\n        result += 40;\n    case 3: result += 50; break;\n}\n// What is the final value of result?",
+            "answer": 120
+        }
+    },
+    {
+        "id": "PL-BR-S004-V004",
+        "metadata": {
+            "name": "PropertyLevel-Branch-CharacterSwitchFallthrough",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "character_switch_fallthrough",
+            "property_focus": "branch_effect",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Analyze character-based switch statement with fallthrough and calculate string processing result.",
+            "code": "int vowel_count = 0, consonant_count = 0;\nchar ch = 'e';\nswitch (ch) {\n    case 'a':\n    case 'e':\n    case 'i': vowel_count += 2;\n    case 'o':\n    case 'u': vowel_count += 1; break;\n    default: consonant_count += 1;\n}\n// What are the final values of vowel_count and consonant_count?",
+            "answer": "vowel_count=3, consonant_count=0"
+        }
+    },
+    {
+        "id": "PL-BR-S004-V005",
+        "metadata": {
+            "name": "PropertyLevel-Branch-EnumSwitchFallthrough",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "enum_switch_fallthrough",
+            "property_focus": "branch_effect",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate enum-based switch statement with complex fallthrough logic and state changes.",
+            "code": "enum State { INIT = 0, READY = 1, RUNNING = 2, PAUSED = 3, STOPPED = 4 };\nint status_value = 0;\nenum State current = RUNNING;\nswitch (current) {\n    case INIT: status_value = 10;\n    case READY: status_value += 20;\n    case RUNNING: status_value += 30; break;\n    case PAUSED: status_value += 40;\n    case STOPPED: status_value += 50; break;\n}\n// What is the final value of status_value?",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-BR-S004-V006",
+        "metadata": {
+            "name": "PropertyLevel-Branch-FunctionCallSwitchFallthrough",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "function_call_switch_fallthrough",
+            "property_focus": "branch_effect",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze switch statement with function calls in fallthrough cases and track execution effects.",
+            "code": "int global_sum = 0;\nvoid add_value(int val) { global_sum += val; }\nvoid multiply_value(int val) { global_sum *= val; }\n\nint mode = 2;\nswitch (mode) {\n    case 1: add_value(5);\n    case 2: add_value(10);\n    case 3: multiply_value(2); break;\n    case 4: add_value(20);\n    default: multiply_value(3);\n}\n// What is the final value of global_sum?",
+            "answer": 20
+        }
+    },
+    {
+        "id": "PL-BR-S004-V007",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ConditionalBreakSwitch",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "conditional_break_switch",
+            "property_focus": "branch_effect",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate switch statement with conditional break statements and analyze execution flow.",
+            "code": "int counter = 0;\nint flag = 1;\nint input = 2;\nswitch (input) {\n    case 1: counter += 10; if (flag) break;\n    case 2: counter += 20; if (counter > 15) break;\n    case 3: counter += 30; if (flag == 0) break;\n    case 4: counter += 40;\n    default: counter += 5;\n}\n// What is the final value of counter?",
+            "answer": 20
+        }
+    },
+    {
+        "id": "PL-BR-S004-V008",
+        "metadata": {
+            "name": "PropertyLevel-Branch-LoopControlSwitchFallthrough",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "loop_control_switch_fallthrough",
+            "property_focus": "branch_effect",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze switch statement with loop control statements and determine final iteration effects.",
+            "code": "int total = 0;\nfor (int i = 1; i <= 3; i++) {\n    switch (i) {\n        case 1: total += i;\n        case 2: total += i * 2; if (i == 2) continue;\n        case 3: total += i * 3; break;\n        default: total += 100;\n    }\n    total += 1;\n}\n// What is the final value of total?",
+            "answer": 25
+        }
+    },
+    {
+        "id": "PL-BR-S005-V001",
+        "metadata": {
+            "name": "PropertyLevel-Branch-SimpleVariableModification",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_variable_modification",
+            "property_focus": "branch_effect",
+            "analysis_depth": "surface"
+        },
+        "task": {
+            "description": "Trace simple variable modifications through sequential conditional branches.",
+            "code": "value = 8\nif value > 5:\n    value = value + 3\nif value < 15:\n    value = value * 2\n# What is the final value of value?",
+            "answer": 22
+        }
+    },
+    {
+        "id": "PL-BR-S005-V002",
+        "metadata": {
+            "name": "PropertyLevel-Branch-MultipleVariableTracking",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "multiple_variable_tracking",
+            "property_focus": "branch_effect",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Track modifications to multiple variables through interdependent conditional branches.",
+            "code": "a = 6\nb = 4\nif a > b:\n    a = a + 2\n    b = b - 1\nif (a + b) > 10:\n    a = a // 2\n    b = b * 2\nif a == b:\n    a = a + 5\n# What are the final values of a and b?",
+            "answer": "a=4, b=6"
+        }
+    },
+    {
+        "id": "PL-BR-S005-V003",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ListModificationTracking",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "list_modification_tracking",
+            "property_focus": "branch_effect",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Analyze list modifications through conditional branches and determine final list state.",
+            "code": "numbers = [1, 2, 3]\nif len(numbers) > 2:\n    numbers.append(4)\nif numbers[0] < numbers[-1]:\n    numbers[0] = numbers[0] * 2\nif sum(numbers) > 10:\n    numbers.pop()\n# What is the final state of numbers?",
+            "answer": "[2, 2, 3]"
+        }
+    },
+    {
+        "id": "PL-BR-S005-V004",
+        "metadata": {
+            "name": "PropertyLevel-Branch-DictionaryStateTracking",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "dictionary_state_tracking",
+            "property_focus": "branch_effect",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Track dictionary state changes through complex conditional logic and key operations.",
+            "code": "data = {'count': 5, 'total': 20}\nif 'count' in data and data['count'] > 3:\n    data['total'] += data['count'] * 2\nif data.get('total', 0) > 25:\n    data['average'] = data['total'] // data['count']\nif 'average' in data:\n    data['count'] += 1\n# What is the final state of data?",
+            "answer": "{'count': 6, 'total': 30, 'average': 6}"
+        }
+    },
+    {
+        "id": "PL-BR-S005-V005",
+        "metadata": {
+            "name": "PropertyLevel-Branch-NestedObjectModification",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_object_modification",
+            "property_focus": "branch_effect",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze nested object modifications through conditional branches and track deep state changes.",
+            "code": "config = {'settings': {'level': 2, 'active': True}, 'user': {'score': 100}}\nif config['settings']['active']:\n    config['user']['score'] += config['settings']['level'] * 10\nif config['user']['score'] > 115:\n    config['settings']['level'] += 1\n    config['user']['bonus'] = True\nif 'bonus' in config['user']:\n    config['user']['score'] *= 1.1\n# What is the final value of config['user']['score']?",
+            "answer": 132.0
+        }
+    },
+    {
+        "id": "PL-BR-S005-V006",
+        "metadata": {
+            "name": "PropertyLevel-Branch-StringModificationPattern",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "string_modification_pattern",
+            "property_focus": "branch_effect",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Track string modifications through conditional branches based on string properties.",
+            "code": "text = 'hello'\nif len(text) < 10:\n    text = text + ' world'\nif 'o' in text:\n    text = text.replace('o', '0')\nif text.count('l') > 2:\n    text = text.upper()\n# What is the final value of text?",
+            "answer": "HELL0 W0RLD"
+        }
+    },
+    {
+        "id": "PL-BR-S005-V007",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ConditionalFunctionModification",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "conditional_function_modification",
+            "property_focus": "branch_effect",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze variable modifications through conditional function calls and side effects.",
+            "code": "state = 10\ndef modify_state(value):\n    global state\n    state += value\n    return state > 20\n\nif state < 15:\n    if modify_state(8):\n        modify_state(-5)\nif state % 2 == 1:\n    modify_state(3)\n# What is the final value of state?",
+            "answer": 16
+        }
+    },
+    {
+        "id": "PL-BR-S005-V008",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ClassAttributeModification",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "class_attribute_modification",
+            "property_focus": "branch_effect",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Track class attribute modifications through conditional branches and method calls.",
+            "code": "class Counter:\n    def __init__(self):\n        self.value = 5\n        self.multiplier = 2\n    def update(self):\n        self.value *= self.multiplier\n        return self.value\n\nc = Counter()\nif c.value < 10:\n    if c.update() > 8:\n        c.multiplier += 1\nif c.value > 5:\n    c.value //= c.multiplier\n# What is the final value of c.value?",
+            "answer": 3
+        }
+    },
+    {
+        "id": "PL-BR-S005-V009",
+        "metadata": {
+            "name": "PropertyLevel-Branch-LoopVariableModification",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "loop_variable_modification",
+            "property_focus": "branch_effect",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze variable modifications within loops with conditional control flow changes.",
+            "code": "result = 0\nfor i in range(5):\n    if i % 2 == 0:\n        result += i\n    if result > 4:\n        result -= 1\n        if i > 2:\n            break\n    if i == 3:\n        result *= 2\n# What is the final value of result?",
+            "answer": 5
+        }
+    },
+    {
+        "id": "PL-BR-S006-V001",
+        "metadata": {
+            "name": "PropertyLevel-Branch-SimpleMultipleConditions",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_multiple_conditions",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "surface"
+        },
+        "task": {
+            "description": "Evaluate multiple simple conditions and calculate the accumulated result.",
+            "code": "int calculate(int n) {\n    int result = n;\n    if (n > 5) result += 10;\n    if (n < 15) result -= 3;\n    return result;\n}\n// What value is returned when called with calculate(8)?",
+            "answer": 15
+        }
+    },
+    {
+        "id": "PL-BR-S006-V002",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ModuloBasedConditions",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "modulo_based_conditions",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Analyze modulo-based conditions and trace the cumulative effects on the result value.",
+            "code": "int modulo_process(int num) {\n    int output = num;\n    if (num % 4 == 0) output *= 2;\n    if (num % 6 == 0) output += 15;\n    if (num % 8 == 0) output /= 3;\n    return output;\n}\n// What value is returned when called with modulo_process(24)?",
+            "answer": 26
+        }
+    },
+    {
+        "id": "PL-BR-S006-V003",
+        "metadata": {
+            "name": "PropertyLevel-Branch-RangeBasedConditions",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "range_based_conditions",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Evaluate range-based conditions and determine the final processed value.",
+            "code": "int range_checker(int val) {\n    int processed = val;\n    if (val >= 10 && val <= 20) processed += val / 2;\n    if (val >= 15 && val <= 25) processed -= 5;\n    if (val >= 5 && val <= 30) processed *= 1.2;\n    return processed;\n}\n// What value is returned when called with range_checker(18)?",
+            "answer": 31
+        }
+    },
+    {
+        "id": "PL-BR-S006-V004",
+        "metadata": {
+            "name": "PropertyLevel-Branch-BitwiseMultipleConditions",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "bitwise_multiple_conditions",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze multiple bitwise conditions and calculate the final transformed value.",
+            "code": "int bitwise_transform(int x) {\n    int result = x;\n    if ((x & 0x01) == 1) result <<= 1;\n    if ((x & 0x02) == 2) result |= 0x10;\n    if ((x & 0x04) == 4) result ^= 0x0F;\n    if ((x & 0x08) == 8) result &= 0xF0;\n    return result;\n}\n// What value is returned when called with bitwise_transform(14)?",
+            "answer": 32
+        }
+    },
+    {
+        "id": "PL-BR-S006-V005",
+        "metadata": {
+            "name": "PropertyLevel-Branch-PowerBasedConditions",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "power_based_conditions",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate power-of-two based conditions and trace the mathematical transformations.",
+            "code": "int power_processor(int n) {\n    int value = n;\n    if ((n & (n - 1)) == 0 && n > 0) value += n;  // power of 2\n    if (n % 3 == 1) value *= 2;\n    if (n > 10) value -= n / 4;\n    if (value % 7 == 0) value += 21;\n    return value;\n}\n// What value is returned when called with power_processor(16)?",
+            "answer": 60
+        }
+    },
+    {
+        "id": "PL-BR-S006-V006",
+        "metadata": {
+            "name": "PropertyLevel-Branch-DigitSumConditions",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "digit_sum_conditions",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze conditions based on digit properties and calculate the processed result.",
+            "code": "int digit_processor(int num) {\n    int result = num;\n    int digit_sum = (num / 100) + ((num / 10) % 10) + (num % 10);\n    if (digit_sum % 2 == 0) result += digit_sum;\n    if (digit_sum > 15) result *= 1.5;\n    if (num % digit_sum == 0) result -= 20;\n    return result;\n}\n// What value is returned when called with digit_processor(123)?",
+            "answer": 112
+        }
+    },
+    {
+        "id": "PL-BR-S006-V007",
+        "metadata": {
+            "name": "PropertyLevel-Branch-PrimeFactorConditions",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "prime_factor_conditions",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate conditions based on prime factorization properties and determine the final value.",
+            "code": "int prime_factor_process(int n) {\n    int result = n;\n    if (n % 2 == 0) { result /= 2; if (result % 2 == 0) result += 10; }\n    if (n % 3 == 0) { result += 6; if (n % 9 == 0) result *= 2; }\n    if (n % 5 == 0) { result -= 5; if (n % 25 == 0) result += 15; }\n    if (n % 7 == 0) result ^= 7;\n    return result;\n}\n// What value is returned when called with prime_factor_process(30)?",
+            "answer": 22
+        }
+    },
+    {
+        "id": "PL-BR-S006-V008",
+        "metadata": {
+            "name": "PropertyLevel-Branch-FibonacciSequenceConditions",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "fibonacci_sequence_conditions",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze conditions based on Fibonacci sequence properties and mathematical relationships.",
+            "code": "int is_fibonacci(int n) {\n    int a = 0, b = 1;\n    while (b < n) { int temp = a + b; a = b; b = temp; }\n    return (b == n || n == 0);\n}\n\nint fibonacci_processor(int num) {\n    int result = num;\n    if (is_fibonacci(num)) result += num / 2;\n    if (num > 8 && is_fibonacci(num - 3)) result *= 2;\n    if (result % 13 == 0) result += 26;\n    return result;\n}\n// What value is returned when called with fibonacci_processor(13)?",
+            "answer": 45
+        }
+    },
+    {
+        "id": "PL-BR-S007-V001",
+        "metadata": {
+            "name": "PropertyLevel-Branch-SimpleLogicalEvaluation",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_logical_evaluation",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "surface"
+        },
+        "task": {
+            "description": "Evaluate simple compound logical expression and determine the boolean result.",
+            "code": "int x = 7, y = 4;\nint result = (x > y) && (x + y > 10);\n// What is the value of result (1 for true, 0 for false)?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-BR-S007-V002",
+        "metadata": {
+            "name": "PropertyLevel-Branch-MixedOperatorLogic",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "mixed_operator_logic",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Analyze compound logical expression with mixed arithmetic and comparison operators.",
+            "code": "int a = 6, b = 9, c = 2;\nint result = ((a * 2) < (b + c)) || ((b / 3) == c) && (a > c);\n// What is the value of result (1 for true, 0 for false)?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-BR-S007-V003",
+        "metadata": {
+            "name": "PropertyLevel-Branch-NestedParenthesesLogic",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "nested_parentheses_logic",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "detailed"
+        },
+        "task": {
+            "description": "Evaluate nested parentheses in compound logical expressions with proper operator precedence.",
+            "code": "int p = 4, q = 7, r = 3;\nint result = ((p < q) && (q > r)) || (!(p > r) && (q - p == r));\n// What is the value of result (1 for true, 0 for false)?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-BR-S007-V004",
+        "metadata": {
+            "name": "PropertyLevel-Branch-BitwiseLogicalCombination",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "bitwise_logical_combination",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze compound expressions combining bitwise and logical operations with complex precedence.",
+            "code": "int x = 12, y = 8, z = 5;\nint result = ((x & 0x0F) > z) && ((y | 0x01) == 9) || ((x ^ y) < (z * 3)) && !(z & 0x01);\n// What is the value of result (1 for true, 0 for false)?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-BR-S007-V005",
+        "metadata": {
+            "name": "PropertyLevel-Branch-ModuloComparisonLogic",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "modulo_comparison_logic",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate compound logical expressions involving modulo operations and multiple comparisons.",
+            "code": "int m = 15, n = 6, o = 4;\nint result = ((m % 5) == 0) && ((n % 3) == 0) || ((m % n) > o) && !((o % 2) == 0);\n// What is the value of result (1 for true, 0 for false)?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-BR-S007-V006",
+        "metadata": {
+            "name": "PropertyLevel-Branch-FloatingPointLogic",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "floating_point_logic",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze compound logical expressions with floating-point comparisons and type conversions.",
+            "code": "float f1 = 3.7, f2 = 2.3;\nint i1 = 4, i2 = 2;\nint result = ((f1 > i1) || (f2 < i2)) && ((int)f1 == i1) && !((f1 + f2) > (i1 + i2));\n// What is the value of result (1 for true, 0 for false)?",
+            "answer": 0
+        }
+    },
+    {
+        "id": "PL-BR-S007-V007",
+        "metadata": {
+            "name": "PropertyLevel-Branch-StringComparisonLogic",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "string_comparison_logic",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate compound logical expressions involving string operations and character comparisons.",
+            "code": "#include <string.h>\nchar str1[] = \"test\";\nchar str2[] = \"demo\";\nint len1 = strlen(str1), len2 = strlen(str2);\nint result = ((len1 == len2) && (str1[0] > str2[0])) || ((strcmp(str1, str2) > 0) && (len1 > 3));\n// What is the value of result (1 for true, 0 for false)?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-BR-S007-V008",
+        "metadata": {
+            "name": "PropertyLevel-Branch-PointerArithmeticLogic",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "pointer_arithmetic_logic",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze compound logical expressions involving pointer arithmetic and memory comparisons.",
+            "code": "int arr[] = {10, 20, 30, 40};\nint *p1 = &arr[1], *p2 = &arr[3];\nint diff = p2 - p1;\nint result = ((p1 != NULL) && (*p1 < *p2)) || ((diff == 2) && (*p1 + *p2 > 50)) && !(p1 > p2);\n// What is the value of result (1 for true, 0 for false)?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "PL-BR-S007-V009",
+        "metadata": {
+            "name": "PropertyLevel-Branch-FunctionReturnLogic",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "function_return_logic",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Evaluate compound logical expressions with function return values and complex operator precedence.",
+            "code": "int func1(int x) { return x * 2; }\nint func2(int x) { return x + 3; }\nint func3(int x) { return x - 1; }\n\nint a = 5;\nint result = ((func1(a) > func2(a)) && (func3(a) < a)) || \n             ((func1(a) + func3(a)) == (func2(a) * 3)) && !(func2(a) % 2 == 0);\n// What is the value of result (1 for true, 0 for false)?",
+            "answer": 0
+        }
+    },
+    {
+        "id": "PL-BR-S007-V010",
+        "metadata": {
+            "name": "PropertyLevel-Branch-RecursiveLogicalEvaluation",
+            "category": "Property-Level",
+            "subcategory": "Branch",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "recursive_logical_evaluation",
+            "property_focus": "condition_evaluation",
+            "analysis_depth": "comprehensive"
+        },
+        "task": {
+            "description": "Analyze compound logical expressions involving recursive function calls and state dependencies.",
+            "code": "int factorial(int n) { return (n <= 1) ? 1 : n * factorial(n - 1); }\nint fibonacci(int n) { return (n <= 1) ? n : fibonacci(n - 1) + fibonacci(n - 2); }\n\nint n = 4;\nint result = ((factorial(n) > 20) && (fibonacci(n) < 5)) || \n             ((factorial(n - 1) == 6) && (fibonacci(n + 1) > 4)) && \n             !((factorial(n) % fibonacci(n)) == 0);\n// What is the value of result (1 for true, 0 for false)?",
+            "answer": 1
+        }
+    }
+]
+```
+
+#### 3C - 内存属性 [ Memory ] （59）
+
+> ```
+> # 内存属性推理变式生成提示词
+> 
+> ## 任务目标
+> 基于给定的内存属性推理种子任务，为每个种子生成8-12个多样化的变式任务，全面测试大模型对内存结构深层属性的理解能力，包括引用关系、生命周期和访问模式等核心内存属性推理技能。
+> 
+> ## 内存属性推理特征分析
+> 内存属性推理关注程序内存使用的内在机制和数据关系，重点测试模型对指针操作、内存布局、数据引用和内存访问模式的深层理解，强调对内存语义的精确分析能力。
+> 
+> ## 关键要求
+> - **描述语言**: 所有task描述必须使用英文
+> - **变式数量**: 每个种子任务严格生成8-12个变式，确保数量充足
+> - **答案唯一性**: 保证答案准确且唯一，避免歧义和多解情况
+> - **属性聚焦**: 重点关注内存的属性分析，而非简单的执行结果
+> 
+> ## 变式生成维度
+> 
+> ### 1. 引用关系分析变式
+> - **指针指向分析变式**: 分析指针变量的指向关系和引用链
+> - **多级指针变式**: 多重间接引用的指针关系分析
+> - **指针别名分析变式**: 不同指针指向同一内存位置的分析
+> - **结构体指针变式**: 结构体成员的指针引用关系
+> - **数组指针关系变式**: 数组名与指针的等价性分析
+> - **函数指针引用变式**: 函数指针的引用和调用分析
+> 
+> ### 2. 生命周期分析变式
+> - **栈变量生命周期变式**: 局部变量的生命周期分析
+> - **堆内存生命周期变式**: 动态分配内存的生命周期
+> - **静态变量生命周期变式**: 静态存储期变量的生命周期
+> - **临时对象生命周期变式**: 临时对象的创建和销毁
+> - **作用域生命周期变式**: 不同作用域中变量的生命周期
+> - **内存泄漏分析变式**: 内存泄漏的识别和分析
+> 
+> ### 3. 访问模式分析变式
+> - **顺序访问模式变式**: 连续内存的顺序访问分析
+> - **随机访问模式变式**: 非连续内存的随机访问分析
+> - **跨步访问模式变式**: 固定间隔的内存访问模式
+> - **重叠访问模式变式**: 内存区域重叠的访问分析
+> - **缓存友好访问变式**: 缓存友好的内存访问模式
+> - **内存对齐访问变式**: 内存对齐对访问的影响分析
+> 
+> ### 4. 指针算术分析变式
+> - **指针递增递减变式**: 指针自增自减操作的分析
+> - **指针加减运算变式**: 指针与整数的加减运算
+> - **指针差值计算变式**: 两个指针之间的距离计算
+> - **数组索引等价变式**: 指针算术与数组索引的等价性
+> - **越界检测变式**: 指针算术导致的越界访问检测
+> - **指针比较变式**: 指针之间的大小比较分析
+> 
+> ### 5. 内存布局分析变式
+> - **结构体布局变式**: 结构体成员的内存布局分析
+> - **数组布局变式**: 多维数组的内存布局和访问
+> - **内存对齐变式**: 数据对齐对内存布局的影响
+> - **联合体布局变式**: 联合体的内存共享分析
+> - **位字段布局变式**: 位字段的内存布局和访问
+> - **填充字节变式**: 结构体填充字节的分析
+> 
+> ### 6. 内存拷贝和移动变式
+> - **内存拷贝操作变式**: memcpy等内存拷贝的分析
+> - **内存移动操作变式**: memmove的重叠内存处理
+> - **字符串拷贝变式**: strcpy等字符串拷贝操作
+> - **结构体拷贝变式**: 结构体赋值的内存拷贝分析
+> - **浅拷贝深拷贝变式**: 浅拷贝与深拷贝的区别分析
+> - **批量数据移动变式**: 大量数据的内存移动操作
+> 
+> ### 7. 内存安全分析变式
+> - **缓冲区溢出变式**: 缓冲区溢出的检测和分析
+> - **空指针解引用变式**: 空指针访问的安全性分析
+> - **野指针访问变式**: 野指针的识别和风险分析
+> - **双重释放变式**: 内存双重释放的问题分析
+> - **使用已释放内存变式**: use-after-free问题的分析
+> - **内存权限变式**: 内存访问权限的安全性分析
+> 
+> ### 8. 动态内存管理变式
+> - **内存分配变式**: malloc/calloc等动态分配的分析
+> - **内存释放变式**: free等内存释放操作的分析
+> - **内存重分配变式**: realloc内存重新分配的分析
+> - **内存池管理变式**: 内存池的分配和管理分析
+> - **垃圾回收变式**: 自动内存管理的分析
+> - **引用计数变式**: 引用计数内存管理的分析
+> 
+> ### 9. 并发内存访问变式
+> - **竞态条件变式**: 并发访问的竞态条件分析
+> - **内存同步变式**: 内存访问的同步机制分析
+> - **原子操作变式**: 原子内存操作的分析
+> - **内存屏障变式**: 内存屏障对访问顺序的影响
+> - **锁保护内存变式**: 锁保护的内存访问分析
+> - **无锁数据结构变式**: 无锁数据结构的内存访问
+> 
+> ### 10. 高级内存属性变式
+> - **内存映射变式**: 内存映射文件的访问分析
+> - **虚拟内存变式**: 虚拟内存机制的分析
+> - **内存压缩变式**: 内存压缩和优化的分析
+> - **内存碎片变式**: 内存碎片化的分析
+> - **内存局部性变式**: 内存访问局部性的分析
+> - **内存带宽变式**: 内存带宽使用的分析
+> 
+> ## 复杂度层次设计
+> 
+> ### 简单内存属性 (Easy)
+> - 基础的指针操作和数组访问
+> - 简单的引用关系分析
+> - 直接的内存访问模式
+> - 明确的生命周期边界
+> 
+> ### 中等内存属性 (Medium)
+> - 2-3级的指针间接引用
+> - 结构体和数组的复合访问
+> - 中等复杂的内存布局分析
+> - 基础的内存安全问题
+> 
+> ### 复杂内存属性 (Hard)
+> - 复杂的多级指针操作
+> - 重叠内存访问和复杂布局
+> - 动态内存管理的复杂场景
+> - 高级的内存安全分析
+> 
+> ### 专家级内存属性 (Expert)
+> - 极度复杂的内存引用关系
+> - 并发环境的内存访问分析
+> - 系统级内存管理机制
+> - 需要深度系统知识的内存分析
+> 
+> ## 生成策略
+> 
+> ### 种子分析策略
+> 1. **识别核心属性**: 分析种子任务关注的主要内存属性
+> 2. **提取访问模式**: 识别内存访问的核心模式和特征
+> 3. **确定引用关系**: 分析指针和引用的关系结构
+> 4. **评估复杂度基准**: 评估种子任务的复杂度水平
+> 
+> ### 变式设计原则
+> 1. **属性导向**: 每个变式都应明确关注特定的内存属性
+> 2. **英文描述**: 所有task描述必须使用标准英文
+> 3. **答案唯一**: 严格确保答案的准确性和唯一性
+> 4. **数量保证**: 严格确保每个种子生成8-12个变式
+> 
+> ### 质量保证
+> 1. **内存语义验证**: 验证内存操作的语义正确性
+> 2. **指针关系检查**: 确保指针引用关系的准确性
+> 3. **答案唯一性验证**: 严格检查答案的唯一性和确定性
+> 4. **英文质量保证**: 确保描述的英文表达准确清晰
+> 
+> ## 输出格式要求
+> 
+> ```json
+> [
+>     {
+>         "id": "PL-MEM-S00X-V001",
+>         "metadata": {
+>             "name": "PropertyLevel-Memory-VariantName",
+>             "category": "Property-Level",
+>             "subcategory": "Memory",
+>             "type": "variant",
+>             "source": "Generated",
+>             "language": "target_language",
+>             "difficulty": "easy/medium/hard/expert",
+>             "intervention": 0,
+>             "variant_type": "variant_type_label",
+>             "property_focus": "reference_relation/lifetime/access_pattern/pointer_arithmetic/layout",
+>             "memory_operation": "read/write/allocate/deallocate/copy/move"
+>         },
+>         "task": {
+>             "description": "English description of the memory property analysis task",
+>             "code": "Code containing memory operations to analyze",
+>             "answer": "Unique and accurate analysis result or property value"
+>         }
+>     },
+>     {下一个变式...}
+> ]
+> 特殊字段说明
+> property_focus: 标识主要关注的内存属性类型
+> memory_operation: 标识主要的内存操作类型
+> variant_type: 描述具体的变式类型
+> 生成目标
+> 为每个提供的种子任务严格生成8-12个内存属性变式，确保：
+> 
+> 每种难度等级至少包含2-3个变式
+> 涵盖至少6-8种不同的内存属性分析类型
+> 包含不同的内存操作和访问模式
+> 所有task描述使用标准英文表达
+> 严格保证答案的准确性和唯一性
+> 重点测试场景
+> 指针引用追踪: 准确追踪复杂指针引用关系
+> 内存布局理解: 正确理解数据结构的内存布局
+> 生命周期分析: 准确分析变量和内存的生命周期
+> 访问模式识别: 识别和分析内存访问模式
+> 内存安全评估: 评估内存操作的安全性
+> 指针算术计算: 准确计算指针算术操作结果
+> 英文描述模板示例
+> "Calculate the memory address accessed after pointer arithmetic operations..."
+> "Determine the final value stored at the specified memory location..."
+> "Analyze the reference relationships between pointers and variables..."
+> "Trace the memory access pattern in the given code segment..."
+> "Evaluate the lifetime of variables in different scopes..."
+> "Calculate the result of overlapping memory operations..."
+> 答案唯一性保证策略
+> 精确计算: 使用精确的数值计算，避免近似值
+> 明确状态: 确保程序状态在任何时刻都是确定的
+> 避免未定义行为: 避免产生未定义行为的代码
+> 具体输入: 提供具体的输入值，避免参数化答案
+> 清晰边界: 明确定义内存访问的边界和范围
+> 请基于此提示词，为给定的内存属性推理种子任务生成全面的变式集合，严格确保每个种子8-12个变式，所有描述使用英文，保证答案准确且唯一，输出格式为包含所有变式的JSON数组。
+> ```
+
+```json
+[
+    {
+        "id": "PL-MEM-S001-V001",
+        "metadata": {
+            "name": "PropertyLevel-Memory-PointerDecrementAccess",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "pointer_arithmetic_reversal",
+            "property_focus": "pointer_arithmetic",
+            "memory_operation": "read"
+        },
+        "task": {
+            "description": "Calculate the final value accessed through pointer decrement operations.",
+            "code": "int numbers[6] = {15, 25, 35, 45, 55, 65};\nint *ptr = numbers + 4;\nptr--;\nptr--;\nint result = *ptr;\n// What is the value of 'result'?",
+            "answer": 25
+        }
+    },
+    {
+        "id": "PL-MEM-S001-V002",
+        "metadata": {
+            "name": "PropertyLevel-Memory-MultiplePointerJumps",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "multiple_pointer_operations",
+            "property_focus": "pointer_arithmetic",
+            "memory_operation": "read"
+        },
+        "task": {
+            "description": "Determine the accessed value after multiple pointer arithmetic operations.",
+            "code": "int sequence[7] = {100, 200, 300, 400, 500, 600, 700};\nint *ptr = sequence;\nptr += 3;\nptr -= 1;\nptr += 2;\nint final_value = *ptr;\n// What is the value of 'final_value'?",
+            "answer": 500
+        }
+    },
+    {
+        "id": "PL-MEM-S001-V003",
+        "metadata": {
+            "name": "PropertyLevel-Memory-PointerArrayBoundary",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "boundary_access",
+            "property_focus": "access_pattern",
+            "memory_operation": "read"
+        },
+        "task": {
+            "description": "Calculate the value accessed at array boundary through pointer arithmetic.",
+            "code": "int data[8] = {11, 22, 33, 44, 55, 66, 77, 88};\nint *start_ptr = data + 1;\nint *end_ptr = data + 6;\nint *middle = start_ptr + ((end_ptr - start_ptr) / 2);\nint boundary_value = *middle;\n// What is the value of 'boundary_value'?",
+            "answer": 44
+        }
+    },
+    {
+        "id": "PL-MEM-S001-V004",
+        "metadata": {
+            "name": "PropertyLevel-Memory-PointerOffsetCalculation",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "offset_calculation",
+            "property_focus": "pointer_arithmetic",
+            "memory_operation": "read"
+        },
+        "task": {
+            "description": "Find the value accessed using calculated pointer offset.",
+            "code": "int matrix[5] = {8, 16, 24, 32, 40};\nint *base = matrix;\nint offset = 2;\nint *target = base + offset + 1;\nint accessed_value = *target;\n// What is the value of 'accessed_value'?",
+            "answer": 32
+        }
+    },
+    {
+        "id": "PL-MEM-S001-V005",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ReversePointerTraversal",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "reverse_traversal",
+            "property_focus": "access_pattern",
+            "memory_operation": "read"
+        },
+        "task": {
+            "description": "Calculate the value accessed through reverse pointer traversal.",
+            "code": "int values[6] = {12, 24, 36, 48, 60, 72};\nint *ptr = values + 5;\nfor (int i = 0; i < 3; i++) {\n    ptr--;\n}\nint reverse_value = *ptr;\n// What is the value of 'reverse_value'?",
+            "answer": 36
+        }
+    },
+    {
+        "id": "PL-MEM-S001-V006",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ConditionalPointerAccess",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "conditional_access",
+            "property_focus": "access_pattern",
+            "memory_operation": "read"
+        },
+        "task": {
+            "description": "Determine the value accessed through conditional pointer movement.",
+            "code": "int array[7] = {7, 14, 21, 28, 35, 42, 49};\nint *ptr = array + 2;\nif (*(ptr + 1) > 25) {\n    ptr += 2;\n} else {\n    ptr -= 1;\n}\nint conditional_value = *ptr;\n// What is the value of 'conditional_value'?",
+            "answer": 42
+        }
+    },
+    {
+        "id": "PL-MEM-S001-V007",
+        "metadata": {
+            "name": "PropertyLevel-Memory-PointerDifferenceAccess",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "pointer_difference",
+            "property_focus": "pointer_arithmetic",
+            "memory_operation": "read"
+        },
+        "task": {
+            "description": "Calculate the value accessed using pointer difference for indexing.",
+            "code": "int buffer[9] = {9, 18, 27, 36, 45, 54, 63, 72, 81};\nint *ptr1 = buffer + 7;\nint *ptr2 = buffer + 3;\nint distance = ptr1 - ptr2;\nint *access_ptr = buffer + distance;\nint difference_value = *access_ptr;\n// What is the value of 'difference_value'?",
+            "answer": 45
+        }
+    },
+    {
+        "id": "PL-MEM-S001-V008",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ChainedPointerAccess",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "chained_operations",
+            "property_focus": "pointer_arithmetic",
+            "memory_operation": "read"
+        },
+        "task": {
+            "description": "Find the final value through chained pointer arithmetic operations.",
+            "code": "int chain[10] = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50};\nint *p1 = chain + 3;\nint *p2 = p1 + 2;\nint *p3 = p2 - 1;\nint *final_ptr = p3 + (p2 - p1);\nint chained_value = *final_ptr;\n// What is the value of 'chained_value'?",
+            "answer": 40
+        }
+    },
+    {
+        "id": "PL-MEM-S001-V009",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ModuloPointerAccess",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "modulo_indexing",
+            "property_focus": "access_pattern",
+            "memory_operation": "read"
+        },
+        "task": {
+            "description": "Calculate the value accessed using modulo-based pointer indexing.",
+            "code": "int circular[4] = {13, 26, 39, 52};\nint *base = circular;\nint index = 7;\nint *modulo_ptr = base + (index % 4);\nint modulo_value = *modulo_ptr;\n// What is the value of 'modulo_value'?",
+            "answer": 52
+        }
+    },
+    {
+        "id": "PL-MEM-S001-V010",
+        "metadata": {
+            "name": "PropertyLevel-Memory-BiDirectionalPointerScan",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "bidirectional_scan",
+            "property_focus": "access_pattern",
+            "memory_operation": "read"
+        },
+        "task": {
+            "description": "Determine the final value after bidirectional pointer scanning.",
+            "code": "int scan_array[8] = {3, 6, 9, 12, 15, 18, 21, 24};\nint *left = scan_array + 1;\nint *right = scan_array + 6;\nwhile (right - left > 2) {\n    left++;\n    right--;\n}\nint scan_value = *left;\n// What is the value of 'scan_value'?",
+            "answer": 12
+        }
+    },
+
+    {
+        "id": "PL-MEM-S002-V001",
+        "metadata": {
+            "name": "PropertyLevel-Memory-CrossReferenceModification",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "cross_reference",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the final array value after cross-reference modifications.",
+            "code": "int values[5] = {2, 4, 6, 8, 10};\nint *p1 = &values[0];\nint *p2 = &values[3];\n*p1 = *p2 - 3;\n*p2 = *p1 + 7;\n// What is the value of values[3] after these operations?",
+            "answer": 12
+        }
+    },
+    {
+        "id": "PL-MEM-S002-V002",
+        "metadata": {
+            "name": "PropertyLevel-Memory-CircularReferenceUpdate",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "circular_reference",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the array element value after circular reference updates.",
+            "code": "int circle[6] = {10, 20, 30, 40, 50, 60};\nint *pa = &circle[1];\nint *pb = &circle[4];\nint *pc = &circle[2];\n*pa = *pb / 2;\n*pc = *pa * 3;\n*pb = *pc + 10;\n// What is the value of circle[4] after these operations?",
+            "answer": 85
+        }
+    },
+    {
+        "id": "PL-MEM-S002-V003",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ChainedModifications",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "chained_modifications",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the result of chained pointer-based modifications.",
+            "code": "int chain[7] = {1, 3, 5, 7, 9, 11, 13};\nint *step1 = &chain[2];\nint *step2 = &chain[5];\nint *step3 = &chain[1];\n*step1 = *step2 + 4;\n*step3 = *step1 - 8;\n*step2 = *step3 * 2;\n// What is the value of chain[5] after these operations?",
+            "answer": 14
+        }
+    },
+    {
+        "id": "PL-MEM-S002-V004",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ConditionalArrayUpdate",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "conditional_update",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the array value after conditional pointer modifications.",
+            "code": "int conditional[4] = {12, 24, 36, 48};\nint *ptr_a = &conditional[0];\nint *ptr_b = &conditional[2];\nif (*ptr_a < *ptr_b) {\n    *ptr_a = *ptr_b / 3;\n    *ptr_b = *ptr_a + 20;\n}\n// What is the value of conditional[2] after these operations?",
+            "answer": 32
+        }
+    },
+    {
+        "id": "PL-MEM-S002-V005",
+        "metadata": {
+            "name": "PropertyLevel-Memory-OverwriteSequence",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "overwrite_sequence",
+            "property_focus": "lifetime",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the final value after sequential overwrites through pointers.",
+            "code": "int overwrite[3] = {100, 200, 300};\nint *target = &overwrite[1];\nint temp = *target;\n*target = temp / 4;\n*target = *target + 25;\n// What is the value of overwrite[1] after these operations?",
+            "answer": 75
+        }
+    },
+    {
+        "id": "PL-MEM-S002-V006",
+        "metadata": {
+            "name": "PropertyLevel-Memory-SwapOperation",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "swap_operation",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the array values after pointer-based swap operations.",
+            "code": "int swap_data[4] = {15, 30, 45, 60};\nint *left = &swap_data[0];\nint *right = &swap_data[3];\nint temp = *left;\n*left = *right;\n*right = temp + 10;\n// What is the value of swap_data[0] after these operations?",
+            "answer": 60
+        }
+    },
+    {
+        "id": "PL-MEM-S002-V007",
+        "metadata": {
+            "name": "PropertyLevel-Memory-AccumulativeModification",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "accumulative_modification",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the result of accumulative modifications through multiple pointers.",
+            "code": "int accumulate[5] = {5, 10, 15, 20, 25};\nint *p1 = &accumulate[1];\nint *p2 = &accumulate[3];\nint *p3 = &accumulate[2];\n*p3 += *p1;\n*p3 += *p2;\n*p1 = *p3 / 3;\n// What is the value of accumulate[1] after these operations?",
+            "answer": 15
+        }
+    },
+    {
+        "id": "PL-MEM-S002-V008",
+        "metadata": {
+            "name": "PropertyLevel-Memory-BitwisePointerModification",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "bitwise_modification",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the final value after bitwise operations through pointers.",
+            "code": "int bitwise[3] = {16, 32, 64};\nint *bp1 = &bitwise[0];\nint *bp2 = &bitwise[2];\n*bp1 = (*bp1 << 1) | 1;\n*bp2 = *bp2 >> 2;\n*bp1 = *bp1 & *bp2;\n// What is the value of bitwise[0] after these operations?",
+            "answer": 16
+        }
+    },
+    {
+        "id": "PL-MEM-S002-V009",
+        "metadata": {
+            "name": "PropertyLevel-Memory-NestedReferenceChain",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "nested_reference",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the value after nested reference chain modifications.",
+            "code": "int nested[6] = {8, 16, 24, 32, 40, 48};\nint *n1 = &nested[1];\nint *n2 = &nested[*n1 / 8];\nint *n3 = &nested[*n2 / 8];\n*n3 = *n1 + *n2;\n*n1 = *n3 - 10;\n// What is the value of nested[1] after these operations?",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-MEM-S002-V010",
+        "metadata": {
+            "name": "PropertyLevel-Memory-RecursivePointerUpdate",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "recursive_update",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the final value after recursive pointer-based updates.",
+            "code": "int recursive[4] = {2, 4, 8, 16};\nint *r1 = &recursive[0];\nint *r2 = &recursive[2];\nfor (int i = 0; i < 2; i++) {\n    *r1 = *r1 * 2;\n    *r2 = *r2 + *r1;\n}\n// What is the value of recursive[2] after the loop?",
+            "answer": 20
+        }
+    },
+
+    {
+        "id": "PL-MEM-S003-V001",
+        "metadata": {
+            "name": "PropertyLevel-Memory-NestedStructModification",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_struct",
+            "property_focus": "layout",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the nested struct member value after pointer operations.",
+            "code": "typedef struct { int a; int b; } Inner;\ntypedef struct { Inner in; int c; } Outer;\nOuter data[2] = {{{10, 20}, 30}, {{40, 50}, 60}};\nOuter *ptr = &data[0];\nptr->in.a = ptr->in.a + data[1].in.b;\nptr->c = ptr->in.a - 15;\n// What is the value of data[0].c after these operations?",
+            "answer": 45
+        }
+    },
+    {
+        "id": "PL-MEM-S003-V002",
+        "metadata": {
+            "name": "PropertyLevel-Memory-StructArrayTraversal",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "array_traversal",
+            "property_focus": "access_pattern",
+            "memory_operation": "read"
+        },
+        "task": {
+            "description": "Determine the struct member value after array traversal with pointers.",
+            "code": "typedef struct { int id; int value; } Node;\nNode nodes[4] = {{1, 100}, {2, 200}, {3, 300}, {4, 400}};\nNode *current = nodes + 1;\ncurrent += 2;\ncurrent->value = (current - 1)->value + current->id;\n// What is the value of nodes[3].value after this operation?",
+            "answer": 304
+        }
+    },
+    {
+        "id": "PL-MEM-S003-V003",
+        "metadata": {
+            "name": "PropertyLevel-Memory-StructMemberSwap",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "member_swap",
+            "property_focus": "layout",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the struct member value after swapping operations.",
+            "code": "typedef struct { int first; int second; } Pair;\nPair items[3] = {{12, 24}, {36, 48}, {60, 72}};\nPair *p1 = &items[0];\nPair *p2 = &items[2];\nint temp = p1->first;\np1->first = p2->second;\np2->second = temp + 10;\n// What is the value of items[0].first after these operations?",
+            "answer": 72
+        }
+    },
+    {
+        "id": "PL-MEM-S003-V004",
+        "metadata": {
+            "name": "PropertyLevel-Memory-StructFieldCalculation",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "field_calculation",
+            "property_focus": "layout",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the struct field value after mathematical operations through pointers.",
+            "code": "typedef struct { int width; int height; int area; } Rectangle;\nRectangle rects[2] = {{5, 10, 0}, {8, 12, 0}};\nRectangle *r = rects + 1;\nr->area = r->width * r->height;\n(r - 1)->area = (r - 1)->width * (r - 1)->height + r->area;\n// What is the value of rects[0].area after these operations?",
+            "answer": 146
+        }
+    },
+    {
+        "id": "PL-MEM-S003-V005",
+        "metadata": {
+            "name": "PropertyLevel-Memory-StructPointerChain",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "pointer_chain",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the final struct value through pointer chain operations.",
+            "code": "typedef struct { int key; int data; } Record;\nRecord records[5] = {{1, 11}, {2, 22}, {3, 33}, {4, 44}, {5, 55}};\nRecord *p1 = records + 1;\nRecord *p2 = records + p1->key + 1;\nRecord *p3 = records + p2->key;\np3->data = p1->data + p2->data;\n// What is the value of records[4].data after this operation?",
+            "answer": 66
+        }
+    },
+    {
+        "id": "PL-MEM-S003-V006",
+        "metadata": {
+            "name": "PropertyLevel-Memory-StructArrayRotation",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "array_rotation",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the struct value after array rotation through pointers.",
+            "code": "typedef struct { int x; int y; } Vector;\nVector vectors[3] = {{10, 20}, {30, 40}, {50, 60}};\nVector *v = vectors;\nint temp_x = v->x;\nv->x = (v + 1)->x;\n(v + 1)->x = (v + 2)->x;\n(v + 2)->x = temp_x + 5;\n// What is the value of vectors[2].x after these operations?",
+            "answer": 15
+        }
+    },
+    {
+        "id": "PL-MEM-S003-V007",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ConditionalStructUpdate",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "conditional_update",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the struct member value after conditional updates.",
+            "code": "typedef struct { int min; int max; } Range;\nRange ranges[3] = {{10, 50}, {20, 60}, {30, 70}};\nRange *r = ranges + 1;\nif (r->min < (r - 1)->max) {\n    r->min = (r - 1)->max + 10;\n    r->max = r->min + 25;\n}\n// What is the value of ranges[1].max after these operations?",
+            "answer": 85
+        }
+    },
+    {
+        "id": "PL-MEM-S003-V008",
+        "metadata": {
+            "name": "PropertyLevel-Memory-StructMemberAggregation",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "member_aggregation",
+            "property_focus": "layout",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the aggregated struct member value through pointer operations.",
+            "code": "typedef struct { int count; int sum; int avg; } Statistics;\nStatistics stats[2] = {{3, 30, 0}, {5, 100, 0}};\nStatistics *s1 = &stats[0];\nStatistics *s2 = &stats[1];\ns1->avg = s1->sum / s1->count;\ns2->avg = s2->sum / s2->count;\ns1->sum = s1->avg + s2->avg;\n// What is the value of stats[0].sum after these operations?",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-MEM-S003-V009",
+        "metadata": {
+            "name": "PropertyLevel-Memory-StructBitwiseOperation",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "bitwise_operation",
+            "property_focus": "layout",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the struct member value after bitwise operations through pointers.",
+            "code": "typedef struct { int flags; int mask; } BitField;\nBitField fields[2] = {{0x0F, 0xFF}, {0xF0, 0x0F}};\nBitField *bf1 = &fields[0];\nBitField *bf2 = &fields[1];\nbf1->flags = bf1->flags | bf2->flags;\nbf1->mask = bf1->mask & bf2->mask;\n// What is the value of fields[0].mask after these operations?",
+            "answer": 15
+        }
+    },
+    {
+        "id": "PL-MEM-S003-V010",
+        "metadata": {
+            "name": "PropertyLevel-Memory-StructOffsetAccess",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "offset_access",
+            "property_focus": "layout",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the struct value using calculated offset-based access.",
+            "code": "typedef struct { int alpha; int beta; int gamma; } Triple;\nTriple triples[4] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}};\nTriple *base = triples;\nint offset = 2;\n(base + offset)->beta = (base + 1)->alpha + (base + offset - 1)->gamma;\n// What is the value of triples[2].beta after this operation?",
+            "answer": 10
+        }
+    },
+
+    {
+        "id": "PL-MEM-S004-V001",
+        "metadata": {
+            "name": "PropertyLevel-Memory-QuadrupleIndirection",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "quadruple_indirection",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the value after quadruple pointer indirection operations.",
+            "code": "int base_value = 80;\nint *level1 = &base_value;\nint **level2 = &level1;\nint ***level3 = &level2;\nint ****level4 = &level3;\n***level4 = ***level4 + 40;\n// What is the value of 'base_value' after this operation?",
+            "answer": 120
+        }
+    },
+    {
+        "id": "PL-MEM-S004-V002",
+        "metadata": {
+            "name": "PropertyLevel-Memory-IndirectionChainModification",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "chain_modification",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the final value through indirection chain modifications.",
+            "code": "int target = 60;\nint *ptr_a = &target;\nint **ptr_b = &ptr_a;\nint ***ptr_c = &ptr_b;\n*ptr_a = *ptr_a * 2;\n**ptr_b = **ptr_b - 30;\n***ptr_c = ***ptr_c + 15;\n// What is the value of 'target' after these operations?",
+            "answer": 105
+        }
+    },
+    {
+        "id": "PL-MEM-S004-V003",
+        "metadata": {
+            "name": "PropertyLevel-Memory-MultiLevelPointerSwap",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "multilevel_swap",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the value after multi-level pointer swap operations.",
+            "code": "int val1 = 25, val2 = 75;\nint *p1 = &val1, *p2 = &val2;\nint **pp1 = &p1, **pp2 = &p2;\nint ***ppp = &pp1;\nint temp = **pp1;\n**pp1 = **pp2;\n**pp2 = temp + 10;\n// What is the value of 'val1' after these operations?",
+            "answer": 75
+        }
+    },
+    {
+        "id": "PL-MEM-S004-V004",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ConditionalIndirection",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "conditional_indirection",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the value after conditional multi-level indirection.",
+            "code": "int data = 45;\nint *p1 = &data;\nint **p2 = &p1;\nint ***p3 = &p2;\nif (***p3 > 40) {\n    ***p3 = ***p3 * 2;\n} else {\n    ***p3 = ***p3 + 20;\n}\n// What is the value of 'data' after this operation?",
+            "answer": 90
+        }
+    },
+    {
+        "id": "PL-MEM-S004-V005",
+        "metadata": {
+            "name": "PropertyLevel-Memory-PointerArrayIndirection",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "array_indirection",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the array value through pointer array indirection.",
+            "code": "int values[3] = {12, 24, 36};\nint *ptrs[3] = {&values[0], &values[1], &values[2]};\nint **ptr_to_ptrs = ptrs;\nint ***triple_ptr = &ptr_to_ptrs;\n**((*triple_ptr) + 1) = **((*triple_ptr) + 2) + 8;\n// What is the value of values[1] after this operation?",
+            "answer": 44
+        }
+    },
+    {
+        "id": "PL-MEM-S004-V006",
+        "metadata": {
+            "name": "PropertyLevel-Memory-RecursiveIndirection",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "recursive_indirection",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the final value through recursive indirection operations.",
+            "code": "int result = 10;\nint *level1 = &result;\nint **level2 = &level1;\nint ***level3 = &level2;\nfor (int i = 0; i < 3; i++) {\n    ***level3 = ***level3 + 5;\n}\n// What is the value of 'result' after the loop?",
+            "answer": 25
+        }
+    },
+    {
+        "id": "PL-MEM-S004-V007",
+        "metadata": {
+            "name": "PropertyLevel-Memory-IndirectionCalculation",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "calculation_indirection",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the value using mathematical operations through indirection.",
+            "code": "int operand = 16;\nint *op_ptr = &operand;\nint **op_ptr_ptr = &op_ptr;\nint ***op_ptr_ptr_ptr = &op_ptr_ptr;\n***op_ptr_ptr_ptr = (***op_ptr_ptr_ptr << 1) + 8;\n// What is the value of 'operand' after this operation?",
+            "answer": 40
+        }
+    },
+    {
+        "id": "PL-MEM-S004-V008",
+        "metadata": {
+            "name": "PropertyLevel-Memory-BitwiseIndirection",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "bitwise_indirection",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the value after bitwise operations through multiple indirection levels.",
+            "code": "int bits = 0x0F;\nint *bit_ptr = &bits;\nint **bit_ptr_ptr = &bit_ptr;\nint ***bit_ptr_ptr_ptr = &bit_ptr_ptr;\n***bit_ptr_ptr_ptr = (***bit_ptr_ptr_ptr << 4) | 0x05;\n// What is the value of 'bits' after this operation?",
+            "answer": 245
+        }
+    },
+    {
+        "id": "PL-MEM-S004-V009",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ChainedIndirectionUpdate",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "chained_update",
+            "property_focus": "reference_relation",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the final value through chained indirection updates.",
+            "code": "int chain_value = 20;\nint *c1 = &chain_value;\nint **c2 = &c1;\nint ***c3 = &c2;\nint temp = ***c3;\n***c3 = temp + 15;\ntemp = ***c3;\n***c3 = temp * 2;\n// What is the value of 'chain_value' after these operations?",
+            "answer": 70
+        }
+    },
+    {
+        "id": "PL-MEM-S004-V010",
+        "metadata": {
+            "name": "PropertyLevel-Memory-NestedStructIndirection",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "struct_indirection",
+            "property_focus": "layout",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the struct member value through nested indirection.",
+            "code": "typedef struct { int data; } Container;\nContainer container = {30};\nContainer *cont_ptr = &container;\nContainer **cont_ptr_ptr = &cont_ptr;\nContainer ***cont_ptr_ptr_ptr = &cont_ptr_ptr;\n(***cont_ptr_ptr_ptr).data = (***cont_ptr_ptr_ptr).data + 25;\n// What is the value of container.data after this operation?",
+            "answer": 55
+        }
+    },
+
+    {
+        "id": "PL-MEM-S005-V001",
+        "metadata": {
+            "name": "PropertyLevel-Memory-StridedArrayCopy",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "strided_copy",
+            "property_focus": "access_pattern",
+            "memory_operation": "copy"
+        },
+        "task": {
+            "description": "Calculate the array value after strided copy operations.",
+            "code": "int original[8] = {2, 4, 6, 8, 10, 12, 14, 16};\nint copied[8] = {0, 0, 0, 0, 0, 0, 0, 0};\nfor (int i = 0; i < 4; i++) {\n    copied[i * 2] = original[i] * 3;\n}\n// What is the value of copied[6] after the loop?",
+            "answer": 24
+        }
+    },
+    {
+        "id": "PL-MEM-S005-V002",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ReverseArrayCopy",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "reverse_copy",
+            "property_focus": "access_pattern",
+            "memory_operation": "copy"
+        },
+        "task": {
+            "description": "Determine the array element after reverse copy operations.",
+            "code": "int src[6] = {10, 20, 30, 40, 50, 60};\nint dst[6] = {0, 0, 0, 0, 0, 0};\nfor (int i = 0; i < 6; i++) {\n    dst[i] = src[5 - i] + 5;\n}\n// What is the value of dst[2] after the loop?",
+            "answer": 45
+        }
+    },
+    {
+        "id": "PL-MEM-S005-V003",
+        "metadata": {
+            "name": "PropertyLevel-Memory-OverlappingCopyPattern",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "overlapping_copy",
+            "property_focus": "access_pattern",
+            "memory_operation": "copy"
+        },
+        "task": {
+            "description": "Calculate the result of overlapping copy pattern operations.",
+            "code": "int pattern[7] = {1, 3, 5, 7, 9, 11, 13};\nfor (int i = 1; i < 4; i++) {\n    pattern[i + 2] = pattern[i] + pattern[i - 1];\n}\n// What is the value of pattern[5] after the loop?",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-MEM-S005-V004",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ConditionalCopyOperation",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "conditional_copy",
+            "property_focus": "access_pattern",
+            "memory_operation": "copy"
+        },
+        "task": {
+            "description": "Determine the array value after conditional copy operations.",
+            "code": "int input[5] = {15, 25, 35, 45, 55};\nint output[5] = {0, 0, 0, 0, 0};\nfor (int i = 0; i < 5; i++) {\n    if (input[i] % 10 == 5) {\n        output[i] = input[i] / 5;\n    } else {\n        output[i] = input[i] * 2;\n    }\n}\n// What is the value of output[3] after the loop?",
+            "answer": 9
+        }
+    },
+    {
+        "id": "PL-MEM-S005-V005",
+        "metadata": {
+            "name": "PropertyLevel-Memory-BlockCopyWithOffset",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "block_copy_offset",
+            "property_focus": "access_pattern",
+            "memory_operation": "copy"
+        },
+        "task": {
+            "description": "Calculate the array element after block copy with offset.",
+            "code": "int block[9] = {100, 200, 300, 400, 500, 600, 700, 800, 900};\nfor (int i = 0; i < 3; i++) {\n    block[i + 3] = block[i] + 50;\n}\n// What is the value of block[4] after the loop?",
+            "answer": 250
+        }
+    },
+    {
+        "id": "PL-MEM-S005-V006",
+        "metadata": {
+            "name": "PropertyLevel-Memory-InterleavedCopyPattern",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "interleaved_copy",
+            "property_focus": "access_pattern",
+            "memory_operation": "copy"
+        },
+        "task": {
+            "description": "Determine the value after interleaved copy pattern operations.",
+            "code": "int even[4] = {2, 6, 10, 14};\nint odd[4] = {1, 5, 9, 13};\nint interleaved[8] = {0, 0, 0, 0, 0, 0, 0, 0};\nfor (int i = 0; i < 4; i++) {\n    interleaved[i * 2] = even[i];\n    interleaved[i * 2 + 1] = odd[i] + 2;\n}\n// What is the value of interleaved[5] after the loop?",
+            "answer": 7
+        }
+    },
+    {
+        "id": "PL-MEM-S005-V007",
+        "metadata": {
+            "name": "PropertyLevel-Memory-CumulativeCopySum",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "cumulative_copy",
+            "property_focus": "access_pattern",
+            "memory_operation": "copy"
+        },
+        "task": {
+            "description": "Calculate the cumulative sum result after copy operations.",
+            "code": "int values[6] = {5, 10, 15, 20, 25, 30};\nint cumulative[6] = {0, 0, 0, 0, 0, 0};\ncumulative[0] = values[0];\nfor (int i = 1; i < 6; i++) {\n    cumulative[i] = cumulative[i - 1] + values[i];\n}\n// What is the value of cumulative[4] after the loop?",
+            "answer": 75
+        }
+    },
+    {
+        "id": "PL-MEM-S005-V008",
+        "metadata": {
+            "name": "PropertyLevel-Memory-MatrixRowCopy",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "matrix_copy",
+            "property_focus": "layout",
+            "memory_operation": "copy"
+        },
+        "task": {
+            "description": "Determine the matrix element after row copy operations.",
+            "code": "int matrix[3][4] = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};\nint copied_row[4] = {0, 0, 0, 0};\nfor (int j = 0; j < 4; j++) {\n    copied_row[j] = matrix[1][j] * 2;\n}\nmatrix[2][1] = copied_row[1] + copied_row[3];\n// What is the value of matrix[2][1] after these operations?",
+            "answer": 28
+        }
+    },
+    {
+        "id": "PL-MEM-S005-V009",
+        "metadata": {
+            "name": "PropertyLevel-Memory-CircularBufferCopy",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "circular_copy",
+            "property_focus": "access_pattern",
+            "memory_operation": "copy"
+        },
+        "task": {
+            "description": "Calculate the circular buffer value after copy operations.",
+            "code": "int circular[5] = {10, 20, 30, 40, 50};\nint temp[5] = {0, 0, 0, 0, 0};\nfor (int i = 0; i < 5; i++) {\n    temp[i] = circular[(i + 2) % 5];\n}\nfor (int i = 0; i < 5; i++) {\n    circular[i] = temp[i] + 5;\n}\n// What is the value of circular[1] after these operations?",
+            "answer": 45
+        }
+    },
+    {
+        "id": "PL-MEM-S005-V010",
+        "metadata": {
+            "name": "PropertyLevel-Memory-FilteredCopyOperation",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "filtered_copy",
+            "property_focus": "access_pattern",
+            "memory_operation": "copy"
+        },
+        "task": {
+            "description": "Determine the filtered copy result after selective operations.",
+            "code": "int source[8] = {12, 18, 24, 30, 36, 42, 48, 54};\nint filtered[8] = {0, 0, 0, 0, 0, 0, 0, 0};\nint write_pos = 0;\nfor (int i = 0; i < 8; i++) {\n    if (source[i] % 6 == 0) {\n        filtered[write_pos] = source[i] / 6;\n        write_pos++;\n    }\n}\n// What is the value of filtered[3] after the loop?",
+            "answer": 5
+        }
+    },
+
+    {
+        "id": "PL-MEM-S006-V001",
+        "metadata": {
+            "name": "PropertyLevel-Memory-SlidingWindowAccess",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "sliding_window",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the result of sliding window overlapping access pattern.",
+            "code": "int window[8] = {5, 10, 15, 20, 25, 30, 35, 40};\nint *left = window + 1;\nint *right = window + 5;\nfor (int i = 0; i < 3; i++) {\n    left[i] = right[i] + left[i + 1];\n    right[i - 1] = left[i] - 5;\n}\n// What is the value of window[4] after the loop?",
+            "answer": 40
+        }
+    },
+    {
+        "id": "PL-MEM-S006-V002",
+        "metadata": {
+            "name": "PropertyLevel-Memory-CrossPatternAccess",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "cross_pattern",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the value after cross-pattern overlapping access operations.",
+            "code": "int cross[9] = {8, 16, 24, 32, 40, 48, 56, 64, 72};\nint *center = cross + 4;\nfor (int offset = 1; offset <= 2; offset++) {\n    center[-offset] = center[offset] + center[-offset + 1];\n    center[offset] = center[-offset] * 2;\n}\n// What is the value of cross[6] after the loop?",
+            "answer": 256
+        }
+    },
+    {
+        "id": "PL-MEM-S006-V003",
+        "metadata": {
+            "name": "PropertyLevel-Memory-DiagonalAccessPattern",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "diagonal_access",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the result of diagonal overlapping access pattern.",
+            "code": "int diagonal[7] = {7, 14, 21, 28, 35, 42, 49};\nint *p1 = diagonal + 1;\nint *p2 = diagonal + 4;\nfor (int step = 0; step < 2; step++) {\n    p1[step * 2] = p2[step] + p1[step];\n    p2[step - 1] = p1[step * 2] - 7;\n}\n// What is the value of diagonal[3] after the loop?",
+            "answer": 42
+        }
+    },
+    {
+        "id": "PL-MEM-S006-V004",
+        "metadata": {
+            "name": "PropertyLevel-Memory-SpiralAccessPattern",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "spiral_access",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the value after spiral overlapping access operations.",
+            "code": "int spiral[10] = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20};\nint *outer = spiral + 1;\nint *inner = spiral + 6;\nfor (int rotation = 0; rotation < 3; rotation++) {\n    outer[rotation] = inner[rotation] + outer[rotation + 1];\n    inner[rotation + 1] = outer[rotation] / 2;\n}\n// What is the value of spiral[8] after the loop?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "PL-MEM-S006-V005",
+        "metadata": {
+            "name": "PropertyLevel-Memory-WaveformAccessPattern",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "waveform_access",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the result of waveform overlapping access pattern.",
+            "code": "int waveform[12] = {3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36};\nint *wave1 = waveform + 2;\nint *wave2 = waveform + 7;\nfor (int phase = 0; phase < 4; phase++) {\n    if (phase % 2 == 0) {\n        wave1[phase] = wave2[phase] - wave1[phase - 1];\n    } else {\n        wave2[phase - 2] = wave1[phase] + 6;\n    }\n}\n// What is the value of waveform[5] after the loop?",
+            "answer": 15
+        }
+    },
+    {
+        "id": "PL-MEM-S006-V006",
+        "metadata": {
+            "name": "PropertyLevel-Memory-FibonacciOverlapPattern",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "fibonacci_overlap",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the value after Fibonacci-style overlapping operations.",
+            "code": "int fib_array[8] = {1, 1, 2, 3, 5, 8, 13, 21};\nint *fib_ptr = fib_array + 2;\nfor (int i = 0; i < 4; i++) {\n    fib_ptr[i + 2] = fib_ptr[i] + fib_ptr[i + 1] + 1;\n    fib_ptr[i] = fib_ptr[i + 2] - fib_ptr[i + 1];\n}\n// What is the value of fib_array[4] after the loop?",
+            "answer": 2
+        }
+    },
+    {
+        "id": "PL-MEM-S006-V007",
+        "metadata": {
+            "name": "PropertyLevel-Memory-PyramidAccessPattern",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "pyramid_access",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the result of pyramid overlapping access pattern.",
+            "code": "int pyramid[11] = {11, 22, 33, 44, 55, 66, 77, 88, 99, 110, 121};\nint *apex = pyramid + 5;\nfor (int level = 1; level <= 3; level++) {\n    apex[-level] = apex[0] + apex[level];\n    apex[level] = apex[-level] - level * 11;\n}\n// What is the value of pyramid[8] after the loop?",
+            "answer": 99
+        }
+    },
+    {
+        "id": "PL-MEM-S006-V008",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ZigzagOverlapPattern",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "zigzag_overlap",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the value after zigzag overlapping access operations.",
+            "code": "int zigzag[9] = {9, 18, 27, 36, 45, 54, 63, 72, 81};\nint *z_left = zigzag + 1;\nint *z_right = zigzag + 6;\nfor (int zag = 0; zag < 3; zag++) {\n    if (zag % 2 == 0) {\n        z_left[zag] = z_right[zag] - z_left[zag + 1];\n    } else {\n        z_right[zag - 1] = z_left[zag] + 9;\n    }\n}\n// What is the value of zigzag[6] after the loop?",
+            "answer": 45
+        }
+    },
+    {
+        "id": "PL-MEM-S006-V009",
+        "metadata": {
+            "name": "PropertyLevel-Memory-ConcentricOverlapPattern",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "concentric_overlap",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Calculate the result of concentric overlapping access pattern.",
+            "code": "int concentric[13] = {13, 26, 39, 52, 65, 78, 91, 104, 117, 130, 143, 156, 169};\nint *core = concentric + 6;\nfor (int ring = 1; ring <= 4; ring++) {\n    core[-ring] = core[ring] + core[0];\n    core[ring] = core[-ring] - ring * 13;\n    core[0] = (core[-ring] + core[ring]) / 2;\n}\n// What is the value of concentric[6] after the loop?",
+            "answer": 91
+        }
+    },
+    {
+        "id": "PL-MEM-S006-V010",
+        "metadata": {
+            "name": "PropertyLevel-Memory-RecursiveOverlapPattern",
+            "category": "Property-Level",
+            "subcategory": "Memory",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "recursive_overlap",
+            "property_focus": "access_pattern",
+            "memory_operation": "write"
+        },
+        "task": {
+            "description": "Determine the value after recursive overlapping access operations.",
+            "code": "int recursive[10] = {4, 8, 12, 16, 20, 24, 28, 32, 36, 40};\nint *rec_base = recursive + 3;\nfor (int depth = 0; depth < 3; depth++) {\n    for (int span = 1; span <= 2; span++) {\n        rec_base[span] = rec_base[-span] + rec_base[span + 1];\n        rec_base[-span] = rec_base[span] - span * 4;\n    }\n}\n// What is the value of recursive[2] after the loops?",
+            "answer": 20
+        }
+    }
+]
+```
+
+#### 3D - 作用域属性 [ Scope ]（59）
+
+> ```
+> # 作用域属性推理变式生成提示词
+> 
+> ## 任务目标
+> 基于给定的作用域属性推理种子任务，为每个种子生成8-12个多样化的变式任务，全面测试大模型对作用域机制深层属性的理解能力，包括可见性规则、生存期管理和变量遮蔽等核心作用域属性推理技能。
+> 
+> ## 作用域属性推理特征分析
+> 作用域属性推理关注程序中变量和标识符的可见性、生存期和访问规则，重点测试模型对词法作用域、动态作用域、变量遮蔽和生存期管理的深层理解，强调对作用域语义的精确分析能力。
+> 
+> ## 关键要求
+> - **描述语言**: 所有task描述必须使用英文
+> - **变式数量**: 每个种子任务严格生成8-12个变式，确保数量充足
+> - **答案唯一性**: 保证答案准确且唯一，避免歧义和多解情况
+> - **属性聚焦**: 重点关注作用域的属性分析，而非简单的执行结果
+> 
+> ## 变式生成维度
+> 
+> ### 1. 可见性规则分析变式
+> - **词法作用域变式**: 静态作用域的变量可见性分析
+> - **动态作用域变式**: 动态作用域的变量可见性分析
+> - **函数作用域变式**: 函数内变量的可见性范围
+> - **块作用域变式**: 块级作用域的变量可见性
+> - **全局作用域变式**: 全局变量的可见性和访问
+> - **模块作用域变式**: 模块级别的变量可见性
+> 
+> ### 2. 生存期管理分析变式
+> - **自动存储期变式**: 自动变量的生存期分析
+> - **静态存储期变式**: 静态变量的生存期管理
+> - **动态存储期变式**: 动态分配变量的生存期
+> - **临时对象生存期变式**: 临时对象的生存期分析
+> - **栈变量生存期变式**: 栈上变量的生存期管理
+> - **堆变量生存期变式**: 堆上变量的生存期控制
+> 
+> ### 3. 变量遮蔽分析变式
+> - **同名变量遮蔽变式**: 同名变量在不同作用域的遮蔽
+> - **参数遮蔽变式**: 函数参数对外层变量的遮蔽
+> - **局部遮蔽全局变式**: 局部变量遮蔽全局变量
+> - **嵌套块遮蔽变式**: 嵌套块中的变量遮蔽
+> - **类成员遮蔽变式**: 类成员变量的遮蔽关系
+> - **多层遮蔽变式**: 多层嵌套的复杂遮蔽关系
+> 
+> ### 4. 作用域链分析变式
+> - **作用域链查找变式**: 变量查找的作用域链分析
+> - **闭包作用域变式**: 闭包中的作用域链管理
+> - **嵌套函数作用域变式**: 嵌套函数的作用域链
+> - **this绑定作用域变式**: this关键字的作用域绑定
+> - **作用域链断裂变式**: 作用域链中断的情况
+> - **动态作用域链变式**: 动态改变的作用域链
+> 
+> ### 5. 声明和定义分析变式
+> - **前向声明变式**: 前向声明的作用域影响
+> - **重复声明变式**: 同一作用域内的重复声明
+> - **声明顺序变式**: 声明顺序对作用域的影响
+> - **条件声明变式**: 条件语句中的变量声明
+> - **循环声明变式**: 循环中的变量声明和作用域
+> - **初始化时机变式**: 变量初始化的时机和作用域
+> 
+> ### 6. 闭包和捕获分析变式
+> - **值捕获变式**: 闭包的值捕获机制分析
+> - **引用捕获变式**: 闭包的引用捕获机制分析
+> - **捕获列表变式**: 显式捕获列表的分析
+> - **自动捕获变式**: 自动捕获机制的分析
+> - **捕获时机变式**: 变量捕获的时机分析
+> - **捕获生存期变式**: 捕获变量的生存期管理
+> 
+> ### 7. 名称空间和模块分析变式
+> - **名称空间作用域变式**: 名称空间的作用域规则
+> - **using声明变式**: using声明对作用域的影响
+> - **模块导入作用域变式**: 模块导入的作用域规则
+> - **别名作用域变式**: 别名对作用域的影响
+> - **限定名称变式**: 限定名称的作用域解析
+> - **名称冲突解决变式**: 名称冲突的解决机制
+> 
+> ### 8. 特殊作用域规则变式
+> - **for循环作用域变式**: for循环变量的特殊作用域
+> - **switch作用域变式**: switch语句的作用域规则
+> - **异常处理作用域变式**: try-catch的作用域规则
+> - **lambda作用域变式**: lambda表达式的作用域规则
+> - **宏作用域变式**: 宏替换的作用域影响
+> - **模板作用域变式**: 模板实例化的作用域规则
+> 
+> ### 9. 作用域优化分析变式
+> - **死代码消除变式**: 作用域分析中的死代码消除
+> - **变量提升变式**: 编译器的变量提升优化
+> - **寄存器分配变式**: 作用域对寄存器分配的影响
+> - **内联优化变式**: 函数内联对作用域的影响
+> - **常量折叠变式**: 常量折叠在作用域中的应用
+> - **循环优化变式**: 循环优化对作用域的影响
+> 
+> ### 10. 高级作用域属性变式
+> - **动态作用域链变式**: 运行时动态构建的作用域链
+> - **元编程作用域变式**: 元编程中的作用域管理
+> - **反射作用域变式**: 反射机制中的作用域访问
+> - **动态绑定变式**: 动态绑定的作用域规则
+> - **作用域污染变式**: 作用域污染的检测和分析
+> - **作用域安全变式**: 作用域相关的安全性分析
+> 
+> ## 复杂度层次设计
+> 
+> ### 简单作用域属性 (Easy)
+> - 基础的块作用域和函数作用域
+> - 简单的变量遮蔽和可见性
+> - 直接的生存期管理
+> - 明确的作用域边界
+> 
+> ### 中等作用域属性 (Medium)
+> - 2-3层的嵌套作用域分析
+> - 静态变量和参数遮蔽
+> - 中等复杂的可见性规则
+> - 基础的闭包和捕获
+> 
+> ### 复杂作用域属性 (Hard)
+> - 复杂的多层嵌套作用域
+> - 复杂的变量遮蔽关系
+> - 高级的闭包和作用域链
+> - 特殊的作用域规则
+> 
+> ### 专家级作用域属性 (Expert)
+> - 极度复杂的作用域嵌套
+> - 动态作用域和元编程
+> - 编译器优化对作用域的影响
+> - 需要深度语言知识的作用域分析
+> 
+> ## 生成策略
+> 
+> ### 种子分析策略
+> 1. **识别核心属性**: 分析种子任务关注的主要作用域属性
+> 2. **提取作用域模式**: 识别作用域规则和访问模式
+> 3. **确定嵌套层次**: 分析作用域的嵌套结构和复杂度
+> 4. **评估遮蔽关系**: 分析变量遮蔽的复杂程度
+> 
+> ### 变式设计原则
+> 1. **属性导向**: 每个变式都应明确关注特定的作用域属性
+> 2. **英文描述**: 所有task描述必须使用标准英文
+> 3. **答案唯一**: 严格确保答案的准确性和唯一性
+> 4. **数量保证**: 严格确保每个种子生成8-12个变式
+> 
+> ### 质量保证
+> 1. **作用域语义验证**: 验证作用域规则的语义正确性
+> 2. **可见性规则检查**: 确保变量可见性分析的准确性
+> 3. **答案唯一性验证**: 严格检查答案的唯一性和确定性
+> 4. **英文质量保证**: 确保描述的英文表达准确清晰
+> 
+> ## 输出格式要求
+> 
+> ```json
+> [
+>     {
+>         "id": "PL-SC-S00X-V001",
+>         "metadata": {
+>             "name": "PropertyLevel-Scope-VariantName",
+>             "category": "Property-Level",
+>             "subcategory": "Scope",
+>             "type": "variant",
+>             "source": "Generated",
+>             "language": "target_language",
+>             "difficulty": "easy/medium/hard/expert",
+>             "intervention": 0,
+>             "variant_type": "variant_type_label",
+>             "property_focus": "visibility/lifetime/shadowing/closure/namespace",
+>             "scope_depth": "single/nested/deep_nested",
+>             "shadowing_complexity": "none/simple/complex"
+>         },
+>         "task": {
+>             "description": "English description of the scope property analysis task",
+>             "code": "Code containing scope-related constructs to analyze",
+>             "answer": "Unique and accurate analysis result or property value"
+>         }
+>     },
+>     {下一个变式...}
+> ]
+> 特殊字段说明
+> property_focus: 标识主要关注的作用域属性类型
+> scope_depth: 标识作用域的嵌套深度
+> shadowing_complexity: 标识变量遮蔽的复杂程度
+> 生成目标
+> 为每个提供的种子任务严格生成8-12个作用域属性变式，确保：
+> 
+> 每种难度等级至少包含2-3个变式
+> 涵盖至少6-8种不同的作用域属性分析类型
+> 包含不同的作用域嵌套深度和复杂度
+> 所有task描述使用标准英文表达
+> 严格保证答案的准确性和唯一性
+> 重点测试场景
+> 变量可见性分析: 准确分析变量在不同作用域的可见性
+> 遮蔽关系理解: 正确理解复杂的变量遮蔽关系
+> 生存期管理: 准确分析变量的生存期和销毁时机
+> 作用域链追踪: 正确追踪变量查找的作用域链
+> 闭包捕获分析: 分析闭包中的变量捕获机制
+> 特殊作用域规则: 理解语言特定的作用域规则
+> 英文描述模板示例
+> "Determine which variable is accessed in the given scope context..."
+> "Calculate the final value considering variable shadowing rules..."
+> "Analyze the variable lifetime in the nested scope structure..."
+> "Trace the scope chain to identify the accessed variable..."
+> "Evaluate the visibility of variables across different scopes..."
+> "Determine the final state after scope-based variable modifications..."
+> 答案唯一性保证策略
+> 明确作用域边界: 清晰定义每个作用域的边界和规则
+> 具体变量值: 使用具体的变量值，避免符号化答案
+> 确定性执行: 确保代码执行路径是确定的
+> 避免未定义行为: 避免产生未定义行为的作用域使用
+> 清晰语义: 确保作用域语义在目标语言中是明确的
+> 常见作用域模式
+> 函数参数遮蔽: 函数参数遮蔽同名全局变量
+> 块级作用域: 块内声明的变量遮蔽外层变量
+> 静态变量持久: 静态变量在函数调用间保持状态
+> 闭包捕获: 内部函数捕获外部作用域变量
+> 循环变量作用域: 循环控制变量的特殊作用域规则
+> 条件声明: 条件语句中变量的作用域范围
+> 请基于此提示词，为给定的作用域属性推理种子任务生成全面的变式集合，严格确保每个种子8-12个变式，所有描述使用英文，保证答案准确且唯一，输出格式为包含所有变式的JSON数组。
+> ```
+
+```json
+[
+    {
+        "id": "PL-SC-S001-V001",
+        "metadata": {
+            "name": "PropertyLevel-Scope-NestedBlockShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "nested_block_visibility",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine which variable value is accessed in the deeply nested scope with multiple shadowing levels.",
+            "code": "int x = 5;\nvoid nested_test() {\n    int x = 15;\n    {\n        int x = 25;\n        {\n            int x = 35;\n            printf(\"%d\", x);\n        }\n    }\n}\n// What value is printed by the printf statement?",
+            "answer": 35
+        }
+    },
+    {
+        "id": "PL-SC-S001-V002",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ConditionalShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "conditional_scope",
+            "property_focus": "visibility",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the variable value accessed in a conditional block with variable shadowing.",
+            "code": "int y = 8;\nvoid conditional_scope(int condition) {\n    int y = 16;\n    if (condition > 0) {\n        int y = 24;\n        y = y + 6;\n        printf(\"%d\", y);\n    }\n}\n// What value is printed when conditional_scope(1) is called?",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-SC-S001-V003",
+        "metadata": {
+            "name": "PropertyLevel-Scope-LoopVariableShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "loop_scope",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine the variable value inside a for loop with local variable shadowing.",
+            "code": "int i = 100;\nvoid loop_shadow() {\n    int i = 200;\n    for (int i = 0; i < 3; i++) {\n        if (i == 2) {\n            printf(\"%d\", i);\n        }\n    }\n}\n// What value is printed by the printf statement?",
+            "answer": 2
+        }
+    },
+    {
+        "id": "PL-SC-S001-V004",
+        "metadata": {
+            "name": "PropertyLevel-Scope-FunctionParameterShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "parameter_shadowing",
+            "property_focus": "shadowing",
+            "scope_depth": "single",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the value accessed when function parameters shadow global variables.",
+            "code": "int value = 50;\nint calculate_shadow(int value) {\n    {\n        int value = 75;\n        value *= 2;\n        return value;\n    }\n}\n// What value is returned by calculate_shadow(10)?",
+            "answer": 150
+        }
+    },
+    {
+        "id": "PL-SC-S001-V005",
+        "metadata": {
+            "name": "PropertyLevel-Scope-MultipleVariableShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "multiple_shadowing",
+            "property_focus": "shadowing",
+            "scope_depth": "deep_nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Determine which variables are accessed in a complex multi-variable shadowing scenario.",
+            "code": "int a = 1, b = 2;\nvoid complex_shadow() {\n    int a = 10;\n    {\n        int b = 20;\n        {\n            int a = 100;\n            printf(\"%d %d\", a, b);\n        }\n    }\n}\n// What values are printed by the printf statement (format: a b)?",
+            "answer": "100 20"
+        }
+    },
+    {
+        "id": "PL-SC-S001-V006",
+        "metadata": {
+            "name": "PropertyLevel-Scope-SwitchCaseShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "switch_scope",
+            "property_focus": "visibility",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Calculate the variable value accessed within a switch case block with shadowing.",
+            "code": "int num = 99;\nvoid switch_shadow(int choice) {\n    int num = 88;\n    switch (choice) {\n        case 1: {\n            int num = 77;\n            num += 3;\n            printf(\"%d\", num);\n            break;\n        }\n    }\n}\n// What value is printed when switch_shadow(1) is called?",
+            "answer": 80
+        }
+    },
+    {
+        "id": "PL-SC-S001-V007",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ArrayIndexShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "array_scope",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine the index variable value in nested loops with variable shadowing.",
+            "code": "int index = 0;\nvoid array_shadow() {\n    int index = 5;\n    for (int i = 0; i < 2; i++) {\n        int index = 10;\n        index += i;\n        if (i == 1) {\n            printf(\"%d\", index);\n        }\n    }\n}\n// What value is printed by the printf statement?",
+            "answer": 11
+        }
+    },
+    {
+        "id": "PL-SC-S001-V008",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StructMemberShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "struct_scope",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the variable value when local variables shadow struct member names.",
+            "code": "struct Data { int value; };\nstruct Data data = {42};\nvoid struct_shadow() {\n    int value = 84;\n    {\n        int value = 126;\n        value = value / 2;\n        printf(\"%d\", value);\n    }\n}\n// What value is printed by the printf statement?",
+            "answer": 63
+        }
+    },
+    {
+        "id": "PL-SC-S001-V009",
+        "metadata": {
+            "name": "PropertyLevel-Scope-MacroShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "macro_scope",
+            "property_focus": "visibility",
+            "scope_depth": "single",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine which value is accessed when local variables shadow macro-defined constants.",
+            "code": "#define MAX_VAL 999\nvoid macro_shadow() {\n    int MAX_VAL = 111;\n    {\n        int MAX_VAL = 222;\n        MAX_VAL += 8;\n        printf(\"%d\", MAX_VAL);\n    }\n}\n// What value is printed by the printf statement?",
+            "answer": 230
+        }
+    },
+    {
+        "id": "PL-SC-S001-V010",
+        "metadata": {
+            "name": "PropertyLevel-Scope-TypedefShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "typedef_scope",
+            "property_focus": "shadowing",
+            "scope_depth": "deep_nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the final value when variables shadow typedef names in nested scopes.",
+            "code": "typedef int MyInt;\nMyInt num = 300;\nvoid typedef_shadow() {\n    int MyInt = 400;\n    {\n        int MyInt = 500;\n        {\n            int MyInt = 600;\n            MyInt -= 50;\n            printf(\"%d\", MyInt);\n        }\n    }\n}\n// What value is printed by the printf statement?",
+            "answer": 550
+        }
+    },
+    {
+        "id": "PL-SC-S002-V001",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StaticCounterIncrement",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "static_persistence",
+            "property_focus": "lifetime",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Calculate the static variable value after multiple function invocations with different increments.",
+            "code": "int increment_counter(int step) {\n    static int counter = 10;\n    counter += step;\n    return counter;\n}\n// What value is returned by the fourth call: increment_counter(3), increment_counter(2), increment_counter(5), increment_counter(1)?",
+            "answer": 21
+        }
+    },
+    {
+        "id": "PL-SC-S002-V002",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StaticArrayAccumulation",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "static_array",
+            "property_focus": "lifetime",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Determine the static array element value after multiple function calls with array modifications.",
+            "code": "int modify_array(int index, int value) {\n    static int arr[3] = {1, 2, 3};\n    arr[index] += value;\n    return arr[index];\n}\n// What is the value of arr[1] after: modify_array(1, 4), modify_array(1, 3), modify_array(1, 2)?",
+            "answer": 11
+        }
+    },
+    {
+        "id": "PL-SC-S002-V003",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StaticStructMember",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "static_struct",
+            "property_focus": "lifetime",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Calculate the static struct member value after multiple function calls with struct modifications.",
+            "code": "typedef struct { int x, y; } Point;\nPoint* get_static_point(int dx, int dy) {\n    static Point p = {0, 0};\n    p.x += dx;\n    p.y += dy;\n    return &p;\n}\n// What is the x value after: get_static_point(3, 2), get_static_point(1, 4), get_static_point(2, 1)?",
+            "answer": 6
+        }
+    },
+    {
+        "id": "PL-SC-S002-V004",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StaticConditionalUpdate",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "static_conditional",
+            "property_focus": "lifetime",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Determine the static variable value after conditional updates across multiple calls.",
+            "code": "int conditional_update(int flag) {\n    static int value = 20;\n    if (flag > 0) {\n        value *= 2;\n    } else {\n        value += 5;\n    }\n    return value;\n}\n// What value is returned by the third call: conditional_update(1), conditional_update(0), conditional_update(1)?",
+            "answer": 90
+        }
+    },
+    {
+        "id": "PL-SC-S002-V005",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StaticRecursiveAccumulation",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "static_recursive",
+            "property_focus": "lifetime",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Calculate the static variable value in a recursive function after complete execution.",
+            "code": "int recursive_static(int n) {\n    static int sum = 0;\n    if (n > 0) {\n        sum += n;\n        return recursive_static(n - 1);\n    }\n    return sum;\n}\n// What value is returned by recursive_static(4)?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "PL-SC-S002-V006",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StaticMultipleVariables",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "static_multiple",
+            "property_focus": "lifetime",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Determine the sum of multiple static variables after several function calls.",
+            "code": "int update_statics(int a, int b) {\n    static int x = 1, y = 2;\n    x += a;\n    y += b;\n    return x + y;\n}\n// What value is returned by the second call: update_statics(3, 4), update_statics(2, 1)?",
+            "answer": 13
+        }
+    },
+    {
+        "id": "PL-SC-S002-V007",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StaticPointerManagement",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "static_pointer",
+            "property_focus": "lifetime",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Calculate the value pointed to by a static pointer after multiple function calls.",
+            "code": "int* get_static_ptr(int increment) {\n    static int value = 100;\n    static int* ptr = &value;\n    *ptr += increment;\n    return ptr;\n}\n// What value is pointed to after: get_static_ptr(5), get_static_ptr(10), get_static_ptr(7)?",
+            "answer": 122
+        }
+    },
+    {
+        "id": "PL-SC-S002-V008",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StaticBitwiseOperations",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "static_bitwise",
+            "property_focus": "lifetime",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Determine the static variable value after bitwise operations across multiple calls.",
+            "code": "int bitwise_static(int operation) {\n    static int bits = 15; // 1111 in binary\n    if (operation == 1) {\n        bits <<= 1;\n    } else {\n        bits >>= 1;\n    }\n    return bits;\n}\n// What value is returned by the third call: bitwise_static(1), bitwise_static(0), bitwise_static(1)?",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-SC-S002-V009",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StaticFloatingPoint",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "static_float",
+            "property_focus": "lifetime",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Calculate the static floating-point variable after multiple arithmetic operations.",
+            "code": "int get_rounded_static(double multiplier) {\n    static double value = 2.5;\n    value *= multiplier;\n    return (int)value;\n}\n// What integer value is returned by the second call: get_rounded_static(1.5), get_rounded_static(2.0)?",
+            "answer": 7
+        }
+    },
+    {
+        "id": "PL-SC-S002-V010",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StaticModuloCounter",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "static_modulo",
+            "property_focus": "lifetime",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Determine the static counter value with modulo operations after multiple calls.",
+            "code": "int modulo_counter(int increment) {\n    static int counter = 8;\n    counter = (counter + increment) % 10;\n    return counter;\n}\n// What value is returned by the fourth call: modulo_counter(3), modulo_counter(4), modulo_counter(6), modulo_counter(2)?",
+            "answer": 3
+        }
+    },
+    {
+        "id": "PL-SC-S003-V001",
+        "metadata": {
+            "name": "PropertyLevel-Scope-BlockExitRestoration",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "block_exit",
+            "property_focus": "visibility",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Calculate the outer variable value after nested block modifications and exit.",
+            "code": "int outer = 12;\n{\n    int outer = 24;\n    outer = outer + 6;\n    {\n        int outer = 48;\n        outer *= 2;\n    }\n}\nouter = outer - 2;\n// What is the final value of the outermost 'outer' variable?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "PL-SC-S003-V002",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ConditionalBlockLifetime",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "conditional_block",
+            "property_focus": "lifetime",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine the variable value after conditional block execution and exit.",
+            "code": "int count = 7;\nint condition = 1;\nif (condition) {\n    int count = 14;\n    count += 3;\n    if (count > 15) {\n        int count = 28;\n        count /= 2;\n    }\n}\ncount *= 3;\n// What is the final value of the outer 'count' variable?",
+            "answer": 21
+        }
+    },
+    {
+        "id": "PL-SC-S003-V003",
+        "metadata": {
+            "name": "PropertyLevel-Scope-LoopBlockLifetime",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "loop_block",
+            "property_focus": "lifetime",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Calculate the outer variable value after loop block execution with local variable destruction.",
+            "code": "int sum = 4;\nfor (int i = 0; i < 3; i++) {\n    int sum = 8;\n    sum += i;\n    if (i == 2) {\n        int sum = 16;\n        sum *= 2;\n    }\n}\nsum += 6;\n// What is the final value of the outer 'sum' variable?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "PL-SC-S003-V004",
+        "metadata": {
+            "name": "PropertyLevel-Scope-SwitchBlockLifetime",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "switch_block",
+            "property_focus": "lifetime",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine the variable value after switch case block execution and exit.",
+            "code": "int result = 9;\nint choice = 2;\nswitch (choice) {\n    case 1: {\n        int result = 18;\n        result += 2;\n        break;\n    }\n    case 2: {\n        int result = 27;\n        result -= 3;\n        break;\n    }\n}\nresult += 4;\n// What is the final value of the outer 'result' variable?",
+            "answer": 13
+        }
+    },
+    {
+        "id": "PL-SC-S003-V005",
+        "metadata": {
+            "name": "PropertyLevel-Scope-WhileBlockLifetime",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "while_block",
+            "property_focus": "lifetime",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the outer variable value after while loop block with multiple local variable scopes.",
+            "code": "int total = 6;\nint counter = 2;\nwhile (counter > 0) {\n    int total = 12;\n    total += counter;\n    {\n        int total = 24;\n        total *= 2;\n    }\n    counter--;\n}\ntotal *= 2;\n// What is the final value of the outer 'total' variable?",
+            "answer": 12
+        }
+    },
+    {
+        "id": "PL-SC-S003-V006",
+        "metadata": {
+            "name": "PropertyLevel-Scope-DoWhileBlockLifetime",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "do_while_block",
+            "property_focus": "lifetime",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine the variable value after do-while block execution and local variable destruction.",
+            "code": "int base = 15;\nint flag = 0;\ndo {\n    int base = 30;\n    base += 5;\n    flag = 1;\n} while (flag == 0);\nbase -= 3;\n// What is the final value of the outer 'base' variable?",
+            "answer": 12
+        }
+    },
+    {
+        "id": "PL-SC-S003-V007",
+        "metadata": {
+            "name": "PropertyLevel-Scope-NestedBlockChain",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "nested_chain",
+            "property_focus": "visibility",
+            "scope_depth": "deep_nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the variable value after multiple nested block executions with sequential modifications.",
+            "code": "int chain = 3;\n{\n    int chain = 6;\n    chain += 2;\n    {\n        int chain = 12;\n        chain *= 2;\n        {\n            int chain = 24;\n            chain /= 3;\n        }\n    }\n}\nchain += 7;\n// What is the final value of the outermost 'chain' variable?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "PL-SC-S003-V008",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ArrayBlockLifetime",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "array_block",
+            "property_focus": "lifetime",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine the array element value after block-scoped array modifications and destruction.",
+            "code": "int arr[3] = {1, 2, 3};\n{\n    int arr[3] = {4, 5, 6};\n    arr[1] += 10;\n    {\n        int arr[3] = {7, 8, 9};\n        arr[1] *= 2;\n    }\n}\narr[1] += 5;\n// What is the final value of the outer arr[1]?",
+            "answer": 7
+        }
+    },
+    {
+        "id": "PL-SC-S003-V009",
+        "metadata": {
+            "name": "PropertyLevel-Scope-PointerBlockLifetime",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "pointer_block",
+            "property_focus": "lifetime",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the pointer value after block-scoped pointer manipulations and restoration.",
+            "code": "int original = 20;\nint* ptr = &original;\n{\n    int local = 40;\n    int* ptr = &local;\n    *ptr += 8;\n    {\n        int inner = 80;\n        int* ptr = &inner;\n        *ptr /= 2;\n    }\n}\n*ptr += 10;\n// What is the final value of the variable pointed to by the outer ptr?",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-SC-S003-V010",
+        "metadata": {
+            "name": "PropertyLevel-Scope-StructBlockLifetime",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "struct_block",
+            "property_focus": "lifetime",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine the struct member value after block-scoped struct modifications and destruction.",
+            "code": "struct Point { int x, y; };\nstruct Point p = {5, 10};\n{\n    struct Point p = {15, 20};\n    p.x += 5;\n    {\n        struct Point p = {25, 30};\n        p.x *= 2;\n    }\n}\np.x += 3;\n// What is the final value of the outer p.x?",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-SC-S004-V001",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GlobalArrayModification",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "global_array",
+            "property_focus": "visibility",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Calculate the global array element value after multiple function calls with array modifications.",
+            "code": "int global_array[3] = {2, 4, 6};\nvoid modify_element(int index, int value) {\n    global_array[index] += value;\n}\nvoid process_array() {\n    modify_element(1, 3);\n    modify_element(1, 2);\n    modify_element(1, -1);\n}\n// What is the value of global_array[1] after calling process_array()?",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-SC-S004-V002",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GlobalStructModification",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "global_struct",
+            "property_focus": "visibility",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Determine the global struct member value after function calls with struct modifications.",
+            "code": "struct Counter { int value; int step; };\nstruct Counter global_counter = {10, 2};\nvoid update_counter(int multiplier) {\n    global_counter.value += global_counter.step * multiplier;\n}\nvoid execute_updates() {\n    update_counter(3);\n    update_counter(2);\n    update_counter(1);\n}\n// What is the value of global_counter.value after calling execute_updates()?",
+            "answer": 22
+        }
+    },
+    {
+        "id": "PL-SC-S004-V003",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GlobalPointerChain",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "global_pointer",
+            "property_focus": "visibility",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Calculate the value pointed to by global pointer after function chain modifications.",
+            "code": "int target = 50;\nint* global_ptr = &target;\nvoid modify_through_ptr(int delta) {\n    *global_ptr += delta;\n}\nvoid chain_modifications() {\n    modify_through_ptr(8);\n    modify_through_ptr(-3);\n    modify_through_ptr(5);\n    modify_through_ptr(-2);\n}\n// What is the value pointed to by global_ptr after calling chain_modifications()?",
+            "answer": 58
+        }
+    },
+    {
+        "id": "PL-SC-S004-V004",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GlobalVariableWithRecursion",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "global_recursive",
+            "property_focus": "visibility",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Determine the global variable value after recursive function calls with accumulation.",
+            "code": "int global_sum = 1;\nvoid recursive_accumulate(int n) {\n    if (n > 0) {\n        global_sum *= 2;\n        recursive_accumulate(n - 1);\n    }\n}\nvoid start_recursion() {\n    recursive_accumulate(3);\n}\n// What is the value of global_sum after calling start_recursion()?",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-SC-S004-V005",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GlobalBitwiseOperations",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "global_bitwise",
+            "property_focus": "visibility",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Calculate the global variable value after function calls with bitwise operations.",
+            "code": "int global_bits = 12; // 1100 in binary\nvoid shift_bits(int direction) {\n    if (direction > 0) {\n        global_bits <<= 1;\n    } else {\n        global_bits >>= 1;\n    }\n}\nvoid bit_sequence() {\n    shift_bits(1);\n    shift_bits(1);\n    shift_bits(-1);\n}\n// What is the value of global_bits after calling bit_sequence()?",
+            "answer": 24
+        }
+    },
+    {
+        "id": "PL-SC-S004-V006",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GlobalFloatingPoint",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "global_float",
+            "property_focus": "visibility",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Determine the integer value of global floating-point variable after function modifications.",
+            "code": "double global_float = 3.2;\nvoid multiply_float(double factor) {\n    global_float *= factor;\n}\nvoid calculate_sequence() {\n    multiply_float(2.5);\n    multiply_float(1.25);\n}\n// What is the integer value of global_float after calling calculate_sequence()?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "PL-SC-S004-V007",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GlobalStringLength",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "global_string",
+            "property_focus": "visibility",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Calculate the global string length after function calls with string modifications.",
+            "code": "#include <string.h>\nchar global_str[20] = \"hello\";\nvoid append_char(char c) {\n    int len = strlen(global_str);\n    global_str[len] = c;\n    global_str[len + 1] = '\\0';\n}\nvoid build_string() {\n    append_char('w');\n    append_char('o');\n    append_char('r');\n}\n// What is the length of global_str after calling build_string()?",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-SC-S004-V008",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GlobalModuloCounter",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "global_modulo",
+            "property_focus": "visibility",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Determine the global counter value with modulo operations after function calls.",
+            "code": "int global_counter = 7;\nvoid increment_modulo(int step, int modulus) {\n    global_counter = (global_counter + step) % modulus;\n}\nvoid counter_sequence() {\n    increment_modulo(4, 10);\n    increment_modulo(6, 10);\n    increment_modulo(8, 10);\n}\n// What is the value of global_counter after calling counter_sequence()?",
+            "answer": 5
+        }
+    },
+    {
+        "id": "PL-SC-S004-V009",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GlobalConditionalUpdate",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "global_conditional",
+            "property_focus": "visibility",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Calculate the global variable value after conditional function calls with different operations.",
+            "code": "int global_value = 16;\nvoid conditional_modify(int condition, int operand) {\n    if (condition == 1) {\n        global_value += operand;\n    } else if (condition == 2) {\n        global_value -= operand;\n    } else {\n        global_value *= operand;\n    }\n}\nvoid execute_conditions() {\n    conditional_modify(1, 4);\n    conditional_modify(2, 6);\n    conditional_modify(3, 2);\n}\n// What is the value of global_value after calling execute_conditions()?",
+            "answer": 28
+        }
+    },
+    {
+        "id": "PL-SC-S004-V010",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GlobalArraySum",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "global_array_sum",
+            "property_focus": "visibility",
+            "scope_depth": "single",
+            "shadowing_complexity": "none"
+        },
+        "task": {
+            "description": "Determine the sum of global array elements after function calls with array manipulations.",
+            "code": "int global_nums[4] = {1, 2, 3, 4};\nvoid rotate_and_add(int add_value) {\n    int temp = global_nums[0];\n    for (int i = 0; i < 3; i++) {\n        global_nums[i] = global_nums[i + 1];\n    }\n    global_nums[3] = temp + add_value;\n}\nvoid process_array() {\n    rotate_and_add(2);\n    rotate_and_add(1);\n}\n// What is the sum of all elements in global_nums after calling process_array()?",
+            "answer": 15
+        }
+    },
+    {
+        "id": "PL-SC-S005-V001",
+        "metadata": {
+            "name": "PropertyLevel-Scope-MultiParameterShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "multi_parameter",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the return value when multiple parameters shadow global variables in nested scopes.",
+            "code": "int a = 1, b = 2, c = 3;\nint complex_shadow(int a, int b) {\n    int c = a + b;\n    {\n        int a = 10;\n        c += a;\n    }\n    return c;\n}\n// What value is returned by complex_shadow(4, 5)?",
+            "answer": 19
+        }
+    },
+    {
+        "id": "PL-SC-S005-V002",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ParameterArrayShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "parameter_array",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Determine the return value when parameter arrays shadow global arrays.",
+            "code": "int arr[3] = {1, 2, 3};\nint array_shadow(int arr[]) {\n    arr[1] = 20;\n    {\n        int arr[3] = {10, 11, 12};\n        arr[1] += 5;\n        return arr[1];\n    }\n}\nint input[3] = {7, 8, 9};\n// What value is returned by array_shadow(input)?",
+            "answer": 16
+        }
+    },
+    {
+        "id": "PL-SC-S005-V003",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ParameterPointerShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "parameter_pointer",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the final value when pointer parameters shadow global pointer variables.",
+            "code": "int value = 100;\nint* ptr = &value;\nint pointer_shadow(int* ptr) {\n    *ptr = 200;\n    {\n        int local = 300;\n        int* ptr = &local;\n        *ptr += 50;\n        return *ptr;\n    }\n}\nint target = 150;\n// What value is returned by pointer_shadow(&target)?",
+            "answer": 350
+        }
+    },
+    {
+        "id": "PL-SC-S005-V004",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ParameterStructShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "parameter_struct",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Determine the return value when struct parameters shadow global struct variables.",
+            "code": "struct Point { int x, y; };\nstruct Point point = {5, 10};\nint struct_shadow(struct Point point) {\n    point.x = 15;\n    {\n        struct Point point = {25, 30};\n        point.x += point.y;\n        return point.x;\n    }\n}\nstruct Point input = {8, 12};\n// What value is returned by struct_shadow(input)?",
+            "answer": 55
+        }
+    },
+    {
+        "id": "PL-SC-S005-V005",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ParameterFunctionPointer",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "parameter_function_ptr",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the return value when function pointer parameters are used in shadowing contexts.",
+            "code": "int global_func() { return 10; }\nint local_func() { return 20; }\nint func_ptr_shadow(int (*func)()) {\n    int result = func();\n    {\n        int (*func)() = local_func;\n        result += func();\n    }\n    return result;\n}\n// What value is returned by func_ptr_shadow(global_func)?",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-SC-S005-V006",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ParameterConstShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "parameter_const",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine the return value when const parameters shadow global const variables.",
+            "code": "const int MAX = 100;\nint const_shadow(const int MAX) {\n    int result = MAX * 2;\n    {\n        const int MAX = 50;\n        result += MAX * 3;\n    }\n    return result;\n}\n// What value is returned by const_shadow(25)?",
+            "answer": 200
+        }
+    },
+    {
+        "id": "PL-SC-S005-V007",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ParameterVolatileShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "parameter_volatile",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the return value when volatile parameters shadow global variables.",
+            "code": "volatile int flag = 1;\nint volatile_shadow(volatile int flag) {\n    int total = flag * 10;\n    {\n        volatile int flag = 5;\n        total += flag * 6;\n        {\n            int flag = 8;\n            total += flag * 2;\n        }\n    }\n    return total;\n}\n// What value is returned by volatile_shadow(3)?",
+            "answer": 76
+        }
+    },
+    {
+        "id": "PL-SC-S005-V008",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ParameterRecursiveShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "parameter_recursive",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Determine the return value when parameters shadow variables in recursive function calls.",
+            "code": "int count = 0;\nint recursive_shadow(int count) {\n    if (count <= 0) return 1;\n    {\n        int count = 2;\n        return count + recursive_shadow(count - 3);\n    }\n}\n// What value is returned by recursive_shadow(1)?",
+            "answer": 3
+        }
+    },
+    {
+        "id": "PL-SC-S005-V009",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ParameterUnionShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "parameter_union",
+            "property_focus": "shadowing",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the return value when union parameters shadow global union variables.",
+            "code": "union Data { int i; float f; };\nunion Data global_data = {42};\nint union_shadow(union Data data) {\n    data.i = 84;\n    {\n        union Data data = {168};\n        data.i /= 2;\n        return data.i;\n    }\n}\nunion Data input = {21};\n// What value is returned by union_shadow(input)?",
+            "answer": 84
+        }
+    },
+    {
+        "id": "PL-SC-S005-V010",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ParameterTypedefShadowing",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "parameter_typedef",
+            "property_focus": "shadowing",
+            "scope_depth": "deep_nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Determine the return value when typedef parameters create complex shadowing scenarios.",
+            "code": "typedef int MyType;\nMyType global_value = 10;\nint typedef_shadow(MyType value) {\n    value *= 3;\n    {\n        typedef float MyType;\n        MyType value = 2.5;\n        int result = (int)(value * 4);\n        {\n            int value = 15;\n            result += value;\n        }\n        return result;\n    }\n}\n// What value is returned by typedef_shadow(7)?",
+            "answer": 25
+        }
+    },
+    {
+        "id": "PL-SC-S006-V001",
+        "metadata": {
+            "name": "PropertyLevel-Scope-NestedFunctionCapture",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "nested_capture",
+            "property_focus": "closure",
+            "scope_depth": "deep_nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the final value considering multiple nested function scopes with variable capture.",
+            "code": "def triple_nested(x):\n    def level_one():\n        def level_two():\n            nonlocal x\n            x *= 3\n            return x\n        x += 5\n        result = level_two()\n        x -= 2\n        return result\n    return level_one()\n\n# What value is returned by triple_nested(4)?",
+            "answer": 27
+        }
+    },
+    {
+        "id": "PL-SC-S006-V002",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ClosureWithLoop",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "closure_loop",
+            "property_focus": "closure",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine the value returned by closure created within a loop with variable capture.",
+            "code": "def closure_loop(n):\n    result = 0\n    for i in range(3):\n        def inner():\n            nonlocal result\n            result += n * i\n            return result\n        if i == 2:\n            return inner()\n    return result\n\n# What value is returned by closure_loop(5)?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "PL-SC-S006-V003",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GlobalNonlocalInteraction",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "global_nonlocal",
+            "property_focus": "visibility",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the final value with both global and nonlocal variable declarations.",
+            "code": "value = 100\ndef global_nonlocal_test(x):\n    value = 200\n    def inner():\n        global value\n        value = 300\n        def deep_inner():\n            nonlocal value\n            value += x\n            return value\n        return deep_inner()\n    return inner()\n\n# What value is returned by global_nonlocal_test(50)?",
+            "answer": 250
+        }
+    },
+    {
+        "id": "PL-SC-S006-V004",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ClosureListComprehension",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "closure_comprehension",
+            "property_focus": "closure",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine the value when closures interact with list comprehension scoping rules.",
+            "code": "def comprehension_closure(multiplier):\n    base = 10\n    def make_func(x):\n        def inner():\n            nonlocal base\n            base += x * multiplier\n            return base\n        return inner\n    funcs = [make_func(i) for i in range(3)]\n    return funcs[2]()\n\n# What value is returned by comprehension_closure(3)?",
+            "answer": 16
+        }
+    },
+    {
+        "id": "PL-SC-S006-V005",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ExceptionHandlingScope",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "exception_scope",
+            "property_focus": "visibility",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the final value when nested functions interact with exception handling scopes.",
+            "code": "def exception_scope(x):\n    result = x\n    def risky_operation():\n        nonlocal result\n        try:\n            result *= 2\n            if result > 15:\n                raise ValueError()\n            result += 3\n        except ValueError:\n            result -= 5\n        return result\n    return risky_operation()\n\n# What value is returned by exception_scope(8)?",
+            "answer": 11
+        }
+    },
+    {
+        "id": "PL-SC-S006-V006",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ClosureFactoryPattern",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "closure_factory",
+            "property_focus": "closure",
+            "scope_depth": "nested",
+            "shadowing_complexity": "simple"
+        },
+        "task": {
+            "description": "Determine the value from closure factory with multiple function creations.",
+            "code": "def closure_factory(initial):\n    def create_counter(step):\n        count = initial\n        def increment():\n            nonlocal count\n            count += step\n            return count\n        return increment\n    counter1 = create_counter(5)\n    counter2 = create_counter(3)\n    return counter1() + counter2()\n\n# What value is returned by closure_factory(10)?",
+            "answer": 28
+        }
+    },
+    {
+        "id": "PL-SC-S006-V007",
+        "metadata": {
+            "name": "PropertyLevel-Scope-LambdaClosure",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "lambda_closure",
+            "property_focus": "closure",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the value when lambda functions create closures with variable capture.",
+            "code": "def lambda_closure(x):\n    multiplier = 2\n    def outer():\n        nonlocal multiplier\n        multiplier += 1\n        inner = lambda: x * multiplier\n        return inner()\n    result = outer()\n    multiplier += 2\n    second = lambda: x * multiplier\n    return result + second()\n\n# What value is returned by lambda_closure(4)?",
+            "answer": 32
+        }
+    },
+    {
+        "id": "PL-SC-S006-V008",
+        "metadata": {
+            "name": "PropertyLevel-Scope-DecoratorScope",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "decorator_scope",
+            "property_focus": "closure",
+            "scope_depth": "deep_nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Determine the value when decorator functions create complex closure relationships.",
+            "code": "def decorator_scope(base):\n    def decorator(func):\n        def wrapper(x):\n            nonlocal base\n            base += x\n            result = func(base)\n            base *= 2\n            return result\n        return wrapper\n    \n    @decorator\n    def calculate(value):\n        return value + 10\n    \n    return calculate(5)\n\n# What value is returned by decorator_scope(3)?",
+            "answer": 18
+        }
+    },
+    {
+        "id": "PL-SC-S006-V009",
+        "metadata": {
+            "name": "PropertyLevel-Scope-GeneratorScope",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "generator_scope",
+            "property_focus": "closure",
+            "scope_depth": "nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Calculate the value when generator functions interact with closure scoping.",
+            "code": "def generator_scope(start):\n    accumulator = start\n    def create_generator():\n        def gen():\n            nonlocal accumulator\n            for i in range(3):\n                accumulator += i * 2\n                yield accumulator\n        return gen()\n    \n    g = create_generator()\n    next(g)\n    next(g)\n    return next(g)\n\n# What value is returned by generator_scope(5)?",
+            "answer": 15
+        }
+    },
+    {
+        "id": "PL-SC-S006-V010",
+        "metadata": {
+            "name": "PropertyLevel-Scope-ClassMethodClosure",
+            "category": "Property-Level",
+            "subcategory": "Scope",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "class_method_closure",
+            "property_focus": "closure",
+            "scope_depth": "deep_nested",
+            "shadowing_complexity": "complex"
+        },
+        "task": {
+            "description": "Determine the value when class methods create closures with instance variable interaction.",
+            "code": "class ScopeTest:\n    def __init__(self, value):\n        self.value = value\n    \n    def create_closure(self, multiplier):\n        def inner():\n            def deep_inner():\n                self.value *= multiplier\n                return self.value + 7\n            self.value += 3\n            return deep_inner()\n        return inner()\n\nobj = ScopeTest(6)\n# What value is returned by obj.create_closure(2)?",
+            "answer": 25
+        }
+    }
+]
+```
+
+#### 3E - 大混合（51）
+
+> ```
+> # 代码属性推理大混合变式生成提示词
+> 
+> ## 任务目标
+> 基于提供的循环属性、分支属性、内存属性、作用域属性种子任务和大混合示例，生成50个左右融合多种代码属性推理类型的综合变式任务，全面测试大模型对循环、分支、内存、作用域等多重属性的综合理解和交叉应用能力。
+> 
+> ## 代码属性推理大混合特征分析
+> 代码属性推理大混合关注程序中多种属性机制的交互和综合效应，重点测试模型对循环计数与分支选择、内存访问与作用域管理、变量追踪与控制流等复杂组合的深层理解，强调对多维度属性的综合分析能力。
+> 
+> ## 关键要求
+> - **描述语言**: 所有task描述必须使用英文
+> - **变式数量**: 总计生成约50个混合变式任务
+> - **答案唯一性**: 保证答案准确且唯一，避免歧义和多解情况
+> - **混合复杂度**: 每个变式都应融合至少2-3种属性类型
+> 
+> ## 混合变式生成维度
+> 
+> ### 1. 循环+分支混合变式
+> - **条件循环计数变式**: 带有条件分支的循环迭代计数分析
+> - **分支内循环变式**: 分支内部循环的变量追踪和计数
+> - **多出口循环变式**: 具有多个分支出口的循环终止分析
+> - **嵌套条件循环变式**: 嵌套条件判断的复杂循环结构
+> - **循环分支累积变式**: 循环中分支选择的累积效果分析
+> - **短路循环变式**: 短路求值影响循环执行的分析
+> 
+> ### 2. 循环+内存混合变式
+> - **指针循环遍历变式**: 指针在循环中的算术操作和内存访问
+> - **循环内存修改变式**: 循环中对内存的修改和累积效果
+> - **数组循环处理变式**: 数组处理循环的内存访问模式分析
+> - **指针追踪循环变式**: 循环中指针状态的跟踪和变化
+> - **内存拷贝循环变式**: 循环中的内存拷贝和数据移动
+> - **重叠访问循环变式**: 循环中重叠内存访问的分析
+> 
+> ### 3. 循环+作用域混合变式
+> - **循环作用域变量变式**: 循环中不同作用域变量的生存期分析
+> - **静态变量循环变式**: 静态变量在循环中的状态管理
+> - **循环局部遮蔽变式**: 循环中局部变量遮蔽的分析
+> - **嵌套作用域循环变式**: 嵌套作用域中的循环变量管理
+> - **循环闭包捕获变式**: 循环中闭包变量捕获的分析
+> - **循环变量生存期变式**: 循环变量的生存期和可见性分析
+> 
+> ### 4. 分支+内存混合变式
+> - **条件内存访问变式**: 条件分支中的指针操作和内存访问
+> - **分支指针修改变式**: 不同分支路径的指针修改效果
+> - **条件内存分配变式**: 条件分支中的内存分配和释放
+> - **分支数组操作变式**: 分支中数组操作的内存效果分析
+> - **多路径内存变式**: 多个分支路径的内存状态分析
+> - **条件指针算术变式**: 条件控制的指针算术操作
+> 
+> ### 5. 分支+作用域混合变式
+> - **条件作用域变式**: 条件分支中的作用域变量管理
+> - **分支变量遮蔽变式**: 分支中变量遮蔽的复杂情况
+> - **多路径作用域变式**: 多个分支路径的作用域分析
+> - **条件静态变量变式**: 条件控制的静态变量修改
+> - **分支闭包变式**: 分支中闭包的作用域分析
+> - **嵌套分支作用域变式**: 嵌套分支的作用域管理
+> 
+> ### 6. 内存+作用域混合变式
+> - **指针作用域变式**: 指针在不同作用域中的生存期分析
+> - **内存遮蔽变式**: 内存访问中的变量遮蔽效果
+> - **作用域内存管理变式**: 不同作用域的内存分配和释放
+> - **指针生存期变式**: 指针变量的生存期和有效性分析
+> - **局部指针变式**: 局部作用域中的指针操作分析
+> - **全局内存访问变式**: 全局变量的内存访问模式
+> 
+> ### 7. 三重混合变式 (循环+分支+内存)
+> - **条件循环内存变式**: 条件循环中的内存操作综合分析
+> - **循环分支指针变式**: 循环中分支控制的指针操作
+> - **内存条件循环变式**: 基于内存状态的条件循环
+> - **指针循环分支变式**: 指针操作驱动的循环分支逻辑
+> - **数组处理综合变式**: 数组处理中的循环、条件和内存
+> - **缓冲区处理变式**: 缓冲区处理的综合属性分析
+> 
+> ### 8. 三重混合变式 (循环+分支+作用域)
+> - **循环条件作用域变式**: 循环中条件控制的作用域管理
+> - **分支循环遮蔽变式**: 分支和循环中的变量遮蔽
+> - **作用域循环条件变式**: 作用域变量影响的循环条件
+> - **嵌套结构综合变式**: 嵌套循环、分支和作用域的综合
+> - **静态变量复合变式**: 静态变量在复合结构中的管理
+> - **闭包循环分支变式**: 闭包中的循环和分支综合
+> 
+> ### 9. 三重混合变式 (循环+内存+作用域)
+> - **循环内存作用域变式**: 循环中内存操作的作用域分析
+> - **指针循环生存期变式**: 指针在循环中的生存期管理
+> - **作用域内存循环变式**: 作用域控制的内存循环操作
+> - **局部指针循环变式**: 局部指针在循环中的操作
+> - **内存生存期循环变式**: 内存生存期与循环的交互
+> - **循环局部内存变式**: 循环中局部内存的管理
+> 
+> ### 10. 四重混合变式 (循环+分支+内存+作用域)
+> - **全属性综合变式**: 四种属性的完全融合分析
+> - **复杂算法模拟变式**: 复杂算法中的多属性交互
+> - **系统级操作变式**: 系统级操作的多属性分析
+> - **数据结构操作变式**: 复杂数据结构操作的综合分析
+> - **状态机实现变式**: 状态机实现的多属性分析
+> - **内存管理系统变式**: 内存管理系统的综合属性
+> 
+> ## 复杂度层次设计
+> 
+> ### 简单混合 (Easy) - 10个变式
+> - 2种属性类型的基础组合
+> - 清晰的执行流程和属性交互
+> - 直观的分析路径
+> - 基础的综合理解
+> 
+> ### 中等混合 (Medium) - 15个变式
+> - 2-3种属性类型的中度组合
+> - 包含一定的嵌套结构
+> - 中等复杂度的属性交互
+> - 需要仔细的分析过程
+> 
+> ### 复杂混合 (Hard) - 15个变式
+> - 3种属性类型的深度融合
+> - 复杂的嵌套和交互结构
+> - 多层次的属性分析
+> - 涉及高级概念的理解
+> 
+> ### 专家级混合 (Expert) - 8个变式
+> - 3-4种属性类型的极度复杂组合
+> - 深度嵌套和复杂交互
+> - 需要专业级别的综合分析
+> - 涉及系统级和算法级的理解
+> 
+> ### 大师级混合 (Master) - 2个变式
+> - 四种属性的完全融合
+> - 极度复杂的综合分析
+> - 需要最高水平的理解能力
+> - 挑战性的综合推理
+> 
+> ## 生成策略
+> 
+> ### 种子分析策略
+> 1. **识别属性特征**: 分析每类种子的核心属性特征
+> 2. **提取交互模式**: 识别不同属性间的潜在交互模式
+> 3. **确定融合点**: 找出属性融合的自然切入点
+> 4. **保持分析深度**: 在混合中保持每种属性的分析深度
+> 
+> ### 变式设计原则
+> 1. **多维融合**: 每个变式都应体现多种属性的有机结合
+> 2. **英文描述**: 所有task描述必须使用标准英文
+> 3. **答案唯一**: 严格确保答案的准确性和唯一性
+> 4. **分析挑战**: 每个变式都应提供有价值的分析挑战
+> 
+> ### 质量保证
+> 1. **属性一致性**: 确保各种属性的语义一致性
+> 2. **交互正确性**: 验证属性间交互的正确性
+> 3. **分析可行性**: 确保综合分析的可行性和合理性
+> 4. **答案验证**: 严格验证答案的准确性和唯一性
+> 
+> ## 输出格式要求
+> 
+> ```json
+> [
+>     {
+>         "id": "PL-MIX-V001",
+>         "metadata": {
+>             "name": "PropertyLevel-Mix-VariantName",
+>             "category": "Property-Level",
+>             "subcategory": "Mix",
+>             "type": "variant",
+>             "source": "Generated",
+>             "language": "target_language",
+>             "difficulty": "easy/medium/hard/expert/master",
+>             "intervention": 0,
+>             "variant_type": "variant_type_label",
+>             "mixed_properties": ["Loop", "Branch", "Memory", "Scope"],
+>             "primary_focus": "主要关注的属性组合",
+>             "analysis_complexity": "low/medium/high/extreme"
+>         },
+>         "task": {
+>             "description": "English description of the mixed property analysis task",
+>             "code": "Code containing multiple property types to analyze",
+>             "answer": "Unique and accurate comprehensive analysis result"
+>         }
+>     },
+>     {下一个变式...}
+> ]
+> 特殊字段说明
+> mixed_properties: 标识该变式包含的属性类型组合
+> primary_focus: 标识主要的分析焦点
+> analysis_complexity: 标识综合分析的复杂程度
+> 生成目标
+> 生成总计约50个代码属性推理大混合变式，分布如下：
+> 
+> 简单混合变式: 10个 (2种属性组合)
+> 中等混合变式: 15个 (2-3种属性组合)
+> 复杂混合变式: 15个 (3种属性组合)
+> 专家级混合变式: 8个 (3-4种属性组合)
+> 大师级混合变式: 2个 (4种属性完全融合)
+> 重点测试场景
+> 多属性协同分析: 同时分析多种属性的协同效应
+> 交互效应理解: 理解不同属性间的相互影响
+> 综合状态追踪: 跟踪多个维度的程序状态变化
+> 复杂控制流分析: 分析复杂控制流中的多重属性
+> 内存-作用域交互: 理解内存操作与作用域的交互
+> 循环-分支协同: 分析循环与分支的协同效应
+> 英文描述模板示例
+> "Analyze the comprehensive interaction of loop iterations, branch conditions, memory operations, and scope management..."
+> "Determine the final state considering the combined effects of conditional logic, pointer arithmetic, and variable scoping..."
+> "Trace the evolution of variables through nested loops with conditional memory access and scope changes..."
+> "Calculate the result of complex property interactions involving iteration counting, branch selection, and memory modifications..."
+> "Evaluate the comprehensive effects of mixed property operations on program state..."
+> 混合模式优先级
+> 实用导向: 优先设计实际编程中常见的属性组合
+> 教学价值: 重点关注有教学和测试价值的组合
+> 渐进复杂: 从简单组合逐步增加到复杂综合
+> 平衡覆盖: 确保各种属性组合的平衡覆盖
+> 请基于此提示词和提供的所有种子任务，生成约50个代码属性推理大混合变式集合，严格确保答案准确且唯一，所有描述使用英文，输出格式为包含所有变式的JSON数组。
+> ```
+
+```json
+[
+    {
+        "id": "PL-MIX-V001",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopBranchBasic",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "loop_branch_basic",
+            "mixed_properties": ["Loop", "Branch"],
+            "primary_focus": "Conditional loop iteration counting",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Analyze the loop with conditional branching - how many times is the variable 'count' incremented?",
+            "code": "int count = 0;\nfor (int i = 1; i <= 10; i++) {\n    if (i % 3 == 0) {\n        count++;\n    }\n}\nprintf(\"Count: %d\\n\", count);",
+            "answer": 3
+        }
+    },
+    {
+        "id": "PL-MIX-V002",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopMemorySimple",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "loop_memory_basic",
+            "mixed_properties": ["Loop", "Memory"],
+            "primary_focus": "Pointer arithmetic in loops",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Track pointer movement through the loop - what value does ptr point to after the loop completes?",
+            "code": "int arr[5] = {10, 20, 30, 40, 50};\nint *ptr = arr;\nfor (int i = 0; i < 3; i++) {\n    ptr++;\n}\nint result = *ptr;",
+            "answer": 40
+        }
+    },
+    {
+        "id": "PL-MIX-V003",
+        "metadata": {
+            "name": "PropertyLevel-Mix-BranchScopeBasic",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "branch_scope_basic",
+            "mixed_properties": ["Branch", "Scope"],
+            "primary_focus": "Variable shadowing in branches",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Determine which variable value is used in the branch - what value is returned?",
+            "code": "int x = 5;\nint test_function(int condition) {\n    if (condition > 0) {\n        int x = 15;\n        return x + 2;\n    }\n    return x * 2;\n}\n// Called with test_function(1)",
+            "answer": 17
+        }
+    },
+    {
+        "id": "PL-MIX-V004",
+        "metadata": {
+            "name": "PropertyLevel-Mix-MemoryScopeBasic",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "memory_scope_basic",
+            "mixed_properties": ["Memory", "Scope"],
+            "primary_focus": "Pointer access with variable scoping",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Analyze pointer access across scopes - what is the final value of the dereferenced pointer?",
+            "code": "int global_val = 100;\nint *ptr;\nvoid set_pointer() {\n    int local_val = 200;\n    ptr = &global_val;\n}\nset_pointer();\nint result = *ptr;",
+            "answer": 100
+        }
+    },
+    {
+        "id": "PL-MIX-V005",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopBranchCondition",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "loop_branch_condition",
+            "mixed_properties": ["Loop", "Branch"],
+            "primary_focus": "Branch-controlled loop termination",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Analyze the loop with early termination - how many iterations are completed before the break?",
+            "code": "int iterations = 0;\nfor (int i = 1; i <= 15; i++) {\n    iterations++;\n    if (i * i > 50) {\n        break;\n    }\n}\nprintf(\"Iterations: %d\\n\", iterations);",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-MIX-V006",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopScopeVariable",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "loop_scope_variable",
+            "mixed_properties": ["Loop", "Scope"],
+            "primary_focus": "Variable scope in loop blocks",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Track variable values across loop scopes - what is the final value of outer_sum?",
+            "code": "int outer_sum = 0;\nfor (int i = 1; i <= 3; i++) {\n    int inner_val = i * 2;\n    outer_sum += inner_val;\n}\nprintf(\"Sum: %d\\n\", outer_sum);",
+            "answer": 12
+        }
+    },
+    {
+        "id": "PL-MIX-V007",
+        "metadata": {
+            "name": "PropertyLevel-Mix-BranchMemoryAccess",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "branch_memory_access",
+            "mixed_properties": ["Branch", "Memory"],
+            "primary_focus": "Conditional pointer operations",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Analyze conditional pointer modification - what value is stored at arr[1] after the operations?",
+            "code": "int arr[3] = {10, 20, 30};\nint *ptr = &arr[1];\nif (arr[0] < 15) {\n    *ptr = *ptr + 5;\n} else {\n    *ptr = *ptr * 2;\n}\nint result = arr[1];",
+            "answer": 25
+        }
+    },
+    {
+        "id": "PL-MIX-V008",
+        "metadata": {
+            "name": "PropertyLevel-Mix-MemoryScopeLifetime",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "memory_scope_lifetime",
+            "mixed_properties": ["Memory", "Scope"],
+            "primary_focus": "Variable lifetime and pointer validity",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Analyze static variable access through pointer - what value is returned after the second function call?",
+            "code": "int* get_static_ptr() {\n    static int value = 10;\n    value += 5;\n    return &value;\n}\nint *ptr1 = get_static_ptr();\nint *ptr2 = get_static_ptr();\nint result = *ptr2;",
+            "answer": 20
+        }
+    },
+    {
+        "id": "PL-MIX-V009",
+        "metadata": {
+            "name": "PropertyLevel-Mix-BranchScopeStatic",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "branch_scope_static",
+            "mixed_properties": ["Branch", "Scope"],
+            "primary_focus": "Static variable modification in branches",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Track static variable through conditional branches - what value is returned by the third call?",
+            "code": "int conditional_increment(int flag) {\n    static int counter = 0;\n    if (flag > 0) {\n        counter += 2;\n    } else {\n        counter += 1;\n    }\n    return counter;\n}\n// Called three times: conditional_increment(1), conditional_increment(0), conditional_increment(1)",
+            "answer": 5
+        }
+    },
+    {
+        "id": "PL-MIX-V010",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopMemoryModify",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "loop_memory_modify",
+            "mixed_properties": ["Loop", "Memory"],
+            "primary_focus": "Array modification through loops",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Calculate array element after loop modifications - what is the value of data[2] after the loop?",
+            "code": "int data[4] = {1, 2, 3, 4};\nfor (int i = 0; i < 3; i++) {\n    data[i + 1] = data[i] + data[i + 1];\n}\nint result = data[2];",
+            "answer": 6
+        }
+    },
+    {
+        "id": "PL-MIX-V011",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopBranchAccumulator",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "loop_branch_accumulator",
+            "mixed_properties": ["Loop", "Branch"],
+            "primary_focus": "Conditional accumulation in loops",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Analyze conditional accumulation pattern - what is the final value of sum after processing all elements?",
+            "code": "int numbers[6] = {2, 7, 4, 9, 6, 3};\nint sum = 0;\nfor (int i = 0; i < 6; i++) {\n    if (numbers[i] % 2 == 0) {\n        sum += numbers[i];\n    } else {\n        sum += numbers[i] * 2;\n    }\n}\nprintf(\"Final sum: %d\\n\", sum);",
+            "answer": 44
+        }
+    },
+    {
+        "id": "PL-MIX-V012",
+        "metadata": {
+            "name": "PropertyLevel-Mix-NestedLoopBranch",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "nested_loop_branch",
+            "mixed_properties": ["Loop", "Branch"],
+            "primary_focus": "Nested loops with conditional logic",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Count conditional executions in nested loops - how many times is the inner operation executed?",
+            "code": "int operations = 0;\nfor (int i = 1; i <= 4; i++) {\n    for (int j = 1; j <= i; j++) {\n        if ((i + j) % 2 == 0) {\n            operations++;\n        }\n    }\n}\nprintf(\"Operations: %d\\n\", operations);",
+            "answer": 4
+        }
+    },
+    {
+        "id": "PL-MIX-V013",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopMemoryPointer",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "loop_memory_pointer",
+            "mixed_properties": ["Loop", "Memory"],
+            "primary_focus": "Pointer traversal with modifications",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Track pointer-based array modification - what is the value of buffer[3] after the loop?",
+            "code": "int buffer[5] = {5, 10, 15, 20, 25};\nint *ptr = buffer + 1;\nfor (int i = 0; i < 3; i++) {\n    *ptr = *ptr + *(ptr - 1);\n    ptr++;\n}\nint result = buffer[3];",
+            "answer": 40
+        }
+    },
+    {
+        "id": "PL-MIX-V014",
+        "metadata": {
+            "name": "PropertyLevel-Mix-BranchMemoryStruct",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "branch_memory_struct",
+            "mixed_properties": ["Branch", "Memory"],
+            "primary_focus": "Conditional struct member access",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Analyze conditional struct modifications - what is the final value of point.y?",
+            "code": "typedef struct { int x; int y; } Point;\nPoint point = {3, 4};\nif (point.x > 2) {\n    point.y = point.y * 2;\n}\nif (point.y > 6) {\n    point.x = point.x + point.y;\n}\nint result = point.y;",
+            "answer": 8
+        }
+    },
+    {
+        "id": "PL-MIX-V015",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopScopeStatic",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "loop_scope_static",
+            "mixed_properties": ["Loop", "Scope"],
+            "primary_focus": "Static variables in loop iterations",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Track static variable across loop iterations - what is the final value of the static variable?",
+            "code": "int process_loop() {\n    static int persistent = 1;\n    for (int i = 0; i < 4; i++) {\n        persistent = persistent * 2;\n    }\n    return persistent;\n}\nint result1 = process_loop();\nint result2 = process_loop();",
+            "answer": 256
+        }
+    },
+    {
+        "id": "PL-MIX-V016",
+        "metadata": {
+            "name": "PropertyLevel-Mix-BranchScopeNested",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "branch_scope_nested",
+            "mixed_properties": ["Branch", "Scope"],
+            "primary_focus": "Nested scopes with conditional access",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Analyze nested scope variable access - what value is returned by the function?",
+            "code": "int x = 100;\nint nested_scope_test(int flag) {\n    int x = 50;\n    if (flag > 0) {\n        int x = 25;\n        if (flag > 5) {\n            return x + 10;\n        }\n        return x * 2;\n    }\n    return x + 5;\n}\n// Called with nested_scope_test(3)",
+            "answer": 50
+        }
+    },
+    {
+        "id": "PL-MIX-V017",
+        "metadata": {
+            "name": "PropertyLevel-Mix-MemoryScopeGlobal",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "memory_scope_global",
+            "mixed_properties": ["Memory", "Scope"],
+            "primary_focus": "Global variable pointer access",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Track global variable modification through pointers - what is the final value of global_data?",
+            "code": "int global_data = 10;\nvoid modify_through_pointer() {\n    int *ptr = &global_data;\n    *ptr = *ptr + 15;\n    {\n        int local_data = 5;\n        *ptr = *ptr + local_data;\n    }\n}\nmodify_through_pointer();\nint result = global_data;",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-MIX-V018",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopBranchContinue",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "loop_branch_continue",
+            "mixed_properties": ["Loop", "Branch"],
+            "primary_focus": "Loop control with continue statements",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Analyze loop with continue statements - how many times is the increment operation executed?",
+            "code": "int counter = 0;\nfor (int i = 1; i <= 10; i++) {\n    if (i % 3 == 0) {\n        continue;\n    }\n    if (i % 2 == 0) {\n        counter += 2;\n    } else {\n        counter += 1;\n    }\n}\nprintf(\"Counter: %d\\n\", counter);",
+            "answer": 11
+        }
+    },
+    {
+        "id": "PL-MIX-V019",
+        "metadata": {
+            "name": "PropertyLevel-Mix-MemoryArrayBounds",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "memory_array_bounds",
+            "mixed_properties": ["Memory", "Loop"],
+            "primary_focus": "Array boundary handling in loops",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Calculate sum with boundary-aware array access - what is the final value of total?",
+            "code": "int values[4] = {2, 4, 6, 8};\nint total = 0;\nfor (int i = 0; i < 6; i++) {\n    if (i < 4) {\n        total += values[i];\n    } else {\n        total += i;\n    }\n}\nprintf(\"Total: %d\\n\", total);",
+            "answer": 29
+        }
+    },
+    {
+        "id": "PL-MIX-V020",
+        "metadata": {
+            "name": "PropertyLevel-Mix-BranchMemoryIndirect",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "branch_memory_indirect",
+            "mixed_properties": ["Branch", "Memory"],
+            "primary_focus": "Conditional indirect memory access",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Analyze conditional pointer indirection - what value is stored in the target location?",
+            "code": "int data1 = 100, data2 = 200;\nint *ptr1 = &data1, *ptr2 = &data2;\nint **indirect_ptr;\nif (data1 < data2) {\n    indirect_ptr = &ptr1;\n    **indirect_ptr = **indirect_ptr + 50;\n} else {\n    indirect_ptr = &ptr2;\n    **indirect_ptr = **indirect_ptr + 25;\n}\nint result = data1;",
+            "answer": 150
+        }
+    },
+    {
+        "id": "PL-MIX-V021",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopBranchMultiCondition",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "loop_branch_multi_condition",
+            "mixed_properties": ["Loop", "Branch"],
+            "primary_focus": "Multiple conditional branches in loops",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Process multiple conditions in loop - what is the final value of result?",
+            "code": "int result = 0;\nfor (int i = 1; i <= 8; i++) {\n    if (i % 2 == 0 && i % 4 != 0) {\n        result += i;\n    } else if (i % 3 == 0) {\n        result += i * 2;\n    } else {\n        result += 1;\n    }\n}\nprintf(\"Result: %d\\n\", result);",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-MIX-V022",
+        "metadata": {
+            "name": "PropertyLevel-Mix-ScopeMemoryLocal",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "scope_memory_local",
+            "mixed_properties": ["Scope", "Memory"],
+            "primary_focus": "Local variable pointer relationships",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Analyze local variable pointer operations - what is the final value accessed through the pointer?",
+            "code": "int outer_function() {\n    int local_var = 20;\n    int *ptr = &local_var;\n    {\n        int inner_var = 15;\n        *ptr = *ptr + inner_var;\n    }\n    *ptr = *ptr * 2;\n    return *ptr;\n}\nint result = outer_function();",
+            "answer": 70
+        }
+    },
+    {
+        "id": "PL-MIX-V023",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopMemoryOverlap",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "loop_memory_overlap",
+            "mixed_properties": ["Loop", "Memory"],
+            "primary_focus": "Overlapping memory access in loops",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Track overlapping array modifications - what is the value of array[1] after all operations?",
+            "code": "int array[4] = {10, 20, 30, 40};\nfor (int i = 0; i < 3; i++) {\n    array[i] = array[i] + array[i + 1];\n}\nfor (int i = 3; i > 0; i--) {\n    array[i] = array[i] - array[i - 1];\n}\nint result = array[1];",
+            "answer": -30
+        }
+    },
+    {
+        "id": "PL-MIX-V024",
+        "metadata": {
+            "name": "PropertyLevel-Mix-BranchScopeParameter",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "branch_scope_parameter",
+            "mixed_properties": ["Branch", "Scope"],
+            "primary_focus": "Parameter shadowing with conditionals",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Analyze parameter shadowing in conditional blocks - what value is returned?",
+            "code": "int param_test(int value) {\n    value = value + 10;\n    if (value > 15) {\n        int value = 5;\n        value = value * 3;\n        return value;\n    }\n    return value * 2;\n}\n// Called with param_test(8)",
+            "answer": 15
+        }
+    },
+    {
+        "id": "PL-MIX-V025",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopScopeCapture",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "loop_scope_capture",
+            "mixed_properties": ["Loop", "Scope"],
+            "primary_focus": "Variable capture across loop iterations",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Track variable modification across loop scopes - what is the final value of accumulator?",
+            "code": "int accumulator = 0;\nfor (int i = 1; i <= 4; i++) {\n    {\n        int multiplier = i * 2;\n        accumulator += multiplier;\n    }\n    accumulator += i;\n}\nprintf(\"Accumulator: %d\\n\", accumulator);",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-MIX-V026",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopBranchMemoryArray",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "loop_branch_memory_array",
+            "mixed_properties": ["Loop", "Branch", "Memory"],
+            "primary_focus": "Conditional array processing in loops",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Analyze complex array processing with conditional logic - what is the final value of data[2]?",
+            "code": "int data[5] = {1, 3, 5, 7, 9};\nint *ptr = data;\nfor (int i = 0; i < 4; i++) {\n    if (*(ptr + i) % 2 == 1) {\n        *(ptr + i + 1) = *(ptr + i + 1) + *(ptr + i);\n    } else {\n        *(ptr + i) = *(ptr + i) * 2;\n    }\n}\nint result = data[2];",
+            "answer": 9
+        }
+    },
+    {
+        "id": "PL-MIX-V027",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopBranchScopeStatic",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "loop_branch_scope_static",
+            "mixed_properties": ["Loop", "Branch", "Scope"],
+            "primary_focus": "Static variable management with conditional loops",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Track static variable through conditional loop iterations - what value is returned by the third function call?",
+            "code": "int conditional_static_loop(int limit) {\n    static int persistent = 2;\n    for (int i = 0; i < limit; i++) {\n        if (i % 2 == 0) {\n            persistent += i;\n        } else {\n            persistent *= 2;\n        }\n    }\n    return persistent;\n}\n// Called three times: conditional_static_loop(2), conditional_static_loop(1), conditional_static_loop(3)",
+            "answer": 32
+        }
+    },
+    {
+        "id": "PL-MIX-V028",
+        "metadata": {
+            "name": "PropertyLevel-Mix-BranchMemoryScopeIndirect",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "branch_memory_scope_indirect",
+            "mixed_properties": ["Branch", "Memory", "Scope"],
+            "primary_focus": "Conditional indirect access with scoping",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Analyze conditional pointer operations across scopes - what is the final value accessed through target_ptr?",
+            "code": "int global_value = 100;\nint* target_ptr;\nvoid setup_pointers(int condition) {\n    int local_value = 50;\n    if (condition > 0) {\n        target_ptr = &global_value;\n        *target_ptr += 25;\n    } else {\n        target_ptr = &local_value;\n        *target_ptr += 10;\n    }\n}\nsetup_pointers(1);\nint result = *target_ptr;",
+            "answer": 125
+        }
+    },
+    {
+        "id": "PL-MIX-V029",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopMemoryScopeLifetime",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "loop_memory_scope_lifetime",
+            "mixed_properties": ["Loop", "Memory", "Scope"],
+            "primary_focus": "Memory lifetime management in loops",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Track memory access patterns across loop scopes - what is the final value of the static variable?",
+            "code": "int* get_persistent_ptr() {\n    static int persistent = 5;\n    return &persistent;\n}\nint process_persistent_loop() {\n    int sum = 0;\n    for (int i = 0; i < 3; i++) {\n        int *ptr = get_persistent_ptr();\n        *ptr = *ptr + i;\n        sum += *ptr;\n    }\n    return sum;\n}\nint result = process_persistent_loop();",
+            "answer": 21
+        }
+    },
+    {
+        "id": "PL-MIX-V030",
+        "metadata": {
+            "name": "PropertyLevel-Mix-NestedLoopBranchMemory",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_loop_branch_memory",
+            "mixed_properties": ["Loop", "Branch", "Memory"],
+            "primary_focus": "Nested loops with conditional memory operations",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Analyze nested loops with conditional pointer operations - what is the final value of matrix[1][1]?",
+            "code": "int matrix[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};\nfor (int i = 0; i < 2; i++) {\n    for (int j = 0; j < 2; j++) {\n        if ((i + j) % 2 == 0) {\n            matrix[i][j] = matrix[i][j] + matrix[i + 1][j + 1];\n        } else {\n            matrix[i + 1][j + 1] = matrix[i + 1][j + 1] * 2;\n        }\n    }\n}\nint result = matrix[1][1];",
+            "answer": 10
+        }
+    },
+    {
+        "id": "PL-MIX-V031",
+        "metadata": {
+            "name": "PropertyLevel-Mix-BranchScopeMemoryStruct",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "branch_scope_memory_struct",
+            "mixed_properties": ["Branch", "Scope", "Memory"],
+            "primary_focus": "Conditional struct operations with scoping",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Analyze conditional struct modifications across scopes - what is the final value of result.value?",
+            "code": "typedef struct { int value; int multiplier; } Data;\nData global_data = {10, 2};\nData process_conditional(int flag) {\n    Data result = global_data;\n    if (flag > 0) {\n        Data local_data = {5, 3};\n        result.value = result.value + local_data.value;\n        result.multiplier = local_data.multiplier;\n    }\n    result.value = result.value * result.multiplier;\n    return result;\n}\nData final = process_conditional(1);\nint answer = final.value;",
+            "answer": 45
+        }
+    },
+    {
+        "id": "PL-MIX-V032",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopBranchScopeNested",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "loop_branch_scope_nested",
+            "mixed_properties": ["Loop", "Branch", "Scope"],
+            "primary_focus": "Nested scopes with conditional loops",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Track variables through nested scopes and conditional loops - what is the final value of outer_var?",
+            "code": "int outer_var = 1;\nfor (int i = 0; i < 3; i++) {\n    int loop_var = i + 1;\n    if (loop_var % 2 == 1) {\n        int inner_var = loop_var * 2;\n        outer_var += inner_var;\n    } else {\n        outer_var += loop_var;\n    }\n}\nprintf(\"Final: %d\\n\", outer_var);",
+            "answer": 9
+        }
+    },
+    {
+        "id": "PL-MIX-V033",
+        "metadata": {
+            "name": "PropertyLevel-Mix-MemoryLoopPointerChain",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "memory_loop_pointer_chain",
+            "mixed_properties": ["Memory", "Loop"],
+            "primary_focus": "Pointer chain traversal in loops",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Follow pointer chain modifications through loop - what is the final value pointed to by the last pointer?",
+            "code": "int values[4] = {10, 20, 30, 40};\nint *ptrs[4];\nfor (int i = 0; i < 4; i++) {\n    ptrs[i] = &values[i];\n}\nfor (int i = 0; i < 3; i++) {\n    *ptrs[i] = *ptrs[i] + *ptrs[i + 1];\n}\nint result = *ptrs[2];",
+            "answer": 90
+        }
+    },
+    {
+        "id": "PL-MIX-V034",
+        "metadata": {
+            "name": "PropertyLevel-Mix-ScopeBranchMemoryGlobal",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "scope_branch_memory_global",
+            "mixed_properties": ["Scope", "Branch", "Memory"],
+            "primary_focus": "Global variable conditional access patterns",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Analyze global variable modification through conditional scopes - what is the final value of global_counter?",
+            "code": "int global_counter = 0;\nvoid conditional_modify(int level) {\n    if (level > 0) {\n        int local_val = level * 5;\n        global_counter += local_val;\n        if (level > 2) {\n            int deep_val = 10;\n            global_counter += deep_val;\n        }\n    } else {\n        global_counter -= 5;\n    }\n}\nconditional_modify(3);\nconditional_modify(1);\nint result = global_counter;",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-MIX-V035",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopMemoryBranchArray",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "loop_memory_branch_array",
+            "mixed_properties": ["Loop", "Memory", "Branch"],
+            "primary_focus": "Array processing with conditional modifications",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Process array with conditional memory operations - what is the sum of all array elements after processing?",
+            "code": "int arr[5] = {2, 4, 6, 8, 10};\nfor (int i = 0; i < 4; i++) {\n    if (arr[i] < arr[i + 1]) {\n        arr[i + 1] = arr[i + 1] - arr[i];\n    } else {\n        arr[i] = arr[i] + arr[i + 1];\n    }\n}\nint sum = 0;\nfor (int i = 0; i < 5; i++) {\n    sum += arr[i];\n}\nint result = sum;",
+            "answer": 20
+        }
+    },
+    {
+        "id": "PL-MIX-V036",
+        "metadata": {
+            "name": "PropertyLevel-Mix-ComplexLoopBranchScope",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "complex_loop_branch_scope",
+            "mixed_properties": ["Loop", "Branch", "Scope"],
+            "primary_focus": "Complex scope management in conditional loops",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Analyze complex variable interactions across loops and scopes - what is the final value returned?",
+            "code": "int complex_scope_analysis() {\n    int base = 5;\n    int total = 0;\n    for (int i = 1; i <= 3; i++) {\n        int base = i * 3;\n        if (i % 2 == 1) {\n            int inner = base + i;\n            total += inner;\n        } else {\n            total += base;\n        }\n    }\n    total += base;\n    return total;\n}\nint result = complex_scope_analysis();",
+            "answer": 25
+        }
+    },
+    {
+        "id": "PL-MIX-V037",
+        "metadata": {
+            "name": "PropertyLevel-Mix-MemoryScopeLoopStatic",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "memory_scope_loop_static",
+            "mixed_properties": ["Memory", "Scope", "Loop"],
+            "primary_focus": "Static memory management across loop iterations",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Track static memory access through multiple function calls - what is the final value stored in the static array?",
+            "code": "int* get_static_array_element(int index) {\n    static int static_array[3] = {1, 2, 3};\n    return &static_array[index];\n}\nvoid modify_static_array() {\n    for (int i = 0; i < 3; i++) {\n        int *ptr = get_static_array_element(i);\n        *ptr = *ptr * (i + 1);\n    }\n}\nmodify_static_array();\nmodify_static_array();\nint *final_ptr = get_static_array_element(2);\nint result = *final_ptr;",
+            "answer": 36
+        }
+    },
+    {
+        "id": "PL-MIX-V038",
+        "metadata": {
+            "name": "PropertyLevel-Mix-BranchMemoryLoopIndirect",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "branch_memory_loop_indirect",
+            "mixed_properties": ["Branch", "Memory", "Loop"],
+            "primary_focus": "Conditional indirect memory access in loops",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Analyze conditional indirect memory operations in loops - what is the final value of target_value?",
+            "code": "int target_value = 10;\nint other_value = 5;\nint *active_ptr = &target_value;\nfor (int i = 0; i < 4; i++) {\n    if (i % 2 == 0) {\n        *active_ptr += i;\n    } else {\n        active_ptr = (active_ptr == &target_value) ? &other_value : &target_value;\n        *active_ptr += i * 2;\n    }\n}\nint result = target_value;",
+            "answer": 16
+        }
+    },
+    {
+        "id": "PL-MIX-V039",
+        "metadata": {
+            "name": "PropertyLevel-Mix-LoopScopeMemoryComplex",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "loop_scope_memory_complex",
+            "mixed_properties": ["Loop", "Scope", "Memory"],
+            "primary_focus": "Complex memory-scope interactions in loops",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Track complex memory and scope interactions through loops - what is the final value of the return?",
+            "code": "int complex_memory_scope() {\n    int external = 100;\n    int *ptr = &external;\n    for (int i = 0; i < 3; i++) {\n        int local = i * 10;\n        if (i == 1) {\n            ptr = &local;\n        }\n        *ptr += i;\n        if (i == 1) {\n            external += local;\n        }\n    }\n    return external;\n}\nint result = complex_memory_scope();",
+            "answer": 112
+        }
+    },
+    {
+        "id": "PL-MIX-V040",
+        "metadata": {
+            "name": "PropertyLevel-Mix-ExpertLoopBranchMemory",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "expert_loop_branch_memory",
+            "mixed_properties": ["Loop", "Branch", "Memory"],
+            "primary_focus": "Expert-level loop-branch-memory interaction",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Analyze expert-level property interactions - what is the final value of the computed result?",
+            "code": "int expert_analysis() {\n    int data[6] = {1, 2, 3, 4, 5, 6};\n    int *left = data, *right = data + 5;\n    int operations = 0;\n    \n    while (left < right) {\n        if (*left + *right > 7) {\n            *left = *left + (*right / 2);\n            operations++;\n        } else {\n            *right = *right - (*left % 3);\n        }\n        left++;\n        right--;\n        if (operations > 2) break;\n    }\n    \n    int sum = 0;\n    for (int i = 0; i < 6; i++) {\n        sum += data[i];\n    }\n    return sum;\n}\nint result = expert_analysis();",
+            "answer": 25
+        }
+    },
+    {
+        "id": "PL-MIX-V041",
+        "metadata": {
+            "name": "PropertyLevel-Mix-ExpertBranchScopeMemory",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "expert_branch_scope_memory",
+            "mixed_properties": ["Branch", "Scope", "Memory"],
+            "primary_focus": "Expert-level branch-scope-memory interaction",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Analyze expert-level conditional scope and memory management - what is the final global state?",
+            "code": "int global_state = 0;\nint* global_ptr = &global_state;\n\nvoid expert_conditional(int level, int *external) {\n    static int call_count = 0;\n    call_count++;\n    \n    if (level > 0) {\n        int local_state = level * call_count;\n        if (call_count % 2 == 1) {\n            global_ptr = &local_state;\n            *global_ptr += level;\n            *external += local_state;\n        } else {\n            global_ptr = &global_state;\n            *global_ptr += local_state;\n        }\n    }\n}\n\nint external_val = 0;\nexpert_conditional(3, &external_val);\nexpert_conditional(2, &external_val);\nexpert_conditional(1, &external_val);\nint result = global_state + external_val;",
+            "answer": 10
+        }
+    },
+    {
+        "id": "PL-MIX-V042",
+        "metadata": {
+            "name": "PropertyLevel-Mix-ExpertLoopScopeMemory",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "expert_loop_scope_memory",
+            "mixed_properties": ["Loop", "Scope", "Memory"],
+            "primary_focus": "Expert-level loop-scope-memory interaction",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Analyze expert-level loop with complex scope and memory patterns - what is the final accumulated value?",
+            "code": "int expert_loop_scope_memory() {\n    static int persistent_data[3] = {10, 20, 30};\n    int accumulator = 0;\n    int *working_ptr;\n    \n    for (int cycle = 0; cycle < 3; cycle++) {\n        working_ptr = &persistent_data[cycle];\n        {\n            int local_multiplier = cycle + 1;\n            *working_ptr = *working_ptr * local_multiplier;\n            accumulator += *working_ptr;\n            \n            if (cycle > 0) {\n                persistent_data[cycle - 1] += local_multiplier;\n            }\n        }\n    }\n    \n    return accumulator;\n}\n\nint first_call = expert_loop_scope_memory();\nint second_call = expert_loop_scope_memory();\nint result = second_call;",
+            "answer": 1140
+        }
+    },
+    {
+        "id": "PL-MIX-V043",
+        "metadata": {
+            "name": "PropertyLevel-Mix-ExpertMultiDimensional",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "expert_multi_dimensional",
+            "mixed_properties": ["Loop", "Branch", "Memory", "Scope"],
+            "primary_focus": "Multi-dimensional property interaction",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Analyze multi-dimensional property interactions - what is the final state of the central element?",
+            "code": "int multi_dimensional_analysis() {\n    static int matrix[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};\n    int *center = &matrix[1][1];\n    \n    for (int round = 0; round < 2; round++) {\n        for (int i = 0; i < 3; i++) {\n            if (matrix[round][i] % 2 == round % 2) {\n                int temp = matrix[round][i];\n                {\n                    int local_factor = i + 1;\n                    *center += temp * local_factor;\n                }\n            }\n        }\n        {\n            int adjustment = round * 5;\n            *center -= adjustment;\n        }\n    }\n    \n    return *center;\n}\nint result = multi_dimensional_analysis();",
+            "answer": 25
+        }
+    },
+    {
+        "id": "PL-MIX-V044",
+        "metadata": {
+            "name": "PropertyLevel-Mix-ExpertRecursiveProperty",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "expert_recursive_property",
+            "mixed_properties": ["Branch", "Memory", "Scope"],
+            "primary_focus": "Recursive property state management",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Analyze recursive property state management - what is the final value after all recursive calls?",
+            "code": "int shared_state = 1;\n\nint recursive_property_analysis(int depth, int *accumulator) {\n    static int call_depth = 0;\n    call_depth++;\n    \n    if (depth <= 0) {\n        call_depth--;\n        return shared_state;\n    }\n    \n    {\n        int local_contribution = depth * call_depth;\n        *accumulator += local_contribution;\n        \n        if (depth % 2 == 1) {\n            shared_state += local_contribution;\n        } else {\n            shared_state *= 2;\n        }\n    }\n    \n    int result = recursive_property_analysis(depth - 1, accumulator);\n    call_depth--;\n    return result + depth;\n}\n\nint accumulator = 0;\nint final_result = recursive_property_analysis(3, &accumulator);\nint answer = shared_state;",
+            "answer": 20
+        }
+    },
+    {
+        "id": "PL-MIX-V045",
+        "metadata": {
+            "name": "PropertyLevel-Mix-ExpertStateManagement",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "expert_state_management",
+            "mixed_properties": ["Loop", "Branch", "Scope"],
+            "primary_focus": "Expert-level state management across properties",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Analyze expert-level state management across multiple property types - what is the final computed state?",
+            "code": "int expert_state_management() {\n    static int global_history[5] = {0};\n    static int history_index = 0;\n    int local_state = 0;\n    \n    for (int phase = 1; phase <= 4; phase++) {\n        {\n            int phase_multiplier = phase;\n            if (phase % 2 == 0) {\n                local_state += phase_multiplier * 3;\n            } else {\n                local_state += phase_multiplier * 2;\n            }\n            \n            global_history[history_index % 5] = local_state;\n            history_index++;\n        }\n        \n        if (phase > 2) {\n            local_state += global_history[(history_index - 3) % 5];\n        }\n    }\n    \n    return local_state;\n}\nint result = expert_state_management();",
+            "answer": 30
+        }
+    },
+    {
+        "id": "PL-MIX-V046",
+        "metadata": {
+            "name": "PropertyLevel-Mix-ExpertInteractionPattern",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "expert_interaction_pattern",
+            "mixed_properties": ["Memory", "Scope", "Branch"],
+            "primary_focus": "Expert-level property interaction patterns",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Analyze expert-level property interaction patterns - what is the final value of the tracked variable?",
+            "code": "int expert_interaction_pattern() {\n    static int static_tracker = 5;\n    int dynamic_state = 0;\n    int *active_pointer;\n    \n    for (int step = 0; step < 3; step++) {\n        if (step == 0) {\n            active_pointer = &static_tracker;\n        } else {\n            active_pointer = &dynamic_state;\n        }\n        \n        {\n            int step_factor = (step + 1) * 2;\n            *active_pointer += step_factor;\n            \n            if (*active_pointer > 10) {\n                static_tracker += step;\n                dynamic_state = static_tracker / 2;\n            }\n        }\n    }\n    \n    return static_tracker + dynamic_state;\n}\nint result = expert_interaction_pattern();",
+            "answer": 20
+        }
+    },
+    {
+        "id": "PL-MIX-V047",
+        "metadata": {
+            "name": "PropertyLevel-Mix-ExpertComprehensive",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "expert_comprehensive",
+            "mixed_properties": ["Loop", "Branch", "Memory", "Scope"],
+            "primary_focus": "Comprehensive expert-level property analysis",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Perform comprehensive expert-level property analysis - what is the final system state value?",
+            "code": "typedef struct { int value; int *ref; } StateNode;\n\nint expert_comprehensive_analysis() {\n    static StateNode nodes[3] = {{10, NULL}, {20, NULL}, {30, NULL}};\n    static int initialization_done = 0;\n    \n    if (!initialization_done) {\n        for (int i = 0; i < 3; i++) {\n            nodes[i].ref = &nodes[(i + 1) % 3].value;\n        }\n        initialization_done = 1;\n    }\n    \n    int system_state = 0;\n    for (int cycle = 0; cycle < 2; cycle++) {\n        for (int node_idx = 0; node_idx < 3; node_idx++) {\n            StateNode *current = &nodes[node_idx];\n            {\n                int local_modifier = cycle + node_idx + 1;\n                if (current->value % 2 == 0) {\n                    *(current->ref) += local_modifier;\n                    system_state += current->value;\n                } else {\n                    current->value += local_modifier;\n                    system_state += *(current->ref);\n                }\n            }\n        }\n    }\n    \n    return system_state;\n}\nint result = expert_comprehensive_analysis();",
+            "answer": 226
+        }
+    },
+    {
+        "id": "PL-MIX-V048",
+        "metadata": {
+            "name": "PropertyLevel-Mix-MasterComplexSystem",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "master",
+            "intervention": 4,
+            "variant_type": "master_complex_system",
+            "mixed_properties": ["Loop", "Branch", "Memory", "Scope"],
+            "primary_focus": "Master-level complex system simulation",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Master-level complex system analysis with full property integration - what is the final equilibrium state?",
+            "code": "typedef struct { int energy; int *connections[3]; int connection_count; } SystemNode;\n\nint master_complex_system() {\n    static SystemNode network[4];\n    static int system_initialized = 0;\n    static int global_time = 0;\n    \n    if (!system_initialized) {\n        for (int i = 0; i < 4; i++) {\n            network[i].energy = (i + 1) * 10;\n            network[i].connection_count = 0;\n        }\n        \n        for (int i = 0; i < 4; i++) {\n            for (int j = 0; j < 3 && j < 4; j++) {\n                if ((i + j + 1) % 4 != i) {\n                    network[i].connections[network[i].connection_count] = &network[(i + j + 1) % 4].energy;\n                    network[i].connection_count++;\n                }\n            }\n        }\n        system_initialized = 1;\n    }\n    \n    for (int time_step = 0; time_step < 3; time_step++) {\n        global_time++;\n        \n        for (int node_id = 0; node_id < 4; node_id++) {\n            SystemNode *current_node = &network[node_id];\n            \n            if (current_node->energy > 25) {\n                for (int conn = 0; conn < current_node->connection_count; conn++) {\n                    int transfer_amount = global_time % 3 + 1;\n                    *(current_node->connections[conn]) += transfer_amount;\n                    current_node->energy -= transfer_amount;\n                }\n            } else {\n                int local_boost = (node_id + 1) * time_step;\n                current_node->energy += local_boost;\n            }\n        }\n    }\n    \n    int total_energy = 0;\n    for (int i = 0; i < 4; i++) {\n        total_energy += network[i].energy;\n    }\n    \n    return total_energy;\n}\nint result = master_complex_system();",
+            "answer": 145
+        }
+    },
+    {
+        "id": "PL-MIX-V049",
+        "metadata": {
+            "name": "PropertyLevel-Mix-MasterUltimateChallenge",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "master",
+            "intervention": 4,
+            "variant_type": "master_ultimate_challenge",
+            "mixed_properties": ["Loop", "Branch", "Memory", "Scope"],
+            "primary_focus": "Ultimate master-level property integration challenge",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Ultimate master-level challenge integrating all four property types - what is the final computed result after all transformations?",
+            "code": "typedef struct { int data[3]; int *active_ptr; int state; } ProcessorUnit;\n\nint master_ultimate_challenge() {\n    static ProcessorUnit processors[2];\n    static int master_state = 100;\n    static int initialization_phase = 1;\n    \n    if (initialization_phase) {\n        for (int p = 0; p < 2; p++) {\n            for (int d = 0; d < 3; d++) {\n                processors[p].data[d] = (p + 1) * (d + 1) * 5;\n            }\n            processors[p].active_ptr = &processors[p].data[0];\n            processors[p].state = p * 10 + 5;\n        }\n        initialization_phase = 0;\n    }\n    \n    for (int execution_round = 0; execution_round < 2; execution_round++) {\n        for (int proc_id = 0; proc_id < 2; proc_id++) {\n            ProcessorUnit *current_proc = &processors[proc_id];\n            \n            for (int operation = 0; operation < 3; operation++) {\n                {\n                    int operation_factor = execution_round + operation + 1;\n                    \n                    if (current_proc->state % 3 == operation % 3) {\n                        *(current_proc->active_ptr) += operation_factor * master_state / 10;\n                        current_proc->active_ptr = &current_proc->data[(operation + 1) % 3];\n                    } else {\n                        current_proc->data[operation] *= 2;\n                        if (current_proc->data[operation] > 50) {\n                            master_state += current_proc->data[operation] / 5;\n                            current_proc->state += operation;\n                        }\n                    }\n                }\n            }\n            \n            current_proc->active_ptr = &current_proc->data[proc_id];\n        }\n        \n        master_state = master_state % 1000;\n    }\n    \n    int final_sum = master_state;\n    for (int p = 0; p < 2; p++) {\n        for (int d = 0; d < 3; d++) {\n            final_sum += processors[p].data[d];\n        }\n    }\n    \n    return final_sum % 1000;\n}\nint result = master_ultimate_challenge();",
+            "answer": 168
+        }
+    },
+    {
+        "id": "PL-MIX-V050",
+        "metadata": {
+            "name": "PropertyLevel-Mix-MasterPropertyFusion",
+            "category": "Property-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "master",
+            "intervention": 4,
+            "variant_type": "master_property_fusion",
+            "mixed_properties": ["Loop", "Branch", "Memory", "Scope"],
+            "primary_focus": "Master-level property fusion analysis",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Master-level property fusion analysis requiring deep understanding of all four property types - what is the final synthesized value?",
+            "code": "int master_property_fusion() {\n    static int fusion_matrix[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};\n    static int *access_pattern[9];\n    static int pattern_initialized = 0;\n    \n    if (!pattern_initialized) {\n        int index = 0;\n        for (int i = 0; i < 3; i++) {\n            for (int j = 0; j < 3; j++) {\n                access_pattern[index++] = &fusion_matrix[i][j];\n            }\n        }\n        pattern_initialized = 1;\n    }\n    \n    int synthesis_state = 0;\n    int *current_focus = access_pattern[0];\n    \n    for (int fusion_cycle = 0; fusion_cycle < 3; fusion_cycle++) {\n        {\n            int cycle_modifier = fusion_cycle * 2 + 1;\n            \n            for (int transformation = 0; transformation < 3; transformation++) {\n                int pattern_index = (fusion_cycle * 3 + transformation) % 9;\n                current_focus = access_pattern[pattern_index];\n                \n                if (*current_focus % 2 == fusion_cycle % 2) {\n                    *current_focus += cycle_modifier;\n                    synthesis_state += *current_focus;\n                    \n                    if (transformation > 0) {\n                        int prev_index = (pattern_index - 1 + 9) % 9;\n                        *(access_pattern[prev_index]) += transformation;\n                    }\n                } else {\n                    synthesis_state += (*current_focus) * cycle_modifier;\n                    *current_focus = (*current_focus + transformation) % 20;\n                }\n            }\n        }\n        \n        synthesis_state = synthesis_state % 500;\n    }\n    \n    int final_matrix_sum = 0;\n    for (int i = 0; i < 3; i++) {\n        for (int j = 0; j < 3; j++) {\n            final_matrix_sum += fusion_matrix[i][j];\n        }\n    }\n    \n    return (synthesis_state + final_matrix_sum) % 1000;\n}\nint result = master_property_fusion();",
+            "answer": 163
+        }
+    }
+]
+```
+
+### 4 - 跨函数推理 [ MultiFunc-Level ] (285)
+
+#### 4A - 函数调用链推理 [ Call Chain ] （64）
+
+> ```
+> # 函数调用链推理变式生成提示词
+> 
+> ## 任务目标
+> 基于给定的函数调用链推理种子任务，为每个种子生成8-12个多样化的变式任务，全面测试大模型对跨函数调用链的理解能力，包括直接调用、链式调用、递归调用和回调函数等核心函数调用链推理技能。
+> 
+> ## 函数调用链推理特征分析
+> 函数调用链推理关注程序中函数间的调用关系和数据流转，重点测试模型对函数参数传递、返回值传播、调用栈管理和执行顺序的深层理解，强调对跨函数边界的数据追踪和控制流分析能力。
+> 
+> ## 关键要求
+> - **描述语言**: 所有task描述必须使用英文
+> - **变式数量**: 每个种子任务严格生成8-12个变式，确保数量充足
+> - **答案唯一性**: 保证答案准确且唯一，避免歧义和多解情况
+> - **调用链聚焦**: 重点关注函数调用链的属性分析，强调跨函数推理
+> 
+> ## 变式生成维度
+> 
+> ### 1. 直接调用链分析变式
+> - **单层调用变式**: 简单的函数调用和返回值传递
+> - **两层调用变式**: 函数A调用函数B的直接调用链
+> - **三层调用变式**: A->B->C的三层直接调用链
+> - **参数传递变式**: 参数在调用链中的传递和变换
+> - **返回值传播变式**: 返回值在调用链中的传播分析
+> - **错误处理调用变式**: 包含错误处理的直接调用链
+> 
+> ### 2. 链式调用分析变式
+> - **方法链式调用变式**: 对象方法的链式调用分析
+> - **函数式链式调用变式**: 函数式编程的链式调用
+> - **数据变换链变式**: 数据在链式调用中的逐步变换
+> - **流式处理链变式**: 流式数据处理的调用链
+> - **管道式调用变式**: 管道模式的函数调用链
+> - **构建器模式调用变式**: 构建器模式的链式调用
+> 
+> ### 3. 递归调用分析变式
+> - **简单递归变式**: 基础递归函数的调用链分析
+> - **尾递归变式**: 尾递归优化的调用链分析
+> - **相互递归变式**: 函数间相互递归的调用链
+> - **递归深度变式**: 递归调用深度的分析
+> - **递归累积变式**: 递归过程中的值累积分析
+> - **条件递归变式**: 带有复杂条件的递归调用
+> 
+> ### 4. 回调函数分析变式
+> - **同步回调变式**: 同步回调函数的调用链分析
+> - **函数指针回调变式**: 通过函数指针的回调调用
+> - **高阶函数变式**: 高阶函数作为参数的调用链
+> - **闭包回调变式**: 闭包函数的回调调用分析
+> - **事件回调变式**: 事件驱动的回调函数链
+> - **回调链式变式**: 多个回调函数的链式执行
+> 
+> ### 5. 函数组合分析变式
+> - **函数组合变式**: 函数组合操作的调用链分析
+> - **柯里化函数变式**: 柯里化函数的调用链
+> - **偏函数应用变式**: 偏函数应用的调用分析
+> - **函数装饰器变式**: 装饰器模式的调用链
+> - **中间件模式变式**: 中间件模式的函数调用
+> - **管道组合变式**: 管道式函数组合的分析
+> 
+> ### 6. 调用栈分析变式
+> - **栈帧分析变式**: 调用栈帧的状态分析
+> - **调用深度变式**: 调用栈深度的计算和分析
+> - **栈溢出检测变式**: 栈溢出风险的分析
+> - **调用轨迹变式**: 完整调用轨迹的追踪
+> - **返回路径变式**: 函数返回路径的分析
+> - **异常传播变式**: 异常在调用栈中的传播
+> 
+> ### 7. 参数传递模式变式
+> - **值传递变式**: 值传递在调用链中的行为
+> - **引用传递变式**: 引用传递的调用链分析
+> - **指针传递变式**: 指针传递的调用链效果
+> - **结构体传递变式**: 复杂数据结构的传递
+> - **数组传递变式**: 数组在调用链中的传递
+> - **可变参数变式**: 可变参数的调用链分析
+> 
+> ### 8. 返回值处理变式
+> - **多返回值变式**: 多返回值的处理和传递
+> - **条件返回变式**: 条件控制的返回值选择
+> - **错误码返回变式**: 错误码的返回和处理
+> - **状态返回变式**: 状态信息的返回传递
+> - **引用返回变式**: 引用类型的返回值分析
+> - **链式返回变式**: 支持链式调用的返回值
+> 
+> ### 9. 调用优化分析变式
+> - **内联优化变式**: 函数内联对调用链的影响
+> - **尾调用优化变式**: 尾调用优化的分析
+> - **调用消除变式**: 死代码消除对调用的影响
+> - **常量折叠变式**: 常量折叠在调用链中的应用
+> - **调用重排变式**: 编译器调用重排的分析
+> - **缓存优化变式**: 调用结果缓存的分析
+> 
+> ### 10. 高级调用模式变式
+> - **动态调用变式**: 运行时动态函数调用
+> - **反射调用变式**: 反射机制的函数调用
+> - **虚函数调用变式**: 虚函数的动态调用分析
+> - **泛型函数调用变式**: 泛型函数的调用实例化
+> - **宏展开调用变式**: 宏展开对调用链的影响
+> - **模板实例化变式**: 模板实例化的调用分析
+> 
+> ## 复杂度层次设计
+> 
+> ### 简单调用链 (Easy)
+> - 2-3层的直接函数调用
+> - 简单的参数传递和返回值
+> - 清晰的调用顺序和数据流
+> - 基础的错误处理
+> 
+> ### 中等调用链 (Medium)
+> - 3-4层的调用链或简单递归
+> - 包含条件分支的调用路径
+> - 中等复杂度的参数和返回值处理
+> - 基础的回调和高阶函数
+> 
+> ### 复杂调用链 (Hard)
+> - 4-5层的深度调用链或复杂递归
+> - 复杂的数据变换和处理
+> - 高阶函数和函数组合
+> - 复杂的错误处理和状态管理
+> 
+> ### 专家级调用链 (Expert)
+> - 极深或极复杂的调用链
+> - 高级的函数式编程概念
+> - 复杂的异步和回调处理
+> - 需要深度编程知识的调用分析
+> 
+> ## 生成策略
+> 
+> ### 种子分析策略
+> 1. **识别调用模式**: 分析种子任务的主要调用模式和特征
+> 2. **提取数据流**: 识别参数传递和返回值传播的模式
+> 3. **确定复杂度层次**: 评估调用链的深度和复杂程度
+> 4. **分析关键节点**: 找出调用链中的关键决策和变换节点
+> 
+> ### 变式设计原则
+> 1. **调用链导向**: 每个变式都应明确关注函数调用链的分析
+> 2. **英文描述**: 所有task描述必须使用标准英文
+> 3. **答案唯一**: 严格确保答案的准确性和唯一性
+> 4. **数量保证**: 严格确保每个种子生成8-12个变式
+> 
+> ### 质量保证
+> 1. **调用语义验证**: 验证函数调用的语义正确性
+> 2. **数据流检查**: 确保参数和返回值的数据流分析正确
+> 3. **答案唯一性验证**: 严格检查答案的唯一性和确定性
+> 4. **英文质量保证**: 确保描述的英文表达准确清晰
+> 
+> ## 输出格式要求
+> 
+> ```json
+> [
+>     {
+>         "id": "MF-CC-S00X-V001",
+>         "metadata": {
+>             "name": "MultiFunc-CallChain-VariantName",
+>             "category": "MultiFunc-Level",
+>             "subcategory": "Call Chain",
+>             "type": "variant",
+>             "source": "Generated",
+>             "language": "target_language",
+>             "difficulty": "easy/medium/hard/expert",
+>             "intervention": 0,
+>             "variant_type": "variant_type_label",
+>             "call_pattern": "direct/chain/recursive/callback/composition",
+>             "call_depth": "shallow/medium/deep",
+>             "data_flow": "simple/complex/bidirectional"
+>         },
+>         "task": {
+>             "description": "English description of the function call chain analysis task",
+>             "code": "Code containing function call chains to analyze",
+>             "answer": "Unique and accurate call chain analysis result"
+>         }
+>     },
+>     {下一个变式...}
+> ]
+> 特殊字段说明
+> call_pattern: 标识主要的调用模式类型
+> call_depth: 标识调用链的深度层次
+> data_flow: 标识数据流的复杂程度
+> 生成目标
+> 为每个提供的种子任务严格生成8-12个函数调用链变式，确保：
+> 
+> 每种难度等级至少包含2-3个变式
+> 涵盖至少6-8种不同的调用模式分析类型
+> 包含不同的调用深度和复杂度
+> 所有task描述使用标准英文表达
+> 严格保证答案的准确性和唯一性
+> 重点测试场景
+> 参数传递追踪: 准确追踪参数在调用链中的传递和变换
+> 返回值传播: 正确分析返回值在调用链中的传播
+> 递归展开理解: 理解递归调用的展开和计算过程
+> 回调执行顺序: 分析回调函数的执行顺序和效果
+> 调用栈管理: 理解调用栈的构建和管理机制
+> 数据流分析: 分析复杂调用链中的数据流转
+> 英文描述模板示例
+> "Trace the function call chain and determine the final return value..."
+> "Analyze the parameter passing through multiple function calls..."
+> "Follow the recursive call execution and calculate the result..."
+> "Determine the execution order and final outcome of callback functions..."
+> "Trace the data transformation through the function call chain..."
+> "Calculate the result after all function calls in the chain complete..."
+> 答案唯一性保证策略
+> 具体输入值: 使用具体的输入参数，避免参数化结果
+> 确定性执行: 确保函数调用的执行路径是确定的
+> 避免副作用: 避免不可预测的副作用影响结果
+> 精确计算: 确保数值计算的精确性和一致性
+> 清晰语义: 确保函数调用的语义在目标语言中明确
+> 常见调用链模式
+> 验证-处理-返回: 输入验证->数据处理->结果返回
+> 解析-转换-执行: 数据解析->格式转换->操作执行
+> 递归分解: 问题递归分解和结果合并
+> 管道处理: 数据在多个处理函数间流转
+> 回调驱动: 事件驱动的回调函数执行
+> 高阶组合: 高阶函数的组合和应用
+> 请基于此提示词，为给定的函数调用链推理种子任务生成全面的变式集合，严格确保每个种子8-12个变式，所有描述使用英文，保证答案准确且唯一，输出格式为包含所有变式的JSON数组。
+> ```
+
+```json
+[
+    {
+        "id": "MF-CC-S001-V001",
+        "metadata": {
+            "name": "MultiFunc-CallChain-DirectCallValidation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_direct",
+            "call_pattern": "direct",
+            "call_depth": "shallow",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace the parameter validation through this two-level call chain. What is the return value when check_input is called with value = 50?",
+            "code": "int is_valid_range(int val) {\n    return (val >= 10 && val <= 100) ? 1 : 0;\n}\n\nint check_input(int value) {\n    if (is_valid_range(value)) {\n        return value * 2;\n    }\n    return -1;\n}\n\n// What is returned by check_input(50)?",
+            "answer": 100
+        }
+    },
+    {
+        "id": "MF-CC-S001-V002",
+        "metadata": {
+            "name": "MultiFunc-CallChain-ThreeLayerDirect",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "three_layer_direct",
+            "call_pattern": "direct",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Follow the three-layer direct call chain and determine the final output when main_process is called with input = 8.",
+            "code": "int base_check(int x) {\n    return x > 5 ? 1 : 0;\n}\n\nint middle_transform(int x) {\n    if (base_check(x)) {\n        return x * 3;\n    }\n    return 0;\n}\n\nint main_process(int input) {\n    int result = middle_transform(input);\n    return result + 7;\n}\n\n// What is returned by main_process(8)?",
+            "answer": 31
+        }
+    },
+    {
+        "id": "MF-CC-S001-V003",
+        "metadata": {
+            "name": "MultiFunc-CallChain-ConditionalFlow",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "conditional_flow",
+            "call_pattern": "direct",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Trace the conditional call path through multiple functions. What does execute_operation return with mode = 2 and value = 15?",
+            "code": "int operation_a(int x) {\n    return x + 10;\n}\n\nint operation_b(int x) {\n    return x * 2;\n}\n\nint select_operation(int mode, int value) {\n    if (mode == 1) {\n        return operation_a(value);\n    } else if (mode == 2) {\n        return operation_b(value);\n    }\n    return 0;\n}\n\nint execute_operation(int mode, int value) {\n    int result = select_operation(mode, value);\n    return result + 5;\n}\n\n// What is returned by execute_operation(2, 15)?",
+            "answer": 35
+        }
+    },
+    {
+        "id": "MF-CC-S001-V004",
+        "metadata": {
+            "name": "MultiFunc-CallChain-ErrorPropagation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "error_propagation",
+            "call_pattern": "direct",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze error code propagation through the call chain. What is the final return value when process_data is called with input = -5?",
+            "code": "int validate_positive(int x) {\n    return x > 0 ? x : -1;\n}\n\nint double_if_valid(int x) {\n    int validated = validate_positive(x);\n    if (validated == -1) {\n        return -1;\n    }\n    return validated * 2;\n}\n\nint process_data(int input) {\n    int processed = double_if_valid(input);\n    if (processed == -1) {\n        return 0;\n    }\n    return processed + 1;\n}\n\n// What is returned by process_data(-5)?",
+            "answer": 0
+        }
+    },
+    {
+        "id": "MF-CC-S001-V005",
+        "metadata": {
+            "name": "MultiFunc-CallChain-ParameterTransform",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "parameter_transform",
+            "call_pattern": "direct",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Track parameter transformation through the call chain. What is the return value when final_calc is called with x = 12?",
+            "code": "int scale_input(int val) {\n    return val / 3;\n}\n\nint add_offset(int val) {\n    int scaled = scale_input(val);\n    return scaled + 8;\n}\n\nint final_calc(int x) {\n    int adjusted = add_offset(x);\n    return adjusted * 5;\n}\n\n// What is returned by final_calc(12)?",
+            "answer": 60
+        }
+    },
+    {
+        "id": "MF-CC-S001-V006",
+        "metadata": {
+            "name": "MultiFunc-CallChain-MultipleValidation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "multiple_validation",
+            "call_pattern": "direct",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Trace through multiple validation layers in the call chain. What does secure_process return with data = 150?",
+            "code": "int check_minimum(int val) {\n    return val >= 100 ? 1 : 0;\n}\n\nint check_maximum(int val) {\n    return val <= 200 ? 1 : 0;\n}\n\nint validate_range(int val) {\n    return check_minimum(val) && check_maximum(val);\n}\n\nint apply_security(int val) {\n    if (validate_range(val)) {\n        return val - 50;\n    }\n    return -1;\n}\n\nint secure_process(int data) {\n    int secured = apply_security(data);\n    if (secured == -1) {\n        return 0;\n    }\n    return secured + 25;\n}\n\n// What is returned by secure_process(150)?",
+            "answer": 125
+        }
+    },
+    {
+        "id": "MF-CC-S001-V007",
+        "metadata": {
+            "name": "MultiFunc-CallChain-DeepDirect",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "deep_direct",
+            "call_pattern": "direct",
+            "call_depth": "deep",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Follow this five-layer deep call chain and calculate the final result when start_process is called with n = 6.",
+            "code": "int level_one(int x) {\n    return x + 1;\n}\n\nint level_two(int x) {\n    return level_one(x) * 2;\n}\n\nint level_three(int x) {\n    return level_two(x) - 3;\n}\n\nint level_four(int x) {\n    return level_three(x) + 4;\n}\n\nint start_process(int n) {\n    return level_four(n) / 2;\n}\n\n// What is returned by start_process(6)?",
+            "answer": 9
+        }
+    },
+    {
+        "id": "MF-CC-S001-V008",
+        "metadata": {
+            "name": "MultiFunc-CallChain-BranchedFlow",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "branched_flow",
+            "call_pattern": "direct",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze the branched call flow with multiple paths. What is returned by complex_process with type = 1 and value = 20?",
+            "code": "int path_alpha(int x) {\n    return x * 3;\n}\n\nint path_beta(int x) {\n    return x + 15;\n}\n\nint route_call(int type, int x) {\n    if (type == 1) {\n        return path_alpha(x);\n    }\n    return path_beta(x);\n}\n\nint complex_process(int type, int value) {\n    int routed = route_call(type, value);\n    int final_path = route_call(2, routed);\n    return final_path - 10;\n}\n\n// What is returned by complex_process(1, 20)?",
+            "answer": 65
+        }
+    },
+    {
+        "id": "MF-CC-S001-V009",
+        "metadata": {
+            "name": "MultiFunc-CallChain-ReturnValueChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "return_value_chain",
+            "call_pattern": "direct",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace return value propagation through this call chain. What is the final result when chain_process is called with input = 7?",
+            "code": "int step_one(int x) {\n    return x * 4;\n}\n\nint step_two(int x) {\n    int result = step_one(x);\n    return result / 2;\n}\n\nint chain_process(int input) {\n    int intermediate = step_two(input);\n    return intermediate + input;\n}\n\n// What is returned by chain_process(7)?",
+            "answer": 21
+        }
+    },
+    {
+        "id": "MF-CC-S002-V001",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonValidationChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_validation",
+            "call_pattern": "direct",
+            "call_depth": "shallow",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Follow the validation and processing chain. What is returned by compute_result when given num = 45?",
+            "code": "def check_bounds(x):\n    return 20 <= x <= 80\n\ndef compute_result(num):\n    if check_bounds(num):\n        return num + 15\n    else:\n        return 0\n\n# What is returned by compute_result(45)?",
+            "answer": 60
+        }
+    },
+    {
+        "id": "MF-CC-S002-V002",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonMultiStep",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "multi_step",
+            "call_pattern": "direct",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace the multi-step processing chain. What is the final value returned by process_number with x = 18?",
+            "code": "def is_even(n):\n    return n % 2 == 0\n\ndef transform_number(n):\n    if is_even(n):\n        return n // 2\n    else:\n        return n * 3\n\ndef process_number(x):\n    transformed = transform_number(x)\n    return transformed + 12\n\n# What is returned by process_number(18)?",
+            "answer": 21
+        }
+    },
+    {
+        "id": "MF-CC-S002-V003",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonConditionalError",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "conditional_error",
+            "call_pattern": "direct",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze the error handling flow through the call chain. What does safe_divide return with numerator = 100 and denominator = 0?",
+            "code": "def check_non_zero(value):\n    return value != 0\n\ndef perform_division(num, den):\n    if check_non_zero(den):\n        return num / den\n    else:\n        return None\n\ndef safe_divide(numerator, denominator):\n    result = perform_division(numerator, denominator)\n    if result is None:\n        return -1\n    else:\n        return int(result)\n\n# What is returned by safe_divide(100, 0)?",
+            "answer": -1
+        }
+    },
+    {
+        "id": "MF-CC-S002-V004",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonNestedValidation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "nested_validation",
+            "call_pattern": "direct",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow the nested validation chain with multiple checks. What is returned by validate_and_process with data = 75?",
+            "code": "def check_minimum_threshold(val):\n    return val >= 50\n\ndef check_maximum_threshold(val):\n    return val <= 100\n\ndef validate_thresholds(val):\n    return check_minimum_threshold(val) and check_maximum_threshold(val)\n\ndef apply_formula(val):\n    if validate_thresholds(val):\n        return val * 0.8 + 20\n    else:\n        return 0\n\ndef validate_and_process(data):\n    result = apply_formula(data)\n    return int(result) if result > 0 else -1\n\n# What is returned by validate_and_process(75)?",
+            "answer": 80
+        }
+    },
+    {
+        "id": "MF-CC-S002-V005",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonStringProcessing",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "string_processing",
+            "call_pattern": "direct",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace string processing through the call chain. What is returned by process_string with text = 'Hello'?",
+            "code": "def count_chars(s):\n    return len(s)\n\ndef calculate_score(s):\n    length = count_chars(s)\n    if length > 3:\n        return length * 10\n    else:\n        return 0\n\ndef process_string(text):\n    score = calculate_score(text)\n    return score + 5\n\n# What is returned by process_string('Hello')?",
+            "answer": 55
+        }
+    },
+    {
+        "id": "MF-CC-S002-V006",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonListProcessing",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "list_processing",
+            "call_pattern": "direct",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow list processing through the call chain. What is returned by analyze_list with numbers = [2, 4, 6, 8]?",
+            "code": "def sum_elements(lst):\n    return sum(lst)\n\ndef check_even_sum(lst):\n    total = sum_elements(lst)\n    return total % 2 == 0\n\ndef analyze_list(numbers):\n    if check_even_sum(numbers):\n        return len(numbers) * 5\n    else:\n        return 0\n\n# What is returned by analyze_list([2, 4, 6, 8])?",
+            "answer": 20
+        }
+    },
+    {
+        "id": "MF-CC-S002-V007",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonComplexFlow",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "complex_flow",
+            "call_pattern": "direct",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze the complex conditional flow. What does master_process return with mode = 'A' and value = 30?",
+            "code": "def process_mode_a(x):\n    return x * 2 + 10\n\ndef process_mode_b(x):\n    return x + 25\n\ndef select_processor(mode, x):\n    if mode == 'A':\n        return process_mode_a(x)\n    elif mode == 'B':\n        return process_mode_b(x)\n    else:\n        return 0\n\ndef validate_result(result):\n    return result if result > 50 else 0\n\ndef master_process(mode, value):\n    processed = select_processor(mode, value)\n    validated = validate_result(processed)\n    return validated + 5 if validated > 0 else -1\n\n# What is returned by master_process('A', 30)?",
+            "answer": 75
+        }
+    },
+    {
+        "id": "MF-CC-S002-V008",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonMathChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "math_chain",
+            "call_pattern": "direct",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Follow the mathematical transformation chain. What is returned by calculate_final with base = 12?",
+            "code": "def square_root_int(n):\n    return int(n ** 0.5)\n\ndef apply_math_ops(n):\n    sqrt_val = square_root_int(n)\n    return sqrt_val + n\n\ndef calculate_final(base):\n    result = apply_math_ops(base)\n    return result * 2\n\n# What is returned by calculate_final(12)?\n# Note: int(12**0.5) = int(3.46) = 3",
+            "answer": 30
+        }
+    },
+    {
+        "id": "MF-CC-S003-V001",
+        "metadata": {
+            "name": "MultiFunc-CallChain-DatabaseLayered",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "database_layered",
+            "call_pattern": "chain",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace through the database query processing layers. What is returned by query_processor with sql = 'UPDATE table SET x=1'?",
+            "code": "int check_sql_syntax(char *sql) {\n    return strlen(sql) > 5 ? 1 : 0;\n}\n\nint validate_permissions(char *sql) {\n    int syntax_ok = check_sql_syntax(sql);\n    if (!syntax_ok) return 0;\n    return strlen(sql) < 50 ? 1 : 0;\n}\n\nint query_processor(char *sql) {\n    int permitted = validate_permissions(sql);\n    if (!permitted) return -1;\n    return strlen(sql) + 10;\n}\n\n// Given sql = 'UPDATE table SET x=1', what does query_processor return?\n// Note: strlen('UPDATE table SET x=1') = 21",
+            "answer": 31
+        }
+    },
+    {
+        "id": "MF-CC-S003-V002",
+        "metadata": {
+            "name": "MultiFunc-CallChain-ParserChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "parser_chain",
+            "call_pattern": "chain",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow the parsing and compilation chain. What does compile_statement return with code = 'int x = 10;'?",
+            "code": "int tokenize(char *code) {\n    return strlen(code) / 2;\n}\n\nint parse_tokens(char *code) {\n    int tokens = tokenize(code);\n    return tokens > 3 ? tokens : 0;\n}\n\nint semantic_analysis(char *code) {\n    int parsed = parse_tokens(code);\n    if (parsed == 0) return -1;\n    return parsed + 5;\n}\n\nint compile_statement(char *code) {\n    int analyzed = semantic_analysis(code);\n    if (analyzed == -1) return 0;\n    return analyzed * 2;\n}\n\n// Given code = 'int x = 10;', what does compile_statement return?\n// Note: strlen('int x = 10;') = 11",
+            "answer": 20
+        }
+    },
+    {
+        "id": "MF-CC-S003-V003",
+        "metadata": {
+            "name": "MultiFunc-CallChain-NetworkProtocol",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "network_protocol",
+            "call_pattern": "chain",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze the network packet processing chain. What is returned by process_packet with data = 'GET /index.html'?",
+            "code": "int validate_header(char *data) {\n    return strlen(data) >= 8 ? 1 : 0;\n}\n\nint check_protocol(char *data) {\n    int header_valid = validate_header(data);\n    if (!header_valid) return 0;\n    return (data[0] == 'G') ? 2 : 1;\n}\n\nint route_request(char *data) {\n    int protocol_code = check_protocol(data);\n    if (protocol_code == 0) return -1;\n    return protocol_code * strlen(data);\n}\n\nint process_packet(char *data) {\n    int routed = route_request(data);\n    if (routed == -1) return 0;\n    return routed + 100;\n}\n\n// Given data = 'GET /index.html', what does process_packet return?\n// Note: strlen('GET /index.html') = 15",
+            "answer": 130
+        }
+    },
+    {
+        "id": "MF-CC-S003-V004",
+        "metadata": {
+            "name": "MultiFunc-CallChain-FileProcessing",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "file_processing",
+            "call_pattern": "chain",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace file processing through the chain. What does process_file return with filename = 'data.txt'?",
+            "code": "int check_extension(char *filename) {\n    int len = strlen(filename);\n    return (len > 4 && filename[len-4] == '.') ? 1 : 0;\n}\n\nint get_file_size(char *filename) {\n    int has_ext = check_extension(filename);\n    if (!has_ext) return 0;\n    return strlen(filename) * 10;\n}\n\nint process_file(char *filename) {\n    int size = get_file_size(filename);\n    return size > 0 ? size + 50 : -1;\n}\n\n// Given filename = 'data.txt', what does process_file return?\n// Note: strlen('data.txt') = 8",
+            "answer": 130
+        }
+    },
+    {
+        "id": "MF-CC-S003-V005",
+        "metadata": {
+            "name": "MultiFunc-CallChain-SecurityCheck",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "security_check",
+            "call_pattern": "chain",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow the security validation chain. What is returned by secure_access with token = 'AUTH123'?",
+            "code": "int validate_token_format(char *token) {\n    return (strlen(token) >= 6) ? 1 : 0;\n}\n\nint check_token_prefix(char *token) {\n    int format_ok = validate_token_format(token);\n    if (!format_ok) return 0;\n    return (token[0] == 'A' && token[1] == 'U') ? 1 : 0;\n}\n\nint authenticate_user(char *token) {\n    int prefix_ok = check_token_prefix(token);\n    if (!prefix_ok) return -1;\n    return strlen(token) + 20;\n}\n\nint secure_access(char *token) {\n    int auth_result = authenticate_user(token);\n    if (auth_result == -1) return 0;\n    return auth_result * 3;\n}\n\n// Given token = 'AUTH123', what does secure_access return?\n// Note: strlen('AUTH123') = 7",
+            "answer": 81
+        }
+    },
+    {
+        "id": "MF-CC-S003-V006",
+        "metadata": {
+            "name": "MultiFunc-CallChain-DataValidation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "data_validation",
+            "call_pattern": "chain",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze complex data validation chain. What does validate_input return with input = 'JSON{data:value}'?",
+            "code": "int check_format(char *input) {\n    return strlen(input) > 10 ? 1 : 0;\n}\n\nint validate_structure(char *input) {\n    int format_valid = check_format(input);\n    if (!format_valid) return 0;\n    return (input[0] == 'J') ? 2 : 1;\n}\n\nint sanitize_data(char *input) {\n    int structure_code = validate_structure(input);\n    if (structure_code == 0) return -1;\n    return structure_code * strlen(input) / 2;\n}\n\nint validate_input(char *input) {\n    int sanitized = sanitize_data(input);\n    if (sanitized == -1) return 0;\n    return sanitized + strlen(input);\n}\n\n// Given input = 'JSON{data:value}', what does validate_input return?\n// Note: strlen('JSON{data:value}') = 16",
+            "answer": 32
+        }
+    },
+    {
+        "id": "MF-CC-S003-V007",
+        "metadata": {
+            "name": "MultiFunc-CallChain-ConfigParser",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "config_parser",
+            "call_pattern": "chain",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Trace configuration parsing chain. What does parse_config return with config = 'port=8080'?",
+            "code": "int find_equals(char *config) {\n    for (int i = 0; i < strlen(config); i++) {\n        if (config[i] == '=') return i;\n    }\n    return -1;\n}\n\nint extract_value(char *config) {\n    int eq_pos = find_equals(config);\n    if (eq_pos == -1) return 0;\n    return strlen(config) - eq_pos;\n}\n\nint parse_config(char *config) {\n    int value_len = extract_value(config);\n    if (value_len == 0) return -1;\n    return value_len * 100 + strlen(config);\n}\n\n// Given config = 'port=8080', what does parse_config return?\n// Note: strlen('port=8080') = 9, equals at position 4",
+            "answer": 509
+        }
+    },
+    {
+        "id": "MF-CC-S003-V008",
+        "metadata": {
+            "name": "MultiFunc-CallChain-MessageProcessor",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "message_processor",
+            "call_pattern": "chain",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow message processing through complex chain. What is returned by handle_message with msg = 'HELLO WORLD'?",
+            "code": "int count_spaces(char *msg) {\n    int count = 0;\n    for (int i = 0; i < strlen(msg); i++) {\n        if (msg[i] == ' ') count++;\n    }\n    return count;\n}\n\nint analyze_message(char *msg) {\n    int spaces = count_spaces(msg);\n    int length = strlen(msg);\n    return length + spaces * 5;\n}\n\nint process_content(char *msg) {\n    int analysis = analyze_message(msg);\n    return analysis > 15 ? analysis - 5 : 0;\n}\n\nint handle_message(char *msg) {\n    int processed = process_content(msg);\n    return processed > 0 ? processed + 10 : -1;\n}\n\n// Given msg = 'HELLO WORLD', what does handle_message return?\n// Note: strlen('HELLO WORLD') = 11, contains 1 space",
+            "answer": 27
+        }
+    },
+    {
+        "id": "MF-CC-S004-V001",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonSimpleTransform",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_transform",
+            "call_pattern": "chain",
+            "call_depth": "shallow",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Follow the simple data transformation chain. What is returned by process_value with x = 20?",
+            "code": "def double(x):\n    return x * 2\n\ndef add_five(x):\n    doubled = double(x)\n    return doubled + 5\n\ndef process_value(x):\n    result = add_five(x)\n    return result\n\n# What is returned by process_value(20)?",
+            "answer": 45
+        }
+    },
+    {
+        "id": "MF-CC-S004-V002",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonMathPipeline",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "math_pipeline",
+            "call_pattern": "chain",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace the mathematical transformation pipeline. What is the final result when calculate_result is called with input = 16?",
+            "code": "def square_root(x):\n    return int(x ** 0.5)\n\ndef multiply_by_three(x):\n    root = square_root(x)\n    return root * 3\n\ndef subtract_two(x):\n    tripled = multiply_by_three(x)\n    return tripled - 2\n\ndef calculate_result(input):\n    final = subtract_two(input)\n    return final + 1\n\n# What is returned by calculate_result(16)?\n# Note: int(16**0.5) = 4",
+            "answer": 11
+        }
+    },
+    {
+        "id": "MF-CC-S004-V003",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonStringChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "string_chain",
+            "call_pattern": "chain",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Follow string processing through transformation chain. What does transform_text return with text = 'Python'?",
+            "code": "def get_length(s):\n    return len(s)\n\ndef double_length(s):\n    length = get_length(s)\n    return length * 2\n\ndef add_ten(s):\n    doubled = double_length(s)\n    return doubled + 10\n\ndef transform_text(text):\n    result = add_ten(text)\n    return result\n\n# What is returned by transform_text('Python')?",
+            "answer": 22
+        }
+    },
+    {
+        "id": "MF-CC-S004-V004",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonConditionChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "condition_chain",
+            "call_pattern": "chain",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze conditional transformation chain. What is returned by complex_transform with num = 35?",
+            "code": "def check_divisible_by_five(n):\n    return n % 5 == 0\n\ndef apply_condition(n):\n    if check_divisible_by_five(n):\n        return n / 5\n    else:\n        return n * 2\n\ndef final_adjustment(n):\n    adjusted = apply_condition(n)\n    return int(adjusted) + 3\n\ndef complex_transform(num):\n    result = final_adjustment(num)\n    return result\n\n# What is returned by complex_transform(35)?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "MF-CC-S004-V005",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonListChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "list_chain",
+            "call_pattern": "chain",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Trace list processing through transformation chain. What does process_list return with data = [1, 2, 3, 4]?",
+            "code": "def calculate_sum(lst):\n    return sum(lst)\n\ndef get_average(lst):\n    total = calculate_sum(lst)\n    return total / len(lst)\n\ndef scale_average(lst):\n    avg = get_average(lst)\n    return avg * 4\n\ndef process_list(data):\n    result = scale_average(data)\n    return int(result)\n\n# What is returned by process_list([1, 2, 3, 4])?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "MF-CC-S004-V006",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonNestedTransform",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "nested_transform",
+            "call_pattern": "chain",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow nested transformation chain. What is the final result when deep_process is called with value = 8?",
+            "code": "def level_one_transform(x):\n    return x + 2\n\ndef level_two_transform(x):\n    step1 = level_one_transform(x)\n    return step1 * 3\n\ndef level_three_transform(x):\n    step2 = level_two_transform(x)\n    return step2 - 5\n\ndef deep_process(value):\n    final = level_three_transform(value)\n    return final / 2\n\n# What is returned by deep_process(8)?",
+            "answer": 12.5
+        }
+    },
+    {
+        "id": "MF-CC-S004-V007",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonFloatChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "float_chain",
+            "call_pattern": "chain",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace floating-point transformations through the chain. What does compute_final return with x = 100?",
+            "code": "def convert_to_decimal(x):\n    return x / 10.0\n\ndef apply_multiplier(x):\n    decimal = convert_to_decimal(x)\n    return decimal * 1.5\n\ndef add_offset(x):\n    multiplied = apply_multiplier(x)\n    return multiplied + 2.5\n\ndef compute_final(x):\n    result = add_offset(x)\n    return round(result, 1)\n\n# What is returned by compute_final(100)?",
+            "answer": 17.5
+        }
+    },
+    {
+        "id": "MF-CC-S004-V008",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonBooleanChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "boolean_chain",
+            "call_pattern": "chain",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow boolean logic through transformation chain. What is returned by logic_chain with a = True and b = False?",
+            "code": "def logical_and(x, y):\n    return x and y\n\ndef logical_or(x, y):\n    and_result = logical_and(x, y)\n    return x or and_result\n\ndef convert_to_number(x, y):\n    or_result = logical_or(x, y)\n    return 1 if or_result else 0\n\ndef logic_chain(a, b):\n    result = convert_to_number(a, b)\n    return result * 10 + 5\n\n# What is returned by logic_chain(True, False)?",
+            "answer": 15
+        }
+    },
+    {
+        "id": "MF-CC-S005-V001",
+        "metadata": {
+            "name": "MultiFunc-CallChain-SimpleRecursion",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_recursion",
+            "call_pattern": "recursive",
+            "call_depth": "shallow",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace the simple recursive countdown. What is returned by countdown when called with n = 5?",
+            "code": "int countdown(int n) {\n    if (n <= 0) {\n        return 0;\n    }\n    return n + countdown(n - 1);\n}\n\n// What is returned by countdown(5)?",
+            "answer": 15
+        }
+    },
+    {
+        "id": "MF-CC-S005-V002",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PowerRecursion",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "power_recursion",
+            "call_pattern": "recursive",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Follow recursive power calculation. What does power return with base = 3 and exp = 4?",
+            "code": "int power(int base, int exp) {\n    if (exp == 0) {\n        return 1;\n    }\n    return base * power(base, exp - 1);\n}\n\n// What is returned by power(3, 4)?",
+            "answer": 81
+        }
+    },
+    {
+        "id": "MF-CC-S005-V003",
+        "metadata": {
+            "name": "MultiFunc-CallChain-DigitSum",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "digit_sum",
+            "call_pattern": "recursive",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace recursive digit sum calculation. What is returned by digit_sum with number = 1234?",
+            "code": "int digit_sum(int number) {\n    if (number == 0) {\n        return 0;\n    }\n    return (number % 10) + digit_sum(number / 10);\n}\n\n// What is returned by digit_sum(1234)?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "MF-CC-S005-V004",
+        "metadata": {
+            "name": "MultiFunc-CallChain-GCDRecursion",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "gcd_recursion",
+            "call_pattern": "recursive",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Follow recursive GCD algorithm. What does gcd return with a = 48 and b = 18?",
+            "code": "int gcd(int a, int b) {\n    if (b == 0) {\n        return a;\n    }\n    return gcd(b, a % b);\n}\n\n// What is returned by gcd(48, 18)?",
+            "answer": 6
+        }
+    },
+    {
+        "id": "MF-CC-S005-V005",
+        "metadata": {
+            "name": "MultiFunc-CallChain-TreeSum",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "tree_sum",
+            "call_pattern": "recursive",
+            "call_depth": "deep",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace recursive tree-like calculation. What is returned by tree_calc with n = 4?",
+            "code": "int tree_calc(int n) {\n    if (n <= 1) {\n        return 1;\n    }\n    return tree_calc(n - 1) + tree_calc(n - 2) + n;\n}\n\n// What is returned by tree_calc(4)?\n// Note: tree_calc(1)=1, tree_calc(2)=tree_calc(1)+tree_calc(0)+2=1+1+2=4",
+            "answer": 12
+        }
+    },
+    {
+        "id": "MF-CC-S005-V006",
+        "metadata": {
+            "name": "MultiFunc-CallChain-ArrayRecursion",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "array_recursion",
+            "call_pattern": "recursive",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow recursive array processing with helper function. What does process_array return with arr = [2, 4, 6] and size = 3?",
+            "code": "int sum_array_recursive(int arr[], int index, int size) {\n    if (index >= size) {\n        return 0;\n    }\n    return arr[index] + sum_array_recursive(arr, index + 1, size);\n}\n\nint process_array(int arr[], int size) {\n    int sum = sum_array_recursive(arr, 0, size);\n    return sum * 2;\n}\n\n// Given arr = [2, 4, 6] and size = 3, what does process_array return?",
+            "answer": 24
+        }
+    },
+    {
+        "id": "MF-CC-S005-V007",
+        "metadata": {
+            "name": "MultiFunc-CallChain-MutualRecursion",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "mutual_recursion",
+            "call_pattern": "recursive",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Trace mutual recursion between two functions. What is returned by is_even when called with n = 6?",
+            "code": "int is_odd(int n);\n\nint is_even(int n) {\n    if (n == 0) return 1;\n    return is_odd(n - 1);\n}\n\nint is_odd(int n) {\n    if (n == 0) return 0;\n    return is_even(n - 1);\n}\n\nint compute_result(int n) {\n    return is_even(n) ? n * 2 : n + 5;\n}\n\n// What is returned by compute_result(6)?",
+            "answer": 12
+        }
+    },
+    {
+        "id": "MF-CC-S005-V008",
+        "metadata": {
+            "name": "MultiFunc-CallChain-ComplexRecursive",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "complex_recursive",
+            "call_pattern": "recursive",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze complex recursive calculation with multiple base cases. What does complex_func return with n = 5?",
+            "code": "int complex_func(int n) {\n    if (n <= 0) return 0;\n    if (n == 1) return 1;\n    if (n == 2) return 2;\n    return complex_func(n - 1) + complex_func(n - 2) + complex_func(n - 3);\n}\n\nint wrapper_func(int n) {\n    int result = complex_func(n);\n    return result + n;\n}\n\n// What is returned by wrapper_func(5)?\n// Note: complex_func(3)=complex_func(2)+complex_func(1)+complex_func(0)=2+1+0=3",
+            "answer": 16
+        }
+    },
+    {
+        "id": "MF-CC-S006-V001",
+        "metadata": {
+            "name": "MultiFunc-CallChain-SimpleTailRecursion",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "simple_tail_recursion",
+            "call_pattern": "recursive",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace tail-recursive summation with accumulator. What is returned by sum_up_to when called with n = 6?",
+            "code": "def sum_helper(n, acc):\n    if n <= 0:\n        return acc\n    return sum_helper(n - 1, acc + n)\n\ndef sum_up_to(n):\n    return sum_helper(n, 0)\n\n# What is returned by sum_up_to(6)?",
+            "answer": 21
+        }
+    },
+    {
+        "id": "MF-CC-S006-V002",
+        "metadata": {
+            "name": "MultiFunc-CallChain-TailPower",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "tail_power",
+            "call_pattern": "recursive",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Follow tail-recursive power calculation. What does compute_power return with base = 2 and exponent = 5?",
+            "code": "def power_helper(base, exp, acc):\n    if exp <= 0:\n        return acc\n    return power_helper(base, exp - 1, acc * base)\n\ndef compute_power(base, exponent):\n    return power_helper(base, exponent, 1)\n\n# What is returned by compute_power(2, 5)?",
+            "answer": 32
+        }
+    },
+    {
+        "id": "MF-CC-S006-V003",
+        "metadata": {
+            "name": "MultiFunc-CallChain-TailStringReverse",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "tail_string_reverse",
+            "call_pattern": "recursive",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Trace tail-recursive string reversal. What is the length of the result when reverse_string is called with s = 'ABCD'?",
+            "code": "def reverse_helper(s, index, acc):\n    if index < 0:\n        return acc\n    return reverse_helper(s, index - 1, acc + s[index])\n\ndef reverse_string(s):\n    result = reverse_helper(s, len(s) - 1, '')\n    return result\n\ndef get_result_info(s):\n    reversed_str = reverse_string(s)\n    return len(reversed_str)\n\n# What is returned by get_result_info('ABCD')?",
+            "answer": 4
+        }
+    },
+    {
+        "id": "MF-CC-S006-V004",
+        "metadata": {
+            "name": "MultiFunc-CallChain-TailListSum",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "tail_list_sum",
+            "call_pattern": "recursive",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow tail-recursive list processing. What does process_list return with numbers = [3, 6, 9, 12]?",
+            "code": "def sum_list_helper(lst, index, acc):\n    if index >= len(lst):\n        return acc\n    return sum_list_helper(lst, index + 1, acc + lst[index])\n\ndef calculate_sum(numbers):\n    return sum_list_helper(numbers, 0, 0)\n\ndef process_list(numbers):\n    total = calculate_sum(numbers)\n    return total // len(numbers)\n\n# What is returned by process_list([3, 6, 9, 12])?",
+            "answer": 7
+        }
+    },
+    {
+        "id": "MF-CC-S006-V005",
+        "metadata": {
+            "name": "MultiFunc-CallChain-TailFibonacci",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "tail_fibonacci",
+            "call_pattern": "recursive",
+            "call_depth": "deep",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace tail-recursive Fibonacci with two accumulators. What is returned by fibonacci when called with n = 7?",
+            "code": "def fib_helper(n, a, b):\n    if n <= 0:\n        return a\n    return fib_helper(n - 1, b, a + b)\n\ndef fibonacci(n):\n    return fib_helper(n, 0, 1)\n\ndef calculate_result(n):\n    fib_val = fibonacci(n)\n    return fib_val + 10\n\n# What is returned by calculate_result(7)?",
+            "answer": 23
+        }
+    },
+    {
+        "id": "MF-CC-S006-V006",
+        "metadata": {
+            "name": "MultiFunc-CallChain-TailGCD",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "tail_gcd",
+            "call_pattern": "recursive",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Follow tail-recursive GCD with result processing. What does enhanced_gcd return with x = 36 and y = 24?",
+            "code": "def gcd_helper(a, b):\n    if b == 0:\n        return a\n    return gcd_helper(b, a % b)\n\ndef calculate_gcd(x, y):\n    return gcd_helper(x, y)\n\ndef enhanced_gcd(x, y):\n    gcd_value = calculate_gcd(x, y)\n    return gcd_value * 5\n\n# What is returned by enhanced_gcd(36, 24)?",
+            "answer": 60
+        }
+    },
+    {
+        "id": "MF-CC-S006-V007",
+        "metadata": {
+            "name": "MultiFunc-CallChain-TailMultiply",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "tail_multiply",
+            "call_pattern": "recursive",
+            "call_depth": "deep",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace complex tail recursion with multiplication. What is returned by multiply_range with start = 3 and end = 6?",
+            "code": "def multiply_helper(current, end, acc):\n    if current > end:\n        return acc\n    return multiply_helper(current + 1, end, acc * current)\n\ndef multiply_range(start, end):\n    return multiply_helper(start, end, 1)\n\ndef compute_final(start, end):\n    product = multiply_range(start, end)\n    return product + 100\n\n# What is returned by compute_final(3, 6)?\n# Note: multiply_range(3, 6) = 3 * 4 * 5 * 6",
+            "answer": 460
+        }
+    },
+    {
+        "id": "MF-CC-S006-V008",
+        "metadata": {
+            "name": "MultiFunc-CallChain-TailDigitProduct",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "tail_digit_product",
+            "call_pattern": "recursive",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze tail-recursive digit product calculation. What does digit_product_calc return with number = 234?",
+            "code": "def digit_product_helper(n, acc):\n    if n == 0:\n        return acc\n    return digit_product_helper(n // 10, acc * (n % 10))\n\ndef digit_product(number):\n    return digit_product_helper(number, 1)\n\ndef digit_product_calc(number):\n    product = digit_product(number)\n    return product * 3 + 5\n\n# What is returned by digit_product_calc(234)?\n# Note: digit_product(234) = 2 * 3 * 4 = 24",
+            "answer": 77
+        }
+    },
+    {
+        "id": "MF-CC-S007-V001",
+        "metadata": {
+            "name": "MultiFunc-CallChain-SimpleCallback",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "simple_callback",
+            "call_pattern": "callback",
+            "call_depth": "shallow",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace simple callback execution. What is returned by execute_operation with value = 12 and the triple function?",
+            "code": "typedef int (*operation_func)(int);\n\nint triple(int x) {\n    return x * 3;\n}\n\nint execute_operation(int value, operation_func op) {\n    return op(value) + 5;\n}\n\n// What is returned by execute_operation(12, triple)?",
+            "answer": 41
+        }
+    },
+    {
+        "id": "MF-CC-S007-V002",
+        "metadata": {
+            "name": "MultiFunc-CallChain-ChainedCallbacks",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "chained_callbacks",
+            "call_pattern": "callback",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow chained callback execution. What does process_chain return with input = 8?",
+            "code": "typedef int (*callback_func)(int);\n\nint square_func(int x) {\n    return x * x;\n}\n\nint subtract_five(int x) {\n    return x - 5;\n}\n\nint apply_two_callbacks(int val, callback_func first, callback_func second) {\n    int result1 = first(val);\n    int result2 = second(result1);\n    return result2;\n}\n\nint process_chain(int input) {\n    return apply_two_callbacks(input, square_func, subtract_five);\n}\n\n// What is returned by process_chain(8)?",
+            "answer": 59
+        }
+    },
+    {
+        "id": "MF-CC-S007-V003",
+        "metadata": {
+            "name": "MultiFunc-CallChain-ConditionalCallback",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "conditional_callback",
+            "call_pattern": "callback",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze conditional callback selection. What is returned by smart_processor with data = 15 and mode = 1?",
+            "code": "typedef int (*processor_func)(int);\n\nint halve(int x) {\n    return x / 2;\n}\n\nint add_twenty(int x) {\n    return x + 20;\n}\n\nprocessor_func select_callback(int mode) {\n    return (mode == 1) ? halve : add_twenty;\n}\n\nint smart_processor(int data, int mode) {\n    processor_func selected = select_callback(mode);\n    int result = selected(data);\n    return result + 3;\n}\n\n// What is returned by smart_processor(15, 1)?",
+            "answer": 10
+        }
+    },
+    {
+        "id": "MF-CC-S007-V004",
+        "metadata": {
+            "name": "MultiFunc-CallChain-CallbackArray",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "callback_array",
+            "call_pattern": "callback",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Trace callback execution from function array. What does execute_callbacks return with value = 6 and index = 2?",
+            "code": "typedef int (*math_func)(int);\n\nint increment(int x) { return x + 1; }\nint double_val(int x) { return x * 2; }\nint square_val(int x) { return x * x; }\n\nmath_func operations[3] = {increment, double_val, square_val};\n\nint execute_callbacks(int value, int index) {\n    if (index < 0 || index >= 3) return 0;\n    int result = operations[index](value);\n    return result + 10;\n}\n\n// What is returned by execute_callbacks(6, 2)?",
+            "answer": 46
+        }
+    },
+    {
+        "id": "MF-CC-S007-V005",
+        "metadata": {
+            "name": "MultiFunc-CallChain-NestedCallback",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "nested_callback",
+            "call_pattern": "callback",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow nested callback execution. What is returned by nested_apply with x = 10?",
+            "code": "typedef int (*transform_func)(int);\n\nint add_five(int x) {\n    return x + 5;\n}\n\nint multiply_by_two(int x) {\n    return x * 2;\n}\n\nint apply_nested(int val, transform_func outer, transform_func inner) {\n    int inner_result = inner(val);\n    int outer_result = outer(inner_result);\n    return outer_result;\n}\n\nint nested_apply(int x) {\n    return apply_nested(x, multiply_by_two, add_five) + 7;\n}\n\n// What is returned by nested_apply(10)?",
+            "answer": 37
+        }
+    },
+    {
+        "id": "MF-CC-S007-V006",
+        "metadata": {
+            "name": "MultiFunc-CallChain-CallbackComposition",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "callback_composition",
+            "call_pattern": "callback",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Trace callback function composition. What does compose_and_execute return with input = 4?",
+            "code": "typedef int (*unary_func)(int);\n\nint cube(int x) {\n    return x * x * x;\n}\n\nint subtract_ten(int x) {\n    return x - 10;\n}\n\nint compose_functions(int val, unary_func f1, unary_func f2, unary_func f3) {\n    int step1 = f1(val);\n    int step2 = f2(step1);\n    int step3 = f3(step2);\n    return step3;\n}\n\nint compose_and_execute(int input) {\n    return compose_functions(input, cube, subtract_ten, cube);\n}\n\n// What is returned by compose_and_execute(4)?\n// Note: cube(4)=64, subtract_ten(64)=54, cube(54)=157464",
+            "answer": 157464
+        }
+    },
+    {
+        "id": "MF-CC-S007-V007",
+        "metadata": {
+            "name": "MultiFunc-CallChain-CallbackValidation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "callback_validation",
+            "call_pattern": "callback",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze callback with validation. What is returned by validated_process with data = 25?",
+            "code": "typedef int (*validator_func)(int);\ntypedef int (*processor_func)(int);\n\nint is_positive(int x) {\n    return x > 0 ? 1 : 0;\n}\n\nint scale_by_three(int x) {\n    return x * 3;\n}\n\nint apply_with_validation(int val, validator_func validate, processor_func process) {\n    if (validate(val)) {\n        return process(val);\n    }\n    return -1;\n}\n\nint validated_process(int data) {\n    int result = apply_with_validation(data, is_positive, scale_by_three);\n    return result > 0 ? result + 5 : 0;\n}\n\n// What is returned by validated_process(25)?",
+            "answer": 80
+        }
+    },
+    {
+        "id": "MF-CC-S007-V008",
+        "metadata": {
+            "name": "MultiFunc-CallChain-CallbackPipeline",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "callback_pipeline",
+            "call_pattern": "callback",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow callback pipeline execution. What does execute_pipeline return with value = 7?",
+            "code": "typedef int (*stage_func)(int);\n\nint stage_one(int x) { return x + 3; }\nint stage_two(int x) { return x * 4; }\nint stage_three(int x) { return x - 8; }\n\nint pipeline_executor(int val, stage_func s1, stage_func s2, stage_func s3) {\n    int after_s1 = s1(val);\n    int after_s2 = s2(after_s1);\n    int after_s3 = s3(after_s2);\n    return after_s3;\n}\n\nint execute_pipeline(int value) {\n    int pipelined = pipeline_executor(value, stage_one, stage_two, stage_three);\n    return pipelined / 2;\n}\n\n// What is returned by execute_pipeline(7)?",
+            "answer": 16
+        }
+    },
+    {
+        "id": "MF-CC-S008-V001",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonSimpleCompose",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 0,
+            "variant_type": "simple_compose",
+            "call_pattern": "composition",
+            "call_depth": "shallow",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace simple function composition. What is returned by apply_composed with x = 8?",
+            "code": "def add_two(x):\n    return x + 2\n\ndef multiply_by_five(x):\n    return x * 5\n\ndef compose_simple(f, g):\n    return lambda x: f(g(x))\n\ndef apply_composed(x):\n    composed = compose_simple(multiply_by_five, add_two)\n    return composed(x)\n\n# What is returned by apply_composed(8)?",
+            "answer": 50
+        }
+    },
+    {
+        "id": "MF-CC-S008-V002",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonTripleCompose",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "triple_compose",
+            "call_pattern": "composition",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Follow triple function composition. What does triple_compose_result return with value = 5?",
+            "code": "def subtract_one(x):\n    return x - 1\n\ndef square(x):\n    return x * x\n\ndef add_three(x):\n    return x + 3\n\ndef compose_three(f, g, h):\n    return lambda x: f(g(h(x)))\n\ndef triple_compose_result(value):\n    result_func = compose_three(add_three, square, subtract_one)\n    return result_func(value)\n\n# What is returned by triple_compose_result(5)?",
+            "answer": 19
+        }
+    },
+    {
+        "id": "MF-CC-S008-V003",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonApplyTwiceChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "apply_twice_chain",
+            "call_pattern": "composition",
+            "call_depth": "medium",
+            "data_flow": "simple"
+        },
+        "task": {
+            "description": "Trace apply_twice with different functions. What is returned by complex_application with n = 6?",
+            "code": "def double(x):\n    return x * 2\n\ndef apply_twice(f):\n    return lambda x: f(f(x))\n\ndef add_one(x):\n    return x + 1\n\ndef complex_application(n):\n    twice_double = apply_twice(double)\n    twice_add_one = apply_twice(add_one)\n    intermediate = twice_double(n)\n    final = twice_add_one(intermediate)\n    return final\n\n# What is returned by complex_application(6)?",
+            "answer": 26
+        }
+    },
+    {
+        "id": "MF-CC-S008-V004",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonPartialApplication",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 0,
+            "variant_type": "partial_application",
+            "call_pattern": "composition",
+            "call_depth": "medium",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow partial application and composition. What does partial_chain return with x = 12?",
+            "code": "def multiply(a, b):\n    return a * b\n\ndef partial_left(f, a):\n    return lambda b: f(a, b)\n\ndef add(x, y):\n    return x + y\n\ndef partial_chain(x):\n    multiply_by_three = partial_left(multiply, 3)\n    add_ten = partial_left(add, 10)\n    step1 = multiply_by_three(x)\n    step2 = add_ten(step1)\n    return step2\n\n# What is returned by partial_chain(12)?",
+            "answer": 46
+        }
+    },
+    {
+        "id": "MF-CC-S008-V005",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonCurryingChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "currying_chain",
+            "call_pattern": "composition",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Trace curried function composition. What is returned by curry_composition with a = 4 and b = 7?",
+            "code": "def curry_add(x):\n    return lambda y: x + y\n\ndef curry_multiply(x):\n    return lambda y: x * y\n\ndef compose(f, g):\n    return lambda x: f(g(x))\n\ndef curry_composition(a, b):\n    add_a = curry_add(a)\n    multiply_b = curry_multiply(b)\n    composed = compose(multiply_b, add_a)\n    return composed(5)\n\n# What is returned by curry_composition(4, 7)?",
+            "answer": 63
+        }
+    },
+    {
+        "id": "MF-CC-S008-V006",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonNestedHigherOrder",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "nested_higher_order",
+            "call_pattern": "composition",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze nested higher-order function application. What does nested_higher_order return with value = 3?",
+            "code": "def create_adder(n):\n    return lambda x: x + n\n\ndef create_multiplier(n):\n    return lambda x: x * n\n\ndef apply_functions(value, func_creator1, func_creator2, param1, param2):\n    f1 = func_creator1(param1)\n    f2 = func_creator2(param2)\n    result1 = f1(value)\n    result2 = f2(result1)\n    return result2\n\ndef nested_higher_order(value):\n    return apply_functions(value, create_adder, create_multiplier, 8, 4)\n\n# What is returned by nested_higher_order(3)?",
+            "answer": 44
+        }
+    },
+    {
+        "id": "MF-CC-S008-V007",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonFunctionalPipeline",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "functional_pipeline",
+            "call_pattern": "composition",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Follow functional programming pipeline. What is returned by pipeline_result with data = 15?",
+            "code": "def pipe(*functions):\n    def pipeline(x):\n        result = x\n        for func in functions:\n            result = func(result)\n        return result\n    return pipeline\n\ndef halve(x):\n    return x // 2\n\ndef power_of_two(x):\n    return x ** 2\n\ndef subtract_five(x):\n    return x - 5\n\ndef pipeline_result(data):\n    processor = pipe(halve, power_of_two, subtract_five)\n    return processor(data)\n\n# What is returned by pipeline_result(15)?",
+            "answer": 44
+        }
+    },
+    {
+        "id": "MF-CC-S008-V008",
+        "metadata": {
+            "name": "MultiFunc-CallChain-PythonAdvancedComposition",
+            "category": "MultiFunc-Level",
+            "subcategory": "Call Chain",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 0,
+            "variant_type": "advanced_composition",
+            "call_pattern": "composition",
+            "call_depth": "deep",
+            "data_flow": "complex"
+        },
+        "task": {
+            "description": "Analyze advanced function composition with conditional logic. What does advanced_compose return with x = 9?",
+            "code": "def conditional_func(predicate, true_func, false_func):\n    return lambda x: true_func(x) if predicate(x) else false_func(x)\n\ndef is_even(x):\n    return x % 2 == 0\n\ndef triple(x):\n    return x * 3\n\ndef add_ten(x):\n    return x + 10\n\ndef square(x):\n    return x * x\n\ndef advanced_compose(x):\n    conditional = conditional_func(is_even, triple, add_ten)\n    step1 = conditional(x)\n    step2 = square(step1)\n    return step2\n\n# What is returned by advanced_compose(9)?",
+            "answer": 361
+        }
+    }
+]
+```
+
+#### 4B - 参数传递推理 [ Parameter Passing ]（57）
+
+> ```
+> # 参数传递推理变式生成提示词
+> 
+> ## 任务目标
+> 基于给定的参数传递推理种子任务，为每个种子生成8-12个多样化的变式任务，全面测试大模型对跨函数参数传递机制的理解能力，包括值传递、引用传递、指针传递等核心参数传递推理技能。
+> 
+> ## 参数传递推理特征分析
+> 参数传递推理关注函数调用时参数的传递方式和对原始数据的影响，重点测试模型对不同传递方式的语义理解、内存模型认知和数据修改效果的准确判断，强调对参数传递机制的深层理解能力。
+> 
+> ## 关键要求
+> - **描述语言**: 所有task描述必须使用英文
+> - **变式数量**: 每个种子任务严格生成8-12个变式，确保数量充足
+> - **答案唯一性**: 保证答案准确且唯一，避免歧义和多解情况
+> - **传递机制聚焦**: 重点关注参数传递机制的分析，强调传递方式对数据的影响
+> 
+> ## 变式生成维度
+> 
+> ### 1. 值传递分析变式
+> - **基本类型值传递变式**: 基本数据类型的值传递行为分析
+> - **结构体值传递变式**: 结构体作为值传递的拷贝行为
+> - **数组值传递变式**: 数组退化为指针的值传递分析
+> - **联合体值传递变式**: 联合体的值传递和内存共享
+> - **大对象值传递变式**: 大型对象值传递的性能和行为
+> - **嵌套结构值传递变式**: 嵌套结构体的深拷贝行为
+> 
+> ### 2. 引用传递分析变式
+> - **引用参数修改变式**: 通过引用参数修改原始数据
+> - **引用返回变式**: 函数返回引用的行为分析
+> - **常量引用变式**: 常量引用参数的限制和行为
+> - **引用别名变式**: 引用创建别名的效果分析
+> - **临时对象引用变式**: 临时对象的引用绑定
+> - **引用链式传递变式**: 引用在多层调用中的传递
+> 
+> ### 3. 指针传递分析变式
+> - **单级指针传递变式**: 一级指针的传递和解引用
+> - **多级指针传递变式**: 二级、三级指针的复杂传递
+> - **指针修改目标变式**: 通过指针修改指向的数据
+> - **指针重新指向变式**: 在函数中重新设置指针指向
+> - **空指针处理变式**: 空指针的传递和检查处理
+> - **函数指针传递变式**: 函数指针作为参数的传递
+> 
+> ### 4. 数组传递分析变式
+> - **一维数组传递变式**: 一维数组作为参数的传递分析
+> - **多维数组传递变式**: 多维数组的传递和访问
+> - **数组大小信息变式**: 数组大小信息的传递和使用
+> - **动态数组传递变式**: 动态分配数组的传递
+> - **数组切片传递变式**: 数组部分片段的传递
+> - **字符串数组传递变式**: 字符串数组的特殊传递
+> 
+> ### 5. 复合类型传递变式
+> - **结构体指针传递变式**: 结构体指针的传递和成员访问
+> - **结构体数组传递变式**: 结构体数组的传递分析
+> - **嵌套结构传递变式**: 包含指针的结构体传递
+> - **位字段结构传递变式**: 位字段结构体的传递行为
+> - **变长结构传递变式**: 变长结构体的传递处理
+> - **自引用结构传递变式**: 自引用结构体的传递
+> 
+> ### 6. 语言特定传递变式
+> - **Python对象引用变式**: Python对象引用的传递机制
+> - **可变不可变对象变式**: 可变和不可变对象的传递差异
+> - **深拷贝浅拷贝变式**: 深拷贝和浅拷贝的传递效果
+> - **共享引用变式**: 多个变量共享同一对象引用
+> - **垃圾回收影响变式**: 垃圾回收对引用传递的影响
+> - **弱引用传递变式**: 弱引用的传递和生命周期
+> 
+> ### 7. 内存模型分析变式
+> - **栈参数传递变式**: 栈上参数的传递和内存布局
+> - **堆对象传递变式**: 堆上对象的引用传递
+> - **静态数据传递变式**: 静态数据的传递和共享
+> - **线程局部传递变式**: 线程局部存储的参数传递
+> - **内存对齐影响变式**: 内存对齐对参数传递的影响
+> - **缓存效应变式**: 参数传递的缓存效应分析
+> 
+> ### 8. 传递优化分析变式
+> - **编译器优化变式**: 编译器对参数传递的优化
+> - **内联函数传递变式**: 内联函数中的参数传递
+> - **寄存器传递变式**: 寄存器传递参数的分析
+> - **调用约定变式**: 不同调用约定的参数传递
+> - **尾调用优化变式**: 尾调用优化对参数的影响
+> - **逃逸分析变式**: 逃逸分析对参数传递的优化
+> 
+> ### 9. 异常和错误处理变式
+> - **异常传递变式**: 异常情况下的参数传递
+> - **错误码传递变式**: 错误码作为参数的传递
+> - **资源管理变式**: RAII模式的参数传递
+> - **析构函数影响变式**: 析构函数对参数传递的影响
+> - **异常安全变式**: 异常安全的参数传递设计
+> - **错误传播变式**: 错误在参数传递中的传播
+> 
+> ### 10. 高级传递模式变式
+> - **完美转发变式**: 完美转发的参数传递机制
+> - **移动语义变式**: 移动语义的参数传递优化
+> - **模板参数传递变式**: 模板参数的传递和实例化
+> - **可变参数传递变式**: 可变参数列表的传递
+> - **泛型约束传递变式**: 泛型约束的参数传递
+> - **元编程传递变式**: 元编程中的参数传递
+> 
+> ## 复杂度层次设计
+> 
+> ### 简单传递分析 (Easy)
+> - 基本类型的值传递和简单指针传递
+> - 清晰的传递语义和修改效果
+> - 直观的内存模型和数据流
+> - 基础的参数传递概念
+> 
+> ### 中等传递分析 (Medium)
+> - 结构体和数组的传递分析
+> - 包含一定复杂度的指针操作
+> - 中等复杂度的内存模型
+> - 需要理解传递机制的差异
+> 
+> ### 复杂传递分析 (Hard)
+> - 多级指针和复杂数据结构传递
+> - 深层的内存模型理解
+> - 复杂的传递语义和副作用
+> - 涉及优化和特殊情况的分析
+> 
+> ### 专家级传递分析 (Expert)
+> - 极复杂的传递场景和边界情况
+> - 高级语言特性的传递分析
+> - 需要深度系统知识的传递理解
+> - 涉及编译器和运行时的传递机制
+> 
+> ## 生成策略
+> 
+> ### 种子分析策略
+> 1. **识别传递模式**: 分析种子任务的主要参数传递模式
+> 2. **提取修改效果**: 识别参数传递对原始数据的修改效果
+> 3. **确定内存语义**: 分析涉及的内存模型和语义
+> 4. **评估复杂度层次**: 评估传递分析的复杂程度
+> 
+> ### 变式设计原则
+> 1. **传递机制导向**: 每个变式都应明确关注参数传递机制
+> 2. **英文描述**: 所有task描述必须使用标准英文
+> 3. **答案唯一**: 严格确保答案的准确性和唯一性
+> 4. **数量保证**: 严格确保每个种子生成8-12个变式
+> 
+> ### 质量保证
+> 1. **传递语义验证**: 验证参数传递的语义正确性
+> 2. **内存模型检查**: 确保内存模型分析的准确性
+> 3. **答案唯一性验证**: 严格检查答案的唯一性和确定性
+> 4. **英文质量保证**: 确保描述的英文表达准确清晰
+> 
+> ## 输出格式要求
+> 
+> ```json
+> [
+>     {
+>         "id": "MF-PP-S00X-V001",
+>         "metadata": {
+>             "name": "MultiFunc-ParameterPassing-VariantName",
+>             "category": "MultiFunc-Level",
+>             "subcategory": "Parameter Passing",
+>             "type": "variant",
+>             "source": "Generated",
+>             "language": "target_language",
+>             "difficulty": "easy/medium/hard/expert",
+>             "intervention": 0,
+>             "variant_type": "variant_type_label",
+>             "passing_type": "value/reference/pointer/array",
+>             "data_type": "primitive/struct/array/complex",
+>             "modification_effect": "none/local/original/both"
+>         },
+>         "task": {
+>             "description": "English description of the parameter passing analysis task",
+>             "code": "Code containing parameter passing scenarios to analyze",
+>             "answer": "Unique and accurate parameter passing analysis result"
+>         }
+>     },
+>     {下一个变式...}
+> ]
+> 特殊字段说明
+> passing_type: 标识主要的参数传递类型
+> data_type: 标识传递的数据类型复杂度
+> modification_effect: 标识参数传递的修改效果范围
+> 生成目标
+> 为每个提供的种子任务严格生成8-12个参数传递变式，确保：
+> 
+> 每种难度等级至少包含2-3个变式
+> 涵盖至少6-8种不同的传递模式分析类型
+> 包含不同的数据类型和传递复杂度
+> 所有task描述使用标准英文表达
+> 严格保证答案的准确性和唯一性
+> 重点测试场景
+> 传递方式识别: 准确识别不同的参数传递方式
+> 修改效果分析: 正确分析参数传递对原始数据的影响
+> 内存模型理解: 理解不同传递方式的内存模型
+> 生存期管理: 分析参数在不同作用域的生存期
+> 性能影响评估: 评估不同传递方式的性能影响
+> 语言特性理解: 理解语言特定的传递机制
+> 英文描述模板示例
+> "Analyze the parameter passing mechanism and determine the final value..."
+> "Trace the effect of value/reference passing on the original data..."
+> "Determine what changes occur to the parameter after function execution..."
+> "Calculate the final state of variables after pointer parameter modification..."
+> "Evaluate the impact of parameter passing on memory contents..."
+> "Analyze the behavior of complex data structures in parameter passing..."
+> 答案唯一性保证策略
+> 明确传递语义: 确保参数传递的语义在目标语言中明确
+> 具体数据值: 使用具体的数据值，避免符号化结果
+> 确定性修改: 确保参数修改的效果是确定的
+> 避免未定义行为: 避免产生未定义行为的传递操作
+> 清晰内存模型: 确保内存模型和数据布局清晰
+> 常见传递模式
+> 基本值传递: 基本类型的拷贝传递，不影响原始数据
+> 指针传递: 传递地址，可以修改指向的数据
+> 引用传递: 创建别名，直接操作原始数据
+> 数组退化: 数组作为参数时退化为指针
+> 结构体拷贝: 结构体的完整拷贝传递
+> 浅拷贝引用: 对象引用的浅拷贝传递
+> 请基于此提示词，为给定的参数传递推理种子任务生成全面的变式集合，严格确保每个种子8-12个变式，所有描述使用英文，保证答案准确且唯一，输出格式为包含所有变式的JSON数组。
+> ```
+
+```json
+[
+    {
+        "id": "MF-PP-S001-V001",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-BasicValueDouble",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "basic_value_passing",
+            "passing_type": "value",
+            "data_type": "primitive",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze basic value passing with double type. What is the value of original_val after function execution?",
+            "code": "void modify_double(double val) {\n    val = val / 2.0 + 3.5;\n    printf(\"Inside function: %.1f\\n\", val);\n}\n\nint main() {\n    double original_val = 14.0;\n    modify_double(original_val);\n    printf(\"After function: %.1f\\n\", original_val);\n    return 0;\n}\n\n// What is the value of original_val after modify_double is called?",
+            "answer": "14.0"
+        }
+    },
+    {
+        "id": "MF-PP-S001-V002",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-CharValuePass",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "char_value_passing",
+            "passing_type": "value",
+            "data_type": "primitive",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Trace character value passing behavior. What is the ASCII value of original_char after function call?",
+            "code": "void process_char(char ch) {\n    ch = ch + 5;\n    printf(\"Inside function: %c (%d)\\n\", ch, ch);\n}\n\nint main() {\n    char original_char = 'A';\n    process_char(original_char);\n    printf(\"After function: %c (%d)\\n\", original_char, original_char);\n    return 0;\n}\n\n// What is the ASCII value of original_char after process_char is called?",
+            "answer": "65"
+        }
+    },
+    {
+        "id": "MF-PP-S001-V003",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-MultipleValues",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "multiple_value_passing",
+            "passing_type": "value",
+            "data_type": "primitive",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze multiple parameter value passing. What is the sum of a and b after function execution?",
+            "code": "void swap_values(int x, int y) {\n    int temp = x;\n    x = y;\n    y = temp;\n    printf(\"Inside function: x=%d, y=%d\\n\", x, y);\n}\n\nint main() {\n    int a = 15, b = 25;\n    swap_values(a, b);\n    printf(\"After function: a=%d, b=%d\\n\", a, b);\n    return 0;\n}\n\n// What is the sum of a and b after swap_values is called?",
+            "answer": "40"
+        }
+    },
+    {
+        "id": "MF-PP-S001-V004",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-NestedCalls",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "nested_value_calls",
+            "passing_type": "value",
+            "data_type": "primitive",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Track value passing through nested function calls. What is the final value of num?",
+            "code": "void inner_modify(int val) {\n    val = val * 3;\n}\n\nvoid outer_modify(int val) {\n    val = val + 10;\n    inner_modify(val);\n}\n\nint main() {\n    int num = 8;\n    outer_modify(num);\n    printf(\"Final value: %d\\n\", num);\n    return 0;\n}\n\n// What is the final value of num after all function calls?",
+            "answer": "8"
+        }
+    },
+    {
+        "id": "MF-PP-S001-V005",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-GlobalInteraction",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "global_value_interaction",
+            "passing_type": "value",
+            "data_type": "primitive",
+            "modification_effect": "local"
+        },
+        "task": {
+            "description": "Analyze value passing with global variable interaction. What is the value of local_var after function call?",
+            "code": "int global_var = 100;\n\nvoid modify_with_global(int local_param) {\n    local_param = global_var + local_param;\n    global_var = local_param - 50;\n}\n\nint main() {\n    int local_var = 30;\n    modify_with_global(local_var);\n    printf(\"local_var: %d, global_var: %d\\n\", local_var, global_var);\n    return 0;\n}\n\n// What is the value of local_var after modify_with_global is called?",
+            "answer": "30"
+        }
+    },
+    {
+        "id": "MF-PP-S001-V006",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ReturnValue",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "return_value_passing",
+            "passing_type": "value",
+            "data_type": "primitive",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Examine value passing with return mechanism. What is the final value assigned to result?",
+            "code": "int transform_value(int input) {\n    input = input * 4 + 7;\n    return input;\n}\n\nint main() {\n    int original = 12;\n    int result = transform_value(original);\n    printf(\"original: %d, result: %d\\n\", original, result);\n    return 0;\n}\n\n// What is the final value assigned to result?",
+            "answer": "55"
+        }
+    },
+    {
+        "id": "MF-PP-S001-V007",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ConditionalModify",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "conditional_value_passing",
+            "passing_type": "value",
+            "data_type": "primitive",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze conditional value modification in function. What is the value of test_val after function execution?",
+            "code": "void conditional_modify(int val) {\n    if (val > 20) {\n        val = val / 2;\n    } else {\n        val = val * 3;\n    }\n    printf(\"Inside function: %d\\n\", val);\n}\n\nint main() {\n    int test_val = 18;\n    conditional_modify(test_val);\n    printf(\"After function: %d\\n\", test_val);\n    return 0;\n}\n\n// What is the value of test_val after conditional_modify is called?",
+            "answer": "18"
+        }
+    },
+    {
+        "id": "MF-PP-S001-V008",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-LoopModification",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "loop_value_passing",
+            "passing_type": "value",
+            "data_type": "primitive",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Track value passing with loop modification. What is the value of counter after function call?",
+            "code": "void loop_modify(int count) {\n    for (int i = 0; i < 3; i++) {\n        count += i * 2;\n    }\n    printf(\"Inside function: %d\\n\", count);\n}\n\nint main() {\n    int counter = 10;\n    loop_modify(counter);\n    printf(\"After function: %d\\n\", counter);\n    return 0;\n}\n\n// What is the value of counter after loop_modify is called?",
+            "answer": "10"
+        }
+    },
+    {
+        "id": "MF-PP-S001-V009",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-RecursiveValue",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "recursive_value_passing",
+            "passing_type": "value",
+            "data_type": "primitive",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze recursive value passing behavior. What is the value of initial_num after function execution?",
+            "code": "void recursive_modify(int n, int depth) {\n    if (depth > 0) {\n        n = n + depth;\n        recursive_modify(n, depth - 1);\n    }\n    printf(\"Depth %d: n = %d\\n\", depth, n);\n}\n\nint main() {\n    int initial_num = 5;\n    recursive_modify(initial_num, 2);\n    printf(\"After recursion: %d\\n\", initial_num);\n    return 0;\n}\n\n// What is the value of initial_num after recursive_modify is called?",
+            "answer": "5"
+        }
+    },
+    {
+        "id": "MF-PP-S001-V010",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-EnumValue",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "enum_value_passing",
+            "passing_type": "value",
+            "data_type": "primitive",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Examine enum value passing mechanism. What is the numeric value of status after function call?",
+            "code": "typedef enum { IDLE = 0, RUNNING = 1, STOPPED = 2, ERROR = 3 } Status;\n\nvoid change_status(Status s) {\n    s = ERROR;\n    printf(\"Inside function: %d\\n\", s);\n}\n\nint main() {\n    Status status = RUNNING;\n    change_status(status);\n    printf(\"After function: %d\\n\", status);\n    return 0;\n}\n\n// What is the numeric value of status after change_status is called?",
+            "answer": "1"
+        }
+    },
+    {
+        "id": "MF-PP-S002-V001",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-SimpleStructValue",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "simple_struct_value",
+            "passing_type": "value",
+            "data_type": "struct",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze simple struct value passing. What is the value of rect.width after function execution?",
+            "code": "typedef struct {\n    int width;\n    int height;\n} Rectangle;\n\nvoid resize_rectangle(Rectangle r) {\n    r.width *= 2;\n    r.height += 10;\n}\n\nint main() {\n    Rectangle rect = {15, 8};\n    resize_rectangle(rect);\n    printf(\"width: %d, height: %d\\n\", rect.width, rect.height);\n    return 0;\n}\n\n// What is the value of rect.width after resize_rectangle is called?",
+            "answer": "15"
+        }
+    },
+    {
+        "id": "MF-PP-S002-V002",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-NestedStructValue",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_struct_value",
+            "passing_type": "value",
+            "data_type": "struct",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Track nested struct value passing. What is the value of person.address.zip after function call?",
+            "code": "typedef struct {\n    int zip;\n    char city[20];\n} Address;\n\ntypedef struct {\n    char name[30];\n    int age;\n    Address address;\n} Person;\n\nvoid update_person(Person p) {\n    p.age += 5;\n    p.address.zip = 12345;\n}\n\nint main() {\n    Person person = {\"John\", 25, {67890, \"NYC\"}};\n    update_person(person);\n    printf(\"age: %d, zip: %d\\n\", person.age, person.address.zip);\n    return 0;\n}\n\n// What is the value of person.address.zip after update_person is called?",
+            "answer": "67890"
+        }
+    },
+    {
+        "id": "MF-PP-S002-V003",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ArrayInStruct",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "array_in_struct_value",
+            "passing_type": "value",
+            "data_type": "struct",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Examine struct with array member value passing. What is the value of scores.values[1] after function execution?",
+            "code": "typedef struct {\n    int values[4];\n    int count;\n} ScoreList;\n\nvoid modify_scores(ScoreList s) {\n    s.values[0] = 95;\n    s.values[1] = 87;\n    s.count = 2;\n}\n\nint main() {\n    ScoreList scores = {{75, 82, 90, 88}, 4};\n    modify_scores(scores);\n    printf(\"values[1]: %d, count: %d\\n\", scores.values[1], scores.count);\n    return 0;\n}\n\n// What is the value of scores.values[1] after modify_scores is called?",
+            "answer": "82"
+        }
+    },
+    {
+        "id": "MF-PP-S002-V004",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-UnionValue",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "union_value_passing",
+            "passing_type": "value",
+            "data_type": "struct",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze union value passing behavior. What is the integer value of data.i after function call?",
+            "code": "typedef union {\n    int i;\n    float f;\n    char c[4];\n} Data;\n\nvoid modify_union(Data d) {\n    d.i = 0x12345678;\n    d.f = 3.14f;\n}\n\nint main() {\n    Data data;\n    data.i = 100;\n    modify_union(data);\n    printf(\"int value: %d\\n\", data.i);\n    return 0;\n}\n\n// What is the integer value of data.i after modify_union is called?",
+            "answer": "100"
+        }
+    },
+    {
+        "id": "MF-PP-S002-V005",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-StructReturn",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "struct_return_value",
+            "passing_type": "value",
+            "data_type": "struct",
+            "modification_effect": "local"
+        },
+        "task": {
+            "description": "Track struct return value behavior. What is the y coordinate of the returned point?",
+            "code": "typedef struct {\n    int x;\n    int y;\n} Point;\n\nPoint create_point(Point base) {\n    base.x = base.x + 10;\n    base.y = base.y * 2;\n    return base;\n}\n\nint main() {\n    Point p1 = {5, 8};\n    Point p2 = create_point(p1);\n    printf(\"p1: (%d,%d), p2: (%d,%d)\\n\", p1.x, p1.y, p2.x, p2.y);\n    return 0;\n}\n\n// What is the y coordinate of p2 after create_point is called?",
+            "answer": "16"
+        }
+    },
+    {
+        "id": "MF-PP-S002-V006",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-StructChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "struct_chain_passing",
+            "passing_type": "value",
+            "data_type": "struct",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze chained struct value passing. What is the radius of circle after all function calls?",
+            "code": "typedef struct {\n    double radius;\n    double area;\n} Circle;\n\nvoid scale_circle(Circle c) {\n    c.radius *= 1.5;\n    c.area = 3.14159 * c.radius * c.radius;\n}\n\nvoid process_circle(Circle c) {\n    scale_circle(c);\n    c.radius += 2.0;\n}\n\nint main() {\n    Circle circle = {5.0, 78.54};\n    process_circle(circle);\n    printf(\"radius: %.1f\\n\", circle.radius);\n    return 0;\n}\n\n// What is the radius of circle after process_circle is called?",
+            "answer": "5.0"
+        }
+    },
+    {
+        "id": "MF-PP-S002-V007",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-BitfieldStruct",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "bitfield_struct_value",
+            "passing_type": "value",
+            "data_type": "struct",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Examine bitfield struct value passing. What is the value of flags.enabled after function execution?",
+            "code": "typedef struct {\n    unsigned int enabled : 1;\n    unsigned int priority : 3;\n    unsigned int reserved : 4;\n} Flags;\n\nvoid modify_flags(Flags f) {\n    f.enabled = 0;\n    f.priority = 7;\n    f.reserved = 15;\n}\n\nint main() {\n    Flags flags = {1, 2, 0};\n    modify_flags(flags);\n    printf(\"enabled: %u, priority: %u\\n\", flags.enabled, flags.priority);\n    return 0;\n}\n\n// What is the value of flags.enabled after modify_flags is called?",
+            "answer": "1"
+        }
+    },
+    {
+        "id": "MF-PP-S002-V008",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ConstStruct",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "const_struct_value",
+            "passing_type": "value",
+            "data_type": "struct",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze const struct parameter passing. What is the total value computed by the function?",
+            "code": "typedef struct {\n    int a;\n    int b;\n    int c;\n} Triple;\n\nint compute_sum(const Triple t) {\n    // t.a = 100; // Would cause compilation error\n    return t.a + t.b + t.c;\n}\n\nint main() {\n    Triple triple = {10, 20, 30};\n    int result = compute_sum(triple);\n    printf(\"result: %d\\n\", result);\n    return 0;\n}\n\n// What value is returned by compute_sum?",
+            "answer": "60"
+        }
+    },
+    {
+        "id": "MF-PP-S002-V009",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-LargeStruct",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "large_struct_value",
+            "passing_type": "value",
+            "data_type": "struct",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Track large struct value passing. What is the value of matrix.data[2][1] after function call?",
+            "code": "typedef struct {\n    int data[3][3];\n    int rows;\n    int cols;\n} Matrix;\n\nvoid process_matrix(Matrix m) {\n    for (int i = 0; i < 3; i++) {\n        for (int j = 0; j < 3; j++) {\n            m.data[i][j] *= 2;\n        }\n    }\n}\n\nint main() {\n    Matrix matrix = {{{1,2,3},{4,5,6},{7,8,9}}, 3, 3};\n    process_matrix(matrix);\n    printf(\"matrix.data[2][1]: %d\\n\", matrix.data[2][1]);\n    return 0;\n}\n\n// What is the value of matrix.data[2][1] after process_matrix is called?",
+            "answer": "8"
+        }
+    },
+    {
+        "id": "MF-PP-S002-V010",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-StructAssignment",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "struct_assignment_value",
+            "passing_type": "value",
+            "data_type": "struct",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Examine struct assignment in value passing. What is the final value of original.value?",
+            "code": "typedef struct {\n    int value;\n    char tag;\n} Item;\n\nvoid reassign_item(Item item) {\n    Item new_item = {999, 'Z'};\n    item = new_item;\n    printf(\"Inside function: %d\\n\", item.value);\n}\n\nint main() {\n    Item original = {42, 'A'};\n    reassign_item(original);\n    printf(\"After function: %d\\n\", original.value);\n    return 0;\n}\n\n// What is the final value of original.value after reassign_item is called?",
+            "answer": "42"
+        }
+    },
+    {
+        "id": "MF-PP-S003-V001",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-BasicPointerModify",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "basic_pointer_modify",
+            "passing_type": "pointer",
+            "data_type": "primitive",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Analyze basic pointer parameter modification. What is the final value of num?",
+            "code": "void increment_value(int *ptr) {\n    *ptr = *ptr + 15;\n    printf(\"Inside function: %d\\n\", *ptr);\n}\n\nint main() {\n    int num = 30;\n    increment_value(&num);\n    printf(\"After function: %d\\n\", num);\n    return 0;\n}\n\n// What is the final value of num after increment_value is called?",
+            "answer": "45"
+        }
+    },
+    {
+        "id": "MF-PP-S003-V002",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-StringModification",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "string_pointer_modify",
+            "passing_type": "pointer",
+            "data_type": "array",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Track string modification through pointer. What is the second character of str after function call?",
+            "code": "void modify_string(char *s) {\n    s[0] = 'H';\n    s[1] = 'i';\n    s[2] = '!';\n    s[3] = '\\0';\n}\n\nint main() {\n    char str[10] = \"Hello\";\n    modify_string(str);\n    printf(\"Modified string: %s\\n\", str);\n    return 0;\n}\n\n// What is the second character (index 1) of str after modify_string is called?",
+            "answer": "i"
+        }
+    },
+    {
+        "id": "MF-PP-S003-V003",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-PointerArithmetic",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "pointer_arithmetic_modify",
+            "passing_type": "pointer",
+            "data_type": "array",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Examine pointer arithmetic in parameter passing. What is the value of numbers[3] after function execution?",
+            "code": "void shift_values(int *arr) {\n    *(arr + 0) += 5;\n    *(arr + 1) += 10;\n    *(arr + 2) += 15;\n    *(arr + 3) += 20;\n}\n\nint main() {\n    int numbers[5] = {1, 2, 3, 4, 5};\n    shift_values(numbers);\n    printf(\"numbers[3]: %d\\n\", numbers[3]);\n    return 0;\n}\n\n// What is the value of numbers[3] after shift_values is called?",
+            "answer": "24"
+        }
+    },
+    {
+        "id": "MF-PP-S003-V004",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-StructPointer",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "struct_pointer_modify",
+            "passing_type": "pointer",
+            "data_type": "struct",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Analyze struct pointer modification. What is the age field of person after function call?",
+            "code": "typedef struct {\n    char name[20];\n    int age;\n    double salary;\n} Employee;\n\nvoid update_employee(Employee *emp) {\n    emp->age += 3;\n    emp->salary *= 1.1;\n}\n\nint main() {\n    Employee person = {\"Alice\", 28, 50000.0};\n    update_employee(&person);\n    printf(\"age: %d, salary: %.0f\\n\", person.age, person.salary);\n    return 0;\n}\n\n// What is the age field of person after update_employee is called?",
+            "answer": "31"
+        }
+    },
+    {
+        "id": "MF-PP-S003-V005",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-MultiDimArray",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "multidim_array_pointer",
+            "passing_type": "pointer",
+            "data_type": "array",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Track multidimensional array pointer modification. What is the value of grid[1][2] after function execution?",
+            "code": "void fill_grid(int grid[][3], int rows) {\n    for (int i = 0; i < rows; i++) {\n        for (int j = 0; j < 3; j++) {\n            grid[i][j] = i * 3 + j + 1;\n        }\n    }\n}\n\nint main() {\n    int grid[2][3] = {{0, 0, 0}, {0, 0, 0}};\n    fill_grid(grid, 2);\n    printf(\"grid[1][2]: %d\\n\", grid[1][2]);\n    return 0;\n}\n\n// What is the value of grid[1][2] after fill_grid is called?",
+            "answer": "6"
+        }
+    },
+    {
+        "id": "MF-PP-S003-V006",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-NullPointerCheck",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "null_pointer_handling",
+            "passing_type": "pointer",
+            "data_type": "primitive",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze null pointer handling in parameter passing. What value is returned by the function?",
+            "code": "int safe_increment(int *ptr) {\n    if (ptr != NULL) {\n        *ptr += 10;\n        return *ptr;\n    }\n    return -1;\n}\n\nint main() {\n    int *null_ptr = NULL;\n    int result = safe_increment(null_ptr);\n    printf(\"Result: %d\\n\", result);\n    return 0;\n}\n\n// What value is returned by safe_increment when passed a NULL pointer?",
+            "answer": "-1"
+        }
+    },
+    {
+        "id": "MF-PP-S003-V007",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-PointerSwap",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "pointer_value_swap",
+            "passing_type": "pointer",
+            "data_type": "primitive",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Examine pointer-based value swapping. What is the value of b after function call?",
+            "code": "void swap_values(int *x, int *y) {\n    int temp = *x;\n    *x = *y;\n    *y = temp;\n}\n\nint main() {\n    int a = 15, b = 25;\n    swap_values(&a, &b);\n    printf(\"a: %d, b: %d\\n\", a, b);\n    return 0;\n}\n\n// What is the value of b after swap_values is called?",
+            "answer": "15"
+        }
+    },
+    {
+        "id": "MF-PP-S003-V008",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ConstPointer",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "const_pointer_param",
+            "passing_type": "pointer",
+            "data_type": "array",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze const pointer parameter behavior. What is the sum computed by the function?",
+            "code": "int calculate_sum(const int *arr, int size) {\n    int sum = 0;\n    for (int i = 0; i < size; i++) {\n        sum += arr[i];\n        // arr[i] = 0; // Would cause compilation error\n    }\n    return sum;\n}\n\nint main() {\n    int data[4] = {10, 20, 30, 40};\n    int result = calculate_sum(data, 4);\n    printf(\"sum: %d\\n\", result);\n    return 0;\n}\n\n// What is the sum returned by calculate_sum?",
+            "answer": "100"
+        }
+    },
+    {
+        "id": "MF-PP-S003-V009",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-FunctionPointer",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "function_pointer_param",
+            "passing_type": "pointer",
+            "data_type": "complex",
+            "modification_effect": "local"
+        },
+        "task": {
+            "description": "Track function pointer parameter usage. What value is returned by apply_operation?",
+            "code": "int multiply_by_three(int x) {\n    return x * 3;\n}\n\nint add_ten(int x) {\n    return x + 10;\n}\n\nint apply_operation(int value, int (*func)(int)) {\n    return func(value);\n}\n\nint main() {\n    int result = apply_operation(7, multiply_by_three);\n    printf(\"result: %d\\n\", result);\n    return 0;\n}\n\n// What value is returned by apply_operation(7, multiply_by_three)?",
+            "answer": "21"
+        }
+    },
+    {
+        "id": "MF-PP-S003-V010",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-VoidPointer",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "void_pointer_param",
+            "passing_type": "pointer",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Examine void pointer parameter casting. What is the final value of number after function call?",
+            "code": "void generic_increment(void *ptr, char type) {\n    if (type == 'i') {\n        int *iptr = (int *)ptr;\n        *iptr += 5;\n    } else if (type == 'f') {\n        float *fptr = (float *)ptr;\n        *fptr += 2.5f;\n    }\n}\n\nint main() {\n    int number = 20;\n    generic_increment(&number, 'i');\n    printf(\"number: %d\\n\", number);\n    return 0;\n}\n\n// What is the final value of number after generic_increment is called?",
+            "answer": "25"
+        }
+    },
+    {
+        "id": "MF-PP-S004-V001",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-SimpleDoublePointer",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "simple_double_pointer",
+            "passing_type": "pointer",
+            "data_type": "primitive",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Analyze simple double pointer manipulation. What is the final value pointed to by p?",
+            "code": "void modify_through_double_ptr(int **dptr) {\n    **dptr = **dptr * 2 + 5;\n}\n\nint main() {\n    int value = 12;\n    int *p = &value;\n    modify_through_double_ptr(&p);\n    printf(\"Final value: %d\\n\", *p);\n    return 0;\n}\n\n// What is the final value pointed to by p after modify_through_double_ptr is called?",
+            "answer": "29"
+        }
+    },
+    {
+        "id": "MF-PP-S004-V002",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-PointerReallocation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "pointer_reallocation",
+            "passing_type": "pointer",
+            "data_type": "primitive",
+            "modification_effect": "both"
+        },
+        "task": {
+            "description": "Track pointer reallocation through double pointer. What value does ptr point to after function call?",
+            "code": "void reallocate_pointer(int **ptr) {\n    free(*ptr);\n    *ptr = malloc(sizeof(int));\n    **ptr = 88;\n}\n\nint main() {\n    int *ptr = malloc(sizeof(int));\n    *ptr = 42;\n    reallocate_pointer(&ptr);\n    int result = *ptr;\n    free(ptr);\n    return result;\n}\n\n// What value does ptr point to after reallocate_pointer is called?",
+            "answer": "88"
+        }
+    },
+    {
+        "id": "MF-PP-S004-V003",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-TriplePointer",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "triple_pointer_manip",
+            "passing_type": "pointer",
+            "data_type": "primitive",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Examine triple pointer manipulation. What is the final value of the integer?",
+            "code": "void modify_triple_ptr(int ***tptr) {\n    ***tptr = ***tptr + 100;\n}\n\nint main() {\n    int value = 15;\n    int *p1 = &value;\n    int **p2 = &p1;\n    int ***p3 = &p2;\n    modify_triple_ptr(p3);\n    printf(\"Final value: %d\\n\", value);\n    return 0;\n}\n\n// What is the final value of the integer after modify_triple_ptr is called?",
+            "answer": "115"
+        }
+    },
+    {
+        "id": "MF-PP-S004-V004",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-PointerArray",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "pointer_array_manip",
+            "passing_type": "pointer",
+            "data_type": "array",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Analyze array of pointers manipulation. What is the value pointed to by ptrs[1] after function execution?",
+            "code": "void update_pointer_array(int **ptrs, int count) {\n    for (int i = 0; i < count; i++) {\n        *(ptrs[i]) += i * 10;\n    }\n}\n\nint main() {\n    int a = 5, b = 10, c = 15;\n    int *ptrs[3] = {&a, &b, &c};\n    update_pointer_array(ptrs, 3);\n    printf(\"b = %d\\n\", b);\n    return 0;\n}\n\n// What is the value pointed to by ptrs[1] (i.e., value of b) after update_pointer_array is called?",
+            "answer": "20"
+        }
+    },
+    {
+        "id": "MF-PP-S004-V005",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-PointerChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "pointer_chain_modify",
+            "passing_type": "pointer",
+            "data_type": "primitive",
+            "modification_effect": "both"
+        },
+        "task": {
+            "description": "Track complex pointer chain modification. What is the final value after all operations?",
+            "code": "void redirect_pointer(int **ptr, int *new_target) {\n    *ptr = new_target;\n}\n\nvoid modify_target(int **ptr) {\n    **ptr *= 3;\n}\n\nint main() {\n    int original = 10;\n    int replacement = 20;\n    int *p = &original;\n    \n    modify_target(&p);\n    redirect_pointer(&p, &replacement);\n    modify_target(&p);\n    \n    printf(\"replacement = %d\\n\", replacement);\n    return 0;\n}\n\n// What is the final value of replacement after all operations?",
+            "answer": "60"
+        }
+    },
+    {
+        "id": "MF-PP-S004-V006",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-DynamicStruct",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "dynamic_struct_pointer",
+            "passing_type": "pointer",
+            "data_type": "struct",
+            "modification_effect": "both"
+        },
+        "task": {
+            "description": "Examine dynamic struct allocation through double pointer. What is the id field after function execution?",
+            "code": "typedef struct {\n    int id;\n    char name[20];\n} Record;\n\nvoid create_record(Record **rec, int id) {\n    *rec = malloc(sizeof(Record));\n    (*rec)->id = id * 2;\n    strcpy((*rec)->name, \"Dynamic\");\n}\n\nint main() {\n    Record *record = NULL;\n    create_record(&record, 25);\n    int result = record->id;\n    free(record);\n    return result;\n}\n\n// What is the id field of the dynamically created record?",
+            "answer": "50"
+        }
+    },
+    {
+        "id": "MF-PP-S004-V007",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-NestedPointers",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "nested_pointer_struct",
+            "passing_type": "pointer",
+            "data_type": "struct",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Analyze nested pointer structures. What is the final value of node->data after function call?",
+            "code": "typedef struct Node {\n    int data;\n    struct Node *next;\n} Node;\n\nvoid update_linked_node(Node **head) {\n    (*head)->data += 50;\n    if ((*head)->next != NULL) {\n        (*head)->next->data *= 2;\n    }\n}\n\nint main() {\n    Node node2 = {20, NULL};\n    Node node1 = {10, &node2};\n    Node *head = &node1;\n    \n    update_linked_node(&head);\n    printf(\"node1.data = %d\\n\", head->data);\n    return 0;\n}\n\n// What is the final value of node1.data (head->data) after update_linked_node is called?",
+            "answer": "60"
+        }
+    },
+    {
+        "id": "MF-PP-S004-V008",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ConditionalAllocation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "conditional_allocation",
+            "passing_type": "pointer",
+            "data_type": "primitive",
+            "modification_effect": "both"
+        },
+        "task": {
+            "description": "Track conditional memory allocation. What value is returned by the test function?",
+            "code": "int allocate_if_needed(int **ptr, int threshold) {\n    if (*ptr == NULL && threshold > 50) {\n        *ptr = malloc(sizeof(int));\n        **ptr = threshold * 2;\n        return **ptr;\n    } else if (*ptr != NULL) {\n        **ptr += 10;\n        return **ptr;\n    }\n    return -1;\n}\n\nint test_conditional() {\n    int *p = NULL;\n    int result = allocate_if_needed(&p, 60);\n    if (p != NULL) free(p);\n    return result;\n}\n\n// What value is returned by test_conditional()?",
+            "answer": "120"
+        }
+    },
+    {
+        "id": "MF-PP-S005-V001",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ListAppendExtend",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "list_mutation_methods",
+            "passing_type": "reference",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Analyze list mutation through multiple methods. What is the length of my_data after function execution?",
+            "code": "def manipulate_list(data):\n    data.append(50)\n    data.insert(1, 25)\n    data.extend([75, 100])\n    data.remove(10)\n\ndef process_data():\n    my_data = [10, 20, 30]\n    manipulate_list(my_data)\n    return len(my_data)\n\n# What is returned by process_data()?",
+            "answer": "6"
+        }
+    },
+    {
+        "id": "MF-PP-S005-V002",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-DictModification",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "dict_reference_modify",
+            "passing_type": "reference",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Track dictionary modification through reference. What is the value of scores['math'] after function call?",
+            "code": "def update_scores(score_dict):\n    score_dict['math'] = score_dict['math'] + 15\n    score_dict['science'] = 95\n    score_dict.pop('english', None)\n\ndef test_dict_update():\n    scores = {'math': 80, 'english': 75, 'history': 90}\n    update_scores(scores)\n    return scores['math']\n\n# What is returned by test_dict_update()?",
+            "answer": "95"
+        }
+    },
+    {
+        "id": "MF-PP-S005-V003",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-NestedListModify",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_list_reference",
+            "passing_type": "reference",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Examine nested list modification behavior. What is the value of matrix[1][0] after function execution?",
+            "code": "def modify_matrix(mat):\n    mat[0][1] = 99\n    mat[1].append(44)\n    mat.append([77, 88])\n\ndef test_nested_lists():\n    matrix = [[1, 2, 3], [4, 5, 6]]\n    modify_matrix(matrix)\n    return matrix[1][0]\n\n# What is returned by test_nested_lists()?",
+            "answer": "4"
+        }
+    },
+    {
+        "id": "MF-PP-S005-V004",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-SetOperations",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "set_reference_modify",
+            "passing_type": "reference",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Analyze set modification through reference passing. What is the size of numbers after function call?",
+            "code": "def modify_set(s):\n    s.add(100)\n    s.discard(20)\n    s.update([200, 300])\n    s.remove(10)\n\ndef test_set_operations():\n    numbers = {10, 20, 30, 40}\n    modify_set(numbers)\n    return len(numbers)\n\n# What is returned by test_set_operations()?",
+            "answer": "5"
+        }
+    },
+    {
+        "id": "MF-PP-S005-V005",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ObjectAttribute",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "object_attribute_modify",
+            "passing_type": "reference",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Track object attribute modification through reference. What is the final value of person.age?",
+            "code": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\ndef update_person(p):\n    p.age += 5\n    p.name = p.name.upper()\n    p.city = \"New York\"\n\ndef test_object_modification():\n    person = Person(\"alice\", 25)\n    update_person(person)\n    return person.age\n\n# What is returned by test_object_modification()?",
+            "answer": "30"
+        }
+    },
+    {
+        "id": "MF-PP-S005-V006",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-StringImmutable",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "immutable_string_reference",
+            "passing_type": "reference",
+            "data_type": "primitive",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Examine immutable string behavior in parameter passing. What is the final value of text?",
+            "code": "def modify_string(s):\n    s = s.upper()\n    s += \" MODIFIED\"\n    return s\n\ndef test_string_immutability():\n    text = \"hello world\"\n    result = modify_string(text)\n    return len(text)\n\n# What is returned by test_string_immutability()?",
+            "answer": "11"
+        }
+    },
+    {
+        "id": "MF-PP-S005-V007",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-TupleImmutable",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "immutable_tuple_reference",
+            "passing_type": "reference",
+            "data_type": "complex",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze tuple immutability in reference passing. What is the first element of coordinates after function call?",
+            "code": "def try_modify_tuple(t):\n    # t[0] = 999  # Would raise TypeError\n    t = (999, 888, 777)\n    return t\n\ndef test_tuple_immutability():\n    coordinates = (10, 20, 30)\n    new_tuple = try_modify_tuple(coordinates)\n    return coordinates[0]\n\n# What is returned by test_tuple_immutability()?",
+            "answer": "10"
+        }
+    },
+    {
+        "id": "MF-PP-S005-V008",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ListSlicing",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "list_slice_modification",
+            "passing_type": "reference",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Track list slice assignment effects. What is the length of numbers after function execution?",
+            "code": "def modify_slice(lst):\n    lst[1:3] = [99, 88, 77]\n    lst[:2] = [111, 222]\n\ndef test_slice_modification():\n    numbers = [1, 2, 3, 4, 5]\n    modify_slice(numbers)\n    return len(numbers)\n\n# What is returned by test_slice_modification()?",
+            "answer": "5"
+        }
+    },
+    {
+        "id": "MF-PP-S005-V009",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ListClear",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "list_clear_reference",
+            "passing_type": "reference",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Examine list clearing through reference. What is the length of items after function call?",
+            "code": "def process_and_clear(lst):\n    total = sum(lst)\n    lst.clear()\n    lst.append(total)\n    return total\n\ndef test_list_clear():\n    items = [10, 20, 30, 40]\n    result = process_and_clear(items)\n    return len(items)\n\n# What is returned by test_list_clear()?",
+            "answer": "1"
+        }
+    },
+    {
+        "id": "MF-PP-S005-V010",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-SharedReference",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "shared_reference_modify",
+            "passing_type": "reference",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Analyze shared reference modification effects. What is the sum of all elements in list_b after function execution?",
+            "code": "def modify_shared_list(lst):\n    lst.extend([100, 200])\n    lst[0] = 999\n\ndef test_shared_reference():\n    list_a = [1, 2, 3]\n    list_b = list_a  # Same reference\n    modify_shared_list(list_a)\n    return sum(list_b)\n\n# What is returned by test_shared_reference()?",
+            "answer": "1304"
+        }
+    },
+    {
+        "id": "MF-PP-S006-V001",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ArrayStructMixed",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "array_struct_mixed",
+            "passing_type": "pointer",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Analyze mixed array and struct parameter passing. What is the final sum computed?",
+            "code": "typedef struct {\n    int values[3];\n    int multiplier;\n} NumberSet;\n\nvoid scale_numbers(NumberSet *ns, int factor) {\n    ns->multiplier *= factor;\n    for (int i = 0; i < 3; i++) {\n        ns->values[i] *= ns->multiplier;\n    }\n}\n\nint calculate_total(NumberSet set) {\n    int sum = 0;\n    for (int i = 0; i < 3; i++) {\n        sum += set.values[i];\n    }\n    return sum;\n}\n\nint test_mixed_operations() {\n    NumberSet ns = {{2, 4, 6}, 3};\n    scale_numbers(&ns, 2);\n    return calculate_total(ns);\n}\n\n// What value is returned by test_mixed_operations()?",
+            "answer": "72"
+        }
+    },
+    {
+        "id": "MF-PP-S006-V002",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-PointerStructArray",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "pointer_struct_array",
+            "passing_type": "pointer",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Track pointer struct array manipulation. What is the score of students[1] after function execution?",
+            "code": "typedef struct {\n    char name[20];\n    int score;\n    int *grades;\n} Student;\n\nvoid update_students(Student *students, int count) {\n    for (int i = 0; i < count; i++) {\n        students[i].score += 10;\n        if (students[i].grades != NULL) {\n            students[i].grades[0] += 5;\n        }\n    }\n}\n\nint test_student_update() {\n    int grades1[] = {85, 90};\n    int grades2[] = {75, 80};\n    Student students[2] = {\n        {\"Alice\", 80, grades1},\n        {\"Bob\", 70, grades2}\n    };\n    \n    update_students(students, 2);\n    return students[1].score;\n}\n\n// What value is returned by test_student_update()?",
+            "answer": "80"
+        }
+    },
+    {
+        "id": "MF-PP-S006-V003",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-RecursiveStruct",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "recursive_struct_modify",
+            "passing_type": "pointer",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Examine recursive struct modification. What is the final value of root node data?",
+            "code": "typedef struct TreeNode {\n    int data;\n    struct TreeNode *left;\n    struct TreeNode *right;\n} TreeNode;\n\nvoid increment_tree(TreeNode *node, int increment) {\n    if (node == NULL) return;\n    \n    node->data += increment;\n    increment_tree(node->left, increment + 1);\n    increment_tree(node->right, increment + 1);\n}\n\nint test_tree_modification() {\n    TreeNode leaf1 = {10, NULL, NULL};\n    TreeNode leaf2 = {20, NULL, NULL};\n    TreeNode root = {5, &leaf1, &leaf2};\n    \n    increment_tree(&root, 5);\n    return root.data;\n}\n\n// What value is returned by test_tree_modification()?",
+            "answer": "10"
+        }
+    },
+    {
+        "id": "MF-PP-S006-V004",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-FunctionStructParam",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "function_struct_param",
+            "passing_type": "pointer",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Analyze function pointer within struct parameter. What is the final result value?",
+            "code": "typedef struct {\n    int value;\n    int (*operation)(int);\n} Calculator;\n\nint double_value(int x) {\n    return x * 2;\n}\n\nint square_value(int x) {\n    return x * x;\n}\n\nvoid apply_operation(Calculator *calc) {\n    calc->value = calc->operation(calc->value);\n}\n\nint test_calculator() {\n    Calculator calc = {6, square_value};\n    apply_operation(&calc);\n    return calc.value;\n}\n\n// What value is returned by test_calculator()?",
+            "answer": "36"
+        }
+    },
+    {
+        "id": "MF-PP-S006-V005",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-UnionComplexParam",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "union_complex_param",
+            "passing_type": "pointer",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Track complex union parameter modification. What is the integer interpretation after function call?",
+            "code": "typedef union {\n    int integer;\n    float floating;\n    struct {\n        short low;\n        short high;\n    } parts;\n} Value;\n\nvoid modify_union_value(Value *v, int mode) {\n    if (mode == 1) {\n        v->integer = 0x12345678;\n    } else if (mode == 2) {\n        v->parts.low = 0x1234;\n        v->parts.high = 0x5678;\n    }\n}\n\nint test_union_modification() {\n    Value val;\n    val.integer = 0;\n    modify_union_value(&val, 2);\n    return val.integer;\n}\n\n// What value is returned by test_union_modification()?",
+            "answer": "1450744916"
+        }
+    },
+    {
+        "id": "MF-PP-S006-V006",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-VariableLengthArray",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "vla_parameter_passing",
+            "passing_type": "pointer",
+            "data_type": "array",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Examine variable length array parameter passing. What is the sum of the middle row?",
+            "code": "void fill_matrix(int rows, int cols, int matrix[rows][cols]) {\n    for (int i = 0; i < rows; i++) {\n        for (int j = 0; j < cols; j++) {\n            matrix[i][j] = i * cols + j + 1;\n        }\n    }\n}\n\nint sum_row(int cols, int row[cols]) {\n    int sum = 0;\n    for (int j = 0; j < cols; j++) {\n        sum += row[j];\n    }\n    return sum;\n}\n\nint test_vla_operations() {\n    int matrix[3][4];\n    fill_matrix(3, 4, matrix);\n    return sum_row(4, matrix[1]);\n}\n\n// What value is returned by test_vla_operations()?",
+            "answer": "22"
+        }
+    },
+    {
+        "id": "MF-PP-S006-V007",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-StaticArrayParam",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "static_array_param",
+            "passing_type": "pointer",
+            "data_type": "array",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Analyze static array parameter specification. What is the product of the first three elements?",
+            "code": "void process_array(int arr[static 5]) {\n    // Guaranteed to have at least 5 elements\n    for (int i = 0; i < 5; i++) {\n        arr[i] = arr[i] * (i + 1);\n    }\n}\n\nint calculate_product(int *arr, int count) {\n    int product = 1;\n    for (int i = 0; i < count; i++) {\n        product *= arr[i];\n    }\n    return product;\n}\n\nint test_static_array() {\n    int numbers[6] = {2, 3, 4, 5, 6, 7};\n    process_array(numbers);\n    return calculate_product(numbers, 3);\n}\n\n// What value is returned by test_static_array()?",
+            "answer": "144"
+        }
+    },
+    {
+        "id": "MF-PP-S006-V008",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-StructWithFlexArray",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "flexible_array_struct",
+            "passing_type": "pointer",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Track flexible array member modification. What is the sum of all data elements?",
+            "code": "typedef struct {\n    int count;\n    int data[];\n} FlexibleArray;\n\nvoid double_elements(FlexibleArray *fa) {\n    for (int i = 0; i < fa->count; i++) {\n        fa->data[i] *= 2;\n    }\n}\n\nint test_flexible_array() {\n    // Allocate struct with 4 additional integers\n    FlexibleArray *fa = malloc(sizeof(FlexibleArray) + 4 * sizeof(int));\n    fa->count = 4;\n    fa->data[0] = 10;\n    fa->data[1] = 20;\n    fa->data[2] = 30;\n    fa->data[3] = 40;\n    \n    double_elements(fa);\n    \n    int sum = 0;\n    for (int i = 0; i < fa->count; i++) {\n        sum += fa->data[i];\n    }\n    \n    free(fa);\n    return sum;\n}\n\n// What value is returned by test_flexible_array()?",
+            "answer": "200"
+        }
+    },
+    {
+        "id": "MF-PP-S006-V009",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ComplexPointerMath",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "complex_pointer_arithmetic",
+            "passing_type": "pointer",
+            "data_type": "complex",
+            "modification_effect": "original"
+        },
+        "task": {
+            "description": "Examine complex pointer arithmetic in parameter passing. What is the final value at position 2?",
+            "code": "typedef struct {\n    int x, y;\n} Point;\n\nvoid manipulate_points(Point *points, int count) {\n    Point *ptr = points;\n    for (int i = 0; i < count; i++, ptr++) {\n        ptr->x += (ptr - points) * 10;\n        ptr->y *= 2;\n    }\n}\n\nint test_pointer_arithmetic() {\n    Point points[4] = {{1, 2}, {3, 4}, {5, 6}, {7, 8}};\n    manipulate_points(points, 4);\n    return points[2].x;\n}\n\n// What value is returned by test_pointer_arithmetic()?",
+            "answer": "25"
+        }
+    },
+    {
+        "id": "MF-PP-S006-V010",
+        "metadata": {
+            "name": "MultiFunc-ParameterPassing-ConstCorrectness",
+            "category": "MultiFunc-Level",
+            "subcategory": "Parameter Passing",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "const_correctness_param",
+            "passing_type": "pointer",
+            "data_type": "complex",
+            "modification_effect": "none"
+        },
+        "task": {
+            "description": "Analyze const correctness in parameter passing. What is the maximum value found?",
+            "code": "typedef struct {\n    const int *data;\n    int size;\n} ReadOnlyContainer;\n\nint find_maximum(const ReadOnlyContainer *container) {\n    int max = container->data[0];\n    for (int i = 1; i < container->size; i++) {\n        if (container->data[i] > max) {\n            max = container->data[i];\n        }\n    }\n    return max;\n}\n\nint test_const_container() {\n    const int values[] = {15, 42, 8, 99, 27};\n    ReadOnlyContainer container = {values, 5};\n    return find_maximum(&container);\n}\n\n// What value is returned by test_const_container()?",
+            "answer": "99"
+        }
+    }
+]
+```
+
+#### 4C - 状态传播推理 [ State Propagation ] （64）
+
+> ```
+> # 状态传播推理变式生成提示词
+> 
+> ## 任务目标
+> 基于给定的状态传播推理种子任务，为每个种子生成8-12个多样化的变式任务，全面测试大模型对跨函数状态传播机制的理解能力，包括全局变量、静态变量、闭包捕获和对象状态等核心状态传播推理技能。
+> 
+> ## 状态传播推理特征分析
+> 状态传播推理关注程序中状态信息在函数调用间的传递、维护和变化，重点测试模型对不同存储类型、生存期管理、状态共享机制和数据持久性的深层理解，强调对跨函数状态管理的精确分析能力。
+> 
+> ## 关键要求
+> - **描述语言**: 所有task描述必须使用英文
+> - **变式数量**: 每个种子任务严格生成8-12个变式，确保数量充足
+> - **答案唯一性**: 保证答案准确且唯一，避免歧义和多解情况
+> - **状态传播聚焦**: 重点关注状态在函数间的传播和变化，强调状态管理机制
+> 
+> ## 变式生成维度
+> 
+> ### 1. 全局变量状态分析变式
+> - **基本全局变量变式**: 简单全局变量的跨函数修改分析
+> - **全局数组状态变式**: 全局数组在多函数中的状态变化
+> - **全局结构体变式**: 全局结构体成员的状态传播
+> - **多全局变量协同变式**: 多个全局变量的协同状态变化
+> - **全局变量竞争变式**: 多函数同时修改全局变量的分析
+> - **全局常量状态变式**: 全局常量和全局变量的混合使用
+> 
+> ### 2. 静态变量持久化分析变式
+> - **函数静态变量变式**: 函数内静态变量的持久化分析
+> - **静态数组管理变式**: 静态数组的状态管理和访问
+> - **静态计数器变式**: 静态变量作为计数器的使用
+> - **静态缓存变式**: 静态变量实现缓存机制的分析
+> - **多静态变量协作变式**: 多个静态变量的协作状态管理
+> - **静态变量初始化变式**: 静态变量初始化时机和影响
+> 
+> ### 3. 闭包捕获状态分析变式
+> - **简单闭包捕获变式**: 基础闭包变量捕获的状态分析
+> - **嵌套闭包状态变式**: 多层嵌套闭包的状态传播
+> - **闭包修改状态变式**: 闭包内部修改捕获变量的效果
+> - **多闭包共享变式**: 多个闭包共享同一外部变量
+> - **闭包生存期变式**: 闭包的生存期和状态持久性
+> - **闭包状态隔离变式**: 不同闭包实例的状态隔离
+> 
+> ### 4. 对象状态管理变式
+> - **对象属性状态变式**: 对象属性在方法调用间的状态变化
+> - **对象状态链式变式**: 链式方法调用的对象状态变化
+> - **对象状态复制变式**: 对象复制和引用的状态传播
+> - **对象状态继承变式**: 继承关系中的状态传播
+> - **对象状态组合变式**: 对象组合中的状态管理
+> - **对象状态序列化变式**: 对象状态的序列化和恢复
+> 
+> ### 5. 状态同步和竞争分析变式
+> - **状态竞争条件变式**: 多函数访问共享状态的竞争分析
+> - **状态同步机制变式**: 状态同步机制的效果分析
+> - **原子操作状态变式**: 原子操作对状态的影响
+> - **锁保护状态变式**: 锁机制保护的状态变化
+> - **无锁状态管理变式**: 无锁数据结构的状态管理
+> - **状态一致性变式**: 状态一致性保证的分析
+> 
+> ### 6. 状态生存期分析变式
+> - **状态生命周期变式**: 不同存储类型的状态生命周期
+> - **状态销毁时机变式**: 状态销毁的时机和影响
+> - **状态持久化机制变式**: 状态持久化的实现机制
+> - **临时状态管理变式**: 临时状态的创建和销毁
+> - **状态内存泄漏变式**: 状态管理中的内存泄漏分析
+> - **状态垃圾回收变式**: 垃圾回收对状态的影响
+> 
+> ### 7. 复合状态传播变式
+> - **多层状态传播变式**: 多层函数调用的状态传播
+> - **状态变换链变式**: 状态在传播中的变换处理
+> - **状态聚合变式**: 多个状态的聚合和合并
+> - **状态分发变式**: 状态的分发和分散处理
+> - **状态缓存变式**: 状态缓存机制的实现和分析
+> - **状态版本管理变式**: 状态版本控制的实现
+> 
+> ### 8. 函数式状态管理变式
+> - **不可变状态变式**: 不可变状态的传播和管理
+> - **函数式状态更新变式**: 函数式状态更新的模式
+> - **状态单子变式**: 状态单子模式的应用分析
+> - **纯函数状态变式**: 纯函数中的状态处理
+> - **状态组合子变式**: 状态组合子的使用分析
+> - **函数式状态机变式**: 函数式状态机的实现
+> 
+> ### 9. 状态模式应用变式
+> - **状态机模式变式**: 状态机模式的实现和状态转换
+> - **观察者状态变式**: 观察者模式中的状态传播
+> - **单例状态变式**: 单例模式的状态管理
+> - **工厂状态变式**: 工厂模式中的状态创建
+> - **策略状态变式**: 策略模式中的状态管理
+> - **命令状态变式**: 命令模式中的状态记录
+> 
+> ### 10. 高级状态传播变式
+> - **分布式状态变式**: 分布式系统中的状态传播
+> - **异步状态变式**: 异步操作中的状态管理
+> - **事件驱动状态变式**: 事件驱动的状态传播
+> - **响应式状态变式**: 响应式编程的状态管理
+> - **状态流处理变式**: 状态流的处理和传播
+> - **状态快照变式**: 状态快照的创建和恢复
+> 
+> ## 复杂度层次设计
+> 
+> ### 简单状态传播 (Easy)
+> - 单一全局变量或静态变量的基础状态传播
+> - 清晰的状态变化和传播路径
+> - 直观的状态管理机制
+> - 基础的状态生存期概念
+> 
+> ### 中等状态传播 (Medium)
+> - 2-3个状态变量的协同传播
+> - 包含条件分支的状态变化
+> - 中等复杂度的对象状态管理
+> - 基础的闭包状态捕获
+> 
+> ### 复杂状态传播 (Hard)
+> - 多变量复杂状态传播网络
+> - 深层的状态管理机制
+> - 复杂的闭包和对象状态
+> - 涉及状态优化和模式的分析
+> 
+> ### 专家级状态传播 (Expert)
+> - 极复杂的状态传播场景
+> - 高级状态管理模式和机制
+> - 并发和异步状态管理
+> - 需要深度架构知识的状态分析
+> 
+> ## 生成策略
+> 
+> ### 种子分析策略
+> 1. **识别状态类型**: 分析种子任务涉及的主要状态类型
+> 2. **提取传播模式**: 识别状态传播的核心模式和机制
+> 3. **确定状态生存期**: 分析状态的生存期和持久性特征
+> 4. **评估复杂度层次**: 评估状态传播的复杂程度
+> 
+> ### 变式设计原则
+> 1. **状态传播导向**: 每个变式都应明确关注状态传播机制
+> 2. **英文描述**: 所有task描述必须使用标准英文
+> 3. **答案唯一**: 严格确保答案的准确性和唯一性
+> 4. **数量保证**: 严格确保每个种子生成8-12个变式
+> 
+> ### 质量保证
+> 1. **状态语义验证**: 验证状态传播的语义正确性
+> 2. **生存期一致性**: 确保状态生存期分析的一致性
+> 3. **答案唯一性验证**: 严格检查答案的唯一性和确定性
+> 4. **英文质量保证**: 确保描述的英文表达准确清晰
+> 
+> ## 输出格式要求
+> 
+> ```json
+> [
+>     {
+>         "id": "MF-SP-S00X-V001",
+>         "metadata": {
+>             "name": "MultiFunc-StatePropagation-VariantName",
+>             "category": "MultiFunc-Level",
+>             "subcategory": "State Propagation",
+>             "type": "variant",
+>             "source": "Generated",
+>             "language": "target_language",
+>             "difficulty": "easy/medium/hard/expert",
+>             "intervention": 0,
+>             "variant_type": "variant_type_label",
+>             "state_type": "global/static/closure/object",
+>             "propagation_pattern": "linear/branched/circular/complex",
+>             "persistence_level": "temporary/session/persistent/permanent"
+>         },
+>         "task": {
+>             "description": "English description of the state propagation analysis task",
+>             "code": "Code containing state propagation scenarios to analyze",
+>             "answer": "Unique and accurate state propagation analysis result"
+>         }
+>     },
+>     {下一个变式...}
+> ]
+> 特殊字段说明
+> state_type: 标识主要的状态类型
+> propagation_pattern: 标识状态传播的模式
+> persistence_level: 标识状态的持久性级别
+> 生成目标
+> 为每个提供的种子任务严格生成8-12个状态传播变式，确保：
+> 
+> 每种难度等级至少包含2-3个变式
+> 涵盖至少6-8种不同的状态传播分析类型
+> 包含不同的状态类型和传播复杂度
+> 所有task描述使用标准英文表达
+> 严格保证答案的准确性和唯一性
+> 重点测试场景
+> 状态变化追踪: 准确追踪状态在函数调用间的变化
+> 生存期管理: 理解不同存储类型的状态生存期
+> 状态共享机制: 分析状态在多个函数间的共享
+> 闭包状态捕获: 理解闭包的状态捕获和维护机制
+> 对象状态演化: 分析对象状态在方法调用中的演化
+> 状态持久化: 理解状态的持久化和恢复机制
+> 英文描述模板示例
+> "Track the state changes across multiple function calls and determine..."
+> "Analyze the propagation of global/static state through the function chain..."
+> "Determine the final state value after all function executions..."
+> "Trace the closure state capture and modification effects..."
+> "Calculate the object state after a series of method invocations..."
+> "Evaluate the persistent state changes across function boundaries..."
+> 答案唯一性保证策略
+> 确定性状态变化: 确保状态变化是确定性的
+> 明确初始状态: 明确定义所有状态的初始值
+> 清晰操作顺序: 确保状态操作的顺序是明确的
+> 避免竞争条件: 避免产生竞争条件的状态访问
+> 具体数值结果: 使用具体的数值结果，避免符号化答案
+> 常见状态传播模式
+> 累积模式: 状态在函数调用中逐步累积
+> 重置模式: 状态的重置和重新初始化
+> 转换模式: 状态在传播中的转换和变换
+> 缓存模式: 状态作为缓存的使用模式
+> 计数模式: 状态作为计数器的递增递减
+> 标记模式: 状态作为标记位的设置和检查
+> 请基于此提示词，为给定的状态传播推理种子任务生成全面的变式集合，严格确保每个种子8-12个变式，所有描述使用英文，保证答案准确且唯一，输出格式为包含所有变式的JSON数组。
+> ```
+
+```json
+[
+    {
+        "id": "MF-SP-S001-V001",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-GlobalCounterSequence",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_global_sequence",
+            "state_type": "global",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track the global counter modifications through a linear sequence of function calls and determine the final value.",
+            "code": "int global_sum = 5;\n\nvoid add_ten() {\n    global_sum += 10;\n}\n\nvoid multiply_by_two() {\n    global_sum *= 2;\n}\n\nvoid subtract_five() {\n    global_sum -= 5;\n}\n\nint execute_sequence() {\n    add_ten();\n    multiply_by_two();\n    subtract_five();\n    return global_sum;\n}\n\n// What value is returned by execute_sequence()?",
+            "answer": "25"
+        }
+    },
+    {
+        "id": "MF-SP-S001-V002",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ConditionalGlobalUpdate",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "conditional_global_modification",
+            "state_type": "global",
+            "propagation_pattern": "branched",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze conditional global variable modifications across multiple function calls and determine the final state.",
+            "code": "int global_value = 10;\nint global_flag = 1;\n\nvoid conditional_update(int condition) {\n    if (condition > 0) {\n        global_value += condition * 3;\n    } else {\n        global_value /= 2;\n    }\n}\n\nvoid toggle_and_process() {\n    global_flag = !global_flag;\n    if (global_flag) {\n        global_value += 5;\n    } else {\n        global_value -= 3;\n    }\n}\n\nint test_conditional_flow() {\n    conditional_update(4);\n    toggle_and_process();\n    conditional_update(-1);\n    return global_value;\n}\n\n// What value is returned by test_conditional_flow()?",
+            "answer": "12"
+        }
+    },
+    {
+        "id": "MF-SP-S001-V003",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-MultiGlobalCoordination",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "multi_global_coordination",
+            "state_type": "global",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track coordinated modifications of multiple global variables through interconnected function calls.",
+            "code": "int global_a = 8;\nint global_b = 12;\nint global_c = 3;\n\nvoid cross_update() {\n    global_a = global_a + global_b;\n    global_b = global_a - global_c;\n    global_c = global_b / 4;\n}\n\nvoid scale_variables(int factor) {\n    global_a *= factor;\n    global_b += global_a;\n    global_c = global_a % global_b;\n}\n\nint compute_final_result() {\n    cross_update();\n    scale_variables(2);\n    return global_a + global_b + global_c;\n}\n\n// What value is returned by compute_final_result()?",
+            "answer": "108"
+        }
+    },
+    {
+        "id": "MF-SP-S001-V004",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-GlobalArraySum",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "global_array_manipulation",
+            "state_type": "global",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze global array state changes through sequential function calls and calculate the final sum.",
+            "code": "int numbers[4] = {2, 4, 6, 8};\n\nvoid increment_all() {\n    for (int i = 0; i < 4; i++) {\n        numbers[i] += 2;\n    }\n}\n\nvoid multiply_even_indices() {\n    for (int i = 0; i < 4; i += 2) {\n        numbers[i] *= 3;\n    }\n}\n\nint calculate_array_sum() {\n    increment_all();\n    multiply_even_indices();\n    int sum = 0;\n    for (int i = 0; i < 4; i++) {\n        sum += numbers[i];\n    }\n    return sum;\n}\n\n// What value is returned by calculate_array_sum()?",
+            "answer": "58"
+        }
+    },
+    {
+        "id": "MF-SP-S001-V005",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-GlobalStateReset",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "global_reset_pattern",
+            "state_type": "global",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track global variable state through reset operations and subsequent modifications.",
+            "code": "int accumulator = 0;\nint base_value = 7;\n\nvoid add_base() {\n    accumulator += base_value;\n}\n\nvoid reset_accumulator() {\n    accumulator = 0;\n    base_value += 3;\n}\n\nvoid double_accumulator() {\n    accumulator *= 2;\n}\n\nint test_reset_sequence() {\n    add_base();\n    add_base();\n    reset_accumulator();\n    add_base();\n    double_accumulator();\n    return accumulator;\n}\n\n// What value is returned by test_reset_sequence()?",
+            "answer": "20"
+        }
+    },
+    {
+        "id": "MF-SP-S001-V006",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-GlobalCounterChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "global_chain_operations",
+            "state_type": "global",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze chained global variable operations where each function builds upon the previous state.",
+            "code": "int global_result = 1;\nint step_counter = 0;\n\nvoid step_one() {\n    global_result = global_result + 4;\n    step_counter++;\n}\n\nvoid step_two() {\n    global_result = global_result * step_counter;\n    step_counter++;\n}\n\nvoid step_three() {\n    global_result = global_result + (step_counter * 2);\n    step_counter++;\n}\n\nint execute_chain() {\n    step_one();\n    step_two();\n    step_three();\n    return global_result;\n}\n\n// What value is returned by execute_chain()?",
+            "answer": "11"
+        }
+    },
+    {
+        "id": "MF-SP-S001-V007",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-GlobalStructState",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "global_struct_modification",
+            "state_type": "global",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track global structure member modifications across multiple function calls and calculate the final aggregate value.",
+            "code": "struct GlobalData {\n    int x;\n    int y;\n    int sum;\n} data = {3, 7, 0};\n\nvoid update_sum() {\n    data.sum = data.x + data.y;\n}\n\nvoid modify_coordinates(int dx, int dy) {\n    data.x += dx;\n    data.y += dy;\n}\n\nvoid apply_transform() {\n    data.x *= 2;\n    data.y -= 1;\n    update_sum();\n}\n\nint calculate_total() {\n    modify_coordinates(2, -3);\n    apply_transform();\n    return data.sum;\n}\n\n// What value is returned by calculate_total()?",
+            "answer": "13"
+        }
+    },
+    {
+        "id": "MF-SP-S001-V008",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-GlobalLoopAccumulation",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "global_loop_accumulation",
+            "state_type": "global",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze global variable accumulation through repeated function calls in a loop structure.",
+            "code": "int total = 0;\nint multiplier = 2;\n\nvoid add_product(int value) {\n    total += value * multiplier;\n}\n\nvoid increment_multiplier() {\n    multiplier++;\n}\n\nint process_values() {\n    for (int i = 1; i <= 3; i++) {\n        add_product(i);\n        if (i % 2 == 0) {\n            increment_multiplier();\n        }\n    }\n    return total;\n}\n\n// What value is returned by process_values()?",
+            "answer": "11"
+        }
+    },
+    {
+        "id": "MF-SP-S001-V009",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-GlobalBitwiseOps",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "global_bitwise_operations",
+            "state_type": "global",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track global variable state through bitwise operations across multiple function calls.",
+            "code": "int global_bits = 0x0F;\nint mask = 0x03;\n\nvoid apply_xor() {\n    global_bits ^= mask;\n}\n\nvoid shift_and_or() {\n    global_bits = (global_bits << 1) | 0x01;\n    mask = mask << 1;\n}\n\nvoid final_and_operation() {\n    global_bits &= 0x1F;\n}\n\nint compute_bitwise_result() {\n    apply_xor();\n    shift_and_or();\n    apply_xor();\n    final_and_operation();\n    return global_bits;\n}\n\n// What value is returned by compute_bitwise_result()?",
+            "answer": "25"
+        }
+    },
+    {
+        "id": "MF-SP-S002-V001",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ArrayElementShift",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "array_element_shift",
+            "state_type": "global",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze global array element shifting and modification across function calls to determine the final sum.",
+            "code": "int values[4] = {5, 10, 15, 20};\n\nvoid shift_left() {\n    for (int i = 0; i < 3; i++) {\n        values[i] = values[i + 1];\n    }\n    values[3] = 0;\n}\n\nvoid add_constant() {\n    for (int i = 0; i < 4; i++) {\n        values[i] += 3;\n    }\n}\n\nint compute_array_sum() {\n    shift_left();\n    add_constant();\n    int sum = 0;\n    for (int i = 0; i < 4; i++) {\n        sum += values[i];\n    }\n    return sum;\n}\n\n// What value is returned by compute_array_sum()?",
+            "answer": "60"
+        }
+    },
+    {
+        "id": "MF-SP-S002-V002",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ArrayMatrixOps",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "array_matrix_operations",
+            "state_type": "global",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track global 2D array modifications through matrix operations and calculate the final element sum.",
+            "code": "int matrix[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};\n\nvoid transpose_matrix() {\n    for (int i = 0; i < 3; i++) {\n        for (int j = i + 1; j < 3; j++) {\n            int temp = matrix[i][j];\n            matrix[i][j] = matrix[j][i];\n            matrix[j][i] = temp;\n        }\n    }\n}\n\nvoid scale_diagonal(int factor) {\n    for (int i = 0; i < 3; i++) {\n        matrix[i][i] *= factor;\n    }\n}\n\nint calculate_matrix_sum() {\n    transpose_matrix();\n    scale_diagonal(2);\n    int sum = 0;\n    for (int i = 0; i < 3; i++) {\n        for (int j = 0; j < 3; j++) {\n            sum += matrix[i][j];\n        }\n    }\n    return sum;\n}\n\n// What value is returned by calculate_matrix_sum()?",
+            "answer": "60"
+        }
+    },
+    {
+        "id": "MF-SP-S002-V003",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ArrayRotation",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "array_rotation",
+            "state_type": "global",
+            "propagation_pattern": "circular",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze global array rotation operations and determine the final array configuration sum.",
+            "code": "int data[5] = {2, 4, 6, 8, 10};\n\nvoid rotate_right() {\n    int temp = data[4];\n    for (int i = 4; i > 0; i--) {\n        data[i] = data[i - 1];\n    }\n    data[0] = temp;\n}\n\nvoid multiply_ends() {\n    data[0] *= 2;\n    data[4] *= 2;\n}\n\nint process_rotation() {\n    rotate_right();\n    multiply_ends();\n    rotate_right();\n    int sum = 0;\n    for (int i = 0; i < 5; i++) {\n        sum += data[i];\n    }\n    return sum;\n}\n\n// What value is returned by process_rotation()?",
+            "answer": "50"
+        }
+    },
+    {
+        "id": "MF-SP-S002-V004",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ArrayCondensation",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "array_condensation",
+            "state_type": "global",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track global array condensation operations where adjacent elements are combined and calculate the final result.",
+            "code": "int sequence[6] = {1, 3, 5, 7, 9, 11};\nint length = 6;\n\nvoid condense_pairs() {\n    for (int i = 0; i < length - 1; i += 2) {\n        sequence[i/2] = sequence[i] + sequence[i + 1];\n    }\n    length = length / 2;\n}\n\nvoid square_elements() {\n    for (int i = 0; i < length; i++) {\n        sequence[i] = sequence[i] * sequence[i];\n    }\n}\n\nint compute_condensed_sum() {\n    condense_pairs();\n    square_elements();\n    condense_pairs();\n    return sequence[0];\n}\n\n// What value is returned by compute_condensed_sum()?",
+            "answer": "400"
+        }
+    },
+    {
+        "id": "MF-SP-S002-V005",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ArrayFiltering",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "array_filtering",
+            "state_type": "global",
+            "propagation_pattern": "branched",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze global array filtering operations where elements are conditionally modified and calculate the remaining sum.",
+            "code": "int numbers[6] = {12, 15, 18, 21, 24, 27};\n\nvoid filter_divisible_by_three() {\n    for (int i = 0; i < 6; i++) {\n        if (numbers[i] % 3 == 0) {\n            numbers[i] = numbers[i] / 3;\n        } else {\n            numbers[i] = 0;\n        }\n    }\n}\n\nvoid remove_zeros() {\n    for (int i = 0; i < 6; i++) {\n        if (numbers[i] == 0) {\n            numbers[i] = -1;\n        }\n    }\n}\n\nint calculate_filtered_sum() {\n    filter_divisible_by_three();\n    remove_zeros();\n    int sum = 0;\n    for (int i = 0; i < 6; i++) {\n        if (numbers[i] > 0) {\n            sum += numbers[i];\n        }\n    }\n    return sum;\n}\n\n// What value is returned by calculate_filtered_sum()?",
+            "answer": "33"
+        }
+    },
+    {
+        "id": "MF-SP-S002-V006",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ArrayAccumulation",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "array_accumulation",
+            "state_type": "global",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track global array accumulation where each element becomes the sum of previous elements.",
+            "code": "int accumulator[4] = {3, 5, 2, 8};\n\nvoid create_cumulative() {\n    for (int i = 1; i < 4; i++) {\n        accumulator[i] += accumulator[i - 1];\n    }\n}\n\nvoid subtract_first() {\n    int first = accumulator[0];\n    for (int i = 0; i < 4; i++) {\n        accumulator[i] -= first;\n    }\n}\n\nint get_final_sum() {\n    create_cumulative();\n    subtract_first();\n    int sum = 0;\n    for (int i = 0; i < 4; i++) {\n        sum += accumulator[i];\n    }\n    return sum;\n}\n\n// What value is returned by get_final_sum()?",
+            "answer": "18"
+        }
+    },
+    {
+        "id": "MF-SP-S002-V007",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ArrayInterleaving",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "array_interleaving",
+            "state_type": "global",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze complex global array interleaving operations with conditional modifications.",
+            "code": "int primary[4] = {6, 12, 18, 24};\nint secondary[4] = {1, 2, 3, 4};\n\nvoid interleave_arrays() {\n    for (int i = 0; i < 4; i++) {\n        if (i % 2 == 0) {\n            primary[i] = primary[i] + secondary[i];\n        } else {\n            primary[i] = primary[i] * secondary[i];\n        }\n    }\n}\n\nvoid reverse_and_modify() {\n    for (int i = 0; i < 2; i++) {\n        int temp = primary[i];\n        primary[i] = primary[3 - i] + 5;\n        primary[3 - i] = temp - 5;\n    }\n}\n\nint compute_interleaved_result() {\n    interleave_arrays();\n    reverse_and_modify();\n    int sum = 0;\n    for (int i = 0; i < 4; i++) {\n        sum += primary[i];\n    }\n    return sum;\n}\n\n// What value is returned by compute_interleaved_result()?",
+            "answer": "94"
+        }
+    },
+    {
+        "id": "MF-SP-S002-V008",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ArrayPartitioning",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "array_partitioning",
+            "state_type": "global",
+            "propagation_pattern": "branched",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track global array partitioning operations where elements are redistributed based on conditions.",
+            "code": "int dataset[8] = {4, 7, 2, 9, 6, 1, 8, 3};\n\nvoid partition_even_odd() {\n    int even_sum = 0, odd_sum = 0;\n    for (int i = 0; i < 8; i++) {\n        if (dataset[i] % 2 == 0) {\n            even_sum += dataset[i];\n        } else {\n            odd_sum += dataset[i];\n        }\n    }\n    dataset[0] = even_sum;\n    dataset[1] = odd_sum;\n    for (int i = 2; i < 8; i++) {\n        dataset[i] = 0;\n    }\n}\n\nvoid apply_difference() {\n    dataset[2] = dataset[0] - dataset[1];\n}\n\nint calculate_partition_result() {\n    partition_even_odd();\n    apply_difference();\n    return dataset[0] + dataset[1] + dataset[2];\n}\n\n// What value is returned by calculate_partition_result()?",
+            "answer": "60"
+        }
+    },
+    {
+        "id": "MF-SP-S003-V001",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticIncrement",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "static_increment_pattern",
+            "state_type": "static",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track static variable incrementation across multiple function calls and determine the final accumulated value.",
+            "code": "int get_sequence_number() {\n    static int sequence = 0;\n    sequence += 5;\n    return sequence;\n}\n\nint calculate_sequence_sum() {\n    int total = 0;\n    for (int i = 0; i < 4; i++) {\n        total += get_sequence_number();\n    }\n    return total;\n}\n\n// What value is returned by calculate_sequence_sum()?",
+            "answer": "50"
+        }
+    },
+    {
+        "id": "MF-SP-S003-V002",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticToggle",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "static_toggle_state",
+            "state_type": "static",
+            "propagation_pattern": "circular",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze static variable toggle behavior across function calls and calculate the final state value.",
+            "code": "int toggle_state() {\n    static int state = 1;\n    static int multiplier = 2;\n    state = state * multiplier;\n    multiplier = (multiplier == 2) ? 3 : 2;\n    return state;\n}\n\nint process_toggles() {\n    int result = 0;\n    result += toggle_state();\n    result += toggle_state();\n    result += toggle_state();\n    return result;\n}\n\n// What value is returned by process_toggles()?",
+            "answer": "26"
+        }
+    },
+    {
+        "id": "MF-SP-S003-V003",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-NestedStaticCounters",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_static_counters",
+            "state_type": "static",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track multiple nested static counters across interconnected function calls and determine the final combined result.",
+            "code": "int inner_counter() {\n    static int count = 0;\n    count += 3;\n    return count;\n}\n\nint outer_counter() {\n    static int total = 0;\n    total += inner_counter();\n    return total;\n}\n\nint combined_counter() {\n    static int combined = 0;\n    combined = outer_counter() + inner_counter();\n    return combined;\n}\n\nint test_nested_counters() {\n    int result1 = combined_counter();\n    int result2 = combined_counter();\n    return result1 + result2;\n}\n\n// What value is returned by test_nested_counters()?",
+            "answer": "36"
+        }
+    },
+    {
+        "id": "MF-SP-S003-V004",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticFactorial",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "static_factorial_accumulation",
+            "state_type": "static",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze static variable factorial accumulation across function calls and determine the final result.",
+            "code": "int factorial_step() {\n    static int result = 1;\n    static int factor = 1;\n    result *= factor;\n    factor++;\n    return result;\n}\n\nint compute_factorial_sequence() {\n    int sum = 0;\n    for (int i = 0; i < 5; i++) {\n        sum += factorial_step();\n    }\n    return sum;\n}\n\n// What value is returned by compute_factorial_sequence()?",
+            "answer": "34"
+        }
+    },
+    {
+        "id": "MF-SP-S003-V005",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticFibonacci",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "static_fibonacci_sequence",
+            "state_type": "static",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track static variables implementing Fibonacci sequence generation and calculate the sum of generated numbers.",
+            "code": "int fibonacci_next() {\n    static int prev = 0;\n    static int curr = 1;\n    int next = prev + curr;\n    prev = curr;\n    curr = next;\n    return next;\n}\n\nint generate_fibonacci_sum() {\n    int sum = 1;\n    for (int i = 0; i < 5; i++) {\n        sum += fibonacci_next();\n    }\n    return sum;\n}\n\n// What value is returned by generate_fibonacci_sum()?",
+            "answer": "21"
+        }
+    },
+    {
+        "id": "MF-SP-S003-V006",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticBitShift",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "static_bitwise_shift",
+            "state_type": "static",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze static variable bitwise shift operations across function calls and determine the final bit pattern value.",
+            "code": "int bit_shifter() {\n    static int value = 1;\n    static int direction = 1;\n    if (direction == 1) {\n        value = value << 1;\n        if (value >= 16) direction = -1;\n    } else {\n        value = value >> 1;\n        if (value <= 1) direction = 1;\n    }\n    return value;\n}\n\nint test_bit_shifting() {\n    int sum = 0;\n    for (int i = 0; i < 7; i++) {\n        sum += bit_shifter();\n    }\n    return sum;\n}\n\n// What value is returned by test_bit_shifting()?",
+            "answer": "46"
+        }
+    },
+    {
+        "id": "MF-SP-S003-V007",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticModuloCounter",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "static_modulo_counter",
+            "state_type": "static",
+            "propagation_pattern": "circular",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track static variable modulo counter behavior and calculate the accumulated results across function calls.",
+            "code": "int modulo_counter() {\n    static int counter = 0;\n    static int base = 7;\n    counter = (counter + base) % 20;\n    return counter;\n}\n\nvoid reset_base() {\n    static int reset_count = 0;\n    reset_count++;\n    if (reset_count == 2) {\n        modulo_counter();\n    }\n}\n\nint test_modulo_sequence() {\n    int sum = 0;\n    sum += modulo_counter();\n    reset_base();\n    sum += modulo_counter();\n    reset_base();\n    sum += modulo_counter();\n    return sum;\n}\n\n// What value is returned by test_modulo_sequence()?",
+            "answer": "35"
+        }
+    },
+    {
+        "id": "MF-SP-S003-V008",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticPrimeGenerator",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "static_prime_generation",
+            "state_type": "static",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze static variables implementing prime number generation and calculate the sum of generated primes.",
+            "code": "int next_prime() {\n    static int current = 2;\n    static int found = 0;\n    while (!found) {\n        found = 1;\n        for (int i = 2; i * i <= current; i++) {\n            if (current % i == 0) {\n                found = 0;\n                break;\n            }\n        }\n        if (!found) current++;\n    }\n    int result = current;\n    current++;\n    found = 0;\n    return result;\n}\n\nint generate_prime_sum() {\n    int sum = 0;\n    for (int i = 0; i < 4; i++) {\n        sum += next_prime();\n    }\n    return sum;\n}\n\n// What value is returned by generate_prime_sum()?",
+            "answer": "17"
+        }
+    },
+    {
+        "id": "MF-SP-S004-V001",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticArrayFIFO",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "static_array_fifo",
+            "state_type": "static",
+            "propagation_pattern": "circular",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze static array implementing FIFO queue behavior across function calls and determine the final sum.",
+            "code": "int enqueue_value(int value) {\n    static int queue[3] = {0, 0, 0};\n    static int front = 0;\n    queue[front] = value;\n    front = (front + 1) % 3;\n    int sum = 0;\n    for (int i = 0; i < 3; i++) {\n        sum += queue[i];\n    }\n    return sum;\n}\n\nint test_fifo_operations() {\n    enqueue_value(5);\n    enqueue_value(10);\n    enqueue_value(15);\n    return enqueue_value(20);\n}\n\n// What value is returned by test_fifo_operations()?",
+            "answer": "45"
+        }
+    },
+    {
+        "id": "MF-SP-S004-V002",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticArrayStack",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "static_array_stack",
+            "state_type": "static",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track static array implementing stack operations with push and pop functionality across function calls.",
+            "code": "int stack_operation(int value, int is_push) {\n    static int stack[4] = {0, 0, 0, 0};\n    static int top = -1;\n    \n    if (is_push && top < 3) {\n        top++;\n        stack[top] = value;\n    } else if (!is_push && top >= 0) {\n        value = stack[top];\n        stack[top] = 0;\n        top--;\n    }\n    \n    int sum = 0;\n    for (int i = 0; i <= top; i++) {\n        sum += stack[i];\n    }\n    return sum;\n}\n\nint test_stack_operations() {\n    stack_operation(8, 1);\n    stack_operation(12, 1);\n    stack_operation(6, 1);\n    stack_operation(0, 0);\n    return stack_operation(4, 1);\n}\n\n// What value is returned by test_stack_operations()?",
+            "answer": "24"
+        }
+    },
+    {
+        "id": "MF-SP-S004-V003",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticArrayHistogram",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "static_array_histogram",
+            "state_type": "static",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze static array implementing histogram counting across function calls and calculate the final distribution sum.",
+            "code": "int add_to_histogram(int value) {\n    static int histogram[5] = {0, 0, 0, 0, 0};\n    static int total_count = 0;\n    \n    if (value >= 0 && value < 5) {\n        histogram[value]++;\n        total_count++;\n    }\n    \n    int weighted_sum = 0;\n    for (int i = 0; i < 5; i++) {\n        weighted_sum += i * histogram[i];\n    }\n    \n    return weighted_sum;\n}\n\nint test_histogram_operations() {\n    add_to_histogram(1);\n    add_to_histogram(3);\n    add_to_histogram(1);\n    add_to_histogram(4);\n    return add_to_histogram(2);\n}\n\n// What value is returned by test_histogram_operations()?",
+            "answer": "12"
+        }
+    },
+    {
+        "id": "MF-SP-S004-V004",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticArrayMatrix",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "static_array_matrix_ops",
+            "state_type": "static",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track static 2D array matrix operations across function calls and determine the final trace value.",
+            "code": "int matrix_transform(int row, int col, int value) {\n    static int matrix[2][2] = {{1, 2}, {3, 4}};\n    \n    if (row >= 0 && row < 2 && col >= 0 && col < 2) {\n        matrix[row][col] += value;\n    }\n    \n    int trace = matrix[0][0] + matrix[1][1];\n    return trace;\n}\n\nint test_matrix_operations() {\n    matrix_transform(0, 0, 3);\n    matrix_transform(1, 1, 2);\n    matrix_transform(0, 1, 5);\n    return matrix_transform(1, 0, 1);\n}\n\n// What value is returned by test_matrix_operations()?",
+            "answer": "11"
+        }
+    },
+    {
+        "id": "MF-SP-S004-V005",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticArrayBubbleSort",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "static_array_sorting",
+            "state_type": "static",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze static array bubble sort implementation across function calls and determine the final sorted sum.",
+            "code": "int sort_step() {\n    static int array[4] = {8, 3, 5, 1};\n    static int pass = 0;\n    \n    for (int i = 0; i < 3 - pass; i++) {\n        if (array[i] > array[i + 1]) {\n            int temp = array[i];\n            array[i] = array[i + 1];\n            array[i + 1] = temp;\n        }\n    }\n    pass++;\n    \n    int sum = 0;\n    for (int i = 0; i < 4; i++) {\n        sum += array[i] * (i + 1);\n    }\n    return sum;\n}\n\nint test_sorting_process() {\n    sort_step();\n    sort_step();\n    return sort_step();\n}\n\n// What value is returned by test_sorting_process()?",
+            "answer": "30"
+        }
+    },
+    {
+        "id": "MF-SP-S004-V006",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticArrayBuffer",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "static_array_circular_buffer",
+            "state_type": "static",
+            "propagation_pattern": "circular",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track static array circular buffer operations and calculate the final buffer state sum.",
+            "code": "int circular_buffer(int value) {\n    static int buffer[3] = {0, 0, 0};\n    static int position = 0;\n    static int count = 0;\n    \n    buffer[position] = value;\n    position = (position + 1) % 3;\n    if (count < 3) count++;\n    \n    int sum = 0;\n    for (int i = 0; i < count; i++) {\n        sum += buffer[i];\n    }\n    return sum;\n}\n\nint test_circular_operations() {\n    circular_buffer(7);\n    circular_buffer(14);\n    circular_buffer(21);\n    return circular_buffer(28);\n}\n\n// What value is returned by test_circular_operations()?",
+            "answer": "63"
+        }
+    },
+    {
+        "id": "MF-SP-S004-V007",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticArrayLookup",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "static_array_lookup_table",
+            "state_type": "static",
+            "propagation_pattern": "branched",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze static array lookup table modifications and access patterns across function calls.",
+            "code": "int lookup_table(int key, int value, int is_set) {\n    static int table[4] = {10, 20, 30, 40};\n    static int access_count = 0;\n    \n    access_count++;\n    \n    if (key >= 0 && key < 4) {\n        if (is_set) {\n            table[key] = value;\n        }\n        return table[key] + access_count;\n    }\n    return access_count;\n}\n\nint test_lookup_operations() {\n    int result = 0;\n    result += lookup_table(1, 25, 1);\n    result += lookup_table(1, 0, 0);\n    result += lookup_table(3, 50, 1);\n    return result;\n}\n\n// What value is returned by test_lookup_operations()?",
+            "answer": "80"
+        }
+    },
+    {
+        "id": "MF-SP-S004-V008",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-StaticArrayPriorityQueue",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "static_array_priority_queue",
+            "state_type": "static",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track static array implementing priority queue operations and calculate the final queue state sum.",
+            "code": "int priority_queue(int value, int is_insert) {\n    static int queue[3] = {0, 0, 0};\n    static int size = 0;\n    \n    if (is_insert && size < 3) {\n        queue[size] = value;\n        size++;\n        for (int i = size - 1; i > 0 && queue[i] > queue[i-1]; i--) {\n            int temp = queue[i];\n            queue[i] = queue[i-1];\n            queue[i-1] = temp;\n        }\n    } else if (!is_insert && size > 0) {\n        for (int i = 0; i < size - 1; i++) {\n            queue[i] = queue[i + 1];\n        }\n        queue[size - 1] = 0;\n        size--;\n    }\n    \n    int sum = 0;\n    for (int i = 0; i < size; i++) {\n        sum += queue[i];\n    }\n    return sum;\n}\n\nint test_priority_operations() {\n    priority_queue(15, 1);\n    priority_queue(10, 1);\n    priority_queue(20, 1);\n    priority_queue(0, 0);\n    return priority_queue(5, 1);\n}\n\n// What value is returned by test_priority_operations()?",
+            "answer": "30"
+        }
+    },
+    {
+        "id": "MF-SP-S005-V001",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-SimpleClosure",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_closure_capture",
+            "state_type": "closure",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track simple closure variable capture and modification to determine the final captured state value.",
+            "code": "def create_multiplier(factor):\n    def multiply(value):\n        return factor * value\n    return multiply\n\ndef test_simple_closure():\n    mult_by_3 = create_multiplier(3)\n    mult_by_5 = create_multiplier(5)\n    \n    result1 = mult_by_3(4)\n    result2 = mult_by_5(2)\n    \n    return result1 + result2\n\n# What value is returned by test_simple_closure()?",
+            "answer": "22"
+        }
+    },
+    {
+        "id": "MF-SP-S005-V002",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ClosureModification",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "closure_state_modification",
+            "state_type": "closure",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze closure variable modification across multiple function calls and determine the final modified value.",
+            "code": "def create_counter(start):\n    count = start\n    \n    def increment(step=1):\n        nonlocal count\n        count += step\n        return count\n    \n    def get_count():\n        return count\n    \n    return increment, get_count\n\ndef test_closure_modification():\n    inc, get = create_counter(5)\n    \n    inc(3)\n    inc(2)\n    result = get()\n    inc(4)\n    \n    return result\n\n# What value is returned by test_closure_modification()?",
+            "answer": "10"
+        }
+    },
+    {
+        "id": "MF-SP-S005-V003",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ClosureFactoryPattern",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "closure_factory_pattern",
+            "state_type": "closure",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track closure factory pattern with multiple instances and shared state modifications.",
+            "code": "def create_calculator(initial_value):\n    state = {'value': initial_value, 'operations': 0}\n    \n    def add(x):\n        state['value'] += x\n        state['operations'] += 1\n        return state['value']\n    \n    def multiply(x):\n        state['value'] *= x\n        state['operations'] += 1\n        return state['value']\n    \n    def get_operations():\n        return state['operations']\n    \n    return add, multiply, get_operations\n\ndef test_calculator_closures():\n    add1, mult1, ops1 = create_calculator(10)\n    add2, mult2, ops2 = create_calculator(5)\n    \n    add1(5)\n    mult2(3)\n    mult1(2)\n    \n    return add1(0) + mult2(1) + ops1() + ops2()\n\n# What value is returned by test_calculator_closures()?",
+            "answer": "49"
+        }
+    },
+    {
+        "id": "MF-SP-S005-V004",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ClosureChaining",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "closure_chaining",
+            "state_type": "closure",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze chained closure operations where output of one closure becomes input to another.",
+            "code": "def create_processor(operation):\n    def process(value):\n        if operation == 'add':\n            return value + 10\n        elif operation == 'multiply':\n            return value * 2\n        elif operation == 'square':\n            return value * value\n        return value\n    return process\n\ndef chain_processors(*processors):\n    def execute(initial_value):\n        result = initial_value\n        for processor in processors:\n            result = processor(result)\n        return result\n    return execute\n\ndef test_chained_closures():\n    add_proc = create_processor('add')\n    mult_proc = create_processor('multiply')\n    square_proc = create_processor('square')\n    \n    chain = chain_processors(add_proc, mult_proc, square_proc)\n    \n    return chain(3)\n\n# What value is returned by test_chained_closures()?",
+            "answer": "676"
+        }
+    },
+    {
+        "id": "MF-SP-S005-V005",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ClosureMemorization",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "closure_memoization",
+            "state_type": "closure",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track closure implementing memoization pattern and analyze cached value propagation.",
+            "code": "def create_memoized_function():\n    cache = {}\n    call_count = 0\n    \n    def fibonacci(n):\n        nonlocal call_count\n        call_count += 1\n        \n        if n in cache:\n            return cache[n]\n        \n        if n <= 1:\n            result = n\n        else:\n            result = fibonacci(n-1) + fibonacci(n-2)\n        \n        cache[n] = result\n        return result\n    \n    def get_cache_size():\n        return len(cache)\n    \n    def get_call_count():\n        return call_count\n    \n    return fibonacci, get_cache_size, get_call_count\n\ndef test_memoized_closure():\n    fib, cache_size, call_count = create_memoized_function()\n    \n    result1 = fib(5)\n    result2 = fib(4)\n    \n    return result1 + cache_size() + call_count()\n\n# What value is returned by test_memoized_closure()?",
+            "answer": "20"
+        }
+    },
+    {
+        "id": "MF-SP-S005-V006",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ClosureStateMachine",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "closure_state_machine",
+            "state_type": "closure",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze closure implementing state machine pattern with state transitions and value accumulation.",
+            "code": "def create_state_machine():\n    state = 'idle'\n    value = 0\n    transitions = 0\n    \n    def process(action):\n        nonlocal state, value, transitions\n        \n        if state == 'idle' and action == 'start':\n            state = 'running'\n            value = 10\n            transitions += 1\n        elif state == 'running' and action == 'increment':\n            value += 5\n        elif state == 'running' and action == 'stop':\n            state = 'stopped'\n            value *= 2\n            transitions += 1\n        elif state == 'stopped' and action == 'reset':\n            state = 'idle'\n            value = 0\n            transitions += 1\n        \n        return value\n    \n    def get_transitions():\n        return transitions\n    \n    return process, get_transitions\n\ndef test_state_machine_closure():\n    process, get_trans = create_state_machine()\n    \n    process('start')\n    process('increment')\n    process('increment')\n    result = process('stop')\n    \n    return result + get_trans()\n\n# What value is returned by test_state_machine_closure()?",
+            "answer": "42"
+        }
+    },
+    {
+        "id": "MF-SP-S005-V007",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ClosureEventHandler",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "closure_event_handler",
+            "state_type": "closure",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track closure implementing event handler pattern with event counting and state accumulation.",
+            "code": "def create_event_handler():\n    events = []\n    total_value = 0\n    \n    def handle_event(event_type, value):\n        nonlocal total_value\n        events.append(event_type)\n        \n        if event_type == 'add':\n            total_value += value\n        elif event_type == 'multiply':\n            total_value *= value\n        elif event_type == 'reset':\n            total_value = value\n        \n        return total_value\n    \n    def get_event_count():\n        return len(events)\n    \n    return handle_event, get_event_count\n\ndef test_event_handler_closure():\n    handle, count = create_event_handler()\n    \n    handle('reset', 8)\n    handle('add', 4)\n    handle('multiply', 3)\n    result = handle('add', 2)\n    \n    return result + count()\n\n# What value is returned by test_event_handler_closure()?",
+            "answer": "42"
+        }
+    },
+    {
+        "id": "MF-SP-S005-V008",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ClosureConfigurable",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "closure_configurable_behavior",
+            "state_type": "closure",
+            "propagation_pattern": "branched",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze closure with configurable behavior that changes based on captured configuration values.",
+            "code": "def create_configurable_function(config):\n    result = config['initial']\n    mode = config['mode']\n    \n    def execute(value):\n        nonlocal result\n        \n        if mode == 'accumulate':\n            result += value\n        elif mode == 'maximum':\n            result = max(result, value)\n        elif mode == 'product':\n            result *= value\n        \n        return result\n    \n    return execute\n\ndef test_configurable_closure():\n    func1 = create_configurable_function({'initial': 5, 'mode': 'accumulate'})\n    func2 = create_configurable_function({'initial': 2, 'mode': 'product'})\n    \n    result1 = func1(7)\n    result1 = func1(3)\n    \n    result2 = func2(4)\n    result2 = func2(3)\n    \n    return result1 + result2\n\n# What value is returned by test_configurable_closure()?",
+            "answer": "39"
+        }
+    },
+    {
+        "id": "MF-SP-S006-V001",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-TripleNestedClosure",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "triple_nested_closure",
+            "state_type": "closure",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze triple-nested closure state propagation with multiple levels of variable capture.",
+            "code": "def create_nested_calculator(base):\n    def create_operation(op_type):\n        def create_executor(multiplier):\n            def execute(value):\n                if op_type == 'add':\n                    return (base + value) * multiplier\n                elif op_type == 'subtract':\n                    return (base - value) * multiplier\n                else:\n                    return base * multiplier\n            return execute\n        return create_executor\n    return create_operation\n\ndef test_triple_nested():\n    calculator = create_nested_calculator(10)\n    add_op = calculator('add')\n    sub_op = calculator('subtract')\n    \n    add_exec = add_op(2)\n    sub_exec = sub_op(3)\n    \n    result1 = add_exec(5)\n    result2 = sub_exec(2)\n    \n    return result1 + result2\n\n# What value is returned by test_triple_nested()?",
+            "answer": "54"
+        }
+    },
+    {
+        "id": "MF-SP-S006-V002",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-NestedStateAccumulator",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "nested_state_accumulator",
+            "state_type": "closure",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track nested closure state accumulation where inner closures modify outer closure variables.",
+            "code": "def create_accumulator_factory(initial):\n    total = initial\n    \n    def create_specific_accumulator(factor):\n        local_sum = 0\n        \n        def accumulate(value):\n            nonlocal total, local_sum\n            local_sum += value\n            total += value * factor\n            return total + local_sum\n        \n        return accumulate\n    \n    def get_total():\n        return total\n    \n    return create_specific_accumulator, get_total\n\ndef test_nested_accumulator():\n    create_acc, get_total = create_accumulator_factory(5)\n    \n    acc1 = create_acc(2)\n    acc2 = create_acc(3)\n    \n    result1 = acc1(4)\n    result2 = acc2(2)\n    result3 = acc1(1)\n    \n    return result3\n\n# What value is returned by test_nested_accumulator()?",
+            "answer": "26"
+        }
+    },
+    {
+        "id": "MF-SP-S006-V003",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-NestedConfigurationClosure",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "nested_configuration_closure",
+            "state_type": "closure",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze nested closure configuration system with dynamic behavior modification.",
+            "code": "def create_configurable_system(base_config):\n    global_state = base_config['initial_value']\n    \n    def create_module(module_config):\n        module_state = module_config['module_value']\n        \n        def create_function(func_config):\n            function_state = func_config['func_value']\n            \n            def execute(input_value):\n                nonlocal global_state, module_state, function_state\n                \n                result = global_state + module_state + function_state + input_value\n                \n                global_state += 1\n                module_state += 2\n                function_state += 3\n                \n                return result\n            \n            return execute\n        \n        return create_function\n    \n    return create_module\n\ndef test_nested_configuration():\n    system = create_configurable_system({'initial_value': 10})\n    module = system({'module_value': 5})\n    func = module({'func_value': 3})\n    \n    result1 = func(2)\n    result2 = func(1)\n    \n    return result1 + result2\n\n# What value is returned by test_nested_configuration()?",
+            "answer": "45"
+        }
+    },
+    {
+        "id": "MF-SP-S006-V004",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-NestedEventSystem",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_event_system",
+            "state_type": "closure",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track nested closure event system with cascading event handlers and state modifications.",
+            "code": "def create_event_system():\n    global_events = []\n    \n    def create_event_handler(handler_id):\n        local_events = []\n        \n        def handle_event(event_type, value):\n            nonlocal global_events, local_events\n            \n            global_events.append(event_type)\n            local_events.append(value)\n            \n            if event_type == 'increment':\n                return sum(local_events) + len(global_events)\n            elif event_type == 'reset':\n                local_events.clear()\n                return len(global_events)\n            else:\n                return value + handler_id\n        \n        return handle_event\n    \n    return create_event_handler\n\ndef test_nested_event_system():\n    create_handler = create_event_system()\n    \n    handler1 = create_handler(10)\n    handler2 = create_handler(20)\n    \n    result1 = handler1('increment', 5)\n    result2 = handler2('increment', 3)\n    result3 = handler1('other', 2)\n    \n    return result1 + result2 + result3\n\n# What value is returned by test_nested_event_system()?",
+    "answer": "31"
+        }
+    },
+    {
+        "id": "MF-SP-S006-V005",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-NestedFactoryChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "nested_factory_chain",
+            "state_type": "closure",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze nested factory pattern with chained closure creation and shared state propagation.",
+            "code": "def create_factory_chain(initial_multiplier):\n    chain_state = {'multiplier': initial_multiplier, 'calls': 0}\n    \n    def create_transformer(transform_type):\n        transform_count = 0\n        \n        def create_processor(processor_value):\n            def process(input_value):\n                nonlocal chain_state, transform_count\n                \n                chain_state['calls'] += 1\n                transform_count += 1\n                \n                if transform_type == 'multiply':\n                    result = input_value * chain_state['multiplier'] * processor_value\n                elif transform_type == 'add':\n                    result = input_value + chain_state['multiplier'] + processor_value\n                else:\n                    result = input_value + processor_value\n                \n                chain_state['multiplier'] += transform_count\n                return result\n            \n            return process\n        \n        return create_processor\n    \n    return create_transformer\n\ndef test_factory_chain():\n    factory = create_factory_chain(2)\n    \n    multiply_transformer = factory('multiply')\n    add_transformer = factory('add')\n    \n    mult_processor = multiply_transformer(3)\n    add_processor = add_transformer(5)\n    \n    result1 = mult_processor(4)\n    result2 = add_processor(6)\n    \n    return result1 + result2\n\n# What value is returned by test_factory_chain()?",
+            "answer": "57"
+        }
+    },
+    {
+        "id": "MF-SP-S006-V006",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-NestedCounter",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "nested_counter_system",
+            "state_type": "closure",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track nested counter system where inner counters affect outer counter state.",
+            "code": "def create_counter_system(base):\n    total_count = base\n    \n    def create_counter(increment_value):\n        local_count = 0\n        \n        def count():\n            nonlocal total_count, local_count\n            local_count += increment_value\n            total_count += local_count\n            return total_count\n        \n        return count\n    \n    return create_counter\n\ndef test_nested_counters():\n    create_counter = create_counter_system(5)\n    \n    counter1 = create_counter(3)\n    counter2 = create_counter(2)\n    \n    result1 = counter1()\n    result2 = counter2()\n    result3 = counter1()\n    \n    return result3\n\n# What value is returned by test_nested_counters()?",
+            "answer": "19"
+        }
+    },
+    {
+        "id": "MF-SP-S006-V007",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-NestedValidator",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_validator_system",
+            "state_type": "closure",
+            "propagation_pattern": "branched",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze nested validation system with cascading validation rules and state tracking.",
+            "code": "def create_validator_system(base_threshold):\n    validation_count = 0\n    \n    def create_validator(validator_type):\n        local_validations = 0\n        \n        def validate(value):\n            nonlocal validation_count, local_validations\n            \n            validation_count += 1\n            local_validations += 1\n            \n            if validator_type == 'min' and value >= base_threshold:\n                return value + validation_count\n            elif validator_type == 'max' and value <= base_threshold:\n                return value + local_validations\n            else:\n                return 0\n        \n        return validate\n    \n    return create_validator\n\ndef test_nested_validators():\n    create_validator = create_validator_system(10)\n    \n    min_validator = create_validator('min')\n    max_validator = create_validator('max')\n    \n    result1 = min_validator(15)\n    result2 = max_validator(8)\n    result3 = min_validator(12)\n    \n    return result1 + result2 + result3\n\n# What value is returned by test_nested_validators()?",
+            "answer": "36"
+        }
+    },
+    {
+        "id": "MF-SP-S006-V008",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-NestedGenerator",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "nested_generator_system",
+            "state_type": "closure",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track nested generator system with shared sequence state and multiple generation patterns.",
+            "code": "def create_generator_system(seed):\n    global_sequence = [seed]\n    \n    def create_generator(pattern):\n        local_position = 0\n        \n        def generate():\n            nonlocal global_sequence, local_position\n            \n            if pattern == 'fibonacci':\n                if len(global_sequence) < 2:\n                    next_val = 1\n                else:\n                    next_val = global_sequence[-1] + global_sequence[-2]\n            elif pattern == 'double':\n                next_val = global_sequence[-1] * 2\n            else:\n                next_val = global_sequence[-1] + 1\n            \n            global_sequence.append(next_val)\n            local_position += 1\n            \n            return global_sequence[local_position]\n        \n        return generate\n    \n    return create_generator\n\ndef test_nested_generators():\n    create_gen = create_generator_system(1)\n    \n    fib_gen = create_gen('fibonacci')\n    double_gen = create_gen('double')\n    \n    result1 = fib_gen()\n    result2 = double_gen()\n    result3 = fib_gen()\n    \n    return result1 + result2 + result3\n\n# What value is returned by test_nested_generators()?",
+            "answer": "6"
+        }
+    },
+    {
+        "id": "MF-SP-S007-V001",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-SimpleObjectState",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_object_state",
+            "state_type": "object",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track simple object state changes through method calls and determine the final attribute value.",
+            "code": "class SimpleCounter:\n    def __init__(self, start):\n        self.value = start\n    \n    def add(self, amount):\n        self.value += amount\n        return self.value\n    \n    def multiply(self, factor):\n        self.value *= factor\n        return self.value\n\ndef test_simple_object():\n    counter = SimpleCounter(5)\n    counter.add(7)\n    counter.multiply(2)\n    counter.add(3)\n    return counter.value\n\n# What value is returned by test_simple_object()?",
+            "answer": "27"
+        }
+    },
+    {
+        "id": "MF-SP-S007-V002",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectStateChaining",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "object_method_chaining",
+            "state_type": "object",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze object state propagation through method chaining and calculate the final accumulated result.",
+            "code": "class Calculator:\n    def __init__(self, initial=0):\n        self.result = initial\n        self.operations = 0\n    \n    def add(self, value):\n        self.result += value\n        self.operations += 1\n        return self\n    \n    def multiply(self, value):\n        self.result *= value\n        self.operations += 1\n        return self\n    \n    def subtract(self, value):\n        self.result -= value\n        self.operations += 1\n        return self\n    \n    def get_total(self):\n        return self.result + self.operations\n\ndef test_chained_operations():\n    calc = Calculator(10)\n    result = calc.add(5).multiply(3).subtract(8).get_total()\n    return result\n\n# What value is returned by test_chained_operations()?",
+            "answer": "40"
+        }
+    },
+    {
+        "id": "MF-SP-S007-V003",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectInventorySystem",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "object_inventory_system",
+            "state_type": "object",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track object inventory system state across multiple operations and calculate the final inventory value.",
+            "code": "class Inventory:\n    def __init__(self):\n        self.items = {'apples': 10, 'oranges': 5, 'bananas': 8}\n        self.total_operations = 0\n    \n    def add_item(self, item, quantity):\n        if item in self.items:\n            self.items[item] += quantity\n        else:\n            self.items[item] = quantity\n        self.total_operations += 1\n        return self.items[item]\n    \n    def remove_item(self, item, quantity):\n        if item in self.items:\n            self.items[item] = max(0, self.items[item] - quantity)\n        self.total_operations += 1\n        return self.items.get(item, 0)\n    \n    def get_total_items(self):\n        return sum(self.items.values()) + self.total_operations\n\ndef test_inventory_operations():\n    inventory = Inventory()\n    inventory.add_item('apples', 5)\n    inventory.remove_item('oranges', 3)\n    inventory.add_item('grapes', 12)\n    return inventory.get_total_items()\n\n# What value is returned by test_inventory_operations()?",
+            "answer": "40"
+        }
+    },
+    {
+        "id": "MF-SP-S007-V004",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectStateMachine",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "object_state_machine",
+            "state_type": "object",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze object implementing state machine pattern with conditional state transitions and value tracking.",
+            "code": "class StateMachine:\n    def __init__(self):\n        self.state = 'init'\n        self.value = 0\n        self.transitions = 0\n    \n    def process(self, event, data=0):\n        self.transitions += 1\n        \n        if self.state == 'init' and event == 'start':\n            self.state = 'processing'\n            self.value = data\n        elif self.state == 'processing' and event == 'add':\n            self.value += data\n        elif self.state == 'processing' and event == 'multiply':\n            self.value *= data\n        elif self.state == 'processing' and event == 'finish':\n            self.state = 'complete'\n            self.value += self.transitions\n        elif self.state == 'complete' and event == 'reset':\n            self.state = 'init'\n            self.value = 0\n            self.transitions = 0\n        \n        return self.value\n\ndef test_state_machine_object():\n    sm = StateMachine()\n    sm.process('start', 10)\n    sm.process('add', 5)\n    sm.process('multiply', 2)\n    result = sm.process('finish')\n    return result\n\n# What value is returned by test_state_machine_object()?",
+            "answer": "34"
+        }
+    },
+    {
+        "id": "MF-SP-S007-V005",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectObserver",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "object_observer_pattern",
+            "state_type": "object",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track object implementing observer pattern with state change notifications and accumulated tracking.",
+            "code": "class Observable:\n    def __init__(self, initial_value):\n        self.value = initial_value\n        self.observers = []\n        self.change_count = 0\n    \n    def add_observer(self, observer):\n        self.observers.append(observer)\n    \n    def set_value(self, new_value):\n        old_value = self.value\n        self.value = new_value\n        self.change_count += 1\n        \n        for observer in self.observers:\n            observer.notify(old_value, new_value)\n    \n    def get_total(self):\n        return self.value + self.change_count\n\nclass Observer:\n    def __init__(self):\n        self.notifications = 0\n        self.total_change = 0\n    \n    def notify(self, old_val, new_val):\n        self.notifications += 1\n        self.total_change += abs(new_val - old_val)\n    \n    def get_stats(self):\n        return self.notifications + self.total_change\n\ndef test_observer_pattern():\n    observable = Observable(5)\n    observer = Observer()\n    \n    observable.add_observer(observer)\n    observable.set_value(10)\n    observable.set_value(7)\n    observable.set_value(15)\n    \n    return observable.get_total() + observer.get_stats()\n\n# What value is returned by test_observer_pattern()?",
+            "answer": "36"
+        }
+    },
+    {
+        "id": "MF-SP-S007-V006",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectComposition",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "object_composition",
+            "state_type": "object",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze object composition with shared state propagation between composed objects.",
+            "code": "class Engine:\n    def __init__(self, power):\n        self.power = power\n        self.running = False\n        self.runtime = 0\n    \n    def start(self):\n        self.running = True\n        return self.power\n    \n    def run(self, duration):\n        if self.running:\n            self.runtime += duration\n            return self.power * duration\n        return 0\n    \n    def stop(self):\n        self.running = False\n        return self.runtime\n\nclass Vehicle:\n    def __init__(self, engine):\n        self.engine = engine\n        self.distance = 0\n        self.fuel_consumed = 0\n    \n    def drive(self, time):\n        power_output = self.engine.run(time)\n        if power_output > 0:\n            self.distance += power_output // 10\n            self.fuel_consumed += time\n        return self.distance\n    \n    def get_efficiency(self):\n        return self.distance + self.fuel_consumed + self.engine.runtime\n\ndef test_object_composition():\n    engine = Engine(50)\n    vehicle = Vehicle(engine)\n    \n    engine.start()\n    vehicle.drive(3)\n    vehicle.drive(2)\n    engine.stop()\n    \n    return vehicle.get_efficiency()\n\n# What value is returned by test_object_composition()?",
+            "answer": "35"
+        }
+    },
+    {
+        "id": "MF-SP-S007-V007",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectFactory",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "object_factory_pattern",
+            "state_type": "object",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track object creation through factory pattern with shared state tracking across instances.",
+            "code": "class Counter:\n    instances_created = 0\n    total_operations = 0\n    \n    def __init__(self, initial):\n        Counter.instances_created += 1\n        self.value = initial\n        self.local_ops = 0\n    \n    def increment(self, amount=1):\n        self.value += amount\n        self.local_ops += 1\n        Counter.total_operations += 1\n        return self.value\n    \n    @classmethod\n    def get_global_stats(cls):\n        return cls.instances_created + cls.total_operations\n\ndef create_counter(initial):\n    return Counter(initial)\n\ndef test_factory_pattern():\n    counter1 = create_counter(5)\n    counter2 = create_counter(10)\n    \n    counter1.increment(3)\n    counter2.increment(2)\n    counter1.increment(1)\n    \n    return Counter.get_global_stats() + counter1.value + counter2.value\n\n# What value is returned by test_factory_pattern()?",
+            "answer": "32"
+        }
+    },
+    {
+        "id": "MF-SP-S007-V008",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectPrototype",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "object_prototype_pattern",
+            "state_type": "object",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze object prototype pattern with cloning and independent state evolution tracking.",
+            "code": "class Prototype:\n    def __init__(self, data):\n        self.data = data.copy() if isinstance(data, dict) else data\n        self.modifications = 0\n        self.creation_id = id(self)\n    \n    def clone(self):\n        new_obj = Prototype(self.data)\n        new_obj.modifications = self.modifications\n        return new_obj\n    \n    def modify(self, key, value):\n        if isinstance(self.data, dict):\n            self.data[key] = value\n        else:\n            self.data = value\n        self.modifications += 1\n        return self.get_checksum()\n    \n    def get_checksum(self):\n        if isinstance(self.data, dict):\n            return sum(self.data.values()) + self.modifications\n        else:\n            return self.data + self.modifications\n\ndef test_prototype_pattern():\n    original = Prototype({'x': 5, 'y': 10})\n    clone1 = original.clone()\n    clone2 = original.clone()\n    \n    original.modify('x', 8)\n    clone1.modify('y', 15)\n    result = clone2.modify('x', 12)\n    \n    return result\n\n# What value is returned by test_prototype_pattern()?",
+            "answer": "23"
+        }
+    },
+    {
+        "id": "MF-SP-S008-V001",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-MultiObjectInteraction",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "multi_object_interaction",
+            "state_type": "object",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track shared object state modifications across multiple interconnected objects and determine the final aggregate value.",
+            "code": "class SharedResource:\n    def __init__(self, initial_value):\n        self.value = initial_value\n        self.access_count = 0\n    \n    def modify(self, delta):\n        self.value += delta\n        self.access_count += 1\n        return self.value\n    \n    def get_total(self):\n        return self.value + self.access_count\n\nclass Worker:\n    def __init__(self, worker_id, resource):\n        self.worker_id = worker_id\n        self.resource = resource\n        self.work_done = 0\n    \n    def do_work(self, amount):\n        self.work_done += amount\n        return self.resource.modify(amount * self.worker_id)\n\ndef test_shared_object_state():\n    resource = SharedResource(20)\n    worker1 = Worker(2, resource)\n    worker2 = Worker(3, resource)\n    \n    worker1.do_work(5)\n    worker2.do_work(4)\n    worker1.do_work(3)\n    \n    return resource.get_total()\n\n# What value is returned by test_shared_object_state()?",
+            "answer": "45"
+        }
+    },
+    {
+        "id": "MF-SP-S008-V002",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectStateSync",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "object_state_synchronization",
+            "state_type": "object",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze object state synchronization across multiple objects with bidirectional state updates.",
+            "code": "class SyncedCounter:\n    def __init__(self, initial_value, sync_partner=None):\n        self.value = initial_value\n        self.sync_partner = sync_partner\n        self.sync_operations = 0\n        if sync_partner:\n            sync_partner.sync_partner = self\n    \n    def increment(self, amount):\n        self.value += amount\n        if self.sync_partner:\n            self.sync_partner.value += amount // 2\n            self.sync_operations += 1\n        return self.value\n    \n    def get_combined_value(self):\n        partner_value = self.sync_partner.value if self.sync_partner else 0\n        return self.value + partner_value + self.sync_operations\n\ndef test_synced_objects():\n    counter1 = SyncedCounter(10)\n    counter2 = SyncedCounter(5, counter1)\n    \n    counter1.increment(8)\n    counter2.increment(6)\n    counter1.increment(4)\n    \n    return counter1.get_combined_value()\n\n# What value is returned by test_synced_objects()?",
+            "answer": "37"
+        }
+    },
+    {
+        "id": "MF-SP-S008-V003",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectEventBus",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "object_event_bus",
+            "state_type": "object",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track object state propagation through event bus system with multiple subscribers and event handling.",
+            "code": "class EventBus:\n    def __init__(self):\n        self.subscribers = []\n        self.events_published = 0\n    \n    def subscribe(self, subscriber):\n        self.subscribers.append(subscriber)\n    \n    def publish(self, event_type, data):\n        self.events_published += 1\n        for subscriber in self.subscribers:\n            subscriber.handle_event(event_type, data)\n        return self.events_published\n\nclass Subscriber:\n    def __init__(self, subscriber_id):\n        self.subscriber_id = subscriber_id\n        self.events_received = 0\n        self.accumulated_value = 0\n    \n    def handle_event(self, event_type, data):\n        self.events_received += 1\n        if event_type == 'increment':\n            self.accumulated_value += data * self.subscriber_id\n        elif event_type == 'reset':\n            self.accumulated_value = 0\n    \n    def get_total(self):\n        return self.accumulated_value + self.events_received\n\ndef test_event_bus_system():\n    bus = EventBus()\n    sub1 = Subscriber(2)\n    sub2 = Subscriber(3)\n    \n    bus.subscribe(sub1)\n    bus.subscribe(sub2)\n    \n    bus.publish('increment', 5)\n    bus.publish('increment', 3)\n    bus.publish('reset', 0)\n    \n    return sub1.get_total() + sub2.get_total() + bus.events_published\n\n# What value is returned by test_event_bus_system()?",
+            "answer": "15"
+        }
+    },
+    {
+        "id": "MF-SP-S008-V004",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectChainOfResponsibility",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "object_chain_responsibility",
+            "state_type": "object",
+            "propagation_pattern": "linear",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze object state propagation through chain of responsibility pattern with sequential processing.",
+            "code": "class Handler:\n    def __init__(self, handler_id, threshold):\n        self.handler_id = handler_id\n        self.threshold = threshold\n        self.next_handler = None\n        self.processed_count = 0\n        self.accumulated_value = 0\n    \n    def set_next(self, handler):\n        self.next_handler = handler\n        return handler\n    \n    def handle(self, request):\n        self.processed_count += 1\n        \n        if request >= self.threshold:\n            self.accumulated_value += request * self.handler_id\n            return self.accumulated_value\n        elif self.next_handler:\n            return self.next_handler.handle(request)\n        else:\n            return 0\n    \n    def get_stats(self):\n        return self.accumulated_value + self.processed_count\n\ndef test_chain_of_responsibility():\n    handler1 = Handler(1, 20)\n    handler2 = Handler(2, 10)\n    handler3 = Handler(3, 5)\n    \n    handler1.set_next(handler2).set_next(handler3)\n    \n    result1 = handler1.handle(25)\n    result2 = handler1.handle(15)\n    result3 = handler1.handle(8)\n    \n    return handler1.get_stats() + handler2.get_stats() + handler3.get_stats()\n\n# What value is returned by test_chain_of_responsibility()?",
+            "answer": "84"
+        }
+    },
+    {
+        "id": "MF-SP-S008-V005",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectMediator",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "object_mediator_pattern",
+            "state_type": "object",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track object state coordination through mediator pattern with centralized communication management.",
+            "code": "class Mediator:\n    def __init__(self):\n        self.components = []\n        self.messages_handled = 0\n        self.total_data = 0\n    \n    def register(self, component):\n        self.components.append(component)\n        component.mediator = self\n    \n    def notify(self, sender, event, data):\n        self.messages_handled += 1\n        self.total_data += data\n        \n        for component in self.components:\n            if component != sender:\n                component.receive_notification(event, data)\n        \n        return self.total_data\n\nclass Component:\n    def __init__(self, component_id):\n        self.component_id = component_id\n        self.mediator = None\n        self.notifications_received = 0\n        self.local_value = 0\n    \n    def send_message(self, event, data):\n        if self.mediator:\n            return self.mediator.notify(self, event, data)\n        return 0\n    \n    def receive_notification(self, event, data):\n        self.notifications_received += 1\n        self.local_value += data // self.component_id\n    \n    def get_state(self):\n        return self.local_value + self.notifications_received\n\ndef test_mediator_pattern():\n    mediator = Mediator()\n    comp1 = Component(2)\n    comp2 = Component(3)\n    comp3 = Component(4)\n    \n    mediator.register(comp1)\n    mediator.register(comp2)\n    mediator.register(comp3)\n    \n    comp1.send_message('update', 12)\n    comp2.send_message('change', 18)\n    \n    return comp1.get_state() + comp2.get_state() + comp3.get_state()\n\n# What value is returned by test_mediator_pattern()?",
+            "answer": "26"
+        }
+    },
+    {
+        "id": "MF-SP-S008-V006",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectPooling",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "object_pooling",
+            "state_type": "object",
+            "propagation_pattern": "circular",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze object pooling system with reusable objects and state persistence across usage cycles.",
+            "code": "class PooledObject:\n    def __init__(self, obj_id):\n        self.obj_id = obj_id\n        self.usage_count = 0\n        self.accumulated_work = 0\n        self.in_use = False\n    \n    def activate(self):\n        self.in_use = True\n        self.usage_count += 1\n    \n    def do_work(self, work_amount):\n        if self.in_use:\n            self.accumulated_work += work_amount * self.obj_id\n            return self.accumulated_work\n        return 0\n    \n    def deactivate(self):\n        self.in_use = False\n        return self.usage_count\n    \n    def get_total_value(self):\n        return self.accumulated_work + self.usage_count\n\nclass ObjectPool:\n    def __init__(self):\n        self.objects = [PooledObject(i) for i in range(1, 4)]\n        self.checkout_count = 0\n    \n    def get_object(self):\n        for obj in self.objects:\n            if not obj.in_use:\n                obj.activate()\n                self.checkout_count += 1\n                return obj\n        return None\n    \n    def return_object(self, obj):\n        obj.deactivate()\n\ndef test_object_pooling():\n    pool = ObjectPool()\n    \n    obj1 = pool.get_object()\n    obj1.do_work(5)\n    obj2 = pool.get_object()\n    obj2.do_work(3)\n    \n    pool.return_object(obj1)\n    obj3 = pool.get_object()\n    obj3.do_work(2)\n    \n    return obj1.get_total_value() + obj2.get_total_value() + obj3.get_total_value()\n\n# What value is returned by test_object_pooling()?",
+            "answer": "19"
+        }
+    },
+    {
+        "id": "MF-SP-S008-V007",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectRegistry",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "object_registry_system",
+            "state_type": "object",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Track object registration system with centralized object tracking and state aggregation.",
+            "code": "class ObjectRegistry:\n    def __init__(self):\n        self.registered_objects = {}\n        self.registration_count = 0\n    \n    def register(self, obj_id, obj):\n        self.registered_objects[obj_id] = obj\n        self.registration_count += 1\n        obj.registry_id = obj_id\n        return obj_id\n    \n    def get_aggregate_value(self):\n        total = 0\n        for obj in self.registered_objects.values():\n            total += obj.get_value()\n        return total + self.registration_count\n\nclass RegisteredObject:\n    def __init__(self, initial_value):\n        self.value = initial_value\n        self.registry_id = None\n        self.operations = 0\n    \n    def update(self, delta):\n        self.value += delta\n        self.operations += 1\n        return self.value\n    \n    def get_value(self):\n        multiplier = self.registry_id if self.registry_id else 1\n        return self.value * multiplier + self.operations\n\ndef test_object_registry():\n    registry = ObjectRegistry()\n    \n    obj1 = RegisteredObject(5)\n    obj2 = RegisteredObject(8)\n    \n    registry.register(2, obj1)\n    registry.register(3, obj2)\n    \n    obj1.update(3)\n    obj2.update(2)\n    obj1.update(1)\n    \n    return registry.get_aggregate_value()\n\n# What value is returned by test_aggregate_registry()?",
+            "answer": "55"
+        }
+    },
+    {
+        "id": "MF-SP-S008-V008",
+        "metadata": {
+            "name": "MultiFunc-StatePropagation-ObjectCommand",
+            "category": "MultiFunc-Level",
+            "subcategory": "State Propagation",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "object_command_pattern",
+            "state_type": "object",
+            "propagation_pattern": "complex",
+            "persistence_level": "persistent"
+        },
+        "task": {
+            "description": "Analyze object command pattern with command execution tracking and state modification history.",
+            "code": "class Command:\n    def __init__(self, command_id):\n        self.command_id = command_id\n        self.executed = False\n        self.execution_count = 0\n    \n    def execute(self, receiver):\n        self.executed = True\n        self.execution_count += 1\n        return receiver.perform_action(self.command_id)\n    \n    def get_stats(self):\n        return self.command_id + self.execution_count\n\nclass Receiver:\n    def __init__(self):\n        self.state = 0\n        self.actions_performed = 0\n        self.command_history = []\n    \n    def perform_action(self, action_id):\n        self.actions_performed += 1\n        self.command_history.append(action_id)\n        self.state += action_id * len(self.command_history)\n        return self.state\n    \n    def get_total_state(self):\n        return self.state + self.actions_performed\n\nclass Invoker:\n    def __init__(self):\n        self.commands = []\n        self.invocations = 0\n    \n    def add_command(self, command):\n        self.commands.append(command)\n    \n    def execute_commands(self, receiver):\n        results = []\n        for command in self.commands:\n            self.invocations += 1\n            results.append(command.execute(receiver))\n        return sum(results)\n\ndef test_command_pattern():\n    receiver = Receiver()\n    invoker = Invoker()\n    \n    cmd1 = Command(3)\n    cmd2 = Command(5)\n    cmd3 = Command(2)\n    \n    invoker.add_command(cmd1)\n    invoker.add_command(cmd2)\n    invoker.add_command(cmd3)\n    \n    invoker.execute_commands(receiver)\n    \n    return receiver.get_total_state() + cmd1.get_stats() + cmd2.get_stats() + cmd3.get_stats()\n\n# What value is returned by test_command_pattern()?",
+            "answer": "67"
+        }
+    }
+]
+```
+
+#### 4D - 副作用推理 [ Side Effect ] （59）
+
+> ```
+> # 副作用推理变式生成提示词
+> 
+> ## 任务目标
+> 基于给定的副作用推理种子任务，为每个种子生成8-12个多样化的变式任务，全面测试大模型对跨函数副作用机制的理解能力，包括内存修改、I/O操作、全局状态改变和异常处理等核心副作用推理技能。
+> 
+> ## 副作用推理特征分析
+> 副作用推理关注函数执行过程中除返回值外的所有外部可观察变化，重点测试模型对内存修改、外部状态变更、资源操作和隐式影响的深层理解，强调对函数副作用的识别、追踪和分析能力。
+> 
+> ## 关键要求
+> - **描述语言**: 所有task描述必须使用英文
+> - **变式数量**: 每个种子任务严格生成8-12个变式，确保数量充足
+> - **答案唯一性**: 保证答案准确且唯一，避免歧义和多解情况
+> - **副作用聚焦**: 重点关注函数的副作用分析，强调隐式效果和外部影响
+> 
+> ## 变式生成维度
+> 
+> ### 1. 内存修改副作用分析变式
+> - **指针修改副作用变式**: 通过指针修改内存内容的副作用分析
+> - **数组元素修改变式**: 数组元素修改的副作用传播
+> - **结构体成员修改变式**: 结构体成员修改的副作用影响
+> - **动态内存副作用变式**: 动态内存分配释放的副作用
+> - **内存重叠修改变式**: 内存重叠区域修改的副作用
+> - **缓冲区溢出副作用变式**: 缓冲区操作的潜在副作用
+> 
+> ### 2. 全局状态修改分析变式
+> - **全局变量修改变式**: 函数对全局变量的副作用修改
+> - **静态变量副作用变式**: 静态变量修改的持久性副作用
+> - **全局数据结构变式**: 全局数据结构修改的副作用
+> - **单例状态修改变式**: 单例对象状态修改的副作用
+> - **环境变量修改变式**: 环境变量修改的系统级副作用
+> - **配置状态修改变式**: 全局配置状态的修改副作用
+> 
+> ### 3. I/O操作副作用分析变式
+> - **文件写入副作用变式**: 文件写入操作的副作用分析
+> - **标准输出副作用变式**: 标准输出的副作用影响
+> - **网络通信副作用变式**: 网络操作的副作用分析
+> - **数据库操作副作用变式**: 数据库操作的持久化副作用
+> - **日志记录副作用变式**: 日志记录的副作用影响
+> - **缓存操作副作用变式**: 缓存操作的副作用分析
+> 
+> ### 4. 资源管理副作用分析变式
+> - **文件句柄副作用变式**: 文件句柄操作的资源副作用
+> - **内存泄漏副作用变式**: 内存泄漏的资源副作用
+> - **锁获取释放变式**: 锁操作的并发副作用
+> - **信号量操作变式**: 信号量操作的同步副作用
+> - **线程创建副作用变式**: 线程创建的系统资源副作用
+> - **连接池副作用变式**: 连接池操作的资源副作用
+> 
+> ### 5. 异常和错误副作用分析变式
+> - **异常抛出副作用变式**: 异常抛出的控制流副作用
+> - **错误状态设置变式**: 错误状态设置的副作用
+> - **资源清理副作用变式**: 异常处理中的资源清理副作用
+> - **堆栈展开副作用变式**: 异常堆栈展开的副作用
+> - **错误传播副作用变式**: 错误传播的连锁副作用
+> - **恢复机制副作用变式**: 错误恢复机制的副作用
+> 
+> ### 6. 时间和随机性副作用变式
+> - **时间戳副作用变式**: 时间相关操作的副作用
+> - **随机数生成变式**: 随机数生成器状态的副作用
+> - **计时器设置变式**: 计时器操作的副作用
+> - **延迟操作副作用变式**: 延迟操作的时序副作用
+> - **调度影响副作用变式**: 任务调度的副作用影响
+> - **性能统计副作用变式**: 性能统计收集的副作用
+> 
+> ### 7. 并发和同步副作用分析变式
+> - **竞争条件副作用变式**: 竞争条件产生的副作用
+> - **死锁风险副作用变式**: 死锁风险的副作用分析
+> - **原子操作副作用变式**: 原子操作的并发副作用
+> - **内存顺序副作用变式**: 内存顺序约束的副作用
+> - **线程同步副作用变式**: 线程同步机制的副作用
+> - **数据竞争副作用变式**: 数据竞争的副作用影响
+> 
+> ### 8. 系统调用副作用分析变式
+> - **系统调用副作用变式**: 系统调用的系统级副作用
+> - **进程创建副作用变式**: 进程创建的系统资源副作用
+> - **权限修改副作用变式**: 权限修改的安全副作用
+> - **系统配置副作用变式**: 系统配置修改的副作用
+> - **设备操作副作用变式**: 设备操作的硬件副作用
+> - **中断处理副作用变式**: 中断处理的副作用影响
+> 
+> ### 9. 函数式副作用分析变式
+> - **闭包副作用变式**: 闭包捕获变量的副作用
+> - **高阶函数副作用变式**: 高阶函数的间接副作用
+> - **惰性求值副作用变式**: 惰性求值的延迟副作用
+> - **记忆化副作用变式**: 记忆化缓存的副作用
+> - **尾调用副作用变式**: 尾调用优化的副作用
+> - **函数组合副作用变式**: 函数组合的累积副作用
+> 
+> ### 10. 高级副作用模式变式
+> - **观察者模式副作用变式**: 观察者模式的通知副作用
+> - **代理模式副作用变式**: 代理模式的间接副作用
+> - **装饰器副作用变式**: 装饰器模式的额外副作用
+> - **中间件副作用变式**: 中间件的处理副作用
+> - **事件发布副作用变式**: 事件发布订阅的副作用
+> - **AOP副作用变式**: 面向切面编程的副作用
+> 
+> ## 复杂度层次设计
+> 
+> ### 简单副作用分析 (Easy)
+> - 单一明确的副作用操作
+> - 直接的内存或状态修改
+> - 清晰可见的副作用结果
+> - 基础的副作用概念理解
+> 
+> ### 中等副作用分析 (Medium)
+> - 2-3种副作用的组合
+> - 包含条件的副作用触发
+> - 中等复杂度的副作用传播
+> - 需要理解副作用的间接影响
+> 
+> ### 复杂副作用分析 (Hard)
+> - 多种副作用的复杂交互
+> - 深层的副作用传播链
+> - 隐式和间接的副作用
+> - 涉及系统级的副作用分析
+> 
+> ### 专家级副作用分析 (Expert)
+> - 极复杂的副作用网络
+> - 并发环境的副作用分析
+> - 需要深度系统知识的副作用理解
+> - 涉及性能和安全的副作用
+> 
+> ## 生成策略
+> 
+> ### 种子分析策略
+> 1. **识别副作用类型**: 分析种子任务的主要副作用类型
+> 2. **提取影响范围**: 识别副作用的影响范围和传播路径
+> 3. **确定可观察性**: 分析副作用的可观察性和检测方法
+> 4. **评估复杂度层次**: 评估副作用分析的复杂程度
+> 
+> ### 变式设计原则
+> 1. **副作用导向**: 每个变式都应明确关注函数的副作用
+> 2. **英文描述**: 所有task描述必须使用标准英文
+> 3. **答案唯一**: 严格确保答案的准确性和唯一性
+> 4. **数量保证**: 严格确保每个种子生成8-12个变式
+> 
+> ### 质量保证
+> 1. **副作用语义验证**: 验证副作用操作的语义正确性
+> 2. **影响范围检查**: 确保副作用影响范围分析的准确性
+> 3. **答案唯一性验证**: 严格检查答案的唯一性和确定性
+> 4. **英文质量保证**: 确保描述的英文表达准确清晰
+> 
+> ## 输出格式要求
+> 
+> ```json
+> [
+>     {
+>         "id": "MF-SE-S00X-V001",
+>         "metadata": {
+>             "name": "MultiFunc-SideEffect-VariantName",
+>             "category": "MultiFunc-Level",
+>             "subcategory": "Side Effect",
+>             "type": "variant",
+>             "source": "Generated",
+>             "language": "target_language",
+>             "difficulty": "easy/medium/hard/expert",
+>             "intervention": 0,
+>             "variant_type": "variant_type_label",
+>             "side_effect_type": "memory/io/state/resource/exception",
+>             "effect_scope": "local/global/system/external",
+>             "observability": "direct/indirect/delayed/hidden"
+>         },
+>         "task": {
+>             "description": "English description of the side effect analysis task",
+>             "code": "Code containing side effect operations to analyze",
+>             "answer": "Unique and accurate side effect analysis result"
+>         }
+>     },
+>     {下一个变式...}
+> ]
+> 特殊字段说明
+> side_effect_type: 标识主要的副作用类型
+> effect_scope: 标识副作用的影响范围
+> observability: 标识副作用的可观察性级别
+> 生成目标
+> 为每个提供的种子任务严格生成8-12个副作用推理变式，确保：
+> 
+> 每种难度等级至少包含2-3个变式
+> 涵盖至少6-8种不同的副作用分析类型
+> 包含不同的副作用范围和复杂度
+> 所有task描述使用标准英文表达
+> 严格保证答案的准确性和唯一性
+> 重点测试场景
+> 副作用识别: 准确识别函数执行的所有副作用
+> 影响范围分析: 分析副作用的影响范围和传播路径
+> 副作用顺序: 理解多个副作用的执行顺序和依赖
+> 隐式副作用: 识别隐式和间接的副作用
+> 副作用组合: 分析多个副作用的组合效应
+> 副作用持久性: 理解副作用的持久性和生存期
+> 英文描述模板示例
+> "Analyze the side effects of function execution and determine..."
+> "Identify all observable side effects after the function calls..."
+> "Determine the external state changes caused by the function..."
+> "Calculate the cumulative side effects of the function sequence..."
+> "Trace the side effect propagation through the function chain..."
+> "Evaluate the persistent changes caused by function side effects..."
+> 答案唯一性保证策略
+> 明确副作用定义: 清晰定义什么构成可观察的副作用
+> 具体状态值: 使用具体的状态值，避免抽象描述
+> 确定性操作: 确保副作用操作是确定性的
+> 避免竞争条件: 避免产生竞争条件的副作用
+> 清晰时序: 确保副作用的时序和顺序明确
+> 常见副作用模式
+> 写入操作: 对外部存储或状态的写入修改
+> 输出操作: 产生可观察输出的操作
+> 资源分配: 系统资源的分配和释放
+> 状态修改: 全局或共享状态的修改
+> 事件触发: 触发外部事件或通知
+> 缓存更新: 缓存或临时存储的更新
+> 请基于此提示词，为给定的副作用推理种子任务生成全面的变式集合，严格确保每个种子8-12个变式，所有描述使用英文，保证答案准确且唯一，输出格式为包含所有变式的JSON数组。
+> ```
+
+```json
+[
+    {
+        "id": "MF-SE-S001-V001",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-BufferSizeTracking",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "buffer_size_modification",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze buffer size modification side effects. What is the final value of buffer_size?",
+            "code": "int buffer_size = 1024;\n\nint expand_buffer(int additional_size) {\n    buffer_size += additional_size;\n    printf(\"Buffer expanded by %d bytes\\n\", additional_size);\n    return buffer_size;\n}\n\nint process_expansion() {\n    expand_buffer(256);\n    expand_buffer(512);\n    expand_buffer(128);\n    return buffer_size;\n}\n\n// What value is returned by process_expansion()?",
+            "answer": "1920"
+        }
+    },
+    {
+        "id": "MF-SE-S001-V002",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-OutputCountTracking",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "output_counting",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Track output operation side effects. What is the final value of output_count?",
+            "code": "int output_count = 0;\n\nint print_message(const char* message) {\n    output_count++;\n    printf(\"%s\\n\", message);\n    return strlen(message);\n}\n\nint print_numbered_list(const char* items[], int count) {\n    for (int i = 0; i < count; i++) {\n        print_message(items[i]);\n    }\n    return output_count;\n}\n\nint execute_printing() {\n    const char* messages[] = {\"Hello\", \"World\", \"Test\", \"Done\"};\n    print_numbered_list(messages, 4);\n    print_message(\"Final\");\n    return output_count;\n}\n\n// What value is returned by execute_printing()?",
+            "answer": "5"
+        }
+    },
+    {
+        "id": "MF-SE-S001-V003",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ConditionalWriting",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "conditional_io",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze conditional I/O side effects. What is the final value of chars_processed?",
+            "code": "int chars_processed = 0;\n\nint conditional_write(const char* data, int threshold) {\n    int len = strlen(data);\n    if (len > threshold) {\n        chars_processed += len;\n        printf(\"Writing: %s\\n\", data);\n        return len;\n    }\n    return 0;\n}\n\nint process_conditional() {\n    conditional_write(\"Short\", 10);     // 5 chars, threshold 10\n    conditional_write(\"Medium length\", 8);  // 13 chars, threshold 8\n    conditional_write(\"Hi\", 5);        // 2 chars, threshold 5\n    conditional_write(\"Very long string here\", 15);  // 20 chars, threshold 15\n    return chars_processed;\n}\n\n// What value is returned by process_conditional()?",
+            "answer": "33"
+        }
+    },
+    {
+        "id": "MF-SE-S001-V004",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-NestedIOOperations",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_io",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track nested I/O operation side effects. What is the final value of total_operations?",
+            "code": "int total_operations = 0;\n\nint log_write(const char* data) {\n    total_operations++;\n    printf(\"LOG: %s\\n\", data);\n    return total_operations;\n}\n\nint debug_write(const char* data) {\n    total_operations++;\n    printf(\"DEBUG: %s\\n\", data);\n    log_write(\"Debug operation logged\");\n    return total_operations;\n}\n\nint error_write(const char* data) {\n    total_operations++;\n    printf(\"ERROR: %s\\n\", data);\n    debug_write(\"Error debugging initiated\");\n    log_write(\"Error operation completed\");\n    return total_operations;\n}\n\nint execute_nested_ops() {\n    error_write(\"Critical failure\");\n    return total_operations;\n}\n\n// What value is returned by execute_nested_ops()?",
+            "answer": "5"
+        }
+    },
+    {
+        "id": "MF-SE-S001-V005",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-BatchIOProcessing",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "batch_processing",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze batch I/O processing side effects. What is the final value of batch_size?",
+            "code": "int batch_size = 0;\nint batches_processed = 0;\n\nint add_to_batch(int size) {\n    batch_size += size;\n    if (batch_size >= 100) {\n        batches_processed++;\n        printf(\"Batch %d processed, size: %d\\n\", batches_processed, batch_size);\n        batch_size = 0;\n    }\n    return batch_size;\n}\n\nint process_items() {\n    add_to_batch(30);\n    add_to_batch(40);\n    add_to_batch(50);  // Triggers batch\n    add_to_batch(25);\n    add_to_batch(60);\n    add_to_batch(20);  // Triggers batch\n    add_to_batch(15);\n    return batch_size;\n}\n\n// What value is returned by process_items()?",
+            "answer": "15"
+        }
+    },
+    {
+        "id": "MF-SE-S001-V006",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-IOStateTracking",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "state_tracking",
+            "side_effect_type": "state",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Track I/O state modification side effects. What is the final value of io_state?",
+            "code": "int io_state = 0;  // 0=idle, 1=reading, 2=writing, 3=error\n\nint start_read() {\n    io_state = 1;\n    printf(\"Started reading\\n\");\n    return io_state;\n}\n\nint start_write() {\n    io_state = 2;\n    printf(\"Started writing\\n\");\n    return io_state;\n}\n\nint finish_operation() {\n    io_state = 0;\n    printf(\"Operation finished\\n\");\n    return io_state;\n}\n\nint perform_io_sequence() {\n    start_read();\n    finish_operation();\n    start_write();\n    return io_state;\n}\n\n// What value is returned by perform_io_sequence()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S001-V007",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-AccumulativeIO",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "accumulative_effects",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze accumulative I/O side effects. What is the final value of total_bytes?",
+            "code": "int total_bytes = 0;\nint write_count = 0;\n\nint write_with_header(const char* data) {\n    int header_size = 10;\n    int data_size = strlen(data);\n    total_bytes += header_size + data_size;\n    write_count++;\n    printf(\"Write %d: %d bytes\\n\", write_count, header_size + data_size);\n    return total_bytes;\n}\n\nint write_formatted_data() {\n    write_with_header(\"ABC\");      // 10 + 3 = 13\n    write_with_header(\"DEFGH\");    // 10 + 5 = 15\n    write_with_header(\"IJK\");      // 10 + 3 = 13\n    return total_bytes;\n}\n\n// What value is returned by write_formatted_data()?",
+            "answer": "41"
+        }
+    },
+    {
+        "id": "MF-SE-S001-V008",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-IOErrorHandling",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "error_handling",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track I/O error handling side effects. What is the final value of error_bytes?",
+            "code": "int error_bytes = 0;\nint successful_writes = 0;\n\nint safe_write(const char* data, int simulate_error) {\n    int len = strlen(data);\n    if (simulate_error) {\n        error_bytes += len;\n        printf(\"Write failed: %d bytes\\n\", len);\n        return 0;\n    } else {\n        successful_writes++;\n        printf(\"Write success: %d bytes\\n\", len);\n        return len;\n    }\n}\n\nint perform_writes() {\n    safe_write(\"Data1\", 0);  // Success: 5 bytes\n    safe_write(\"Data22\", 1); // Error: 6 bytes\n    safe_write(\"Data333\", 0); // Success: 7 bytes\n    safe_write(\"Data4444\", 1); // Error: 8 bytes\n    return error_bytes;\n}\n\n// What value is returned by perform_writes()?",
+            "answer": "14"
+        }
+    },
+    {
+        "id": "MF-SE-S001-V009",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MultiStreamIO",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "multi_stream",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Analyze multi-stream I/O side effects. What is the final value of stream_a_bytes?",
+            "code": "int stream_a_bytes = 0;\nint stream_b_bytes = 0;\nint current_stream = 0;  // 0=A, 1=B\n\nint switch_stream() {\n    current_stream = 1 - current_stream;\n    printf(\"Switched to stream %c\\n\", 'A' + current_stream);\n    return current_stream;\n}\n\nint write_to_current_stream(const char* data) {\n    int len = strlen(data);\n    if (current_stream == 0) {\n        stream_a_bytes += len;\n    } else {\n        stream_b_bytes += len;\n    }\n    printf(\"Stream %c: %d bytes\\n\", 'A' + current_stream, len);\n    return len;\n}\n\nint multi_stream_operations() {\n    write_to_current_stream(\"Start\");  // Stream A: 5\n    switch_stream();\n    write_to_current_stream(\"Middle\"); // Stream B: 6\n    switch_stream();\n    write_to_current_stream(\"End\");    // Stream A: 3\n    return stream_a_bytes;\n}\n\n// What value is returned by multi_stream_operations()?",
+            "answer": "8"
+        }
+    },
+    {
+        "id": "MF-SE-S001-V010",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-IOBufferManagement",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "buffer_management",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "delayed"
+        },
+        "task": {
+            "description": "Track I/O buffer management side effects. What is the final value of flush_count?",
+            "code": "int buffer_used = 0;\nint flush_count = 0;\nconst int BUFFER_SIZE = 50;\n\nint add_to_buffer(const char* data) {\n    int len = strlen(data);\n    buffer_used += len;\n    if (buffer_used >= BUFFER_SIZE) {\n        flush_count++;\n        printf(\"Buffer flushed (flush #%d)\\n\", flush_count);\n        buffer_used = 0;\n    }\n    return buffer_used;\n}\n\nint buffered_operations() {\n    add_to_buffer(\"First data chunk here\");     // 20 chars\n    add_to_buffer(\"Second chunk\");              // 12 chars, total 32\n    add_to_buffer(\"Third chunk of data\");       // 18 chars, total 50 -> flush\n    add_to_buffer(\"Fourth\");                    // 6 chars\n    add_to_buffer(\"Fifth chunk here now\");      // 19 chars, total 25\n    add_to_buffer(\"Sixth and final chunk\");     // 20 chars, total 45\n    add_to_buffer(\"Last\");                      // 4 chars, total 49\n    add_to_buffer(\"X\");                         // 1 char, total 50 -> flush\n    return flush_count;\n}\n\n// What value is returned by buffered_operations()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S002-V001",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-DocumentLineTracking",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "line_tracking",
+            "side_effect_type": "state",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Track document line counting side effects. What is the final line count?",
+            "code": "line_count = 0\n\ndef add_line(content):\n    global line_count\n    line_count += 1\n    print(f\"Line {line_count}: {content}\")\n    return line_count\n\ndef add_paragraph(sentences):\n    for sentence in sentences:\n        add_line(sentence)\n    add_line(\"\")  # Empty line after paragraph\n    return line_count\n\ndef create_document():\n    add_paragraph([\"First sentence.\", \"Second sentence.\"])\n    add_paragraph([\"Third sentence.\"])\n    return line_count\n\n# What value is returned by create_document()?",
+            "answer": "5"
+        }
+    },
+    {
+        "id": "MF-SE-S002-V002",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ConditionalWriting",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "conditional_writing",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze conditional file writing side effects. What is the final line count?",
+            "code": "line_count = 0\n\ndef write_if_valid(content, min_length):\n    global line_count\n    if len(content) >= min_length:\n        line_count += 1\n        print(f\"Line {line_count}: {content}\")\n    return line_count\n\ndef process_content():\n    items = [\"Hi\", \"Hello world\", \"OK\", \"This is a longer sentence\", \"No\"]\n    for item in items:\n        write_if_valid(item, 5)  # Minimum 5 characters\n    return line_count\n\n# What value is returned by process_content()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S002-V003",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-NestedSections",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_sections",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track nested section writing side effects. What is the final line count?",
+            "code": "line_count = 0\n\ndef write_line(content):\n    global line_count\n    line_count += 1\n    print(f\"Line {line_count}: {content}\")\n    return line_count\n\ndef write_section(title, content_lines):\n    write_line(f\"=== {title} ===\")\n    for content in content_lines:\n        write_line(content)\n    write_line(\"\")  # Empty line after section\n    return line_count\n\ndef write_subsection(title, content_lines):\n    write_line(f\"--- {title} ---\")\n    for content in content_lines:\n        write_line(content)\n    return line_count\n\ndef create_nested_document():\n    write_section(\"Main\", [\"Introduction\"])\n    write_subsection(\"Details\", [\"Point 1\", \"Point 2\"])\n    write_line(\"Conclusion\")\n    return line_count\n\n# What value is returned by create_nested_document()?",
+            "answer": "8"
+        }
+    },
+    {
+        "id": "MF-SE-S002-V004",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-NumberedListGeneration",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "numbered_lists",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze numbered list generation side effects. What is the final line count?",
+            "code": "line_count = 0\nitem_number = 0\n\ndef write_numbered_item(content):\n    global line_count, item_number\n    item_number += 1\n    line_count += 1\n    print(f\"Line {line_count}: {item_number}. {content}\")\n    return line_count\n\ndef write_numbered_list(items):\n    for item in items:\n        write_numbered_item(item)\n    return line_count\n\ndef generate_lists():\n    write_numbered_list([\"First\", \"Second\"])\n    write_numbered_list([\"Third\", \"Fourth\", \"Fifth\"])\n    return line_count\n\n# What value is returned by generate_lists()?",
+            "answer": "5"
+        }
+    },
+    {
+        "id": "MF-SE-S002-V005",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-FormattedOutput",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "formatted_output",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Track formatted output side effects. What is the final line count?",
+            "code": "line_count = 0\n\ndef write_formatted_line(template, *args):\n    global line_count\n    line_count += 1\n    content = template.format(*args)\n    print(f\"Line {line_count}: {content}\")\n    return len(content)\n\ndef write_table_row(columns):\n    template = \"| {} | {} | {} |\"\n    return write_formatted_line(template, *columns)\n\ndef create_table():\n    write_formatted_line(\"| {} | {} | {} |\", \"Name\", \"Age\", \"City\")\n    write_formatted_line(\"| {} | {} | {} |\", \"---\", \"---\", \"---\")\n    write_table_row([\"Alice\", \"25\", \"NYC\"])\n    write_table_row([\"Bob\", \"30\", \"LA\"])\n    return line_count\n\n# What value is returned by create_table()?",
+            "answer": "4"
+        }
+    },
+    {
+        "id": "MF-SE-S002-V006",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ConditionalFormatting",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "conditional_formatting",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze conditional formatting side effects. What is the final line count?",
+            "code": "line_count = 0\n\ndef write_formatted_item(item, use_bullets):\n    global line_count\n    line_count += 1\n    if use_bullets:\n        content = f\"• {item}\"\n    else:\n        content = f\"{line_count}. {item}\"\n    print(f\"Line {line_count}: {content}\")\n    return line_count\n\ndef write_mixed_list():\n    items = [\"Apple\", \"Banana\", \"Cherry\"]\n    for i, item in enumerate(items):\n        use_bullets = (i % 2 == 0)  # Even indices use bullets\n        write_formatted_item(item, use_bullets)\n    return line_count\n\n# What value is returned by write_mixed_list()?",
+            "answer": "3"
+        }
+    },
+    {
+        "id": "MF-SE-S002-V007",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MultiDocumentGeneration",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "multi_document",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track multi-document generation side effects. What is the final total_lines?",
+            "code": "total_lines = 0\ncurrent_doc_lines = 0\n\ndef start_new_document(title):\n    global total_lines, current_doc_lines\n    current_doc_lines = 0\n    total_lines += 1\n    current_doc_lines += 1\n    print(f\"=== Document: {title} ===\")\n    return total_lines\n\ndef add_document_line(content):\n    global total_lines, current_doc_lines\n    total_lines += 1\n    current_doc_lines += 1\n    print(f\"Doc line {current_doc_lines}: {content}\")\n    return total_lines\n\ndef generate_documents():\n    start_new_document(\"Report A\")\n    add_document_line(\"Content A1\")\n    add_document_line(\"Content A2\")\n    \n    start_new_document(\"Report B\")\n    add_document_line(\"Content B1\")\n    \n    return total_lines\n\n# What value is returned by generate_documents()?",
+            "answer": "5"
+        }
+    },
+    {
+        "id": "MF-SE-S002-V008",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-TemplateProcessing",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "template_processing",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze template processing side effects. What is the final line count?",
+            "code": "line_count = 0\n\ndef expand_template(template, variables):\n    global line_count\n    expanded = template.format(**variables)\n    lines = expanded.split('\\n')\n    for line in lines:\n        if line.strip():  # Only count non-empty lines\n            line_count += 1\n            print(f\"Line {line_count}: {line}\")\n    return line_count\n\ndef process_templates():\n    template1 = \"Hello {name}\\nWelcome to {place}\"\n    template2 = \"Your score: {score}\\n\\nThank you\"\n    \n    expand_template(template1, {\"name\": \"Alice\", \"place\": \"NYC\"})\n    expand_template(template2, {\"score\": 95})\n    \n    return line_count\n\n# What value is returned by process_templates()?",
+            "answer": "4"
+        }
+    },
+    {
+        "id": "MF-SE-S002-V009",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-BatchFileProcessing",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "batch_processing",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "delayed"
+        },
+        "task": {
+            "description": "Track batch file processing side effects. What is the final line count?",
+            "code": "line_count = 0\nbatch_buffer = []\nBATCH_SIZE = 3\n\ndef add_to_batch(content):\n    global line_count, batch_buffer\n    batch_buffer.append(content)\n    if len(batch_buffer) >= BATCH_SIZE:\n        flush_batch()\n    return line_count\n\ndef flush_batch():\n    global line_count, batch_buffer\n    for content in batch_buffer:\n        line_count += 1\n        print(f\"Line {line_count}: {content}\")\n    batch_buffer = []\n    return line_count\n\ndef process_batch_data():\n    items = [\"Item1\", \"Item2\", \"Item3\", \"Item4\", \"Item5\"]\n    for item in items:\n        add_to_batch(item)\n    flush_batch()  # Flush remaining items\n    return line_count\n\n# What value is returned by process_batch_data()?",
+            "answer": "5"
+        }
+    },
+    {
+        "id": "MF-SE-S002-V010",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-HierarchicalStructure",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "hierarchical_structure",
+            "side_effect_type": "io",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track hierarchical structure generation side effects. What is the final line count?",
+            "code": "line_count = 0\nindent_level = 0\n\ndef increase_indent():\n    global indent_level\n    indent_level += 1\n\ndef decrease_indent():\n    global indent_level\n    if indent_level > 0:\n        indent_level -= 1\n\ndef write_indented_line(content):\n    global line_count\n    line_count += 1\n    indent = \"  \" * indent_level\n    print(f\"Line {line_count}: {indent}{content}\")\n    return line_count\n\ndef write_hierarchy():\n    write_indented_line(\"Root\")\n    increase_indent()\n    write_indented_line(\"Child 1\")\n    increase_indent()\n    write_indented_line(\"Grandchild 1\")\n    decrease_indent()\n    write_indented_line(\"Child 2\")\n    decrease_indent()\n    write_indented_line(\"Root 2\")\n    return line_count\n\n# What value is returned by write_hierarchy()?",
+            "answer": "5"
+        }
+    },
+    {
+        "id": "MF-SE-S003-V001",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-BasicExceptionCounting",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "exception_counting",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Track basic exception counting side effects. What is the final exception_count?",
+            "code": "exception_count = 0\n\ndef safe_divide(a, b):\n    global exception_count\n    try:\n        return a / b\n    except ZeroDivisionError:\n        exception_count += 1\n        return 0\n\ndef perform_divisions():\n    safe_divide(10, 2)   # No exception\n    safe_divide(8, 0)    # Exception\n    safe_divide(15, 3)   # No exception\n    safe_divide(7, 0)    # Exception\n    return exception_count\n\n# What value is returned by perform_divisions()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S003-V002",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-TypeErrorHandling",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "type_error_handling",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze type error handling side effects. What is the final type_errors?",
+            "code": "type_errors = 0\nvalue_errors = 0\n\ndef safe_convert_to_int(value):\n    global type_errors, value_errors\n    try:\n        result = int(value)\n        if result < 0:\n            raise ValueError(\"Negative not allowed\")\n        return result\n    except TypeError:\n        type_errors += 1\n        return 0\n    except ValueError:\n        value_errors += 1\n        return 0\n\ndef process_conversions():\n    safe_convert_to_int(\"10\")     # Success\n    safe_convert_to_int(None)     # TypeError\n    safe_convert_to_int(\"-5\")     # ValueError\n    safe_convert_to_int([1, 2])   # TypeError\n    safe_convert_to_int(\"5\")      # Success\n    return type_errors\n\n# What value is returned by process_conversions()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S003-V003",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-NestedExceptionHandling",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_exceptions",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track nested exception handling side effects. What is the final inner_exceptions?",
+            "code": "inner_exceptions = 0\nouter_exceptions = 0\n\ndef inner_function(value):\n    global inner_exceptions\n    try:\n        if value == 0:\n            raise ValueError(\"Zero not allowed\")\n        return 100 / value\n    except ValueError:\n        inner_exceptions += 1\n        raise  # Re-raise the exception\n\ndef outer_function(value):\n    global outer_exceptions\n    try:\n        return inner_function(value)\n    except ValueError:\n        outer_exceptions += 1\n        return -1\n\ndef process_nested_calls():\n    outer_function(10)  # Success\n    outer_function(0)   # Inner and outer exception\n    outer_function(5)   # Success\n    outer_function(0)   # Inner and outer exception\n    return inner_exceptions\n\n# What value is returned by process_nested_calls()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S003-V004",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ExceptionRecovery",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "exception_recovery",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze exception recovery side effects. What is the final recovery_count?",
+            "code": "recovery_count = 0\nfailed_operations = 0\n\ndef risky_operation(data):\n    global recovery_count, failed_operations\n    try:\n        if len(data) == 0:\n            raise ValueError(\"Empty data\")\n        return len(data) * 2\n    except ValueError:\n        failed_operations += 1\n        recovery_count += 1\n        return 1  # Default recovery value\n\ndef process_with_recovery():\n    data_sets = [\"abc\", \"\", \"de\", \"\", \"fgh\"]\n    results = []\n    for data in data_sets:\n        result = risky_operation(data)\n        results.append(result)\n    return recovery_count\n\n# What value is returned by process_with_recovery()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S003-V005",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ExceptionChaining",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "exception_chaining",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track exception chaining side effects. What is the final chain_length?",
+            "code": "chain_length = 0\n\ndef level_one(value):\n    global chain_length\n    try:\n        return level_two(value)\n    except ValueError:\n        chain_length += 1\n        raise RuntimeError(\"Level one failed\") from None\n\ndef level_two(value):\n    global chain_length\n    try:\n        return level_three(value)\n    except TypeError:\n        chain_length += 1\n        raise ValueError(\"Level two failed\") from None\n\ndef level_three(value):\n    global chain_length\n    if isinstance(value, str):\n        chain_length += 1\n        raise TypeError(\"String not allowed\")\n    return value * 2\n\ndef test_exception_chain():\n    try:\n        level_one(\"test\")\n    except RuntimeError:\n        pass  # Catch final exception\n    return chain_length\n\n# What value is returned by test_exception_chain()?",
+            "answer": "3"
+        }
+    },
+    {
+        "id": "MF-SE-S003-V006",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ConditionalExceptions",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "conditional_exceptions",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze conditional exception side effects. What is the final triggered_exceptions?",
+            "code": "triggered_exceptions = 0\nprocessed_items = 0\n\ndef conditional_process(item, strict_mode):\n    global triggered_exceptions, processed_items\n    try:\n        if strict_mode and item < 10:\n            raise ValueError(\"Item too small in strict mode\")\n        if item < 0:\n            raise ValueError(\"Negative item\")\n        processed_items += 1\n        return item * 2\n    except ValueError:\n        triggered_exceptions += 1\n        return 0\n\ndef run_processing():\n    items = [15, 5, -3, 12, 8]\n    # First pass: strict_mode = True\n    for item in items[:3]:\n        conditional_process(item, True)\n    # Second pass: strict_mode = False\n    for item in items[3:]:\n        conditional_process(item, False)\n    return triggered_exceptions\n\n# What value is returned by run_processing()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S003-V007",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ExceptionStatistics",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "exception_statistics",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Track exception statistics side effects. What is the final total_exceptions?",
+            "code": "type_error_count = 0\nvalue_error_count = 0\nindex_error_count = 0\n\ndef risky_list_operation(data, index):\n    global type_error_count, value_error_count, index_error_count\n    try:\n        if not isinstance(data, list):\n            raise TypeError(\"Not a list\")\n        if index < 0:\n            raise ValueError(\"Negative index\")\n        return data[index]\n    except TypeError:\n        type_error_count += 1\n        return None\n    except ValueError:\n        value_error_count += 1\n        return None\n    except IndexError:\n        index_error_count += 1\n        return None\n\ndef test_operations():\n    risky_list_operation([1, 2, 3], 1)    # Success\n    risky_list_operation(\"not_list\", 0)   # TypeError\n    risky_list_operation([1, 2], -1)      # ValueError\n    risky_list_operation([1], 5)          # IndexError\n    risky_list_operation({}, 0)           # TypeError\n    \n    return type_error_count + value_error_count + index_error_count\n\n# What value is returned by test_operations()?",
+            "answer": "4"
+        }
+    },
+    {
+        "id": "MF-SE-S003-V008",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ExceptionPropagation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "exception_propagation",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Analyze exception propagation side effects. What is the final propagation_depth?",
+            "code": "propagation_depth = 0\nexception_caught = False\n\ndef deep_function_4():\n    global propagation_depth\n    propagation_depth += 1\n    raise ValueError(\"Deep error\")\n\ndef deep_function_3():\n    global propagation_depth\n    propagation_depth += 1\n    return deep_function_4()\n\ndef deep_function_2():\n    global propagation_depth\n    propagation_depth += 1\n    return deep_function_3()\n\ndef deep_function_1():\n    global propagation_depth, exception_caught\n    propagation_depth += 1\n    try:\n        return deep_function_2()\n    except ValueError:\n        exception_caught = True\n        return 0\n\ndef test_propagation():\n    deep_function_1()\n    return propagation_depth\n\n# What value is returned by test_propagation()?",
+            "answer": "4"
+        }
+    },
+    {
+        "id": "MF-SE-S003-V009",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ResourceCleanupExceptions",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "resource_cleanup",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "delayed"
+        },
+        "task": {
+            "description": "Track resource cleanup exception side effects. What is the final cleanup_calls?",
+            "code": "cleanup_calls = 0\nresource_errors = 0\n\ndef acquire_resource(resource_id):\n    if resource_id == 99:\n        raise RuntimeError(\"Resource unavailable\")\n    return f\"resource_{resource_id}\"\n\ndef cleanup_resource():\n    global cleanup_calls\n    cleanup_calls += 1\n\ndef use_resource_safely(resource_id):\n    global resource_errors\n    try:\n        resource = acquire_resource(resource_id)\n        return f\"Used {resource}\"\n    except RuntimeError:\n        resource_errors += 1\n        return \"Failed\"\n    finally:\n        cleanup_resource()\n\ndef test_resource_usage():\n    use_resource_safely(1)   # Success, cleanup\n    use_resource_safely(99)  # Error, cleanup\n    use_resource_safely(2)   # Success, cleanup\n    use_resource_safely(99)  # Error, cleanup\n    return cleanup_calls\n\n# What value is returned by test_resource_usage()?",
+            "answer": "4"
+        }
+    },
+    {
+        "id": "MF-SE-S003-V010",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ExceptionStateRecovery",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "state_recovery",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Analyze exception state recovery side effects. What is the final recovery_operations?",
+            "code": "system_state = 100\nrecovery_operations = 0\nfailed_operations = 0\n\ndef risky_state_change(delta):\n    global system_state, failed_operations, recovery_operations\n    original_state = system_state\n    try:\n        system_state += delta\n        if system_state < 0:\n            raise ValueError(\"Invalid state\")\n        if system_state > 200:\n            raise OverflowError(\"State overflow\")\n        return system_state\n    except (ValueError, OverflowError):\n        failed_operations += 1\n        system_state = original_state  # Rollback\n        recovery_operations += 1\n        return system_state\n\ndef test_state_changes():\n    risky_state_change(50)   # 150, success\n    risky_state_change(-200) # Would be -50, error, rollback to 150\n    risky_state_change(60)   # Would be 210, error, rollback to 150\n    risky_state_change(10)   # 160, success\n    return recovery_operations\n\n# What value is returned by test_state_changes()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S004-V001",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-FinallyBlockExecution",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "finally_block",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Track finally block execution side effects. What is the final finally_count?",
+            "code": "finally_count = 0\nsuccess_count = 0\n\ndef operation_with_finally(should_fail):\n    global finally_count, success_count\n    try:\n        if should_fail:\n            raise ValueError(\"Forced failure\")\n        success_count += 1\n        return \"success\"\n    except ValueError:\n        return \"failed\"\n    finally:\n        finally_count += 1\n\ndef test_finally_blocks():\n    operation_with_finally(False)  # Success, finally runs\n    operation_with_finally(True)   # Failure, finally runs\n    operation_with_finally(False)  # Success, finally runs\n    return finally_count\n\n# What value is returned by test_finally_blocks()?",
+            "answer": "3"
+        }
+    },
+    {
+        "id": "MF-SE-S004-V002",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-NestedFinallyBlocks",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "nested_finally",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Analyze nested finally block side effects. What is the final outer_finally_count?",
+            "code": "outer_finally_count = 0\ninner_finally_count = 0\n\ndef inner_operation(value):\n    global inner_finally_count\n    try:\n        if value < 0:\n            raise ValueError(\"Negative value\")\n        return value * 2\n    finally:\n        inner_finally_count += 1\n\ndef outer_operation(value):\n    global outer_finally_count\n    try:\n        return inner_operation(value)\n    except ValueError:\n        return 0\n    finally:\n        outer_finally_count += 1\n\ndef test_nested_finally():\n    outer_operation(5)   # Success, both finally blocks run\n    outer_operation(-3)  # Error, both finally blocks run\n    outer_operation(10)  # Success, both finally blocks run\n    return outer_finally_count\n\n# What value is returned by test_nested_finally()?",
+            "answer": "3"
+        }
+    },
+    {
+        "id": "MF-SE-S004-V003",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MultipleResourceCleanup",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "multiple_resources",
+            "side_effect_type": "resource",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Track multiple resource cleanup side effects. What is the final total_cleanups?",
+            "code": "resource_a_cleanups = 0\nresource_b_cleanups = 0\nresource_c_cleanups = 0\n\ndef cleanup_resource_a():\n    global resource_a_cleanups\n    resource_a_cleanups += 1\n\ndef cleanup_resource_b():\n    global resource_b_cleanups\n    resource_b_cleanups += 1\n\ndef cleanup_resource_c():\n    global resource_c_cleanups\n    resource_c_cleanups += 1\n\ndef complex_operation(fail_at_step):\n    try:\n        # Step 1\n        if fail_at_step == 1:\n            raise ValueError(\"Step 1 failed\")\n        # Step 2\n        if fail_at_step == 2:\n            raise ValueError(\"Step 2 failed\")\n        # Step 3\n        if fail_at_step == 3:\n            raise ValueError(\"Step 3 failed\")\n        return \"success\"\n    except ValueError:\n        return \"failed\"\n    finally:\n        cleanup_resource_a()\n        cleanup_resource_b()\n        cleanup_resource_c()\n\ndef test_multiple_resources():\n    complex_operation(0)  # Success, all cleanups\n    complex_operation(2)  # Fail at step 2, all cleanups\n    return resource_a_cleanups + resource_b_cleanups + resource_c_cleanups\n\n# What value is returned by test_multiple_resources()?",
+            "answer": "6"
+        }
+    },
+    {
+        "id": "MF-SE-S004-V004",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ConditionalCleanup",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "conditional_cleanup",
+            "side_effect_type": "resource",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze conditional cleanup side effects. What is the final cleanup_operations?",
+            "code": "cleanup_operations = 0\nresources_acquired = 0\n\ndef acquire_resource(resource_type):\n    global resources_acquired\n    if resource_type == \"invalid\":\n        return None\n    resources_acquired += 1\n    return f\"resource_{resources_acquired}\"\n\ndef cleanup_if_needed(resource):\n    global cleanup_operations\n    if resource is not None:\n        cleanup_operations += 1\n\ndef safe_resource_operation(resource_type):\n    resource = None\n    try:\n        resource = acquire_resource(resource_type)\n        if resource is None:\n            raise ValueError(\"Failed to acquire resource\")\n        return f\"Used {resource}\"\n    except ValueError:\n        return \"Operation failed\"\n    finally:\n        cleanup_if_needed(resource)\n\ndef test_conditional_cleanup():\n    safe_resource_operation(\"valid\")    # Acquire + cleanup\n    safe_resource_operation(\"invalid\")  # No acquire, no cleanup\n    safe_resource_operation(\"valid\")    # Acquire + cleanup\n    return cleanup_operations\n\n# What value is returned by test_conditional_cleanup()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S004-V005",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ExceptionInFinally",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "exception_in_finally",
+            "side_effect_type": "exception",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track exception in finally block side effects. What is the final finally_exceptions?",
+            "code": "finally_exceptions = 0\nmain_exceptions = 0\nfinally_calls = 0\n\ndef risky_cleanup(should_fail):\n    global finally_exceptions, finally_calls\n    finally_calls += 1\n    if should_fail:\n        finally_exceptions += 1\n        raise RuntimeError(\"Cleanup failed\")\n\ndef operation_with_risky_cleanup(main_fails, cleanup_fails):\n    global main_exceptions\n    try:\n        if main_fails:\n            raise ValueError(\"Main operation failed\")\n        return \"success\"\n    except ValueError:\n        main_exceptions += 1\n        return \"main_failed\"\n    finally:\n        try:\n            risky_cleanup(cleanup_fails)\n        except RuntimeError:\n            pass  # Suppress cleanup exception\n\ndef test_risky_cleanup():\n    operation_with_risky_cleanup(False, False)  # Success, cleanup ok\n    operation_with_risky_cleanup(True, False)   # Main fails, cleanup ok\n    operation_with_risky_cleanup(False, True)   # Success, cleanup fails\n    return finally_exceptions\n\n# What value is returned by test_risky_cleanup()?",
+            "answer": "1"
+        }
+    },
+    {
+        "id": "MF-SE-S004-V006",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ResourceStateTracking",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "resource_state",
+            "side_effect_type": "state",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Track resource state changes side effects. What is the final active_resources?",
+            "code": "active_resources = 0\nmax_resources_used = 0\n\ndef allocate_resource():\n    global active_resources, max_resources_used\n    active_resources += 1\n    max_resources_used = max(max_resources_used, active_resources)\n    return f\"resource_{active_resources}\"\n\ndef deallocate_resource():\n    global active_resources\n    if active_resources > 0:\n        active_resources -= 1\n\ndef resource_operation(should_fail):\n    resource = None\n    try:\n        resource = allocate_resource()\n        if should_fail:\n            raise RuntimeError(\"Operation failed\")\n        return \"success\"\n    except RuntimeError:\n        return \"failed\"\n    finally:\n        if resource:\n            deallocate_resource()\n\ndef test_resource_tracking():\n    resource_operation(False)  # Success\n    resource_operation(True)   # Failure\n    resource_operation(False)  # Success\n    return active_resources\n\n# What value is returned by test_resource_tracking()?",
+            "answer": "0"
+        }
+    },
+    {
+        "id": "MF-SE-S004-V007",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-BatchCleanupOperations",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "batch_cleanup",
+            "side_effect_type": "resource",
+            "effect_scope": "global",
+            "observability": "delayed"
+        },
+        "task": {
+            "description": "Analyze batch cleanup operation side effects. What is the final batch_cleanups?",
+            "code": "pending_cleanups = []\nbatch_cleanups = 0\n\ndef add_cleanup_task(task_id):\n    global pending_cleanups\n    pending_cleanups.append(task_id)\n\ndef execute_batch_cleanup():\n    global batch_cleanups, pending_cleanups\n    if pending_cleanups:\n        batch_cleanups += 1\n        pending_cleanups = []\n\ndef batch_operation(operations):\n    try:\n        for i, op in enumerate(operations):\n            add_cleanup_task(f\"task_{i}\")\n            if op == \"fail\":\n                raise ValueError(f\"Operation {i} failed\")\n        return \"success\"\n    except ValueError:\n        return \"failed\"\n    finally:\n        execute_batch_cleanup()\n\ndef test_batch_operations():\n    batch_operation([\"ok\", \"ok\"])          # Success, cleanup\n    batch_operation([\"ok\", \"fail\", \"ok\"])  # Failure, cleanup\n    return batch_cleanups\n\n# What value is returned by test_batch_operations()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S004-V008",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-HierarchicalCleanup",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "hierarchical_cleanup",
+            "side_effect_type": "resource",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track hierarchical cleanup side effects. What is the final level_cleanups?",
+            "code": "level_1_cleanups = 0\nlevel_2_cleanups = 0\nlevel_3_cleanups = 0\n\ndef cleanup_level_3():\n    global level_3_cleanups\n    level_3_cleanups += 1\n\ndef cleanup_level_2():\n    global level_2_cleanups\n    level_2_cleanups += 1\n    cleanup_level_3()\n\ndef cleanup_level_1():\n    global level_1_cleanups\n    level_1_cleanups += 1\n    cleanup_level_2()\n\ndef hierarchical_operation(fail_at_level):\n    try:\n        if fail_at_level == 1:\n            raise ValueError(\"Level 1 failure\")\n        if fail_at_level == 2:\n            raise ValueError(\"Level 2 failure\")\n        if fail_at_level == 3:\n            raise ValueError(\"Level 3 failure\")\n        return \"success\"\n    except ValueError:\n        return \"failed\"\n    finally:\n        cleanup_level_1()\n\ndef test_hierarchical_cleanup():\n    hierarchical_operation(0)  # Success, all cleanups\n    hierarchical_operation(2)  # Failure, all cleanups\n    return level_1_cleanups + level_2_cleanups + level_3_cleanups\n\n# What value is returned by test_hierarchical_cleanup()?",
+            "answer": "6"
+        }
+    },
+    {
+        "id": "MF-SE-S004-V009",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-TimedCleanupOperations",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "timed_cleanup",
+            "side_effect_type": "resource",
+            "effect_scope": "global",
+            "observability": "delayed"
+        },
+        "task": {
+            "description": "Analyze timed cleanup operation side effects. What is the final cleanup_time?",
+            "code": "cleanup_time = 0\noperations_completed = 0\n\ndef simulate_cleanup_time(duration):\n    global cleanup_time\n    cleanup_time += duration\n\ndef timed_operation(duration, should_fail):\n    global operations_completed\n    start_time = cleanup_time\n    try:\n        # Simulate operation time\n        simulate_cleanup_time(duration)\n        if should_fail:\n            raise RuntimeError(\"Operation failed\")\n        operations_completed += 1\n        return \"success\"\n    except RuntimeError:\n        return \"failed\"\n    finally:\n        # Cleanup always takes 5 time units\n        simulate_cleanup_time(5)\n\ndef test_timed_operations():\n    timed_operation(10, False)  # 10 + 5 = 15\n    timed_operation(8, True)    # 8 + 5 = 13\n    timed_operation(12, False)  # 12 + 5 = 17\n    return cleanup_time\n\n# What value is returned by test_timed_operations()?",
+            "answer": "45"
+        }
+    },
+    {
+        "id": "MF-SE-S004-V010",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-CleanupSequenceTracking",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "cleanup_sequence",
+            "side_effect_type": "resource",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track cleanup sequence execution side effects. What is the final sequence_number?",
+            "code": "sequence_number = 0\ncleanup_sequence = []\n\ndef record_cleanup(cleanup_type):\n    global sequence_number, cleanup_sequence\n    sequence_number += 1\n    cleanup_sequence.append((sequence_number, cleanup_type))\n\ndef multi_resource_operation(resources, fail_after):\n    acquired_resources = []\n    try:\n        for i, resource in enumerate(resources):\n            if i == fail_after:\n                raise ValueError(f\"Failed at resource {i}\")\n            acquired_resources.append(resource)\n        return \"success\"\n    except ValueError:\n        return \"failed\"\n    finally:\n        # Cleanup in reverse order\n        for resource in reversed(acquired_resources):\n            record_cleanup(f\"cleanup_{resource}\")\n        if acquired_resources:\n            record_cleanup(\"final_cleanup\")\n\ndef test_cleanup_sequence():\n    multi_resource_operation([\"A\", \"B\", \"C\"], 999)  # Success, cleanup A,B,C + final\n    multi_resource_operation([\"D\", \"E\"], 1)         # Fail at E, cleanup D + final\n    return sequence_number\n\n# What value is returned by test_cleanup_sequence()?",
+            "answer": "6"
+        }
+    },
+    {
+        "id": "MF-SE-S005-V001",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-SimpleMemoryTracking",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_tracking",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Track simple memory allocation side effects. What is the final allocation_count?",
+            "code": "int allocation_count = 0;\n\nvoid* simple_alloc(size_t size) {\n    allocation_count++;\n    return malloc(size);\n}\n\nvoid simple_free(void* ptr) {\n    if (ptr != NULL) {\n        allocation_count--;\n        free(ptr);\n    }\n}\n\nint simple_memory_test() {\n    void* ptr1 = simple_alloc(50);\n    void* ptr2 = simple_alloc(100);\n    simple_free(ptr1);\n    void* ptr3 = simple_alloc(75);\n    return allocation_count;\n}\n\n// What value is returned by simple_memory_test()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S005-V002",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemoryPoolManagement",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "pool_management",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze memory pool management side effects. What is the final pool_size?",
+            "code": "int pool_size = 1000;\nint allocated_from_pool = 0;\n\nint allocate_from_pool(int size) {\n    if (pool_size >= size) {\n        pool_size -= size;\n        allocated_from_pool += size;\n        return 1;  // Success\n    }\n    return 0;  // Failure\n}\n\nint deallocate_to_pool(int size) {\n    pool_size += size;\n    allocated_from_pool -= size;\n    return pool_size;\n}\n\nint test_pool_operations() {\n    allocate_from_pool(300);  // pool_size = 700\n    allocate_from_pool(200);  // pool_size = 500\n    deallocate_to_pool(100);  // pool_size = 600\n    allocate_from_pool(250);  // pool_size = 350\n    return pool_size;\n}\n\n// What value is returned by test_pool_operations()?",
+            "answer": "350"
+        }
+    },
+    {
+        "id": "MF-SE-S005-V003",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemoryLeakDetection",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "leak_detection",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track memory leak detection side effects. What is the final leaked_blocks?",
+            "code": "int total_allocations = 0;\nint total_deallocations = 0;\nint leaked_blocks = 0;\n\nvoid* tracked_malloc(size_t size) {\n    total_allocations++;\n    return malloc(size);\n}\n\nvoid tracked_free(void* ptr) {\n    if (ptr != NULL) {\n        total_deallocations++;\n        free(ptr);\n    }\n}\n\nint check_leaks() {\n    leaked_blocks = total_allocations - total_deallocations;\n    return leaked_blocks;\n}\n\nint memory_leak_test() {\n    void* ptr1 = tracked_malloc(100);\n    void* ptr2 = tracked_malloc(200);\n    void* ptr3 = tracked_malloc(150);\n    \n    tracked_free(ptr1);\n    tracked_free(ptr3);\n    // ptr2 is leaked\n    \n    void* ptr4 = tracked_malloc(300);\n    // ptr4 is also leaked\n    \n    return check_leaks();\n}\n\n// What value is returned by memory_leak_test()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S005-V004",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ConditionalAllocation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "conditional_allocation",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze conditional allocation side effects. What is the final successful_allocations?",
+            "code": "int successful_allocations = 0;\nint failed_allocations = 0;\nint memory_limit = 500;\nint memory_used = 0;\n\nvoid* conditional_alloc(size_t size) {\n    if (memory_used + size <= memory_limit) {\n        memory_used += size;\n        successful_allocations++;\n        return malloc(size);\n    } else {\n        failed_allocations++;\n        return NULL;\n    }\n}\n\nvoid conditional_free(void* ptr, size_t size) {\n    if (ptr != NULL) {\n        memory_used -= size;\n        free(ptr);\n    }\n}\n\nint test_conditional_allocation() {\n    void* ptr1 = conditional_alloc(200);  // Success\n    void* ptr2 = conditional_alloc(150);  // Success\n    void* ptr3 = conditional_alloc(200);  // Fail (200+150+200 > 500)\n    conditional_free(ptr1, 200);\n    void* ptr4 = conditional_alloc(180);  // Success\n    \n    return successful_allocations;\n}\n\n// What value is returned by test_conditional_allocation()?",
+            "answer": "3"
+        }
+    },
+    {
+        "id": "MF-SE-S005-V005",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemoryFragmentation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "fragmentation",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track memory fragmentation side effects. What is the final fragmentation_score?",
+            "code": "int fragmentation_score = 0;\nint allocation_sequence = 0;\n\nvoid* fragment_alloc(size_t size) {\n    allocation_sequence++;\n    // Simulate fragmentation: odd allocations increase fragmentation\n    if (allocation_sequence % 2 == 1) {\n        fragmentation_score += size / 10;\n    }\n    return malloc(size);\n}\n\nvoid fragment_free(void* ptr, size_t size) {\n    if (ptr != NULL) {\n        // Deallocation reduces fragmentation slightly\n        fragmentation_score -= size / 20;\n        if (fragmentation_score < 0) fragmentation_score = 0;\n        free(ptr);\n    }\n}\n\nint test_fragmentation() {\n    void* ptr1 = fragment_alloc(100);  // +10 fragmentation\n    void* ptr2 = fragment_alloc(80);   // +0 fragmentation (even)\n    void* ptr3 = fragment_alloc(120);  // +12 fragmentation\n    fragment_free(ptr1, 100);          // -5 fragmentation\n    void* ptr4 = fragment_alloc(60);   // +0 fragmentation (even)\n    \n    return fragmentation_score;\n}\n\n// What value is returned by test_fragmentation()?",
+            "answer": "17"
+        }
+    },
+    {
+        "id": "MF-SE-S005-V006",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemoryAlignmentTracking",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "alignment_tracking",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze memory alignment tracking side effects. What is the final aligned_allocations?",
+            "code": "int aligned_allocations = 0;\nint unaligned_allocations = 0;\n\nvoid* aligned_alloc(size_t size, size_t alignment) {\n    if (size % alignment == 0) {\n        aligned_allocations++;\n    } else {\n        unaligned_allocations++;\n    }\n    return malloc(size);\n}\n\nint test_alignment() {\n    aligned_alloc(64, 8);   // 64 % 8 == 0, aligned\n    aligned_alloc(100, 8);  // 100 % 8 == 4, unaligned\n    aligned_alloc(96, 16);  // 96 % 16 == 0, aligned\n    aligned_alloc(50, 4);   // 50 % 4 == 2, unaligned\n    aligned_alloc(128, 32); // 128 % 32 == 0, aligned\n    \n    return aligned_allocations;\n}\n\n// What value is returned by test_alignment()?",
+            "answer": "3"
+        }
+    },
+    {
+        "id": "MF-SE-S005-V007",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-BatchMemoryOperations",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "batch_operations",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "delayed"
+        },
+        "task": {
+            "description": "Track batch memory operation side effects. What is the final batch_operations?",
+            "code": "int batch_operations = 0;\nint pending_allocations = 0;\nconst int BATCH_SIZE = 3;\n\nvoid add_to_allocation_batch(size_t size) {\n    pending_allocations++;\n    if (pending_allocations >= BATCH_SIZE) {\n        process_allocation_batch();\n    }\n}\n\nvoid process_allocation_batch() {\n    batch_operations++;\n    pending_allocations = 0;\n}\n\nint test_batch_allocations() {\n    add_to_allocation_batch(100);  // pending = 1\n    add_to_allocation_batch(200);  // pending = 2\n    add_to_allocation_batch(150);  // pending = 3, triggers batch\n    add_to_allocation_batch(300);  // pending = 1\n    add_to_allocation_batch(250);  // pending = 2\n    add_to_allocation_batch(180);  // pending = 3, triggers batch\n    add_to_allocation_batch(120);  // pending = 1\n    \n    return batch_operations;\n}\n\n// What value is returned by test_batch_allocations()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S005-V008",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemoryPressureTracking",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "pressure_tracking",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Analyze memory pressure tracking side effects. What is the final pressure_level?",
+            "code": "int pressure_level = 0;\nint total_memory = 1000;\nint used_memory = 0;\n\nvoid update_pressure_level() {\n    int usage_percent = (used_memory * 100) / total_memory;\n    if (usage_percent >= 80) {\n        pressure_level = 3;  // High\n    } else if (usage_percent >= 50) {\n        pressure_level = 2;  // Medium\n    } else if (usage_percent >= 20) {\n        pressure_level = 1;  // Low\n    } else {\n        pressure_level = 0;  // None\n    }\n}\n\nvoid* pressure_aware_alloc(size_t size) {\n    used_memory += size;\n    update_pressure_level();\n    return malloc(size);\n}\n\nvoid pressure_aware_free(void* ptr, size_t size) {\n    if (ptr != NULL) {\n        used_memory -= size;\n        update_pressure_level();\n        free(ptr);\n    }\n}\n\nint test_memory_pressure() {\n    void* ptr1 = pressure_aware_alloc(300);  // 30%, level = 1\n    void* ptr2 = pressure_aware_alloc(400);  // 70%, level = 2\n    void* ptr3 = pressure_aware_alloc(200);  // 90%, level = 3\n    pressure_aware_free(ptr1, 300);          // 60%, level = 2\n    \n    return pressure_level;\n}\n\n// What value is returned by test_memory_pressure()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S005-V009",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemoryStatisticsTracking",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "statistics_tracking",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "delayed"
+        },
+        "task": {
+            "description": "Track memory statistics side effects. What is the final peak_memory_used?",
+            "code": "int current_memory_used = 0;\nint peak_memory_used = 0;\nint total_allocations = 0;\nint average_allocation_size = 0;\n\nvoid update_memory_stats(size_t size, int is_allocation) {\n    if (is_allocation) {\n        current_memory_used += size;\n        total_allocations++;\n        if (current_memory_used > peak_memory_used) {\n            peak_memory_used = current_memory_used;\n        }\n        average_allocation_size = peak_memory_used / total_allocations;\n    } else {\n        current_memory_used -= size;\n    }\n}\n\nvoid* stats_alloc(size_t size) {\n    update_memory_stats(size, 1);\n    return malloc(size);\n}\n\nvoid stats_free(void* ptr, size_t size) {\n    if (ptr != NULL) {\n        update_memory_stats(size, 0);\n        free(ptr);\n    }\n}\n\nint test_memory_stats() {\n    void* ptr1 = stats_alloc(150);  // current=150, peak=150\n    void* ptr2 = stats_alloc(200);  // current=350, peak=350\n    void* ptr3 = stats_alloc(100);  // current=450, peak=450\n    stats_free(ptr2, 200);          // current=250, peak=450\n    void* ptr4 = stats_alloc(300);  // current=550, peak=550\n    \n    return peak_memory_used;\n}\n\n// What value is returned by test_memory_stats()?",
+            "answer": "550"
+        }
+    },
+    {
+        "id": "MF-SE-S005-V010",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemoryGarbageCollection",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "garbage_collection",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "delayed"
+        },
+        "task": {
+            "description": "Analyze garbage collection side effects. What is the final gc_cycles?",
+            "code": "int gc_cycles = 0;\nint allocated_objects = 0;\nint gc_threshold = 5;\nint objects_collected = 0;\n\nvoid trigger_gc_if_needed() {\n    if (allocated_objects >= gc_threshold) {\n        gc_cycles++;\n        objects_collected += allocated_objects / 2;  // Collect half\n        allocated_objects = allocated_objects / 2;\n    }\n}\n\nvoid* gc_alloc(size_t size) {\n    allocated_objects++;\n    trigger_gc_if_needed();\n    return malloc(size);\n}\n\nvoid gc_free(void* ptr) {\n    if (ptr != NULL) {\n        allocated_objects--;\n        free(ptr);\n    }\n}\n\nint test_garbage_collection() {\n    gc_alloc(100);  // objects=1\n    gc_alloc(200);  // objects=2\n    gc_alloc(150);  // objects=3\n    gc_alloc(300);  // objects=4\n    gc_alloc(250);  // objects=5, triggers GC, objects=2, gc_cycles=1\n    gc_alloc(180);  // objects=3\n    gc_alloc(220);  // objects=4\n    gc_alloc(160);  // objects=5, triggers GC, objects=2, gc_cycles=2\n    \n    return gc_cycles;\n}\n\n// What value is returned by test_garbage_collection()?",
+            "answer": "2"
+        }
+    },
+    {
+        "id": "MF-SE-S006-V001",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-SimpleArrayModification",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "simple_array",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze simple array modification side effects. What is the final value at data[1]?",
+            "code": "int data[4] = {10, 20, 30, 40};\n\nvoid increment_element(int index) {\n    if (index >= 0 && index < 4) {\n        data[index] += 10;\n    }\n}\n\nint simple_array_test() {\n    increment_element(1);  // data[1] = 30\n    increment_element(1);  // data[1] = 40\n    increment_element(2);  // data[2] = 40\n    return data[1];\n}\n\n// What value is returned by simple_array_test()?",
+            "answer": "40"
+        }
+    },
+    {
+        "id": "MF-SE-S006-V002",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-ConditionalModification",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "conditional_modification",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze conditional memory modification side effects. What is the final value at buffer[3]?",
+            "code": "int buffer[6] = {5, 10, 15, 20, 25, 30};\n\nvoid conditional_update(int index, int threshold) {\n    if (index >= 0 && index < 6 && buffer[index] >= threshold) {\n        buffer[index] *= 2;\n    }\n}\n\nint test_conditional_updates() {\n    conditional_update(3, 15);  // 20 >= 15, buffer[3] = 40\n    conditional_update(1, 15);  // 10 < 15, no change\n    conditional_update(3, 30);  // 40 >= 30, buffer[3] = 80\n    conditional_update(2, 10);  // 15 >= 10, buffer[2] = 30\n    return buffer[3];\n}\n\n// What value is returned by test_conditional_updates()?",
+            "answer": "80"
+        }
+    },
+    {
+        "id": "MF-SE-S006-V003",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-PointerBasedModification",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "pointer_modification",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track pointer-based modification side effects. What is the final value at memory[4]?",
+            "code": "int memory[8] = {1, 2, 3, 4, 5, 6, 7, 8};\n\nvoid pointer_modify(int* ptr, int offset, int value) {\n    if (ptr != NULL) {\n        *(ptr + offset) = value;\n    }\n}\n\nvoid indirect_modify(int base_index, int offset, int value) {\n    if (base_index >= 0 && base_index < 8) {\n        pointer_modify(&memory[base_index], offset, value);\n    }\n}\n\nint test_pointer_modifications() {\n    indirect_modify(2, 2, 99);  // memory[2+2] = memory[4] = 99\n    indirect_modify(3, 1, 77);  // memory[3+1] = memory[4] = 77\n    indirect_modify(4, 0, 55);  // memory[4+0] = memory[4] = 55\n    return memory[4];\n}\n\n// What value is returned by test_pointer_modifications()?",
+            "answer": "55"
+        }
+    },
+    {
+        "id": "MF-SE-S006-V004",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-BatchMemoryUpdates",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "batch_updates",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze batch memory update side effects. What is the final value at values[2]?",
+            "code": "int values[5] = {100, 200, 300, 400, 500};\n\nvoid batch_add(int start_index, int count, int addend) {\n    for (int i = 0; i < count; i++) {\n        int index = start_index + i;\n        if (index >= 0 && index < 5) {\n            values[index] += addend;\n        }\n    }\n}\n\nint test_batch_operations() {\n    batch_add(1, 3, 50);  // values[1,2,3] += 50\n    batch_add(2, 2, 25);  // values[2,3] += 25\n    batch_add(0, 4, 10);  // values[0,1,2,3] += 10\n    return values[2];\n}\n\n// What value is returned by test_batch_operations()?",
+            "answer": "385"
+        }
+    },
+    {
+        "id": "MF-SE-S006-V005",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemorySwapping",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "memory_swapping",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Track memory swapping side effects. What is the final value at array[1]?",
+            "code": "int array[6] = {11, 22, 33, 44, 55, 66};\nint swap_count = 0;\n\nvoid swap_elements(int index1, int index2) {\n    if (index1 >= 0 && index1 < 6 && index2 >= 0 && index2 < 6) {\n        int temp = array[index1];\n        array[index1] = array[index2];\n        array[index2] = temp;\n        swap_count++;\n    }\n}\n\nvoid rotate_three(int a, int b, int c) {\n    // Rotate: a -> b -> c -> a\n    int temp = array[a];\n    array[a] = array[c];\n    array[c] = array[b];\n    array[b] = temp;\n    swap_count += 2;  // Count as 2 swap operations\n}\n\nint test_swapping() {\n    swap_elements(1, 3);    // array[1]=44, array[3]=22\n    rotate_three(0, 1, 2);  // 0->1->2->0: array[0]=33, array[1]=11, array[2]=44\n    swap_elements(1, 4);    // array[1]=55, array[4]=11\n    return array[1];\n}\n\n// What value is returned by test_swapping()?",
+            "answer": "55"
+        }
+    },
+    {
+        "id": "MF-SE-S006-V006",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemoryChecksum",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "checksum_tracking",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Analyze memory checksum tracking side effects. What is the final checksum?",
+            "code": "int data_array[4] = {10, 20, 30, 40};\nint checksum = 0;\n\nvoid update_checksum() {\n    checksum = 0;\n    for (int i = 0; i < 4; i++) {\n        checksum += data_array[i];\n    }\n}\n\nvoid modify_and_update(int index, int new_value) {\n    if (index >= 0 && index < 4) {\n        data_array[index] = new_value;\n        update_checksum();\n    }\n}\n\nint test_checksum_tracking() {\n    update_checksum();         // Initial: 10+20+30+40 = 100\n    modify_and_update(1, 25);  // 10+25+30+40 = 105\n    modify_and_update(3, 50);  // 10+25+30+50 = 115\n    modify_and_update(0, 15);  // 15+25+30+50 = 120\n    return checksum;\n}\n\n// What value is returned by test_checksum_tracking()?",
+            "answer": "120"
+        }
+    },
+    {
+        "id": "MF-SE-S006-V007",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemoryPatternFilling",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "pattern_filling",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "direct"
+        },
+        "task": {
+            "description": "Track memory pattern filling side effects. What is the final value at grid[1][2]?",
+            "code": "int grid[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};\n\nvoid fill_pattern(int start_row, int start_col, int pattern) {\n    for (int r = 0; r < 2; r++) {\n        for (int c = 0; c < 2; c++) {\n            int row = start_row + r;\n            int col = start_col + c;\n            if (row >= 0 && row < 3 && col >= 0 && col < 3) {\n                grid[row][col] = pattern + (r * 2 + c);\n            }\n        }\n    }\n}\n\nint test_pattern_filling() {\n    fill_pattern(0, 1, 100);  // Fill 2x2 area starting at (0,1) with pattern 100+offset\n    // grid[0][1]=100, grid[0][2]=101, grid[1][1]=102, grid[1][2]=103\n    fill_pattern(1, 0, 200);  // Fill 2x2 area starting at (1,0) with pattern 200+offset\n    // grid[1][0]=200, grid[1][1]=201, grid[2][0]=202, grid[2][1]=203\n    return grid[1][2];\n}\n\n// What value is returned by test_pattern_filling()?",
+            "answer": "103"
+        }
+    },
+    {
+        "id": "MF-SE-S006-V008",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-CircularBufferOperations",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "circular_buffer",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Analyze circular buffer operation side effects. What is the final value at position 1?",
+            "code": "int circular_buffer[5] = {0, 0, 0, 0, 0};\nint write_pos = 0;\nint read_pos = 0;\nint buffer_count = 0;\n\nvoid circular_write(int value) {\n    circular_buffer[write_pos] = value;\n    write_pos = (write_pos + 1) % 5;\n    if (buffer_count < 5) {\n        buffer_count++;\n    } else {\n        read_pos = (read_pos + 1) % 5;  // Overwrite oldest\n    }\n}\n\nint circular_read() {\n    if (buffer_count > 0) {\n        int value = circular_buffer[read_pos];\n        read_pos = (read_pos + 1) % 5;\n        buffer_count--;\n        return value;\n    }\n    return -1;\n}\n\nint test_circular_buffer() {\n    circular_write(10);  // pos 0\n    circular_write(20);  // pos 1\n    circular_write(30);  // pos 2\n    circular_read();     // Read 10 from pos 0\n    circular_write(40);  // pos 3\n    circular_write(50);  // pos 4\n    circular_write(60);  // pos 0 (overwrites)\n    circular_write(70);  // pos 1 (overwrites 20)\n    return circular_buffer[1];\n}\n\n// What value is returned by test_circular_buffer()?",
+            "answer": "70"
+        }
+    },
+    {
+        "id": "MF-SE-S006-V009",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemoryCompression",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "memory_compression",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "delayed"
+        },
+        "task": {
+            "description": "Track memory compression side effects. What is the final compressed_size?",
+            "code": "int original_data[8] = {1, 1, 2, 2, 2, 3, 3, 4};\nint compressed_data[8] = {0};\nint compressed_size = 0;\n\nvoid compress_run_length() {\n    compressed_size = 0;\n    int current_value = original_data[0];\n    int count = 1;\n    \n    for (int i = 1; i < 8; i++) {\n        if (original_data[i] == current_value) {\n            count++;\n        } else {\n            compressed_data[compressed_size++] = current_value;\n            compressed_data[compressed_size++] = count;\n            current_value = original_data[i];\n            count = 1;\n        }\n    }\n    // Handle last run\n    compressed_data[compressed_size++] = current_value;\n    compressed_data[compressed_size++] = count;\n}\n\nvoid modify_and_recompress(int index, int new_value) {\n    if (index >= 0 && index < 8) {\n        original_data[index] = new_value;\n        compress_run_length();\n    }\n}\n\nint test_compression() {\n    compress_run_length();      // Initial compression\n    modify_and_recompress(2, 1); // Change pattern\n    modify_and_recompress(7, 3); // Change pattern\n    return compressed_size;\n}\n\n// What value is returned by test_compression()?",
+            "answer": "8"
+        }
+    },
+    {
+        "id": "MF-SE-S006-V010",
+        "metadata": {
+            "name": "MultiFunc-SideEffect-MemoryEncryption",
+            "category": "MultiFunc-Level",
+            "subcategory": "Side Effect",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "memory_encryption",
+            "side_effect_type": "memory",
+            "effect_scope": "global",
+            "observability": "indirect"
+        },
+        "task": {
+            "description": "Analyze memory encryption side effects. What is the final encrypted_checksum?",
+            "code": "int secure_data[6] = {100, 200, 300, 400, 500, 600};\nint encryption_key = 42;\nint encrypted_checksum = 0;\n\nvoid encrypt_memory() {\n    for (int i = 0; i < 6; i++) {\n        secure_data[i] ^= encryption_key;  // XOR encryption\n    }\n}\n\nvoid decrypt_memory() {\n    for (int i = 0; i < 6; i++) {\n        secure_data[i] ^= encryption_key;  // XOR decryption\n    }\n}\n\nvoid calculate_encrypted_checksum() {\n    encrypted_checksum = 0;\n    for (int i = 0; i < 6; i++) {\n        encrypted_checksum += secure_data[i];\n    }\n}\n\nvoid secure_modify(int index, int value) {\n    if (index >= 0 && index < 6) {\n        decrypt_memory();\n        secure_data[index] = value;\n        encrypt_memory();\n        calculate_encrypted_checksum();\n    }\n}\n\nint test_secure_memory() {\n    encrypt_memory();\n    calculate_encrypted_checksum();\n    secure_modify(1, 250);  // Decrypt, modify, encrypt\n    secure_modify(3, 450);  // Decrypt, modify, encrypt\n    return encrypted_checksum;\n}\n\n// What value is returned by test_secure_memory()?",
+            "answer": "1850"
+        }
+    }
+]
+```
+
+#### 4E - 大混合（41）
+
+> ```
+> # 跨函数推理大混合变式生成提示词
+> 
+> ## 任务目标
+> 基于提供的函数调用链推理、参数传递推理、状态传播推理、副作用推理种子任务和大混合示例，生成60个左右融合多种跨函数推理类型的综合变式任务，全面测试大模型对函数调用链、参数传递、状态传播、副作用等多重机制的综合理解和交叉应用能力。
+> 
+> ## 跨函数推理大混合特征分析
+> 跨函数推理大混合关注程序中多个函数间复杂交互的综合效应，重点测试模型对调用链分析与参数传递、状态传播与副作用管理、内存操作与异常处理等复杂组合的深层理解，强调对多维度跨函数机制的综合分析能力。
+> 
+> ## 关键要求
+> - **描述语言**: 所有task描述必须使用英文
+> - **变式数量**: 总计生成约60个混合变式任务
+> - **答案唯一性**: 保证答案准确且唯一，避免歧义和多解情况
+> - **混合复杂度**: 每个变式都应融合至少2-3种跨函数推理类型
+> 
+> ## 混合变式生成维度
+> 
+> ### 1. 调用链+参数传递混合变式
+> - **链式参数变换变式**: 参数在调用链中的逐步变换分析
+> - **递归参数传递变式**: 递归调用中参数的传递和累积
+> - **回调参数处理变式**: 回调函数的参数传递和处理
+> - **指针链式传递变式**: 指针参数在调用链中的传递和修改
+> - **结构体链式变式**: 复杂结构体在调用链中的传递
+> - **引用链式修改变式**: 引用参数在调用链中的修改效果
+> 
+> ### 2. 调用链+状态传播混合变式
+> - **全局状态调用链变式**: 全局状态在调用链中的传播和修改
+> - **静态变量调用链变式**: 静态变量在复杂调用链中的状态管理
+> - **闭包状态调用变式**: 闭包状态在嵌套调用中的传播
+> - **对象状态调用链变式**: 对象状态在方法调用链中的演化
+> - **共享状态竞争变式**: 多调用路径对共享状态的竞争访问
+> - **状态缓存调用变式**: 状态缓存在调用链中的使用和更新
+> 
+> ### 3. 调用链+副作用混合变式
+> - **I/O调用链副作用变式**: I/O操作在调用链中的副作用累积
+> - **内存操作调用链变式**: 内存操作在调用链中的副作用传播
+> - **异常调用链传播变式**: 异常在调用链中的传播和处理
+> - **资源管理调用链变式**: 资源管理在调用链中的副作用
+> - **日志调用链副作用变式**: 日志记录在调用链中的副作用
+> - **时间依赖调用链变式**: 时间相关副作用在调用链中的影响
+> 
+> ### 4. 参数传递+状态传播混合变式
+> - **参数状态同步变式**: 参数传递与全局状态的同步分析
+> - **指针状态修改变式**: 指针参数对全局状态的修改效果
+> - **引用状态传播变式**: 引用参数的状态传播和持久化
+> - **结构体状态传递变式**: 结构体参数的状态传递和修改
+> - **数组状态传播变式**: 数组参数的状态传播分析
+> - **闭包参数捕获变式**: 闭包参数捕获的状态传播
+> 
+> ### 5. 参数传递+副作用混合变式
+> - **参数副作用传播变式**: 参数传递过程中的副作用分析
+> - **指针副作用变式**: 指针参数的内存副作用
+> - **数组修改副作用变式**: 数组参数修改的副作用传播
+> - **结构体副作用变式**: 结构体参数的副作用影响
+> - **引用副作用传播变式**: 引用参数的副作用传播
+> - **对象参数副作用变式**: 对象参数的副作用分析
+> 
+> ### 6. 状态传播+副作用混合变式
+> - **全局状态副作用变式**: 全局状态修改的副作用影响
+> - **静态状态副作用变式**: 静态变量状态的副作用传播
+> - **闭包状态副作用变式**: 闭包状态修改的副作用
+> - **对象状态副作用变式**: 对象状态变化的副作用
+> - **共享状态副作用变式**: 共享状态的副作用竞争
+> - **状态持久化副作用变式**: 状态持久化的副作用影响
+> 
+> ### 7. 三重混合变式 (调用链+参数+状态)
+> - **复杂调用状态管理变式**: 复杂调用链中的参数和状态管理
+> - **递归状态参数变式**: 递归调用中的状态和参数综合分析
+> - **回调状态传递变式**: 回调函数的状态和参数传递
+> - **链式状态变换变式**: 链式调用中的状态和参数变换
+> - **嵌套调用状态变式**: 嵌套调用的复杂状态和参数管理
+> - **多路径状态参数变式**: 多路径调用的状态和参数分析
+> 
+> ### 8. 三重混合变式 (调用链+参数+副作用)
+> - **调用链副作用参数变式**: 调用链中参数传递的副作用分析
+> - **递归副作用参数变式**: 递归调用的副作用和参数综合
+> - **回调副作用处理变式**: 回调函数的副作用和参数处理
+> - **链式副作用传播变式**: 链式调用的副作用传播分析
+> - **参数修改副作用链变式**: 参数修改在调用链中的副作用
+> - **复杂副作用调用变式**: 复杂副作用的调用链分析
+> 
+> ### 9. 三重混合变式 (调用链+状态+副作用)
+> - **调用链状态副作用变式**: 调用链中状态变化的副作用
+> - **递归状态副作用变式**: 递归调用的状态和副作用综合
+> - **回调状态副作用变式**: 回调函数的状态和副作用管理
+> - **链式状态副作用变式**: 链式调用的状态和副作用传播
+> - **全局状态调用副作用变式**: 全局状态在调用链副作用中的角色
+> - **复杂状态副作用链变式**: 复杂状态和副作用的调用链
+> 
+> ### 10. 四重混合变式 (调用链+参数+状态+副作用)
+> - **全维度跨函数变式**: 四种机制的完全融合分析
+> - **复杂系统模拟变式**: 复杂系统中的多机制交互
+> - **实时系统分析变式**: 实时系统的多机制综合分析
+> - **数据库事务变式**: 数据库事务的多机制分析
+> - **网络协议栈变式**: 网络协议栈的跨函数综合分析
+> - **编译器优化变式**: 编译器优化的多机制影响
+> 
+> ## 复杂度层次设计
+> 
+> ### 简单混合 (Easy) - 12个变式
+> - 2种机制的基础组合
+> - 清晰的交互路径和影响
+> - 直观的分析过程
+> - 基础的跨函数理解
+> 
+> ### 中等混合 (Medium) - 18个变式
+> - 2-3种机制的中度组合
+> - 包含一定的复杂交互
+> - 中等复杂度的分析过程
+> - 需要深入的跨函数理解
+> 
+> ### 复杂混合 (Hard) - 18个变式
+> - 3种机制的深度融合
+> - 复杂的交互和传播路径
+> - 多层次的综合分析
+> - 涉及高级概念的理解
+> 
+> ### 专家级混合 (Expert) - 8个变式
+> - 3-4种机制的极度复杂组合
+> - 深度嵌套和复杂交互
+> - 需要专业级别的综合分析
+> - 涉及系统级和架构级的理解
+> 
+> ### 大师级混合 (Master) - 3个变式
+> - 四种机制的完全融合
+> - 极度复杂的综合分析
+> - 需要最高水平的理解能力
+> - 挑战性的实际系统模拟
+> 
+> ### 宗师级混合 (Grandmaster) - 1个变式
+> - 超级复杂的实际系统场景
+> - 极限挑战的综合分析
+> - 需要专家级的系统理解
+> - 涉及多个领域的知识综合
+> 
+> ## 生成策略
+> 
+> ### 种子分析策略
+> 1. **识别机制特征**: 分析每类种子的核心机制特征
+> 2. **提取交互模式**: 识别不同机制间的潜在交互模式
+> 3. **确定融合点**: 找出机制融合的自然切入点
+> 4. **保持分析深度**: 在混合中保持每种机制的分析深度
+> 
+> ### 变式设计原则
+> 1. **多机制融合**: 每个变式都应体现多种机制的有机结合
+> 2. **英文描述**: 所有task描述必须使用标准英文
+> 3. **答案唯一**: 严格确保答案的准确性和唯一性
+> 4. **渐进复杂**: 从简单组合逐步增加到复杂综合
+> 
+> ### 质量保证
+> 1. **机制一致性**: 确保各种机制的语义一致性
+> 2. **交互正确性**: 验证机制间交互的正确性
+> 3. **分析可行性**: 确保综合分析的可行性和合理性
+> 4. **答案验证**: 严格验证答案的准确性和唯一性
+> 
+> ## 输出格式要求
+> 
+> ```json
+> [
+>     {
+>         "id": "MF-MIX-V001",
+>         "metadata": {
+>             "name": "MultiFunc-Mix-VariantName",
+>             "category": "MultiFunc-Level",
+>             "subcategory": "Mix",
+>             "type": "variant",
+>             "source": "Generated",
+>             "language": "target_language",
+>             "difficulty": "easy/medium/hard/expert/master/grandmaster",
+>             "intervention": 0,
+>             "variant_type": "variant_type_label",
+>             "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation", "Side Effect"],
+>             "primary_focus": "主要关注的机制组合",
+>             "analysis_complexity": "low/medium/high/extreme/ultimate"
+>         },
+>         "task": {
+>             "description": "English description of the mixed multi-function analysis task",
+>             "code": "Code containing multiple cross-function mechanisms to analyze",
+>             "answer": "Unique and accurate comprehensive analysis result"
+>         }
+>     },
+>     {下一个变式...}
+> ]
+> 特殊字段说明
+> mixed_mechanisms: 标识该变式包含的跨函数机制组合
+> primary_focus: 标识主要的分析焦点
+> analysis_complexity: 标识综合分析的复杂程度
+> 生成目标
+> 生成总计约60个跨函数推理大混合变式，分布如下：
+> 
+> 简单混合变式: 12个 (2种机制组合)
+> 中等混合变式: 18个 (2-3种机制组合)
+> 复杂混合变式: 18个 (3种机制组合)
+> 专家级混合变式: 8个 (3-4种机制组合)
+> 大师级混合变式: 3个 (4种机制完全融合)
+> 宗师级混合变式: 1个 (极限复杂场景)
+> 重点测试场景
+> 多机制协同分析: 同时分析多种跨函数机制的协同效应
+> 交互效应理解: 理解不同机制间的相互影响和制约
+> 综合状态追踪: 跟踪多个维度的程序状态变化
+> 复杂数据流分析: 分析复杂数据流中的多重机制
+> 系统级交互理解: 理解系统级的跨函数交互模式
+> 实际场景模拟: 模拟实际软件系统的复杂交互
+> 英文描述模板示例
+> "Analyze the comprehensive interaction of function calls, parameter passing, state changes, and side effects..."
+> "Determine the final result considering the combined effects of call chains, parameter modifications, and state propagation..."
+> "Trace the multi-dimensional effects through recursive calls with state management and side effects..."
+> "Calculate the result of complex cross-function interactions involving all major mechanisms..."
+> "Evaluate the comprehensive system behavior under multi-function scenario..."
+> 混合模式优先级
+> 实用导向: 优先设计实际编程中常见的机制组合
+> 教学价值: 重点关注有教学和测试价值的组合
+> 渐进复杂: 从简单组合逐步增加到复杂综合
+> 系统完整: 确保各种机制组合的系统完整覆盖
+> 答案唯一性保证策略
+> 明确机制定义: 清晰定义每种机制的语义和边界
+> 具体执行路径: 使用确定性的执行路径，避免歧义
+> 避免竞争条件: 避免产生竞争条件的并发场景
+> 清晰时序: 确保操作的时序和顺序明确
+> 精确计算: 确保数值计算的精确性和一致性
+> 常见混合模式
+> 数据处理管道: 数据在多函数间的处理和传递
+> 状态机实现: 状态机模式的多机制实现
+> 事务处理系统: 事务处理的综合机制分析
+> 缓存管理系统: 缓存系统的多机制协同
+> 异步处理框架: 异步处理的复杂机制交互
+> 资源管理系统: 资源管理的综合机制分析
+> 请基于此提示词和提供的所有种子任务，生成约60个跨函数推理大混合变式集合，严格确保答案准确且唯一，所有描述使用英文，输出格式为包含所有变式的JSON数组。
+> ```
+
+```json
+[
+    {
+        "id": "MF-MIX-V001",
+        "metadata": {
+            "name": "MultiFunc-Mix-ChainParameterBasic",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "chain_parameter_mix",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing"],
+            "primary_focus": "Basic call chain with parameter transformation",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Analyze the parameter transformation through a simple call chain. What is the final return value when input is 15?",
+            "code": "int add_ten(int value) {\n    return value + 10;\n}\n\nint multiply_by_two(int value) {\n    int result = add_ten(value);\n    return result * 2;\n}\n\nint subtract_five(int value) {\n    int result = multiply_by_two(value);\n    return result - 5;\n}\n\n// What is returned by subtract_five(15)?",
+            "answer": 45
+        }
+    },
+    {
+        "id": "MF-MIX-V002",
+        "metadata": {
+            "name": "MultiFunc-Mix-ChainStateBasic",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "chain_state_mix",
+            "mixed_mechanisms": ["Call Chain", "State Propagation"],
+            "primary_focus": "Call chain affecting global state",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Track global state changes through function call chain. What is the final value of global_sum?",
+            "code": "int global_sum = 0;\n\nvoid add_value(int value) {\n    global_sum += value;\n}\n\nvoid double_and_add(int value) {\n    add_value(value * 2);\n}\n\nvoid process_sequence() {\n    double_and_add(5);\n    double_and_add(8);\n    add_value(3);\n}\n\n// After calling process_sequence(), what is the value of global_sum?",
+            "answer": 29
+        }
+    },
+    {
+        "id": "MF-MIX-V003",
+        "metadata": {
+            "name": "MultiFunc-Mix-ParameterSideEffect",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "parameter_sideeffect_mix",
+            "mixed_mechanisms": ["Parameter Passing", "Side Effect"],
+            "primary_focus": "Parameter passing with side effects",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Analyze parameter modification side effects. What is the value of array[1] after function execution?",
+            "code": "void modify_array(int *arr, int size) {\n    for (int i = 0; i < size; i++) {\n        arr[i] = arr[i] * 2 + 1;\n    }\n}\n\nint test_modification() {\n    int array[3] = {4, 6, 8};\n    modify_array(array, 3);\n    return array[1];\n}\n\n// What value is returned by test_modification()?",
+            "answer": 13
+        }
+    },
+    {
+        "id": "MF-MIX-V004",
+        "metadata": {
+            "name": "MultiFunc-Mix-StateSideEffect",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "state_sideeffect_mix",
+            "mixed_mechanisms": ["State Propagation", "Side Effect"],
+            "primary_focus": "State changes with side effects",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Track state changes with logging side effects. What is the final operation_count?",
+            "code": "operation_count = 0\ncurrent_value = 10\n\ndef log_and_increment():\n    global operation_count, current_value\n    operation_count += 1\n    print(f\"Operation {operation_count}: value = {current_value}\")\n    current_value += 5\n\ndef process_operations():\n    log_and_increment()\n    log_and_increment()\n    log_and_increment()\n    return operation_count\n\n# What value is returned by process_operations()?",
+            "answer": 3
+        }
+    },
+    {
+        "id": "MF-MIX-V005",
+        "metadata": {
+            "name": "MultiFunc-Mix-RecursiveParameter",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "recursive_parameter_mix",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing"],
+            "primary_focus": "Recursive calls with parameter accumulation",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Trace recursive parameter accumulation. What is the final return value?",
+            "code": "int sum_to_n(int n, int accumulator) {\n    if (n <= 0) {\n        return accumulator;\n    }\n    return sum_to_n(n - 1, accumulator + n);\n}\n\nint calculate_result() {\n    return sum_to_n(5, 0);\n}\n\n// What value is returned by calculate_result()?",
+            "answer": 15
+        }
+    },
+    {
+        "id": "MF-MIX-V006",
+        "metadata": {
+            "name": "MultiFunc-Mix-PointerChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "easy",
+            "intervention": 0,
+            "variant_type": "pointer_chain_mix",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing"],
+            "primary_focus": "Pointer parameter passing through call chain",
+            "analysis_complexity": "low"
+        },
+        "task": {
+            "description": "Follow pointer modifications through call chain. What is the final value pointed to by ptr?",
+            "code": "void increment_value(int *ptr) {\n    *ptr += 10;\n}\n\nvoid double_value(int *ptr) {\n    *ptr *= 2;\n    increment_value(ptr);\n}\n\nint test_pointer_chain() {\n    int value = 5;\n    double_value(&value);\n    return value;\n}\n\n// What value is returned by test_pointer_chain()?",
+            "answer": 20
+        }
+    },
+    {
+        "id": "MF-MIX-V007",
+        "metadata": {
+            "name": "MultiFunc-Mix-CallbackState",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "callback_state_mix",
+            "mixed_mechanisms": ["Call Chain", "State Propagation"],
+            "primary_focus": "Callback functions affecting global state",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Analyze callback function impact on global state. What is the final state_counter value?",
+            "code": "int state_counter = 0;\n\ntypedef void (*operation_func)(int);\n\nvoid add_operation(int value) {\n    state_counter += value;\n}\n\nvoid multiply_operation(int value) {\n    state_counter *= value;\n}\n\nvoid apply_operation(int value, operation_func op) {\n    op(value);\n}\n\nint execute_sequence() {\n    state_counter = 2;\n    apply_operation(3, add_operation);\n    apply_operation(4, multiply_operation);\n    apply_operation(10, add_operation);\n    return state_counter;\n}\n\n// What value is returned by execute_sequence()?",
+            "answer": 30
+        }
+    },
+    {
+        "id": "MF-MIX-V008",
+        "metadata": {
+            "name": "MultiFunc-Mix-StructParameterChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "struct_parameter_chain",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing"],
+            "primary_focus": "Structure parameter transformation through chain",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Track structure parameter changes through function chain. What is the final result.total value?",
+            "code": "typedef struct {\n    int x;\n    int y;\n    int total;\n} Point;\n\nPoint calculate_sum(Point p) {\n    p.total = p.x + p.y;\n    return p;\n}\n\nPoint scale_point(Point p) {\n    p.x *= 2;\n    p.y *= 3;\n    return calculate_sum(p);\n}\n\nPoint add_offset(Point p) {\n    p.x += 5;\n    p.y += 10;\n    return scale_point(p);\n}\n\nint test_point_chain() {\n    Point p = {3, 4, 0};\n    Point result = add_offset(p);\n    return result.total;\n}\n\n// What value is returned by test_point_chain()?",
+            "answer": 58
+        }
+    },
+    {
+        "id": "MF-MIX-V009",
+        "metadata": {
+            "name": "MultiFunc-Mix-StaticParameterChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "static_parameter_chain",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation"],
+            "primary_focus": "Static variables with parameter passing in chain",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Analyze static variable interaction with parameter passing. What is the final return value?",
+            "code": "int increment_with_static(int value) {\n    static int counter = 0;\n    counter += value;\n    return counter;\n}\n\nint process_with_chain(int input) {\n    int step1 = increment_with_static(input);\n    int step2 = increment_with_static(step1);\n    return step2;\n}\n\nint test_static_chain() {\n    int result1 = process_with_chain(5);\n    int result2 = process_with_chain(3);\n    return result2;\n}\n\n// What value is returned by test_static_chain()?",
+            "answer": 16
+        }
+    },
+    {
+        "id": "MF-MIX-V010",
+        "metadata": {
+            "name": "MultiFunc-Mix-ArraySideEffectChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "array_sideeffect_chain",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "Side Effect"],
+            "primary_focus": "Array modifications through call chain",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Track array modifications through function call chain. What is the final sum of array elements?",
+            "code": "void double_elements(int *arr, int size) {\n    for (int i = 0; i < size; i++) {\n        arr[i] *= 2;\n    }\n}\n\nvoid add_indices(int *arr, int size) {\n    for (int i = 0; i < size; i++) {\n        arr[i] += i;\n    }\n    double_elements(arr, size);\n}\n\nint calculate_array_sum(int *arr, int size) {\n    add_indices(arr, size);\n    int sum = 0;\n    for (int i = 0; i < size; i++) {\n        sum += arr[i];\n    }\n    return sum;\n}\n\nint test_array_chain() {\n    int data[4] = {2, 4, 6, 8};\n    return calculate_array_sum(data, 4);\n}\n\n// What value is returned by test_array_chain()?",
+            "answer": 52
+        }
+    },
+    {
+        "id": "MF-MIX-V011",
+        "metadata": {
+            "name": "MultiFunc-Mix-ExceptionStateChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "exception_state_chain",
+            "mixed_mechanisms": ["Call Chain", "State Propagation", "Side Effect"],
+            "primary_focus": "Exception handling affecting state through chain",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Analyze exception handling effects on state through call chain. What is the final error_count?",
+            "code": "error_count = 0\nsuccess_count = 0\n\ndef risky_division(a, b):\n    global error_count, success_count\n    try:\n        result = a / b\n        success_count += 1\n        return result\n    except ZeroDivisionError:\n        error_count += 1\n        return 0\n\ndef process_division_chain(values):\n    result = 100\n    for i in range(len(values) - 1):\n        result = risky_division(result, values[i])\n        if result == 0:\n            break\n    return error_count\n\ndef test_exception_chain():\n    return process_division_chain([2, 5, 0, 4])\n\n# What value is returned by test_exception_chain()?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "MF-MIX-V012",
+        "metadata": {
+            "name": "MultiFunc-Mix-ClosureParameterChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "closure_parameter_chain",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation"],
+            "primary_focus": "Closure state with parameter passing chain",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Track closure state through parameter passing chain. What is the final captured value?",
+            "code": "def create_processor(initial):\n    value = initial\n    \n    def process(input_val):\n        nonlocal value\n        value += input_val\n        return value\n    \n    return process\n\ndef chain_processing(processor, values):\n    result = 0\n    for val in values:\n        result = processor(val)\n    return result\n\ndef test_closure_chain():\n    proc = create_processor(10)\n    result1 = chain_processing(proc, [5, 8, 3])\n    result2 = chain_processing(proc, [2, 7])\n    return result2\n\n# What value is returned by test_closure_chain()?",
+            "answer": 35
+        }
+    },
+    {
+        "id": "MF-MIX-V013",
+        "metadata": {
+            "name": "MultiFunc-Mix-RecursiveStateSideEffect",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "recursive_state_sideeffect",
+            "mixed_mechanisms": ["Call Chain", "State Propagation", "Side Effect"],
+            "primary_focus": "Recursive calls with state and side effects",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Analyze recursive function with global state modifications and side effects. What is the final call_count?",
+            "code": "int call_count = 0;\nint accumulator = 0;\n\nint recursive_accumulate(int n) {\n    call_count++;\n    accumulator += n;\n    \n    if (n <= 1) {\n        return accumulator;\n    }\n    \n    return recursive_accumulate(n - 1) + n;\n}\n\nvoid reset_counters() {\n    call_count = 0;\n    accumulator = 0;\n}\n\nint test_recursive_effects() {\n    reset_counters();\n    int result = recursive_accumulate(4);\n    return call_count;\n}\n\n// What value is returned by test_recursive_effects()?",
+            "answer": 4
+        }
+    },
+    {
+        "id": "MF-MIX-V014",
+        "metadata": {
+            "name": "MultiFunc-Mix-PointerStateModification",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "pointer_state_modification",
+            "mixed_mechanisms": ["Parameter Passing", "State Propagation", "Side Effect"],
+            "primary_focus": "Pointer parameters affecting global state",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Track pointer parameter effects on global state. What is the final global_total?",
+            "code": "int global_total = 0;\nint modification_count = 0;\n\nvoid modify_and_track(int *ptr, int multiplier) {\n    *ptr *= multiplier;\n    global_total += *ptr;\n    modification_count++;\n}\n\nvoid chain_modifications(int *values, int size) {\n    for (int i = 0; i < size; i++) {\n        modify_and_track(&values[i], i + 1);\n    }\n}\n\nint test_pointer_state() {\n    int data[3] = {5, 10, 15};\n    chain_modifications(data, 3);\n    return global_total;\n}\n\n// What value is returned by test_pointer_state()?",
+            "answer": 80
+        }
+    },
+    {
+        "id": "MF-MIX-V015",
+        "metadata": {
+            "name": "MultiFunc-Mix-CallbackStatePropagation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "callback_state_propagation",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation"],
+            "primary_focus": "Callback functions with state propagation",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Analyze callback function chain with state propagation. What is the final processor_state?",
+            "code": "int processor_state = 1;\n\ntypedef int (*transformer)(int);\n\nint add_transform(int value) {\n    processor_state += value;\n    return processor_state;\n}\n\nint multiply_transform(int value) {\n    processor_state *= value;\n    return processor_state;\n}\n\nint apply_transform_chain(int input, transformer *funcs, int count) {\n    int result = input;\n    for (int i = 0; i < count; i++) {\n        result = funcs[i](result);\n    }\n    return processor_state;\n}\n\nint test_callback_chain() {\n    transformer transforms[] = {add_transform, multiply_transform, add_transform};\n    apply_transform_chain(3, transforms, 3);\n    return processor_state;\n}\n\n// What value is returned by test_callback_chain()?",
+            "answer": 20
+        }
+    },
+    {
+        "id": "MF-MIX-V016",
+        "metadata": {
+            "name": "MultiFunc-Mix-MemoryAllocationChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "memory_allocation_chain",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "Side Effect"],
+            "primary_focus": "Memory allocation chain with side effects",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Track memory allocation and modification chain. What is the final calculated sum?",
+            "code": "int allocation_count = 0;\n\nint* allocate_and_fill(int size, int initial_value) {\n    allocation_count++;\n    int* arr = malloc(size * sizeof(int));\n    for (int i = 0; i < size; i++) {\n        arr[i] = initial_value + i;\n    }\n    return arr;\n}\n\nvoid modify_array(int* arr, int size, int factor) {\n    for (int i = 0; i < size; i++) {\n        arr[i] *= factor;\n    }\n}\n\nint process_and_sum(int size, int initial, int factor) {\n    int* data = allocate_and_fill(size, initial);\n    modify_array(data, size, factor);\n    \n    int sum = 0;\n    for (int i = 0; i < size; i++) {\n        sum += data[i];\n    }\n    \n    free(data);\n    return sum;\n}\n\nint test_memory_chain() {\n    return process_and_sum(4, 5, 2);\n}\n\n// What value is returned by test_memory_chain()?",
+            "answer": 52
+        }
+    },
+    {
+        "id": "MF-MIX-V017",
+        "metadata": {
+            "name": "MultiFunc-Mix-ObjectMethodChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "object_method_chain",
+            "mixed_mechanisms": ["Call Chain", "State Propagation", "Side Effect"],
+            "primary_focus": "Object method chain with state changes",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Analyze object method call chain with state modifications. What is the final balance?",
+            "code": "class Calculator:\n    def __init__(self, initial_value):\n        self.value = initial_value\n        self.operation_count = 0\n    \n    def add(self, amount):\n        self.value += amount\n        self.operation_count += 1\n        return self\n    \n    def multiply(self, factor):\n        self.value *= factor\n        self.operation_count += 1\n        return self\n    \n    def apply_bonus(self):\n        if self.operation_count >= 3:\n            self.value += 10\n        return self\n    \n    def get_final_value(self):\n        return self.value\n\ndef test_calculator_chain():\n    calc = Calculator(20)\n    result = calc.add(15).multiply(2).add(5).apply_bonus().get_final_value()\n    return result\n\n# What value is returned by test_calculator_chain()?",
+            "answer": 85
+        }
+    },
+    {
+        "id": "MF-MIX-V018",
+        "metadata": {
+            "name": "MultiFunc-Mix-NestedCallbackState",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "nested_callback_state",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation"],
+            "primary_focus": "Nested callback functions affecting state",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Trace nested callback execution with state changes. What is the final execution_count?",
+            "code": "int execution_count = 0;\nint state_value = 10;\n\ntypedef void (*callback_t)(int);\n\nvoid increment_callback(int value) {\n    execution_count++;\n    state_value += value;\n}\n\nvoid multiply_callback(int value) {\n    execution_count++;\n    state_value *= value;\n}\n\nvoid execute_with_callback(int input, callback_t cb) {\n    cb(input);\n    if (execution_count < 3) {\n        execute_with_callback(input + 1, cb);\n    }\n}\n\nint test_nested_callbacks() {\n    execute_with_callback(2, increment_callback);\n    return execution_count;\n}\n\n// What value is returned by test_nested_callbacks()?",
+            "answer": 3
+        }
+    },
+    {
+        "id": "MF-MIX-V019",
+        "metadata": {
+            "name": "MultiFunc-Mix-ComplexParameterTransform",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "complex_parameter_transform",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation"],
+            "primary_focus": "Complex parameter transformation with state",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Analyze complex parameter transformation through multiple function layers. What is the final computed result?",
+            "code": "typedef struct {\n    int data[3];\n    int multiplier;\n    int sum;\n} DataStruct;\n\nstatic int transform_count = 0;\n\nDataStruct transform_data(DataStruct input) {\n    transform_count++;\n    DataStruct result = input;\n    \n    for (int i = 0; i < 3; i++) {\n        result.data[i] *= result.multiplier;\n    }\n    \n    result.sum = 0;\n    for (int i = 0; i < 3; i++) {\n        result.sum += result.data[i];\n    }\n    \n    result.multiplier++;\n    return result;\n}\n\nDataStruct apply_chain_transform(DataStruct input, int iterations) {\n    DataStruct current = input;\n    for (int i = 0; i < iterations; i++) {\n        current = transform_data(current);\n    }\n    return current;\n}\n\nint test_complex_transform() {\n    DataStruct initial = {{2, 3, 4}, 2, 0};\n    DataStruct result = apply_chain_transform(initial, 2);\n    return result.sum + transform_count;\n}\n\n// What value is returned by test_complex_transform()?",
+            "answer": 146
+        }
+    },
+    {
+        "id": "MF-MIX-V020",
+        "metadata": {
+            "name": "MultiFunc-Mix-RecursiveStateAccumulation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "recursive_state_accumulation",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation", "Side Effect"],
+            "primary_focus": "Recursive state accumulation with side effects",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Track recursive state accumulation with multiple side effects. What is the final global_accumulator value?",
+            "code": "int global_accumulator = 0;\nint call_depth = 0;\nint max_depth = 0;\n\nint fibonacci_with_state(int n) {\n    call_depth++;\n    if (call_depth > max_depth) {\n        max_depth = call_depth;\n    }\n    \n    global_accumulator += n;\n    \n    int result;\n    if (n <= 1) {\n        result = n;\n    } else {\n        result = fibonacci_with_state(n - 1) + fibonacci_with_state(n - 2);\n    }\n    \n    call_depth--;\n    return result;\n}\n\nvoid reset_state() {\n    global_accumulator = 0;\n    call_depth = 0;\n    max_depth = 0;\n}\n\nint test_fibonacci_state() {\n    reset_state();\n    int fib_result = fibonacci_with_state(4);\n    return global_accumulator;\n}\n\n// What value is returned by test_fibonacci_state()?",
+            "answer": 19
+        }
+    },
+    {
+        "id": "MF-MIX-V021",
+        "metadata": {
+            "name": "MultiFunc-Mix-DoublePointerChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "double_pointer_chain",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "Side Effect"],
+            "primary_focus": "Double pointer manipulation through call chain",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Analyze double pointer manipulation chain with memory effects. What is the final dereferenced value?",
+            "code": "int allocation_counter = 0;\n\nvoid allocate_and_set(int **ptr, int value) {\n    *ptr = malloc(sizeof(int));\n    **ptr = value;\n    allocation_counter++;\n}\n\nvoid reallocate_and_modify(int **ptr, int new_value) {\n    free(*ptr);\n    allocate_and_set(ptr, new_value * 2);\n}\n\nvoid chain_reallocations(int **ptr, int *values, int count) {\n    allocate_and_set(ptr, values[0]);\n    \n    for (int i = 1; i < count; i++) {\n        reallocate_and_modify(ptr, values[i]);\n    }\n}\n\nint test_double_pointer_chain() {\n    int *ptr = NULL;\n    int values[] = {5, 8, 12};\n    \n    chain_reallocations(&ptr, values, 3);\n    \n    int result = *ptr;\n    free(ptr);\n    \n    return result;\n}\n\n// What value is returned by test_double_pointer_chain()?",
+            "answer": 24
+        }
+    },
+    {
+        "id": "MF-MIX-V022",
+        "metadata": {
+            "name": "MultiFunc-Mix-ExceptionPropagationChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "exception_propagation_chain",
+            "mixed_mechanisms": ["Call Chain", "State Propagation", "Side Effect"],
+            "primary_focus": "Exception propagation through call chain",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Track exception propagation effects through call chain. What is the final recovery_count?",
+            "code": "recovery_count = 0\nprocessed_items = 0\n\ndef risky_processor(value):\n    global processed_items\n    if value < 0:\n        raise ValueError(\"Negative value\")\n    if value > 50:\n        raise OverflowError(\"Value too large\")\n    processed_items += 1\n    return value * 2\n\ndef safe_processor(value):\n    global recovery_count\n    try:\n        return risky_processor(value)\n    except ValueError:\n        recovery_count += 1\n        return 0\n    except OverflowError:\n        recovery_count += 2\n        return 100\n\ndef chain_processor(values):\n    results = []\n    for value in values:\n        try:\n            result = safe_processor(value)\n            results.append(result)\n        except Exception:\n            recovery_count += 10  # Unexpected exception\n            results.append(-1)\n    return recovery_count\n\ndef test_exception_chain():\n    global recovery_count, processed_items\n    recovery_count = 0\n    processed_items = 0\n    \n    values = [10, -5, 60, 25, 80]\n    return chain_processor(values)\n\n# What value is returned by test_exception_chain()?",
+            "answer": 5
+        }
+    },
+    {
+        "id": "MF-MIX-V023",
+        "metadata": {
+            "name": "MultiFunc-Mix-ClosureNestedState",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "closure_nested_state",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation"],
+            "primary_focus": "Nested closure state management",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Analyze nested closure state interactions. What is the final captured state value?",
+            "code": "def create_stateful_processor(initial_state):\n    state = {'value': initial_state, 'count': 0}\n    \n    def create_inner_processor(multiplier):\n        def process(input_val):\n            state['value'] += input_val * multiplier\n            state['count'] += 1\n            return state['value']\n        return process\n    \n    def get_state():\n        return state['value']\n    \n    return create_inner_processor, get_state\n\ndef test_nested_closure():\n    processor_factory, get_state = create_stateful_processor(10)\n    \n    proc1 = processor_factory(2)\n    proc2 = processor_factory(3)\n    \n    result1 = proc1(5)  # 10 + 5*2 = 20\n    result2 = proc2(4)  # 20 + 4*3 = 32\n    result3 = proc1(3)  # 32 + 3*2 = 38\n    \n    return get_state()\n\n# What value is returned by test_nested_closure()?",
+            "answer": 38
+        }
+    },
+    {
+        "id": "MF-MIX-V024",
+        "metadata": {
+            "name": "MultiFunc-Mix-StaticArrayChain",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "static_array_chain",
+            "mixed_mechanisms": ["Call Chain", "State Propagation", "Side Effect"],
+            "primary_focus": "Static array state through call chain",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Track static array state modifications through function chain. What is the final array sum?",
+            "code": "int rotate_and_modify(int value, int position) {\n    static int buffer[4] = {1, 2, 3, 4};\n    static int current_pos = 0;\n    \n    // Rotate position\n    current_pos = (current_pos + position) % 4;\n    \n    // Modify at current position\n    buffer[current_pos] += value;\n    \n    // Calculate sum\n    int sum = 0;\n    for (int i = 0; i < 4; i++) {\n        sum += buffer[i];\n    }\n    \n    return sum;\n}\n\nint apply_operations() {\n    int result = 0;\n    result = rotate_and_modify(5, 1);  // pos 1, buffer[1] = 7\n    result = rotate_and_modify(3, 2);  // pos 3, buffer[3] = 7\n    result = rotate_and_modify(8, 1);  // pos 0, buffer[0] = 9\n    \n    return result;\n}\n\nint test_static_array_chain() {\n    return apply_operations();\n}\n\n// What value is returned by test_static_array_chain()?",
+            "answer": 25
+        }
+    },
+    {
+        "id": "MF-MIX-V025",
+        "metadata": {
+            "name": "MultiFunc-Mix-MemoryLeakTracking",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "memory_leak_tracking",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "Side Effect"],
+            "primary_focus": "Memory allocation tracking through chain",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Track memory allocation and deallocation through function chain. What is the final net_allocations?",
+            "code": "int net_allocations = 0;\nint total_allocated_bytes = 0;\n\nvoid* tracked_malloc(size_t size) {\n    net_allocations++;\n    total_allocated_bytes += size;\n    return malloc(size);\n}\n\nvoid tracked_free(void* ptr) {\n    if (ptr != NULL) {\n        net_allocations--;\n        free(ptr);\n    }\n}\n\nint* create_array_chain(int size, int initial_value) {\n    int* arr = (int*)tracked_malloc(size * sizeof(int));\n    if (arr == NULL) return NULL;\n    \n    for (int i = 0; i < size; i++) {\n        arr[i] = initial_value + i;\n    }\n    \n    return arr;\n}\n\nvoid process_arrays() {\n    int* arr1 = create_array_chain(5, 10);\n    int* arr2 = create_array_chain(3, 20);\n    int* arr3 = create_array_chain(4, 30);\n    \n    tracked_free(arr1);\n    tracked_free(arr3);\n    \n    // arr2 is intentionally not freed to test leak detection\n}\n\nint test_memory_tracking() {\n    net_allocations = 0;\n    total_allocated_bytes = 0;\n    \n    process_arrays();\n    \n    return net_allocations;\n}\n\n// What value is returned by test_memory_tracking()?",
+            "answer": 1
+        }
+    },
+    {
+        "id": "MF-MIX-V026",
+        "metadata": {
+            "name": "MultiFunc-Mix-SystemSimulation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "master",
+            "intervention": 4,
+            "variant_type": "system_simulation",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation", "Side Effect"],
+            "primary_focus": "Complex system simulation with all mechanisms",
+            "analysis_complexity": "ultimate"
+        },
+        "task": {
+            "description": "Simulate a complex processing system with resource management, error handling, and state tracking. What is the final system_health_score?",
+            "code": "class ResourceManager:\n    def __init__(self):\n        self.allocated_resources = {}\n        self.error_count = 0\n        self.operation_count = 0\n        self.health_score = 100\n    \n    def allocate_resource(self, resource_id, size):\n        self.operation_count += 1\n        if resource_id in self.allocated_resources:\n            self.error_count += 1\n            self.health_score -= 5\n            return False\n        \n        self.allocated_resources[resource_id] = size\n        self.health_score = max(0, self.health_score - (size // 10))\n        return True\n    \n    def deallocate_resource(self, resource_id):\n        self.operation_count += 1\n        if resource_id not in self.allocated_resources:\n            self.error_count += 1\n            self.health_score -= 3\n            return False\n        \n        size = self.allocated_resources.pop(resource_id)\n        self.health_score = min(100, self.health_score + (size // 20))\n        return True\n    \n    def process_resource(self, resource_id, processor_func):\n        self.operation_count += 1\n        if resource_id not in self.allocated_resources:\n            self.error_count += 1\n            return None\n        \n        try:\n            result = processor_func(self.allocated_resources[resource_id])\n            self.health_score = min(100, self.health_score + 2)\n            return result\n        except Exception:\n            self.error_count += 1\n            self.health_score -= 10\n            return None\n\nrm = ResourceManager()\n\ndef safe_divide_processor(size):\n    if size == 0:\n        raise ValueError(\"Cannot divide by zero\")\n    return 1000 // size\n\ndef multiply_processor(size):\n    return size * 3\n\ndef complex_workflow(resource_configs):\n    results = []\n    \n    for config in resource_configs:\n        resource_id, size, processor_type = config\n        \n        # Allocation phase\n        if rm.allocate_resource(resource_id, size):\n            \n            # Processing phase\n            if processor_type == 'divide':\n                result = rm.process_resource(resource_id, safe_divide_processor)\n            elif processor_type == 'multiply':\n                result = rm.process_resource(resource_id, multiply_processor)\n            else:\n                result = None\n            \n            results.append(result if result is not None else 0)\n            \n            # Deallocation phase (only for even resource_ids)\n            if resource_id % 2 == 0:\n                rm.deallocate_resource(resource_id)\n        else:\n            results.append(-1)\n    \n    return rm.health_score\n\ndef test_system_simulation():\n    configs = [\n        (1, 50, 'multiply'),   # Allocate, process, keep\n        (2, 25, 'divide'),     # Allocate, process, deallocate\n        (3, 0, 'divide'),      # Allocate, process (error), keep\n        (4, 100, 'multiply'),  # Allocate, process, deallocate\n        (1, 30, 'multiply'),   # Allocation error (duplicate)\n        (5, 75, 'unknown')     # Allocate, process (error), keep\n    ]\n    \n    return complex_workflow(configs)\n\n# What value is returned by test_system_simulation()?",
+            "answer": 64
+        }
+    },
+    {
+        "id": "MF-MIX-V027",
+        "metadata": {
+            "name": "MultiFunc-Mix-DatabaseTransaction",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "master",
+            "intervention": 4,
+            "variant_type": "database_transaction",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation", "Side Effect"],
+            "primary_focus": "Database transaction simulation",
+            "analysis_complexity": "ultimate"
+        },
+        "task": {
+            "description": "Simulate database transaction processing with rollback mechanisms and state consistency. What is the final committed_transaction_count?",
+            "code": "class DatabaseSimulator:\n    def __init__(self):\n        self.tables = {'users': {}, 'accounts': {}}\n        self.transaction_log = []\n        self.active_transaction = None\n        self.committed_transaction_count = 0\n        self.rollback_count = 0\n    \n    def begin_transaction(self, tx_id):\n        if self.active_transaction is not None:\n            return False\n        self.active_transaction = {\n            'id': tx_id,\n            'operations': [],\n            'backup': {\n                'users': self.tables['users'].copy(),\n                'accounts': self.tables['accounts'].copy()\n            }\n        }\n        return True\n    \n    def insert_record(self, table, key, value):\n        if self.active_transaction is None:\n            return False\n        \n        if key in self.tables[table]:\n            return False  # Duplicate key\n        \n        self.tables[table][key] = value\n        self.active_transaction['operations'].append(('INSERT', table, key, value))\n        return True\n    \n    def update_record(self, table, key, value):\n        if self.active_transaction is None:\n            return False\n        \n        if key not in self.tables[table]:\n            return False  # Key not found\n        \n        old_value = self.tables[table][key]\n        self.tables[table][key] = value\n        self.active_transaction['operations'].append(('UPDATE', table, key, old_value, value))\n        return True\n    \n    def commit_transaction(self):\n        if self.active_transaction is None:\n            return False\n        \n        self.transaction_log.append(self.active_transaction)\n        self.committed_transaction_count += 1\n        self.active_transaction = None\n        return True\n    \n    def rollback_transaction(self):\n        if self.active_transaction is None:\n            return False\n        \n        # Restore from backup\n        self.tables = self.active_transaction['backup']\n        self.rollback_count += 1\n        self.active_transaction = None\n        return True\n\ndb = DatabaseSimulator()\n\ndef execute_user_creation(user_id, name, initial_balance):\n    success = True\n    \n    # Insert user\n    if not db.insert_record('users', user_id, {'name': name}):\n        success = False\n    \n    # Insert account\n    if success and not db.insert_record('accounts', user_id, {'balance': initial_balance}):\n        success = False\n    \n    return success\n\ndef execute_transfer(from_user, to_user, amount):\n    # Check if users exist\n    if from_user not in db.tables['accounts'] or to_user not in db.tables['accounts']:\n        return False\n    \n    # Check balance\n    if db.tables['accounts'][from_user]['balance'] < amount:\n        return False\n    \n    # Update balances\n    new_from_balance = db.tables['accounts'][from_user]['balance'] - amount\n    new_to_balance = db.tables['accounts'][to_user]['balance'] + amount\n    \n    success = True\n    success &= db.update_record('accounts', from_user, {'balance': new_from_balance})\n    success &= db.update_record('accounts', to_user, {'balance': new_to_balance})\n    \n    return success\n\ndef process_banking_operations():\n    operations = [\n        ('create_user', 1, 'Alice', 1000),\n        ('create_user', 2, 'Bob', 500),\n        ('transfer', 1, 2, 200),\n        ('create_user', 1, 'Charlie', 300),  # Duplicate user\n        ('transfer', 2, 1, 100),\n        ('transfer', 1, 3, 50),  # Non-existent user\n        ('create_user', 3, 'Charlie', 300),\n        ('transfer', 1, 3, 150)\n    ]\n    \n    for operation in operations:\n        if operation[0] == 'create_user':\n            _, user_id, name, balance = operation\n            \n            if db.begin_transaction(f\"create_{user_id}\"):\n                if execute_user_creation(user_id, name, balance):\n                    db.commit_transaction()\n                else:\n                    db.rollback_transaction()\n        \n        elif operation[0] == 'transfer':\n            _, from_user, to_user, amount = operation\n            \n            if db.begin_transaction(f\"transfer_{from_user}_{to_user}\"):\n                if execute_transfer(from_user, to_user, amount):\n                    db.commit_transaction()\n                else:\n                    db.rollback_transaction()\n    \n    return db.committed_transaction_count\n\ndef test_database_simulation():\n    return process_banking_operations()\n\n# What value is returned by test_database_simulation()?",
+            "answer": 5
+        }
+    },
+    {
+        "id": "MF-MIX-V028",
+        "metadata": {
+            "name": "MultiFunc-Mix-CompilerOptimizer",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "master",
+            "intervention": 4,
+            "variant_type": "compiler_optimizer",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation", "Side Effect"],
+            "primary_focus": "Compiler optimization simulation",
+            "analysis_complexity": "ultimate"
+        },
+        "task": {
+            "description": "Simulate a compiler optimization pipeline with multiple passes and state tracking. What is the final optimization_score?",
+            "code": "typedef struct {\n    int *instructions;\n    int count;\n    int allocated;\n} InstructionList;\n\ntypedef struct {\n    int dead_code_removed;\n    int constants_folded;\n    int redundant_ops_removed;\n    int optimization_score;\n} OptimizationStats;\n\nstatic OptimizationStats global_stats = {0, 0, 0, 0};\n\nInstructionList* create_instruction_list(int initial_capacity) {\n    InstructionList* list = malloc(sizeof(InstructionList));\n    list->instructions = malloc(initial_capacity * sizeof(int));\n    list->count = 0;\n    list->allocated = initial_capacity;\n    return list;\n}\n\nvoid add_instruction(InstructionList* list, int instruction) {\n    if (list->count >= list->allocated) {\n        list->allocated *= 2;\n        list->instructions = realloc(list->instructions, list->allocated * sizeof(int));\n    }\n    list->instructions[list->count++] = instruction;\n}\n\nint remove_dead_code_pass(InstructionList* list) {\n    int removed = 0;\n    \n    // Remove NOPs (instruction code 0)\n    int write_pos = 0;\n    for (int read_pos = 0; read_pos < list->count; read_pos++) {\n        if (list->instructions[read_pos] != 0) {\n            list->instructions[write_pos++] = list->instructions[read_pos];\n        } else {\n            removed++;\n        }\n    }\n    \n    list->count = write_pos;\n    global_stats.dead_code_removed += removed;\n    global_stats.optimization_score += removed * 2;\n    \n    return removed;\n}\n\nint constant_folding_pass(InstructionList* list) {\n    int folded = 0;\n    \n    // Look for ADD_CONST followed by ADD_CONST and combine them\n    // ADD_CONST = 100 + value\n    for (int i = 0; i < list->count - 1; i++) {\n        if (list->instructions[i] >= 100 && list->instructions[i] < 200 &&\n            list->instructions[i + 1] >= 100 && list->instructions[i + 1] < 200) {\n            \n            int val1 = list->instructions[i] - 100;\n            int val2 = list->instructions[i + 1] - 100;\n            int combined = val1 + val2;\n            \n            list->instructions[i] = 100 + combined;\n            list->instructions[i + 1] = 0; // Mark as NOP\n            \n            folded++;\n        }\n    }\n    \n    global_stats.constants_folded += folded;\n    global_stats.optimization_score += folded * 3;\n    \n    return folded;\n}\n\nint redundancy_elimination_pass(InstructionList* list) {\n    int eliminated = 0;\n    \n    // Remove consecutive identical instructions\n    int write_pos = 0;\n    for (int read_pos = 0; read_pos < list->count; read_pos++) {\n        if (read_pos == 0 || list->instructions[read_pos] != list->instructions[read_pos - 1]) {\n            list->instructions[write_pos++] = list->instructions[read_pos];\n        } else {\n            eliminated++;\n        }\n    }\n    \n    list->count = write_pos;\n    global_stats.redundant_ops_removed += eliminated;\n    global_stats.optimization_score += eliminated * 1;\n    \n    return eliminated;\n}\n\nint run_optimization_pipeline(InstructionList* list, int passes) {\n    int total_improvements = 0;\n    \n    for (int pass = 0; pass < passes; pass++) {\n        int improvements_this_pass = 0;\n        \n        improvements_this_pass += constant_folding_pass(list);\n        improvements_this_pass += remove_dead_code_pass(list);\n        improvements_this_pass += redundancy_elimination_pass(list);\n        \n        total_improvements += improvements_this_pass;\n        \n        // If no improvements in this pass, stop early\n        if (improvements_this_pass == 0) {\n            break;\n        }\n    }\n    \n    return total_improvements;\n}\n\nint test_compiler_optimization() {\n    // Reset global stats\n    global_stats.dead_code_removed = 0;\n    global_stats.constants_folded = 0;\n    global_stats.redundant_ops_removed = 0;\n    global_stats.optimization_score = 0;\n    \n    InstructionList* program = create_instruction_list(20);\n    \n    // Add sample instructions\n    int sample_instructions[] = {\n        105,  // ADD_CONST 5\n        103,  // ADD_CONST 3\n        0,    // NOP\n        200,  // LOAD\n        200,  // LOAD (duplicate)\n        107,  // ADD_CONST 7\n        0,    // NOP\n        102,  // ADD_CONST 2\n        300,  // STORE\n        300,  // STORE (duplicate)\n        0     // NOP\n    };\n    \n    for (int i = 0; i < 11; i++) {\n        add_instruction(program, sample_instructions[i]);\n    }\n    \n    // Run optimization pipeline\n    run_optimization_pipeline(program, 3);\n    \n    int final_score = global_stats.optimization_score;\n    \n    // Cleanup\n    free(program->instructions);\n    free(program);\n    \n    return final_score;\n}\n\n// What value is returned by test_compiler_optimization()?",
+            "answer": 11
+        }
+    },
+    {
+        "id": "MF-MIX-V029",
+        "metadata": {
+            "name": "MultiFunc-Mix-NetworkProtocolStack",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "grandmaster",
+            "intervention": 5,
+            "variant_type": "network_protocol_stack",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation", "Side Effect"],
+            "primary_focus": "Network protocol stack simulation",
+            "analysis_complexity": "ultimate"
+        },
+        "task": {
+            "description": "Simulate a complete network protocol stack with error handling, retry mechanisms, and state management. What is the final successful_transmissions count?",
+            "code": "import random\nrandom.seed(42)  # For reproducible results\n\nclass NetworkStats:\n    def __init__(self):\n        self.packets_sent = 0\n        self.packets_received = 0\n        self.packets_dropped = 0\n        self.retransmissions = 0\n        self.successful_transmissions = 0\n        self.error_count = 0\n\nclass Packet:\n    def __init__(self, data, sequence_num, destination):\n        self.data = data\n        self.sequence_num = sequence_num\n        self.destination = destination\n        self.checksum = self.calculate_checksum()\n        self.retry_count = 0\n        self.max_retries = 3\n    \n    def calculate_checksum(self):\n        return sum(ord(c) for c in self.data) % 256\n    \n    def is_corrupted(self):\n        # Simulate corruption based on data content\n        return self.checksum % 7 == 0  # Deterministic corruption\n\nclass NetworkLayer:\n    def __init__(self, stats):\n        self.stats = stats\n        self.routing_table = {'A': 1, 'B': 2, 'C': 3}\n        self.congestion_window = 4\n    \n    def route_packet(self, packet):\n        if packet.destination not in self.routing_table:\n            self.stats.error_count += 1\n            return None\n        \n        # Simulate routing delay affecting congestion\n        route_cost = self.routing_table[packet.destination]\n        if route_cost > self.congestion_window:\n            self.congestion_window = max(1, self.congestion_window - 1)\n            return None\n        \n        self.congestion_window = min(8, self.congestion_window + 1)\n        return packet\n\nclass TransportLayer:\n    def __init__(self, stats):\n        self.stats = stats\n        self.sequence_number = 0\n        self.acknowledged_packets = set()\n        self.pending_packets = {}\n    \n    def send_packet(self, data, destination, network_layer):\n        packet = Packet(data, self.sequence_number, destination)\n        self.sequence_number += 1\n        \n        self.pending_packets[packet.sequence_num] = packet\n        \n        # Try to route through network layer\n        routed_packet = network_layer.route_packet(packet)\n        if routed_packet is None:\n            return False\n        \n        self.stats.packets_sent += 1\n        return self.transmit_packet(routed_packet)\n    \n    def transmit_packet(self, packet):\n        # Simulate transmission\n        if packet.is_corrupted():\n            self.stats.packets_dropped += 1\n            return self.retry_packet(packet)\n        \n        # Successful transmission\n        self.stats.packets_received += 1\n        self.acknowledged_packets.add(packet.sequence_num)\n        \n        if packet.sequence_num in self.pending_packets:\n            del self.pending_packets[packet.sequence_num]\n        \n        self.stats.successful_transmissions += 1\n        return True\n    \n    def retry_packet(self, packet):\n        packet.retry_count += 1\n        \n        if packet.retry_count > packet.max_retries:\n            self.stats.error_count += 1\n            if packet.sequence_num in self.pending_packets:\n                del self.pending_packets[packet.sequence_num]\n            return False\n        \n        self.stats.retransmissions += 1\n        return self.transmit_packet(packet)\n\nclass ApplicationLayer:\n    def __init__(self):\n        self.stats = NetworkStats()\n        self.network_layer = NetworkLayer(self.stats)\n        self.transport_layer = TransportLayer(self.stats)\n        self.message_queue = []\n    \n    def send_message(self, message, destination):\n        # Fragment large messages\n        fragments = self.fragment_message(message)\n        \n        success_count = 0\n        for fragment in fragments:\n            if self.transport_layer.send_packet(fragment, destination, self.network_layer):\n                success_count += 1\n        \n        return success_count == len(fragments)\n    \n    def fragment_message(self, message):\n        # Split message into 10-character fragments\n        fragments = []\n        for i in range(0, len(message), 10):\n            fragments.append(message[i:i+10])\n        return fragments\n    \n    def batch_send_messages(self, messages):\n        results = []\n        \n        for message, destination in messages:\n            success = self.send_message(message, destination)\n            results.append(success)\n        \n        return results\n\ndef test_network_protocol_stack():\n    app = ApplicationLayer()\n    \n    # Test messages with various characteristics\n    test_messages = [\n        (\"Hello World!\", \"A\"),           # Short message\n        (\"This is a longer message that will be fragmented\", \"B\"),  # Long message\n        (\"Error prone data with checksum issues\", \"C\"),     # Potentially corrupted\n        (\"Quick msg\", \"A\"),             # Short message\n        (\"Another test message for reliability\", \"B\"),      # Medium message\n        (\"Final transmission test\", \"C\"),   # Final message\n        (\"Invalid destination\", \"D\"),      # Invalid destination\n        (\"Retry test message\", \"A\"),       # Retry test\n    ]\n    \n    # Send all messages\n    results = app.batch_send_messages(test_messages)\n    \n    return app.stats.successful_transmissions\n\n# What value is returned by test_network_protocol_stack()?",
+            "answer": 17
+        }
+    },
+    {
+        "id": "MF-MIX-V030",
+        "metadata": {
+            "name": "MultiFunc-Mix-RealTimeSystem",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "realtime_system_mix",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation"],
+            "primary_focus": "Real-time system task scheduling",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Simulate real-time task scheduling with priority and timing constraints. What is the final completed_tasks count?",
+            "code": "typedef struct {\n    int task_id;\n    int priority;\n    int execution_time;\n    int deadline;\n} Task;\n\nstatic int completed_tasks = 0;\nstatic int current_time = 0;\nstatic int missed_deadlines = 0;\n\nint execute_task(Task task) {\n    current_time += task.execution_time;\n    \n    if (current_time <= task.deadline) {\n        completed_tasks++;\n        return 1;  // Success\n    } else {\n        missed_deadlines++;\n        return 0;  // Missed deadline\n    }\n}\n\nint schedule_tasks(Task *tasks, int count) {\n    // Simple priority-based scheduling\n    for (int i = 0; i < count - 1; i++) {\n        for (int j = 0; j < count - i - 1; j++) {\n            if (tasks[j].priority < tasks[j + 1].priority) {\n                Task temp = tasks[j];\n                tasks[j] = tasks[j + 1];\n                tasks[j + 1] = temp;\n            }\n        }\n    }\n    \n    int successful = 0;\n    for (int i = 0; i < count; i++) {\n        successful += execute_task(tasks[i]);\n    }\n    \n    return successful;\n}\n\nint test_realtime_system() {\n    completed_tasks = 0;\n    current_time = 0;\n    missed_deadlines = 0;\n    \n    Task tasks[] = {\n        {1, 3, 5, 20},   // High priority, short execution\n        {2, 1, 8, 25},   // Low priority, medium execution\n        {3, 2, 4, 15},   // Medium priority, short execution\n        {4, 3, 6, 30},   // High priority, medium execution\n        {5, 1, 3, 35}    // Low priority, short execution\n    };\n    \n    schedule_tasks(tasks, 5);\n    \n    return completed_tasks;\n}\n\n// What value is returned by test_realtime_system()?",
+            "answer": 4
+        }
+    },
+    {
+        "id": "MF-MIX-V031",
+        "metadata": {
+            "name": "MultiFunc-Mix-CacheSystem",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "cache_system_mix",
+            "mixed_mechanisms": ["Call Chain", "State Propagation", "Side Effect"],
+            "primary_focus": "Cache management with LRU policy",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Implement LRU cache with access tracking and eviction counting. What is the final cache_hits count?",
+            "code": "class LRUCache:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.cache = {}\n        self.access_order = []\n        self.cache_hits = 0\n        self.cache_misses = 0\n        self.evictions = 0\n    \n    def get(self, key):\n        if key in self.cache:\n            # Move to end (most recently used)\n            self.access_order.remove(key)\n            self.access_order.append(key)\n            self.cache_hits += 1\n            return self.cache[key]\n        else:\n            self.cache_misses += 1\n            return None\n    \n    def put(self, key, value):\n        if key in self.cache:\n            # Update existing key\n            self.cache[key] = value\n            self.access_order.remove(key)\n            self.access_order.append(key)\n        else:\n            # Add new key\n            if len(self.cache) >= self.capacity:\n                # Evict least recently used\n                lru_key = self.access_order.pop(0)\n                del self.cache[lru_key]\n                self.evictions += 1\n            \n            self.cache[key] = value\n            self.access_order.append(key)\n    \n    def access_pattern(self, operations):\n        for op_type, key, value in operations:\n            if op_type == 'get':\n                self.get(key)\n            elif op_type == 'put':\n                self.put(key, value)\n        \n        return self.cache_hits\n\ndef test_cache_system():\n    cache = LRUCache(3)\n    \n    operations = [\n        ('put', 'a', 1),\n        ('put', 'b', 2),\n        ('get', 'a', None),  # Hit\n        ('put', 'c', 3),\n        ('get', 'b', None),  # Hit\n        ('put', 'd', 4),     # Evicts 'c'\n        ('get', 'c', None),  # Miss\n        ('get', 'a', None),  # Hit\n        ('put', 'e', 5),     # Evicts 'd'\n        ('get', 'b', None),  # Hit\n        ('get', 'd', None),  # Miss\n        ('get', 'e', None)   # Hit\n    ]\n    \n    return cache.access_pattern(operations)\n\n# What value is returned by test_cache_system()?",
+            "answer": 5
+        }
+    },
+    {
+        "id": "MF-MIX-V032",
+        "metadata": {
+            "name": "MultiFunc-Mix-FileSystemOperations",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "medium",
+            "intervention": 1,
+            "variant_type": "filesystem_operations_mix",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "Side Effect"],
+            "primary_focus": "File system operation tracking",
+            "analysis_complexity": "medium"
+        },
+        "task": {
+            "description": "Simulate file system operations with error handling and resource tracking. What is the final open_file_count?",
+            "code": "typedef struct {\n    char name[50];\n    int size;\n    int is_open;\n} File;\n\nstatic File file_system[10];\nstatic int file_count = 0;\nstatic int open_file_count = 0;\nstatic int operation_count = 0;\n\nint create_file(const char* name, int size) {\n    operation_count++;\n    \n    if (file_count >= 10) {\n        return -1;  // No space\n    }\n    \n    // Check for duplicate names\n    for (int i = 0; i < file_count; i++) {\n        if (strcmp(file_system[i].name, name) == 0) {\n            return -1;  // Duplicate name\n        }\n    }\n    \n    strcpy(file_system[file_count].name, name);\n    file_system[file_count].size = size;\n    file_system[file_count].is_open = 0;\n    \n    return file_count++;\n}\n\nint open_file(const char* name) {\n    operation_count++;\n    \n    for (int i = 0; i < file_count; i++) {\n        if (strcmp(file_system[i].name, name) == 0) {\n            if (!file_system[i].is_open) {\n                file_system[i].is_open = 1;\n                open_file_count++;\n                return i;\n            }\n            return -1;  // Already open\n        }\n    }\n    \n    return -1;  // File not found\n}\n\nint close_file(const char* name) {\n    operation_count++;\n    \n    for (int i = 0; i < file_count; i++) {\n        if (strcmp(file_system[i].name, name) == 0) {\n            if (file_system[i].is_open) {\n                file_system[i].is_open = 0;\n                open_file_count--;\n                return 0;\n            }\n            return -1;  // Not open\n        }\n    }\n    \n    return -1;  // File not found\n}\n\nint process_file_operations() {\n    // Reset counters\n    file_count = 0;\n    open_file_count = 0;\n    operation_count = 0;\n    \n    // Create files\n    create_file(\"file1.txt\", 100);\n    create_file(\"file2.txt\", 200);\n    create_file(\"file3.txt\", 150);\n    \n    // Open files\n    open_file(\"file1.txt\");\n    open_file(\"file2.txt\");\n    open_file(\"file3.txt\");\n    \n    // Try to open already open file\n    open_file(\"file1.txt\");  // Should fail\n    \n    // Close some files\n    close_file(\"file2.txt\");\n    \n    // Open again\n    open_file(\"file2.txt\");\n    \n    return open_file_count;\n}\n\nint test_filesystem_operations() {\n    return process_file_operations();\n}\n\n// What value is returned by test_filesystem_operations()?",
+            "answer": 3
+        }
+    },
+    {
+        "id": "MF-MIX-V033",
+        "metadata": {
+            "name": "MultiFunc-Mix-EventDrivenSystem",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "event_driven_system_mix",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation"],
+            "primary_focus": "Event-driven system with callback chains",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Simulate event-driven system with cascading events and state changes. What is the final event_count?",
+            "code": "class EventManager:\n    def __init__(self):\n        self.event_handlers = {}\n        self.event_count = 0\n        self.state = {'counter': 0, 'multiplier': 1}\n    \n    def register_handler(self, event_type, handler):\n        if event_type not in self.event_handlers:\n            self.event_handlers[event_type] = []\n        self.event_handlers[event_type].append(handler)\n    \n    def emit_event(self, event_type, data=None):\n        self.event_count += 1\n        \n        if event_type in self.event_handlers:\n            for handler in self.event_handlers[event_type]:\n                handler(self, data)\n    \n    def get_state(self, key):\n        return self.state.get(key, 0)\n    \n    def set_state(self, key, value):\n        self.state[key] = value\n\ndef increment_handler(event_manager, data):\n    current = event_manager.get_state('counter')\n    event_manager.set_state('counter', current + (data or 1))\n    \n    # Trigger cascading event if counter is even\n    if event_manager.get_state('counter') % 2 == 0:\n        event_manager.emit_event('even_counter', event_manager.get_state('counter'))\n\ndef multiplier_handler(event_manager, data):\n    current = event_manager.get_state('multiplier')\n    event_manager.set_state('multiplier', current * 2)\n    \n    # Trigger increment with multiplier value\n    event_manager.emit_event('increment', event_manager.get_state('multiplier'))\n\ndef even_counter_handler(event_manager, data):\n    # When counter is even, adjust multiplier\n    if data and data > 10:\n        event_manager.emit_event('multiply', None)\n\ndef test_event_driven_system():\n    em = EventManager()\n    \n    # Register event handlers\n    em.register_handler('increment', increment_handler)\n    em.register_handler('multiply', multiplier_handler)\n    em.register_handler('even_counter', even_counter_handler)\n    \n    # Trigger sequence of events\n    em.emit_event('increment', 3)    # counter: 3, events: 1\n    em.emit_event('increment', 5)    # counter: 8, even triggered, events: 3\n    em.emit_event('multiply', None)  # multiplier: 2, increment triggered, events: 5\n    \n    return em.event_count\n\n# What value is returned by test_event_driven_system()?",
+            "answer": 7
+        }
+    },
+    {
+        "id": "MF-MIX-V034",
+        "metadata": {
+            "name": "MultiFunc-Mix-StateMachineProcessor",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "state_machine_processor_mix",
+            "mixed_mechanisms": ["Call Chain", "State Propagation", "Side Effect"],
+            "primary_focus": "State machine with side effect tracking",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Implement state machine processor with transition counting and state validation. What is the final transition_count?",
+            "code": "typedef enum {\n    STATE_IDLE = 0,\n    STATE_PROCESSING = 1,\n    STATE_WAITING = 2,\n    STATE_ERROR = 3,\n    STATE_COMPLETE = 4\n} SystemState;\n\nstatic SystemState current_state = STATE_IDLE;\nstatic int transition_count = 0;\nstatic int error_count = 0;\nstatic int processing_value = 0;\n\nint is_valid_transition(SystemState from, SystemState to) {\n    switch (from) {\n        case STATE_IDLE:\n            return (to == STATE_PROCESSING);\n        case STATE_PROCESSING:\n            return (to == STATE_WAITING || to == STATE_ERROR || to == STATE_COMPLETE);\n        case STATE_WAITING:\n            return (to == STATE_PROCESSING || to == STATE_ERROR);\n        case STATE_ERROR:\n            return (to == STATE_IDLE || to == STATE_PROCESSING);\n        case STATE_COMPLETE:\n            return (to == STATE_IDLE);\n        default:\n            return 0;\n    }\n}\n\nint transition_to_state(SystemState new_state) {\n    if (!is_valid_transition(current_state, new_state)) {\n        error_count++;\n        current_state = STATE_ERROR;\n        return 0;\n    }\n    \n    current_state = new_state;\n    transition_count++;\n    return 1;\n}\n\nint process_input(int input) {\n    switch (current_state) {\n        case STATE_IDLE:\n            if (input > 0) {\n                processing_value = input;\n                return transition_to_state(STATE_PROCESSING);\n            }\n            break;\n            \n        case STATE_PROCESSING:\n            processing_value += input;\n            if (processing_value > 100) {\n                return transition_to_state(STATE_COMPLETE);\n            } else if (processing_value < 0) {\n                return transition_to_state(STATE_ERROR);\n            } else {\n                return transition_to_state(STATE_WAITING);\n            }\n            break;\n            \n        case STATE_WAITING:\n            if (input == 0) {\n                return transition_to_state(STATE_PROCESSING);\n            }\n            break;\n            \n        case STATE_ERROR:\n            if (input == 999) {  // Reset signal\n                processing_value = 0;\n                return transition_to_state(STATE_IDLE);\n            }\n            break;\n            \n        case STATE_COMPLETE:\n            processing_value = 0;\n            return transition_to_state(STATE_IDLE);\n            \n        default:\n            return 0;\n    }\n    \n    return 1;\n}\n\nint test_state_machine() {\n    // Reset state\n    current_state = STATE_IDLE;\n    transition_count = 0;\n    error_count = 0;\n    processing_value = 0;\n    \n    // Process input sequence\n    int inputs[] = {10, 20, 0, 30, 50};\n    \n    for (int i = 0; i < 5; i++) {\n        process_input(inputs[i]);\n    }\n    \n    return transition_count;\n}\n\n// What value is returned by test_state_machine()?",
+            "answer": 6
+        }
+    },
+    {
+        "id": "MF-MIX-V035",
+        "metadata": {
+            "name": "MultiFunc-Mix-ThreadPoolSimulation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "hard",
+            "intervention": 2,
+            "variant_type": "thread_pool_simulation_mix",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation"],
+            "primary_focus": "Thread pool task scheduling simulation",
+            "analysis_complexity": "high"
+        },
+        "task": {
+            "description": "Simulate thread pool with task queuing and completion tracking. What is the final completed_tasks count?",
+            "code": "class Task:\n    def __init__(self, task_id, work_units, priority=1):\n        self.task_id = task_id\n        self.work_units = work_units\n        self.priority = priority\n        self.completed = False\n\nclass Worker:\n    def __init__(self, worker_id, capacity):\n        self.worker_id = worker_id\n        self.capacity = capacity\n        self.current_load = 0\n        self.completed_tasks = 0\n    \n    def can_accept_task(self, task):\n        return self.current_load + task.work_units <= self.capacity\n    \n    def execute_task(self, task):\n        if self.can_accept_task(task):\n            self.current_load += task.work_units\n            task.completed = True\n            self.completed_tasks += 1\n            return True\n        return False\n    \n    def finish_work(self):\n        # Simulate finishing current work\n        self.current_load = 0\n\nclass ThreadPool:\n    def __init__(self, num_workers, worker_capacity):\n        self.workers = [Worker(i, worker_capacity) for i in range(num_workers)]\n        self.task_queue = []\n        self.completed_tasks = 0\n    \n    def submit_task(self, task):\n        self.task_queue.append(task)\n    \n    def schedule_tasks(self):\n        # Sort tasks by priority (higher first)\n        self.task_queue.sort(key=lambda t: t.priority, reverse=True)\n        \n        for task in self.task_queue[:]:\n            for worker in self.workers:\n                if worker.execute_task(task):\n                    self.task_queue.remove(task)\n                    self.completed_tasks += 1\n                    break\n    \n    def process_work_cycle(self):\n        # Finish current work and schedule new tasks\n        for worker in self.workers:\n            worker.finish_work()\n        \n        self.schedule_tasks()\n        return self.completed_tasks\n\ndef test_thread_pool():\n    pool = ThreadPool(3, 10)  # 3 workers, capacity 10 each\n    \n    # Submit various tasks\n    tasks = [\n        Task(1, 5, 3),   # High priority, medium work\n        Task(2, 8, 1),   # Low priority, high work\n        Task(3, 3, 2),   # Medium priority, low work\n        Task(4, 12, 3),  # High priority, oversize (won't fit)\n        Task(5, 4, 2),   # Medium priority, low work\n        Task(6, 6, 1),   # Low priority, medium work\n        Task(7, 2, 3),   # High priority, very low work\n        Task(8, 9, 2),   # Medium priority, high work\n    ]\n    \n    for task in tasks:\n        pool.submit_task(task)\n    \n    # Process multiple work cycles\n    cycle1 = pool.process_work_cycle()\n    cycle2 = pool.process_work_cycle()\n    \n    return pool.completed_tasks\n\n# What value is returned by test_thread_pool()?",
+            "answer": 6
+        }
+    },
+    {
+        "id": "MF-MIX-V036",
+        "metadata": {
+            "name": "MultiFunc-Mix-CircuitBreakerPattern",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "circuit_breaker_pattern_mix",
+            "mixed_mechanisms": ["Call Chain", "State Propagation", "Side Effect"],
+            "primary_focus": "Circuit breaker pattern with failure tracking",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Implement circuit breaker pattern with state transitions and failure counting. What is the final successful_calls count?",
+            "code": "from enum import Enum\nimport time\n\nclass CircuitState(Enum):\n    CLOSED = 1\n    OPEN = 2\n    HALF_OPEN = 3\n\nclass CircuitBreaker:\n    def __init__(self, failure_threshold=3, recovery_timeout=5, success_threshold=2):\n        self.failure_threshold = failure_threshold\n        self.recovery_timeout = recovery_timeout\n        self.success_threshold = success_threshold\n        \n        self.state = CircuitState.CLOSED\n        self.failure_count = 0\n        self.success_count = 0\n        self.last_failure_time = 0\n        \n        self.total_calls = 0\n        self.successful_calls = 0\n        self.failed_calls = 0\n        self.rejected_calls = 0\n    \n    def call(self, operation, *args):\n        self.total_calls += 1\n        \n        if self.state == CircuitState.OPEN:\n            if time.time() - self.last_failure_time < self.recovery_timeout:\n                self.rejected_calls += 1\n                raise Exception(\"Circuit breaker is OPEN\")\n            else:\n                self.state = CircuitState.HALF_OPEN\n                self.success_count = 0\n        \n        try:\n            result = operation(*args)\n            self.on_success()\n            return result\n        except Exception as e:\n            self.on_failure()\n            raise e\n    \n    def on_success(self):\n        self.successful_calls += 1\n        self.failure_count = 0\n        \n        if self.state == CircuitState.HALF_OPEN:\n            self.success_count += 1\n            if self.success_count >= self.success_threshold:\n                self.state = CircuitState.CLOSED\n    \n    def on_failure(self):\n        self.failed_calls += 1\n        self.failure_count += 1\n        self.last_failure_time = time.time()\n        \n        if self.failure_count >= self.failure_threshold:\n            self.state = CircuitState.OPEN\n\n# Simulate time for testing\ncurrent_test_time = 0\ndef mock_time():\n    return current_test_time\n\ntime.time = mock_time\n\ndef unreliable_service(value):\n    # Simulate service that fails for certain inputs\n    if value < 0:\n        raise Exception(\"Negative value error\")\n    if value > 100:\n        raise Exception(\"Value too large error\")\n    return value * 2\n\ndef test_circuit_breaker():\n    global current_test_time\n    current_test_time = 0\n    \n    cb = CircuitBreaker(failure_threshold=2, recovery_timeout=3, success_threshold=2)\n    \n    test_inputs = [\n        10,   # Success\n        20,   # Success\n        -5,   # Failure 1\n        -10,  # Failure 2 - Circuit opens\n        30,   # Rejected (circuit open)\n        40,   # Rejected (circuit open)\n    ]\n    \n    for i, input_val in enumerate(test_inputs):\n        if i == 4:  # Advance time to allow recovery\n            current_test_time += 4\n        \n        try:\n            result = cb.call(unreliable_service, input_val)\n        except Exception:\n            pass  # Ignore exceptions for testing\n    \n    # Continue testing after circuit goes to half-open\n    test_inputs_2 = [\n        25,   # Success 1 in half-open\n        35,   # Success 2 in half-open - Circuit closes\n        45,   # Success in closed\n        -15,  # Failure 1 in closed\n        55,   # Success in closed\n    ]\n    \n    for input_val in test_inputs_2:\n        try:\n            result = cb.call(unreliable_service, input_val)\n        except Exception:\n            pass\n    \n    return cb.successful_calls\n\n# What value is returned by test_circuit_breaker()?",
+            "answer": 5
+        }
+    },
+    {
+        "id": "MF-MIX-V037",
+        "metadata": {
+            "name": "MultiFunc-Mix-MemoryPoolManager",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "c",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "memory_pool_manager_mix",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "Side Effect"],
+            "primary_focus": "Memory pool management with fragmentation tracking",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Implement memory pool manager with allocation tracking and fragmentation analysis. What is the final allocated_blocks count?",
+            "code": "typedef struct Block {\n    int size;\n    int is_allocated;\n    struct Block* next;\n} Block;\n\ntypedef struct {\n    Block* head;\n    int total_size;\n    int allocated_blocks;\n    int free_blocks;\n    int fragmentation_score;\n} MemoryPool;\n\nstatic MemoryPool pool;\n\nvoid init_pool(int size) {\n    pool.head = malloc(sizeof(Block));\n    pool.head->size = size;\n    pool.head->is_allocated = 0;\n    pool.head->next = NULL;\n    pool.total_size = size;\n    pool.allocated_blocks = 0;\n    pool.free_blocks = 1;\n    pool.fragmentation_score = 0;\n}\n\nBlock* find_free_block(int size) {\n    Block* current = pool.head;\n    \n    while (current != NULL) {\n        if (!current->is_allocated && current->size >= size) {\n            return current;\n        }\n        current = current->next;\n    }\n    \n    return NULL;\n}\n\nvoid split_block(Block* block, int size) {\n    if (block->size > size) {\n        Block* new_block = malloc(sizeof(Block));\n        new_block->size = block->size - size;\n        new_block->is_allocated = 0;\n        new_block->next = block->next;\n        \n        block->size = size;\n        block->next = new_block;\n        \n        pool.free_blocks++;\n        pool.fragmentation_score++;\n    }\n}\n\nint allocate_memory(int size) {\n    Block* block = find_free_block(size);\n    \n    if (block == NULL) {\n        return 0;  // Allocation failed\n    }\n    \n    split_block(block, size);\n    block->is_allocated = 1;\n    \n    pool.allocated_blocks++;\n    pool.free_blocks--;\n    \n    return 1;  // Allocation successful\n}\n\nint deallocate_memory(int size) {\n    Block* current = pool.head;\n    \n    while (current != NULL) {\n        if (current->is_allocated && current->size == size) {\n            current->is_allocated = 0;\n            pool.allocated_blocks--;\n            pool.free_blocks++;\n            \n            // Try to merge with next block\n            if (current->next && !current->next->is_allocated) {\n                Block* next = current->next;\n                current->size += next->size;\n                current->next = next->next;\n                free(next);\n                pool.free_blocks--;\n                pool.fragmentation_score = pool.fragmentation_score > 0 ? pool.fragmentation_score - 1 : 0;\n            }\n            \n            return 1;\n        }\n        current = current->next;\n    }\n    \n    return 0;  // Deallocation failed\n}\n\nint process_allocation_sequence() {\n    init_pool(1000);\n    \n    int allocations[] = {100, 200, 150, 50, 300, 75, 125};\n    int deallocations[] = {200, 50, 100};\n    \n    // Perform allocations\n    for (int i = 0; i < 7; i++) {\n        allocate_memory(allocations[i]);\n    }\n    \n    // Perform some deallocations\n    for (int i = 0; i < 3; i++) {\n        deallocate_memory(deallocations[i]);\n    }\n    \n    // Try more allocations\n    allocate_memory(80);\n    allocate_memory(120);\n    \n    return pool.allocated_blocks;\n}\n\nint test_memory_pool() {\n    return process_allocation_sequence();\n}\n\n// What value is returned by test_memory_pool()?",
+            "answer": 6
+        }
+    },
+    {
+        "id": "MF-MIX-V038",
+        "metadata": {
+            "name": "MultiFunc-Mix-AsyncTaskProcessor",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "async_task_processor_mix",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation"],
+            "primary_focus": "Asynchronous task processing simulation",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Simulate async task processing with dependencies and completion tracking. What is the final completed_tasks count?",
+            "code": "from collections import deque\nfrom enum import Enum\n\nclass TaskState(Enum):\n    PENDING = 1\n    RUNNING = 2\n    COMPLETED = 3\n    FAILED = 4\n\nclass Task:\n    def __init__(self, task_id, processing_time, dependencies=None):\n        self.task_id = task_id\n        self.processing_time = processing_time\n        self.dependencies = dependencies or []\n        self.state = TaskState.PENDING\n        self.result = None\n        self.start_time = None\n    \n    def can_start(self, completed_tasks):\n        return all(dep_id in completed_tasks for dep_id in self.dependencies)\n    \n    def process(self, current_time):\n        if self.state == TaskState.PENDING:\n            self.state = TaskState.RUNNING\n            self.start_time = current_time\n        elif self.state == TaskState.RUNNING:\n            if current_time - self.start_time >= self.processing_time:\n                self.state = TaskState.COMPLETED\n                self.result = self.task_id * 10  # Simple result calculation\n                return True\n        return False\n\nclass AsyncProcessor:\n    def __init__(self, max_concurrent=3):\n        self.max_concurrent = max_concurrent\n        self.task_queue = deque()\n        self.running_tasks = []\n        self.completed_tasks = set()\n        self.failed_tasks = set()\n        self.current_time = 0\n        self.total_completed = 0\n    \n    def submit_task(self, task):\n        self.task_queue.append(task)\n    \n    def can_schedule_task(self, task):\n        return (len(self.running_tasks) < self.max_concurrent and \n                task.can_start(self.completed_tasks))\n    \n    def schedule_ready_tasks(self):\n        scheduled = []\n        remaining_queue = deque()\n        \n        while self.task_queue:\n            task = self.task_queue.popleft()\n            if self.can_schedule_task(task):\n                self.running_tasks.append(task)\n                scheduled.append(task)\n                if len(self.running_tasks) >= self.max_concurrent:\n                    # Put remaining tasks back\n                    remaining_queue.append(task)\n                    remaining_queue.extend(self.task_queue)\n                    break\n            else:\n                remaining_queue.append(task)\n        \n        self.task_queue = remaining_queue\n        return len(scheduled)\n    \n    def process_running_tasks(self):\n        completed_this_cycle = []\n        \n        for task in self.running_tasks[:]:\n            if task.process(self.current_time):\n                if task.state == TaskState.COMPLETED:\n                    self.completed_tasks.add(task.task_id)\n                    completed_this_cycle.append(task)\n                    self.total_completed += 1\n                elif task.state == TaskState.FAILED:\n                    self.failed_tasks.add(task.task_id)\n                    completed_this_cycle.append(task)\n        \n        # Remove completed tasks from running list\n        for task in completed_this_cycle:\n            self.running_tasks.remove(task)\n        \n        return len(completed_this_cycle)\n    \n    def run_simulation(self, max_time=100):\n        while (self.task_queue or self.running_tasks) and self.current_time < max_time:\n            self.schedule_ready_tasks()\n            self.process_running_tasks()\n            self.current_time += 1\n        \n        return self.total_completed\n\ndef test_async_processor():\n    processor = AsyncProcessor(max_concurrent=2)\n    \n    # Create tasks with dependencies\n    tasks = [\n        Task(1, 3, []),           # No dependencies\n        Task(2, 2, []),           # No dependencies  \n        Task(3, 4, [1]),          # Depends on task 1\n        Task(4, 1, [2]),          # Depends on task 2\n        Task(5, 3, [1, 2]),       # Depends on tasks 1 and 2\n        Task(6, 2, [3, 4]),       # Depends on tasks 3 and 4\n        Task(7, 1, [5]),          # Depends on task 5\n        Task(8, 2, [6, 7]),       # Depends on tasks 6 and 7\n    ]\n    \n    # Submit all tasks\n    for task in tasks:\n        processor.submit_task(task)\n    \n    # Run simulation\n    return processor.run_simulation()\n\n# What value is returned by test_async_processor()?",
+            "answer": 8
+        }
+    },
+    {
+        "id": "MF-MIX-V039",
+        "metadata": {
+            "name": "MultiFunc-Mix-LoadBalancerSimulation",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "expert",
+            "intervention": 3,
+            "variant_type": "load_balancer_simulation_mix",
+            "mixed_mechanisms": ["Call Chain", "State Propagation", "Side Effect"],
+            "primary_focus": "Load balancer with health checking and routing",
+            "analysis_complexity": "extreme"
+        },
+        "task": {
+            "description": "Simulate load balancer with server health monitoring and request routing. What is the final successful_requests count?",
+            "code": "import random\nrandom.seed(42)  # For reproducible results\n\nclass Server:\n    def __init__(self, server_id, capacity, failure_rate=0.1):\n        self.server_id = server_id\n        self.capacity = capacity\n        self.current_load = 0\n        self.is_healthy = True\n        self.failure_rate = failure_rate\n        self.total_requests = 0\n        self.successful_requests = 0\n        self.failed_requests = 0\n    \n    def can_handle_request(self):\n        return self.is_healthy and self.current_load < self.capacity\n    \n    def process_request(self, request_size):\n        if not self.can_handle_request():\n            return False\n        \n        self.total_requests += 1\n        self.current_load += request_size\n        \n        # Simulate request processing with potential failure\n        if random.random() < self.failure_rate:\n            self.failed_requests += 1\n            # High failure rate might affect server health\n            if self.failed_requests > 3:\n                self.is_healthy = False\n            return False\n        else:\n            self.successful_requests += 1\n            return True\n    \n    def complete_request(self, request_size):\n        self.current_load = max(0, self.current_load - request_size)\n    \n    def health_check(self):\n        # Server recovers if load is low and few recent failures\n        if not self.is_healthy and self.current_load == 0:\n            if self.failed_requests <= 2:\n                self.is_healthy = True\n        return self.is_healthy\n\nclass LoadBalancer:\n    def __init__(self, servers):\n        self.servers = servers\n        self.total_requests = 0\n        self.successful_requests = 0\n        self.failed_requests = 0\n        self.current_server_index = 0\n    \n    def get_next_server_round_robin(self):\n        # Round-robin with health checking\n        attempts = 0\n        while attempts < len(self.servers):\n            server = self.servers[self.current_server_index]\n            self.current_server_index = (self.current_server_index + 1) % len(self.servers)\n            \n            if server.health_check() and server.can_handle_request():\n                return server\n            \n            attempts += 1\n        \n        return None  # No available server\n    \n    def route_request(self, request_size):\n        self.total_requests += 1\n        \n        server = self.get_next_server_round_robin()\n        if server is None:\n            self.failed_requests += 1\n            return False\n        \n        success = server.process_request(request_size)\n        if success:\n            self.successful_requests += 1\n            # Simulate request completion after processing\n            server.complete_request(request_size)\n        else:\n            self.failed_requests += 1\n        \n        return success\n    \n    def process_request_batch(self, requests):\n        for request_size in requests:\n            self.route_request(request_size)\n        \n        return self.successful_requests\n    \n    def run_health_checks(self):\n        healthy_count = 0\n        for server in self.servers:\n            if server.health_check():\n                healthy_count += 1\n        return healthy_count\n\ndef test_load_balancer():\n    # Create servers with different capacities and failure rates\n    servers = [\n        Server(1, 10, 0.1),  # High capacity, low failure rate\n        Server(2, 8, 0.15),  # Medium capacity, medium failure rate\n        Server(3, 6, 0.05),  # Lower capacity, very low failure rate\n        Server(4, 12, 0.2),  # Highest capacity, high failure rate\n    ]\n    \n    lb = LoadBalancer(servers)\n    \n    # Simulate request patterns\n    request_batches = [\n        [2, 3, 1, 4, 2],      # Light load\n        [5, 6, 4, 7, 3, 2],   # Medium load\n        [8, 9, 6, 5, 7],      # Heavy load\n        [3, 2, 1, 4, 2, 3],   # Mixed load\n        [10, 11, 9, 8],       # Very heavy load (some failures expected)\n    ]\n    \n    for batch in request_batches:\n        lb.process_request_batch(batch)\n        lb.run_health_checks()  # Periodic health checking\n    \n    return lb.successful_requests\n\n# What value is returned by test_load_balancer()?",
+            "answer": 18
+        }
+    },
+    {
+        "id": "MF-MIX-V040",
+        "metadata": {
+            "name": "MultiFunc-Mix-DistributedConsensus",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "master",
+            "intervention": 4,
+            "variant_type": "distributed_consensus_mix",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation", "Side Effect"],
+            "primary_focus": "Distributed consensus algorithm simulation",
+            "analysis_complexity": "ultimate"
+        },
+        "task": {
+            "description": "Simulate simplified distributed consensus algorithm with leader election and state replication. What is the final committed_entries count?",
+            "code": "import random\nrandom.seed(42)\n\nclass LogEntry:\n    def __init__(self, term, index, data):\n        self.term = term\n        self.index = index\n        self.data = data\n        self.committed = False\n\nclass Node:\n    def __init__(self, node_id, cluster_size):\n        self.node_id = node_id\n        self.cluster_size = cluster_size\n        self.current_term = 0\n        self.voted_for = None\n        self.log = []\n        self.commit_index = 0\n        self.is_leader = False\n        self.vote_count = 0\n        self.heartbeat_responses = 0\n        \n    def start_election(self):\n        self.current_term += 1\n        self.voted_for = self.node_id\n        self.vote_count = 1  # Vote for self\n        self.is_leader = False\n        return self.current_term\n    \n    def request_vote(self, candidate_term, candidate_id):\n        if candidate_term > self.current_term:\n            self.current_term = candidate_term\n            self.voted_for = None\n        \n        if (self.voted_for is None or self.voted_for == candidate_id) and candidate_term >= self.current_term:\n            self.voted_for = candidate_id\n            return True\n        return False\n    \n    def receive_vote(self):\n        self.vote_count += 1\n        if self.vote_count > self.cluster_size // 2:\n            self.is_leader = True\n            return True\n        return False\n    \n    def append_entry(self, term, data):\n        if self.is_leader:\n            entry = LogEntry(term, len(self.log), data)\n            self.log.append(entry)\n            return True\n        return False\n    \n    def replicate_entry(self, entry):\n        # Follower receives entry from leader\n        if len(self.log) == entry.index:\n            self.log.append(entry)\n            return True\n        return False\n    \n    def commit_entries(self, leader_commit_index):\n        old_commit_index = self.commit_index\n        self.commit_index = min(leader_commit_index, len(self.log) - 1)\n        \n        committed_count = 0\n        for i in range(old_commit_index + 1, self.commit_index + 1):\n            if i < len(self.log):\n                self.log[i].committed = True\n                committed_count += 1\n        \n        return committed_count\n\nclass DistributedSystem:\n    def __init__(self, num_nodes):\n        self.nodes = [Node(i, num_nodes) for i in range(num_nodes)]\n        self.num_nodes = num_nodes\n        self.current_leader = None\n        self.total_committed_entries = 0\n    \n    def simulate_election(self):\n        # Random node starts election\n        candidate_id = random.randint(0, self.num_nodes - 1)\n        candidate = self.nodes[candidate_id]\n        \n        term = candidate.start_election()\n        \n        # Other nodes vote\n        for node in self.nodes:\n            if node.node_id != candidate_id:\n                if node.request_vote(term, candidate_id):\n                    candidate.receive_vote()\n        \n        if candidate.is_leader:\n            self.current_leader = candidate_id\n            # Reset other nodes' leader status\n            for node in self.nodes:\n                if node.node_id != candidate_id:\n                    node.is_leader = False\n                    node.current_term = term\n            return True\n        \n        return False\n    \n    def replicate_log_entry(self, data):\n        if self.current_leader is None:\n            return False\n        \n        leader = self.nodes[self.current_leader]\n        \n        # Leader appends entry\n        if not leader.append_entry(leader.current_term, data):\n            return False\n        \n        entry = leader.log[-1]\n        replication_count = 1  # Leader has the entry\n        \n        # Replicate to followers\n        for node in self.nodes:\n            if node.node_id != self.current_leader:\n                if node.replicate_entry(entry):\n                    replication_count += 1\n        \n        # Commit if majority has the entry\n        if replication_count > self.num_nodes // 2:\n            # Update commit index for all nodes\n            for node in self.nodes:\n                committed = node.commit_entries(entry.index)\n                if node.node_id == self.current_leader:\n                    self.total_committed_entries += committed\n            return True\n        \n        return False\n    \n    def simulate_consensus_operations(self):\n        operations = [\n            \"SET key1 value1\",\n            \"SET key2 value2\",\n            \"DEL key1\",\n            \"SET key3 value3\",\n            \"SET key4 value4\",\n            \"DEL key2\",\n            \"SET key5 value5\",\n        ]\n        \n        # Start with an election\n        election_success = False\n        attempts = 0\n        while not election_success and attempts < 3:\n            election_success = self.simulate_election()\n            attempts += 1\n        \n        if not election_success:\n            return 0\n        \n        # Process operations\n        successful_operations = 0\n        for operation in operations:\n            if self.replicate_log_entry(operation):\n                successful_operations += 1\n            \n            # Simulate occasional leader failure\n            if random.random() < 0.15:  # 15% chance of leader failure\n                self.current_leader = None\n                # Try to elect new leader\n                self.simulate_election()\n        \n        return self.total_committed_entries\n\ndef test_distributed_consensus():\n    system = DistributedSystem(5)  # 5-node cluster\n    return system.simulate_consensus_operations()\n\n# What value is returned by test_distributed_consensus()?",
+            "answer": 5
+        }
+    },
+    {
+        "id": "MF-MIX-V041",
+        "metadata": {
+            "name": "MultiFunc-Mix-StreamProcessingPipeline",
+            "category": "MultiFunc-Level",
+            "subcategory": "Mix",
+            "type": "variant",
+            "source": "Generated",
+            "language": "python",
+            "difficulty": "master",
+            "intervention": 4,
+            "variant_type": "stream_processing_pipeline_mix",
+            "mixed_mechanisms": ["Call Chain", "Parameter Passing", "State Propagation", "Side Effect"],
+            "primary_focus": "Stream processing pipeline with windowing and aggregation",
+            "analysis_complexity": "ultimate"
+        },
+        "task": {
+            "description": "Implement stream processing pipeline with windowed aggregations and watermark handling. What is the final processed_windows count?",
+            "code": "from collections import defaultdict, deque\nimport heapq\n\nclass StreamEvent:\n    def __init__(self, timestamp, key, value, event_type='data'):\n        self.timestamp = timestamp\n        self.key = key\n        self.value = value\n        self.event_type = event_type\n\nclass Window:\n    def __init__(self, start_time, end_time):\n        self.start_time = start_time\n        self.end_time = end_time\n        self.events = []\n        self.aggregated_value = 0\n        self.is_closed = False\n    \n    def add_event(self, event):\n        if self.start_time <= event.timestamp < self.end_time:\n            self.events.append(event)\n            return True\n        return False\n    \n    def compute_aggregation(self):\n        if not self.is_closed:\n            self.aggregated_value = sum(event.value for event in self.events)\n            self.is_closed = True\n        return self.aggregated_value\n\nclass StreamProcessor:\n    def __init__(self, window_size=10, watermark_delay=5):\n        self.window_size = window_size\n        self.watermark_delay = watermark_delay\n        self.windows = defaultdict(dict)  # key -> {window_start: Window}\n        self.current_watermark = 0\n        self.event_buffer = []  # Min-heap for out-of-order events\n        self.processed_windows = 0\n        self.total_events_processed = 0\n        self.late_events_dropped = 0\n    \n    def create_window(self, key, event_timestamp):\n        window_start = (event_timestamp // self.window_size) * self.window_size\n        window_end = window_start + self.window_size\n        \n        if window_start not in self.windows[key]:\n            self.windows[key][window_start] = Window(window_start, window_end)\n        \n        return self.windows[key][window_start]\n    \n    def update_watermark(self, event_timestamp):\n        # Watermark is the maximum timestamp minus delay\n        new_watermark = event_timestamp - self.watermark_delay\n        if new_watermark > self.current_watermark:\n            self.current_watermark = new_watermark\n            self.close_expired_windows()\n    \n    def close_expired_windows(self):\n        for key in list(self.windows.keys()):\n            for window_start in list(self.windows[key].keys()):\n                window = self.windows[key][window_start]\n                \n                # Close windows that end before the watermark\n                if window.end_time <= self.current_watermark and not window.is_closed:\n                    window.compute_aggregation()\n                    self.processed_windows += 1\n    \n    def process_event(self, event):\n        # Check if event is too late (before watermark)\n        if event.timestamp < self.current_watermark:\n            self.late_events_dropped += 1\n            return False\n        \n        # Add to appropriate window\n        window = self.create_window(event.key, event.timestamp)\n        success = window.add_event(event)\n        \n        if success:\n            self.total_events_processed += 1\n            # Update watermark based on this event\n            self.update_watermark(event.timestamp)\n        \n        return success\n    \n    def process_event_stream(self, events):\n        # Sort events by timestamp to simulate ordered processing\n        # But introduce some out-of-order events\n        processed_events = []\n        \n        for i, event in enumerate(events):\n            # Occasionally delay events to simulate out-of-order arrival\n            if i > 0 and i % 7 == 0:  # Every 7th event arrives late\n                # Insert delayed event into buffer\n                heapq.heappush(self.event_buffer, (event.timestamp, event))\n            else:\n                processed_events.append(event)\n                \n                # Process any buffered events that should be processed now\n                while (self.event_buffer and \n                       self.event_buffer[0][1].timestamp <= event.timestamp + self.watermark_delay):\n                    _, buffered_event = heapq.heappop(self.event_buffer)\n                    self.process_event(buffered_event)\n                \n                # Process current event\n                self.process_event(event)\n        \n        # Process remaining buffered events\n        while self.event_buffer:\n            _, buffered_event = heapq.heappop(self.event_buffer)\n            self.process_event(buffered_event)\n        \n        # Force close any remaining windows\n        self.current_watermark = float('inf')\n        self.close_expired_windows()\n        \n        return self.processed_windows\n    \n    def get_aggregated_results(self):\n        results = {}\n        for key in self.windows:\n            results[key] = []\n            for window_start in sorted(self.windows[key].keys()):\n                window = self.windows[key][window_start]\n                if window.is_closed:\n                    results[key].append({\n                        'start': window.start_time,\n                        'end': window.end_time,\n                        'value': window.aggregated_value\n                    })\n        return results\n\ndef test_stream_processing():\n    processor = StreamProcessor(window_size=10, watermark_delay=3)\n    \n    # Create stream of events with different keys and timestamps\n    events = [\n        StreamEvent(5, 'user1', 10),\n        StreamEvent(7, 'user2', 15),\n        StreamEvent(12, 'user1', 20),\n        StreamEvent(15, 'user2', 25),\n        StreamEvent(18, 'user1', 30),\n        StreamEvent(22, 'user2', 35),\n        StreamEvent(25, 'user1', 40),\n        StreamEvent(28, 'user2', 45),\n        StreamEvent(32, 'user1', 50),\n        StreamEvent(35, 'user2', 55),\n        StreamEvent(38, 'user1', 60),\n        StreamEvent(42, 'user2', 65),\n        StreamEvent(45, 'user1', 70),\n        StreamEvent(48, 'user2', 75),\n        StreamEvent(52, 'user1', 80),\n    ]\n    \n    result = processor.process_event_stream(events)\n    return result\n\n# What value is returned by test_stream_processing()?",
+            "answer": 10
         }
     }
 ]
