@@ -16417,7 +16417,7 @@ TreecEva
     {
         "id": "BL-MIX-S001-V001",
         "metadata": {
-            "name": "线性初始化+条件验证混合",
+            "name": "Linear Initialization + Conditional Validation Mixed",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16428,18 +16428,18 @@ TreecEva
             "variant_type": "Linear+Conditional",
             "mixed_blocks": ["Linear", "Conditional"],
             "primary_pattern": "Linear",
-            "complexity_factors": ["顺序执行", "条件分支"]
+            "complexity_factors": ["sequential execution", "conditional branching"]
         },
         "task": {
-            "description": "给定以下线性初始化后接条件验证的代码块，当input为25时，result的最终值是多少？",
-            "code": "int input = 25;\nint result = 0;\nint threshold = 20;\nint multiplier = 3;\n\n// 线性初始化\nresult = input * multiplier;\n\n// 条件验证\nif (result > threshold) {\n    result = result + 10;\n} else {\n    result = result - 5;\n}\n\nprintf(\"Result: %d\\n\", result);",
+            "description": "Given the following code block containing linear initialization followed by conditional validation, what is the final value of `result` when `input` is 25?",
+            "code": "int input = 25;\nint result = 0;\nint threshold = 20;\nint multiplier = 3;\n\n// Linear initialization\nresult = input * multiplier;\n\n// Conditional validation\nif (result > threshold) {\n    result = result + 10;\n} else {\n    result = result - 5;\n}\n\nprintf(\"Result: %d\\n\", result);",
             "answer": 85
         }
     },
     {
         "id": "BL-MIX-S001-V002",
         "metadata": {
-            "name": "条件分支内线性计算",
+            "name": "Linear Computation within Conditional Branches",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16450,18 +16450,18 @@ TreecEva
             "variant_type": "Conditional+Linear",
             "mixed_blocks": ["Conditional", "Linear"],
             "primary_pattern": "Conditional",
-            "complexity_factors": ["条件判断", "线性计算"]
+            "complexity_factors": ["conditional logic", "linear computation"]
         },
         "task": {
-            "description": "给定以下条件分支内包含线性计算的代码块，当score为88时，final_grade的最终值是多少？",
-            "code": "score = 88\nbonus_points = 5\npenalty = 2\n\nif score >= 85:\n    # 线性计算序列\n    adjusted_score = score + bonus_points\n    final_grade = adjusted_score * 1.1\n    final_grade = int(final_grade)\nelse:\n    adjusted_score = score - penalty\n    final_grade = adjusted_score * 0.9\n    final_grade = int(final_grade)\n\nprint(f\"Final grade: {final_grade}\")",
+            "description": "Given the following code block containing linear computation within conditional branches, what is the final value of `final_grade` when `score` is 88?",
+            "code": "score = 88\nbonus_points = 5\npenalty = 2\n\nif score >= 85:\n    # Linear computation sequence\n    adjusted_score = score + bonus_points\n    final_grade = adjusted_score * 1.1\n    final_grade = int(final_grade)\nelse:\n    adjusted_score = score - penalty\n    final_grade = adjusted_score * 0.9\n    final_grade = int(final_grade)\n\nprint(f\"Final grade: {final_grade}\")",
             "answer": 102
         }
     },
     {
         "id": "BL-MIX-S001-V003",
         "metadata": {
-            "name": "循环前线性准备+循环处理",
+            "name": "Linear Preparation + Loop Processing",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16472,18 +16472,18 @@ TreecEva
             "variant_type": "Linear+Iterative",
             "mixed_blocks": ["Linear", "Iterative"],
             "primary_pattern": "Iterative",
-            "complexity_factors": ["线性初始化", "循环累积"]
+            "complexity_factors": ["linear initialization", "loop accumulation"]
         },
         "task": {
-            "description": "给定以下循环前线性准备后接循环处理的代码块，sum的最终值是多少？",
-            "code": "// 线性准备阶段\nint base = 10;\nint increment = 3;\nint limit = 5;\nint sum = base;\n\n// 循环处理阶段\nfor (int i = 1; i <= limit; i++) {\n    sum += i * increment;\n}\n\nprintf(\"Sum: %d\\n\", sum);",
+            "description": "Given the following code block containing linear preparation followed by loop processing, what is the final value of `sum`?",
+            "code": "// Linear preparation phase\nint base = 10;\nint increment = 3;\nint limit = 5;\nint sum = base;\n\n// Loop processing phase\nfor (int i = 1; i <= limit; i++) {\n    sum += i * increment;\n}\n\nprintf(\"Sum: %d\\n\", sum);",
             "answer": 55
         }
     },
     {
         "id": "BL-MIX-S001-V004",
         "metadata": {
-            "name": "循环内条件控制",
+            "name": "Conditional Control within Loop",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16494,10 +16494,10 @@ TreecEva
             "variant_type": "Iterative+Conditional",
             "mixed_blocks": ["Iterative", "Conditional"],
             "primary_pattern": "Iterative",
-            "complexity_factors": ["循环控制", "条件分支"]
+            "complexity_factors": ["loop control", "conditional branching"]
         },
         "task": {
-            "description": "给定以下循环内包含条件控制的代码块，count的最终值是多少？",
+            "description": "Given the following code block containing conditional control within a loop, what is the final value of `count`?",
             "code": "numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\ncount = 0\ntotal = 0\n\nfor num in numbers:\n    if num % 2 == 0:\n        total += num\n        count += 1\n    else:\n        total -= num\n        \nprint(f\"Count: {count}, Total: {total}\")",
             "answer": 5
         }
@@ -16505,7 +16505,7 @@ TreecEva
     {
         "id": "BL-MIX-S001-V005",
         "metadata": {
-            "name": "三重混合：初始化+条件+循环",
+            "name": "Triple Mixed: Initialization + Conditional + Loop",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16516,18 +16516,18 @@ TreecEva
             "variant_type": "Linear+Conditional+Iterative",
             "mixed_blocks": ["Linear", "Conditional", "Iterative"],
             "primary_pattern": "Mixed",
-            "complexity_factors": ["线性初始化", "条件验证", "循环处理"]
+            "complexity_factors": ["linear initialization", "conditional validation", "loop processing"]
         },
         "task": {
-            "description": "给定以下包含线性初始化、条件验证和循环处理的三重混合代码块，当input为7时，result的最终值是多少？",
-            "code": "int input = 7;\nint result = 0;\nint base = 5;\nint factor = 2;\n\n// 线性初始化\nresult = input + base;\n\n// 条件验证\nif (result > 10) {\n    // 循环处理\n    for (int i = 1; i <= 3; i++) {\n        result *= factor;\n    }\n} else {\n    result = result * 10;\n}\n\nprintf(\"Result: %d\\n\", result);",
+            "description": "Given the following triple mixed code block containing linear initialization, conditional validation, and loop processing, what is the final value of `result` when `input` is 7?",
+            "code": "int input = 7;\nint result = 0;\nint base = 5;\nint factor = 2;\n\n// Linear initialization\nresult = input + base;\n\n// Conditional validation\nif (result > 10) {\n    // Loop processing\n    for (int i = 1; i <= 3; i++) {\n        result *= factor;\n    }\n} else {\n    result = result * 10;\n}\n\nprintf(\"Result: %d\\n\", result);",
             "answer": 96
         }
     },
     {
         "id": "BL-MIX-S001-V006",
         "metadata": {
-            "name": "条件依赖的线性计算链",
+            "name": "Conditional Dependent Linear Computation Chain",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16538,18 +16538,18 @@ TreecEva
             "variant_type": "Conditional+Linear",
             "mixed_blocks": ["Conditional", "Linear"],
             "primary_pattern": "Linear",
-            "complexity_factors": ["条件选择", "线性依赖"]
+            "complexity_factors": ["conditional selection", "linear dependency"]
         },
         "task": {
-            "description": "给定以下条件依赖的线性计算链，当x为15时，final_value的最终值是多少？",
-            "code": "x = 15\nthreshold = 12\n\n# 条件选择基础值\nif x > threshold:\n    base_value = x * 2\nelse:\n    base_value = x + 10\n\n# 线性计算链\nstep1 = base_value + 5\nstep2 = step1 * 1.5\nfinal_value = int(step2 - 3)\n\nprint(f\"Final value: {final_value}\")",
+            "description": "Given the following conditional dependent linear computation chain, what is the final value of `final_value` when `x` is 15?",
+            "code": "x = 15\nthreshold = 12\n\n# Conditional base value selection\nif x > threshold:\n    base_value = x * 2\nelse:\n    base_value = x + 10\n\n# Linear computation chain\nstep1 = base_value + 5\nstep2 = step1 * 1.5\nfinal_value = int(step2 - 3)\n\nprint(f\"Final value: {final_value}\")",
             "answer": 49
         }
     },
     {
         "id": "BL-MIX-S001-V007",
         "metadata": {
-            "name": "嵌套循环与条件过滤",
+            "name": "Nested Loops with Conditional Filtering",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16560,10 +16560,10 @@ TreecEva
             "variant_type": "Iterative+Conditional",
             "mixed_blocks": ["Iterative", "Conditional"],
             "primary_pattern": "Iterative",
-            "complexity_factors": ["嵌套循环", "条件过滤"]
+            "complexity_factors": ["nested loops", "conditional filtering"]
         },
         "task": {
-            "description": "给定以下嵌套循环与条件过滤的代码块，valid_count的最终值是多少？",
+            "description": "Given the following code block with nested loops and conditional filtering, what is the final value of `valid_count`?",
             "code": "int matrix[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};\nint valid_count = 0;\nint threshold = 5;\n\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (matrix[i][j] > threshold) {\n            valid_count++;\n        }\n    }\n}\n\nprintf(\"Valid count: %d\\n\", valid_count);",
             "answer": 4
         }
@@ -16571,7 +16571,7 @@ TreecEva
     {
         "id": "BL-MIX-S001-V008",
         "metadata": {
-            "name": "循环累积后线性变换",
+            "name": "Loop Accumulation with Linear Transformation",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16582,18 +16582,18 @@ TreecEva
             "variant_type": "Iterative+Linear",
             "mixed_blocks": ["Iterative", "Linear"],
             "primary_pattern": "Iterative",
-            "complexity_factors": ["循环累积", "线性变换"]
+            "complexity_factors": ["loop accumulation", "linear transformation"]
         },
         "task": {
-            "description": "给定以下循环累积后线性变换的代码块，final_result的最终值是多少？",
-            "code": "data = [2, 4, 6, 8, 10]\naccumulator = 0\n\n# 循环累积\nfor value in data:\n    accumulator += value * 2\n\n# 线性变换\nintermediate = accumulator / 2\nbonus = 15\nfinal_result = int(intermediate + bonus)\n\nprint(f\"Final result: {final_result}\")",
+            "description": "Given the following code block with loop accumulation followed by linear transformation, what is the final value of `final_result`?",
+            "code": "data = [2, 4, 6, 8, 10]\naccumulator = 0\n\n# Loop accumulation\nfor value in data:\n    accumulator += value * 2\n\n# Linear transformation\nintermediate = accumulator / 2\nbonus = 15\nfinal_result = int(intermediate + bonus)\n\nprint(f\"Final result: {final_result}\")",
             "answer": 45
         }
     },
     {
         "id": "BL-MIX-S001-V009",
         "metadata": {
-            "name": "多条件分支线性处理",
+            "name": "Multi-Branch Linear Processing",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16604,10 +16604,10 @@ TreecEva
             "variant_type": "Conditional+Linear",
             "mixed_blocks": ["Conditional", "Linear"],
             "primary_pattern": "Conditional",
-            "complexity_factors": ["多路分支", "线性处理"]
+            "complexity_factors": ["multi-way branching", "linear processing"]
         },
         "task": {
-            "description": "给定以下多条件分支线性处理的代码块，当grade为78时，final_score的最终值是多少？",
+            "description": "Given the following multi-branch linear processing code block, what is the final value of `final_score` when `grade` is 78?",
             "code": "int grade = 78;\nint final_score = 0;\nint bonus = 0;\nint penalty = 0;\n\nif (grade >= 90) {\n    bonus = 20;\n    penalty = 0;\n    final_score = grade + bonus;\n} else if (grade >= 80) {\n    bonus = 10;\n    penalty = 2;\n    final_score = grade + bonus - penalty;\n} else if (grade >= 70) {\n    bonus = 5;\n    penalty = 5;\n    final_score = grade + bonus - penalty;\n} else {\n    bonus = 0;\n    penalty = 10;\n    final_score = grade - penalty;\n}\n\nprintf(\"Final score: %d\\n\", final_score);",
             "answer": 78
         }
@@ -16615,7 +16615,7 @@ TreecEva
     {
         "id": "BL-MIX-S001-V010",
         "metadata": {
-            "name": "条件控制循环终止",
+            "name": "Conditional Loop Termination Control",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16626,10 +16626,10 @@ TreecEva
             "variant_type": "Conditional+Iterative",
             "mixed_blocks": ["Conditional", "Iterative"],
             "primary_pattern": "Iterative",
-            "complexity_factors": ["条件终止", "循环控制"]
+            "complexity_factors": ["conditional termination", "loop control"]
         },
         "task": {
-            "description": "给定以下条件控制循环终止的代码块，iterations的最终值是多少？",
+            "description": "Given the following code block with conditional loop termination control, what is the final value of `iterations`?",
             "code": "int value = 100;\nint iterations = 0;\nint threshold = 10;\n\nwhile (value > threshold) {\n    iterations++;\n    value = value / 2;\n    \n    if (iterations >= 5) {\n        break;\n    }\n}\n\nprintf(\"Iterations: %d, Final value: %d\\n\", iterations, value);",
             "answer": 4
         }
@@ -16637,7 +16637,7 @@ TreecEva
     {
         "id": "BL-MIX-S001-V011",
         "metadata": {
-            "name": "线性预处理+复杂循环",
+            "name": "Linear Preprocessing + Complex Loop",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16648,18 +16648,18 @@ TreecEva
             "variant_type": "Linear+Iterative",
             "mixed_blocks": ["Linear", "Iterative"],
             "primary_pattern": "Iterative",
-            "complexity_factors": ["线性预处理", "复杂循环"]
+            "complexity_factors": ["linear preprocessing", "complex loop"]
         },
         "task": {
-            "description": "给定以下线性预处理+复杂循环的代码块，processed_count的最终值是多少？",
-            "code": "# 线性预处理\nraw_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nfilter_threshold = 5\nmultiplier = 2\nadjustment = 3\n\n# 复杂循环处理\nprocessed_count = 0\nsum_processed = 0\n\nfor item in raw_data:\n    if item > filter_threshold:\n        processed_value = item * multiplier + adjustment\n        sum_processed += processed_value\n        processed_count += 1\n\nprint(f\"Processed count: {processed_count}\")",
+            "description": "Given the following code block with linear preprocessing and complex loop, what is the final value of `processed_count`?",
+            "code": "# Linear preprocessing\nraw_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nfilter_threshold = 5\nmultiplier = 2\nadjustment = 3\n\n# Complex loop processing\nprocessed_count = 0\nsum_processed = 0\n\nfor item in raw_data:\n    if item > filter_threshold:\n        processed_value = item * multiplier + adjustment\n        sum_processed += processed_value\n        processed_count += 1\n\nprint(f\"Processed count: {processed_count}\")",
             "answer": 5
         }
     },
     {
         "id": "BL-MIX-S001-V012",
         "metadata": {
-            "name": "递归调用内条件判断",
+            "name": "Recursive Call with Conditional Logic",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16670,18 +16670,18 @@ TreecEva
             "variant_type": "Iterative+Conditional",
             "mixed_blocks": ["Iterative", "Conditional"],
             "primary_pattern": "Iterative",
-            "complexity_factors": ["递归调用", "条件判断"]
+            "complexity_factors": ["recursive calls", "conditional logic"]
         },
         "task": {
-            "description": "给定以下递归调用内条件判断的代码块，fibonacci(6)的返回值是多少？",
-            "code": "int fibonacci(int n) {\n    // 基础条件\n    if (n <= 1) {\n        return n;\n    }\n    \n    // 条件优化\n    if (n == 2) {\n        return 1;\n    }\n    \n    // 递归调用\n    return fibonacci(n - 1) + fibonacci(n - 2);\n}\n\nint result = fibonacci(6);\nprintf(\"Fibonacci(6): %d\\n\", result);",
+            "description": "Given the following code block with recursive calls and conditional logic, what is the return value of `fibonacci(6)`?",
+            "code": "int fibonacci(int n) {\n    // Base conditions\n    if (n <= 1) {\n        return n;\n    }\n    \n    // Conditional optimization\n    if (n == 2) {\n        return 1;\n    }\n    \n    // Recursive calls\n    return fibonacci(n - 1) + fibonacci(n - 2);\n}\n\nint result = fibonacci(6);\nprintf(\"Fibonacci(6): %d\\n\", result);",
             "answer": 8
         }
     },
     {
         "id": "BL-MIX-S001-V013",
         "metadata": {
-            "name": "交替线性与条件处理",
+            "name": "Alternating Linear and Conditional Processing",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16692,18 +16692,18 @@ TreecEva
             "variant_type": "Linear+Conditional",
             "mixed_blocks": ["Linear", "Conditional"],
             "primary_pattern": "Mixed",
-            "complexity_factors": ["交替模式", "状态传递"]
+            "complexity_factors": ["alternating patterns", "state transfer"]
         },
         "task": {
-            "description": "给定以下交替线性与条件处理的代码块，当input为12时，result的最终值是多少？",
-            "code": "input = 12\nresult = input\n\n# 第一次线性处理\nresult = result * 2\n\n# 第一次条件处理\nif result > 20:\n    result = result - 5\nelse:\n    result = result + 3\n\n# 第二次线性处理\nresult = result + 10\n\n# 第二次条件处理\nif result % 2 == 0:\n    result = result / 2\nelse:\n    result = result * 3\n\nprint(f\"Result: {result}\")",
+            "description": "Given the following code block with alternating linear and conditional processing, what is the final value of `result` when `input` is 12?",
+            "code": "input = 12\nresult = input\n\n# First linear processing\nresult = result * 2\n\n# First conditional processing\nif result > 20:\n    result = result - 5\nelse:\n    result = result + 3\n\n# Second linear processing\nresult = result + 10\n\n# Second conditional processing\nif result % 2 == 0:\n    result = result / 2\nelse:\n    result = result * 3\n\nprint(f\"Result: {result}\")",
             "answer": 17.0
         }
     },
     {
         "id": "BL-MIX-S001-V014",
         "metadata": {
-            "name": "循环内嵌套条件与线性",
+            "name": "Loop with Nested Conditionals and Linear Operations",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16714,18 +16714,18 @@ TreecEva
             "variant_type": "Iterative+Conditional+Linear",
             "mixed_blocks": ["Iterative", "Conditional", "Linear"],
             "primary_pattern": "Iterative",
-            "complexity_factors": ["循环嵌套", "条件分支", "线性计算"]
+            "complexity_factors": ["nested loops", "conditional branches", "linear computation"]
         },
         "task": {
-            "description": "给定以下循环内嵌套条件与线性的代码块，final_sum的最终值是多少？",
-            "code": "int arr[] = {2, 5, 8, 3, 9, 1, 7, 4};\nint size = 8;\nint final_sum = 0;\nint even_multiplier = 3;\nint odd_multiplier = 2;\n\nfor (int i = 0; i < size; i++) {\n    int current = arr[i];\n    \n    // 条件判断\n    if (current % 2 == 0) {\n        // 线性计算（偶数）\n        current = current * even_multiplier;\n        current = current + 1;\n    } else {\n        // 线性计算（奇数）\n        current = current * odd_multiplier;\n        current = current - 1;\n    }\n    \n    final_sum += current;\n}\n\nprintf(\"Final sum: %d\\n\", final_sum);",
+            "description": "Given the following code block with loop containing nested conditionals and linear operations, what is the final value of `final_sum`?",
+            "code": "int arr[] = {2, 5, 8, 3, 9, 1, 7, 4};\nint size = 8;\nint final_sum = 0;\nint even_multiplier = 3;\nint odd_multiplier = 2;\n\nfor (int i = 0; i < size; i++) {\n    int current = arr[i];\n    \n    // Conditional logic\n    if (current % 2 == 0) {\n        // Linear computation (even)\n        current = current * even_multiplier;\n        current = current + 1;\n    } else {\n        // Linear computation (odd)\n        current = current * odd_multiplier;\n        current = current - 1;\n    }\n    \n    final_sum += current;\n}\n\nprintf(\"Final sum: %d\\n\", final_sum);",
             "answer": 119
         }
     },
     {
         "id": "BL-MIX-S001-V015",
         "metadata": {
-            "name": "分支选择不同循环",
+            "name": "Branch Selection for Different Loops",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16736,18 +16736,18 @@ TreecEva
             "variant_type": "Conditional+Iterative",
             "mixed_blocks": ["Conditional", "Iterative"],
             "primary_pattern": "Conditional",
-            "complexity_factors": ["分支选择", "不同循环"]
+            "complexity_factors": ["branch selection", "different loops"]
         },
         "task": {
-            "description": "给定以下分支选择不同循环的代码块，当mode为'fast'时，result的最终值是多少？",
-            "code": "mode = 'fast'\ndata = [1, 2, 3, 4, 5]\nresult = 0\n\nif mode == 'slow':\n    # 慢速处理循环\n    for i in range(len(data)):\n        for j in range(i + 1):\n            result += data[j]\nelif mode == 'fast':\n    # 快速处理循环\n    for item in data:\n        result += item * 2\nelse:\n    # 默认处理循环\n    for item in data:\n        result += item\n\nprint(f\"Result: {result}\")",
+            "description": "Given the following code block with branch selection for different loops, what is the final value of `result` when `mode` is 'fast'?",
+            "code": "mode = 'fast'\ndata = [1, 2, 3, 4, 5]\nresult = 0\n\nif mode == 'slow':\n    # Slow processing loop\n    for i in range(len(data)):\n        for j in range(i + 1):\n            result += data[j]\nelif mode == 'fast':\n    # Fast processing loop\n    for item in data:\n        result += item * 2\nelse:\n    # Default processing loop\n    for item in data:\n        result += item\n\nprint(f\"Result: {result}\")",
             "answer": 30
         }
     },
     {
         "id": "BL-MIX-S001-V016",
         "metadata": {
-            "name": "状态机模式混合",
+            "name": "State Machine Pattern Mix",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16758,18 +16758,18 @@ TreecEva
             "variant_type": "Linear+Conditional+Iterative",
             "mixed_blocks": ["Linear", "Conditional", "Iterative"],
             "primary_pattern": "Mixed",
-            "complexity_factors": ["状态机", "状态转换", "循环控制"]
+            "complexity_factors": ["state machine", "state transitions", "loop control"]
         },
         "task": {
-            "description": "给定以下状态机模式混合的代码块，当输入字符串为\"ABBC\"时，final_state的最终值是多少？",
-            "code": "typedef enum { IDLE = 0, STATE_A = 1, STATE_B = 2, ERROR = -1 } state_t;\n\nstate_t process_string(const char* input) {\n    state_t current_state = IDLE;\n    int position = 0;\n    \n    // 循环处理每个字符\n    while (input[position] != '\\0') {\n        char ch = input[position];\n        \n        // 状态转换条件\n        switch (current_state) {\n            case IDLE:\n                if (ch == 'A') current_state = STATE_A;\n                else current_state = ERROR;\n                break;\n            case STATE_A:\n                if (ch == 'B') current_state = STATE_B;\n                else current_state = ERROR;\n                break;\n            case STATE_B:\n                if (ch == 'B' || ch == 'C') current_state = STATE_B;\n                else current_state = ERROR;\n                break;\n            default:\n                current_state = ERROR;\n        }\n        \n        // 线性递增\n        position++;\n        \n        // 错误检查\n        if (current_state == ERROR) break;\n    }\n    \n    return current_state;\n}\n\nstate_t final_state = process_string(\"ABBC\");\nprintf(\"Final state: %d\\n\", final_state);",
+            "description": "Given the following state machine pattern mixed code block, what is the final value of `final_state` when the input string is \"ABBC\"?",
+            "code": "typedef enum { IDLE = 0, STATE_A = 1, STATE_B = 2, ERROR = -1 } state_t;\n\nstate_t process_string(const char* input) {\n    state_t current_state = IDLE;\n    int position = 0;\n    \n    // Loop through each character\n    while (input[position] != '\\0') {\n        char ch = input[position];\n        \n        // State transition conditions\n        switch (current_state) {\n            case IDLE:\n                if (ch == 'A') current_state = STATE_A;\n                else current_state = ERROR;\n                break;\n            case STATE_A:\n                if (ch == 'B') current_state = STATE_B;\n                else current_state = ERROR;\n                break;\n            case STATE_B:\n                if (ch == 'B' || ch == 'C') current_state = STATE_B;\n                else current_state = ERROR;\n                break;\n            default:\n                current_state = ERROR;\n        }\n        \n        // Linear increment\n        position++;\n        \n        // Error check\n        if (current_state == ERROR) break;\n    }\n    \n    return current_state;\n}\n\nstate_t final_state = process_string(\"ABBC\");\nprintf(\"Final state: %d\\n\", final_state);",
             "answer": 2
         }
     },
     {
         "id": "BL-MIX-S001-V017",
         "metadata": {
-            "name": "数据变换管道",
+            "name": "Data Transformation Pipeline",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16780,18 +16780,18 @@ TreecEva
             "variant_type": "Linear+Conditional+Iterative",
             "mixed_blocks": ["Linear", "Conditional", "Iterative"],
             "primary_pattern": "Linear",
-            "complexity_factors": ["数据管道", "多阶段处理"]
+            "complexity_factors": ["data pipeline", "multi-stage processing"]
         },
         "task": {
-            "description": "给定以下数据变换管道的代码块，processed_data的长度是多少？",
-            "code": "raw_data = [10, 25, 8, 33, 15, 42, 7, 28]\n\n# 阶段1: 线性预处理\nscale_factor = 1.2\noffset = 5\nstage1_data = [int(x * scale_factor + offset) for x in raw_data]\n\n# 阶段2: 条件过滤\nthreshold = 20\nstage2_data = []\nfor value in stage1_data:\n    if value >= threshold:\n        stage2_data.append(value)\n\n# 阶段3: 循环变换\nprocessed_data = []\nfor i, value in enumerate(stage2_data):\n    if i % 2 == 0:\n        processed_data.append(value * 2)\n    else:\n        processed_data.append(value + 10)\n\nprint(f\"Processed data length: {len(processed_data)}\")",
+            "description": "Given the following data transformation pipeline code block, what is the length of `processed_data`?",
+            "code": "raw_data = [10, 25, 8, 33, 15, 42, 7, 28]\n\n# Stage 1: Linear preprocessing\nscale_factor = 1.2\noffset = 5\nstage1_data = [int(x * scale_factor + offset) for x in raw_data]\n\n# Stage 2: Conditional filtering\nthreshold = 20\nstage2_data = []\nfor value in stage1_data:\n    if value >= threshold:\n        stage2_data.append(value)\n\n# Stage 3: Loop transformation\nprocessed_data = []\nfor i, value in enumerate(stage2_data):\n    if i % 2 == 0:\n        processed_data.append(value * 2)\n    else:\n        processed_data.append(value + 10)\n\nprint(f\"Processed data length: {len(processed_data)}\")",
             "answer": 6
         }
     },
     {
         "id": "BL-MIX-S001-V018",
         "metadata": {
-            "name": "嵌套函数调用混合",
+            "name": "Nested Function Call Mix",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16802,18 +16802,18 @@ TreecEva
             "variant_type": "Iterative+Conditional+Linear",
             "mixed_blocks": ["Iterative", "Conditional", "Linear"],
             "primary_pattern": "Iterative",
-            "complexity_factors": ["函数嵌套", "递归调用", "多重条件"]
+            "complexity_factors": ["function nesting", "recursive calls", "multiple conditions"]
         },
         "task": {
-            "description": "给定以下嵌套函数调用混合的代码块，calculate_sum(4, 3)的返回值是多少？",
-            "code": "int process_value(int x, int depth) {\n    // 线性基础计算\n    int base = x * 2 + 1;\n    \n    // 条件递归\n    if (depth > 0) {\n        return base + process_value(x - 1, depth - 1);\n    } else {\n        return base;\n    }\n}\n\nint calculate_sum(int n, int depth) {\n    int total = 0;\n    \n    // 循环调用\n    for (int i = 1; i <= n; i++) {\n        int partial = process_value(i, depth);\n        total += partial;\n    }\n    \n    return total;\n}\n\nint result = calculate_sum(4, 3);\nprintf(\"Result: %d\\n\", result);",
+            "description": "Given the following nested function call mixed code block, what is the return value of `calculate_sum(4, 3)`?",
+            "code": "int process_value(int x, int depth) {\n    // Linear base calculation\n    int base = x * 2 + 1;\n    \n    // Conditional recursion\n    if (depth > 0) {\n        return base + process_value(x - 1, depth - 1);\n    } else {\n        return base;\n    }\n}\n\nint calculate_sum(int n, int depth) {\n    int total = 0;\n    \n    // Loop calls\n    for (int i = 1; i <= n; i++) {\n        int partial = process_value(i, depth);\n        total += partial;\n    }\n    \n    return total;\n}\n\nint result = calculate_sum(4, 3);\nprintf(\"Result: %d\\n\", result);",
             "answer": 80
         }
     },
     {
         "id": "BL-MIX-S001-V019",
         "metadata": {
-            "name": "资源管理混合模式",
+            "name": "Resource Management Mixed Pattern",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16824,18 +16824,18 @@ TreecEva
             "variant_type": "Linear+Conditional+Iterative",
             "mixed_blocks": ["Linear", "Conditional", "Iterative"],
             "primary_pattern": "Mixed",
-            "complexity_factors": ["资源分配", "条件释放", "循环管理"]
+            "complexity_factors": ["resource allocation", "conditional release", "loop management"]
         },
         "task": {
-            "description": "给定以下资源管理混合模式的代码块，当capacity为5时，allocated_count的最终值是多少？",
-            "code": "typedef struct {\n    int* ptr;\n    int size;\n    int allocated;\n} resource_t;\n\nint manage_resources(int capacity) {\n    resource_t resources[10];\n    int allocated_count = 0;\n    \n    // 线性初始化\n    for (int i = 0; i < 10; i++) {\n        resources[i].ptr = NULL;\n        resources[i].size = 0;\n        resources[i].allocated = 0;\n    }\n    \n    // 循环分配\n    for (int i = 0; i < capacity && i < 10; i++) {\n        int size = (i + 1) * 16;\n        \n        // 条件分配\n        if (size <= 64) {\n            resources[i].ptr = malloc(size);\n            if (resources[i].ptr != NULL) {\n                resources[i].size = size;\n                resources[i].allocated = 1;\n                allocated_count++;\n            }\n        }\n    }\n    \n    // 条件释放（模拟，实际不释放）\n    for (int i = 0; i < 10; i++) {\n        if (resources[i].allocated && resources[i].size > 32) {\n            // 这里只是计数，不实际释放\n            // free(resources[i].ptr);\n            // allocated_count--;\n        }\n    }\n    \n    return allocated_count;\n}\n\nint result = manage_resources(5);\nprintf(\"Allocated count: %d\\n\", result);",
+            "description": "Given the following resource management mixed pattern code block, what is the final value of `allocated_count` when `capacity` is 5?",
+            "code": "typedef struct {\n    int* ptr;\n    int size;\n    int allocated;\n} resource_t;\n\nint manage_resources(int capacity) {\n    resource_t resources[10];\n    int allocated_count = 0;\n    \n    // Linear initialization\n    for (int i = 0; i < 10; i++) {\n        resources[i].ptr = NULL;\n        resources[i].size = 0;\n        resources[i].allocated = 0;\n    }\n    \n    // Loop allocation\n    for (int i = 0; i < capacity && i < 10; i++) {\n        int size = (i + 1) * 16;\n        \n        // Conditional allocation\n        if (size <= 64) {\n            resources[i].ptr = malloc(size);\n            if (resources[i].ptr != NULL) {\n                resources[i].size = size;\n                resources[i].allocated = 1;\n                allocated_count++;\n            }\n        }\n    }\n    \n    // Conditional release (simulated, not actually freeing)\n    for (int i = 0; i < 10; i++) {\n        if (resources[i].allocated && resources[i].size > 32) {\n            // This is just counting, not actually freeing\n            // free(resources[i].ptr);\n            // allocated_count--;\n        }\n    }\n    \n    return allocated_count;\n}\n\nint result = manage_resources(5);\nprintf(\"Allocated count: %d\\n\", result);",
             "answer": 4
         }
     },
     {
         "id": "BL-MIX-S001-V020",
         "metadata": {
-            "name": "多层跳出控制",
+            "name": "Multi-Level Break Control",
             "category": "Block-Level",
             "subcategory": "Mixed",
             "type": "variant",
@@ -16846,518 +16846,12 @@ TreecEva
             "variant_type": "Iterative+Conditional",
             "mixed_blocks": ["Iterative", "Conditional"],
             "primary_pattern": "Iterative",
-            "complexity_factors": ["多层循环", "跳出控制"]
+            "complexity_factors": ["multi-level loops", "break control"]
         },
         "task": {
-            "description": "给定以下多层跳出控制的代码块，found_count的最终值是多少？",
+            "description": "Given the following multi-level break control code block, what is the final value of `found_count`?",
             "code": "matrix = [\n    [1, 2, 3, 15],\n    [4, 5, 6, 16],\n    [7, 8, 9, 17],\n    [10, 11, 12, 18]\n]\n\ntarget = 15\nfound_count = 0\nfound = False\n\nfor i in range(len(matrix)):\n    if found:\n        break\n    for j in range(len(matrix[i])):\n        current = matrix[i][j]\n        if current == target:\n            found = True\n            found_count += 1\n            break\n        elif current > 10:\n            found_count += 1\n            \nprint(f\"Found count: {found_count}\")",
             "answer": 4
-        }
-    },
-    {
-        "id": "BL-MIX-S002-V001",
-        "metadata": {
-            "name": "数组处理条件分支",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "easy",
-            "intervention": 0,
-            "variant_type": "Linear+Conditional",
-            "mixed_blocks": ["Linear", "Conditional"],
-            "primary_pattern": "Linear",
-            "complexity_factors": ["数组操作", "条件处理"]
-        },
-        "task": {
-            "description": "基于BL-LN-S002的数组初始化模式，添加条件验证，当size为3时，initialized_count的值是多少？",
-            "code": "int size = 3;\nint arr[5] = {0};\nint initialized_count = 0;\nint default_value = -1;\n\n// 线性初始化\nfor (int i = 0; i < 5; i++) {\n    arr[i] = default_value;\n}\n\n// 条件验证和计数\nif (size > 0 && size <= 5) {\n    for (int i = 0; i < size; i++) {\n        if (arr[i] == default_value) {\n            initialized_count++;\n        }\n    }\n}\n\nprintf(\"Initialized count: %d\\n\", initialized_count);",
-            "answer": 3
-        }
-    },
-    {
-        "id": "BL-MIX-S002-V002",
-        "metadata": {
-            "name": "独立配置验证组合",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "python",
-            "difficulty": "medium",
-            "intervention": 1,
-            "variant_type": "Linear+Conditional+Iterative",
-            "mixed_blocks": ["Linear", "Conditional", "Iterative"],
-            "primary_pattern": "Linear",
-            "complexity_factors": ["配置管理", "验证循环"]
-        },
-        "task": {
-            "description": "基于BL-LN-S002的独立配置模式，添加循环验证，valid_configs的最终值是多少？",
-            "code": "# 线性配置设置（类似原始种子）\nmax_retries = 3\ntimeout_seconds = 30.0\nlog_level = 'INFO'\nis_debug = False\ndefault_encoding = 'utf-8'\n\n# 配置验证循环\nconfigs = {\n    'max_retries': max_retries,\n    'timeout_seconds': timeout_seconds,\n    'log_level': log_level,\n    'is_debug': is_debug,\n    'default_encoding': default_encoding\n}\n\nvalid_configs = 0\nfor key, value in configs.items():\n    # 条件验证每个配置\n    if key == 'max_retries' and isinstance(value, int) and value > 0:\n        valid_configs += 1\n    elif key == 'timeout_seconds' and isinstance(value, float) and value > 0:\n        valid_configs += 1\n    elif key == 'log_level' and value in ['DEBUG', 'INFO', 'WARNING', 'ERROR']:\n        valid_configs += 1\n    elif key == 'is_debug' and isinstance(value, bool):\n        valid_configs += 1\n    elif key == 'default_encoding' and isinstance(value, str) and len(value) > 0:\n        valid_configs += 1\n\nprint(f\"Valid configs: {valid_configs}\")",
-            "answer": 5
-        }
-    },
-    {
-        "id": "BL-MIX-S003-V001",
-        "metadata": {
-            "name": "文件处理循环扩展",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "hard",
-            "intervention": 2,
-            "variant_type": "Linear+Conditional+Iterative",
-            "mixed_blocks": ["Linear", "Conditional", "Iterative"],
-            "primary_pattern": "Conditional",
-            "complexity_factors": ["文件处理", "循环扩展", "错误处理"]
-        },
-        "task": {
-            "description": "基于BL-LN-S003的文件处理模式，添加批量处理循环，当文件数量为4且2个成功时，success_count的值是多少？",
-            "code": "// 模拟文件处理结果\nint file_results[] = {0, -1, 0, -1}; // 0表示成功，-1表示失败\nint file_count = 4;\n\nint process_files_batch(int* results, int count) {\n    int success_count = 0;\n    int total_processed = 0;\n    \n    // 循环处理每个文件\n    for (int i = 0; i < count; i++) {\n        // 线性计数\n        total_processed++;\n        \n        // 条件判断处理结果（基于原始逻辑）\n        int rc = results[i];\n        if (rc == 0) {  // 模拟 blkid_do_safeprobe 返回 0\n            success_count++;\n        }\n        \n        // 可选的错误处理\n        if (rc == -1 && success_count == 0 && i > count/2) {\n            // 如果一半以上失败且没有成功，提前退出\n            break;\n        }\n    }\n    \n    return success_count;\n}\n\nint result = process_files_batch(file_results, file_count);\nprintf(\"Success count: %d\\n\", result);",
-            "answer": 2
-        }
-    },
-    {
-        "id": "BL-MIX-S004-V001",
-        "metadata": {
-            "name": "计算链条件优化",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "python",
-            "difficulty": "medium",
-            "intervention": 1,
-            "variant_type": "Linear+Conditional",
-            "mixed_blocks": ["Linear", "Conditional"],
-            "primary_pattern": "Linear",
-            "complexity_factors": ["计算链", "条件优化"]
-        },
-        "task": {
-            "description": "基于BL-LN-S004的计算链模式，添加条件优化，当base为15时，optimized_result的最终值是多少？",
-            "code": "base = 15\nmultiplier = 3\noffset = 5\n\n# 原始计算链\ntemp = base * multiplier\nresult = temp + offset\n\n# 条件优化\nif result > 40:\n    # 高值优化\n    optimized_result = result * 0.9  # 降低10%\nelif result > 20:\n    # 中值优化\n    optimized_result = result * 1.1  # 增加10%\nelse:\n    # 低值保持\n    optimized_result = result\n\noptimized_result = int(optimized_result)\nprint(f\"Optimized result: {optimized_result}\")",
-            "answer": 49
-        }
-    },
-    {
-        "id": "BL-MIX-S004-V002",
-        "metadata": {
-            "name": "多链并行计算",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "python",
-            "difficulty": "hard",
-            "intervention": 2,
-            "variant_type": "Linear+Iterative",
-            "mixed_blocks": ["Linear", "Iterative"],
-            "primary_pattern": "Linear",
-            "complexity_factors": ["并行计算", "多链处理"]
-        },
-        "task": {
-            "description": "基于BL-LN-S004的计算链，扩展为多链并行计算，max_result的最终值是多少？",
-            "code": "# 多个计算链的基础参数\nchains = [\n    {'base': 10, 'multiplier': 3, 'offset': 5},\n    {'base': 8, 'multiplier': 4, 'offset': 2},\n    {'base': 12, 'multiplier': 2, 'offset': 8},\n    {'base': 6, 'multiplier': 5, 'offset': 3}\n]\n\nresults = []\nmax_result = 0\n\n# 循环处理每个计算链\nfor chain in chains:\n    # 线性计算链（类似原始模式）\n    temp = chain['base'] * chain['multiplier']\n    result = temp + chain['offset']\n    results.append(result)\n    \n    # 跟踪最大值\n    if result > max_result:\n        max_result = result\n\nprint(f\"Max result: {max_result}\")",
-            "answer": 35
-        }
-    },
-    {
-        "id": "BL-MIX-S005-V001",
-        "metadata": {
-            "name": "累积计算条件分支",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "medium",
-            "intervention": 1,
-            "variant_type": "Linear+Conditional",
-            "mixed_blocks": ["Linear", "Conditional"],
-            "primary_pattern": "Linear",
-            "complexity_factors": ["累积计算", "条件分支"]
-        },
-        "task": {
-            "description": "基于BL-LN-S005的累积模式，添加条件分支，当threshold为50时，final_total的值是多少？",
-            "code": "int total = 0;\nint threshold = 50;\nint bonus = 20;\nint penalty = 10;\n\n// 原始累积过程\ntotal += 10;\ntotal += 15;\ntotal += 7;\ntotal *= 2;\n\n// 条件分支处理\nif (total >= threshold) {\n    // 达到阈值，获得奖励\n    int final_total = total + bonus;\n    printf(\"Final total with bonus: %d\\n\", final_total);\n} else {\n    // 未达阈值，扣除惩罚\n    int final_total = total - penalty;\n    printf(\"Final total with penalty: %d\\n\", final_total);\n}",
-            "answer": 84
-        }
-    },
-    {
-        "id": "BL-MIX-S006-V001",
-        "metadata": {
-            "name": "屏幕初始化循环验证",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "hard",
-            "intervention": 2,
-            "variant_type": "Linear+Iterative+Conditional",
-            "mixed_blocks": ["Linear", "Iterative", "Conditional"],
-            "primary_pattern": "Linear",
-            "complexity_factors": ["初始化循环", "验证检查"]
-        },
-        "task": {
-            "description": "基于BL-LN-S006的屏幕初始化，添加多屏幕循环初始化和验证，当screen_count为3时，valid_screens的值是多少？",
-            "code": "typedef struct {\n    void* grid;\n    void* saved_grid;\n    int cstyle;\n    int default_cstyle;\n    int ccolour;\n    int default_ccolour;\n    int initialized;\n} screen_t;\n\nint init_multiple_screens(int screen_count) {\n    screen_t screens[5];\n    int valid_screens = 0;\n    \n    // 循环初始化多个屏幕\n    for (int i = 0; i < screen_count && i < 5; i++) {\n        // 线性初始化（基于原始模式）\n        screens[i].grid = malloc(100); // 模拟 grid_create\n        screens[i].saved_grid = NULL;\n        screens[i].cstyle = 0; // SCREEN_CURSOR_DEFAULT\n        screens[i].default_cstyle = 0;\n        screens[i].ccolour = -1;\n        screens[i].default_ccolour = -1;\n        screens[i].initialized = 1;\n        \n        // 条件验证\n        if (screens[i].grid != NULL && screens[i].ccolour == -1) {\n            valid_screens++;\n        }\n    }\n    \n    return valid_screens;\n}\n\nint result = init_multiple_screens(3);\nprintf(\"Valid screens: %d\\n\", result);",
-            "answer": 3
-        }
-    },
-    {
-        "id": "BL-MIX-CD001-V001",
-        "metadata": {
-            "name": "页面大小检查循环扩展",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "medium",
-            "intervention": 1,
-            "variant_type": "Conditional+Iterative",
-            "mixed_blocks": ["Conditional", "Iterative"],
-            "primary_pattern": "Conditional",
-            "complexity_factors": ["系统调用", "循环检查"]
-        },
-        "task": {
-            "description": "基于BL-CD-S001的页面大小检查，扩展为多次尝试循环，当尝试3次且第2次成功返回4096时，final_size的值是多少？",
-            "code": "#define DEFAULT_MEM_ALIGNMENT 1024\n\nsize_t get_pagesize_with_retry(int max_attempts) {\n    size_t final_size = 0;\n    long results[] = {-1, 4096, 8192}; // 模拟多次 sysconf 调用结果\n    \n    // 循环尝试获取页面大小\n    for (int attempt = 0; attempt < max_attempts; attempt++) {\n        long r = results[attempt];\n        \n        // 原始条件逻辑\n        if (r <= 0) {\n            final_size = DEFAULT_MEM_ALIGNMENT;\n        } else {\n            final_size = (size_t)r;\n            break; // 成功获取，跳出循环\n        }\n    }\n    \n    return final_size;\n}\n\nsize_t result = get_pagesize_with_retry(3);\nprintf(\"Final size: %zu\\n\", result);",
-            "answer": 4096
-        }
-    },
-    {
-        "id": "BL-MIX-CD002-V001",
-        "metadata": {
-            "name": "成绩评级批量处理",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "python",
-            "difficulty": "hard",
-            "intervention": 2,
-            "variant_type": "Conditional+Iterative+Linear",
-            "mixed_blocks": ["Conditional", "Iterative", "Linear"],
-            "primary_pattern": "Conditional",
-            "complexity_factors": ["嵌套条件", "批量处理", "统计计算"]
-        },
-        "task": {
-            "description": "基于BL-CD-S002的嵌套条件评级，扩展为批量处理多个学生成绩，A_grade_count的最终值是多少？",
-            "code": "scores = [92, 97, 85, 88, 76, 94, 83]\ngrade_counts = {'A+': 0, 'A': 0, 'B': 0, 'C': 0}\nA_grade_count = 0  # A+ 和 A 的总数\n\n# 循环处理每个学生的成绩\nfor score in scores:\n    grade = None\n    \n    # 嵌套条件逻辑（基于原始模式）\n    if score >= 90:\n        if score >= 95:\n            grade = 'A+'\n        else:\n            grade = 'A'\n    else:\n        if score >= 80:\n            grade = 'B'\n        else:\n            grade = 'C'\n    \n    # 线性统计\n    grade_counts[grade] += 1\n    if grade in ['A+', 'A']:\n        A_grade_count += 1\n\nprint(f\"A grade count (A+ and A): {A_grade_count}\")",
-            "answer": 4
-        }
-    },
-    {
-        "id": "BL-MIX-CD003-V001",
-        "metadata": {
-            "name": "动态分类系统",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "medium",
-            "intervention": 1,
-            "variant_type": "Conditional+Linear+Iterative",
-            "mixed_blocks": ["Conditional", "Linear", "Iterative"],
-            "primary_pattern": "Conditional",
-            "complexity_factors": ["动态阈值", "分类统计"]
-        },
-        "task": {
-            "description": "基于BL-CD-S003的else-if链分类，扩展为动态阈值系统，当values数组有5个元素时，medium_count的值是多少？",
-            "code": "int values[] = {5, 15, 25, 35, 8};\nint count = 5;\nint low_threshold = 10;\nint medium_threshold = 20;\nint high_threshold = 30;\n\n// 统计计数器\nint low_count = 0, medium_count = 0, high_count = 0, extreme_count = 0;\n\n// 循环处理每个值\nfor (int i = 0; i < count; i++) {\n    int value = values[i];\n    const char* category;\n    \n    // 原始条件链逻辑\n    if (value < low_threshold) {\n        category = \"low\";\n        low_count++;\n    } else if (value < medium_threshold) {\n        category = \"medium\";\n        medium_count++;\n    } else if (value < high_threshold) {\n        category = \"high\";\n        high_count++;\n    } else {\n        category = \"extreme\";\n        extreme_count++;\n    }\n    \n    // 线性调整阈值（动态特性）\n    if (i == count - 1) {\n        // 最后一次迭代，不调整\n    } else {\n        low_threshold += 1;\n        medium_threshold += 1;\n        high_threshold += 1;\n    }\n}\n\nprintf(\"Medium count: %d\\n\", medium_count);",
-            "answer": 2
-        }
-    },
-    {
-        "id": "BL-MIX-CD004-V001",
-        "metadata": {
-            "name": "多语言星期映射",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "hard",
-            "intervention": 2,
-            "variant_type": "Conditional+Iterative",
-            "mixed_blocks": ["Conditional", "Iterative"],
-            "primary_pattern": "Conditional",
-            "complexity_factors": ["多语言支持", "循环映射"]
-        },
-        "task": {
-            "description": "基于BL-CD-S004的switch语句，扩展为多语言星期映射，当languages数组有2种语言且day为3时，找到的映射数量是多少？",
-            "code": "typedef struct {\n    const char* lang;\n    const char* days[8]; // 0不用，1-7对应周一到周日\n} language_map_t;\n\nlanguage_map_t languages[] = {\n    {\"en\", {\"\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"}},\n    {\"zh\", {\"\", \"星期一\", \"星期二\", \"星期三\", \"星期四\", \"星期五\", \"星期六\", \"星期日\"}}\n};\n\nint day = 3;\nint lang_count = 2;\nint found_mappings = 0;\n\n// 循环遍历每种语言\nfor (int i = 0; i < lang_count; i++) {\n    const char* day_name = NULL;\n    \n    // 原始switch逻辑的等价条件版本\n    if (day >= 1 && day <= 7) {\n        day_name = languages[i].days[day];\n        if (day_name != NULL && strlen(day_name) > 0) {\n            found_mappings++;\n        }\n    }\n}\n\nprintf(\"Found mappings: %d\\n\", found_mappings);",
-            "answer": 2
-        }
-    },
-    {
-        "id": "BL-MIX-CD005-V001",
-        "metadata": {
-            "name": "多模式标志处理",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "expert",
-            "intervention": 3,
-            "variant_type": "Conditional+Iterative+Linear",
-            "mixed_blocks": ["Conditional", "Iterative", "Linear"],
-            "primary_pattern": "Conditional",
-            "complexity_factors": ["位操作", "fallthrough", "批量处理"]
-        },
-        "task": {
-            "description": "基于BL-CD-S005的switch fallthrough，扩展为多输入批量处理，当inputs为[1,2,3]时，combined_flags的最终值是多少？",
-            "code": "int inputs[] = {1, 2, 3};\nint input_count = 3;\nint combined_flags = 0;\n\n// 循环处理每个输入\nfor (int idx = 0; idx < input_count; idx++) {\n    int input = inputs[idx];\n    int flags = 0;\n    \n    // 原始switch fallthrough逻辑\n    switch (input) {\n        case 1:\n            flags |= 0x01;\n            // fallthrough\n        case 2:\n            flags |= 0x02;\n            // fallthrough\n        case 3:\n            flags |= 0x04;\n            break;\n        default:\n            flags = -1;\n    }\n    \n    // 线性组合标志\n    if (flags >= 0) {\n        combined_flags |= flags;\n    }\n}\n\nprintf(\"Combined flags: 0x%02X\\n\", combined_flags);",
-            "answer": 7
-        }
-    },
-    {
-        "id": "BL-MIX-CD006-V001",
-        "metadata": {
-            "name": "三元表达式链式处理",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "expert",
-            "intervention": 3,
-            "variant_type": "Conditional+Iterative",
-            "mixed_blocks": ["Conditional", "Iterative"],
-            "primary_pattern": "Conditional",
-            "complexity_factors": ["三元表达式", "链式处理", "复杂逻辑"]
-        },
-        "task": {
-            "description": "基于BL-CD-S006的三元条件链，扩展为配对处理循环，当pairs数组有3对数据时，max_result的值是多少？",
-            "code": "typedef struct {\n    int x;\n    int y;\n} pair_t;\n\npair_t pairs[] = {{7, 5}, {4, 8}, {9, 3}};\nint pair_count = 3;\nint results[3];\nint max_result = 0;\n\n// 循环处理每对数据\nfor (int i = 0; i < pair_count; i++) {\n    int x = pairs[i].x;\n    int y = pairs[i].y;\n    \n    // 原始三元条件链逻辑\n    int result = (x > y) ? ((x % 2 == 0) ? x * 2 : x + 10) : ((y % 2 == 0) ? y * 3 : y - 2);\n    \n    results[i] = result;\n    \n    // 线性更新最大值\n    if (result > max_result) {\n        max_result = result;\n    }\n}\n\nprintf(\"Max result: %d\\n\", max_result);",
-            "answer": 24
-        }
-    },
-    {
-        "id": "BL-MIX-CD007-V001",
-        "metadata": {
-            "name": "资源分配批量检查",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "hard",
-            "intervention": 2,
-            "variant_type": "Conditional+Iterative+Linear",
-            "mixed_blocks": ["Conditional", "Iterative", "Linear"],
-            "primary_pattern": "Conditional",
-            "complexity_factors": ["内存管理", "批量分配", "错误处理"]
-        },
-        "task": {
-            "description": "基于BL-CD-S007的空指针检查，扩展为批量资源分配，当请求5个资源时，successful_allocations的值是多少？",
-            "code": "typedef struct {\n    int fd;\n    short events;\n    int allocated;\n} poll_handle_t;\n\nint allocate_poll_handles(int count) {\n    poll_handle_t* handles[10];\n    int successful_allocations = 0;\n    int sizes[] = {32, 64, 32, 128, 64}; // 模拟不同大小的分配\n    \n    // 循环分配资源\n    for (int i = 0; i < count && i < 10; i++) {\n        // 模拟malloc调用\n        poll_handle_t* p = (poll_handle_t*)malloc(sizes[i % 5]);\n        \n        // 原始空指针检查逻辑\n        if (p == NULL) {\n            handles[i] = NULL;\n        } else {\n            // 线性初始化\n            p->fd = i + 1;\n            p->events = 0x01;\n            p->allocated = 1;\n            handles[i] = p;\n            successful_allocations++;\n        }\n    }\n    \n    return successful_allocations;\n}\n\nint result = allocate_poll_handles(5);\nprintf(\"Successful allocations: %d\\n\", result);",
-            "answer": 5
-        }
-    },
-    {
-        "id": "BL-MIX-CD008-V001",
-        "metadata": {
-            "name": "多维度评估系统",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "python",
-            "difficulty": "expert",
-            "intervention": 3,
-            "variant_type": "Conditional+Iterative+Linear",
-            "mixed_blocks": ["Conditional", "Iterative", "Linear"],
-            "primary_pattern": "Conditional",
-            "complexity_factors": ["复杂逻辑", "多维度", "批量评估"]
-        },
-        "task": {
-            "description": "基于BL-CD-S008的复杂条件逻辑，扩展为多申请人评估系统，当有3个申请人时，approved_premium_count的值是多少？",
-            "code": "applicants = [\n    {'age': 25, 'income': 50000, 'has_degree': True},\n    {'age': 30, 'income': 35000, 'has_degree': False},\n    {'age': 22, 'income': 25000, 'has_degree': True}\n]\n\nstatuses = []\napproved_premium_count = 0\ntotal_approved = 0\n\n# 循环评估每个申请人\nfor applicant in applicants:\n    age = applicant['age']\n    income = applicant['income']\n    has_degree = applicant['has_degree']\n    status = None\n    \n    # 原始复杂条件逻辑\n    if age >= 18 and age <= 65:\n        if income > 30000:\n            if has_degree:\n                status = \"approved_premium\"\n            else:\n                status = \"approved_standard\"\n        else:\n            if age >= 21 and has_degree:\n                status = \"approved_basic\"\n            else:\n                status = \"pending_review\"\n    else:\n        status = \"not_eligible\"\n    \n    statuses.append(status)\n    \n    # 线性统计\n    if status.startswith(\"approved\"):\n        total_approved += 1\n        if status == \"approved_premium\":\n            approved_premium_count += 1\n\nprint(f\"Approved premium count: {approved_premium_count}\")",
-            "answer": 1
-        }
-    },
-    {
-        "id": "BL-MIX-IT001-V001",
-        "metadata": {
-            "name": "累加循环条件优化",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "easy",
-            "intervention": 0,
-            "variant_type": "Iterative+Conditional",
-            "mixed_blocks": ["Iterative", "Conditional"],
-            "primary_pattern": "Iterative",
-            "complexity_factors": ["循环累加", "条件优化"]
-        },
-        "task": {
-            "description": "基于BL-IT-S001的简单for循环，添加条件优化，当threshold为12时，final_sum的值是多少？",
-            "code": "int sum = 0;\nint threshold = 12;\nint bonus = 5;\n\n// 原始循环累加\nfor (int i = 1; i <= 5; i++) {\n    sum += i;\n}\n\n// 条件优化\nif (sum >= threshold) {\n    int final_sum = sum + bonus;\n    printf(\"Final sum with bonus: %d\\n\", final_sum);\n} else {\n    int final_sum = sum;\n    printf(\"Final sum: %d\\n\", final_sum);\n}",
-            "answer": 20
-        }
-    },
-    {
-        "id": "BL-MIX-IT002-V001",
-        "metadata": {
-            "name": "数组初始化验证循环",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "medium",
-            "intervention": 1,
-            "variant_type": "Iterative+Conditional+Linear",
-            "mixed_blocks": ["Iterative", "Conditional", "Linear"],
-            "primary_pattern": "Iterative",
-            "complexity_factors": ["数组初始化", "验证循环", "统计计算"]
-        },
-        "task": {
-            "description": "基于BL-IT-S002的数组初始化，添加验证循环，当GB_SIZE为4时，null_count的值是多少？",
-            "code": "#define MAX_SIZE 10\nvoid* pointer_arr[MAX_SIZE];\nint pointer_idx = 0;\nint GB_SIZE = 4;\n\nvoid extended_init_with_validation() {\n    int null_count = 0;\n    int non_null_count = 0;\n    \n    // 线性初始化\n    pointer_idx = 0;\n    \n    // 原始初始化循环\n    for (int i = 0; i < GB_SIZE && i < MAX_SIZE; i++) {\n        pointer_arr[i] = NULL;\n    }\n    \n    // 验证循环\n    for (int i = 0; i < MAX_SIZE; i++) {\n        // 条件检查和统计\n        if (i < GB_SIZE) {\n            if (pointer_arr[i] == NULL) {\n                null_count++;\n            } else {\n                non_null_count++;\n            }\n        }\n    }\n    \n    printf(\"Null count: %d\\n\", null_count);\n}\n\nextended_init_with_validation();",
-            "answer": 4
-        }
-    },
-    {
-        "id": "BL-MIX-IT003-V001",
-        "metadata": {
-            "name": "多条件while循环",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "medium",
-            "intervention": 1,
-            "variant_type": "Iterative+Conditional",
-            "mixed_blocks": ["Iterative", "Conditional"],
-            "primary_pattern": "Iterative",
-            "complexity_factors": ["多条件", "循环控制"]
-        },
-        "task": {
-            "description": "基于BL-IT-S003的while循环，添加多条件控制，当initial_value为24且max_iterations为6时，final_count的值是多少？",
-            "code": "int value = 24;\nint count = 0;\nint max_iterations = 6;\nint min_value = 1;\n\n// 多条件while循环（基于原始逻辑扩展）\nwhile (value > min_value && count < max_iterations) {\n    value = value / 2;\n    count++;\n    \n    // 条件检查：如果值变为奇数且大于1，调整\n    if (value > 1 && value % 2 == 1) {\n        value = value + 1; // 向上舍入到偶数\n    }\n}\n\nint final_count = count;\nprintf(\"Final count: %d\\n\", final_count);",
-            "answer": 5
-        }
-    },
-    {
-        "id": "BL-MIX-IT004-V001",
-        "metadata": {
-            "name": "嵌套循环线性处理",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "python",
-            "difficulty": "hard",
-            "intervention": 2,
-            "variant_type": "Iterative+Linear+Conditional",
-            "mixed_blocks": ["Iterative", "Linear", "Conditional"],
-            "primary_pattern": "Iterative",
-            "complexity_factors": ["嵌套循环", "线性处理", "条件过滤"]
-        },
-        "task": {
-            "description": "基于BL-IT-S004的嵌套循环，添加线性处理和条件过滤，filtered_total的最终值是多少？",
-            "code": "total = 0\nfiltered_total = 0\nprocessing_factor = 2\nfilter_threshold = 8\n\n# 原始嵌套循环计算\nfor i in range(3):\n    for j in range(2):\n        value = (i + 1) * (j + 1)\n        total += value\n        \n        # 线性处理\n        processed_value = value * processing_factor\n        \n        # 条件过滤\n        if processed_value >= filter_threshold:\n            filtered_total += processed_value\n\nprint(f\"Filtered total: {filtered_total}\")",
-            "answer": 28
-        }
-    },
-    {
-        "id": "BL-MIX-IT005-V001",
-        "metadata": {
-            "name": "中断控制统计循环",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "hard",
-            "intervention": 2,
-            "variant_type": "Iterative+Conditional+Linear",
-            "mixed_blocks": ["Iterative", "Conditional", "Linear"],
-            "primary_pattern": "Iterative",
-            "complexity_factors": ["中断控制", "统计循环", "多重条件"]
-        },
-        "task": {
-            "description": "基于BL-IT-S005的break和continue循环，添加统计功能，当上限为15时，processed_count的值是多少？",
-            "code": "int sum = 0;\nint processed_count = 0;\nint skipped_count = 0;\nint early_exit = 0;\nint limit = 15;\n\n// 扩展的循环与统计\nfor (int i = 1; i <= limit; i++) {\n    // 线性计数\n    if (i % 2 == 0) {\n        skipped_count++;\n        continue;\n    }\n    \n    // 条件检查提前退出\n    if (i > 10) {\n        early_exit = 1;\n        break;\n    }\n    \n    // 线性处理\n    sum += i;\n    processed_count++;\n}\n\nprintf(\"Processed count: %d\\n\", processed_count);",
-            "answer": 5
-        }
-    },
-    {
-        "id": "BL-MIX-IT006-V001",
-        "metadata": {
-            "name": "do-while条件增强",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "medium",
-            "intervention": 1,
-            "variant_type": "Iterative+Conditional",
-            "mixed_blocks": ["Iterative", "Conditional"],
-            "primary_pattern": "Iterative",
-            "complexity_factors": ["do-while", "条件增强"]
-        },
-        "task": {
-            "description": "基于BL-IT-S006的do-while循环，添加条件增强，当initial_n为2且target为15时，final_n的值是多少？",
-            "code": "int n = 2;\nint target = 15;\nint increment = 3;\nint max_iterations = 8;\nint iterations = 0;\n\n// 增强的do-while循环\ndo {\n    n += increment;\n    iterations++;\n    \n    // 条件调整increment\n    if (n > target && increment > 1) {\n        increment = 1; // 减小增量，精确控制\n    }\n    \n    // 安全检查，避免无限循环\n    if (iterations >= max_iterations) {\n        break;\n    }\n    \n} while (n < target);\n\nint final_n = n;\nprintf(\"Final n: %d\\n\", final_n);",
-            "answer": 17
-        }
-    },
-    {
-        "id": "BL-MIX-IT007-V001",
-        "metadata": {
-            "name": "递归函数记忆化",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "c",
-            "difficulty": "expert",
-            "intervention": 3,
-            "variant_type": "Iterative+Conditional+Linear",
-            "mixed_blocks": ["Iterative", "Conditional", "Linear"],
-            "primary_pattern": "Iterative",
-            "complexity_factors": ["递归优化", "记忆化", "缓存管理"]
-        },
-        "task": {
-            "description": "基于BL-IT-S007的递归阶乘，添加记忆化缓存，当计算factorial_cached(5)时，cache_hits的值是多少？",
-            "code": "static int cache[20] = {0}; // 缓存数组\nstatic int cache_hits = 0;\nstatic int cache_misses = 0;\n\nint factorial_cached(int n) {\n    // 条件检查缓存\n    if (n < 20 && cache[n] != 0) {\n        cache_hits++;\n        return cache[n];\n    }\n    \n    cache_misses++;\n    \n    // 基础递归条件\n    if (n <= 1) {\n        int result = 1;\n        if (n < 20) cache[n] = result;\n        return result;\n    }\n    \n    // 递归计算\n    int result = n * factorial_cached(n - 1);\n    \n    // 线性缓存存储\n    if (n < 20) {\n        cache[n] = result;\n    }\n    \n    return result;\n}\n\n// 初始化缓存\nfor (int i = 0; i < 20; i++) {\n    cache[i] = 0;\n}\ncache_hits = 0;\ncache_misses = 0;\n\nint result = factorial_cached(5);\nprintf(\"Cache hits: %d\\n\", cache_hits);",
-            "answer": 0
-        }
-    },
-    {
-        "id": "BL-MIX-IT008-V001",
-        "metadata": {
-            "name": "复杂累积多路处理",
-            "category": "Block-Level",
-            "subcategory": "Mixed",
-            "type": "variant",
-            "source": "Generated",
-            "language": "python",
-            "difficulty": "expert",
-            "intervention": 3,
-            "variant_type": "Iterative+Conditional+Linear",
-            "mixed_blocks": ["Iterative", "Conditional", "Linear"],
-            "primary_pattern": "Iterative",
-            "complexity_factors": ["多路处理", "复杂累积", "动态调整"]
-        },
-        "task": {
-            "description": "基于BL-IT-S008的复杂累积，扩展为多路并行处理，当增加分组处理时，group_totals的总和是多少？",
-            "code": "numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\ngroup_size = 3\ngroup_totals = []\ntotal_sum = 0\n\n# 按组处理数字\nfor group_start in range(0, len(numbers), group_size):\n    group = numbers[group_start:group_start + group_size]\n    group_result = 0\n    group_multiplier = 1\n    \n    # 组内处理（基于原始逻辑）\n    for num in group:\n        if num % 2 == 0:\n            group_result += num * group_multiplier\n            group_multiplier += 1\n        else:\n            group_result -= num\n    \n    group_totals.append(group_result)\n    \n    # 线性累加到总和\n    total_sum += group_result\n\nprint(f\"Total sum of group totals: {total_sum}\")",
-            "answer": -9
         }
     }
 ]
