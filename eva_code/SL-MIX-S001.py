@@ -1,92 +1,101 @@
-import math
-import random
+import hashlib
+import itertools
+from functools import reduce
 
-# Constants initialization
-PI = 3.14159265359
-MAX_SIZE = 1024
-DEBUG_MODE = True
-ERROR_CODE = -1
-SUCCESS_CODE = 0
+# Constants and initial data structures
+BASE_MULTIPLIER = 17
+MOD_VALUE = 1000007
+SECRET_KEY = 0xABCDEF
+data_matrix = [
+    [3, 7, 11, 15],
+    [19, 23, 27, 31], 
+    [35, 39, 43, 47],
+    [51, 55, 59, 63]
+]
+weight_vector = [0.25, 0.35, 0.15, 0.25]
+configuration = {
+    'active': True,
+    'threshold': 42.5,
+    'iterations': 8,
+    'precision': 3
+}
 
-# Data structures initialization
-numbers = [15, 42, 87, 23, 91, 56, 34, 78, 12, 65]
-weights = [0.1, 0.2, 0.15, 0.25, 0.3]
-config = {'threshold': 50, 'multiplier': 2.5, 'enabled': True}
-matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+# String processing and hash calculations
+input_string = "DataProcessing2024"
+hash_object = hashlib.md5(input_string.encode())
+hex_hash = hash_object.hexdigest()
+hash_numeric = int(hex_hash[:8], 16)
+reduced_hash = hash_numeric % 10000
 
-# Variable assignments and arithmetic operations
-total_sum = sum(numbers)
-average = total_sum / len(numbers)
-max_value = max(numbers)
-min_value = min(numbers)
-range_value = max_value - min_value
+# Matrix operations with conditional logic
+flattened_data = [item for row in data_matrix for item in row]
+filtered_data = [x for x in flattened_data if x % 4 == 3]
+sorted_filtered = sorted(filtered_data, reverse=True)
 
-# Boolean operations and conditional logic
-is_above_threshold = average > config['threshold']
-is_enabled = config['enabled'] and DEBUG_MODE
-has_valid_range = range_value > 0 and range_value < MAX_SIZE
+# Weighted calculations
+weighted_sum = sum(w * sorted_filtered[i] for i, w in enumerate(weight_vector) if i < len(sorted_filtered))
+normalized_weight = weighted_sum / sum(weight_vector)
 
-# API/Function calls with complex parameters
-squared_numbers = [x **2 for x in numbers if x > min_value]
-filtered_sum = sum(squared_numbers)
-sqrt_result = math.sqrt(filtered_sum)
-log_result = math.log10(sqrt_result) if sqrt_result > 0 else 0
+# Bitwise operations sequence
+bit_pattern = SECRET_KEY
+for i in range(4):
+    bit_pattern ^= (sorted_filtered[i] << (i * 2))
+    bit_pattern &= 0xFFFFFF
+    bit_pattern |= (1 << (7 + i))
 
-# Complex arithmetic with multiple operations
-weighted_score = sum(w * n for w, n in zip(weights, numbers[:len(weights)]))
-normalized_score = weighted_score / sum(weights)
-bonus_multiplier = config['multiplier'] if is_above_threshold else 1.0
-final_score = normalized_score * bonus_multiplier
+# Recursive-style calculation using reduce
+recursive_product = reduce(lambda x, y: (x * y) % MOD_VALUE, sorted_filtered[:4], 1)
+power_result = pow(recursive_product, 3, MOD_VALUE)
 
-# Bitwise operations
-flags = 0b1010
-position = 3
-mask = flags | (1 << position)
-check_bit = (mask & (1 << position)) != 0
-toggled_flags = flags ^ (1 << position)
+# String manipulation and encoding
+reversed_string = input_string[::-1]
+char_codes = [ord(c) for c in reversed_string[:8]]
+char_sum = sum(char_codes)
+encoded_value = char_sum ^ reduced_hash
 
-# String operations and API calls
-status_message = "Processing" if is_enabled else "Disabled"
-message_length = len(status_message)
-uppercase_message = status_message.upper()
-reversed_message = status_message[::-1]
+# Complex conditional assignments
+is_threshold_met = normalized_weight > configuration['threshold']
+is_pattern_valid = (bit_pattern & 0xFF) > 128
+is_power_significant = power_result > 50000
 
-# Multiple assignments and tuple unpacking
-first, second, *rest = numbers
-a, b = b if 'b' in locals() else 10, a if 'a' in locals() else 20
-temp_x, temp_y, temp_z = 1, 2, 3
-temp_x, temp_y = temp_y, temp_x  # Swap
+# Multi-level calculations
+if is_threshold_met and is_pattern_valid:
+    level_1 = encoded_value * BASE_MULTIPLIER
+elif is_power_significant:
+    level_1 = encoded_value + power_result
+else:
+    level_1 = encoded_value // 2
 
-# Complex expression evaluation
-complex_expr = (final_score * 0.8 + log_result * 0.2)** 0.5
-rounded_expr = round(complex_expr, 2)
-int_expr = int(complex_expr * 100) % 1000
+# Nested list comprehension with filtering
+nested_result = [
+    sum(row[i] * weight_vector[i] for i in range(len(row)))
+    for row in data_matrix
+    if sum(row) % 3 == 0
+]
 
-# Array operations and slicing
-sliced_numbers = numbers[2:8:2]
-reversed_slice = sliced_numbers[::-1]
-sum_slice = sum(reversed_slice)
+# Itertools operations
+combination_sum = sum(
+    reduce(lambda x, y: x + y, combo)
+    for combo in itertools.combinations(sorted_filtered, 2)
+    if sum(combo) % 7 == 0
+)
 
-# Matrix operations
-matrix_sum = sum(sum(row) for row in matrix)
-diagonal_sum = sum(matrix[i][i] for i in range(len(matrix)))
-matrix_flatten = [item for row in matrix for item in row]
+# Final aggregation with modular arithmetic
+temp_result = (
+    level_1 +
+    (bit_pattern % 1000) +
+    (power_result % 500) +
+    len(nested_result) * 100 +
+    (combination_sum % 200) +
+    configuration['iterations'] * 15
+)
 
-# Conditional assignments
-status_code = SUCCESS_CODE if all([is_enabled, has_valid_range, check_bit]) else ERROR_CODE
-error_count = 0 if status_code == SUCCESS_CODE else 1
-
-# Final result calculation combining all elements
-result = (
-    int_expr + 
-    sum_slice + 
-    diagonal_sum + 
-    (status_code * 100) + 
-    error_count + 
-    len(rest) + 
-    message_length + 
-    (toggles_flags if 'toggles_flags' in locals() else toggled_flags)
+# Ultimate calculation with multiple transformations
+target_result = (
+    (temp_result * 3) % 8192 +
+    (reduced_hash % 256) +
+    (len(char_codes) * 7) +
+    (1 if all([is_threshold_met, is_pattern_valid, is_power_significant]) else 0)
 ) % 10000
 
-print(f"Final result: {result}")
-    
+print(f"Target result: {target_result}")
