@@ -1021,10 +1021,10 @@ AI_APIS = {
         "api_key": API_KEY,
         "model": "Qwen3-Coder-480B-A35B-Instruct"
     },
-    "deepseek_r1": {
+    "Doubao": {
         "base_url": BASE_URL,
         "api_key": API_KEY,
-        "model": "DeepSeek-R1"
+        "model": "Doubao-Embedding-Large-Text"
     },
     "glm4_plus": {
         "base_url": BASE_URL,
