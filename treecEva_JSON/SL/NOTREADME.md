@@ -1021,10 +1021,10 @@ AI_APIS = {
         "api_key": API_KEY,
         "model": "Qwen3-Coder-480B-A35B-Instruct"
     },
-    "Doubao": {
+    "minimax_text": {
         "base_url": BASE_URL,
         "api_key": API_KEY,
-        "model": "Doubao-Embedding-Large-Text"
+        "model": "MiniMax-Text-01"
     },
     "glm4_plus": {
         "base_url": BASE_URL,
