@@ -16,9 +16,9 @@ class AIEvaluator:
         with open(DATASET_PATH, 'r', encoding='utf-8') as f:
             self.dataset = json.load(f)
     
-    def call_api(self, prompt, api_name):
+    def call_api(self, prompt, ai_name):
         """调用指定的API"""
-        api_config = AI_APIS[api_name]
+        api_config = AI_APIS[ai_name]
         
         client = openai.OpenAI(
             api_key=api_config['api_key'],
@@ -31,7 +31,7 @@ class AIEvaluator:
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are an expert programmer. Analyze the given code and predict the final output value. Provide only the numerical answer."
+                        "content": "You are an expert programmer. Analyze the given code and predict the final output value. Provide only the numerical answer, no explanation."
                     },
                     {
                         "role": "user",
@@ -39,7 +39,7 @@ class AIEvaluator:
                     }
                 ],
                 temperature=0.1,
-                max_tokens=100
+                max_tokens=50
             )
             
             return response.choices[0].message.content
@@ -49,26 +49,19 @@ class AIEvaluator:
     
     def extract_number_from_response(self, response):
         """从响应中提取数字"""
-        # 移除错误信息
         if "Error:" in response:
             return None
             
         # 寻找数字模式
         patterns = [
-            r'(?:answer|result|output|value).*?(\d+)',
             r'^(\d+)$',
-            r'(\d+)(?:\s*$|\s*\.)',
+            r'(\d+)',
         ]
         
         for pattern in patterns:
-            match = re.search(pattern, response, re.IGNORECASE | re.MULTILINE)
+            match = re.search(pattern, response.strip(), re.MULTILINE)
             if match:
                 return int(match.group(1))
-        
-        # 尝试提取最后一个数字
-        numbers = re.findall(r'\d+', response)
-        if numbers:
-            return int(numbers[-1])
         
         return None
     
@@ -78,14 +71,14 @@ class AIEvaluator:
         code = task_data["task"]["code"]
         
         prompt = f"""
-                {description}
+{description}
 
-                Code:
-                ```{task_data["metadata"]["language"]}
-                {code}
-                ```
-                Please analyze this code step by step and determine the final output value. Provide only the numerical answer.
-                """
+Code:
+```{task_data["metadata"]["language"]}
+{code}
+```
+Analyze this code step by step and determine the final output value. Provide only the number.
+"""
         return prompt
     
     def evaluate_task_with_ai(self, task_data, ai_name):
@@ -94,13 +87,22 @@ class AIEvaluator:
         response = self.call_api(prompt, ai_name)
         predicted_answer = self.extract_number_from_response(response)
         
-        return {
-            "raw_response": response,
-            "predicted_answer": predicted_answer
-        }
-    
+        return predicted_answer
+
+    def calculate_difficulty_from_errors(self, ai_correctness):
+        """根据AI错误数计算难度（0-5）"""
+        # ai_correctness 中 0 表示错误，1 表示正确
+        error_count = ai_correctness.count(0)
+        
+        # 难度 = AI错误的数目，范围 0-5
+        # 如果所有AI都答对了，难度为0
+        # 如果所有5个AI都答错了，难度为5
+        difficulty = min(error_count, 5)
+        
+        return difficulty
+
     def evaluate_all_tasks(self):
-        """评估所有任务"""
+        """评估所有任务并根据结果更新难度"""
         self.load_dataset()
         
         # 获取所有AI名称
@@ -114,62 +116,103 @@ class AIEvaluator:
                 
             task_id = task["id"]
             expected_answer = task["task"]["answer"]
+            original_difficulty = task["metadata"]["difficulty"]
             
-            print(f"Evaluating task {task_id}...")
+            print(f"Evaluating task {task_id} (original difficulty: {original_difficulty})...")
             
-            task_results = {
-                "expected_answer": expected_answer,
-                "ai_predictions": {},
-                "correct_ais": [],
-                "incorrect_ais": []
-            }
+            # 存储每个AI的评估结果（1表示正确，0表示错误）
+            ai_correctness = []
             
             # 对每个AI进行评估
             for ai_name in ai_names:
                 print(f"  Testing with {ai_name}...")
-                ai_result = self.evaluate_task_with_ai(task, ai_name)
+                predicted_answer = self.evaluate_task_with_ai(task, ai_name)
                 
-                if ai_result and ai_result["predicted_answer"] is not None:
-                    task_results["ai_predictions"][ai_name] = ai_result
-                    
-                    # 检查答案是否正确
-                    if ai_result["predicted_answer"] == expected_answer:
-                        task_results["correct_ais"].append(ai_name)
-                    else:
-                        task_results["incorrect_ais"].append(ai_name)
+                if predicted_answer is not None and predicted_answer == expected_answer:
+                    ai_correctness.append(1)
+                    print(f"    ✓ Correct: {predicted_answer}")
                 else:
-                    task_results["ai_predictions"][ai_name] = {
-                        "raw_response": ai_result["raw_response"] if ai_result else "Failed to get response",
-                        "predicted_answer": None
-                    }
-                    task_results["incorrect_ais"].append(ai_name)
+                    ai_correctness.append(0)
+                    print(f"    ✗ Wrong: {predicted_answer} (expected: {expected_answer})")
+            
+            # 根据AI错误数计算新难度
+            new_difficulty = self.calculate_difficulty_from_errors(ai_correctness)
+            
+            # 更新数据集中的难度
+            self.dataset[i]["metadata"]["difficulty"] = new_difficulty
+            
+            # 记录格式：case2：难度：3 ai评估记录：0 0 0 1 1
+            correctness_str = " ".join(map(str, ai_correctness))
+            result_line = f"{task_id}：难度：{new_difficulty} ai评估记录：{correctness_str}"
+            
+            self.evaluation_results[task_id] = {
+                "original_difficulty": original_difficulty,
+                "new_difficulty": new_difficulty,
+                "ai_correctness": ai_correctness,
+                "error_count": ai_correctness.count(0),
+                "result_line": result_line
+            }
+            
+            if new_difficulty != original_difficulty:
+                print(f"  难度更新：{original_difficulty} → {new_difficulty}")
+            
+            print(f"  结果：{result_line}")
         
-            self.evaluation_results[task_id] = task_results
+        # 保存更新后的数据集（含新难度）
+        with open(DATASET_PATH, 'w', encoding='utf-8') as f:
+            json.dump(self.dataset, f, indent=2, ensure_ascii=False)
         
         # 保存评估结果
-        with open("data/ai_evaluation_results.json", 'w', encoding='utf-8') as f:
+        with open("data/ai_evaluation_with_difficulty.json", 'w', encoding='utf-8') as f:
             json.dump(self.evaluation_results, f, indent=2, ensure_ascii=False)
         
         # 生成统计报告
-        self.generate_statistics_report()
+        self.generate_difficulty_statistics()
         
-        print("AI evaluation completed!")
+        print("AI evaluation completed and difficulties updated!")
 
-    def generate_statistics_report(self):
-        """生成统计报告"""
+    def generate_difficulty_statistics(self):
+        """生成难度统计报告"""
         ai_names = list(AI_APIS.keys())
-        stats = {ai_name: {"correct": 0, "total": 0} for ai_name in ai_names}
         
+        print("\n=== AI评估统计报告 ===")
+        
+        # 按任务显示结果
         for task_id, results in self.evaluation_results.items():
-            for ai_name in ai_names:
-                stats[ai_name]["total"] += 1
-                if ai_name in results["correct_ais"]:
-                    stats[ai_name]["correct"] += 1
+            print(results["result_line"])
         
-        print("\n=== AI Evaluation Statistics ===")
-        for ai_name, stat in stats.items():
-            accuracy = stat["correct"] / stat["total"] * 100 if stat["total"] > 0 else 0
-            print(f"{ai_name}: {stat['correct']}/{stat['total']} ({accuracy:.1f}%)")
+        # 难度分布统计
+        print(f"\n=== 难度分布统计 ===")
+        difficulty_distribution = {}
+        difficulty_changes = 0
+        
+        for results in self.evaluation_results.values():
+            new_diff = results["new_difficulty"]
+            if new_diff not in difficulty_distribution:
+                difficulty_distribution[new_diff] = 0
+            difficulty_distribution[new_diff] += 1
+            
+            if results["original_difficulty"] != results["new_difficulty"]:
+                difficulty_changes += 1
+        
+        for difficulty in range(6):  # 0-5
+            count = difficulty_distribution.get(difficulty, 0)
+            print(f"难度 {difficulty}: {count} 个任务")
+        
+        print(f"\n难度发生变化的任务数: {difficulty_changes}")
+        
+        # 整体正确率统计
+        total_tasks = len(self.evaluation_results)
+        ai_total_correct = [0] * len(ai_names)
+        
+        for results in self.evaluation_results.values():
+            for i, correct in enumerate(results["ai_correctness"]):
+                ai_total_correct[i] += correct
+        
+        print(f"\n=== 整体正确率 ===")
+        for i, ai_name in enumerate(ai_names):
+            accuracy = ai_total_correct[i] / total_tasks * 100 if total_tasks > 0 else 0
+            print(f"{ai_name}: {ai_total_correct[i]}/{total_tasks} ({accuracy:.1f}%)")
 
 if __name__ == "__main__":
     evaluator = AIEvaluator()
