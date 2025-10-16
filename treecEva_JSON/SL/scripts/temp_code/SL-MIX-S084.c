@@ -1,71 +1,73 @@
 #define _USE_MATH_DEFINES
 #include <stdio.h>
 #include <math.h>
-#include <string.h>
 
-#define MAX_LEN 100
+// Function pointer type for signal processing callbacks
+typedef double (*signal_processor)(double, double);
 
-typedef struct {
-    double x;
-    double y;
-} Point;
-
-typedef struct {
-    Point points[3];
-    int count;
-} Triangle;
-
-// Function to calculate area of triangle using Heron's formula
-double triangle_area(Triangle* t) {
-    Point p1 = t->points[0];
-    Point p2 = t->points[1];
-    Point p3 = t->points[2];
-    
-    // Calculate side lengths
-    double a = sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
-    double b = sqrt(pow(p3.x - p2.x, 2) + pow(p3.y - p2.y, 2));
-    double c = sqrt(pow(p1.x - p3.x, 2) + pow(p1.y - p3.y, 2));
-    
-    // Semi-perimeter
-    double s = (a + b + c) / 2;
-    
-    // Heron's formula
-    return sqrt(s * (s - a) * (s - b) * (s - c));
+// Signal processing functions
+double amplify(double signal, double gain) {
+    return signal * gain;
 }
 
-// Function to perform bit manipulation
-int bit_operation(int a, int b) {
-    return (a & b) ^ ((a | b) << 1);
+double filter(double signal, double threshold) {
+    return (signal > threshold) ? signal : 0.0;
 }
+
+// Union for type punning between float and int representations
+union signal_representation {
+    float amplitude;
+    int encoded_value;
+};
 
 int main() {
-    // Initialize triangle data
-    Triangle t = {
-        .points = {{0, 0}, {3, 0}, {0, 4}},
-        .count = 3
-    };
+    // Volatile variables for signal processing parameters
+    volatile double frequencies[] = {120.5, 60.0, 240.0, 300.0, 180.0};
+    volatile double amplitudes[] = {0.3, 0.9, 0.6, 0.2, 0.75};
+    volatile int num_components = 5;
     
-    // Perform area calculation
-    double area = triangle_area(&t);
+    // Processing function pointers
+    signal_processor processors[2] = {amplify, filter};
     
-    // Perform bit operations on calculated values
-    int val1 = (int)(area * 2);  // Should be 12
-    int val2 = (int)(area * 3);  // Should be 18
-    int bit_result = bit_operation(val1, val2);
+    // Greedy selection of dominant frequency
+    double max_weighted_value = -1.0;
+    int dominant_index = -1;
     
-    // String manipulation
-    char buffer[MAX_LEN];
-    snprintf(buffer, MAX_LEN, "Area: %.2f", area);
-    int str_len = strlen(buffer);
+    for (int i = 0; i < num_components; i++) {
+        // Apply signal processing pipeline
+        double processed = processors[0](amplitudes[i], 2.0); // Amplify
+        processed = processors[1](processed, 1.0);            // Filter
+        
+        // Calculate weighted value for dominance selection
+        double weighted_value = processed * frequencies[i];
+        
+        // Short-circuit evaluation in conditional
+        if (weighted_value > max_weighted_value && processed > 0.0) {
+            max_weighted_value = weighted_value;
+            dominant_index = i;
+        }
+    }
     
-    // Complex mathematical expression
-    double expr1 = pow(area, 1.5) + log(area + 1);
-    double expr2 = sin(area) * cos(area/2);
+    // Early return if no dominant frequency found
+    if (dominant_index == -1) {
+        printf("Result: 0\n");
+        return 0;
+    }
     
-    // Final calculation combining all results
-    int result = (int)((bit_result * str_len) + expr1 - expr2 * 100);
+    // Type punning to encode the dominant frequency
+    union signal_representation encoded;
+    encoded.amplitude = (float)frequencies[dominant_index];
     
-    printf("Result: %d\n", result);
+    // Final calculation using the encoded value
+    int dominant_frequency = encoded.encoded_value & 0xFFFF; // Mask to lower 16 bits
     
+    // Apply correction factor based on comparison
+    if (dominant_frequency > 16000) {
+        dominant_frequency /= 2;
+    } else {
+        dominant_frequency *= 3;
+    }
+    
+    printf("Result: %d\n", dominant_frequency);
     return 0;
 }

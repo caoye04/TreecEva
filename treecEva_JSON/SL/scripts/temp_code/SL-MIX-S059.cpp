@@ -1,41 +1,54 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
-#include <cmath>
-#include <string>
+#include <queue>
+#include <memory>
+#include <algorithm>
 
 using namespace std;
 
-double computeExpression(int a, int b, double c) {
-    return pow(a, 2) + sqrt(b) * c;
-}
-
 int main() {
-    vector<vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    string s = "HelloWorld";
-    int x = 10;
-    int y = 20;
-    double z = 2.5;
+    // Container IDs and weights
+    vector<int> container_ids = {101, 202, 303, 404};
+    vector<int> container_weights = {150, 200, 175, 225};
     
-    // Step 1: Modify x using bitwise operations
-    x = (x << 2) ^ (y >> 1);
+    // Priority queue for weights (max heap)
+    priority_queue<int> weight_queue;
+    for (int weight : container_weights) {
+        weight_queue.push(weight);
+    }
     
-    // Step 2: Update y based on matrix values
-    y += matrix[1][2] - matrix[0][0];
+    // Dynamic programming table for checksum calculation
+    unique_ptr<vector<int>> dp = make_unique<vector<int>>(container_ids.size() + 1, 0);
     
-    // Step 3: Compute z using the function
-    z = computeExpression(matrix[2][1], matrix[0][2], z);
+    // Calculate checksum using dynamic programming
+    for (size_t i = 1; i <= container_ids.size(); ++i) {
+        int id_digit_sum = 0;
+        int temp_id = container_ids[i-1];
+        while (temp_id > 0) {
+            id_digit_sum += temp_id % 10;
+            temp_id /= 10;
+        }
+        
+        // Nested loop for additional processing
+        int adjustment = 0;
+        for (int j = 0; j < id_digit_sum; ++j) {
+            if (j % 2 == 0) {
+                adjustment += 1;
+            } else {
+                adjustment -= 1;
+            }
+        }
+        
+        (*dp)[i] = (*dp)[i-1] + id_digit_sum + adjustment;
+    }
     
-    // Step 4: Manipulate string and use its length
-    s = s.substr(5) + to_string(matrix[1][0]);
-    int len = static_cast<int>(s.length());
+    // Apply weight-based modifier
+    int weight_modifier = weight_queue.top();
+    weight_queue.pop();
     
-    // Step 5: Perform complex arithmetic
-    int temp = (x & 0xF) * (y | 0x3) + len;
+    int final_checksum = (*dp)[container_ids.size()] + (weight_modifier % 10);
     
-    // Step 6: Final calculation involving all variables
-    double result = (temp / 3.0) + z - (static_cast<double>(matrix[2][2]) / matrix[0][1]);
-    
-    cout << "Result: " << result << endl;
+    cout << "Result: " << final_checksum << endl;
     return 0;
 }

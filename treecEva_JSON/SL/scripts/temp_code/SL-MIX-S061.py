@@ -1,44 +1,42 @@
 import math
+from functools import reduce
+from collections import namedtuple
 
-def process_data(data):
-    result = []
-    for i, sublist in enumerate(data):
-        transformed = []
-        for j, val in enumerate(sublist):
-            if isinstance(val, int):
-                transformed.append((val ** 2) % (j + 2))
-            elif isinstance(val, str):
-                transformed.append(len(val) * (i + 1))
-            else:
-                transformed.append(0)
-        result.append(transformed)
-    return result
+# Define a sensor reading structure
+SensorData = namedtuple('SensorData', ['sensor_id', 'raw_value', 'timestamp'])
 
-data_matrix = [
-    [3, 'hello', 7.2, 4],
-    ['world', 5, None, 2.8],
-    [1, 'test', 9, 'example']
+# Initial sensor readings
+readings = [
+    SensorData('THERMAL_01', 245.7, 1623456789),
+    SensorData('THERMAL_02', 198.3, 1623456791),
+    SensorData('THERMAL_03', 305.2, 1623456793),
+    SensorData('THERMAL_04', 176.8, 1623456795),
+    SensorData('THERMAL_05', 287.4, 1623456797)
 ]
 
-processed = process_data(data_matrix)
+# Process readings with mathematical transformations
+processed_values = []
+for reading in readings:
+    # Apply logarithmic scaling
+    scaled_value = math.log(reading.raw_value) * 10
+    
+    # Early return for outlier values
+    if scaled_value < 50 or scaled_value > 60:
+        continue
+    
+    # Apply exponential adjustment
+    adjusted_value = math.exp(scaled_value / 20)
+    processed_values.append(adjusted_value)
 
-# Flatten processed list and calculate sum of squares
-flattened = [item for sublist in processed for item in sublist]
-sum_of_squares = sum(x**2 for x in flattened if isinstance(x, int))
+# Calculate stability index using functional programming
+if len(processed_values) > 0:
+    # Compute the geometric mean of processed values
+    product = reduce(lambda x, y: x * y, processed_values)
+    geometric_mean = product ** (1/len(processed_values))
+    
+    # Apply final transformation
+    stability_index = round(math.log(geometric_mean) * 100)
+else:
+    stability_index = 0
 
-# Perform modular exponentiation
-mod_exp_result = pow(sum_of_squares, 3, 1000)
-
-# Bitwise operations
-bitwise_and = mod_exp_result & 0xFF
-bitwise_or = mod_exp_result | 0xF0
-xor_result = bitwise_and ^ bitwise_or
-
-# Trigonometric adjustment
-angle_rad = math.radians(xor_result % 90)
-sin_val = math.sin(angle_rad)
-adjusted = round(sin_val * 1000)
-
-# Final calculation sequence
-final_result = ((adjusted << 2) + (xor_result >> 1)) % 1000
-print(f'Result: {final_result}')
+print(f"Result: {stability_index}")

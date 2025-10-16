@@ -1,56 +1,39 @@
-import math
+import heapq
+from collections import defaultdict
 
-def process_nested_data(data):
-    transformed = []
-    for i, sublist in enumerate(data):
-        temp = []
-        for j, val in enumerate(sublist):
-            if isinstance(val, int):
-                temp.append(val ** 2 if j % 2 == 0 else math.sqrt(val))
-            elif isinstance(val, str):
-                temp.append(len(val) * (i + 1))
-        transformed.append(temp)
-    return transformed
+def process_transactions(transaction_ids):
+    priority_queue = []
+    hash_accumulator = defaultdict(int)
+    
+    for tid in transaction_ids:
+        # Modular arithmetic operation on transaction ID
+        mod_result = (tid * 17 + 23) % 1000
+        
+        # Update hash accumulator with modular result
+        hash_accumulator[tid % 10] += mod_result
+        
+        # Push to priority queue based on hash accumulator
+        heapq.heappush(priority_queue, (hash_accumulator[tid % 10], tid))
+    
+    # Process the priority queue
+    while priority_queue:
+        current_priority, current_tid = heapq.heappop(priority_queue)
+        
+        # Apply another modular transformation
+        transformed_priority = (current_priority * 31 + 19) % 997
+        
+        # Update the hash accumulator again
+        hash_accumulator[current_tid % 10] = (hash_accumulator[current_tid % 10] + transformed_priority) % 1009
+    
+    # Calculate final hash component
+    final_hash_component = 0
+    for key in sorted(hash_accumulator.keys()):
+        final_hash_component = (final_hash_component * 37 + hash_accumulator[key]) % 1013
+    
+    return final_hash_component
 
-def aggregate_transformed(data):
-    total = 0
-    for sublist in data:
-        for val in sublist:
-            if isinstance(val, (int, float)):
-                total += val
-    return total
+# Transaction identifiers for a block
+transactions = [12345, 67890, 11111, 22222, 33333, 44444, 55555, 66666, 77777, 88888]
 
-def apply_bitwise_operations(value):
-    # Apply a sequence of bitwise operations
-    value = (value & 0xFF) | 0x10
-    value = value ^ 0x0F
-    value = value << 2
-    return value
-
-def main():
-    # Initial nested data structure
-    nested_data = [
-        [4, 9, 'hello', 16],
-        ['world', 25, 36, 'test'],
-        [49, 'example', 64, 81]
-    ]
-    
-    # Step 1: Process nested data
-    processed = process_nested_data(nested_data)
-    
-    # Step 2: Aggregate transformed values
-    aggregated = aggregate_transformed(processed)
-    
-    # Step 3: Apply mathematical operations
-    aggregated = math.floor(aggregated / 3.0) * 2
-    
-    # Step 4: Apply bitwise operations
-    bitwise_result = apply_bitwise_operations(aggregated)
-    
-    # Step 5: Final calculation step
-    result = (bitwise_result % 1000) + sum([ord(c) for c in 'SLMIX'])
-    
-    print(f"Result: {result}")
-
-if __name__ == "__main__":
-    main()
+result = process_transactions(transactions)
+print(f"Result: {result}")

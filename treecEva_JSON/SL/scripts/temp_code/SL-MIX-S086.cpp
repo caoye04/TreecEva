@@ -1,59 +1,60 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <vector>
-#include <map>
-#include <string>
-#include <cmath>
-#include <bitset>
+#include <queue>
+#include <memory>
+#include <optional>
 
-class DataProcessor {
-private:
-    std::map<std::string, std::vector<int>> data;
-
+class AuthToken {
 public:
-    void addData(const std::string& key, const std::vector<int>& values) {
-        data[key] = values;
-    }
-    
-    int computeAggregate(const std::string& key) {
-        int sum = 0;
-        if (data.find(key) != data.end()) {
-            for (int val : data[key]) {
-                sum += val * static_cast<int>(std::pow(2, val % 3));
-            }
-        }
-        return sum;
+    int priority;
+    int value;
+    AuthToken(int p, int v) : priority(p), value(v) {}
+};
+
+struct Compare {
+    bool operator()(const std::shared_ptr<AuthToken>& a, const std::shared_ptr<AuthToken>& b) {
+        return a->priority < b->priority;
     }
 };
 
 int main() {
-    DataProcessor processor;
+    std::priority_queue<std::shared_ptr<AuthToken>, std::vector<std::shared_ptr<AuthToken>>, Compare> token_queue;
     
-    // Initialize data
-    processor.addData("alpha", {3, 1, 4});
-    processor.addData("beta", {2, 7, 1, 8});
+    // Initialize tokens
+    token_queue.push(std::make_shared<AuthToken>(3, 100));
+    token_queue.push(std::make_shared<AuthToken>(1, 50));
+    token_queue.push(std::make_shared<AuthToken>(2, 75));
     
-    // Perform computations
-    int a = processor.computeAggregate("alpha");
-    int b = processor.computeAggregate("beta");
+    int accumulator = 0;
+    std::optional<int> modifier = std::nullopt;
     
-    // Bitwise operations
-    int x = (a & b) | ((a ^ b) << 2);
-    int y = (~x >> 1) & 0xFF;
+    // Process tokens
+    while (!token_queue.empty()) {
+        auto token = token_queue.top();
+        token_queue.pop();
+        
+        // Apply modular arithmetic
+        int processed_value = (token->value * 3) % 256;
+        
+        // Short-circuit evaluation
+        if (token->priority > 1 && (processed_value > 100 || token->value < 60)) {
+            if (!modifier.has_value() || processed_value > modifier.value()) {
+                modifier = processed_value;
+            }
+        }
+        
+        accumulator += processed_value;
+    }
     
-    // Mathematical transformations
-    double dx = static_cast<double>(x);
-    double dy = static_cast<double>(y);
-    double z = std::sin(dx) * std::cos(dy) + std::log(std::abs(dx - dy) + 1);
-    
-    // String manipulation
-    std::string s1 = std::to_string(static_cast<long long>(std::round(z * 1000)));
-    std::string s2 = "12345";
-    int concatValue = std::stoi(s1 + s2.substr(2, 3));
+    int authentication_result = 0;
     
     // Final computation
-    int result = (concatValue % 256) ^ (static_cast<int>(z * 100) & 0x7F);
+    if (modifier.has_value() && accumulator > 200) {
+        authentication_result = (accumulator + modifier.value()) % 1000;
+    } else {
+        authentication_result = accumulator % 1000;
+    }
     
-    std::cout << "Result: " << result << std::endl;
+    std::cout << "Result: " << authentication_result << std::endl;
     return 0;
 }

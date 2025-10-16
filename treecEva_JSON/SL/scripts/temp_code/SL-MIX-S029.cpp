@@ -1,50 +1,53 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
-#include <cmath>
-#include <string>
+#include <bitset>
 
-double compute_inner_value(const std::vector<int>& nums) {
-    double sum = 0;
-    for (size_t i = 0; i < nums.size(); ++i) {
-        if (i % 2 == 0) {
-            sum += std::pow(nums[i], 2);
-        } else {
-            sum -= std::sqrt(std::abs(nums[i]));
-        }
+class FibonacciGenerator {
+private:
+    std::vector<int> fib_cache;
+
+public:
+    FibonacciGenerator() : fib_cache(2, 0) {
+        fib_cache[1] = 1;
     }
-    return sum;
-}
+    
+    int get_nth(int n) {
+        if (n < fib_cache.size()) {
+            return fib_cache[n];
+        }
+        
+        for (int i = fib_cache.size(); i <= n; ++i) {
+            fib_cache.push_back(fib_cache[i-1] + fib_cache[i-2]);
+        }
+        return fib_cache[n];
+    }
+};
 
 int main() {
-    std::vector<int> data = {9, 16, 25, 36, 49};
+    FibonacciGenerator fib_gen;
     
-    double inner = compute_inner_value(data);
+    // Get the 12th Fibonacci number as the base key
+    int base_key = fib_gen.get_nth(12);
     
-    std::string flag = "complex_mix";
-    bool cond1 = (inner > 0);
-    bool cond2 = (flag.length() > 5);
-    bool combined = cond1 && cond2;
+    // Process the key through bitwise operations
+    int processed_key = (base_key << 3) ^ (base_key >> 2) & 0xFFFF;
     
-    int base = 12;
-    int shift = 3;
-    int shifted = base << shift;
+    // Message block to authenticate (16-bit)
+    short message_block = 0x1A2B;
     
-    double trig_result = std::sin(M_PI / 6) * 100; // sin(30 degrees) * 100
+    // Generate authentication code
+    short authentication_code = static_cast<short>(
+        (message_block ^ processed_key) & 0xFFFF
+    );
     
-    double mixed;
-    if (combined) {
-        mixed = inner + shifted + trig_result;
-    } else {
-        mixed = inner - shifted - trig_result;
-    }
+    // Apply additional transformation
+    authentication_code = (authentication_code >> 4) | (authentication_code << 12);
     
-    int xor_result = 0xF0 ^ 0x0F;
+    // Final adjustment using XOR with a mask
+    short mask = 0x5555; // Alternating 0101 pattern
+    authentication_code ^= mask;
     
-    double final_result = mixed / xor_result;
-    
-    std::cout << "Result: " << final_result << std::endl;
-    
+    std::cout << "Result: " << authentication_code << std::endl;
     return 0;
 }

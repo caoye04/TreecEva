@@ -1,43 +1,35 @@
 import math
+from collections import defaultdict
 
-def transform_data(data):
-    transformed = []
-    for key, values in data.items():
-        sub_result = []
-        for v in values:
-            if isinstance(v, int) and v > 0:
-                sub_result.append(math.log(v) * 2)
-            elif isinstance(v, str):
-                sub_result.append(len(v) ** 2)
-            else:
-                sub_result.append(0)
-        transformed.append((key, sum(sub_result)))
-    return dict(transformed)
+# Package data: (weight, priority_factor)
+packages = [(16, 2), (9, 3), (25, 1), (4, 4), (36, 2)]
+truck_capacity = 30
 
-def aggregate_results(mapped_data):
-    total = 0
-    for key, value in mapped_data.items():
-        if key.startswith('group'):
-            total += int(value) & 0xFF
-        else:
-            total += value
-    return total
+# Initialize DP table
+# dp[i][w] = maximum value achievable with first i packages and weight limit w
+dp = defaultdict(lambda: defaultdict(float))
 
-# Main execution
-nested_data = {
-    'groupA': [10, 'hello', -5, 2.5],
-    'groupB': ['world', 100, None, 3],
-    'other': [4, 'test', 6, 'longstring']
-}
+# Fill DP table
+for i in range(1, len(packages) + 1):
+    weight, priority = packages[i-1]
+    value = math.sqrt(weight) * priority
+    for w in range(truck_capacity + 1):
+        # Don't take the current package
+        dp[i][w] = dp[i-1][w]
+        # Take the current package if it fits
+        if weight <= w:
+            dp[i][w] = max(dp[i][w], dp[i-1][w-weight] + value)
 
-mapped = transform_data(nested_data)
-aggregated = aggregate_results(mapped)
+# Find optimal load value
+optimal_load_value = dp[len(packages)][truck_capacity]
 
-# Bitwise manipulation with previous result
-shifted = aggregated << 2
-masked = shifted & 0x1FF
+# Apply a correction factor based on unused capacity
+unused_capacity = truck_capacity - max(w for w in range(truck_capacity + 1) if dp[len(packages)][w] == optimal_load_value)
+correction_factor = 1.0 + (unused_capacity / truck_capacity) * 0.1
+optimal_load_value *= correction_factor
 
-# Final calculation combining multiple operations
-final_result = (masked ^ 0xAA) + int(math.sqrt(144)) - (7 * 3)
+# Final adjustment using a lambda function
+adjustment = lambda x: round(x, 2) if x % 1 != 0 else int(x)
+optimal_load_value = adjustment(optimal_load_value)
 
-print(f"Result: {final_result}")
+print(f"Result: {optimal_load_value}")

@@ -1,62 +1,61 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
-#include <cmath>
-#include <string>
+#include <algorithm>
 
-using namespace std;
+template<int N>
+struct ModifiedFibonacci {
+    static constexpr int value = ModifiedFibonacci<N-1>::value + ModifiedFibonacci<N-2>::value;
+};
 
-double complex_calculation(vector<vector<int>>& matrix, string& modifier) {
-    double sum = 0.0;
-    int rows = matrix.size();
-    int cols = matrix[0].size();
-    
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            if (i % 2 == 0 && j % 2 == 0) {
-                sum += sqrt(abs(matrix[i][j]));
-            } else if (i % 2 != 0 && j % 2 != 0) {
-                sum += pow(matrix[i][j], 2);
-            } else {
-                sum += matrix[i][j] * 1.5;
-            }
-        }
-    }
-    
-    if (modifier == "exp") {
-        sum = exp(sum / (rows * cols));
-    } else if (modifier == "log") {
-        sum = log(sum + 1);
-    }
-    
-    return sum;
+template<>
+struct ModifiedFibonacci<0> {
+    static constexpr int value = 13;
+};
+
+template<>
+struct ModifiedFibonacci<1> {
+    static constexpr int value = 21;
+};
+
+constexpr int getPackageWeight(int index) {
+    return ModifiedFibonacci<0>::value * (index == 0) +
+           ModifiedFibonacci<1>::value * (index == 1) +
+           ModifiedFibonacci<2>::value * (index == 2) +
+           ModifiedFibonacci<3>::value * (index == 3) +
+           ModifiedFibonacci<4>::value * (index == 4) +
+           ModifiedFibonacci<5>::value * (index == 5) +
+           ModifiedFibonacci<6>::value * (index == 6) +
+           ModifiedFibonacci<7>::value * (index == 7) +
+           ModifiedFibonacci<8>::value * (index == 8) +
+           ModifiedFibonacci<9>::value * (index == 9);
 }
 
 int main() {
-    vector<vector<int>> data = {{4, -9, 16}, {25, -36, 49}, {64, -81, 100}};
-    string mode = "exp";
+    const int truckCapacity = 2000;
+    std::vector<int> packageWeights;
     
-    double intermediate = complex_calculation(data, mode);
-    
-    // Perform bit manipulations
-    int bit_value = static_cast<int>(intermediate * 1000) & 0xFF;
-    bit_value = bit_value ^ (bit_value >> 2);
-    
-    // Mathematical transformations
-    double trig_result = sin(intermediate) * cos(intermediate/2);
-    
-    // Complex conditional logic
-    double final_result;
-    if (bit_value > 100) {
-        final_result = intermediate * trig_result;
-    } else if (bit_value > 50) {
-        final_result = intermediate + trig_result;
-    } else {
-        final_result = pow(intermediate, 1.0/3.0) * trig_result;
+    // Generate package weights following modified Fibonacci sequence
+    for (int i = 0; i < 10; ++i) {
+        packageWeights.push_back(getPackageWeight(i));
     }
     
-    // Execution point Y
-    cout << "Result: " << final_result << endl;
+    // Sort packages in ascending order for greedy approach
+    std::sort(packageWeights.begin(), packageWeights.end());
     
+    // Greedy algorithm: load as many packages as possible
+    int loadedPackages = 0;
+    int currentLoad = 0;
+    
+    for (int weight : packageWeights) {
+        if (currentLoad + weight <= truckCapacity) {
+            currentLoad += weight;
+            loadedPackages++;
+        } else {
+            break;
+        }
+    }
+    
+    std::cout << "Result: " << loadedPackages << std::endl;
     return 0;
 }

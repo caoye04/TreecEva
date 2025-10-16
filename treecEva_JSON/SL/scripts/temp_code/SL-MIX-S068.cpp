@@ -1,41 +1,38 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
-#include <cmath>
-#include <algorithm>
 #include <string>
-
-using namespace std;
-
-double compute_expression(int a, int b, double c) {
-    return pow(a, 2) + sqrt(b) * sin(c);
-}
+#include <sstream>
+#include <algorithm>
 
 int main() {
-    vector<vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    int x = matrix[1][2];
-    int y = matrix[0][1] + matrix[2][0];
+    std::vector<std::string> book_titles = {
+        "The Great Gatsby",
+        "To Kill a Mockingbird",
+        "The Catcher in the Rye",
+        "Pride and Prejudice",
+        "The Lord of the Rings"
+    };
     
-    double angle = 1.5708; // approximately pi/2
-    double intermediate = compute_expression(x, y, angle);
+    std::string favorite_word = "The";
+    int match_counter = 0;
     
-    string s = "HelloWorld";
-    int len = s.length();
-    int z = len ^ (int(intermediate) & 0xFF);
-    
-    vector<int> arr = {z, x, y};
-    sort(arr.begin(), arr.end());
-    
-    int product = 1;
-    for (int i = 0; i < arr.size(); i++) {
-        product *= arr[i];
-        if (i == 1) {
-            product -= arr[0];
+    for (const auto& title : book_titles) {
+        std::istringstream iss(title);
+        std::vector<std::string> tokens;
+        std::string word;
+        
+        while (iss >> word) {
+            tokens.push_back(word);
+        }
+        
+        std::sort(tokens.begin(), tokens.end());
+        
+        if (!tokens.empty() && tokens[0] == favorite_word) {
+            match_counter++;
         }
     }
     
-    int final_result = (product >> 2) + (z & 0x0F);
-    
-    cout << "Result: " << final_result << endl;
+    std::cout << "Result: " << match_counter << std::endl;
     return 0;
 }

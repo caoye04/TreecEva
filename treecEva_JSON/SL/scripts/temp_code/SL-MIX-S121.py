@@ -1,46 +1,49 @@
-import math
+import heapq
+from functools import reduce
+from collections import namedtuple
 
-def process_data(data):
-    result = []
-    for i, sublist in enumerate(data):
-        temp = []
-        for j, val in enumerate(sublist):
-            if isinstance(val, str):
-                temp.append(len(val) * (i + 1))
-            elif isinstance(val, int):
-                temp.append(val ** (j + 1))
-            elif isinstance(val, float):
-                temp.append(round(math.sqrt(val), 2))
-        result.append(temp)
-    return result
+task_tuple = namedtuple('Task', ['id', 'priority', 'dependencies', 'execution_time'])
 
-def aggregate_values(processed_data):
-    totals = []
-    for sublist in processed_data:
-        total = 0
-        for val in sublist:
-            total += val if isinstance(val, int) else int(val)
-        totals.append(total)
-    return totals
+# Task scheduler with priority queue and dependency tracking
+class TaskScheduler:
+    def __init__(self):
+        self.task_queue = []
+        self.completed = {}
+        self.failure_log = set()
+    
+    def add_task(self, task):
+        heapq.heappush(self.task_queue, (task.priority, task))
+    
+    def process_tasks(self):
+        completed_count = 0
+        while self.task_queue:
+            _, task = heapq.heappop(self.task_queue)
+            # Short-circuit: skip if any dependency failed
+            if any(dep in self.failure_log for dep in task.dependencies):
+                continue
+            # Simulate task execution with potential failure
+            success = task.execution_time % 3 != 0
+            if success:
+                self.completed[task.id] = True
+                completed_count += 1
+            else:
+                self.failure_log.add(task.id)
+        return completed_count
 
-data = [
-    ["hello", 2, 9.0, "world"],
-    [3, "test", 4.0, 5],
-    ["a", "bb", 3, 2.25]
+# Initialize scheduler with tasks
+scheduler = TaskScheduler()
+tasks_data = [
+    task_tuple('render_engine', 2, [], 5),
+    task_tuple('texture_loader', 1, ['render_engine'], 3),
+    task_tuple('physics_sim', 3, ['render_engine'], 4),
+    task_tuple('ai_behavior', 4, ['physics_sim'], 6),
+    task_tuple('audio_mixer', 2, ['texture_loader'], 9),
+    task_tuple('network_sync', 5, ['ai_behavior', 'audio_mixer'], 2)
 ]
 
-processed = process_data(data)
-aggregated = aggregate_values(processed)
+# Add tasks using functional approach
+list(map(scheduler.add_task, tasks_data))
 
-# Bitwise operations and mathematical transformations
-x = aggregated[0] << 1
-y = aggregated[1] >> 1
-z = aggregated[2] & 0xF
-
-# Complex calculation using x, y, z
-intermediate = (x * y) + (z ^ 0xA) - int(math.log10(max(aggregated)) * 10)
-
-# Final result computation
-final_result = (intermediate % 7) ** 3 + sum([ord(c) for c in hex(intermediate)[-3:] if c.isdigit()])
-
-print(f"Result: {final_result}")
+# Process all tasks and count completions
+completed_task_count = scheduler.process_tasks()
+print(f"Result: {completed_task_count}")

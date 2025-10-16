@@ -1,66 +1,46 @@
-import math
+from functools import reduce
+from itertools import combinations
 
-def complex_transform(data):
-    transformed = []
-    for i, val in enumerate(data):
-        if i % 3 == 0:
-            transformed.append(val ** 2)
-        elif i % 3 == 1:
-            transformed.append(math.sqrt(abs(val)))
-        else:
-            transformed.append(math.log(abs(val) + 1))
-    return transformed
+def calculate_bond_energy(atoms):
+    return reduce(lambda x, y: x * y, atoms, 1)
 
-def nested_operation(matrix):
-    flattened = [item for sublist in matrix for item in sublist]
-    processed = []
-    for x in flattened:
-        if x > 0:
-            processed.append(math.sin(x))
-        else:
-            processed.append(math.cos(x))
-    return sum(processed)
+def get_molecular_stability(molecule_configs):
+    dp_table = {}
+    
+    def stabilize(subset):
+        if subset in dp_table:
+            return dp_table[subset]
+        if len(subset) <= 1:
+            dp_table[subset] = sum(subset)
+            return dp_table[subset]
+        
+        # Combinatorial analysis of pair interactions
+        pairwise_interactions = [
+            calculate_bond_energy(pair) 
+            for pair in combinations(subset, 2)
+        ]
+        
+        # Dynamic programming with functional reduction
+        interaction_sum = sum(pairwise_interactions)
+        base_energy = reduce(lambda acc, val: acc + val**2, subset, 0)
+        
+        dp_table[subset] = interaction_sum + base_energy
+        return dp_table[subset]
+    
+    total_stability = 0
+    for config in molecule_configs:
+        sorted_config = tuple(sorted(config))
+        total_stability += stabilize(sorted_config)
+    
+    return total_stability
 
-data_structure = {
-    'layer1': [
-        {'values': [2, -4, 8, -16]},
-        {'values': [32, -64, 128]}
-    ],
-    'layer2': [
-        [[1, -2], [3, -4]],
-        [[5, -6], [7, -8]]
-    ]
-}
+# Molecular configuration data representing atomic bonds
+organic_compounds = [
+    (3, 5, 7),
+    (2, 4, 6, 8),
+    (1, 9),
+    (5, 5, 5)
+]
 
-# Phase 1: Process layer1
-layer1_results = []
-for item in data_structure['layer1']:
-    transformed = complex_transform(item['values'])
-    layer1_results.extend(transformed)
-
-# Phase 2: Process layer2
-layer2_result = nested_operation(data_structure['layer2'])
-
-# Phase 3: Combine results
-combined = []
-for i in range(min(len(layer1_results), 10)):  # Limit to first 10 elements
-    if i < len(layer1_results):
-        combined.append(layer1_results[i] * layer2_result)
-
-# Phase 4: Statistical analysis
-mean_val = sum(combined) / len(combined) if combined else 0
-variance = sum((x - mean_val) ** 2 for x in combined) / len(combined) if combined else 0
-
-# Phase 5: Final computation
-weighted_sum = 0
-for i, val in enumerate(combined):
-    weight = math.exp(-i/len(combined)) if combined else 0
-    weighted_sum += val * weight
-
-# Phase 6: Apply final transformation
-if weighted_sum > 0:
-    result = int(math.floor(weighted_sum ** (1/3)))
-else:
-    result = int(math.ceil(abs(weighted_sum) ** (1/3))) * -1
-
-print(f"Result: {result}")
+stability_index = get_molecular_stability(organic_compounds)
+print(f"Result: {stability_index}")

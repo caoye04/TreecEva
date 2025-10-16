@@ -1,60 +1,75 @@
-import math
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 
-def complex_transform(data_list):
-    transformed = []
-    for item in data_list:
-        if isinstance(item, str):
-            transformed.append(len(item) * 2)
-        elif isinstance(item, int):
-            transformed.append(item ^ 0xF)  # XOR with 15
-        elif isinstance(item, float):
-            transformed.append(int(math.floor(item * 3.14)))
-        else:
-            transformed.append(0)
-    return transformed
+class ChecksumTracker:
+    def __init__(self):
+        self.intermediates = []
+    
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+    
+    def record(self, value):
+        self.intermediates.append(value)
 
-def nested_operation(container):
-    total = 0
-    for key, value in container.items():
-        if isinstance(value, list):
-            for i, elem in enumerate(value):
-                if i % 2 == 0:
-                    total += elem << 1  # Left shift by 1 (multiply by 2)
-                else:
-                    total += elem >> 1  # Right shift by 1 (integer division by 2)
-        elif isinstance(value, dict):
-            sub_total = 0
-            for sub_key, sub_value in value.items():
-                sub_total += (sub_key * sub_value) % 7
-            total += sub_total
-    return total
+def build_linked_list(values):
+    if not values:
+        return None
+    head = ListNode(values[0])
+    current = head
+    for val in values[1:]:
+        current.next = ListNode(val)
+        current = current.next
+    return head
 
-# Initialize complex nested data structure
-data = {
-    'alpha': [3, 8, 5, 12],
-    'beta': {
-        2: 4,
-        5: 9,
-        3: 7
-    },
-    'gamma': ['hello', 3.14159, 42, 'world!']
-}
+def divide_and_process(node, tracker):
+    if not node:
+        return frozenset()
+    
+    if not node.next:  # Base case: single node
+        # Transform node value using logical operations
+        transformed = (node.val & 0xF) | ((node.val >> 4) & 0xF) if node.val > 0 else node.val
+        tracker.record(transformed)
+        return frozenset([transformed])
+    
+    # Divide the list
+    slow = fast = node
+    prev = None
+    while fast and fast.next:
+        prev = slow
+        slow = slow.next
+        fast = fast.next.next
+    
+    # Split into two halves
+    prev.next = None
+    
+    # Conquer: process both halves
+    left_set = divide_and_process(node, tracker)
+    right_set = divide_and_process(slow, tracker)
+    
+    # Combine results with set operations
+    combined = left_set.union(right_set)
+    
+    # Apply checksum logic: XOR all elements, then apply mask
+    xor_result = 0
+    for item in combined:
+        xor_result ^= item
+    
+    masked = xor_result & 0xFF
+    tracker.record(masked)
+    return frozenset([masked])
 
-# Perform nested operation on data
-intermediate_value = nested_operation(data)
+# Main execution
+message_blocks = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
+head = build_linked_list(message_blocks)
 
-# Transform gamma values
-transformed_gamma = complex_transform(data['gamma'])
+with ChecksumTracker() as tracker:
+    result_set = divide_and_process(head, tracker)
+    # Final checksum calculation
+    checksum_result = sum(tracker.intermediates) % 256
 
-# Calculate accumulator using transformed values and intermediate value
-accumulator = 0
-for i, val in enumerate(transformed_gamma):
-    accumulator += (val * (i + 1)) ^ intermediate_value
-
-# Apply mathematical transformation
-accumulator = int(math.sqrt(accumulator) * 10) & 0xFF  # Mask to 8-bit
-
-# Final calculation step
-result = (accumulator << 2) + (intermediate_value % 5) - sum(transformed_gamma)
-
-print(f'Result: {result}')
+print(f"Result: {checksum_result}")

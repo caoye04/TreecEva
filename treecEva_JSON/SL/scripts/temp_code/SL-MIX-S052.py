@@ -1,64 +1,60 @@
+import itertools
 import math
 
-def complex_transform(data):
-    transformed = []
-    for i, val in enumerate(data):
-        if i % 2 == 0:
-            transformed.append(val ** 2)
-        else:
-            transformed.append(math.sqrt(abs(val)))
-    return transformed
+def cross_product(o, a, b):
+    return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
 
-def nested_operation(matrix):
-    result = 0
-    for row in matrix:
-        temp = 1
-        for elem in row:
-            temp *= elem if elem != 0 else 1
-        result += temp
-    return result
+def convex_hull(points):
+    points = sorted(set(points))
+    if len(points) <= 1:
+        return points
+    lower = []
+    for p in points:
+        while len(lower) >= 2 and cross_product(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+    upper = []
+    for p in reversed(points):
+        while len(upper) >= 2 and cross_product(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+    return lower[:-1] + upper[:-1]
 
-data_structure = {
-    'level1': {
-        'level2a': [3, -4, 5, -6],
-        'level2b': [
-            {'inner1': 2, 'inner2': [7, 8]},
-            {'inner1': 3, 'inner2': [9, 10]}
-        ]
-    },
-    'level1b': [
-        [1, 2, 0],
-        [3, 0, 4],
-        [0, 5, 6]
-    ]
-}
+def decode_scaling_factor(metadata_str):
+    char_sum = sum(ord(c) for c in metadata_str if c.isalpha())
+    digit_product = 1
+    has_digits = False
+    for c in metadata_str:
+        if c.isdigit():
+            digit_product *= int(c)
+            has_digits = True
+    if not has_digits:
+        digit_product = 1
+    return char_sum * digit_product
 
-# Process level2a
-processed_a = complex_transform(data_structure['level1']['level2a'])
+survey_zones_vertices = [
+    [(0, 0), (4, 0), (4, 3)],
+    [(1, 1), (5, 1), (5, 4), (1, 4)],
+    [(2, 2), (6, 2), (6, 5)]
+]
 
-# Process level2b
-processed_b_values = []
-for item in data_structure['level1']['level2b']:
-    processed_b_values.extend(item['inner2'])
-processed_b = complex_transform(processed_b_values)
+zone_metadata = ["ZoneA-12", "ZoneB-34", "ZoneC-56"]
 
-# Combine processed results
-combined = processed_a + processed_b
+all_vertices = list(itertools.chain.from_iterable(survey_zones_vertices))
+hull_points = convex_hull(all_vertices)
 
-# Perform aggregation
-aggregated = 0
-for i, val in enumerate(combined):
-    if i % 3 == 0:
-        aggregated += val
-    elif i % 3 == 1:
-        aggregated -= val
-    else:
-        aggregated *= val if val != 0 else 1
+# Calculate area using Shoelace formula
+n = len(hull_points)
+area = 0.0
+for i in range(n):
+    j = (i + 1) % n
+    area += hull_points[i][0] * hull_points[j][1]
+    area -= hull_points[j][0] * hull_points[i][1]
+survey_area = abs(area) / 2.0
 
-# Process level1b matrix
-matrix_result = nested_operation(data_structure['level1b'])
+scaling_factors = [decode_scaling_factor(meta) for meta in zone_metadata]
+total_scaling = sum(scaling_factors)
 
-# Final calculation
-final_result = int((aggregated + matrix_result) / (len(combined) - len(processed_b)))
+normalized_survey_area = survey_area * math.log(total_scaling)
 
-print(f"Result: {final_result}")
+print(f"Result: {normalized_survey_area}")

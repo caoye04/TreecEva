@@ -1,61 +1,78 @@
+from collections import defaultdict
+from itertools import combinations
 import math
 
-def process_nested_data(data):
-    result = 0
-    for key, value in data.items():
-        if isinstance(value, dict):
-            inner_result = 0
-            for inner_key, inner_value in value.items():
-                if isinstance(inner_value, list):
-                    temp_sum = sum(inner_value)
-                    inner_result += temp_sum * len(inner_value)
-                elif isinstance(inner_value, str):
-                    inner_result += len(inner_value) ** 2
-                else:
-                    inner_result += inner_value
-            result += inner_result
-        elif isinstance(value, list):
-            for i, item in enumerate(value):
-                if i % 2 == 0:
-                    result += item
-                else:
-                    result -= item
-        else:
-            result += value
-    return result
+def custom_position_hash(x, y):
+    return hash(f"{x:.2f},{y:.2f}") % 1000000
 
-def complex_computation(x, y, z):
-    a = math.pow(x, 2) + math.sqrt(y)
-    b = math.log(z) if z > 0 else 0
-    c = math.sin(a) + math.cos(b)
-    d = int(c * 1000) & 0xFF
-    return d
+def euclidean_distance(p1, p2):
+    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
-data_structure = {
-    'level1': {
-        'level2a': [1, 2, 3, 4],
-        'level2b': 'hello',
-        'level2c': {
-            'level3a': [5, 6],
-            'level3b': 'world',
-            'level3c': 42
-        }
-    },
-    'array1': [10, 5, 8, 3, 7],
-    'value1': 100,
-    'value2': 200
-}
+# Sensor data: (sensor_id, [(x,y), (x,y), ...])
+sensor_readings = [
+    ('LIDAR_01', [(1.5, 2.3), (3.7, 4.1), (2.2, 5.8)]),
+    ('RADAR_02', [(1.5, 2.3), (6.1, 3.9), (2.2, 5.8)]),
+    ('SONAR_03', [(3.7, 4.1), (7.2, 1.5), (4.4, 6.7)])
+]
 
-# Process the nested data structure
-processed_value = process_nested_data(data_structure)
+# Process sensor data
+unique_positions = set()
+position_frequency = defaultdict(int)
+encoded_positions = {}
 
-# Perform complex mathematical computation
-computed_value = complex_computation(processed_value, 144, 1000)
+for sensor_id, positions in sensor_readings:
+    for x, y in positions:
+        # Round to 2 decimal places for consistency
+        x, y = round(x, 2), round(y, 2)
+        unique_positions.add((x, y))
+        position_frequency[(x, y)] += 1
+        encoded_positions[(x, y)] = custom_position_hash(x, y)
 
-# Bitwise operations
-bitwise_result = (computed_value << 2) ^ 0xAA
+# Convert to list for indexing
+position_list = list(unique_positions)
 
-# Final calculation combining all results
-final_result = (processed_value + computed_value + bitwise_result) % 97
+# Calculate geometric properties
+if len(position_list) >= 2:
+    # Find maximum distance between any two points
+    max_distance = 0
+    for p1, p2 in combinations(position_list, 2):
+        dist = euclidean_distance(p1, p2)
+        if dist > max_distance:
+            max_distance = dist
+    
+    # Calculate centroid
+    centroid_x = sum(p[0] for p in position_list) / len(position_list)
+    centroid_y = sum(p[1] for p in position_list) / len(position_list)
+    
+    # Count positions in each quadrant relative to centroid
+    quadrant_counts = [0, 0, 0, 0]  # I, II, III, IV
+    for x, y in position_list:
+        if x >= centroid_x and y >= centroid_y:
+            quadrant_counts[0] += 1
+        elif x < centroid_x and y >= centroid_y:
+            quadrant_counts[1] += 1
+        elif x < centroid_x and y < centroid_y:
+            quadrant_counts[2] += 1
+        else:  # x >= centroid_x and y < centroid_y
+            quadrant_counts[3] += 1
+    
+    # Combinatorial analysis: count triangles that can be formed
+    triangle_count = len(list(combinations(position_list, 3)))
+    
+    # Security checksum calculation
+    frequency_product = 1
+    for freq in position_frequency.values():
+        frequency_product *= freq
+    
+    hash_sum = sum(encoded_positions.values())
+    
+    # Final checksum combines geometric and combinatorial properties
+    security_checksum = int((max_distance * 100) + 
+                           (triangle_count * 10) + 
+                           (sum(quadrant_counts) * 5) + 
+                           (frequency_product * 3) + 
+                           (hash_sum % 1000))
+else:
+    security_checksum = 0
 
-print(f'Result: {final_result}')
+print(f"Result: {security_checksum}")

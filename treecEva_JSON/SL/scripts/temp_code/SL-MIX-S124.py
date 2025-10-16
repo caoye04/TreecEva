@@ -1,49 +1,85 @@
-import math
+import heapq
+from collections import deque
 
-def complex_transform(data):
-    result = []
-    for i, val in enumerate(data):
-        if i % 2 == 0:
-            result.append(val ** 2)
-        else:
-            result.append(math.sqrt(abs(val)))
-    return result
+class NoteEvent:
+    def __init__(self, time, pitch, duration):
+        self.time = time
+        self.pitch = pitch
+        self.duration = duration
+    
+    def __lt__(self, other):
+        return self.time < other.time
 
-def nested_operation(x, y, z):
-    a = x * y + z
-    b = (a & 0xFF) | (z << 2)
-    c = math.log(b + 1) if b > 0 else 0
-    return int(c) ^ (x % 10)
+def generate_primes(limit):
+    sieve = [True] * (limit + 1)
+    sieve[0] = sieve[1] = False
+    for i in range(2, int(limit**0.5) + 1):
+        if sieve[i]:
+            for j in range(i*i, limit + 1, i):
+                sieve[j] = False
+    return [i for i, is_prime in enumerate(sieve) if is_prime]
 
-data_structure = {
-    'layer1': [
-        {'values': [3, -4, 5]},
-        {'values': [7, -2, 9, 16]}
-    ],
-    'layer2': {
-        'sub_a': (12, 8, 5),
-        'sub_b': [1, 3, 5, 7, 9]
-    }
-}
+def fibonacci_sequence(n):
+    if n <= 0: return []
+    elif n == 1: return [1]
+    elif n == 2: return [1, 1]
+    seq = [1, 1]
+    for _ in range(2, n):
+        seq.append(seq[-1] + seq[-2])
+    return seq
 
-# Process layer1
-processed_values = []
-for item in data_structure['layer1']:
-    transformed = complex_transform(item['values'])
-    processed_values.extend(transformed)
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
 
-# Process layer2
-tuple_sum = sum(data_structure['layer2']['sub_a'])
-list_product = 1
-for num in data_structure['layer2']['sub_b']:
-    list_product *= num
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)
 
-# Combine results
-intermediate_value = nested_operation(tuple_sum, len(processed_values), list_product)
+# Initialize musical composition system
+prime_time_signatures = generate_primes(20)[:8]  # First 8 primes
+rhythm_pattern = fibonacci_sequence(7)  # First 7 Fibonacci numbers
 
-# Final calculation
-bit_shifted = intermediate_value << 3
-masked_value = bit_shifted & 0x1FF
-final_result = masked_value - (processed_values[0] + processed_values[-1])
+# Create event heap
+note_events = []
+for i, rhythm in enumerate(rhythm_pattern):
+    heapq.heappush(note_events, NoteEvent(rhythm, 60 + i*2, rhythm_pattern[i % len(rhythm_pattern)]))
 
-print(f"Result: {final_result}")
+# State machine for processing notes
+states = deque(['REST', 'ATTACK', 'SUSTAIN', 'RELEASE'])
+current_state = states[0]
+state_transitions = 0
+harmonic_resonance = 1
+
+# Process events
+while note_events and state_transitions < 12:
+    event = heapq.heappop(note_events)
+    
+    # State transition logic
+    current_state = states[(states.index(current_state) + 1) % len(states)]
+    state_transitions += 1
+    
+    # Apply musical transformations based on state
+    if current_state == 'ATTACK':
+        harmonic_resonance *= event.pitch
+    elif current_state == 'SUSTAIN':
+        harmonic_resonance += event.duration
+    elif current_state == 'RELEASE':
+        if event.duration > 0:
+            harmonic_resonance = harmonic_resonance // event.duration
+    
+    # Prime-based modulation
+    prime_factor = prime_time_signatures[state_transitions % len(prime_time_signatures)]
+    if harmonic_resonance % prime_factor == 0:
+        harmonic_resonance = harmonic_resonance // prime_factor + lcm(harmonic_resonance, prime_factor)
+    
+    # Schedule next event based on Fibonacci rhythm
+    if state_transitions < 12:
+        next_rhythm = rhythm_pattern[state_transitions % len(rhythm_pattern)]
+        heapq.heappush(note_events, NoteEvent(event.time + next_rhythm, event.pitch + 1, next_rhythm))
+
+# Final harmonic calculation
+final_prime = prime_time_signatures[-1]
+harmonic_resonance = (harmonic_resonance * final_prime) % 1000
+
+print(f"Result: {harmonic_resonance}")

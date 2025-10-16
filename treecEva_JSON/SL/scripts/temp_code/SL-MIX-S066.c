@@ -1,55 +1,68 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <stdio.h>
-#include <math.h>
-#include <string.h>
+#include <stdlib.h>
 
-#define MAX_LEN 100
+#define FIB_STEPS 6
+
+typedef struct DigitWheel {
+    int position;
+    int history[];  // flexible array member
+} DigitWheel;
+
+typedef struct WheelNode {
+    DigitWheel* wheel;
+    int (*step_func)(int pos, int step_val);
+    struct WheelNode* next;
+} WheelNode;
+
+int fibonacci(int n) {
+    if (n <= 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int step_operation(int pos, int step_val) {
+    return (pos + step_val) % 10;
+}
 
 int main() {
-    // Initialize complex nested data structures
-    int matrix[3][3] = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    double vector[3] = {1.5, 2.5, 3.5};
-    char text[MAX_LEN] = "ComplexComputationChallenge";
+    int final_torque = 0;
+    int num_wheels = 4;
     
-    // Step 1: Perform matrix-vector multiplication and store result in temp_vector
-    double temp_vector[3] = {0};
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            temp_vector[i] += matrix[i][j] * vector[j];
+    // Create linked list of wheels
+    WheelNode* head = NULL;
+    WheelNode* current = NULL;
+    
+    for (int i = 0; i < num_wheels; i++) {
+        WheelNode* node = (WheelNode*)malloc(sizeof(WheelNode));
+        size_t wheel_size = sizeof(DigitWheel) + FIB_STEPS * sizeof(int);
+        node->wheel = (DigitWheel*)malloc(wheel_size);
+        node->wheel->position = i + 1;
+        node->step_func = step_operation;
+        node->next = NULL;
+        
+        if (head == NULL) {
+            head = node;
+            current = node;
+        } else {
+            current->next = node;
+            current = node;
         }
     }
     
-    // Step 2: Calculate the magnitude of temp_vector
-    double magnitude = 0;
-    for (int i = 0; i < 3; i++) {
-        magnitude += temp_vector[i] * temp_vector[i];
-    }
-    magnitude = sqrt(magnitude);
-    
-    // Step 3: Perform bitwise operations on text length
-    int text_len = strlen(text);
-    int bit_operation_result = (text_len << 2) ^ (text_len >> 1);
-    
-    // Step 4: Complex mathematical expression combining previous results
-    double complex_expr = pow(magnitude, 1.5) + log(bit_operation_result) * sin(M_PI / 4);
-    
-    // Step 5: Conditional logic with multiple branches
-    int condition_a = (complex_expr > 100) ? 1 : 0;
-    int condition_b = (bit_operation_result % 7 == 0) ? 1 : 0;
-    
-    // Step 6: Final calculation combining all previous steps
-    double target_result;
-    if (condition_a && condition_b) {
-        target_result = complex_expr / magnitude * bit_operation_result;
-    } else if (condition_a || condition_b) {
-        target_result = complex_expr + magnitude - bit_operation_result;
-    } else {
-        target_result = complex_expr * magnitude + bit_operation_result;
+    // Apply Fibonacci-based stepping
+    current = head;
+    int wheel_index = 0;
+    while (current != NULL) {
+        for (int step = 1; step <= FIB_STEPS; step++) {
+            int fib_val = fibonacci(step);
+            current->wheel->history[step-1] = current->wheel->position;
+            current->wheel->position = current->step_func(current->wheel->position, fib_val);
+        }
+        final_torque += current->wheel->position * (wheel_index + 1);
+        current = current->next;
+        wheel_index++;
     }
     
-    // Target point
-    printf("Target result: %.0f\n", target_result);
-    
+    printf("Result: %d\n", final_torque);
     return 0;
 }

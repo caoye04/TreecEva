@@ -1,50 +1,45 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <cmath>
 #include <vector>
-#include <string>
+#include <numeric>
 
 using namespace std;
 
-double compute_inner_value(int x, double y) {
-    return pow(x, 2) + sin(y) * cos(y);
-}
+class FibonacciMod {
+private:
+    vector<int> fib_cache;
+    int mod;
+
+public:
+    FibonacciMod(int modulo) : mod(modulo) {
+        fib_cache.push_back(0);
+        fib_cache.push_back(1);
+    }
+    
+    int get(int n) {
+        while (fib_cache.size() <= n) {
+            int next = (fib_cache[fib_cache.size()-1] + fib_cache[fib_cache.size()-2]) % mod;
+            fib_cache.push_back(next);
+        }
+        return fib_cache[n];
+    }
+};
 
 int main() {
-    vector<vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    int n = matrix.size();
-    int m = matrix[0].size();
+    FibonacciMod fib_mod(100);
+    vector<int> node_values;
     
-    double accumulator = 0.0;
-    for(int i=0; i<n; i++){
-        for(int j=0; j<m; j++){
-            if((i+j)%2 == 0){
-                accumulator += sqrt(matrix[i][j]);
-            } else {
-                accumulator -= log(matrix[i][j]+1);
-            }
-        }
+    // Level 0: 1 node (index 1)
+    // Level 1: 2 nodes (indices 2,3)
+    // Level 2: 4 nodes (indices 4,5,6,7)
+    // Level 3: 8 nodes (indices 8,9,10,11,12,13,14,15)
+    
+    for (int i = 1; i <= 15; i++) {
+        node_values.push_back(fib_mod.get(i));
     }
     
-    string key = "COMPUTE";
-    int hash_val = 0;
-    for(char c : key){
-        hash_val = (hash_val * 31 + c) % 100;
-    }
+    int total_sum = accumulate(node_values.begin(), node_values.end(), 0);
     
-    bool flag1 = (accumulator > 10);
-    bool flag2 = (hash_val < 50);
-    
-    double final_result = 0;
-    if(flag1 && flag2){
-        final_result = compute_inner_value( static_cast<int>(accumulator/10), M_PI/4 );
-    } else if(flag1 || flag2){
-        final_result = ceil(accumulator) * floor(static_cast<double>(hash_val)/7);
-    } else {
-        final_result = round(accumulator + hash_val);
-    }
-    
-    cout << "Result: " << final_result << endl;
+    cout << "Result: " << total_sum << endl;
     return 0;
 }

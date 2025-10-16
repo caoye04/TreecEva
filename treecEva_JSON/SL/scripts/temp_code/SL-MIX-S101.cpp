@@ -1,47 +1,80 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
-#include <cmath>
-#include <algorithm>
 
-using namespace std;
+template<int N>
+class PositionDecoder {
+public:
+    static int decode(int encoded) {
+        int base = (encoded >> 8) & 0xFF;
+        int offset = encoded & 0xFF;
+        if (offset & 0x80) {
+            offset = offset - 256;  // Sign extend for negative offsets
+        }
+        return base + offset;
+    }
+};
 
-double compute_expression(int a, int b, double c) {
-    return pow(a, 2) + sqrt(b) * sin(c);
-}
+template<>
+class PositionDecoder<0> {
+public:
+    static int decode(int encoded) {
+        return (encoded & 0xFF) * 2;
+    }
+};
+
+class RoboticArmController {
+private:
+    int currentPosition;
+    
+public:
+    RoboticArmController() : currentPosition(0) {}
+    
+    int processMovements(const std::vector<int>& commands) {
+        for (size_t i = 0; i < commands.size(); ++i) {
+            int cmd = commands[i];
+            int mode = (cmd >> 16) & 0xF;
+            int encoded = cmd & 0xFFFF;
+            
+            if (mode == 0xF) {
+                // Emergency stop command
+                break;
+            }
+            
+            int delta;
+            if (mode == 0) {
+                delta = PositionDecoder<0>::decode(encoded);
+            } else {
+                delta = PositionDecoder<1>::decode(encoded);
+            }
+            
+            // Check for safety limits
+            if (currentPosition + delta > 1000) {
+                return currentPosition;  // Early return if limit exceeded
+            }
+            
+            currentPosition += delta;
+            
+            // Special adjustment every 3 movements
+            if ((i + 1) % 3 == 0) {
+                currentPosition = (currentPosition / 10) * 10;  // Round to nearest 10
+            }
+        }
+        return currentPosition;
+    }
+};
 
 int main() {
-    vector<vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
+    RoboticArmController arm;
+    std::vector<int> movementCommands = {
+        (0x1 << 16) | 0x0205,  // Mode 1: base=2, offset=5
+        (0x0 << 16) | 0x000A,  // Mode 0: value=10*2=20
+        (0x1 << 16) | 0x01F0,  // Mode 1: base=1, offset=-16
+        (0x1 << 16) | 0x0307,  // Mode 1: base=3, offset=7
+        (0xF << 16) | 0xABCD   // Emergency stop
+    };
     
-    int x = matrix[1][2];
-    int y = matrix[0][1] << 2;
-    double z = M_PI / 4.0;
-    
-    double temp = compute_expression(x, y, z);
-    
-    int arr[] = {static_cast<int>(temp), 42, 100};
-    int* ptr = arr;
-    
-    int sum = 0;
-    for (int i = 0; i < 3; ++i) {
-        sum += *(ptr + i);
-    }
-    
-    bool condition1 = (sum > 150);
-    bool condition2 = (matrix[2][0] & 1);
-    
-    int intermediate = condition1 ? (condition2 ? sum * 2 : sum / 2) : (condition2 ? sum + 10 : sum - 10);
-    
-    vector<int> values = {intermediate, static_cast<int>(temp), x, y};
-    sort(values.begin(), values.end());
-    
-    int final_result = 0;
-    for (size_t i = 0; i < values.size(); ++i) {
-        final_result ^= (values[i] << i);
-    }
-    
-    cout << "Result: " << final_result << endl;
-    
+    int finalPosition = arm.processMovements(movementCommands);
+    std::cout << "Result: " << finalPosition << std::endl;
     return 0;
 }

@@ -1,36 +1,66 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
+struct packet_header {
+    unsigned int version : 4;
+    unsigned int ihl : 4;
+    unsigned int tos : 8;
+    unsigned int tot_len : 16;
+};
+
+struct packet_stats {
+    int count;
+    double sum;
+    double sum_sq;
+};
+
+void update_stats(struct packet_stats* stats, double value) {
+    stats->count++;
+    stats->sum += value;
+    stats->sum_sq += value * value;
+}
+
+double compute_variance(struct packet_stats* stats) {
+    if (stats->count <= 1) return 0.0;
+    double mean = stats->sum / stats->count;
+    return (stats->sum_sq / stats->count) - (mean * mean);
+}
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
 
 int main() {
-    int matrix[3][3] = {{2, 4, 8}, {16, 32, 64}, {128, 256, 512}};
-    int vector[3] = {1, 2, 3};
-    int temp[3] = {0};
-    int i, j;
-    long long accumulator = 0;
+    struct packet_header packets[4] = {
+        {4, 5, 0, 40},
+        {4, 6, 8, 64},
+        {6, 5, 16, 52},
+        {4, 5, 0, 48}
+    };
     
-    // Step 1: Matrix-vector multiplication with bitwise shifts
-    for (i = 0; i < 3; i++) {
-        for (j = 0; j < 3; j++) {
-            temp[i] += (matrix[i][j] << (vector[j] - 1));
-        }
+    struct packet_stats stats = {0, 0.0, 0.0};
+    int composite_field = 0;
+    
+    for (int i = 0; i < 4; i++) {
+        int field_value = (packets[i].version << 12) | 
+                         (packets[i].ihl << 8) | 
+                         packets[i].tos;
+        update_stats(&stats, (double)field_value);
+        composite_field += packets[i].tot_len;
     }
     
-    // Step 2: Apply trigonometric transformation and accumulate
-    for (i = 0; i < 3; i++) {
-        accumulator += (long long)(temp[i] * sin(M_PI / 2 * (i + 1)));
-    }
+    double variance = compute_variance(&stats);
+    int checksum_base = (int)floor(variance);
+    int final_checksum = gcd(checksum_base, composite_field);
     
-    // Step 3: Bitwise manipulation with masking
-    long long mask = 0xF0F0F0F0LL;
-    accumulator = (accumulator & mask) ^ ((accumulator >> 4) & mask);
-    
-    // Step 4: Final arithmetic and logical operations
-    int final_result = (int)((accumulator % 987654321) + sqrt(accumulator & 0xFF) * 1000);
-    
-    printf("Result: %d\n", final_result);
+    printf("Result: %d\n", final_checksum);
     return 0;
 }
