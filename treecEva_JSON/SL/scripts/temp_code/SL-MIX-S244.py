@@ -1,48 +1,44 @@
-import math
+from collections import deque
+from functools import reduce
 
-def complex_transform(data):
-    transformed = []
-    for i, val in enumerate(data):
-        if i % 2 == 0:
-            transformed.append(val ** 2)
-        else:
-            transformed.append(math.sqrt(abs(val)))
-    return transformed
+class TransactionLogger:
+    def __init__(self, func):
+        self.func = func
+        self.log = []
+    
+    def __call__(self, *args, **kwargs):
+        result = self.func(*args, **kwargs)
+        self.log.append(result)
+        return result
 
-def aggregate_stats(values):
-    product = 1
-    sum_val = 0
-    count = 0
-    for v in values:
-        if v > 0:
-            product *= v
-            sum_val += v
-            count += 1
-    avg = sum_val / count if count > 0 else 0
-    return product, avg, count
+@TransactionLogger
+def process_correction(value, rate=1.05):
+    return value * rate
 
-# Initialize data structures
-matrix = [
-    [2, -4, 3],
-    [-1, 5, -2],
-    [0, 7, 4]
-]
+def apply_reversals(transactions_stack):
+    reversed_amount = 0.0
+    while transactions_stack:
+        transaction = transactions_stack.pop()
+        reversed_amount += transaction * 0.02
+    return reversed_amount
 
-# Flatten matrix and apply transformation
-flat_list = [item for sublist in matrix for item in sublist]
-transformed_data = complex_transform(flat_list)
+# Initialize account state
+account_balance = 1000.0
+recent_corrections = deque([200.0, -50.0, 125.5, -30.25])
+suspicious_transactions = [150.0, 75.0, 200.0]
 
-# Perform aggregation
-product, average, count = aggregate_stats(transformed_data)
+# Process corrections from queue
+while recent_corrections:
+    correction = recent_corrections.popleft()
+    account_balance += process_correction(correction)
 
-# Bitwise and mathematical operations
-bitwise_result = (int(product) & 0xFF) | (int(average) << 2)
-log_val = math.log(abs(bitwise_result) + 1)
+# Apply reversals from stack
+reversal_stack = deque(suspicious_transactions)
+account_balance -= apply_reversals(reversal_stack)
 
-# Final calculation sequence
-x = log_val * 3
-y = math.sin(x) * 100
-z = int(y) ^ 0xAA
-final_result = z % 42
+# Final adjustment using functional approach
+adjustments = [1.02, 0.98, 1.01]
+compound_factor = reduce(lambda x, y: x * y, adjustments)
+account_balance = account_balance * compound_factor
 
-print(f'Result: {final_result}')
+print(f"Result: {account_balance}")

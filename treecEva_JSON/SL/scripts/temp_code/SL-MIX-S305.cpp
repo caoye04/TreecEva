@@ -1,38 +1,96 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <vector>
+#include <unordered_map>
 #include <cmath>
-#include <string>
 
-using namespace std;
+struct Vehicle {
+    int baseSpeed;
+    int priorityModifier;
+    
+    constexpr Vehicle(int speed = 0, int mod = 0) : baseSpeed(speed), priorityModifier(mod) {}
+    
+    constexpr int calculateBasePriority() const {
+        return baseSpeed * priorityModifier;
+    }
+};
 
-double compute_expression(int a, int b, double c) {
-    return pow(a, 2) + sqrt(b) * sin(c);
+constexpr Vehicle operator+(const Vehicle& v1, const Vehicle& v2) {
+    return Vehicle(v1.baseSpeed + v2.baseSpeed, v1.priorityModifier + v2.priorityModifier);
 }
 
+class ZoneNode {
+public:
+    int congestionLevel;
+    ZoneNode* next;
+    
+    ZoneNode(int level) : congestionLevel(level), next(nullptr) {}
+};
+
 int main() {
-    vector<vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    string s = "HelloWorld";
-    int x = 4, y = 9;
-    double z = 1.57;
+    std::unordered_map<int, Vehicle> vehicleRegistry;
+    vehicleRegistry[1] = Vehicle(60, 2);  // Standard car
+    vehicleRegistry[2] = Vehicle(40, 3);  // Truck
+    vehicleRegistry[3] = Vehicle(80, 1);  // Motorcycle
     
-    int sum = 0;
-    for(size_t i=0; i<matrix.size(); ++i)
-        for(size_t j=0; j<matrix[i].size(); ++j)
-            sum += matrix[i][j] & (1 << ((i+j)%4));
+    // Build linked list of zones
+    ZoneNode* head = new ZoneNode(3);
+    head->next = new ZoneNode(5);
+    head->next->next = new ZoneNode(2);
     
-    bool cond1 = (x > 3) && (y < 10 || s.length() == 10);
-    bool cond2 = !(static_cast<double>(y)/x > 2.0);
+    int vehicleID = 2;
+    int timeOfDay = 14; // 2 PM
+    int finalPriorityScore = 0;
     
-    double expr_val = compute_expression(x, y, z);
+    if (vehicleRegistry.find(vehicleID) != vehicleRegistry.end()) {
+        Vehicle v = vehicleRegistry[vehicleID];
+        int basePriority = v.calculateBasePriority();
+        
+        ZoneNode* current = head;
+        int zoneMultiplier = 1;
+        
+        while (current != nullptr && basePriority > 0) {
+            int congestionImpact = 0;
+            
+            switch(current->congestionLevel) {
+                case 1: case 2:
+                    congestionImpact = 1;
+                    break;
+                case 3: case 4:
+                    congestionImpact = 2;
+                    break;
+                case 5:
+                    congestionImpact = 3;
+                    break;
+                default:
+                    congestionImpact = 0;
+            }
+            
+            bool isPeakHour = (timeOfDay >= 7 && timeOfDay <= 9) || (timeOfDay >= 17 && timeOfDay <= 19);
+            int timeAdjustment = isPeakHour ? 2 : 1;
+            
+            int zoneScore = (basePriority / congestionImpact) * timeAdjustment;
+            finalPriorityScore += zoneScore * zoneMultiplier;
+            
+            if (zoneScore > 50) {
+                finalPriorityScore += 10;
+                break;
+            }
+            
+            current = current->next;
+            zoneMultiplier++;
+            basePriority -= 10;
+        }
+        
+        finalPriorityScore = (finalPriorityScore > 100) ? finalPriorityScore/2 : finalPriorityScore;
+    }
     
-    int arr[] = {static_cast<int>(expr_val), sum, static_cast<int>(s.length())};
-    int* ptr_arr[3];
-    for(int i=0; i<3; ++i) ptr_arr[i] = &arr[i];
+    // Clean up linked list
+    while (head != nullptr) {
+        ZoneNode* temp = head;
+        head = head->next;
+        delete temp;
+    }
     
-    int idx = (cond1 ^ cond2) ? (*ptr_arr[0])%3 : (*ptr_arr[1])%3;
-    int final_result = *(ptr_arr[idx]) + (cond1 && cond2 ? 100 : -50);
-    
-    cout << "Result: " << final_result << endl;
+    std::cout << "Result: " << finalPriorityScore << std::endl;
     return 0;
 }

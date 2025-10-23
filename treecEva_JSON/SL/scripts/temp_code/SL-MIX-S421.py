@@ -1,42 +1,44 @@
-import math
+from collections import defaultdict
+from itertools import permutations
+import statistics
 
-def process_nested_data(data):
-    result = []
-    for sublist in data:
-        temp = []
-        for item in sublist:
-            if isinstance(item, int):
-                temp.append(item ** 2)
-            elif isinstance(item, str):
-                temp.append(len(item))
-            else:
-                temp.append(0)
-        result.append(sum(temp))
-    return result
+def calculate_satisfaction(votes):
+    # Count occurrences of each vote type
+    vote_counter = defaultdict(int)
+    for vote in votes:
+        vote_counter[vote] += 1
+    
+    # Generate all permutations of unique votes
+    unique_votes = list(vote_counter.keys())
+    perm_count = 0
+    valid_perms = []
+    
+    for p in permutations(unique_votes):
+        perm_count += 1
+        # Check if permutation satisfies logical condition
+        if all(x <= y for x, y in zip(p, p[1:])) and len(p) > 1:
+            valid_perms.append(p)
+    
+    # Compute scores for valid permutations
+    scores = []
+    for perm in valid_perms:
+        # Calculate weighted score based on frequency
+        score = sum(vote_counter[vote] * (i + 1) for i, vote in enumerate(perm))
+        scores.append(score)
+    
+    # Return mean of scores or 0 if no valid permutations
+    return statistics.mean(scores) if scores else 0
 
-def apply_bitwise_operations(numbers):
-    xor_result = 0
-    for num in numbers:
-        xor_result ^= num
-    return xor_result
+# Simulation data
+voter_preferences = [3, 1, 2, 3, 2, 1, 3, 3, 2]
 
-data_structure = [
-    [3, 'hello', 2.5, 4],
-    ['world', 5, None, 7],
-    [1, 'a'*6, 9, 'test']
-]
+# Short-circuit evaluation in assignment
+is_diverse = len(set(voter_preferences)) > 1 and max(voter_preferences) <= 5
 
-processed_data = process_nested_data(data_structure)
-bitwise_result = apply_bitwise_operations(processed_data)
+final_score = 0
+if is_diverse:
+    final_score = calculate_satisfaction(voter_preferences)
+else:
+    final_score = -1  # Indicates insufficient diversity
 
-# Perform advanced mathematical operations
-log_val = math.log(bitwise_result + 10)
-sin_val = math.sin(log_val)
-cos_val = math.cos(log_val * 2)
-
-# Complex calculation chain
-intermediate_result = (bitwise_result * log_val) // 3
-final_adjustment = (sin_val + cos_val) * 100
-final_result = int(intermediate_result + final_adjustment)
-
-print(f'Result: {final_result}')
+print(f"Result: {final_score}")

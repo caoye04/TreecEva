@@ -1,36 +1,34 @@
-import math
+from functools import reduce
 
-def process_nested_data(data):
-    result = []
-    for i, sublist in enumerate(data):
-        temp = []
-        for j, val in enumerate(sublist):
-            if isinstance(val, str):
-                temp.append(len(val) * (i + 1))
-            elif isinstance(val, int):
-                temp.append(val ** (j + 1))
-            else:
-                temp.append(int(val))
-        result.append(sum(temp) % 7)
-    return result
+def calculate_package_checksum(loaded_packages):
+    # Dynamic programming approach to calculate checksum
+    checksum_history = [0] * len(loaded_packages)
+    total_checksum = 0
+    
+    for i in range(1, len(loaded_packages)):
+        # Sum weights of all previous packages that are lighter
+        lighter_sum = sum(weight for weight in loaded_packages[:i] if weight < loaded_packages[i])
+        checksum_history[i] = lighter_sum
+        total_checksum += lighter_sum
+    
+    return total_checksum
 
-data_structure = [
-    ["hello", 2, 3.5],
-    [4, "world", 2.2, True],
-    ["a", "bb", "ccc", 5, False]
-]
+# Package weights in kg
+package_weights = [320, 150, 480, 210, 90, 370, 180, 420]
 
-processed = process_nested_data(data_structure)
+# Sort packages by weight in descending order (greedy approach)
+package_weights.sort(reverse=True)
 
-# Perform advanced calculations
-x = sum(processed) * 3
-y = math.factorial(len(processed))
-z = x ** 2 - y
+# Truck loading simulation
+truck_capacity = 1000
+loaded_packages = []
+remaining_packages = package_weights.copy()
 
-if z > 100:
-    final_result = z // 10 + len(str(z))
-else:
-    sqrt_z = math.isqrt(abs(z)) if z >= 0 else 0
-    final_result = sqrt_z + (z % 7)
+while remaining_packages and sum(loaded_packages) + remaining_packages[0] <= truck_capacity:
+    next_package = remaining_packages.pop(0)
+    loaded_packages.append(next_package)
 
-print(f'Result: {final_result}')
+# Calculate logistics checksum using dynamic programming
+logistics_checksum = calculate_package_checksum(loaded_packages)
+
+print(f"Result: {logistics_checksum}")

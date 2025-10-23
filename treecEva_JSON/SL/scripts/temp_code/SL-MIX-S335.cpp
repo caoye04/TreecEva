@@ -1,50 +1,45 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <vector>
 #include <cmath>
-#include <string>
 
-using namespace std;
-
-double complex_calc(int a, double b, vector<int>& v) {
-    double res = 0.0;
-    for (int i = 0; i < v.size(); i++) {
-        if (i % 2 == 0) {
-            res += pow(v[i], 2) * sin(b);
-        } else {
-            res -= sqrt(abs(v[i])) * cos(b);
-        }
+constexpr long long mod_exp(long long base, long long exp, long long mod) {
+    long long result = 1;
+    base %= mod;
+    while (exp > 0) {
+        if (exp & 1) result = (result * base) % mod;
+        base = (base * base) % mod;
+        exp >>= 1;
     }
-    return res + a;
+    return result;
+}
+
+long long xor_shift_reduce(long long value, int shift) {
+    return (value ^ (value >> shift)) & 0xFFFF;
+}
+
+long long recursive_validator(long long n, long long acc) {
+    if (n <= 1) return acc;
+    long long next = (n % 2 == 0) ? n / 2 : 3 * n + 1;
+    return recursive_validator(next, acc ^ n);
 }
 
 int main() {
-    vector<int> data = {4, -9, 16, -25, 36};
-    int x = 5;
-    double y = 1.5708; // Approximately pi/2
-    string s = "Hello";
+    long long seed = 1337;
+    long long modulus = 100000007;
+    long long exponent = 293847;
     
-    // Perform bitwise operations
-    int mask = 0xF0; // 240 in decimal
-    int val = 0x55;  // 85 in decimal
-    int bitwise_result = (mask & val) | ((mask ^ val) >> 2);
+    // Step 1: Compute modular exponentiation
+    long long mod_result = mod_exp(seed, exponent, modulus);
     
-    // Manipulate string
-    s += " World";
-    int str_len = s.length();
+    // Step 2: Apply XOR-shift reduction
+    long long reduced = xor_shift_reduce(mod_result, 8);
     
-    // Complex calculation with function call
-    double calc_result = complex_calc(x, y, data);
+    // Step 3: Recursive validation with accumulator
+    long long validated = recursive_validator(reduced, 0);
     
-    // Final computation
-    double result = 0.0;
-    if ((bitwise_result > 30) && (str_len == 11)) {
-        result = (calc_result * 2.5) - floor(calc_result / 3.0);
-    } else {
-        result = (calc_result * 1.5) + ceil(calc_result / 4.0);
-    }
+    // Step 4: Final transformation with bitwise operations
+    long long authToken = ((validated << 3) | (validated >> 5)) & 0xFFFFFFFF;
     
-    // Execution Point Y
-    cout << "Result: " << result << endl;
+    std::cout << "Result: " << authToken << std::endl;
     return 0;
 }

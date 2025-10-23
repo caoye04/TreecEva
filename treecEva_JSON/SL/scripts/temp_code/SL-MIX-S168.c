@@ -1,65 +1,62 @@
 #define _USE_MATH_DEFINES
 #include <stdio.h>
-#include <math.h>
+#include <stdlib.h>
 
-#define SIZE 5
+struct PriorityPacket {
+    unsigned int flag : 4;
+    unsigned int priority : 3;
+    unsigned int reserved : 1;
+};
 
-int sum_array(int arr[], int size) {
-    int s = 0;
-    for (int i = 0; i < size; i++) {
-        s += arr[i];
-    }
-    return s;
-}
+typedef int (*Comparator)(const void*, const void*);
 
-int max_of_three(int a, int b, int c) {
-    int max = a;
-    if (b > max) max = b;
-    if (c > max) max = c;
-    return max;
+int compare_packets(const void* a, const void* b) {
+    struct PriorityPacket* pa = (struct PriorityPacket*)a;
+    struct PriorityPacket* pb = (struct PriorityPacket*)b;
+    return (pb->priority << 4 | pb->flag) - (pa->priority << 4 | pa->flag);
 }
 
 int main() {
-    int nums[SIZE] = {3, 7, 2, 9, 4};
-    int *ptr = nums;
-    int x = 15, y = 22, z = 8;
+    struct PriorityPacket packets[4] = {
+        {0x7, 0x3, 0},
+        {0x2, 0x5, 0},
+        {0xE, 0x1, 0},
+        {0x5, 0x4, 0}
+    };
     
-    // Step 1: Modify array using pointer arithmetic and conditionals
-    for (int i = 0; i < SIZE; i++) {
-        if (*(ptr + i) % 2 == 0) {
-            *(ptr + i) = *(ptr + i) * 2;
-        } else {
-            *(ptr + i) = *(ptr + i) + 5;
+    // Apply mask and modify flags
+    for(int i=0; i<4; i++) {
+        packets[i].flag &= 0x7;
+    }
+    
+    // Sort packets based on custom comparator
+    qsort(packets, 4, sizeof(struct PriorityPacket), compare_packets);
+    
+    int dp_table[4];
+    dp_table[0] = packets[0].priority * 10 + packets[0].flag;
+    
+    for(int j=1; j<4; j++) {
+        int current_val = packets[j].priority * 10 + packets[j].flag;
+        switch(j) {
+            case 1:
+                dp_table[j] = (current_val > dp_table[j-1]) ? current_val : dp_table[j-1];
+                break;
+            case 2:
+                if(current_val % 2 == 0) {
+                    dp_table[j] = dp_table[j-1] + (current_val >> 1);
+                } else {
+                    dp_table[j] = dp_table[j-1] - (current_val & 0x3);
+                }
+                break;
+            case 3:
+                dp_table[j] = dp_table[j-1] ^ current_val;
+                break;
+            default:
+                dp_table[j] = dp_table[j-1];
         }
     }
     
-    // Step 2: Perform arithmetic and bitwise operations
-    int a = (x + y) * 3;
-    int b = (z << 2) | 3; // Left shift z by 2, then bitwise OR with 3
-    int c = (int)pow(2, 4); // 2^4
-    
-    // Step 3: Call functions and perform logical evaluations
-    int sum_nums = sum_array(nums, SIZE);
-    int max_val = max_of_three(a, b, c);
-    
-    // Step 4: Complex conditional logic
-    int intermediate;
-    if ((sum_nums > 100) && (max_val < 100)) {
-        intermediate = sum_nums & max_val;
-    } else if ((sum_nums < 50) || (max_val > 150)) {
-        intermediate = sum_nums | max_val;
-    } else {
-        intermediate = sum_nums ^ max_val;
-    }
-    
-    // Step 5: Final computation involving trigonometric function
-    double angle = 1.5708; // Approximately pi/2
-    double sin_val = sin(angle);
-    int multiplier = (sin_val > 0.9) ? 10 : 5;
-    
-    // Final step: Compute the result
-    int result = (intermediate + multiplier) / 3;
-    
-    printf("Result: %d\n", result);
+    int control_output = dp_table[3] & 0xFF;
+    printf("Result: %d\n", control_output);
     return 0;
 }

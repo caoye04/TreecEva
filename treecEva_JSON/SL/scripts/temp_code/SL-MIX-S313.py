@@ -1,69 +1,58 @@
-import math
+import collections
 
-def complex_transform(data):
-    transformed = []
-    for i, val in enumerate(data):
-        if i % 2 == 0:
-            transformed.append(val ** 2)
-        else:
-            transformed.append(math.sqrt(abs(val)))
-    return transformed
-
-def aggregate_values(matrix):
-    totals = []
-    for row in matrix:
-        total = 0
-        for i, val in enumerate(row):
-            if i % 3 == 0:
-                total += val * 2
-            elif i % 3 == 1:
-                total -= val
+class TaskScheduler:
+    def __init__(self):
+        self.state = 'PENDING'
+        self.interrupt_stack = []
+        self.task_queue = collections.deque()
+        self.interrupt_count = 0
+    
+    def digit_square_sum(self, n):
+        return sum(int(digit) ** 2 for digit in str(n))
+    
+    def process_tasks(self, task_ids):
+        # Initialize queue with task IDs
+        for tid in task_ids:
+            self.task_queue.append(tid)
+        
+        while self.task_queue:
+            current_task = self.task_queue.popleft()
+            priority = self.digit_square_sum(current_task)
+            
+            if priority > 50:
+                # Interrupt all pending tasks
+                self.interrupt_count += len(self.task_queue)
+                # Clear queue
+                self.task_queue.clear()
+                # Push interrupt to stack
+                self.interrupt_stack.append(current_task)
+                self.state = 'RUNNING'
+                break
             else:
-                total *= val if val != 0 else 1
-        totals.append(total)
-    return sum(totals)
+                # Process normally
+                if self.state == 'PENDING':
+                    self.state = 'RUNNING'
+                elif self.state == 'RUNNING':
+                    self.state = 'COMPLETED'
+                # Re-queue for next cycle if not completed
+                if self.state != 'COMPLETED':
+                    self.task_queue.append(current_task)
+                else:
+                    # Reset state for next task
+                    self.state = 'PENDING'
+        
+        # Process any remaining interrupts
+        while self.interrupt_stack:
+            task = self.interrupt_stack.pop()
+            if self.digit_square_sum(task) > 100:
+                self.interrupt_count += 1
+        
+        return self.interrupt_count
 
-# Initialize data structures
-nested_data = [
-    [1, -4, 3, 2],
-    [2.5, -9, 4, -16, 5],
-    [6, -25, 7, 8, -9, 10]
-]
+# Initialize scheduler
+scheduler = TaskScheduler()
+tasks = [123, 99, 45, 88, 12, 77]
 
-# Transformation step 1
-step1_data = [complex_transform(row) for row in nested_data]
-
-# Flatten and filter
-flattened = [item for sublist in step1_data for item in sublist]
-filtered_data = [x for x in flattened if x > 2]
-
-# Create dictionary with mathematical operations
-mapped_dict = {}
-for i, val in enumerate(filtered_data):
-    if i % 4 == 0:
-        mapped_dict[i] = math.log(val) if val > 0 else 0
-    elif i % 4 == 1:
-        mapped_dict[i] = math.sin(val)
-    elif i % 4 == 2:
-        mapped_dict[i] = math.cos(val)
-    else:
-        mapped_dict[i] = val ** 0.5
-
-# Build matrix from dictionary values
-matrix_data = []
-keys = list(mapped_dict.keys())
-sorted_values = [mapped_dict[k] for k in sorted(keys)]
-
-for i in range(0, len(sorted_values), 3):
-    matrix_data.append(sorted_values[i:i+3])
-
-# Final aggregation
-result = aggregate_values(matrix_data)
-
-# Apply final transformation
-if result > 0:
-    result = int(result * 1.5) ^ 42  # XOR with 42
-else:
-    result = int(result * -1.5) & 255  # Bitwise AND with 255
-
-print(f"Result: {result}")
+# Process tasks
+interrupt_count = scheduler.process_tasks(tasks)
+print(f"Result: {interrupt_count}")

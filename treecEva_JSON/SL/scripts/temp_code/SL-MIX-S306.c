@@ -2,44 +2,45 @@
 #include <stdio.h>
 #include <math.h>
 
-#define MAX_SIZE 5
-
-struct DataPoint {
-    double values[3];
-    int flags;
-};
-
-struct ComputationUnit {
-    struct DataPoint points[MAX_SIZE];
-    int count;
+union DataConverter {
+    float raw_float;
+    unsigned int raw_bits;
 };
 
 int main() {
-    struct ComputationUnit unit = {
-        .points = {
-            {.values = {1.5, 2.0, 3.5}, .flags = 3},
-            {.values = {4.0, 5.5, 6.0}, .flags = 5},
-            {.values = {7.5, 8.0, 9.5}, .flags = 7},
-            {.values = {10.0, 11.5, 12.0}, .flags = 9},
-            {.values = {13.5, 14.0, 15.5}, .flags = 11}
-        },
-        .count = MAX_SIZE
-    };
-
-    double accumulator = 0.0;
-    double result = 0.0;
-
-    for(int i=0; i<unit.count; i++) {
-        struct DataPoint *p = &unit.points[i];
-        for(int j=0; j<3; j++) {
-            if(p->flags & (1<<j)) {
-                double temp = pow(p->values[j], 2);
-                accumulator += sqrt(temp) * ((p->flags >> j) & 1 ? 1 : -1);
+    volatile int sensor_readings[3][4] = {{120, 150, 135, 125}, {140, 130, 138, 142}, {128, 133, 137, 130}};
+    int i, j;
+    union DataConverter converter;
+    float sum = 0.0;
+    int calibrated_output = 0;
+    
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 4; j++) {
+            if (sensor_readings[i][j] > 130) {
+                converter.raw_float = (float)sensor_readings[i][j];
+                converter.raw_bits = converter.raw_bits & 0xFFFFFFF0; // Mask lower 4 bits
+                sum += converter.raw_float;
+            } else {
+                converter.raw_float = (float)sensor_readings[i][j];
+                converter.raw_bits = converter.raw_bits | 0x0000000F; // Set lower 4 bits
+                sum += converter.raw_float;
             }
         }
-        result = accumulator / (i+1) + sin(accumulator) * cos(i);
     }
-
-    printf("Result: %.6f\n", result);
+    
+    float mean = sum / 12.0;
+    sum = 0.0;
+    
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 4; j++) {
+            float diff = (float)sensor_readings[i][j] - mean;
+            sum += diff * diff;
+        }
+    }
+    
+    float variance = sum / 12.0;
+    calibrated_output = (int)(mean + sqrt(variance));
+    
+    printf("Result: %d\n", calibrated_output);
     return 0;
 }

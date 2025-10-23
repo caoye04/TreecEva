@@ -1,59 +1,60 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <vector>
-#include <cmath>
-#include <algorithm>
+#include <optional>
 
-using namespace std;
-
-double compute_inner_value(const vector<vector<int>>& matrix, int row) {
-    double sum = 0;
-    for (int val : matrix[row]) {
-        sum += sqrt(abs(val));
+class ThermalZone {
+public:
+    double raw_temp;
+    int zone_id;
+    
+    ThermalZone(double temp, int id) : raw_temp(temp), zone_id(id) {}
+    
+    // Operator overloading for averaging
+    ThermalZone operator+(const ThermalZone& other) const {
+        return ThermalZone(raw_temp + other.raw_temp, zone_id);
     }
-    return sum;
+    
+    ThermalZone operator/(double divisor) const {
+        return ThermalZone(raw_temp / divisor, zone_id);
+    }
+};
+
+std::optional<double> calibrate(int zone_id, double reading) {
+    double calibrated;
+    switch(zone_id) {
+        case 1:
+            calibrated = reading * 1.05;
+            break;
+        case 2:
+            calibrated = reading * 0.98;
+            break;
+        case 3:
+            calibrated = reading * 1.02;
+            break;
+        default:
+            return std::nullopt;
+    }
+    return calibrated;
 }
 
 int main() {
-    vector<vector<int>> data = {{-16, 9, -4}, {25, -36, 49}, {-64, 81, -100}};
-    vector<double> intermediates(3);
+    ThermalZone zone1(25.4, 1);
+    ThermalZone zone2(27.8, 2);
+    ThermalZone zone3(26.1, 3);
     
-    for (int i = 0; i < 3; i++) {
-        intermediates[i] = compute_inner_value(data, i);
+    auto calibrated1 = calibrate(zone1.zone_id, zone1.raw_temp);
+    auto calibrated2 = calibrate(zone2.zone_id, zone2.raw_temp);
+    auto calibrated3 = calibrate(zone3.zone_id, zone3.raw_temp);
+    
+    if (calibrated1 && calibrated2 && calibrated3) {
+        // Divide and conquer approach to compute average
+        double sum12 = (*calibrated1 + *calibrated2).raw_temp;
+        double avg12 = sum12 / 2.0;
+        double total_sum = avg12 * 2 + *calibrated3;
+        double final_avg = total_sum / 3.0;
+        
+        std::cout << "Result: " << final_avg << std::endl;
     }
     
-    double max_val = *max_element(intermediates.begin(), intermediates.end());
-    int max_index = 0;
-    for (int i = 0; i < 3; i++) {
-        if (intermediates[i] == max_val) {
-            max_index = i;
-            break;
-        }
-    }
-    
-    bool conditions[3];
-    for (int i = 0; i < 3; i++) {
-        conditions[i] = (intermediates[i] > 10.0) && (data[i][0] < 0);
-    }
-    
-    int count = 0;
-    for (int i = 0; i < 3; i++) {
-        count += conditions[i] ? 1 : 0;
-    }
-    
-    double result = 0;
-    if (count >= 2) {
-        result = pow(intermediates[max_index], 2) + 2 * M_PI * max_index;
-    } else {
-        double product = 1;
-        for (double val : intermediates) {
-            product *= val;
-        }
-        result = product / (max_val + 1);
-    }
-    
-    result = floor(result * 1000) / 1000; // Round to 3 decimal places
-    cout << "Result: " << result << endl;
     return 0;
 }

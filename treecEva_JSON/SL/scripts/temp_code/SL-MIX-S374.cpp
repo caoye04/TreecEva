@@ -1,44 +1,114 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <cmath>
-#include <vector>
+#include <queue>
+#include <stack>
 
-using namespace std;
+template<int N>
+struct Factorial {
+    static constexpr int value = N * Factorial<N - 1>::value;
+};
 
-double recursive_sum(vector<int>& arr, int index) {
-    if (index >= arr.size()) return 0.0;
-    return sqrt(abs(arr[index])) + recursive_sum(arr, index + 2);
+template<>
+struct Factorial<0> {
+    static constexpr int value = 1;
+};
+
+constexpr int calculateCombinations(int n, int k) {
+    return Factorial<n>::value / (Factorial<k>::value * Factorial<n - k>::value);
 }
 
+struct Point {
+    int x, y;
+    Point() : x(0), y(0) {}
+    Point(int x_, int y_) : x(x_), y(y_) {}
+    
+    double distanceTo(const Point& other) const {
+        int dx = x - other.x;
+        int dy = y - other.y;
+        return std::sqrt(dx*dx + dy*dy);
+    }
+};
+
+struct Node {
+    Point position;
+    Node* next;
+    Node(Point p) : position(p), next(nullptr) {}
+};
+
 int main() {
-    vector<int> data = {16, -9, 25, -4, 36, -49, 64};
-    int mask = 0xF0; // 240 in decimal, 11110000 in binary
-    int shift_val = 3;
-    double intermediate = 0.0;
-    int combined_ops = 0;
+    // Initialize robot's starting position and target
+    Point robot(0, 0);
+    Point target(10, 10);
     
-    for (int i = 0; i < data.size(); i++) {
-        if (i % 2 == 0) {
-            data[i] = data[i] ^ mask;
-        } else {
-            data[i] = data[i] << shift_val;
-        }
-        combined_ops += (data[i] & 0x0F); // Add last 4 bits
+    // Create a linked list representing possible waypoints
+    Node* head = new Node(Point(2, 3));
+    head->next = new Node(Point(5, 5));
+    head->next->next = new Node(Point(8, 7));
+    head->next->next->next = new Node(Point(10, 10));
+    
+    // Navigation parameters
+    const int totalWaypoints = 4;
+    const int selectedPaths = 3;
+    
+    // Calculate number of possible path combinations
+    int pathCombinations = calculateCombinations(totalWaypoints, selectedPaths);
+    
+    // Obstacle map represented as bitmask flags
+    const unsigned int obstacleMap = 0b10101010;
+    const unsigned int pathFlags = 0b11001100;
+    
+    // Check if path is clear using short-circuit evaluation
+    bool pathClear = (obstacleMap & pathFlags) == 0 && (pathCombinations > 0);
+    
+    // Initialize navigation containers
+    std::queue<Point> navigationQueue;
+    std::stack<double> distanceStack;
+    
+    // Populate queue with waypoints
+    Node* current = head;
+    while (current != nullptr) {
+        navigationQueue.push(current->position);
+        current = current->next;
     }
     
-    // Apply a trigonometric adjustment
-    for (int i = 0; i < data.size(); i++) {
-        data[i] = static_cast<int>(data[i] * cos(M_PI / 4));
+    // Calculate distances and push to stack
+    Point previousPoint = robot;
+    while (!navigationQueue.empty()) {
+        Point currentPoint = navigationQueue.front();
+        navigationQueue.pop();
+        
+        double segmentDistance = previousPoint.distanceTo(currentPoint);
+        distanceStack.push(segmentDistance);
+        previousPoint = currentPoint;
     }
     
-    intermediate = recursive_sum(data, 0);
+    // Calculate total geometric distance
+    double totalGeometricDistance = 0.0;
+    while (!distanceStack.empty()) {
+        totalGeometricDistance += distanceStack.top();
+        distanceStack.pop();
+    }
     
-    int result = static_cast<int>(intermediate) ^ combined_ops;
+    // Apply combinatorial factor and obstacle penalty
+    int obstaclePenalty = __builtin_popcount(obstacleMap & pathFlags); // Count set bits
     
-    // Final computation
-    result = result & 0xFF; // Mask to last 8 bits
+    // Final path cost calculation
+    int finalPathCost = 0;
+    if (pathClear || (pathCombinations > 5 && obstaclePenalty < 3)) {
+        finalPathCost = static_cast<int>(totalGeometricDistance * pathCombinations) - (obstaclePenalty * 10);
+    } else {
+        finalPathCost = static_cast<int>(totalGeometricDistance * pathCombinations) + (obstaclePenalty * 20);
+    }
     
-    cout << "Result: " << result << endl;
+    // Clean up linked list
+    current = head;
+    while (current != nullptr) {
+        Node* temp = current;
+        current = current->next;
+        delete temp;
+    }
+    
+    std::cout << "Result: " << finalPathCost << std::endl;
     return 0;
 }

@@ -1,48 +1,101 @@
 #define _USE_MATH_DEFINES
 #include <stdio.h>
-#include <math.h>
-#include <string.h>
+#include <stdlib.h>
 
-#define MAX_LEN 100
+#define PACKET_COUNT 7
+
+typedef struct {
+    int priority;
+    int size;
+    long timestamp;
+} PacketHeader;
+
+typedef struct Node {
+    int data;
+    struct Node* next;
+} QueueNode;
+
+typedef struct {
+    QueueNode* front;
+    QueueNode* rear;
+} Queue;
+
+Queue* create_queue() {
+    Queue* q = (Queue*)malloc(sizeof(Queue));
+    q->front = q->rear = NULL;
+    return q;
+}
+
+void enqueue(Queue* q, int value) {
+    QueueNode* newNode = (QueueNode*)malloc(sizeof(QueueNode));
+    newNode->data = value;
+    newNode->next = NULL;
+    if (q->rear == NULL) {
+        q->front = q->rear = newNode;
+    } else {
+        q->rear->next = newNode;
+        q->rear = newNode;
+    }
+}
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
 
 int main() {
-    // Initialize variables
-    int a = 12, b = 7;
-    double x = 3.5, y = 2.0;
-    char str1[MAX_LEN] = "HelloWorld";
-    char str2[MAX_LEN] = "Programming";
+    volatile int total_processing_weight = 0;
+    volatile int packet_sequence_mask = 0xF0; // 11110000 in binary
     
-    // Step 1: Perform arithmetic and bitwise operations
-    int step1 = ((a + b) * 3) & 0xFF;
+    Queue* processing_queue = create_queue();
     
-    // Step 2: Perform floating-point operations
-    double step2 = pow(x, y) + log10(step1);
+    PacketHeader headers[PACKET_COUNT] = {
+        {3, 128, 1000},
+        {1, 256, 1005},
+        {2, 64,  1012},
+        {3, 512, 1020},
+        {1, 32,  1030},
+        {2, 192, 1035},
+        {3, 96,  1042}
+    };
     
-    // Step 3: String manipulation
-    int len1 = strlen(str1);
-    int len2 = strlen(str2);
-    int str_product = len1 * len2;
-    
-    // Step 4: Complex conditional logic
-    int condition_result;
-    if ((step1 > 50) && (step2 < 50.0)) {
-        condition_result = step1 | str_product;
-    } else if ((step1 <= 50) || (step2 >= 50.0)) {
-        condition_result = step1 ^ str_product;
-    } else {
-        condition_result = ~(step1 & str_product);
+    for (int i = 0; i < PACKET_COUNT; i++) {
+        // Calculate packet weight using GCD of size and priority
+        int base_weight = headers[i].size / gcd(headers[i].size, headers[i].priority);
+        
+        // Apply timestamp factor using bitwise operations
+        int timestamp_factor = (headers[i].timestamp & packet_sequence_mask) >> 4;
+        
+        // Compute processing weight with arithmetic operations
+        int processing_weight = (base_weight * headers[i].priority) + (timestamp_factor ^ 0x0A);
+        
+        // Add to queue for processing
+        enqueue(processing_queue, processing_weight);
+        
+        // Update accumulator with cumulative XOR
+        total_processing_weight ^= processing_weight;
     }
     
-    // Step 5: Array operations
-    int arr[5] = {1, 4, 9, 16, 25};
-    int arr_sum = 0;
-    for (int i = 0; i < 5; i++) {
-        arr_sum += (int)sqrt(arr[i]);
+    // Final adjustment - sum all queued values with accumulator
+    QueueNode* current = processing_queue->front;
+    while (current != NULL) {
+        total_processing_weight += (current->data & 0xFF); // Only lower 8 bits
+        current = current->next;
     }
     
-    // Step 6: Final calculation combining all previous results
-    int final_result = (condition_result + arr_sum) % 100;
+    printf("Result: %d\n", total_processing_weight);
     
-    printf("Result: %d\n", final_result);
+    // Cleanup
+    while (processing_queue->front != NULL) {
+        QueueNode* temp = processing_queue->front;
+        processing_queue->front = processing_queue->front->next;
+        free(temp);
+    }
+    free(processing_queue);
+    
     return 0;
 }

@@ -1,89 +1,44 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
-#include <cmath>
-#include <string>
+#include <algorithm>
+#include <numeric>
 
-class ComplexDataProcessor {
-private:
-    std::vector<std::vector<int>> matrix;
-    std::string key;
+bool is_prime(int n) {
+    if (n <= 1) return false;
+    if (n <= 3) return true;
+    if (n % 2 == 0 || n % 3 == 0) return false;
+    for (int i = 5; i * i <= n; i += 6)
+        if (n % i == 0 || n % (i + 2) == 0)
+            return false;
+    return true;
+}
 
-public:
-    ComplexDataProcessor(int size) {
-        matrix.resize(size, std::vector<int>(size, 0));
-        key = "PROCESSING_KEY_" + std::to_string(size);
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
     }
-
-    void populateMatrix() {
-        int value = 1;
-        for (int i = 0; i < matrix.size(); i++) {
-            for (int j = 0; j < matrix[i].size(); j++) {
-                matrix[i][j] = value++;
-            }
-        }
-    }
-
-    int calculateDiagonalSum() {
-        int sum = 0;
-        for (int i = 0; i < matrix.size(); i++) {
-            sum += matrix[i][i];
-        }
-        return sum;
-    }
-
-    std::string getKey() {
-        return key;
-    }
-
-    int getMatrixElement(int row, int col) {
-        if (row >= 0 && row < matrix.size() && col >= 0 && col < matrix[0].size()) {
-            return matrix[row][col];
-        }
-        return -1;
-    }
-};
-
-struct DataBundle {
-    int x;
-    int y;
-    double z;
-    
-    DataBundle(int a, int b, double c) : x(a), y(b), z(c) {}
-};
-
-int complexCalculation(int a, int b, double c) {
-    return static_cast<int>(std::pow(a, 2) + std::sqrt(b) + std::floor(c));
+    return a;
 }
 
 int main() {
-    ComplexDataProcessor processor(5);
-    processor.populateMatrix();
+    std::vector<int> primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
+    int seed = 42;
+    int master_key = 0;
     
-    int diag_sum = processor.calculateDiagonalSum();
+    auto transform = [&primes](int value, int index) -> int {
+        int p = primes[index % primes.size()];
+        return is_prime(value) ? value * p : value + p;
+    };
     
-    DataBundle bundle(diag_sum, 64, 12.75);
-    
-    int step1 = complexCalculation(bundle.x, bundle.y, bundle.z);
-    
-    int arr[4] = {step1, step1/2, step1/3, step1/4};
-    
-    int xor_result = 0;
-    for (int i = 0; i < 4; i++) {
-        xor_result ^= arr[i];
+    for (size_t i = 0; i < primes.size(); ++i) {
+        int candidate = transform(seed, i);
+        master_key += (candidate > 100) ? (candidate / 2) : (candidate * 2);
+        seed = gcd(seed, candidate) > 1 ? seed + candidate : seed ^ candidate;
     }
     
-    std::string key = processor.getKey();
-    int key_length = key.length();
-    
-    int matrix_val = processor.getMatrixElement(2, 3);
-    
-    double trig_result = std::sin(M_PI/6) * 100; // sin(30 degrees) * 100
-    
-    int final_result = ((xor_result & 0xFF) + key_length) * matrix_val + static_cast<int>(trig_result);
-    
-    std::cout << "Result: " << final_result << std::endl;
-    
+    std::cout << "Result: " << master_key << std::endl;
     return 0;
 }

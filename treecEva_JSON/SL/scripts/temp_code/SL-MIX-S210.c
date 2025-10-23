@@ -1,31 +1,47 @@
 #define _USE_MATH_DEFINES
 #include <stdio.h>
-#include <math.h>
+#include <stdlib.h>
 
-#define SIZE 5
+struct TelemetryNode {
+    int temperature;
+    struct TelemetryNode* next;
+};
 
 int main() {
-    int matrix[SIZE][SIZE] = {{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}, {16, 17, 18, 19, 20}, {21, 22, 23, 24, 25}};
-    int vector[SIZE] = {2, 3, 1, 4, 0};
-    int result = 0;
-    int temp = 0;
-    int i, j;
+    struct TelemetryNode* head = NULL;
+    struct TelemetryNode* second = NULL;
+    struct TelemetryNode* third = NULL;
     
-    for (i = 0; i < SIZE; i++) {
-        for (j = 0; j < SIZE; j++) {
-            if ((i + j) % 2 == 0) {
-                temp = matrix[i][j] ^ vector[(i * j) % SIZE];
-                temp = temp << 1;
-            } else {
-                temp = matrix[i][j] & vector[(i + j) % SIZE];
-                temp = temp >> 1;
-            }
-            result += (int)pow(temp, 0.5);
-        }
+    head = (struct TelemetryNode*)malloc(sizeof(struct TelemetryNode));
+    second = (struct TelemetryNode*)malloc(sizeof(struct TelemetryNode));
+    third = (struct TelemetryNode*)malloc(sizeof(struct TelemetryNode));
+    
+    head->temperature = 20;
+    head->next = second;
+    
+    second->temperature = 25;
+    second->next = third;
+    
+    third->temperature = 30;
+    third->next = NULL;
+    
+    int sum = 0;
+    int count = 0;
+    struct TelemetryNode* current = head;
+    
+    while (current != NULL) {
+        sum += current->temperature;
+        count++;
+        current = current->next;
     }
     
-    result = result % 1000;
+    int average_temperature = sum / count;
     
-    printf("Result: %d\n", result);
+    printf("Result: %d\n", average_temperature);
+    
+    free(third);
+    free(second);
+    free(head);
+    
     return 0;
 }

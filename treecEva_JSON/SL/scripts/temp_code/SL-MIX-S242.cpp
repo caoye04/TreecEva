@@ -1,42 +1,43 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
-#include <string>
-#include <cmath>
-#include <algorithm>
+#include <memory>
 
-using namespace std;
+template<typename T>
+T gcd(T a, T b) {
+    while (b != 0) {
+        T temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+template<typename T>
+T lcm(T a, T b) {
+    return (a / gcd(a, b)) * b;
+}
 
 int main() {
-    vector<vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    int sum_primes = 0;
+    std::vector<int> signal_buffer = {12, 18, 24, 30, 36};
+    std::unique_ptr<int> checksum = std::make_unique<int>(1);
+    int index = 0;
     
-    // Sum all elements in the matrix
-    for (const auto& row : matrix) {
-        for (int val : row) {
-            sum_primes += val;
+    while (index < signal_buffer.size() - 1) {
+        int current = signal_buffer[index];
+        int next = signal_buffer[index + 1];
+        
+        bool is_lcm_operation = (index % 2 == 0) ? true : false;
+        
+        if (is_lcm_operation) {
+            *checksum = lcm(*checksum, gcd(current, next));
+        } else {
+            *checksum = gcd(*checksum, lcm(current, next));
         }
+        
+        index = index + 1;
     }
     
-    // Perform a complex mathematical expression
-    double expr = pow(sum_primes, 1.0/3.0);
-    int rounded_expr = static_cast<int>(round(expr));
-    
-    // Bitwise operations
-    int shifted = (rounded_expr << 2) ^ 0xF;
-    int masked = shifted & 0x3F;
-    
-    // String manipulation
-    string s = "compute";
-    reverse(s.begin(), s.end());
-    int str_hash = 0;
-    for (char c : s) {
-        str_hash += static_cast<int>(c);
-    }
-    
-    // Final computation using all derived values
-    int final_result = (masked * 3) + (str_hash % 100) - static_cast<int>(sqrt(sum_primes));
-    
-    cout << "Result: " << final_result << endl;
+    std::cout << "Result: " << *checksum << std::endl;
     return 0;
 }

@@ -1,39 +1,49 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <cmath>
-#include <cstring>
+#include <string>
+#include <map>
+#include <algorithm>
+#include <numeric>
+#include <optional>
 
-using namespace std;
-
-double recursive_power_sum(int base, int exp, int depth) {
-    if (depth <= 0) return 1.0;
-    return pow(base, exp) + recursive_power_sum(base, exp - 1, depth - 1);
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
 }
 
 int main() {
-    int values[4][4] = {{2, 3, 5, 7}, {11, 13, 17, 19}, {23, 29, 31, 37}, {41, 43, 47, 53}};
-    double temp = 0.0;
-    int mask = 0xF0;  // 11110000 in binary
-    char buffer[256];
+    std::string input = "aabbccccdddddd";
+    std::map<char, int> frequency;
     
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            if ((i * j) & (mask >> 4)) {
-                temp += sqrt(values[i][j]);
-            } else {
-                temp -= cbrt(values[i][j]);
+    for (char c : input) {
+        frequency[c]++;
+    }
+    
+    int total_chars = input.length();
+    int unique_chars = frequency.size();
+    
+    // Greedy selection of frequencies that are coprime
+    std::vector<int> selected_freqs;
+    for (const auto& pair : frequency) {
+        bool is_coprime = true;
+        for (int selected : selected_freqs) {
+            if (gcd(pair.second, selected) != 1) {
+                is_coprime = false;
+                break;
             }
+        }
+        if (is_coprime) {
+            selected_freqs.push_back(pair.second);
         }
     }
     
-    int x = static_cast<int>(temp) % 100;
-    int y = (x << 2) ^ 0xAA;
-    double z = recursive_power_sum(2, y % 10, 3);
+    int sum_selected = std::accumulate(selected_freqs.begin(), selected_freqs.end(), 0);
+    int compression_ratio = (sum_selected * 100) / total_chars;
     
-    snprintf(buffer, sizeof(buffer), "Value: %f", z);
-    int len = strlen(buffer);
-    int result = (len * y) & 0xFF;
-    
-    cout << "Result: " << result << endl;
+    std::cout << "Result: " << compression_ratio << std::endl;
     return 0;
 }

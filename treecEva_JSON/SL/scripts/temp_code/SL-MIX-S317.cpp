@@ -1,39 +1,61 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
+#include <string>
 #include <vector>
-#include <cmath>
+#include <map>
+#include <algorithm>
 
-using namespace std;
-
-double recursive_power_sum(vector<int>& nums, int index) {
-    if (index >= nums.size()) return 0;
-    double val = pow(nums[index], 3);
-    return val + recursive_power_sum(nums, index + 1);
+constexpr int calculate_weight(int freq, int len) {
+    return freq * len + (len > 1 ? (1 << (len - 1)) : 0);
 }
 
 int main() {
-    vector<vector<int>> matrix = {{2, 3}, {4, 5}, {6, 7}};
-    int xor_accum = 0;
-    double sum_powers = 0;
+    std::string input = "aabbccdddeeeff";
+    std::map<std::string, int> freq_map;
     
-    for(int i=0; i<matrix.size(); i++) {
-        vector<int> row = matrix[i];
-        int local_xor = row[0] ^ row[1];
-        xor_accum |= local_xor;
-        sum_powers += recursive_power_sum(row, 0);
+    // Tokenization and frequency counting
+    for (size_t i = 0; i < input.length(); ) {
+        size_t j = i;
+        while (j < input.length() && input[j] == input[i]) j++;
+        std::string token = input.substr(i, j - i);
+        freq_map[token]++;
+        i = j;
     }
     
-    long long factorial = 1;
-    for(int i=1; i<=xor_accum; i++) {
-        factorial *= i;
+    // Dynamic programming table for optimal merging
+    std::vector<int> dp(freq_map.size() + 1, 0);
+    std::vector<std::string> tokens;
+    for (const auto& pair : freq_map) {
+        tokens.push_back(pair.first);
     }
     
-    double log_val = log(factorial);
-    double sin_component = sin(log_val);
-    double cos_component = cos(sum_powers / 100.0);
+    // Greedy merging with short-circuit evaluation
+    int compression_score = 0;
+    for (size_t i = 0; i < tokens.size(); ++i) {
+        const std::string& token = tokens[i];
+        int freq = freq_map[token];
+        int len = token.length();
+        
+        // Short-circuit: skip if token is too short or frequency is low
+        if (len < 2 && freq < 3) continue;
+        
+        // Calculate weight using constexpr function
+        int weight = calculate_weight(freq, len);
+        
+        // Bitwise encoding: shift and XOR
+        int encoded = (weight << 2) ^ (len & 0x3);
+        
+        // Ternary operator for dynamic programming update
+        dp[i+1] = (i > 0) ? std::max(dp[i], dp[i-1] + encoded) : encoded;
+        
+        // Accumulate compression score
+        compression_score += (encoded > 0) ? encoded : 0;
+    }
     
-    double computed_value = round((sin_component + cos_component) * 1000);
+    // Final adjustment using move semantics
+    std::vector<int> temp_dp = std::move(dp);
+    compression_score ^= temp_dp.back() & 0xFF;
     
-    cout << "Result: " << computed_value << endl;
+    std::cout << "Result: " << compression_score << std::endl;
     return 0;
 }

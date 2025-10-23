@@ -1,59 +1,41 @@
-import math
+from itertools import permutations, combinations
+from functools import reduce
 
-def complex_transform(data):
-    transformed = []
-    for i, val in enumerate(data):
-        if i % 2 == 0:
-            transformed.append(val ** 2)
-        else:
-            transformed.append(math.sqrt(abs(val)))
-    return transformed
+def signal_transformer(signal):
+    return ''.join(chr((ord(c) - 65 + 3) % 26 + 65) if 'A' <= c <= 'Z' else c for c in signal)
 
-def aggregate_stats(numbers):
-    product = 1
-    for num in numbers:
-        product *= num if num != 0 else 1
-    return {
-        'sum': sum(numbers),
-        'product': product,
-        'mean': sum(numbers) / len(numbers) if numbers else 0
-    }
+def signal_evaluator(signals):
+    transformed_signals = [signal_transformer(s) for s in signals]
+    pattern_score = 0
+    
+    for perm in permutations(transformed_signals, 2):
+        if perm[0][:2] == perm[1][-2:]:
+            pattern_score += 1
+    
+    return pattern_score
 
-# Initialize complex nested data structure
-matrix = [
-    [3, -4, 5],
-    [2, 0, -1],
-    [7, 8, -9]
-]
+cosmic_bursts = ['ALPHA', 'BETA', 'GAMMA', 'DELTA']
+cosmic_combinations = list(combinations(cosmic_bursts, 3))
+transformed_combinations = []
 
-# Flatten and apply transformations
-flat_list = [item for sublist in matrix for item in sublist]
-transformed_data = complex_transform(flat_list)
+for combo in cosmic_combinations:
+    temp_list = []
+    for signal in combo:
+        transformed_signal = ''.join(chr((ord(c) - 65 + 5) % 26 + 65) for c in signal)
+        temp_list.append(transformed_signal)
+    transformed_combinations.append(temp_list)
 
-# Perform statistical aggregations
-stats = aggregate_stats(transformed_data)
+scores = list(map(signal_evaluator, transformed_combinations))
+cosmic_signature = reduce(lambda x, y: x ^ y, scores, 0)
 
-# Nested dictionary with computed values
-computations = {
-    'layer1': {
-        'a': stats['sum'] * 2,
-        'b': stats['product'] // 1000
-    },
-    'layer2': {
-        'x': math.floor(stats['mean']),
-        'y': (stats['sum'] + stats['product']) % 100
-    }
-}
+match cosmic_signature % 4:
+    case 0:
+        cosmic_signature += 10
+    case 1:
+        cosmic_signature *= 2
+    case 2:
+        cosmic_signature -= 5
+    case 3:
+        cosmic_signature = cosmic_signature ** 2
 
-# Bitwise and mathematical operations
-bitwise_result = (computations['layer1']['a'] & 0xFF) ^ computations['layer2']['x']
-trig_operation = math.sin(math.radians(30)) * computations['layer1']['b']
-
-# String manipulation and encoding
-encoded = ''.join(chr(ord(c) ^ 42) for c in str(bitwise_result))
-value_from_string = sum(ord(c) for c in encoded)
-
-# Final calculation step
-result = int((value_from_string * trig_operation) // computations['layer2']['y'])
-
-print(f'Result: {result}')
+print(f"Result: {cosmic_signature}")

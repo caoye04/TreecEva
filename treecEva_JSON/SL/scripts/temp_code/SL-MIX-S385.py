@@ -1,41 +1,56 @@
 import math
+from collections import defaultdict
 
-def transform_data(data):
-    transformed = []
-    for i, item in enumerate(data):
-        if isinstance(item, int):
-            transformed.append(math.factorial(item % 7))
-        elif isinstance(item, str):
-            transformed.append(len(item) ** 2)
-        else:
-            transformed.append(sum(x ** 2 for x in item))
-    return transformed
+def calculate_hub_efficiency(weights, distances):
+    if not weights or not distances:
+        return 0
+    avg_weight = sum(weights) / len(weights)
+    total_distance = sum(distances)
+    efficiency = (avg_weight * len(weights)) / (total_distance + 1)  # +1 to avoid division by zero
+    return math.floor(efficiency)
 
-def process_nested(nested_dict):
-    results = {}
-    for key, value in nested_dict.items():
-        if isinstance(value, list):
-            results[key] = sum(transform_data(value))
-        elif isinstance(value, dict):
-            sub_results = process_nested(value)
-            results[key] = sum(sub_results.values())
-        else:
-            results[key] = value * 3
-    return results
+def distribute_packages(hub_data):
+    # Divide and conquer approach - split hubs into groups of 2
+    if len(hub_data) <= 2:
+        efficiencies = [
+            calculate_hub_efficiency(weights, distances) 
+            for weights, distances in hub_data
+        ]
+        return sum(efficiencies) if efficiencies else 0
+    
+    mid = len(hub_data) // 2
+    left_result = distribute_packages(hub_data[:mid])
+    right_result = distribute_packages(hub_data[mid:])
+    return left_result + right_result
 
-data_structure = {
-    'alpha': [3, 'hello', [1, 2, 3]],
-    'beta': {
-        'gamma': [4, 'world', [2, 3]],
-        'delta': 5
-    },
-    'epsilon': [6, 'test', [1, 1, 1, 2]]
-}
+# Hub data: list of tuples (weights, distances)
+logistics_hubs = [
+    ([120, 85, 200], [50, 30, 70]),
+    ([95, 110], [40, 60]),
+    ([75, 130, 90, 115], [25, 80, 45, 55]),
+    ([200, 150], [90, 70]),
+    ([60, 80, 100], [30, 40, 50])
+]
 
-intermediate = process_nested(data_structure)
-aggregated = sum(intermediate.values())
-weighted_sum = aggregated * len(intermediate)
-modulus_operation = weighted_sum % 997
-log_value = int(math.log(modulus_operation + 1) * 100)
-final_result = log_value ^ 0xFF
-print(f'Result: {final_result}')
+# Process hub data using divide and conquer
+base_distribution_score = distribute_packages(logistics_hubs)
+
+# Apply optimization factors using list comprehension
+optimization_factors = [1.2, 0.9, 1.1, 0.95, 1.05]
+hub_efficiencies = [
+    calculate_hub_efficiency(weights, distances) 
+    for weights, distances in logistics_hubs
+]
+
+# Calculate weighted optimization
+weighted_optimization = sum(
+    eff * factor 
+    for eff, factor in zip(hub_efficiencies, optimization_factors)
+)
+
+# Final calculation combining base score and weighted optimization
+optimized_distribution_score = math.ceil(
+    (base_distribution_score * 0.7) + (weighted_optimization * 0.3)
+)
+
+print(f"Result: {optimized_distribution_score}")

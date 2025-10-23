@@ -1,37 +1,35 @@
 import math
+import re
 
-def complex_transform(data_dict):
-    result = []
-    for key, value in data_dict.items():
-        if isinstance(value, list):
-            transformed = [math.sqrt(abs(x)) if x >= 0 else -math.sqrt(abs(x)) for x in value]
-            result.append(sum(transformed))
-        elif isinstance(value, dict):
-            sub_sum = sum([v for v in value.values() if isinstance(v, (int, float))])
-            result.append(math.log(sub_sum + 1) if sub_sum > 0 else 0)
-        else:
-            result.append(value ** 2 if value > 0 else - (value ** 2))
-    return result
+def process_tokens(token_list):
+    # Step 1: Filter tokens that are purely numeric
+    numeric_tokens = list(filter(lambda x: re.match(r'^\d+$', x), token_list))
+    
+    # Step 2: Convert to integers and apply exponentiation
+    powered_values = list(map(lambda x: int(x) ** 2, numeric_tokens))
+    
+    # Step 3: Apply logarithmic scaling to each powered value
+    scaled_values = list(map(lambda x: math.log(x + 1), powered_values))
+    
+    # Step 4: Convert to integer and perform bitwise XOR with a mask
+    mask = 0b1101
+    xor_results = list(map(lambda x: int(x) ^ mask, scaled_values))
+    
+    # Step 5: Sum all XOR results
+    aggregated_sum = sum(xor_results)
+    
+    # Step 6: Apply modulus with a prime number
+    prime = 23
+    mod_result = aggregated_sum % prime
+    
+    # Step 7: Final transformation using exponentiation
+    final_code = (mod_result ** 3) % 100
+    
+    return final_code
 
-data = {
-    'a': [16, -9, 4, -1],
-    'b': {'x': 2.5, 'y': 3.5, 'z': 'ignore'},
-    'c': -5,
-    'd': [0, -4, 9],
-    'e': {'p': 1, 'q': 2.2, 'r': 3.8}
-}
+# Encoded tokens
+encoded_tokens = ['abc123', '456def', '789', '12', 'test34', '56']
 
-transformed_list = complex_transform(data)
-
-# Perform advanced aggregation
-aggregated = 0
-for i, val in enumerate(transformed_list):
-    if i % 2 == 0:
-        aggregated += math.ceil(val)
-    else:
-        aggregated += math.floor(val)
-
-# Apply final transformation
-final_result = (aggregated & 0xFF) ^ (aggregated >> 4)
-
-print(f"Result: {final_result}")
+# Process the tokens
+final_code = process_tokens(encoded_tokens)
+print(f'Result: {final_code}')

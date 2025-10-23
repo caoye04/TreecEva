@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chain of Thought Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .progress-info {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-prev:hover:not(:disabled) {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-next {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-reset {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .btn-auto {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-auto:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress-bar-container {
+            padding: 0 30px 20px;
+            background: #f8f9fa;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .timeline {
+            padding: 40px 30px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 40px;
+            opacity: 0.3;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .step.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .step.completed {
+            opacity: 0.7;
+            transform: translateX(0);
+        }
+
+        .step-number {
+            min-width: 100px;
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            z-index: 1;
+        }
+
+        .number-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e9ecef;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: all 0.3s;
+        }
+
+        .step.active .number-circle {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .step.completed .number-circle {
+            background: #28a745;
+            color: white;
+        }
+
+        .step-content {
+            flex: 1;
+            background: #f8f9fa;
+            padding: 20px 25px;
+            border-radius: 12px;
+            border-left: 4px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .step.active .step-content {
+            background: white;
+            border-left-color: #667eea;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+
+        .step.completed .step-content {
+            border-left-color: #28a745;
+        }
+
+        .step-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .step-text {
+            color: #495057;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        .step.active .step-text {
+            color: #212529;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            margin: 30px;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .summary.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .summary h2 {
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .summary p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 25px;
+            }
+
+            .step-number {
+                min-width: 70px;
+            }
+
+            .number-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 1em;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .button-group {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Chain of Thought Visualization</h1>
+            <p>Temperature Sensor Data Processing & Analysis</p>
+        </div>
+
+        <div class="controls">
+            <div class="progress-info">
+                Step <span id="currentStep">0</span> / <span id="totalSteps">32</span>
+            </div>
+            <div class="button-group">
+                <button class="btn-prev" onclick="prevStep()" id="prevBtn">◀ Previous</button>
+                <button class="btn-next" onclick="nextStep()" id="nextBtn">Next ▶</button>
+                <button class="btn-auto" onclick="toggleAuto()" id="autoBtn">▶ Auto Play</button>
+                <button class="btn-reset" onclick="reset()">↺ Reset</button>
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="timeline" id="timeline">
+            <!-- Steps will be inserted here by JavaScript -->
+        </div>
+
+        <div class="summary" id="summary">
+            <h2>🎯 Process Complete!</h2>
+            <p>All 32 steps of the temperature sensor data processing have been executed. The final weighted average temperature is <span class="highlight">25.7125°C</span>, calculated from 7 filtered readings after removing outliers and applying time-based weights.</p>
+        </div>
+    </div>
+
+    <script>
+        const steps = [
+            "The sensor_readings list contains eight tuples with temperature values and their respective units: (25, 'C'), (77, 'F'), (298.15, 'K'), (30, 'C'), (86, 'F'), (310, 'K'), (22, 'C'), and (68, 'F').",
+            "The celsius_converter function is applied to each reading to normalize temperatures into Celsius, starting with (25, 'C') which remains 25.0 since the unit is already Celsius.",
+            "The second reading (77, 'F') is converted using (77 - 32) * 5/9, resulting in 25.0°C, confirming accurate Fahrenheit to Celsius conversion via the formula.",
+            "The third reading (298.15, 'K') is converted by subtracting 273.15, yielding exactly 25.0°C, verifying correct Kelvin to Celsius normalization.",
+            "The fourth reading (30, 'C') remains unchanged at 30.0°C as it is already in Celsius, preserving its original value during normalization.",
+            "The fifth reading (86, 'F') converts to (86 - 32) * 5/9 = 30.0°C, matching expected output for 86°F in Celsius.",
+            "The sixth reading (310, 'K') becomes 310 - 273.15 = 36.85°C, a valid conversion from Kelvin to Celsius above standard room temperature.",
+            "The seventh reading (22, 'C') stays at 22.0°C without any transformation needed due to being in the target unit.",
+            "The eighth reading (68, 'F') converts to (68 - 32) * 5/9 = 20.0°C, completing all unit conversions accurately.",
+            "After processing, normalized_temps contains [25.0, 25.0, 25.0, 30.0, 30.0, 36.85, 22.0, 20.0], representing all sensor data now uniformly in degrees Celsius.",
+            "The outlier_filter function computes the mean of normalized_temps: sum([25.0, 25.0, 25.0, 30.0, 30.0, 36.85, 22.0, 20.0]) / 8 = 203.85 / 8 = 25.48125°C.",
+            "The standard deviation is calculated using statistics.stdev on [25.0, 25.0, 25.0, 30.0, 30.0, 36.85, 22.0, 20.0], resulting in approximately 5.674.",
+            "Two times the standard deviation is 2 * 5.674 ≈ 11.348, defining the threshold for outlier detection around the mean of 25.48125.",
+            "Each temperature in normalized_temps is checked against |t - 25.48125| ≤ 11.348 to determine inclusion in filtered_temps.",
+            "25.0 passes the test because |25.0 - 25.48125| = 0.48125 ≤ 11.348, so it is retained in filtered_temps.",
+            "Another 25.0 also passes with the same difference, contributing to multiple identical valid entries.",
+            "The third 25.0 is included again under the same condition, maintaining consistency across duplicates.",
+            "30.0 has |30.0 - 25.48125| = 4.51875 ≤ 11.348, so it is kept in the filtered dataset.",
+            "Another 30.0 is similarly accepted due to identical deviation, preserving both high-end moderate values.",
+            "36.85 fails the test because |36.85 - 25.48125| = 11.36875 > 11.348, marking it as an outlier and excluding it.",
+            "22.0 satisfies |22.0 - 25.48125| = 3.48125 ≤ 11.348, so it remains in filtered_temps.",
+            "20.0 yields |20.0 - 25.48125| = 5.48125 ≤ 11.348, thus it is not considered an outlier and is included.",
+            "After filtering, filtered_temps becomes [25.0, 25.0, 25.0, 30.0, 30.0, 22.0, 20.0], removing only the 36.85°C value.",
+            "The weights list is generated using [0.1, 0.15, 0.2, 0.25, 0.3] repeated enough times and truncated to match len(filtered_temps)=7, resulting in [0.1, 0.15, 0.2, 0.25, 0.3, 0.1, 0.15].",
+            "Weighted_sum starts at 0 and accumulates temp * weight pairs: first term is 25.0 * 0.1 = 2.5.",
+            "Second contribution is 25.0 * 0.15 = 3.75, increasing weighted_sum to 6.25 after two terms.",
+            "Third term adds 25.0 * 0.2 = 5.0, bringing cumulative sum to 11.25.",
+            "Fourth term contributes 30.0 * 0.25 = 7.5, updating weighted_sum to 18.75.",
+            "Fifth term adds 30.0 * 0.3 = 9.0, raising total to 27.75.",
+            "Sixth term includes 22.0 * 0.1 = 2.2, increasing weighted_sum to 29.95.",
+            "Seventh and final term adds 20.0 * 0.15 = 3.0, resulting in weighted_sum = 32.95.",
+            "Sum of weights is 0.1 + 0.15 + 0.2 + 0.25 + 0.3 + 0.1 + 0.15 = 1.25, used to normalize the weighted sum for the final average calculation of 32.95 / 1.25 = 25.7125°C."
+        ];
+
+        let currentStep = 0;
+        let autoPlayInterval = null;
+
+        function initTimeline() {
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+            
+            steps.forEach((text, index) => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'step';
+                stepDiv.id = `step-${index}`;
+                
+                const highlightedText = highlightNumbers(text);
+                
+                stepDiv.innerHTML = `
+                    <div class="step-number">
+                        <div class="number-circle">${index + 1}</div>
+                    </div>
+                    <div class="step-content">
+                        <div class="step-title">${getStepTitle(index)}</div>
+                        <div class="step-text">${highlightedText}</div>
+                    </div>
+                `;
+                
+                timeline.appendChild(stepDiv);
+            });
+            
+            document.getElementById('totalSteps').textContent = steps.length;
+        }
+
+        function highlightNumbers(text) {
+            return text.replace(/(\d+\.?\d*)/g, '<span class="highlight">$1</span>');
+        }
+
+        function getStepTitle(index) {
+            const titles = [
+                "First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", 
+                "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth", "Thirteenth",
+                "Fourteenth", "Fifteenth", "Sixteenth", "Seventeenth", "Eighteenth",
+                "Nineteenth", "Twentieth", "Twenty-first", "Twenty-second", "Twenty-third",
+                "Twenty-fourth", "Twenty-fifth", "Twenty-sixth", "Twenty-seventh",
+                "Twenty-eighth", "Twenty-ninth", "Thirtieth", "Thirty-first", "Thirty-second"
+            ];
+            return titles[index] || `Step ${index + 1}`;
+        }
+
+        function updateDisplay() {
+            // Update step states
+            steps.forEach((_, index) => {
+                const stepEl = document.getElementById(`step-${index}`);
+                if (index < currentStep) {
+                    stepEl.className = 'step completed';
+                } else if (index === currentStep) {
+                    stepEl.className = 'step active';
+                    setTimeout(() => {
+                        stepEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                } else {
+                    stepEl.className = 'step';
+                }
+            });
+
+            // Update progress bar
+            const progress = ((currentStep + 1) / steps.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            // Update current step display
+            document.getElementById('currentStep').textContent = currentStep + 1;
+
+            // Update buttons
+            document.getElementById('prevBtn').disabled = currentStep === 0;
+            document.getElementById('nextBtn').disabled = currentStep === steps.length - 1;
+
+            // Show summary at the end
+            if (currentStep === steps.length - 1) {
+                document.getElementById('summary').classList.add('show');
+            } else {
+                document.getElementById('summary').classList.remove('show');
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateDisplay();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateDisplay();
+            }
+        }
+
+        function reset() {
+            currentStep = 0;
+            updateDisplay();
+            stopAuto();
+        }
+
+        function toggleAuto() {
+            if (autoPlayInterval) {
+                stopAuto();
+            } else {
+                startAuto();
+            }
+        }
+
+        function startAuto() {
+            document.getElementById('autoBtn').textContent = '⏸ Pause';
+            document.getElementById('autoBtn').style.background = '#ffc107';
+            autoPlayInterval = setInterval(() => {
+                if (currentStep < steps.length - 1) {
+                    nextStep();
+                } else {
+                    stopAuto();
+                }
+            }, 2000);
+        }
+
+        function stopAuto() {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+                document.getElementById('autoBtn').textContent = '▶ Auto Play';
+                document.getElementById('autoBtn').style.background = '#28a745';
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextStep();
+            if (e.key === 'ArrowLeft') prevStep();
+            if (e.key === ' ') {
+                e.preventDefault();
+                toggleAuto();
+            }
+        });
+
+        // Initialize
+        initTimeline();
+        updateDisplay();
+    </script>
+</body>
+</html>

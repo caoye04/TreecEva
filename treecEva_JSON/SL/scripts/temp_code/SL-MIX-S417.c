@@ -1,69 +1,50 @@
 #define _USE_MATH_DEFINES
 #include <stdio.h>
-#include <math.h>
-#include <string.h>
+#include <stdlib.h>
 
-#define MAX_LEN 100
+struct TreeNode {
+    int mask;
+    struct TreeNode* left;
+    struct TreeNode* right;
+};
 
-typedef struct {
-    int x;
-    int y;
-} Point;
-
-typedef struct {
-    Point* points;
-    int count;
-} Polygon;
-
-int compute_hash(const char* str) {
-    int hash = 0;
-    for (int i = 0; i < strlen(str); i++) {
-        hash = (hash << 5) - hash + str[i]; // hash * 31 + str[i]
-    }
-    return hash;
+struct TreeNode* createNode(int mask) {
+    struct TreeNode* node = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+    node->mask = mask;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
 }
 
-int determinant(Point p1, Point p2, Point p3) {
-    return (p2.x - p1.x) * (p3.y - p1.y) - (p3.x - p1.x) * (p2.y - p1.y);
+int computeEncryptedValue(struct TreeNode* node, int* dp) {
+    if (node == NULL) return 0;
+    
+    int left_val = computeEncryptedValue(node->left, dp);
+    int right_val = computeEncryptedValue(node->right, dp);
+    
+    int combined = left_val ^ right_val;
+    int result = node->mask ^ combined;
+    
+    (*dp) += result & 0xF;  // Only consider last 4 bits for DP accumulation
+    
+    return result;
 }
 
 int main() {
-    // Initialize polygon data
-    Point vertices[] = {{0, 0}, {4, 0}, {4, 3}, {0, 3}};
-    Polygon poly;
-    poly.points = vertices;
-    poly.count = sizeof(vertices)/sizeof(vertices[0]);
-
-    // Compute perimeter using Euclidean distance
-    double perimeter = 0.0;
-    for(int i=0; i<poly.count; i++) {
-        Point p1 = poly.points[i];
-        Point p2 = poly.points[(i+1)%poly.count];
-        double dx = p2.x - p1.x;
-        double dy = p2.y - p1.y;
-        perimeter += sqrt(dx*dx + dy*dy);
-    }
-
-    // Calculate area using shoelace formula
-    int area = 0;
-    for(int i=0; i<poly.count; i++) {
-        Point p1 = poly.points[i];
-        Point p2 = poly.points[(i+1)%poly.count];
-        area += (p1.x * p2.y - p2.x * p1.y);
-    }
-    area = abs(area) / 2;
-
-    // Perform bitwise transformations
-    int hash_val = compute_hash("rectangle");
-    int transformed = ((hash_val & 0xFF) ^ (hash_val >> 8)) | (area << 4);
-
-    // Apply mathematical operations
-    double log_area = log((double)area + 1);
-    int final_shift = (int)(perimeter * sin(log_area));
+    volatile int dp_accumulator = 0;
     
-    // Final computation combining all factors
-    int result = (transformed & 0xFFFF) + (final_shift << 2) - (int)perimeter;
+    // Constructing a binary tree
+    struct TreeNode* root = createNode(0b1100);
+    root->left = createNode(0b1010);
+    root->right = createNode(0b0110);
+    root->left->left = createNode(0b1111);
+    root->left->right = createNode(0b0001);
+    root->right->left = createNode(0b1001);
+    root->right->right = createNode(0b0101);
     
-    printf("Result: %d\n", result);
+    int encrypted_root = computeEncryptedValue(root, &dp_accumulator);
+    
+    printf("Result: %d\n", encrypted_root);
+    
     return 0;
 }

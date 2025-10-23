@@ -1,53 +1,27 @@
-import math
-
-def complex_transform(data):
+def tokenize_and_transform(payload):
+    tokens = [ord(c) for c in payload]
     transformed = []
-    for i, val in enumerate(data):
-        if i % 2 == 0:
-            transformed.append(val ** 2)
+    for i, val in enumerate(tokens):
+        if i % 3 == 0:
+            transformed.append(val << 2)
+        elif i % 3 == 1:
+            transformed.append(val >> 1)
         else:
-            transformed.append(math.sqrt(abs(val)))
+            transformed.append(val ^ 0xFF)
     return transformed
 
-def aggregate_values(matrix):
-    totals = []
+def compute_checksum(matrix):
+    xor_accum = 0
     for row in matrix:
-        total = 0
-        for val in row:
-            total += val if val > 0 else -val
-        totals.append(total)
-    return totals
+        row_sum = sum(row)
+        xor_accum ^= row_sum
+    return xor_accum
 
-data_structure = [
-    [1, -4, 9, -16, 25],
-    [36, -49, 64, -81, 100],
-    [-121, 144, -169, 196, -225]
-]
-
-# Process the data structure
-processed_data = []
-for sublist in data_structure:
-    processed_data.append(complex_transform(sublist))
-
-# Aggregate values
-aggregated = aggregate_values(processed_data)
-
-# Perform bitwise operations
-bitwise_result = aggregated[0]
-for i in range(1, len(aggregated)):
-    if i % 2 == 1:
-        bitwise_result = bitwise_result & int(aggregated[i])
-    else:
-        bitwise_result = bitwise_result ^ int(aggregated[i])
-
-# Mathematical transformation
-transformed_value = math.log(abs(bitwise_result)) * math.sin(math.pi / 4)
-
-# String manipulation and final combination
-str_parts = [str(int(transformed_value)), str(len(aggregated)), str(sum(aggregated))]
-combined_str = ''.join(str_parts)
-
-# Final calculation step
-result = (int(combined_str) // 10) + (bitwise_result % 7) - len(str_parts)
-
-print(f"Result: {result}")
+payload = "SECURITY2023"
+token_stream = tokenize_and_transform(payload)
+grid_size = 4
+matrix_form = [token_stream[i:i+grid_size] for i in range(0, len(token_stream), grid_size)]
+checksum_val = compute_checksum(matrix_form)
+key_modifier = (lambda x: x & 0xF0)(sum(token_stream) ^ 0xAA)
+transmission_code = checksum_val | key_modifier
+print(f"Result: {transmission_code}")

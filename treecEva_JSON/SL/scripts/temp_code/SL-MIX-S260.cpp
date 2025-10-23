@@ -1,35 +1,78 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <vector>
-#include <cmath>
 #include <string>
+#include <memory>
+#include <cmath>
 
-double computeValue(int n) {
-    double sum = 0.0;
-    for (int i = 1; i <= n; ++i) {
-        sum += std::pow(-1, i + 1) / (2 * i - 1);
+struct Position {
+    int x = 0;
+    int y = 0;
+};
+
+class Robot {
+private:
+    std::unique_ptr<Position> pos;
+
+public:
+    Robot() : pos(std::make_unique<Position>()) {}
+    
+    void move(int dx, int dy) {
+        pos->x += dx;
+        pos->y += dy;
     }
-    return sum * 4;
+    
+    int getManhattanDistance() const {
+        return std::abs(pos->x) + std::abs(pos->y);
+    }
+    
+    Position getPosition() const { return *pos; }
+};
+
+std::string transformInstruction(const std::string& input) {
+    std::string result = "";
+    for (char c : input) {
+        if (c >= 'A' && c <= 'Z') {
+            result += static_cast<char>(c + 32); // Convert to lowercase
+        } else if (c == 'l') {
+            result += "left";
+        } else if (c == 'r') {
+            result += "right";
+        } else {
+            result += c;
+        }
+    }
+    return result;
+}
+
+void executeMovement(Robot& robot, const std::string& command) {
+    if (command == "north") {
+        robot.move(0, 1);
+    } else if (command == "south") {
+        robot.move(0, -1);
+    } else if (command == "east") {
+        robot.move(1, 0);
+    } else if (command == "west") {
+        robot.move(-1, 0);
+    } else if (command.substr(0, 4) == "left") {
+        int steps = command.length() > 4 ? std::stoi(command.substr(4)) : 1;
+        robot.move(-steps, 0);
+    } else if (command.substr(0, 5) == "right") {
+        int steps = command.length() > 5 ? std::stoi(command.substr(5)) : 1;
+        robot.move(steps, 0);
+    }
 }
 
 int main() {
-    std::vector<std::vector<int>> matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-    int a = matrix[1][2];
-    int b = matrix[2][0];
+    Robot rover;
+    std::string raw_commands[] = {"N", "E", "L3", "R2", "S"};
+    int num_commands = sizeof(raw_commands)/sizeof(raw_commands[0]);
     
-    double x = computeValue(10000);
-    int y = static_cast<int>(std::round(x));
-    
-    std::string s = "HELLO";
-    int z = 0;
-    for (char c : s) {
-        z += (c - 'A' + 1);
+    for (int i = 0; i < num_commands; ++i) {
+        std::string transformed = transformInstruction(raw_commands[i]);
+        executeMovement(rover, transformed);
     }
     
-    int result = (a & b) | (y ^ z);
-    result <<= 2;
-    result -= (matrix[0][0] * matrix[2][2]);
-    
-    std::cout << "Result: " << result << std::endl;
+    int final_distance = rover.getManhattanDistance();
+    std::cout << "Result: " << final_distance << std::endl;
     return 0;
 }

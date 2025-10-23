@@ -1,50 +1,54 @@
 #define _USE_MATH_DEFINES
 #include <stdio.h>
-#include <math.h>
+#include <stdlib.h>
 
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
+#define BUFFER_SIZE 5
+#define MODULUS 7
 
-int complex_operation(int x, int y) {
-    return (x * 3 + y * 2) ^ (x & y);
+typedef struct Block {
+    int access_counter;
+    int data_payload;
+    struct Block* next;
+} Block;
+
+int transform(int x) {
+    return (x * 3 + 1) % MODULUS;
+}
+
+int aggregate(Block* head, int (*func)(int)) {
+    int sum = 0;
+    Block* current = head;
+    do {
+        sum += func(current->access_counter);
+        current = current->next;
+    } while (current != head);
+    return sum;
 }
 
 int main() {
-    int matrix[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-    int vector[3] = {10, 20, 30};
-    int i, j;
-    int temp = 0;
-    int accumulator = 0;
-    int mask = 0xF0;
-    double pi_approx = 3.14159;
-    
-    // First processing loop
-    for (i = 0; i < 3; i++) {
-        for (j = 0; j < 3; j++) {
-            if ((i + j) % 2 == 0) {
-                matrix[i][j] = matrix[i][j] * 2 + (int)floor(pi_approx);
-            } else {
-                matrix[i][j] = matrix[i][j] - (int)ceil(pi_approx);
-            }
-        }
+    Block nodes[BUFFER_SIZE];
+    for (int i = 0; i < BUFFER_SIZE; i++) {
+        nodes[i].access_counter = (i * 2 + 3) % MODULUS;
+        nodes[i].data_payload = i * 10;
+        nodes[i].next = &nodes[(i + 1) % BUFFER_SIZE];
     }
     
-    // Second processing with bitwise operations
-    for (i = 0; i < 3; i++) {
-        temp = (vector[i] << 1) & mask;
-        accumulator += temp ^ (matrix[i][i] | 0x0A);
+    Block* head = &nodes[0];
+    Block* ptr = head;
+    int steps = 3;
+    for (int i = 0; i < steps; i++) {
+        ptr->access_counter = (ptr->access_counter + 5) % MODULUS;
+        ptr = ptr->next;
     }
     
-    // Complex function calls and mathematical operations
-    int intermediate = complex_operation(matrix[1][2], vector[0]);
-    int power_result = (int)pow((double)(intermediate % 7), 3.0);
+    int intermediate_sum = 0;
+    for (int i = 0; i < BUFFER_SIZE; i++) {
+        intermediate_sum += nodes[i].access_counter;
+    }
     
-    // Final calculation sequence
-    int result = accumulator;
-    result = (result >> 2) + power_result;
-    result = result * (matrix[2][1] & 0x0F) - (vector[2] >> 3);
+    int final_metric = aggregate(head, transform);
+    final_metric = (final_metric + intermediate_sum) % MODULUS;
     
-    // CRITICAL_POINT
-    printf("Result: %d\n", result);
+    printf("Result: %d\n", final_metric);
     return 0;
 }

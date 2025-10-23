@@ -1,44 +1,74 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <vector>
-#include <cmath>
 #include <string>
+#include <unordered_map>
+#include <memory>
+#include <vector>
 
-double computeValue(int n) {
-    double sum = 0.0;
-    for (int i = 1; i <= n; ++i) {
-        sum += std::pow(-1, i + 1) / (2 * i - 1);
+using namespace std;
+
+// String hashing function
+size_t hash_string(const string& s) {
+    size_t hash = 0;
+    for (char c : s) {
+        hash = hash * 31 + c;
     }
-    return sum * 4;
+    return hash;
+}
+
+// Memoization table for dynamic programming
+unordered_map<string, int> memo;
+
+// Recursive backtracking function with memoization
+int calculate_loading_efficiency(const vector<string>& packages, int index, int current_load) {
+    // Base case
+    if (index >= packages.size()) {
+        return current_load;
+    }
+    
+    // Create key for memoization
+    string key = to_string(index) + "," + to_string(current_load);
+    if (memo.find(key) != memo.end()) {
+        return memo[key];
+    }
+    
+    // Get hash of current package
+    size_t package_hash = hash_string(packages[index]);
+    
+    // Apply encoding/decoding transformation
+    int encoded_value = (package_hash & 0xFF) ^ ((package_hash >> 8) & 0xFF);
+    
+    // Use ternary operator and short-circuit evaluation
+    bool is_heavy = (encoded_value > 100) && (packages[index].length() > 3);
+    int weight_factor = is_heavy ? 2 : 1;
+    
+    // Recursive calls with move semantics for efficiency
+    int include_package = calculate_loading_efficiency(
+        move(packages), index + 1, current_load + (encoded_value * weight_factor)
+    );
+    
+    int exclude_package = calculate_loading_efficiency(
+        move(packages), index + 1, current_load
+    );
+    
+    // Store result in memo table
+    return memo[key] = max(include_package, exclude_package);
 }
 
 int main() {
-    std::vector<std::vector<int>> matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-    int a = matrix[1][2];
-    int b = matrix[2][0];
+    // Define package sequence
+    vector<string> shipment_packages = {"BOX-A", "CYL-B", "SPH-C", "CUB-D", "IRG-E"};
     
-    double pi_approx = computeValue(10000);
-    int scaled_pi = static_cast<int>(pi_approx * 1000);
+    // Use smart pointer for resource management
+    unique_ptr<int> efficiency_score = make_unique<int>(0);
     
-    std::string s = "complex";
-    int str_len = s.length();
+    // Calculate loading efficiency using dynamic programming
+    *efficiency_score = calculate_loading_efficiency(shipment_packages, 0, 0);
     
-    int x = (a & b) | (str_len ^ 0x0F);
-    int y = (scaled_pi >> 4) & 0xFF;
+    // Apply final adjustment using bitwise operations
+    int final_loading_score = (*efficiency_score & 0x1FF) | ((*efficiency_score >> 9) & 0x3F);
     
-    bool cond1 = (x > y) && (pi_approx > 3.14);
-    bool cond2 = !((a + b) < 10);
+    cout << "Result: " << final_loading_score << endl;
     
-    int result = 0;
-    if (cond1 || cond2) {
-        result = (x * y) + (cond1 ? 1 : 0) - (cond2 ? 1 : 0);
-    } else {
-        result = (x + y) * 2;
-    }
-    
-    result = result ^ 0xAA;
-    result = (result << 2) | (result >> 3);
-    
-    std::cout << "Result: " << result << std::endl;
     return 0;
 }

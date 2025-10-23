@@ -1,59 +1,50 @@
 #define _USE_MATH_DEFINES
 #include <stdio.h>
-#include <math.h>
-#include <string.h>
+#include <stdlib.h>
 
-#define MAX_LEN 100
+struct Node {
+    int weight;
+    struct Node* left;
+    struct Node* right;
+};
 
-typedef struct {
-    int x;
-    int y;
-} Point;
+struct Packet {
+    volatile int priority;
+    int metadata;
+};
 
-typedef struct {
-    Point points[3];
-    int count;
-} Polygon;
-
-int calculate_area(Polygon* poly) {
-    int area = 0;
-    for(int i=0; i<poly->count; i++) {
-        area += poly->points[i].x * poly->points[(i+1)%poly->count].y;
-        area -= poly->points[i].y * poly->points[(i+1)%poly->count].x;
-    }
-    return abs(area) / 2;
+int process_packet(struct Packet* pkt, struct Node* root) {
+    if (!root) return pkt->metadata;
+    
+    // Apply modular transformation
+    pkt->metadata = (pkt->metadata * root->weight + 7) % 13;
+    
+    // Conditional routing with short-circuit evaluation
+    return (pkt->priority > 0 && root->left) ? 
+           process_packet(pkt, root->left) : 
+           (root->right ? process_packet(pkt, root->right) : pkt->metadata);
 }
 
 int main() {
-    Polygon shape;
-    shape.count = 3;
+    // Initialize packet
+    struct Packet pkt = {3, 5};
     
-    // Initialize points
-    shape.points[0].x = 0;
-    shape.points[0].y = 0;
-    shape.points[1].x = 4;
-    shape.points[1].y = 0;
-    shape.points[2].x = 2;
-    shape.points[2].y = 3;
+    // Build binary tree
+    struct Node n1 = {2, NULL, NULL};
+    struct Node n2 = {4, NULL, NULL};
+    struct Node n3 = {3, &n1, &n2};
+    struct Node n4 = {5, NULL, NULL};
+    struct Node root = {1, &n3, &n4};
     
-    int base_area = calculate_area(&shape);
+    // Process packet through tree
+    int intermediate = process_packet(&pkt, &root);
     
-    char buffer[MAX_LEN];
-    snprintf(buffer, MAX_LEN, "%d", base_area);
-    int len = strlen(buffer);
+    // Apply final transformations
+    int queue_op = (intermediate << 1) & 7;  // Bitwise shift and mask
+    int stack_op = (queue_op > 4) ? queue_op - 2 : queue_op + 3;  // Ternary operator
     
-    // Perform some bitwise operations
-    int mask = (1 << len) - 1;
-    int shifted = base_area << 2;
-    int masked_result = shifted & mask;
+    volatile int final_metric = ((stack_op * 3) % 11) + (pkt.priority && intermediate ? 1 : 0);  // Short-circuit eval
     
-    // Apply mathematical transformations
-    double sqrt_val = sqrt((double)masked_result);
-    int final_int = (int)ceil(sqrt_val);
-    
-    // Combine with string length in a complex expression
-    int result = ((final_int * len) + (base_area ^ len)) & 0xFF;
-    
-    printf("Result: %d\n", result);
+    printf("Result: %d\n", final_metric);
     return 0;
 }

@@ -1,45 +1,92 @@
 #define _USE_MATH_DEFINES
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
-#define SIZE 5
+typedef struct Node {
+    int speed;
+    struct Node* next;
+} Node;
+
+void push(Node** head, int speed) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->speed = speed;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+int pop(Node** head) {
+    if (*head == NULL) return -1;
+    Node* temp = *head;
+    int speed = temp->speed;
+    *head = (*head)->next;
+    free(temp);
+    return speed;
+}
+
+void heapify(int arr[], int n, int i) {
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    if (largest != i) {
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+        heapify(arr, n, largest);
+    }
+}
+
+void buildMaxHeap(int arr[], int n) {
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+}
 
 int main() {
-    double matrix[SIZE][SIZE] = {
-        {1.5, 2.3, 3.7, 4.1, 5.9},
-        {2.2, 3.8, 4.4, 5.6, 6.3},
-        {3.1, 4.9, 5.5, 6.7, 7.2},
-        {4.8, 5.1, 6.9, 7.4, 8.8},
-        {5.5, 6.6, 7.3, 8.1, 9.9}
-    };
+    Node* vehicle_queue = NULL;
     
-    double vector[SIZE] = {1.1, 2.2, 3.3, 4.4, 5.5};
-    double result_vector[SIZE] = {0};
+    // Simulate vehicle speeds using linked list
+    push(&vehicle_queue, 65);
+    push(&vehicle_queue, 72);
+    push(&vehicle_queue, 58);
+    push(&vehicle_queue, 80);
+    push(&vehicle_queue, 67);
     
-    // Matrix-vector multiplication
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            result_vector[i] += matrix[i][j] * vector[j];
-        }
+    int speeds[5];
+    int count = 0;
+    
+    // Extract speeds from queue
+    while (vehicle_queue != NULL && count < 5) {
+        speeds[count++] = pop(&vehicle_queue);
     }
     
-    // Compute the dot product of result_vector with itself
-    double dot_product = 0.0;
-    for (int i = 0; i < SIZE; i++) {
-        dot_product += result_vector[i] * result_vector[i];
+    // Build max heap
+    buildMaxHeap(speeds, count);
+    
+    // Extract top 3 speeds
+    int top_speeds[3];
+    for (int i = 0; i < 3; i++) {
+        top_speeds[i] = speeds[0];
+        speeds[0] = speeds[count - 1 - i];
+        heapify(speeds, count - 1 - i, 0);
     }
     
-    // Apply logarithmic transformation
-    double log_result = log(dot_product);
+    // Calculate mean
+    double mean = (top_speeds[0] + top_speeds[1] + top_speeds[2]) / 3.0;
     
-    // Perform bitwise operations on an integer derived from log_result
-    int int_part = (int)log_result;
-    int shifted = int_part << 2;  // Left shift by 2
-    int masked = shifted & 0xF0;  // Mask with 0xF0 (240 in decimal)
+    // Calculate variance
+    double variance = ((top_speeds[0] - mean) * (top_speeds[0] - mean) +
+                      (top_speeds[1] - mean) * (top_speeds[1] - mean) +
+                      (top_speeds[2] - mean) * (top_speeds[2] - mean)) / 3.0;
     
-    // Final computation combining all previous results
-    double final_result = pow(log_result, 2) + sqrt(masked) + (int_part % 7);
+    int speed_variance = (int)round(variance);
+    printf("Result: %d\n", speed_variance);
     
-    printf("Result: %.6f\n", final_result);
     return 0;
 }

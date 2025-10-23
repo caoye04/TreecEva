@@ -1,59 +1,54 @@
-import math
+from collections import deque
+from math import sqrt
+from functools import reduce
+from dataclasses import dataclass
 
-def process_nested_data(data):
-    result = 0
-    for key, value in data.items():
-        if isinstance(value, list):
-            temp = 0
-            for i, item in enumerate(value):
-                if isinstance(item, dict):
-                    sub_temp = 1
-                    for sub_key, sub_value in item.items():
-                        if isinstance(sub_value, str):
-                            sub_temp *= len(sub_value)
-                        elif isinstance(sub_value, int):
-                            sub_temp += sub_value
-                    temp += sub_temp
-                elif isinstance(item, int):
-                    temp += item * (i + 1)
-            result += temp
-        elif isinstance(value, dict):
-            sub_result = 0
-            for sub_key, sub_value in value.items():
-                if isinstance(sub_value, list):
-                    for i, elem in enumerate(sub_value):
-                        if isinstance(elem, int):
-                            sub_result += elem * pow(i, 2)
-                        elif isinstance(elem, str):
-                            sub_result += ord(elem[0])
-            result += sub_result
-    return result
+def harmonic_mean(values):
+    if not values or 0 in values:
+        return 0
+    n = len(values)
+    reciprocal_sum = sum(1.0 / v for v in values)
+    return n / reciprocal_sum
 
-def transform_values(x, y, z):
-    a = x & (y | z)
-    b = (x ^ y) << 2
-    c = ~(a & b)
-    d = math.floor(math.sqrt(abs(c)))
-    return d
+@dataclass
+class Position:
+    x: float
+    y: float
+    depth: float
 
-data_structure = {
-    'alpha': [
-        5,
-        {'beta': 'hello', 'gamma': 7},
-        3,
-        {'delta': 'world', 'epsilon': 2}
-    ],
-    'zeta': {
-        'eta': [1, 'A', 3, 'B'],
-        'theta': [4, 'X', 2]
-    },
-    'iota': [
-        10,
-        20,
-        {'kappa': 'test', 'lambda': 5}
-    ]
-}
+# Underwater drone trajectory
+positions = [
+    Position(0.0, 0.0, 10.0),
+    Position(3.0, 4.0, 12.0),
+    Position(7.0, 8.0, 9.0),
+    Position(10.0, 12.0, 15.0)
+]
 
-intermediate_value = process_nested_data(data_structure)
-final_result = transform_values(intermediate_value, 0b1101, 0o17)
-print(f'Result: {final_result}')
+depth_changes = []
+cumulative_displacement = 0.0
+position_stack = deque()
+
+for i in range(1, len(positions)):
+    prev_pos = positions[i-1]
+    curr_pos = positions[i]
+    
+    delta_x = curr_pos.x - prev_pos.x
+    delta_y = curr_pos.y - prev_pos.y
+    delta_z = curr_pos.depth - prev_pos.depth
+    
+    segment_distance = sqrt(delta_x**2 + delta_y**2 + delta_z**2)
+    cumulative_displacement += segment_distance
+    
+    if delta_z != 0:
+        depth_changes.append(abs(delta_z))
+    
+    position_stack.appendleft((delta_x, delta_y, delta_z))
+
+if depth_changes:
+    smoothing_factor = harmonic_mean(depth_changes) / max(depth_changes)
+else:
+    smoothing_factor = 1.0
+
+smoothed_trajectory_length = cumulative_displacement * smoothing_factor
+
+print(f"Result: {smoothed_trajectory_length}")

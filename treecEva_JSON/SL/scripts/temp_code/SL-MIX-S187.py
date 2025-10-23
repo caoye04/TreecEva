@@ -1,54 +1,62 @@
 import math
+from collections import defaultdict
+from statistics import variance
 
-def complex_transform(data_dict):
-    result = []
-    for key, values in data_dict.items():
-        transformed = []
-        for i, val in enumerate(values):
-            if i % 2 == 0:
-                transformed.append(val ** 2)
-            else:
-                transformed.append(math.sqrt(abs(val)))
-        result.append(sum(transformed))
-    return result
+def calculate_distance(p1, p2):
+    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
-def process_nested(nested_list):
-    flattened = []
-    for sublist in nested_list:
-        if isinstance(sublist, list):
-            flattened.extend(process_nested(sublist))
-        else:
-            flattened.append(sublist)
-    return flattened
+def get_quadrant(point):
+    x, y = point
+    if x >= 0 and y >= 0:
+        return 1
+    elif x < 0 and y >= 0:
+        return 2
+    elif x < 0 and y < 0:
+        return 3
+    else:
+        return 4
 
-data = {
-    'alpha': [3, -4, 5],
-    'beta': [2, -9, 16, -25],
-    'gamma': [-1, 4, -9, 16, -25]
+# Robotic arm movement sequence
+movement_sequence = [(0, 0), (3, 4), (-2, 5), (-5, -1), (4, -3), (1, 1)]
+
+# State machine for tracking operations
+arm_state = {
+    'current_position': (0, 0),
+    'distances': [],
+    'quadrant_visits': defaultdict(int),
+    'operation_count': 0
 }
 
-# Stage 1: Transform data
-stage1 = complex_transform(data)
+# Process each movement
+for target_position in movement_sequence[1:]:
+    # Calculate distance moved
+    distance = calculate_distance(arm_state['current_position'], target_position)
+    arm_state['distances'].append(distance)
+    
+    # Update position
+    arm_state['current_position'] = target_position
+    
+    # Update quadrant visits using modular arithmetic for cyclic tracking
+    quadrant = get_quadrant(target_position)
+    arm_state['quadrant_visits'][quadrant] = (arm_state['quadrant_visits'][quadrant] + 1) % 3
+    
+    # Increment operation counter
+    arm_state['operation_count'] += 1
 
-# Stage 2: Create nested structure
-nested = [[stage1[0], [stage1[1], stage1[2]]], stage1[0] + stage1[1] + stage1[2]]
+# Calculate efficiency using statistical variance
+if len(arm_state['distances']) > 1:
+    base_variance = variance(arm_state['distances'])
+else:
+    base_variance = 0
 
-# Stage 3: Flatten nested structure
-flattened = process_nested(nested)
+# Apply correction factor based on quadrant balance
+quadrant_counts = [arm_state['quadrant_visits'][i] for i in range(1, 5)]
+imbalance_factor = max(quadrant_counts) - min(quadrant_counts)
 
-# Stage 4: Bitwise and mathematical operations
-bitwise_sum = 0
-for i in range(len(flattened)):
-    if i < len(flattened) - 1:
-        bitwise_sum += int(flattened[i]) & int(flattened[i+1])
+# Final efficiency rating calculation
+efficiency_rating = (base_variance * 100 + imbalance_factor * 5) / arm_state['operation_count']
 
-# Stage 5: Trigonometric adjustments
-trig_adjustment = 0
-for val in flattened:
-    trig_adjustment += math.sin(val) * 100
+# Apply floating point precision correction
+efficiency_rating = round(efficiency_rating, 2)
 
-# Stage 6: Final computation
-final_result = (bitwise_sum * 3) + int(trig_adjustment) - sum([x for x in flattened if x > 50])
-
-# END OF COMPUTATION
-print(f"Result: {final_result}")
+print(f"Result: {efficiency_rating}")

@@ -1,50 +1,40 @@
 import math
+from functools import reduce
 
-def process_nested_data(data):
-    total = 0
-    for key, values in data.items():
-        if isinstance(values, list):
-            for i, val in enumerate(values):
-                if i % 2 == 0:
-                    total += val * math.log(i + 2)
-                else:
-                    total -= val // (i + 1)
-        elif isinstance(values, dict):
-            for sub_key, sub_val in values.items():
-                total += sub_val ** (1/3) if sub_val > 0 else 0
-    return int(total)
+def tokenize_sentences(text):
+    return [sentence.strip() for sentence in text.split('.') if sentence.strip()]
 
-def transform_string(s):
-    vowels = 'aeiouAEIOU'
-    transformed = ''
-    for char in s:
-        if char in vowels:
-            transformed += chr(ord(char) ^ 0x5C)
-        else:
-            transformed += char.upper()
-    return transformed
+def calculate_length_variance(sentences):
+    lengths = [len(sentence.split()) for sentence in sentences]
+    mean_length = sum(lengths) / len(lengths)
+    variance = sum((x - mean_length) ** 2 for x in lengths) / len(lengths)
+    return variance
 
-data_structure = {
-    'alpha': [7, 14, 21, 28],
-    'beta': {'gamma': 64, 'delta': -27, 'epsilon': 125},
-    'zeta': [3, 6, 9, 12, 15]
-}
+def vocabulary_richness(words):
+    unique_words = set(words)
+    return len(unique_words) / len(words) if words else 0
 
-string_input = "MachineLearning"
-transformed_str = transform_string(string_input)
-char_sum = sum(ord(c) for c in transformed_str)
+corpus = "Advanced computational algorithms require precise implementation. These systems often involve complex data structures. Efficient processing demands optimized code execution. Mathematical models guide software development. Robust frameworks ensure reliable performance."
 
-processed_value = process_nested_data(data_structure)
-intermediate = (char_sum & processed_value) | (char_sum >> 2)
+sentences = tokenize_sentences(corpus)
+words = [word for sentence in sentences for word in sentence.split()]
 
-theta = 5
-kappa = 3
-lambda_val = 7
+length_variance = calculate_length_variance(sentences)
+vocab_diversity = vocabulary_richness(words)
 
-for i in range(1, kappa + 1):
-    theta ^= (lambda_val << i) + i
-    lambda_val += 2
+complexity_base = length_variance * 10 + vocab_diversity * 100
+sentence_count = len(sentences)
+word_count = len(words)
 
-final_computation = ((theta * intermediate) % 1000) + len(transformed_str)
-final_result = final_computation if final_computation > 0 else abs(final_computation) + 100
-print(f"Result: {final_result}")
+adjustment_factor = 1.5 if sentence_count > 3 else 0.8
+adjusted_complexity = complexity_base * adjustment_factor
+
+log_transform = math.log(adjusted_complexity + 1)
+exp_modifier = math.exp(log_transform * 0.1)
+
+scores = [adjusted_complexity, log_transform, exp_modifier]
+mean_score = reduce(lambda a, b: a + b, scores) / len(scores)
+
+normalized_score = round((mean_score - min(scores)) / (max(scores) - min(scores)) * 100) if max(scores) != min(scores) else 0
+
+print(f"Result: {normalized_score}")

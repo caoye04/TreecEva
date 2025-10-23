@@ -1,56 +1,59 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <vector>
-#include <cmath>
+#include <map>
 #include <string>
+#include <vector>
+#include <algorithm>
+#include <memory>
 
-using namespace std;
+int binary_search_code(const std::vector<std::pair<int, std::string>>& codes, const std::string& target) {
+    int left = 0;
+    int right = codes.size() - 1;
+    
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (codes[mid].second == target) {
+            return codes[mid].first;
+        }
+        if (codes[mid].second < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return -1;
+}
 
 int main() {
-    // Initialize data structures
-    vector<vector<int>> matrix = {{2, 3, 4}, {5, 6, 7}, {8, 9, 10}};
-    vector<int> coefficients = {3, -2, 5};
-    string key = "COMPLEX_OPERATION";
+    // Encoding map: character -> binary code
+    std::map<char, std::string> encoding_map = {{'A', "0"}, {'B', "10"}, {'C', "110"}, {'D', "111"}};
     
-    // Step 1: Perform matrix row operations with coefficients
-    for(int i = 0; i < matrix.size(); i++) {
-        for(int j = 0; j < matrix[i].size(); j++) {
-            matrix[i][j] = matrix[i][j] * coefficients[j % coefficients.size()];
+    // Decoding map: binary code -> character (sorted by code length for efficient search)
+    std::vector<std::pair<char, std::string>> decoding_vector = {{'A', "0"}, {'B', "10"}, {'C', "110"}, {'D', "111"}};
+    
+    // Sort by code for binary search
+    std::sort(decoding_vector.begin(), decoding_vector.end(), [](const auto& a, const auto& b) {
+        return a.second < b.second;
+    });
+    
+    // Encoded message
+    std::string encoded_message = "110100111";
+    
+    // Decoding process
+    std::string current_code = "";
+    int decoded_length = 0;
+    
+    for (char bit : encoded_message) {
+        current_code += bit;
+        char decoded_char = binary_search_code(decoding_vector, current_code);
+        if (decoded_char != -1) {
+            decoded_length++;
+            current_code = "";
         }
     }
     
-    // Step 2: Calculate aggregated sums
-    vector<int> row_sums(matrix.size(), 0);
-    for(int i = 0; i < matrix.size(); i++) {
-        for(int j = 0; j < matrix[i].size(); j++) {
-            row_sums[i] += matrix[i][j];
-        }
-    }
+    // END OF DECODING PROCESS
     
-    // Step 3: Apply mathematical transformations
-    double transformed_value = 0.0;
-    for(int i = 0; i < row_sums.size(); i++) {
-        transformed_value += pow(row_sums[i], 1.0/3.0) * sin(M_PI / 6.0);
-    }
-    
-    // Step 4: Bitwise operations
-    int bitwise_result = static_cast<int>(floor(transformed_value));
-    bitwise_result = (bitwise_result << 2) ^ 0xF;
-    
-    // Step 5: String-based conditional logic
-    int selector = 0;
-    if(key.length() > 10 && key[0] == 'C') {
-        selector = 1;
-    } else if(key.find("OPERATION") != string::npos) {
-        selector = 2;
-    } else {
-        selector = 3;
-    }
-    
-    // Step 6: Final calculation combining all components
-    int final_result = ((bitwise_result & 0xFF) * selector) + static_cast<int>(ceil(transformed_value));
-    
-    cout << "Result: " << final_result << endl;
+    std::cout << "Result: " << decoded_length << std::endl;
     return 0;
 }

@@ -1,74 +1,20 @@
 import math
 
-def process_data(data):
-    processed = []
-    for item in data:
-        if isinstance(item, dict):
-            temp = []
-            for k, v in item.items():
-                if isinstance(v, list):
-                    reduced = sum([x**2 for x in v if isinstance(x, (int, float))])
-                    temp.append((k, math.sqrt(reduced)))
-                else:
-                    temp.append((k, v * 2 if isinstance(v, (int, float)) else str(v).upper()))
-            processed.append(dict(temp))
-        elif isinstance(item, (list, tuple)):
-            flat = [elem for sublist in item for elem in (sublist if isinstance(sublist, (list, tuple)) else [sublist])]
-            numeric = [x for x in flat if isinstance(x, (int, float))]
-            if numeric:
-                avg = sum(numeric) / len(numeric)
-                processed.append(round(avg, 2))
-            else:
-                processed.append(''.join(map(str, flat)).lower())
-        else:
-            processed.append(item)
-    return processed
+elevation_data = [150, 210, 180, 300, 270, 240, 330, 400, 360, 390]
+terrain_distance = [i * 0.5 for i in range(len(elevation_data))]
 
-data_structure = [
-    {'a': [1, 2, 3], 'b': [4, 5]},
-    ([10, 20], [30, 40]),
-    {'name': 'test', 'values': [2, 4, 6, 8]},
-    ('x', 'y', 'z'),
-    [{'p': 5}, [7, 14]],
-    100
-]
+log_scale_factor = lambda h: math.log(h + 10) if h > 0 else 0
+exp_weight = lambda d: math.exp(-0.2 * d)
 
-processed_list = process_data(data_structure)
+scaled_elevations = [log_scale_factor(h) for h in elevation_data]
+weights = [exp_weight(d) for d in terrain_distance]
 
-# Further transformation using bitwise and modular arithmetic
-transformed_values = []
-for idx, element in enumerate(processed_list):
-    if isinstance(element, dict):
-        total = sum(v for v in element.values() if isinstance(v, (int, float)))
-        transformed_values.append(int(total) & 0xFF)
-    elif isinstance(element, (int, float)):
-        shifted = (int(element) << 2) % 256
-        transformed_values.append(shifted)
-    elif isinstance(element, str):
-        hash_val = sum(ord(c) for c in element)
-        transformed_values.append(hash_val % 100)
+visibility_index = 0
+for i in range(len(scaled_elevations)):
+    if scaled_elevations[i] > sum(scaled_elevations[:i]) / (i + 1) if i > 0 else True:
+        visibility_index += scaled_elevations[i] * weights[i]
     else:
-        transformed_values.append(0)
+        visibility_index -= scaled_elevations[i] * 0.1
 
-# Final aggregation step
-aggregated = {}
-for i, val in enumerate(transformed_values):
-    key = i % 3
-    if key not in aggregated:
-        aggregated[key] = []
-    aggregated[key].append(val)
-
-# Compute final result from aggregated data
-final_computation = []
-for key in sorted(aggregated.keys()):
-    values = aggregated[key]
-    if key == 0:
-        result = max(values) ^ min(values)
-    elif key == 1:
-        result = sum(values) | (len(values) << 4)
-    else:
-        result = (sum(values) * 3) >> 2
-    final_computation.append(result)
-
-final_result = sum(final_computation) % 1000
-print(f'Result: {final_result}')
+visibility_index = round(visibility_index, 2)
+print(f"Result: {visibility_index}")

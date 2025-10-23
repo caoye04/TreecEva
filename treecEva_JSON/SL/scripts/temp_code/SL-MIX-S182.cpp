@@ -1,50 +1,69 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
-#include <cmath>
-#include <string>
+#include <algorithm>
 
-class DataProcessor {
-public:
-    static int process(int x) {
-        return (x % 7 == 0) ? (x / 7) : (x * 3 + 1);
-    }
+constexpr bool is_prime(int n) {
+    if (n <= 1) return false;
+    if (n <= 3) return true;
+    if (n % 2 == 0 || n % 3 == 0) return false;
+    for (int i = 5; i * i <= n; i += 6)
+        if (n % i == 0 || n % (i + 2) == 0)
+            return false;
+    return true;
+}
+
+template<int N>
+struct Factorial {
+    static constexpr int value = N * Factorial<N - 1>::value;
 };
 
-struct Point {
-    double x, y;
-    Point(double x = 0, double y = 0) : x(x), y(y) {}
-    double distance(const Point& other) const {
-        return sqrt(pow(x - other.x, 2) + pow(y - other.y, 2));
-    }
+template<>
+struct Factorial<0> {
+    static constexpr int value = 1;
 };
 
-int main() {
-    std::vector<int> nums = {15, 28, 9, 42, 11, 77, 33, 50};
-    std::vector<Point> points = {Point(0,0), Point(3,4), Point(1,1), Point(5,12)};
-    
-    int sum = 0;
-    for (size_t i = 0; i < nums.size(); ++i) {
-        int val = DataProcessor::process(nums[i]);
-        sum += (val & 0x1) ? (val ^ 0xF) : (val >> 1);
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
     }
-    
-    double maxDist = 0;
-    for (size_t i = 0; i < points.size(); ++i) {
-        for (size_t j = i+1; j < points.size(); ++j) {
-            double d = points[i].distance(points[j]);
-            if (d > maxDist) maxDist = d;
+    return a;
+}
+
+int lcm(int a, int b) {
+    return (a / gcd(a, b)) * b;
+}
+
+int compute_signal_path(int n) {
+    if (n <= 1) return 1;
+    int path_sum = 0;
+    for (int i = 1; i <= n; ++i) {
+        if (is_prime(i)) {
+            path_sum += i * Factorial<3>::value;
+        } else if (i % 2 == 0) {
+            path_sum += lcm(i, 4);
+        } else {
+            path_sum += compute_signal_path(n - 1);
         }
     }
+    return path_sum;
+}
+
+int main() {
+    int base_frequency = 5;
+    int modulation_factor = 3;
+    bool is_optimal = (base_frequency > 3) && (modulation_factor < 5);
     
-    std::string s = "COMPUTATION";
-    int charSum = 0;
-    for (char c : s) {
-        charSum += (c - 'A' + 1);
+    int transmission_efficiency = 0;
+    
+    if (is_optimal || !is_prime(modulation_factor)) {
+        transmission_efficiency = compute_signal_path(base_frequency);
+    } else {
+        transmission_efficiency = Factorial<4>::value;
     }
     
-    int result = static_cast<int>(maxDist) * (sum % 10) + (charSum & 0x1F);
-    
-    std::cout << "Result: " << result << std::endl;
+    std::cout << "Result: " << transmission_efficiency << std::endl;
     return 0;
 }

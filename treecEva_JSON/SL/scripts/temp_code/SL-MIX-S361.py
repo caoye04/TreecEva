@@ -1,49 +1,55 @@
-import math
+from collections import defaultdict
 
-def process_nested_data(data):
-    total = 0
-    for i, sublist in enumerate(data):
-        if isinstance(sublist, list):
-            for j, val in enumerate(sublist):
-                if isinstance(val, (int, float)):
-                    adjusted_val = val * (i + 1) * (j + 1)
-                    if adjusted_val % 2 == 0:
-                        total += adjusted_val
-                    else:
-                        total -= adjusted_val // 2
-                elif isinstance(val, str):
-                    numeric_part = ''.join(filter(str.isdigit, val))
-                    if numeric_part:
-                        num = int(numeric_part)
-                        total += num if num % 3 == 0 else -num
-    return total
+def process_packet_headers(headers):
+    # Initialize verification accumulator
+    verification_code = 0
+    
+    # Process each header component with bitwise transformations
+    for i, header_val in enumerate(headers):
+        # Apply XOR with position-based mask
+        masked_val = header_val ^ (i + 1)
+        
+        # Rotate left by 3 bits (assuming 32-bit integers)
+        rotated_val = ((masked_val << 3) | (masked_val >> 29)) & 0xFFFFFFFF
+        
+        # Combine with verification code using OR
+        verification_code |= rotated_val
+    
+    return verification_code
 
-def transform_with_formula(x, y, z):
-    intermediate = (x ** 2 + y ** 2) / (abs(z) + 1)
-    result = math.log(intermediate + 1) * math.sin(math.radians(45))
-    return round(result, 4)
+def calculate_security_hash(base_value, modifier_sequence):
+    # Apply floating point transformations
+    transformed = float(base_value)
+    for mod in modifier_sequence:
+        if mod > 0:
+            transformed = transformed * 1.7 + mod
+        else:
+            transformed = transformed / 2.3 + mod
+    
+    # Convert back to integer with truncation
+    return int(transformed)
 
-data_structure = [
-    [12, "abc45def", 7.5],
-    ["xyz90", 3, [4, "test15"]],
-    [2.2, "num33", 8]
-]
+# Packet header data
+packet_headers = [0x1A2B3C4D, 0x5E6F7890, 0xABCD1234]
 
-# Expand nested lists into main structure
-expanded_data = []
-for item in data_structure:
-    if isinstance(item, list):
-        expanded_data.extend(item)
-    else:
-        expanded_data.append(item)
+# Security modifier sequence
+modifiers = [-3.5, 7.2, -1.8, 4.6]
 
-processed_sum = process_nested_data([expanded_data])
+# Step 1: Process headers through bitwise pipeline
+processed_headers_checksum = process_packet_headers(packet_headers)
 
-a, b, c = 5, -3, 4
-formula_result = transform_with_formula(a, b, c)
+# Step 2: Calculate base security hash
+base_security_hash = calculate_security_hash(12345, modifiers)
 
-bitwise_combo = (a << 2) & (b | c) ^ (c >> 1)
-conditional_factor = 1 if processed_sum > formula_result else -1
+# Step 3: Combine results with additional transformations
+combined_result = (processed_headers_checksum & 0xFFFF) << 16
+combined_result |= (base_security_hash & 0xFFFF)
 
-final_result = int((processed_sum + formula_result) * conditional_factor) ^ bitwise_combo
-print(f'Result: {final_result}')
+# Step 4: Final verification using XOR and ternary logic
+final_verification = combined_result ^ 0xDEADBEEF
+final_verification = final_verification if final_verification > 0 else (final_verification * -1) & 0xFFFFFFFF
+
+# The target variable whose value we need
+security_verification_code = final_verification
+
+print(f"Result: {security_verification_code}")

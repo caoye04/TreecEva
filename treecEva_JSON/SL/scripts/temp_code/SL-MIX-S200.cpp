@@ -1,47 +1,77 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
-#include <string>
+#include <functional>
 #include <cmath>
-#include <algorithm>
 
-using namespace std;
+struct RiskNode {
+    double base_risk;
+    bool is_high_yield;
+    std::vector<RiskNode*> sectors;
+    
+    RiskNode(double risk, bool high_yield) : base_risk(risk), is_high_yield(high_yield) {}
+};
 
-double compute_expression(int x, int y) {
-    return pow(x, 2) + sqrt(abs(y)) + log(static_cast<double>(x + 1));
+double calculate_portfolio_volatility(RiskNode* root) {
+    if (!root) return 0.0;
+    
+    // Lambda for dynamic risk weighting based on market conditions
+    auto risk_weight = [](double base, bool high_yield) -> double {
+        return high_yield ? base * 1.5 : base * 0.9;
+    };
+    
+    // Short-circuit evaluation for conditional risk adjustment
+    double adjusted_risk = root->is_high_yield && root->base_risk > 0.05 ? 
+                          risk_weight(root->base_risk, true) + 0.02 :
+                          risk_weight(root->base_risk, root->is_high_yield);
+    
+    // Aggregate sector risks using STL algorithms
+    double sector_contribution = 0.0;
+    for (auto& sector : root->sectors) {
+        sector_contribution += calculate_portfolio_volatility(sector) * 0.3;
+    }
+    
+    return adjusted_risk + sector_contribution;
 }
 
 int main() {
-    vector<vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    string s = "HelloWorld";
-    int n = s.length();
+    // Creating a financial portfolio tree
+    RiskNode* bonds = new RiskNode(0.03, false);
+    RiskNode* stocks = new RiskNode(0.08, true);
+    RiskNode* derivatives = new RiskNode(0.12, true);
     
-    int a = matrix[1][2]; // 13
-    int b = static_cast<int>(s[n - 1]) ^ 0xFF; // XOR with 255
-    double c = compute_expression(a % 5, b >> 2); // Right shift b by 2
+    // High-yield bond sector
+    RiskNode* high_yield_bonds = new RiskNode(0.06, true);
+    bonds->sectors.push_back(high_yield_bonds);
     
-    bool flag1 = (a > 10) && (b < 200);
-    bool flag2 = !((c < 50) || (s.find("World") != string::npos));
+    // Technology stocks sector
+    RiskNode* tech_stocks = new RiskNode(0.10, true);
+    stocks->sectors.push_back(tech_stocks);
     
-    int d = (flag1 ? a : b) & (flag2 ? 0xF0 : 0x0F); // Bitwise AND with mask
+    // Derivatives sub-sectors
+    RiskNode* options = new RiskNode(0.15, true);
+    RiskNode* futures = new RiskNode(0.09, true);
+    derivatives->sectors.push_back(options);
+    derivatives->sectors.push_back(futures);
     
-    vector<pair<string, double>> data = {{s.substr(0, 5), c}, {s.substr(5), static_cast<double>(d)}};
+    // Portfolio root
+    RiskNode* portfolio = new RiskNode(0.05, false);
+    portfolio->sectors.push_back(bonds);
+    portfolio->sectors.push_back(stocks);
+    portfolio->sectors.push_back(derivatives);
     
-    double e = data[0].second * data[1].second;
-    int f = static_cast<int>(floor(e / 100.0));
+    double portfolio_volatility = calculate_portfolio_volatility(portfolio);
     
-    int g = (f << 3) | (f >> 1); // Bitwise operations
+    // Clean up memory
+    delete high_yield_bonds;
+    delete tech_stocks;
+    delete options;
+    delete futures;
+    delete bonds;
+    delete stocks;
+    delete derivatives;
+    delete portfolio;
     
-    int h = 0;
-    for (const auto& row : matrix) {
-        for (int val : row) {
-            if ((val & 1) == 1) { // Check if odd
-                h += val;
-            }
-        }
-    }
-    
-    int result = (g + h) % 256;
-    cout << "Result: " << result << endl;
+    std::cout << "Result: " << std::round(portfolio_volatility * 10000) / 10000 << std::endl;
     return 0;
 }

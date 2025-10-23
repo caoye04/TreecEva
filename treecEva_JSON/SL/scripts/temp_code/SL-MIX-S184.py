@@ -1,47 +1,44 @@
-import math
+import heapq
+from functools import reduce
 
-def transform_data(data):
-    transformed = []
-    for item in data:
-        if isinstance(item, int):
-            transformed.append(item ** 2)
-        elif isinstance(item, str):
-            transformed.append(len(item))
-        elif isinstance(item, list):
-            transformed.append(sum(item))
-        else:
-            transformed.append(0)
-    return transformed
+def calculate_route_efficiency(scores):
+    # Using dynamic programming to calculate maximum efficiency
+    n = len(scores)
+    if n == 0:
+        return 0
+    dp = [0] * (n + 1)
+    dp[1] = scores[0]
+    for i in range(2, n + 1):
+        dp[i] = max(dp[i-1], dp[i-2] + scores[i-1])
+    return dp[n]
 
-def calculate_checksum(values):
-    checksum = 0
-    for i, val in enumerate(values):
-        checksum += (i + 1) * val
-    return checksum
+# Initial priority queue of route efficiency scores
+route_scores = [15, 10, 18, 9, 22, 12, 17]
+heap = route_scores[:]
+heapq.heapify(heap)
 
-data_structure = [
-    [1, 2, 3],
-    "hello",
-    5,
-    [10, 20],
-    "world!",
-    3.5,
-    [7, 14, 21]
-]
+# Update scores with new values
+updates = [3, -2, 7, 1]
+for update in updates:
+    if heap:
+        current = heapq.heappop(heap)
+        heapq.heappush(heap, current + update)
 
-# Step 1: Transform the data structure
-step1_result = transform_data(data_structure)
+# Extract final scores from heap
+final_scores = []
+while heap:
+    final_scores.append(heapq.heappop(heap))
 
-# Step 2: Apply a mathematical transformation
-step2_result = [math.sqrt(x) if x > 0 else 0 for x in step1_result]
+# Apply dynamic programming to optimize route efficiency
+optimized_efficiency = calculate_route_efficiency(final_scores)
 
-# Step 3: Calculate checksum
-checksum = calculate_checksum(step2_result)
+# Apply a lambda-based transformation to adjust for fuel costs
+adjustment_factor = lambda x: x * 0.95 if x > 20 else x * 1.05
+adjusted_scores = list(map(adjustment_factor, final_scores))
 
-# Step 4: Bitwise operations
-bitwise_result = int(checksum) & 0xFF
+# Combine adjusted scores using reduce
+combined_score = reduce(lambda a, b: a + b, adjusted_scores, 0)
 
-# Step 5: Final calculation
-final_result = (bitwise_result ^ 0xAA) + sum([ord(c) for c in "RESULT"])
-
-print(f"Result: {final_result}")
+# Final efficiency is the max of optimized and combined scores
+final_efficiency = max(optimized_efficiency, combined_score)
+print(f"Result: {optimized_efficiency}")

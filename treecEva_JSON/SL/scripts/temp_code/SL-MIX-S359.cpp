@@ -1,62 +1,58 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
+#include <string>
+#include <regex>
+#include <memory>
 #include <cmath>
-#include <algorithm>
 
-using namespace std;
+class TransactionProcessor {
+private:
+    std::vector<double> amounts;
+    std::vector<std::string> categories;
 
-double compute_expression(int a, int b, double c) {
-    return pow(a, 2) + sqrt(b) * sin(c);
-}
-
-struct DataPoint {
-    int id;
-    vector<double> values;
+public:
+    TransactionProcessor(std::vector<double> a, std::vector<std::string> c) : amounts(a), categories(c) {}
+    
+    double process() {
+        double baseBalance = 1000.0;
+        std::regex depositPattern("DEP[0-9]+", std::regex_constants::icase);
+        std::regex withdrawalPattern("WTH[0-9]+", std::regex_constants::icase);
+        
+        auto adjustAmount = [](double amount, const std::string& category) -> double {
+            if (category.find("PREMIUM") != std::string::npos) {
+                return amount * 1.05;
+            }
+            return amount;
+        };
+        
+        for (size_t i = 0; i < amounts.size(); ++i) {
+            double adjustedAmount = adjustAmount(amounts[i], categories[i]);
+            if (std::regex_match(categories[i], depositPattern)) {
+                baseBalance += adjustedAmount;
+            } else if (std::regex_match(categories[i], withdrawalPattern)) {
+                baseBalance -= adjustedAmount;
+            } else {
+                baseBalance += (adjustedAmount > 100) ? adjustedAmount * 0.01 : 0;
+            }
+        }
+        
+        // Statistical adjustment: mean of top 3 transactions
+        std::vector<double> sortedAmounts = amounts;
+        std::sort(sortedAmounts.begin(), sortedAmounts.end(), std::greater<double>());
+        double meanTop3 = (sortedAmounts[0] + sortedAmounts[1] + sortedAmounts[2]) / 3.0;
+        
+        return baseBalance + (meanTop3 > 200 ? meanTop3 * 0.02 : 0);
+    }
 };
 
 int main() {
-    const double PI = 3.141592653589793;
+    std::vector<double> transactionAmounts = {250.0, 150.0, 300.0, 75.0, 500.0};
+    std::vector<std::string> transactionCategories = {"DEP101", "WTH202", "DEPPREMIUM303", "FEE001", "DEP404"};
     
-    // Initialize variables
-    int x = 5;
-    double y = 2.5;
-    int z = x * 3 - 2;
+    std::unique_ptr<TransactionProcessor> processor = std::make_unique<TransactionProcessor>(transactionAmounts, transactionCategories);
+    double adjustedBalance = processor->process();
     
-    // Bitwise operations
-    int bitmask = (x << 2) & (z >> 1);
-    
-    // Conditional logic with short-circuit evaluation
-    bool condition = (bitmask > 10) && (y < 3.0);
-    
-    // Nested data structures
-    vector<DataPoint> dataset = {
-        {1, {1.1, 2.2, 3.3}},
-        {2, {4.4, 5.5, 6.6}},
-        {3, {7.7, 8.8, 9.9}}
-    };
-    
-    // Mathematical computation
-    double intermediate = compute_expression(x, z, PI / 4);
-    
-    // Modify dataset based on condition
-    if (condition || (intermediate > 50)) {
-        for (auto& point : dataset) {
-            for (double& val : point.values) {
-                val = val * 1.5 + 0.5;
-            }
-        }
-    }
-    
-    // Aggregate results from dataset
-    double sum_values = 0.0;
-    for (const auto& point : dataset) {
-        sum_values += accumulate(point.values.begin(), point.values.end(), 0.0);
-    }
-    
-    // Final complex calculation
-    double final_result = (intermediate + sum_values) / (bitmask + 1) + static_cast<int>(condition);
-    
-    cout << "Result: " << final_result << endl;
+    std::cout << "Result: " << adjustedBalance << std::endl;
     return 0;
 }

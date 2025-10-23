@@ -1,58 +1,37 @@
-import math
+from collections import deque
+import re
 
-def process_nested_data(data):
-    result = 0
-    for i, sublist in enumerate(data):
-        temp = 0
-        for j, val in enumerate(sublist):
-            if isinstance(val, str):
-                temp += len(val) * (i + 1)
-            elif isinstance(val, int):
-                temp += val ^ (j + 1)
-            elif isinstance(val, float):
-                temp += int(math.log(abs(val) + 1))
-        result += temp << (i + 1)
-    return result
-
-def transform_values(mapping, keys):
-    transformed = []
-    for key in keys:
-        if key in mapping:
-            value = mapping[key]
-            if isinstance(value, list):
-                transformed.append(process_nested_data([value]))
-            else:
-                transformed.append(value * 2)
+def calculate_session_score(activities):
+    activity_stack = deque()
+    session_score = 0
+    
+    # Process activities into stack with pattern matching
+    for activity in activities:
+        if re.match(r'^login.*', activity):
+            activity_stack.append(hash(activity) % 100)
+        elif re.match(r'^view_.*', activity):
+            if activity_stack:
+                activity_stack[-1] += len(activity)
+        elif re.match(r'^purchase_.*', activity):
+            if activity_stack:
+                top_val = activity_stack.pop()
+                activity_stack.append(top_val * 2)
         else:
-            transformed.append(-1)
-    return transformed
+            activity_stack.append(hash(activity) % 50)
+    
+    # Calculate final score using conditional branching
+    while activity_stack:
+        val = activity_stack.popleft()
+        if val > 50:
+            session_score += val // 3
+        elif val > 25:
+            session_score += val // 2
+        else:
+            session_score += val
+    
+    return session_score
 
-data_structure = [
-    ["hello", 42, 3.14],
-    ["world", 10, -2.718, "test"],
-    [100, "example", 1.414, 7, "end"]
-]
-
-mapping_dict = {
-    'a': ["alpha", 5, 2.71],
-    'b': 12,
-    'c': ["beta", 20, -1.41, "gamma"],
-    'd': 8
-}
-
-keys_list = ['a', 'b', 'c', 'd', 'e']
-
-processed_data = process_nested_data(data_structure)
-transformed_values = transform_values(mapping_dict, keys_list)
-
-# Perform complex calculation
-final_result = processed_data
-for i, val in enumerate(transformed_values):
-    if i % 2 == 0:
-        final_result += val * (i + 1)
-    else:
-        final_result -= val >> (i - 1) if i > 0 else val
-
-# Apply final transformation
-final_result = (final_result & 0xFFFF) ^ ((final_result >> 16) & 0xFFFF)
-print(f"Result: {final_result}")
+# Execution point Y
+user_activities = ['login_start', 'view_product_page', 'purchase_item_123', 'logout']
+session_score = calculate_session_score(user_activities)
+print(f'Result: {session_score}')

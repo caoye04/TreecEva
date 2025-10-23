@@ -1,46 +1,39 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <stdio.h>
-#include <math.h>
-#include <string.h>
+#include <stdint.h>
 
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
+struct PacketHeader {
+    uint32_t flags : 8;
+    uint32_t type : 4;
+    uint32_t priority : 3;
+    uint32_t reserved : 17;
+};
+
+union HeaderAccessor {
+    struct PacketHeader fields;
+    uint32_t raw;
+};
 
 int main() {
-    // Initialize variables
-    int x = 7, y = 3;
-    double z = 2.5;
-    char str1[] = "hello";
-    char str2[] = "world";
+    union HeaderAccessor packet;
+    packet.raw = 0x1AC5F39B; // Initial header value
     
-    // Perform arithmetic and logical operations
-    int a = (x << 2) + (y & 0x03);
-    double b = pow(z, 3) - sqrt(4.0);
-    int c = strlen(str1) * strlen(str2);
+    uint8_t mask1 = 0xF0;     // Mask for upper nibble
+    uint8_t mask2 = 0x0F;     // Mask for lower nibble
     
-    // Nested conditional logic with short-circuit evaluation
-    int d;
-    if ((a > 10) && (b < 10.0 || c == 25)) {
-        d = a ^ (int)b;
-    } else {
-        d = ~(a | (int)b);
+    // Extract and transform flags using bit operations
+    uint8_t extracted = (packet.fields.flags & mask1) >> 4;
+    uint8_t transformed = ((extracted ^ 0x0A) & mask2) << 2;
+    
+    // Apply another transformation using dynamic programming approach
+    uint8_t dp_table[16];
+    for(int i = 0; i < 16; i++) {
+        dp_table[i] = (i * 3 + 7) & 0x0F;
     }
     
-    // Array and pointer manipulations
-    int arr[5] = {1, 2, 3, 4, 5};
-    int *p = arr;
-    int sum = 0;
-    for(int i=0; i<5; i++){
-        sum += *(p+i) * (d % (i+2));
-    }
+    uint8_t lookup_result = dp_table[transformed >> 2];
+    uint8_t processed_flags = (lookup_result | (packet.fields.priority << 1)) ^ 0x03;
     
-    // Bitwise and mathematical operations combined
-    int e = (sum >> 2) & 0xFF;
-    double f = log(exp(2.0)) + cos(M_PI);
-    
-    // Final computation
-    int result = ((e * (int)f) + (a & c)) ^ (d | 0xF0);
-    
-    printf("Result: %d\n", result);
+    printf("Result: %d\n", processed_flags);
     return 0;
 }

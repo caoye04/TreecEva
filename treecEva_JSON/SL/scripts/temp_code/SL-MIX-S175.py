@@ -1,51 +1,50 @@
-import math
+import heapq
 
-def process_nested_data(data):
-    result = 0
-    for i, sublist in enumerate(data):
-        sub_result = 1
-        for j, val in enumerate(sublist):
-            if isinstance(val, int) and val > 0:
-                sub_result *= val
-            elif isinstance(val, str):
-                sub_result *= len(val)
-        result += sub_result if i % 2 == 0 else -sub_result
-    return result
-
-def transform_string(s):
-    parts = s.split('_')
-    transformed = []
-    for part in parts:
-        if len(part) % 2 == 0:
-            transformed.append(part.upper())
+def analyze_packet_signatures():
+    # Initialize heap with packet signatures (risk_score, signature_id)
+    packet_heap = [(35, 'SIG001'), (82, 'SIG002'), (17, 'SIG003'), (91, 'SIG004'), (45, 'SIG005')]
+    heapq.heapify(packet_heap)
+    
+    # Security threshold for immediate processing
+    RISK_THRESHOLD = 50
+    
+    # Counter for processed signatures
+    processed_signature_count = 0
+    
+    # Process packets until heap is empty or critical condition met
+    while packet_heap:
+        risk_score, signature_id = heapq.heappop(packet_heap)
+        
+        # If risk score exceeds threshold, process immediately
+        if risk_score > RISK_THRESHOLD:
+            processed_signature_count += 1
+            # Early return if we've processed 2 high-risk signatures
+            if processed_signature_count >= 2:
+                break
         else:
-            transformed.append(part.lower())
-    return ''.join(transformed)
+            # Apply modular arithmetic to adjust low-risk scores
+            adjusted_score = (risk_score * 3) % 23
+            # Re-insert adjusted signature if score is still significant
+            if adjusted_score > 5:
+                heapq.heappush(packet_heap, (adjusted_score, f'{signature_id}_ADJ'))
+    
+    # Additional check using set operations for signature validation
+    valid_signatures = frozenset(['SIG001', 'SIG003', 'SIG005'])
+    audit_trail = []
+    
+    # Lambda function to validate signature
+    is_valid_sig = lambda sig_id: sig_id.split('_')[0] in valid_signatures
+    
+    # Audit remaining signatures
+    for _, sig_id in packet_heap:
+        if is_valid_sig(sig_id):
+            audit_trail.append(sig_id)
+    
+    # Final adjustment to processed count based on audit
+    processed_signature_count = (processed_signature_count * len(audit_trail)) % 7
+    
+    return processed_signature_count
 
-data_structure = [
-    [2, 'hello', 3],
-    ['world', 4, 'test'],
-    [5, 'a', 'bc', 7],
-    ['even', 'odd', 2]
-]
-
-string_input = 'this_is_a_complex_test_string'
-
-# Process the nested data
-processed_value = process_nested_data(data_structure)
-
-# Transform the string
-transformed_string = transform_string(string_input)
-
-# Perform mathematical operations
-log_value = math.log(processed_value + 100)
-exp_value = math.exp(2)
-sqrt_value = math.sqrt(len(transformed_string))
-
-# Combine results with bitwise operations
-bitwise_result = (int(log_value) & int(exp_value)) | int(sqrt_value)
-
-# Final calculation
-final_result = (bitwise_result ^ len(data_structure)) + sum([len(s) for s in transformed_string.split('_')])
-
-print(f'Result: {final_result}')
+# Execute analysis
+final_count = analyze_packet_signatures()
+print(f"Result: {final_count}")

@@ -1,54 +1,46 @@
 import math
+from collections import namedtuple
 
-def complex_transform(data):
-    transformed = []
-    for i, val in enumerate(data):
-        if i % 2 == 0:
-            transformed.append(val ** 2)
-        else:
-            transformed.append(math.sqrt(abs(val)))
-    return transformed
+SignalData = namedtuple('SignalData', ['frequency', 'amplitude', 'phase'])
 
-def aggregate_metrics(series):
-    metrics = {
-        'sum': sum(series),
-        'product': 1,
-        'count': len(series)
-    }
-    for num in series:
-        if num != 0:
-            metrics['product'] *= num
-    return metrics
+def analyze_cosmic_signal(signals):
+    processed_count = 0
+    cosmic_index = 0
+    energy_signatures = {1, 2, 4, 8, 16}
+    forbidden_frequencies = frozenset([3, 7, 11, 15])
+    
+    for idx, signal in enumerate(signals):
+        if signal.frequency in forbidden_frequencies:
+            continue
+        
+        transformed_freq = signal.frequency % 5
+        
+        match transformed_freq:
+            case 0:
+                cosmic_index += int(math.log2(signal.amplitude)) if signal.amplitude > 0 else 0
+            case 1 | 4:
+                cosmic_index += signal.phase * 2
+            case 2:
+                if signal.amplitude in energy_signatures:
+                    cosmic_index += int(math.log(signal.amplitude))
+                else:
+                    cosmic_index -= 1
+            case _:
+                cosmic_index += signal.frequency
+        
+        processed_count += 1
+        if processed_count >= 3:
+            break
+    
+    return cosmic_index
 
-def evaluate_expression(a, b, c):
-    x = (a & b) ^ c
-    y = a | (b << 2)
-    z = ~(x ^ y)
-    return (x + y) % (abs(z) + 1)
-
-# Main execution starts here
-matrix = [
-    [3, -4, 5],
-    [-2, 7, -1],
-    [6, 0, -8]
+observed_signals = [
+    SignalData(frequency=12, amplitude=16, phase=3),
+    SignalData(frequency=7, amplitude=8, phase=5),  # Forbidden frequency
+    SignalData(frequency=9, amplitude=4, phase=2),
+    SignalData(frequency=14, amplitude=32, phase=1),
+    SignalData(frequency=5, amplitude=2, phase=4)
 ]
 
-flattened = [item for sublist in matrix for item in sublist]
-transformed_data = complex_transform(flattened)
-metrics = aggregate_metrics(transformed_data)
-
-# Perform bit operations on metrics
-bitwise_result = evaluate_expression(
-    int(metrics['sum']), 
-    int(metrics['product'] % 1000), 
-    int(metrics['count'])
-)
-
-# Final calculation
-final_result = (
-    (math.floor(math.log(abs(bitwise_result) + 1)) + 1) *
-    (len(str(abs(bitwise_result))) + 1) +
-    (bin(bitwise_result).count('1') if bitwise_result >= 0 else bin(bitwise_result & 0xFFFFFFFF).count('1'))
-) % 100
-
-print(f"Result: {final_result}")
+cosmic_index = analyze_cosmic_signal(observed_signals)
+print(f"Result: {cosmic_index}")

@@ -1,59 +1,69 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <stdio.h>
 #include <math.h>
 
-#define MAX_NODES 5
-
-struct Node {
-    int id;
-    double value;
-    struct Node* next;
-};
-
-struct Graph {
-    struct Node nodes[MAX_NODES];
-    int count;
-};
-
-void initialize_graph(struct Graph* g) {
-    for (int i = 0; i < MAX_NODES; i++) {
-        g->nodes[i].id = i;
-        g->nodes[i].value = pow(-1, i) * (i + 1) * M_PI;
-        g->nodes[i].next = (i < MAX_NODES - 1) ? &g->nodes[i+1] : NULL;
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
     }
-    g->count = MAX_NODES;
+    return a;
+}
+
+int is_prime(int n) {
+    if (n <= 1) return 0;
+    if (n <= 3) return 1;
+    if (n % 2 == 0 || n % 3 == 0) return 0;
+    for (int i = 5; i * i <= n; i += 6)
+        if (n % i == 0 || n % (i + 2) == 0)
+            return 0;
+    return 1;
 }
 
 int main() {
-    struct Graph g;
-    initialize_graph(&g);
+    volatile int packet_id = 12345;
+    int prime_factors = 0;
+    int temp_id = packet_id;
     
-    double accumulator = 0.0;
-    int counter = 0;
-    struct Node* current = g.nodes;
-    
-    while (current != NULL && counter < 3) {
-        if (counter % 2 == 0) {
-            accumulator += current->value * 2;
-        } else {
-            accumulator -= fabs(current->value);
+    // Count distinct prime factors
+    for (int i = 2; i <= temp_id; i++) {
+        if (is_prime(i) && temp_id % i == 0) {
+            prime_factors++;
+            while (temp_id % i == 0) {
+                temp_id /= i;
+            }
         }
-        current = current->next;
-        counter++;
     }
     
-    // Perform a bitwise operation on counter
-    int mask = 0xF0;
-    counter = (counter << 2) & mask;
+    struct packet_data {
+        int id;
+        int factors;
+        char pattern[];  // flexible array member
+    };
     
-    // Use counter to index into a calculated array
-    double values[4] = {sin(accumulator), cos(accumulator), tan(accumulator/2), sqrt(fabs(accumulator))};
-    double selected = values[(counter >> 4) % 4];
+    struct packet_data *pkt = malloc(sizeof(struct packet_data) + 10);
+    pkt->id = packet_id;
+    pkt->factors = prime_factors;
     
-    // Final calculation
-    int target_value = (int)(selected * 1000) ^ 0xAA;
+    // Simulate pattern matching with regex-like logic
+    char pattern_match = 0;
+    if ((pkt->id & 0xF) == 0x9) {  // Check if last 4 bits are 1001
+        pattern_match = 1;
+    }
     
-    printf("Result: %d\n", target_value);
+    int security_score = 0;
+    if (pattern_match) {
+        security_score = gcd(pkt->id, pkt->factors * 100);
+    } else {
+        security_score = (pkt->id >> 2) ^ (pkt->factors << 3);
+    }
+    
+    if (is_prime(security_score)) {
+        security_score += 1000;
+    }
+    
+    printf("Result: %d\n", security_score);
+    free(pkt);
     return 0;
 }

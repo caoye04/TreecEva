@@ -1,56 +1,77 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <vector>
 #include <cmath>
-#include <string>
 
-class DataProcessor {
+template<typename T>
+struct TreeNode {
+    T value;
+    TreeNode* left;
+    TreeNode* right;
+    
+    TreeNode(T val) : value(val), left(nullptr), right(nullptr) {}
+    
+    ~TreeNode() {
+        delete left;
+        delete right;
+    }
+};
+
+template<typename T>
+class Aggregator {
 public:
-    static int process(int x, int y) {
-        return (x * 2 + y) ^ (x & y);
+    T aggregated_value;
+    
+    Aggregator() : aggregated_value(0) {}
+    
+    Aggregator operator+(const Aggregator& other) const {
+        Aggregator result;
+        result.aggregated_value = aggregated_value + other.aggregated_value + 1;
+        return result;
+    }
+    
+    Aggregator& operator+=(const Aggregator& other) {
+        aggregated_value += other.aggregated_value + 2;
+        return *this;
     }
 };
 
-struct Point {
-    double x, y;
-    Point(double x = 0, double y = 0) : x(x), y(y) {}
-    double distance(const Point& other) const {
-        return sqrt(pow(x - other.x, 2) + pow(y - other.y, 2));
+template<typename T>
+Aggregator<T> compute_aggregate(TreeNode<T>* node) {
+    if (!node) {
+        return Aggregator<T>{};
     }
-};
+    
+    Aggregator<T> left_agg = compute_aggregate(node->left);
+    Aggregator<T> right_agg = compute_aggregate(node->right);
+    
+    Aggregator<T> node_agg;
+    node_agg.aggregated_value = node->value;
+    
+    if (node->left && node->right) {
+        node_agg += left_agg + right_agg;
+        node_agg.aggregated_value = static_cast<T>(std::floor(node_agg.aggregated_value / 2.0));
+    } else if (node->left || node->right) {
+        Aggregator<T> child_agg = node->left ? left_agg : right_agg;
+        node_agg = node_agg + child_agg;
+        node_agg.aggregated_value *= 2;
+    }
+    
+    return node_agg;
+}
 
 int main() {
-    std::vector<std::vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    int accumulator = 0;
-    for (size_t i = 0; i < matrix.size(); ++i) {
-        for (size_t j = 0; j < matrix[i].size(); ++j) {
-            if ((i + j) % 2 == 0) {
-                accumulator += matrix[i][j];
-            } else {
-                accumulator -= matrix[i][j];
-            }
-        }
-    }
+    TreeNode<int>* root = new TreeNode<int>(10);
+    root->left = new TreeNode<int>(5);
+    root->right = new TreeNode<int>(3);
+    root->left->left = new TreeNode<int>(2);
+    root->left->right = new TreeNode<int>(8);
+    root->right->left = new TreeNode<int>(1);
     
-    Point p1(3.0, 4.0);
-    Point p2(0.0, 0.0);
-    double dist = p1.distance(p2);
-    int rounded_dist = static_cast<int>(round(dist));
+    Aggregator<int> root_aggregate = compute_aggregate(root);
+    int root_agg_value = root_aggregate.aggregated_value;
     
-    std::string code = "COMPLEX_LOGIC";
-    int hash = 0;
-    for (char c : code) {
-        hash = (hash * 31 + c) & 0xFF;
-    }
+    delete root;
     
-    int x = 12, y = 15;
-    x = DataProcessor::process(x, y);
-    y = DataProcessor::process(y, x);
-    
-    int bitwise_result = (x << 2) | (y >> 1);
-    
-    int final_result = (accumulator * rounded_dist + hash) ^ bitwise_result;
-    
-    std::cout << "Result: " << final_result << std::endl;
+    std::cout << "Result: " << root_agg_value << std::endl;
     return 0;
 }

@@ -1,50 +1,54 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <vector>
-#include <map>
-#include <string>
-#include <cmath>
-#include <algorithm>
+#include <optional>
+#include <variant>
 
-using namespace std;
+// Function to apply XOR mask with rotation
+unsigned int rotateMask(unsigned int mask, int shift) {
+    return (mask << shift) | (mask >> (32 - shift));
+}
 
-double compute_expression(int x, int y) {
-    return pow(x, 2) + sqrt(abs(y)) + log(static_cast<double>(x + 1));
+// Variadic template to process multiple values with a mask
+template<typename... Args>
+unsigned int encodeSequence(unsigned int mask, Args... args) {
+    unsigned int result = 0;
+    ((result ^= (args ^ mask)), ...);
+    return result;
 }
 
 int main() {
-    vector<map<string, int>> data = {
-        {{"a", 5}, {"b", -16}},
-        {{"c", 3}, {"d", 8}},
-        {{"e", 12}, {"f", -4}}
-    };
+    // Initial mask and data
+    unsigned int baseMask = 0x12345678;
+    unsigned int payloadA = 0xABCD1234;
+    unsigned int payloadB = 0xFEDCBA98;
     
-    int accumulator = 0;
-    double sum_of_computations = 0.0;
+    // Encode payloads with initial mask
+    unsigned int stageOne = encodeSequence(baseMask, payloadA, payloadB);
     
-    for (const auto& inner_map : data) {
-        for (const auto& pair : inner_map) {
-            int value = pair.second;
-            if (value > 0) {
-                accumulator += value;
-            } else {
-                accumulator ^= abs(value); // Bitwise XOR with absolute value
-            }
-            sum_of_computations += compute_expression(abs(value), value * 2);
-        }
+    // Rotate mask and apply to stage one result
+    unsigned int rotatedMask = rotateMask(baseMask, 7);
+    unsigned int stageTwo = stageOne ^ rotatedMask;
+    
+    // Apply bit masking with AND/OR operations
+    unsigned int filterMask = 0x0F0F0F0F;
+    stageTwo &= filterMask;
+    stageTwo |= (filterMask << 1);
+    
+    // Optional value handling for conditional processing
+    std::optional<unsigned int> intermediateToken = stageTwo;
+    if (intermediateToken.has_value()) {
+        intermediateToken = intermediateToken.value() ^ 0xDEADBEEF;
     }
     
-    string s = "Hello";
-    s += " World!";
-    reverse(s.begin(), s.end());
+    // Finalize authentication token with variant handling
+    std::variant<unsigned int, bool> tokenContainer = intermediateToken.value_or(0);
+    unsigned int authToken = 0;
     
-    int str_len = static_cast<int>(s.length());
-    int mask = (1 << 4) - 1; // 15 in decimal
-    int masked_value = accumulator & mask;
+    if (std::holds_alternative<unsigned int>(tokenContainer)) {
+        authToken = std::get<unsigned int>(tokenContainer) & 0xFFFFFFFF;
+    }
     
-    double final_computation = ceil(sum_of_computations / str_len);
-    int final_result = static_cast<int>(final_computation) + masked_value;
-    
-    cout << "Result: " << final_result << endl;
+    // Output result
+    std::cout << "Result: " << authToken << std::endl;
     return 0;
 }

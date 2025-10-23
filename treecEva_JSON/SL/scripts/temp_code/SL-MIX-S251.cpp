@@ -1,52 +1,65 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
+#include <sstream>
 #include <cmath>
-#include <algorithm>
+#include <optional>
 
-using namespace std;
+double calculate_mean(const std::vector<double>& values) {
+    double sum = 0.0;
+    for (const auto& val : values) {
+        sum += val;
+    }
+    return sum / values.size();
+}
+
+double calculate_variance(const std::vector<double>& values, double mean) {
+    double sum_sq_diff = 0.0;
+    for (const auto& val : values) {
+        sum_sq_diff += (val - mean) * (val - mean);
+    }
+    return sum_sq_diff / values.size();
+}
+
+std::optional<double> parse_transaction(const std::string& transaction) {
+    try {
+        size_t pos;
+        double value = std::stod(transaction, &pos);
+        if (pos == transaction.length()) {
+            return value;
+        } else {
+            return std::nullopt;
+        }
+    } catch (...) {
+        return std::nullopt;
+    }
+}
 
 int main() {
-    vector<vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    int accumulator = 0;
+    std::vector<std::string> raw_transactions = {"100.50", "200.75", "invalid", "150.25", "300.00", "175.80"};
+    std::vector<double> valid_transactions;
     
-    for (size_t i = 0; i < matrix.size(); ++i) {
-        for (size_t j = 0; j < matrix[i].size(); ++j) {
-            if ((i + j) % 2 == 0) {
-                accumulator += matrix[i][j];
-            } else {
-                accumulator -= matrix[i][j];
-            }
+    for (const auto& tx : raw_transactions) {
+        auto parsed = parse_transaction(tx);
+        if (parsed.has_value()) {
+            valid_transactions.push_back(parsed.value());
         }
     }
     
-    string text = "HELLO";
-    int char_sum = 0;
-    for (char c : text) {
-        char_sum += static_cast<int>(c);
+    double mean = calculate_mean(valid_transactions);
+    double variance = calculate_variance(valid_transactions, mean);
+    
+    // Risk adjustment logic
+    double risk_factor = 1.0;
+    if (variance > 5000.0) {
+        risk_factor = 1.2;
+    } else if (variance > 2000.0) {
+        risk_factor = 1.1;
     }
     
-    double angle_rad = M_PI / 4.0;
-    double sine_val = sin(angle_rad);
-    int scaled_sine = static_cast<int>(sine_val * 1000);
+    double adjusted_variance = variance * risk_factor;
     
-    int x = 12;
-    int y = 18;
-    int gcd_val = __gcd(x, y);
-    int lcm_val = (x * y) / gcd_val;
-    
-    int bitwise = (x & y) | (x << 2);
-    
-    vector<int> numbers = {1, 2, 3, 4, 5};
-    int product = 1;
-    for (int num : numbers) {
-        product *= num;
-    }
-    
-    int final_result = (accumulator + char_sum + scaled_sine + lcm_val + bitwise + product) % 10000;
-    
-    cout << "Result: " << final_result << endl;
+    std::cout << "Result: " << adjusted_variance << std::endl;
     return 0;
 }

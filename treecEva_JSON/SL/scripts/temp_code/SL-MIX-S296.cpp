@@ -1,46 +1,62 @@
-#define M_PI 3.14159265358979323846
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <string>
+#include <numeric>
 
-using namespace std;
+struct Waypoint {
+    double x, y;
+    Waypoint(double x_, double y_) : x(x_), y(y_) {}
+};
 
-double complex_calculation(int a, int b, double c) {
-    return pow(a, 2) + sqrt(b) * c - (a & b);
+double calculateEuclideanDistance(const Waypoint& a, const Waypoint& b) {
+    return std::sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
 
+double calculateTerrainFactor(const std::vector<Waypoint>& waypoints) {
+    if (waypoints.size() < 2) return 0.0;
+    std::vector<double> diffs;
+    for (size_t i = 1; i < waypoints.size(); ++i) {
+        diffs.push_back(std::abs(waypoints[i].x - waypoints[i-1].x));
+    }
+    double sum = std::accumulate(diffs.begin(), diffs.end(), 0.0);
+    return sum / diffs.size();
+}
+
+enum class RobotState { MOVING, CHARGING, IDLE };
+
 int main() {
-    vector<vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    vector<double> results;
-    string key = "CRYPTO";
-    int shift = 3;
-    double accumulator = 0.0;
+    std::vector<Waypoint> navigationPath = {
+        Waypoint(0.0, 0.0),
+        Waypoint(3.0, 4.0),
+        Waypoint(7.0, 1.0),
+        Waypoint(10.0, 5.0)
+    };
     
-    for (int i = 0; i < matrix.size(); i++) {
-        for (int j = 0; j < matrix[i].size(); j++) {
-            int value = matrix[i][j];
-            double calc = complex_calculation(value, i+j, 1.5);
-            results.push_back(calc);
+    double terrainFactor = calculateTerrainFactor(navigationPath);
+    RobotState currentState = RobotState::MOVING;
+    double total_energy_consumed = 0.0;
+    
+    for (size_t i = 1; i < navigationPath.size(); ++i) {
+        double segmentDistance = calculateEuclideanDistance(navigationPath[i-1], navigationPath[i]);
+        double energyConsumption = segmentDistance * terrainFactor;
+        
+        if (currentState == RobotState::CHARGING) {
+            total_energy_consumed += 2.0;
+            currentState = RobotState::MOVING;
         }
+        
+        total_energy_consumed += energyConsumption;
+        
+        currentState = (energyConsumption > 10.0) ? RobotState::CHARGING : RobotState::MOVING;
     }
     
-    for (int i = 0; i < results.size(); i++) {
-        accumulator += results[i];
+    if (currentState == RobotState::CHARGING) {
+        total_energy_consumed += 2.0;
     }
     
-    int xor_result = 0;
-    for (char c : key) {
-        xor_result ^= (int)c;
-    }
+    currentState = RobotState::IDLE;
     
-    int bit_shifted = (xor_result << shift) | (xor_result >> (32-shift));
-    
-    double final_result = accumulator + bit_shifted - (M_PI * 100);
-    
-    // Execution point Y
-    cout << "Result: " << final_result << endl;
-    
+    std::cout << "Result: " << total_energy_consumed << std::endl;
     return 0;
 }

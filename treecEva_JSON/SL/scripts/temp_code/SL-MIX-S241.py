@@ -1,63 +1,37 @@
+from collections import namedtuple
 import math
 
-def process_nested_data(data):
-    result = 0
-    for i, sublist in enumerate(data):
-        if i % 2 == 0:
-            for j, val in enumerate(sublist):
-                if j % 3 == 0:
-                    result += math.factorial(val)
-                elif j % 3 == 1:
-                    result -= val ** 2
-                else:
-                    result *= val if val != 0 else 1
-        else:
-            temp = [x for x in sublist if x > 0]
-            result += sum(temp) if temp else 0
-    return result
+# Define drone state using namedtuple
+drone_state = namedtuple('drone_state', ['x', 'y'])
 
-def transform_string(s):
-    mapping = {chr(i): i-96 for i in range(97, 123)}  # a=1, b=2, ..., z=26
-    total = 0
-    for char in s.lower():
-        if char in mapping:
-            total += mapping[char]
-        else:
-            total -= 1
-    return total
+# Initial positions of drones
+alpha_drone = drone_state(2.5, 3.7)
+beta_drone = drone_state(-1.4, 5.2)
+gamma_drone = drone_state(4.8, -2.1)
 
-data_structure = [
-    [1, 2, 3, 4, 5],
-    [6, -2, 8, 0, 10],
-    [2, 3, 1, 4],
-    [-1, -2, -3],
-    [5, 0, 2, 3, 1, 4]
-]
+# Movement displacement vectors
+alpha_displacement = (3.1, -2.6)
+beta_displacement = (-2.7, 1.9)
+gamma_displacement = (0.5, 4.3)
 
-string_value = "Complexity"
+# Calculate final positions
+final_alpha = drone_state(alpha_drone.x + alpha_displacement[0], alpha_drone.y + alpha_displacement[1])
+final_beta = drone_state(beta_drone.x + beta_displacement[0], beta_drone.y + beta_displacement[1])
+final_gamma = drone_state(gamma_drone.x + gamma_displacement[0], gamma_drone.y + gamma_displacement[1])
 
-# Phase 1: Process data structure
-processed_value = process_nested_data(data_structure)
+# Function to calculate distance between two points
+def euclidean_distance(point1, point2):
+    return math.sqrt((point1.x - point2.x)**2 + (point1.y - point2.y)**2)
 
-# Phase 2: Transform string
-transformed_value = transform_string(string_value)
+# Calculate side lengths of the triangle
+side_a = euclidean_distance(final_alpha, final_beta)
+side_b = euclidean_distance(final_beta, final_gamma)
+side_c = euclidean_distance(final_gamma, final_alpha)
 
-# Phase 3: Mathematical operations
-angle_rad = math.pi / 4
-sin_val = math.sin(angle_rad)
-cos_val = math.cos(angle_rad)
-trig_result = int((sin_val ** 2 + cos_val ** 2) * 1000)  # Should be 1000
+# Calculate semi-perimeter
+semi_perimeter = (side_a + side_b + side_c) / 2.0
 
-# Phase 4: Bitwise operations
-bitwise_a = processed_value & 0xFF
-bitwise_b = transformed_value | 0xF0
-bitwise_result = bitwise_a ^ bitwise_b
+# Calculate area using Heron's formula
+survey_zone_area = math.sqrt(semi_perimeter * (semi_perimeter - side_a) * (semi_perimeter - side_b) * (semi_perimeter - side_c))
 
-# Phase 5: Final calculation sequence
-step1 = processed_value + transformed_value
-step2 = step1 * trig_result
-step3 = step2 - bitwise_result
-step4 = step3 // 7
-final_result = step4 % 1000  # TARGET ASSIGNMENT
-
-print(f"Result: {final_result}")
+print(f"Result: {survey_zone_area}")

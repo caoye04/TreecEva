@@ -1,52 +1,44 @@
-import math
+import itertools
 
-def complex_transform(data):
-    transformed = []
-    for i, val in enumerate(data):
-        if isinstance(val, str):
-            transformed.append(len(val) ^ (i + 1))
-        elif isinstance(val, int):
-            transformed.append(val * 2 if val % 2 == 0 else val * 3)
-        else:
-            transformed.append(int(math.sqrt(abs(val)) * 10))
-    return transformed
+class AnalysisSession:
+    def __enter__(self):
+        self.session_active = True
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.session_active = False
 
-def process_nested(container):
-    results = []
-    for item in container:
-        if isinstance(item, list):
-            results.append(sum(complex_transform(item)))
-        elif isinstance(item, dict):
-            temp = 0
-            for k, v in item.items():
-                temp += len(k) * v if isinstance(v, int) else int(ord(str(v)[0]))
-            results.append(temp)
-        else:
-            results.append(item.bit_length() if isinstance(item, int) else 0)
-    return results
+def is_palindrome(s):
+    return s == s[::-1]
 
-# Initial data structures
-matrix = [
-    ["hello", 4, -9.64],
-    {"key1": 5, "key2": "value"},
-    2048,
-    ["a", 7, 16.0, "xyz"]
-]
+def validate_sequence(seq, min_length=3):
+    valid = []
+    n = len(seq)
+    for i in range(n):
+        for j in range(i + min_length, n + 1):
+            subseq = seq[i:j]
+            if is_palindrome(subseq):
+                valid.append(subseq)
+    return valid
 
-# Transformation pipeline
-stage1 = process_nested(matrix)
-stage2 = [x for x in stage1 if x > 10]
-stage3 = [(x & 0xFF) ^ (x >> 8) for x in stage2]
+sequences = ['ATGCAATGC', 'TTACGTAAGT', 'CGCGCG']
+validated_palindromes = 0
 
-# Mathematical processing
-accumulator = 0
-for i, val in enumerate(stage3):
-    accumulator += val * math.factorial(i) if i < 4 else val
+with AnalysisSession() as session:
+    if session.session_active:
+        for seq in sequences:
+            palindromes = validate_sequence(seq)
+            combinations = list(itertools.combinations(palindromes, 2))
+            filtered_combinations = [
+                (a, b) for a, b in combinations
+                if len(a) > 3 and len(b) > 3 and (len(a) % 2 == 1 or len(b) % 2 == 1)
+            ]
+            validated_palindromes += len(filtered_combinations)
 
-# Final aggregation
-result = accumulator % 1000
-bytes_data = bytes([result])
-encoded = ''.join(format(x, '02x') for x in bytes_data)
-result = int(encoded, 16)  # END OF COMPUTATION
+# Apply final logical filter
+if validated_palindromes > 0 and (validated_palindromes % 2 == 0 or validated_palindromes > 5):
+    validated_palindromes *= 2
+else:
+    validated_palindromes += 1
 
-print(f"Result: {result}")
+print(f"Result: {validated_palindromes}")

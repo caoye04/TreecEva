@@ -1,58 +1,61 @@
 #define _USE_MATH_DEFINES
 #include <stdio.h>
-#include <math.h>
-#include <string.h>
+#include <stdlib.h>
+#include <stdint.h>
 
-#define MAX_LEN 100
+#define BUFFER_SIZE 8
+#define FLAG_FULL    0x01
+#define FLAG_EMPTY   0x02
+#define FLAG_LOCKED  0x04
+#define FLAG_DIRTY   0x08
+
+typedef struct {
+    int16_t *samples;
+    uint8_t state_flags;
+    uint8_t head;
+    uint8_t tail;
+} AudioBuffer;
+
+AudioBuffer* create_buffer() {
+    AudioBuffer* buf = (AudioBuffer*)malloc(sizeof(AudioBuffer));
+    buf->samples = (int16_t*)calloc(BUFFER_SIZE, sizeof(int16_t));
+    buf->state_flags = FLAG_EMPTY;
+    buf->head = 0;
+    buf->tail = 0;
+    return buf;
+}
 
 int main() {
-    // Initialize variables
-    int arr[5][5] = {{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15},{16,17,18,19,20},{21,22,23,24,25}};
-    double matrix[3][3] = {{1.5, 2.7, 3.9}, {4.1, 5.3, 6.5}, {7.7, 8.9, 9.1}};
-    char str[MAX_LEN] = "ComplexComputationChallenge";
+    AudioBuffer* pcm_buffer = create_buffer();
+    uint8_t control_word = 0xAA;  // 10101010
     
-    // Step 1: Perform nested loop operations on integer array
-    int sum1 = 0;
-    for(int i=0; i<5; i++) {
-        for(int j=0; j<5; j++) {
-            if((i+j) % 2 == 0) {
-                sum1 += arr[i][j];
-            }
-        }
+    // Simulate buffer filling
+    for (int i = 0; i < 5; i++) {
+        pcm_buffer->samples[pcm_buffer->head] = (int16_t)(i * 100);
+        pcm_buffer->head = (pcm_buffer->head + 1) % BUFFER_SIZE;
     }
     
-    // Step 2: Process floating-point matrix with mathematical functions
-    double product1 = 1.0;
-    for(int i=0; i<3; i++) {
-        for(int j=0; j<3; j++) {
-            product1 *= sqrt(matrix[i][j]);
-        }
+    // Update state using bitwise operations
+    if (pcm_buffer->head != pcm_buffer->tail) {
+        pcm_buffer->state_flags &= ~FLAG_EMPTY;
+        pcm_buffer->state_flags |= FLAG_DIRTY;
     }
     
-    // Step 3: Manipulate string and perform bitwise operations
-    int str_len = strlen(str);
-    int xor_result = 0;
-    for(int i=0; i<str_len; i++) {
-        xor_result ^= (int)str[i];
+    // Process control word with short-circuit evaluation
+    if ((control_word & 0xF0) && (pcm_buffer->state_flags & FLAG_DIRTY)) {
+        control_word ^= 0x55;  // XOR with 01010101
+        pcm_buffer->state_flags |= FLAG_LOCKED;
     }
     
-    // Step 4: Complex conditional logic with multiple variables
-    int condition_var = ((sum1 > 100) ? (int)product1 : (int)(product1 * 2)) & xor_result;
-    
-    // Step 5: Perform advanced arithmetic operations
-    long long factorial = 1;
-    for(int i=1; i<=7; i++) {
-        factorial *= i;
+    // Final state calculation
+    uint8_t final_state = 0;
+    if (!(pcm_buffer->state_flags & FLAG_FULL) || (pcm_buffer->head == pcm_buffer->tail)) {
+        final_state = (pcm_buffer->state_flags << 2) ^ (control_word >> 3);
     }
     
-    double power_operation = pow((double)condition_var, 3);
+    printf("Result: %d\n", final_state);
     
-    // Step 6: Combine results using modular arithmetic
-    int intermediate_result = ((int)power_operation + (int)factorial) % 1000;
-    
-    // Step 7: Final complex computation involving all previous results
-    int final_result = ((intermediate_result << 2) ^ (sum1 >> 1)) + (int)(product1 * 10) - xor_result;
-    
-    printf("Result: %d\n", final_result);
+    free(pcm_buffer->samples);
+    free(pcm_buffer);
     return 0;
 }

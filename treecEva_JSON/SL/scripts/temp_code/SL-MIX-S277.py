@@ -1,83 +1,44 @@
+from collections import defaultdict
 import math
 
-def process_nested_data(data):
-    result = 0
-    for key, value in data.items():
-        if isinstance(value, dict):
-            result += process_nested_data(value)
-        elif isinstance(value, list):
-            for i, item in enumerate(value):
-                if isinstance(item, (int, float)):
-                    result += item * (i + 1)
-                elif isinstance(item, str):
-                    result += len(item) * (-1 if key.startswith('neg') else 1)
-        elif isinstance(value, (int, float)):
-            result += value if value > 0 else value * -2
-    return result
+def tokenize_signature(raw_signature):
+    tokens = []
+    for i in range(0, len(raw_signature), 4):
+        token = raw_signature[i:i+4]
+        if len(token) == 4:
+            tokens.append(int.from_bytes(token.encode(), 'big'))
+    return tokens
 
-def transform_string(s, shifts):
-    result = ''
-    for i, char in enumerate(s):
-        shift = shifts[i % len(shifts)]
-        new_char = chr((ord(char) - ord('a') + shift) % 26 + ord('a'))
-        result += new_char
-    return result
+def is_suspicious_pattern(token):
+    # Check if token has alternating bit pattern (e.g., 0101... or 1010...)
+    return (token & 0xAAAAAAAA) == 0 or (token & 0x55555555) == 0
 
-def calculate_weighted_sum(matrix):
-    total = 0
-    for i, row in enumerate(matrix):
-        row_sum = sum(row)
-        total += row_sum * (i + 1)
-        if i % 2 == 1:  # For odd-indexed rows, apply additional transformation
-            total -= max(row) * 2
-    return total
+class PacketAnalyzer:
+    def __init__(self):
+        self.pattern_frequency = defaultdict(int)
+        self.threat_score = 0
+    
+    def process_packet_batch(self, packet_signatures):
+        batch_threat = 0
+        for signature in packet_signatures:
+            tokens = tokenize_signature(signature)
+            for token in tokens:
+                if is_suspicious_pattern(token):
+                    self.pattern_frequency[token] += 1
+                    # Bitwise operations to calculate threat level
+                    threat_indicator = (token & 0xFF) ^ ((token >> 8) & 0xFF)
+                    batch_threat += threat_indicator * self.pattern_frequency[token]
+        self.threat_score += batch_threat & 0xFFFF
 
-data_structure = {
-    'level1_a': {
-        'level2_a': [10, -5, 'hello', 3.14],
-        'level2_b': 42,
-        'neg_level2_c': ['test', 7, -2.5]
-    },
-    'level1_b': [20, 'world', -15, 8],
-    'level1_c': -100
-}
+# Simulate processing a batch of 128 network packets
+analyzer = PacketAnalyzer()
+packet_data = [
+    "PKT001THREAT_SIG1",
+    "PKT002SAFE_PATTERN",
+    "PKT003THREAT_SIG2",
+    "PKT004THREAT_SIG1",
+    "PKT005THREAT_SIG3"
+] * 25 + ["PKT126THREAT_SIG1", "PKT127THREAT_SIG2", "PKT128THREAT_SIG1"]
 
-# Process the nested data structure
-processed_value = process_nested_data(data_structure)
-
-# Transform a string using a shifting pattern
-secret_message = transform_string('python', [1, 3, 2, 4, 5, 6])
-
-# Calculate a weighted sum from a matrix
-matrix_data = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [10, 11, 12]
-]
-matrix_sum = calculate_weighted_sum(matrix_data)
-
-# Perform a series of mathematical operations
-a = processed_value
-b = len(secret_message)  # Should be 6
-c = matrix_sum
-
-d = math.pow(a, 1/3)  # Cube root of a
-if d > 0:
-    e = math.floor(d)
-else:
-    e = math.ceil(d)
-
-f = b * c + e
-
-g = f % 17
-h = math.log(abs(g) + 1) if g != 0 else 1
-
-# Bitwise operations
-i = int(h) & 0xF  # Lower 4 bits
-j = i << 2  # Left shift by 2
-
-# Final calculation combining all previous results
-final_result = (j ^ 0xA) + int(math.sqrt(abs(processed_value)))
-
-print(f'Result: {final_result}')
+analyzer.process_packet_batch(packet_data)
+print(f"Result: {analyzer.threat_score}")

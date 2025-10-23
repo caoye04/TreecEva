@@ -1,51 +1,39 @@
-import math
+import re
+from functools import reduce
 
-def process_nested_data(data):
-    result = []
-    for i, sublist in enumerate(data):
-        temp = []
-        for j, val in enumerate(sublist):
-            if isinstance(val, int) and val > 0:
-                temp.append((val ** 2) ^ (i + 1))
-            elif isinstance(val, str):
-                temp.append(len(val) * (j + 1))
-            else:
-                temp.append(0)
-        result.append(sum(temp))
-    return result
+def calculate_base_score(payload):
+    return sum(ord(c) for c in payload if c.isalnum())
 
-def calculate_weighted_sum(values, weights):
-    return sum(v * w for v, w in zip(values, weights))
+def is_suspicious_pattern(payload):
+    return bool(re.search(r'[0-9]{4,}', payload))
 
-def transform_and_aggregate(matrix):
-    intermediate = []
-    for row in matrix:
-        transformed = [math.log(x + 1) if x > 0 else 0 for x in row]
-        intermediate.append(sum(transformed))
-    return math.floor(sum(intermediate) * 100)
+def contains_hex_sequences(payload):
+    return bool(re.search(r'[a-fA-F0-9]{6,}', payload))
 
-# Main execution starts here
-nested_data = [
-    [3, 'hello', -2, 'world'],
-    ['test', 5, 0, 'a'],
-    [7, 'python', 2, 'code']
-]
+# Encoded payload data
+encoded_payload = "X5k9#abcd1234#ZmFsc2U="  # Base64 for 'false'
 
-weights = [0.5, 1.5, 2.0]
+# Decoding step
+import base64
+decoded_payload = base64.b64decode(encoded_payload.split('#')[2]).decode('utf-8')
 
-processed_data = process_nested_data(nested_data)
-weighted_sum = calculate_weighted_sum(processed_data, weights)
+# Pattern analysis
+suspicious_flags = {
+    'has_long_digits': is_suspicious_pattern(decoded_payload),
+    'has_hex_sequences': contains_hex_sequences(decoded_payload),
+    'is_non_printable': any(not c.isprintable() for c in decoded_payload)
+}
 
-matrix_data = [
-    [weighted_sum % 10, weighted_sum // 10],
-    [weighted_sum & 15, weighted_sum | 7]
-]
+# Scoring logic
+base_score = calculate_base_score(decoded_payload)
+suspicion_indicators = frozenset(flag for flag, value in suspicious_flags.items() if value)
+indicator_weights = {'has_long_digits': 10, 'has_hex_sequences': 15, 'is_non_printable': 20}
 
-aggregated_value = transform_and_aggregate(matrix_data)
+# Calculate weighted suspicion score using dictionary comprehension and set operations
+weighted_scores = {indicator: indicator_weights[indicator] for indicator in suspicion_indicators}
+suspicion_score = sum(weighted_scores.values()) if weighted_scores else 0
 
-# Bitwise manipulation and final calculation
-x = (aggregated_value << 2) & 255
-y = (x ^ 170) + 42
-final_result = (y * 3) % 1000
+# Final threat calculation with short-circuit logic
+threat_score = base_score + suspicion_score if not (suspicious_flags['is_non_printable'] and len(decoded_payload) > 10) else 0
 
-print(f'Result: {final_result}')
+print(f"Result: {threat_score}")

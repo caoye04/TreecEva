@@ -1,48 +1,55 @@
 #define _USE_MATH_DEFINES
 #include <stdio.h>
-#include <math.h>
+#include <stdlib.h>
 
-#define SIZE 5
+typedef struct PacketNode {
+    int size;
+    struct PacketNode* next;
+} PacketNode;
 
 int main() {
-    int matrix[SIZE][SIZE] = {
-        {1, 2, 3, 4, 5},
-        {6, 7, 8, 9, 10},
-        {11, 12, 13, 14, 15},
-        {16, 17, 18, 19, 20},
-        {21, 22, 23, 24, 25}
-    };
+    PacketNode* head = NULL;
+    PacketNode* current = NULL;
     
-    int *ptr = &matrix[0][0];
-    int i, j;
-    long long accumulator = 0;
-    double temp;
-    int result = 0;
+    // Simulate packet reception: 64, 128, 32, 256, 16
+    int packets[] = {64, 128, 32, 256, 16};
+    int num_packets = 5;
     
-    for (i = 0; i < SIZE; i++) {
-        for (j = 0; j < SIZE; j++) {
-            if ((i + j) % 2 == 0) {
-                temp = pow(matrix[i][j], 2);
-                accumulator += (long long)temp;
-            } else {
-                temp = sqrt(matrix[i][j]);
-                accumulator -= (long long)temp;
-            }
+    // Build linked list
+    for (int i = 0; i < num_packets; i++) {
+        PacketNode* new_node = (PacketNode*)malloc(sizeof(PacketNode));
+        new_node->size = packets[i];
+        new_node->next = NULL;
+        
+        if (head == NULL) {
+            head = new_node;
+            current = head;
+        } else {
+            current->next = new_node;
+            current = new_node;
         }
     }
     
-    // Bitwise operations on accumulator
-    int mask = 0xFF;
-    int shifted = (int)(accumulator >> 3);
-    result = shifted & mask;
+    // Process packets
+    int total_bytes = 0;
+    PacketNode* temp = head;
     
-    // Final adjustment
-    if (result > 128) {
-        result = result ^ 0xAA;
-    } else {
-        result = result | 0x55;
+    while (temp != NULL) {
+        if (temp->size > 100) {
+            break;  // Early return simulation
+        }
+        total_bytes += temp->size;
+        temp = temp->next;
     }
     
-    printf("Result: %d\n", result);
+    printf("Result: %d\n", total_bytes);
+    
+    // Free allocated memory
+    while (head != NULL) {
+        PacketNode* to_free = head;
+        head = head->next;
+        free(to_free);
+    }
+    
     return 0;
 }

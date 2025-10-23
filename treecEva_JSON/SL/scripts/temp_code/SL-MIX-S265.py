@@ -1,64 +1,77 @@
+from collections import deque
 import math
 
-def transform_data(data):
-    transformed = []
-    for item in data:
-        if isinstance(item, dict):
-            temp = {}
-            for k, v in item.items():
-                if isinstance(v, list):
-                    temp[k] = sum(v)
-                else:
-                    temp[k] = v * 2
-            transformed.append(temp)
-        elif isinstance(item, list):
-            transformed.append([x**2 for x in item])
-        elif isinstance(item, tuple):
-            transformed.append(tuple(x + 1 for x in item))
-        else:
-            transformed.append(item)
-    return transformed
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
 
-def calculate_metrics(transformed):
-    metrics = {}
-    total_sum = 0
-    element_count = 0
-    for item in transformed:
-        if isinstance(item, dict):
-            for v in item.values():
-                total_sum += v
-                element_count += 1
-        elif isinstance(item, list):
-            total_sum += sum(item)
-            element_count += len(item)
-        elif isinstance(item, tuple):
-            total_sum += sum(item)
-            element_count += len(item)
-        else:
-            total_sum += item
-            element_count += 1
-    metrics['average'] = total_sum / element_count if element_count else 0
-    metrics['sum'] = total_sum
-    return metrics
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
 
-data_structure = [
-    {'a': [1, 2, 3], 'b': 4},
-    [2, 3, 4],
-    (5, 6),
-    7,
-    {'c': [10, 20], 'd': 3, 'e': [1, 1, 1]}
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)
+
+def fibonacci(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
+
+# Key derivation function using lambda and closure
+transform_ops = [
+    lambda x: x * 2 if x % 2 == 0 else x + 3,
+    lambda x: fibonacci(x % 10) if x > 5 else x,
+    lambda x: x ^ (x >> 1) if x & 1 else x | (x << 1)
 ]
 
-transformed_data = transform_data(data_structure)
-metrics = calculate_metrics(transformed_data)
+# Initialization vector
+init_vector = 12345
 
-# Perform advanced computation using metrics
-log_avg = math.log(metrics['average']) if metrics['average'] > 0 else 0
-exp_sum = math.exp(metrics['sum'] % 10) if metrics['sum'] > 0 else 1
+# Prime factorization step
+factors = []
+num = init_vector
+divisor = 2
+while divisor * divisor <= num:
+    if num % divisor == 0:
+        factors.append(divisor)
+        num //= divisor
+    else:
+        divisor += 1
+if num > 1:
+    factors.append(num)
 
-# Bitwise operations
-bitwise_result = int(log_avg) & int(exp_sum)
+# Stack-based transformation
+stack = deque()
+for factor in factors:
+    if is_prime(factor):
+        stack.append(factor)
+    else:
+        if stack:
+            stack.pop()
 
-# Final complex calculation
-final_result = (bitwise_result ** 2) + (int(log_avg) | int(exp_sum)) - (metrics['sum'] // 10)
-print(f"Result: {final_result}")
+# LCM calculation of remaining stack elements
+lcm_result = 1
+while stack:
+    element = stack.popleft()
+    lcm_result = lcm(lcm_result, element)
+
+# Apply transformation operations
+derived_key = lcm_result
+for op in transform_ops:
+    derived_key = op(derived_key)
+    
+# Final adjustment based on logical conditions
+if derived_key > 100 and not (derived_key & 1):
+    derived_key = derived_key >> 2
+elif derived_key <= 100 or (derived_key & 1):
+    derived_key = derived_key << 1
+
+print(f"Result: {derived_key}")

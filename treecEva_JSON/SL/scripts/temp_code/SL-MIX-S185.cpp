@@ -1,58 +1,56 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
-#include <string>
-#include <cmath>
 #include <algorithm>
+#include <functional>
 
 using namespace std;
 
-double compute_expression(int a, int b, double c) {
-    return pow(a, 2) + sqrt(b) * c;
+double calculateFee(double amount) {
+    return (amount < 1000) ? amount * 0.02 : 
+           (amount < 5000) ? amount * 0.015 : 
+           amount * 0.01;
+}
+
+void merge(vector<double>& arr, int l, int m, int r) {
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    vector<double> L(n1), R(n2);
+    for (int i = 0; i < n1; i++) L[i] = arr[l + i];
+    for (int j = 0; j < n2; j++) R[j] = arr[m + 1 + j];
+    int i = 0, j = 0, k = l;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) arr[k++] = L[i++];
+        else arr[k++] = R[j++];
+    }
+    while (i < n1) arr[k++] = L[i++];
+    while (j < n2) arr[k++] = R[j++];
+}
+
+void mergeSort(vector<double>& arr, int l, int r) {
+    if (l >= r) return;
+    int m = l + (r - l) / 2;
+    mergeSort(arr, l, m);
+    mergeSort(arr, m + 1, r);
+    merge(arr, l, m, r);
 }
 
 int main() {
-    vector<vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    string s = "HelloWorld";
-    int x = 10, y = 20;
+    vector<double> transactions = {1200.0, 800.0, 6500.0, 300.0, 4500.0};
+    auto feeLambda = [](double amt) -> double { return calculateFee(amt); };
+    vector<double> fees(transactions.size());
     
-    // Step 1: Perform bitwise operations
-    int bitwise_result = (x << 2) & (y >> 1);
-    
-    // Step 2: Manipulate string
-    reverse(s.begin(), s.end());
-    int str_length = static_cast<int>(s.length());
-    
-    // Step 3: Nested loop with conditionals
-    int sum = 0;
-    for (int i = 0; i < matrix.size(); ++i) {
-        for (int j = 0; j < matrix[i].size(); ++j) {
-            if ((matrix[i][j] % 2 == 0 && i < j) || (matrix[i][j] > 10 && j >= i)) {
-                sum += matrix[i][j];
-            }
-        }
+    for (size_t i = 0; i < transactions.size(); ++i) {
+        fees[i] = feeLambda(transactions[i]);
     }
     
-    // Step 4: Mathematical computation
-    double expr_result = compute_expression(bitwise_result, str_length, 1.5);
+    mergeSort(fees, 0, static_cast<int>(fees.size()) - 1);
     
-    // Step 5: Final calculation
-    int final_sum = sum + static_cast<int>(expr_result);
-    
-    // Step 6: Bitwise XOR with a calculated value
-    int xor_val = (final_sum ^ 0xFF) & 0x7F;
-    
-    // Step 7: Conditional assignment based on complex logic
-    int conditional_result;
-    if ((xor_val > 50 || str_length < 10) && (bitwise_result != 0)) {
-        conditional_result = xor_val * 2;
-    } else {
-        conditional_result = xor_val / 2;
+    double total_fee_aggregate = 0.0;
+    for (const auto& fee : fees) {
+        total_fee_aggregate += fee;
     }
     
-    // Final result computation
-    int result = conditional_result + static_cast<int>(compute_expression(conditional_result, 16, 2.0)) % 100;
-    
-    cout << "Result: " << result << endl;
+    cout << "Result: " << total_fee_aggregate << endl;
     return 0;
 }

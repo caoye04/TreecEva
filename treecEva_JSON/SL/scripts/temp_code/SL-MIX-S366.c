@@ -1,48 +1,69 @@
 #define _USE_MATH_DEFINES
 #include <stdio.h>
-#include <math.h>
-#include <string.h>
+#include <stdlib.h>
 
-#define MAX_LEN 100
+typedef struct {
+    volatile int head;
+    volatile int tail;
+    volatile int size;
+    int data[];  // flexible array member
+} circular_buffer_t;
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+int calculate_checksum(circular_buffer_t* buffer) {
+    int checksum = 0;
+    int capacity = buffer->size - 1;
+    
+    // Short-circuit evaluation in condition
+    if (buffer != NULL && buffer->head >= 0 && buffer->tail >= 0) {
+        // Use GCD in calculation
+        checksum = gcd(buffer->head + 1, buffer->tail + 1);
+        checksum += gcd(capacity, buffer->head);
+        
+        // Conditional branch based on buffer state
+        if (buffer->head > buffer->tail) {
+            checksum += (buffer->head - buffer->tail);
+        } else if (buffer->head < buffer->tail) {
+            checksum += (buffer->tail - buffer->head);
+        } else {
+            checksum += buffer->size;
+        }
+    }
+    
+    return checksum;
+}
 
 int main() {
-    // Initialize variables
-    int arr[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-    double matrix[2][2] = {{2.5, 3.7}, {1.2, 4.8}};
-    char str[MAX_LEN] = "HelloWorld";
-    int i, j;
-    double sum = 0.0;
-    int product = 1;
-    int final_result;
-
-    // Step 1: Compute the sum of all elements in arr
-    for (i = 0; i < 3; i++) {
-        for (j = 0; j < 3; j++) {
-            sum += arr[i][j];
-        }
+    int buffer_size = 8;
+    circular_buffer_t* sensor_buffer = malloc(sizeof(circular_buffer_t) + buffer_size * sizeof(int));
+    
+    sensor_buffer->head = 5;
+    sensor_buffer->tail = 2;
+    sensor_buffer->size = buffer_size;
+    
+    // Initialize buffer data
+    for (int i = 0; i < buffer_size; i++) {
+        sensor_buffer->data[i] = i * 3 + 1;
     }
-
-    // Step 2: Compute the product of diagonal elements in matrix
-    product = (int)(matrix[0][0] * matrix[1][1]);
-
-    // Step 3: Manipulate string
-    int len = strlen(str);
-    for (i = 0; i < len; i++) {
-        if (str[i] >= 'A' && str[i] <= 'Z') {
-            str[i] = str[i] + 32; // Convert to lowercase
-        }
-    }
-
-    // Step 4: Perform a complex mathematical operation
-    double temp = pow(sum, 2) + sqrt(product);
-    int temp_int = (int)temp;
-
-    // Step 5: Bitwise operations
-    int bitwise_result = (temp_int << 2) ^ 0xF0;
-
-    // Step 6: Final computation
-    final_result = (bitwise_result & 0xFF) + len;
-
-    printf("Result: %d\n", final_result);
+    
+    int diagnostic_checksum = calculate_checksum(sensor_buffer);
+    
+    // Perform some buffer operations that modify volatile variables
+    sensor_buffer->head = (sensor_buffer->head + 3) % buffer_size;
+    sensor_buffer->tail = (sensor_buffer->tail + 1) % buffer_size;
+    
+    // Recalculate checksum after operations
+    diagnostic_checksum += calculate_checksum(sensor_buffer);
+    
+    printf("Result: %d\n", diagnostic_checksum);
+    free(sensor_buffer);
     return 0;
 }

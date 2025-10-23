@@ -14,15 +14,16 @@
 ```cmd
 工作目录/
 ├── scripts/
+│   ├── data/
+│   │   ├── Statement-Level-MIX.json
+│ 	│   └── answer.json 
+│ 	│   └── ai_evaluation_with_difficulty.json
+│   ├── temp_code/
 │   ├── execute_tasks.py
 │   ├── generate_cot.py
 │   ├── ai_evaluation.py
 │   ├── generate_new_task.py
 │   └── main_loop.py
-├── data/
-│   ├── Statement-Level-MIX.json
-│   └── answer.json
-├── temp_code/
 ├── requirements.txt
 ├── test_api.py
 └── config.py

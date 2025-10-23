@@ -1,46 +1,29 @@
-import math
+from collections import deque
 
-def process_nested_data(data):
-    result = []
-    for i, sublist in enumerate(data):
-        temp = []
-        for j, val in enumerate(sublist):
-            if isinstance(val, int):
-                temp.append(val ** 2)
-            elif isinstance(val, str):
-                temp.append(len(val))
-            else:
-                temp.append(int(val))
-        result.append(sum(temp) + i * 10)
-    return result
+def load_truck_packages():
+    truck_capacity = 1000
+    package_weights = [73, 128, 56, 201, 99, 312, 88, 155, 67, 244]
+    modular_constraints = [5, 7, 3, 11, 2, 13, 4, 9, 6, 8]
+    
+    # Apply modular arithmetic to adjust weights
+    adjusted_weights = [(w % m) if m != 0 else w for w, m in zip(package_weights, modular_constraints)]
+    
+    # Greedy selection: prioritize packages with higher adjusted weights
+    sorted_indices = sorted(range(len(adjusted_weights)), key=lambda i: adjusted_weights[i], reverse=True)
+    
+    # Load packages using deque for efficient pops from both ends
+    packages_queue = deque(sorted_indices)
+    remaining_capacity = truck_capacity
+    
+    while packages_queue and remaining_capacity > 0:
+        idx = packages_queue.popleft()
+        weight = package_weights[idx]
+        
+        # Only load if it fits
+        if weight <= remaining_capacity:
+            remaining_capacity -= weight
+    
+    return remaining_capacity
 
-def transform_values(values):
-    transformed = []
-    for val in values:
-        if val % 2 == 0:
-            transformed.append(math.sqrt(val))
-        else:
-            transformed.append(val ** 3)
-    return transformed
-
-data_structure = [
-    [1, 'hello', 3.0, 4],
-    ['world', 2, 5, 6.0],
-    [7, 8, 'test', 9]
-]
-
-processed_data = process_nested_data(data_structure)
-transformed_data = transform_values(processed_data)
-
-# Perform bit-wise operations
-bitwise_result = 0
-for i, val in enumerate(transformed_data):
-    if i % 2 == 0:
-        bitwise_result |= int(val)
-    else:
-        bitwise_result &= int(val)
-
-# Final calculation
-final_result = (bitwise_result ^ 0xFF) + sum([x for x in transformed_data if x > 10])
-
-print(f'Result: {final_result}')
+remaining_capacity = load_truck_packages()
+print(f"Result: {remaining_capacity}")

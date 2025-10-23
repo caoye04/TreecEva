@@ -1,44 +1,58 @@
 import math
 
-def transform_data(data):
-    processed = []
-    for key, values in data.items():
-        temp = []
-        for v in values:
-            if isinstance(v, int):
-                temp.append(v ** 2)
-            elif isinstance(v, str):
-                temp.append(len(v))
-            else:
-                temp.append(0)
-        processed.append((key, sum(temp)))
-    return dict(processed)
+class AcousticNode:
+    def __init__(self, timestamp, amplitude):
+        self.timestamp = timestamp
+        self.amplitude = amplitude
+        self.next = None
 
-data_structure = {
-    'alpha': [3, 'hello', 5],
-    'beta': ['world', 2, 3.5, None],
-    'gamma': [7, 'test', 'longerstring']
-}
+def build_signal_chain():
+    # Create linked list: 100->200->150->300->250
+    head = AcousticNode(0, 100)
+    head.next = AcousticNode(1, 200)
+    head.next.next = AcousticNode(2, 150)
+    head.next.next.next = AcousticNode(3, 300)
+    head.next.next.next.next = AcousticNode(4, 250)
+    return head
 
-transformed = transform_data(data_structure)
+def process_window_measurements(window_data):
+    peak_map = {}
+    for time, amp in window_data.items():
+        key = time // 2
+        peak_map[key] = max(peak_map.get(key, 0), amp)
+    return peak_map
 
-# Perform advanced computations
-accumulated = 0
-for k, v in transformed.items():
-    if k == 'gamma':
-        accumulated += v * 3
-    elif k.startswith('a'):
-        accumulated += int(math.sqrt(v))
-    else:
-        accumulated += v << 2
+def compute_degradation_factor(peaks):
+    total_energy = sum(peaks.values())
+    baseline = max(peaks.values())
+    # Logarithmic energy decay model
+    return math.log(total_energy) if total_energy > 0 else 0
 
-# Bitwise and modular arithmetic mix
-x = accumulated & 0xFF
-y = (x ^ 0xAA) % 17
-z = y | 0b1100
+def apply_signal_transform(value, factor):
+    # Bitwise transformation with masking
+    masked = (int(value) & 0xFF) << 2
+    scaled = masked * factor
+    return scaled if scaled < 1000 else scaled / 2
 
-# Final calculation sequence
-interim = (z + 12) * (z - 5)
-final_result = interim // 7 + (interim % 7)
+# Main execution
+signal_chain = build_signal_chain()
+window_measurements = {node.timestamp: node.amplitude for node in 
+                      [signal_chain, signal_chain.next, signal_chain.next.next]}
 
-print(f'Result: {final_result}')
+peak_tracking = process_window_measurements(window_measurements)
+attenuation_factor = compute_degradation_factor(peak_tracking)
+
+# Ternary operator with short-circuit evaluation
+adjusted_factor = attenuation_factor * 2 if attenuation_factor > 1.5 and peak_tracking.get(0, 0) > 100 else attenuation_factor
+
+# List comprehension for signal processing
+processed_values = [apply_signal_transform(amp, adjusted_factor) for amp in [100, 200, 150]]
+
+# Lambda function for aggregation
+aggregate_fn = lambda vals: sum(vals) / len(vals) if vals else 0
+mean_processed = aggregate_fn(processed_values)
+
+# Final metric calculation with exponentiation
+final_metric = int(math.exp(mean_processed / 100) * 10) & 0x1FF
+
+print(f"Result: {final_metric}")

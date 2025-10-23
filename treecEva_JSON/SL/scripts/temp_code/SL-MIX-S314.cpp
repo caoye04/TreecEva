@@ -1,78 +1,103 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
+#include <queue>
 #include <vector>
-#include <cmath>
-#include <bitset>
+#include <algorithm>
 
-using namespace std;
-
-double recursive_transform(int n, double base) {
-    if (n <= 1) return base;
-    double val = recursive_transform(n - 1, base);
-    if (n % 3 == 0) {
-        return val * log(val + 1);
-    } else if (n % 3 == 1) {
-        return sqrt(val) + sin(val);
-    } else {
-        return pow(val, 1.0/3.0) + cos(val);
+struct Package {
+    int id;
+    double weight;
+    int urgency;
+    double ratio; // urgency/weight
+    
+    bool operator<(const Package& other) const {
+        return ratio < other.ratio; // Max heap based on ratio
     }
-}
+};
 
-int bitwise_chain(int x) {
-    x = x << 2;
-    x = x ^ 0xF;
-    x = x & 0xFF;
-    x = x >> 1;
-    return x | 0x1;
-}
-
-struct DataPack {
-    vector<int> indices;
-    double value;
-    int flag;
+template<typename T>
+class PriorityQueue {
+private:
+    std::priority_queue<T> pq;
+public:
+    void push(const T& item) { pq.push(item); }
+    T top() const { return pq.top(); }
+    void pop() { pq.pop(); }
+    bool empty() const { return pq.empty(); }
+    size_t size() const { return pq.size(); }
 };
 
 int main() {
-    vector<DataPack> packs(3);
+    const double VEHICLE_CAPACITY = 100.0;
     
-    // Initialize first pack
-    packs[0].indices = {2, 4, 6};
-    packs[0].value = 3.5;
-    packs[0].flag = 1;
+    // Initialize packages with ID, weight, urgency
+    std::vector<Package> packages = {
+        {1, 30.5, 80, 0},
+        {2, 20.0, 65, 0},
+        {3, 15.2, 50, 0},
+        {4, 40.0, 90, 0},
+        {5, 25.3, 70, 0}
+    };
     
-    // Initialize second pack
-    packs[1].indices = {1, 3, 5, 7};
-    packs[1].value = 2.0;
-    packs[1].flag = 0;
+    // Calculate urgency-to-weight ratios
+    for(auto& pkg : packages) {
+        pkg.ratio = pkg.urgency / pkg.weight;
+    }
     
-    // Initialize third pack
-    packs[2].indices = {0, 8, 9};
-    packs[2].value = 5.0;
-    packs[2].flag = 1;
+    // Sort packages by ratio in descending order for preprocessing
+    std::sort(packages.begin(), packages.end(), [](const Package& a, const Package& b) {
+        return a.ratio > b.ratio;
+    });
     
-    double accumulator = 0.0;
-    for (int i = 0; i < 3; i++) {
-        int sum_indices = 0;
-        for (int idx : packs[i].indices) {
-            sum_indices += idx;
+    // Load packages into priority queue
+    PriorityQueue<Package> packageQueue;
+    for(const auto& pkg : packages) {
+        packageQueue.push(pkg);
+    }
+    
+    double currentLoad = 0.0;
+    double totalSelectedWeight = 0.0;
+    
+    // Greedy selection process
+    while(!packageQueue.empty() && currentLoad < VEHICLE_CAPACITY) {
+        Package currentPackage = packageQueue.top();
+        packageQueue.pop();
+        
+        // Check if adding this package exceeds capacity
+        bool canAdd = (currentLoad + currentPackage.weight) <= VEHICLE_CAPACITY;
+        
+        // Ternary operator to decide whether to add the package
+        totalSelectedWeight += canAdd ? currentPackage.weight : 0.0;
+        currentLoad += canAdd ? currentPackage.weight : 0.0;
+    }
+    
+    // Final adjustment using greedy principle - check remaining capacity
+    double remainingCapacity = VEHICLE_CAPACITY - currentLoad;
+    
+    // If there's still space, try to fit a smaller package
+    if(remainingCapacity > 0 && !packageQueue.empty()) {
+        // Search for a package that fits in remaining space
+        std::vector<Package> tempStorage;
+        bool found = false;
+        
+        while(!packageQueue.empty() && !found) {
+            Package candidate = packageQueue.top();
+            packageQueue.pop();
+            
+            if(candidate.weight <= remainingCapacity) {
+                totalSelectedWeight += candidate.weight;
+                found = true;
+            } else {
+                tempStorage.push_back(candidate);
+            }
         }
         
-        int transformed_index = bitwise_chain(sum_indices);
-        
-        if (packs[i].flag) {
-            double temp = recursive_transform(transformed_index, packs[i].value);
-            accumulator += floor(temp * 1000) / 1000;
-        } else {
-            accumulator -= ceil(packs[i].value * transformed_index);
+        // Restore unprocessed packages
+        for(const auto& pkg : tempStorage) {
+            packageQueue.push(pkg);
         }
     }
     
-    int final_int = static_cast<int>(accumulator);
-    bitset<16> bits(final_int);
-    int bit_count = bits.count();
-    
-    double final_result = accumulator * bit_count;
-    
-    cout << "Result: " << final_result << endl;
+    std::cout << "Result: " << static_cast<int>(totalSelectedWeight * 100 + 0.5) << std::endl;
     return 0;
 }

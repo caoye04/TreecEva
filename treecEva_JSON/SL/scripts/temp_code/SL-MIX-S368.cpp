@@ -1,43 +1,66 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
-#include <cmath>
-#include <algorithm>
-
+#include <numeric>
 using namespace std;
 
+class SignalPattern {
+public:
+    int value;
+    SignalPattern(int v = 0) : value(v) {}
+    
+    // Overload + operator
+    SignalPattern operator+(const SignalPattern& other) const {
+        return SignalPattern((this->value + other.value) % 100);
+    }
+    
+    // Overload * operator
+    SignalPattern operator*(const SignalPattern& other) const {
+        return SignalPattern((this->value * other.value) % 100);
+    }
+};
+
+// Function to calculate GCD
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+// Recursive stabilization function
+SignalPattern stabilize(const vector<SignalPattern>& signals, int index) {
+    if (index >= signals.size() - 1) return signals[index];
+    SignalPattern combined = signals[index] + signals[index+1];
+    SignalPattern next = stabilize(signals, index + 1);
+    return combined * next;
+}
+
 int main() {
-    vector<vector<int>> matrix = {{2, 3, 5}, {7, 11, 13}, {17, 19, 23}};
-    int base = 2;
-    int exp = 4;
-    int power_result = pow(base, exp);
+    vector<int> raw_signals = {15, 25, 35, 45, 55};
+    vector<SignalPattern> modulated_signals;
     
-    int sum_primes = 0;
-    for (int i = 0; i < matrix.size(); i++) {
-        for (int j = 0; j < matrix[i].size(); j++) {
-            sum_primes += matrix[i][j];
-        }
+    // Apply modular transformation and create SignalPattern objects
+    for (int sig : raw_signals) {
+        modulated_signals.push_back(SignalPattern((sig * 3) % 100));
     }
     
-    int bitwise_and = power_result & sum_primes;
-    int bitwise_or = power_result | sum_primes;
-    int bitwise_xor = power_result ^ sum_primes;
+    // Stabilize the signal configuration
+    SignalPattern stable_configuration = stabilize(modulated_signals, 0);
+    int stable_configuration_sum = stable_configuration.value;
     
-    int condition_result = (bitwise_and > 50) ? (bitwise_or + 10) : (bitwise_xor - 5);
-    
-    vector<int> results = {power_result, sum_primes, bitwise_and, bitwise_or, bitwise_xor, condition_result};
-    sort(results.begin(), results.end());
-    
-    int median = (results[2] + results[3]) / 2;
-    
-    int factorial = 1;
-    for (int i = 1; i <= 5; i++) {
-        factorial *= i;
+    // Add mean of original signals adjusted by their GCD
+    int sum_original = accumulate(raw_signals.begin(), raw_signals.end(), 0);
+    int mean_adjusted = sum_original / raw_signals.size();
+    int signal_gcd = raw_signals[0];
+    for (size_t i = 1; i < raw_signals.size(); ++i) {
+        signal_gcd = gcd(signal_gcd, raw_signals[i]);
     }
     
-    int final_result = (median * 3) + (factorial / 10) - (condition_result % 7);
+    stable_configuration_sum += (mean_adjusted + signal_gcd) % 100;
     
-    cout << "Result: " << final_result << endl;
-    
+    cout << "Result: " << stable_configuration_sum << endl;
     return 0;
 }
