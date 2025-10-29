@@ -1,0 +1,150 @@
+1 import heapq
+1 [] []
+2 from functools import reduce
+2 [] []
+3 from collections import namedtuple
+3 [] []
+5 task_tuple = namedtuple('Task', ['id', 'priority', 'dependencies', 'execution_time'])
+5 [] []
+8 class TaskScheduler:
+8 [] []
+8 class TaskScheduler:
+8 [] []
+9     def __init__(self):
+9 [] []
+14     def add_task(self, task):
+14 [] []
+17     def process_tasks(self):
+17 [] []
+34 scheduler = TaskScheduler()
+34 ['self'] ['<TaskScheduler object>']
+10         self.task_queue = []
+10 ['self'] ['<TaskScheduler object>']
+11         self.completed = {}
+11 ['self'] ['<TaskScheduler object>']
+12         self.failure_log = set()
+12 ['self'] ['<TaskScheduler object>']
+36     task_tuple('render_engine', 2, [], 5),
+36 ['scheduler'] ['<TaskScheduler object>']
+37     task_tuple('texture_loader', 1, ['render_engine'], 3),
+37 ['scheduler'] ['<TaskScheduler object>']
+38     task_tuple('physics_sim', 3, ['render_engine'], 4),
+38 ['scheduler'] ['<TaskScheduler object>']
+39     task_tuple('ai_behavior', 4, ['physics_sim'], 6),
+39 ['scheduler'] ['<TaskScheduler object>']
+40     task_tuple('audio_mixer', 2, ['texture_loader'], 9),
+40 ['scheduler'] ['<TaskScheduler object>']
+41     task_tuple('network_sync', 5, ['ai_behavior', 'audio_mixer'], 2)
+41 ['scheduler'] ['<TaskScheduler object>']
+35 tasks_data = [
+35 ['scheduler', 'tasks_data'] ['<TaskScheduler object>', "[Task(id='render_engine', priority=2, dependencies=[], execution_time=5), Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3), Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4), Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6), Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9), Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)]"]
+45 list(map(scheduler.add_task, tasks_data))
+45 ['self', 'task'] ['<TaskScheduler object>', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)"]
+48 completed_task_count = scheduler.process_tasks()
+48 ['self'] ['<TaskScheduler object>']
+18         completed_count = 0
+18 ['self', 'completed_count'] ['<TaskScheduler object>', '0']
+19         while self.task_queue:
+19 ['self', 'completed_count'] ['<TaskScheduler object>', '0']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task'] ['<TaskScheduler object>', '0', '1', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)"]
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x00000244D26BAAA0>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x00000244D26BAAA0>', "'render_engine'", '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x00000244D26BAAA0>', "'render_engine'", '<TaskScheduler object>']
+25             success = task.execution_time % 3 != 0
+25 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '1', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)", 'False']
+26             if success:
+26 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '1', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)", 'False']
+30                 self.failure_log.add(task.id)
+30 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '1', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)", 'False']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '1', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)", 'False']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9)", 'False']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x00000244D26BA9E0>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x00000244D26BA9E0>', "'texture_loader'", '<TaskScheduler object>']
+23                 continue
+23 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9)", 'False']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9)", 'False']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'False']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x00000244D26BA9E0>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x00000244D26BA9E0>', '<TaskScheduler object>']
+25             success = task.execution_time % 3 != 0
+25 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'True']
+26             if success:
+26 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'True']
+27                 self.completed[task.id] = True
+27 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'True']
+28                 completed_count += 1
+28 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'True']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'True']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x00000244D26BA9E0>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x00000244D26BA9E0>', "'render_engine'", '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x00000244D26BA9E0>', "'render_engine'", '<TaskScheduler object>']
+25             success = task.execution_time % 3 != 0
+25 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+26             if success:
+26 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+27                 self.completed[task.id] = True
+27 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+28                 completed_count += 1
+28 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '4', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)", 'True']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x00000244D26BA9E0>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x00000244D26BA9E0>', "'physics_sim'", '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x00000244D26BA9E0>', "'physics_sim'", '<TaskScheduler object>']
+25             success = task.execution_time % 3 != 0
+25 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '4', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)", 'False']
+26             if success:
+26 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '4', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)", 'False']
+30                 self.failure_log.add(task.id)
+30 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '4', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)", 'False']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '4', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)", 'False']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '5', "Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)", 'False']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x00000244D26BAA40>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x00000244D26BAA40>', "'ai_behavior'", '<TaskScheduler object>']
+23                 continue
+23 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '5', "Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)", 'False']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '5', "Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)", 'False']
+31         return completed_count
+31 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '5', "Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)", 'False']
+49 print(f"Result: {completed_task_count}")
+49 ['scheduler', 'tasks_data', 'completed_task_count'] ['<TaskScheduler object>', "[Task(id='render_engine', priority=2, dependencies=[], execution_time=5), Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3), Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4), Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6), Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9), Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)]", '2']

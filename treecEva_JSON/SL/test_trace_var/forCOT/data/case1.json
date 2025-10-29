@@ -1,0 +1,15 @@
+{
+  "id": "SL-MIX-S121",
+  "metadata": {
+    "category": "Statement-Level",
+    "language": "python",
+    "difficulty": 3,
+    "intervention": 7
+  },
+  "task": {
+    "description": "A priority task scheduler uses a min-heap to manage execution order. Tasks have priority levels and dependencies. The scheduler processes tasks with short-circuit logic to skip dependent tasks when a parent fails. After processing the initial task queue, what is the value of variable 'completed_task_count' at execution point Y?",
+    "code": "import heapq\nfrom functools import reduce\nfrom collections import namedtuple\n\ntask_tuple = namedtuple('Task', ['id', 'priority', 'dependencies', 'execution_time'])\n\n# Task scheduler with priority queue and dependency tracking\nclass TaskScheduler:\n    def __init__(self):\n        self.task_queue = []\n        self.completed = {}\n        self.failure_log = set()\n    \n    def add_task(self, task):\n        heapq.heappush(self.task_queue, (task.priority, task))\n    \n    def process_tasks(self):\n        completed_count = 0\n        while self.task_queue:\n            _, task = heapq.heappop(self.task_queue)\n            # Short-circuit: skip if any dependency failed\n            if any(dep in self.failure_log for dep in task.dependencies):\n                continue\n            # Simulate task execution with potential failure\n            success = task.execution_time % 3 != 0\n            if success:\n                self.completed[task.id] = True\n                completed_count += 1\n            else:\n                self.failure_log.add(task.id)\n        return completed_count\n\n# Initialize scheduler with tasks\nscheduler = TaskScheduler()\ntasks_data = [\n    task_tuple('render_engine', 2, [], 5),\n    task_tuple('texture_loader', 1, ['render_engine'], 3),\n    task_tuple('physics_sim', 3, ['render_engine'], 4),\n    task_tuple('ai_behavior', 4, ['physics_sim'], 6),\n    task_tuple('audio_mixer', 2, ['texture_loader'], 9),\n    task_tuple('network_sync', 5, ['ai_behavior', 'audio_mixer'], 2)\n]\n\n# Add tasks using functional approach\nlist(map(scheduler.add_task, tasks_data))\n\n# Process all tasks and count completions\ncompleted_task_count = scheduler.process_tasks()\nprint(f\"Result: {completed_task_count}\")",
+    "answer": 2,
+    "cot": ""
+  }
+}

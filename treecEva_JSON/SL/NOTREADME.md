@@ -1,13 +1,15 @@
 # 代码记录
 
-## 任务需求
+## 任务背景
 
-我在做一个数据集，想用AI来进行辅助。我需要写四个AI的API调用程序和脚本来完成以下四项任务：
+这里是一个基于AI muti-agent 框架生成代码推理训练集的系统。
 
-1. 基于已有的任务，将其task/code用脚本转换为真实code文件，并且运行并记录返回值。这个会单独存储在一个answer.json里，如果输出返回值有值，则在json里记录该任务的值，不对的话则在json中标注，无法运行成功，且简要记录运行错误原因
-2. 基于已有的任务+记录的answer生成思维链，并在数据集文件中更新
-3. 调用五个不同的AI的API，不看answer和cot，直接预测任务答案，与真实答案对比，并记录每个问题回答正确的AI和错误的AI
-4. 基于目前的内容，再生成一个task，并再数据集文件中更新，并且再重复上面的三步
+目前有四大agent：
+
+- Agent1：execute_tasks 根据目前数据集，转换成可运行的代码并记录问题对应位置的运行结果
+- Agent2：generate_cot 根据单个case生成精简的三句话以内的cot
+- Agent3：ai_evaluation 调用五个ai的API，预测对应case的答案，根据错误ai数目更新难度
+- Agent4：generate_new_task 根据给出的背景和需求和已有数据集，并且根据已有数据集情况，均衡难度和提升多样性，扩展数据集
 
 ## 工作结构
 
@@ -25,7 +27,6 @@
 │   ├── generate_new_task.py
 │   └── main_loop.py
 ├── requirements.txt
-├── test_api.py
 └── config.py
 ```
 
@@ -1596,8 +1597,8 @@ if __name__ == "__main__":
 import os
 
 # 文件路径配置
-DATASET_PATH = "data/Statement-Level-MIX.json"
-ANSWER_PATH = "data/answer.json"
+DATASET_PATH = "scripts/data/Statement-Level-MIX.json"
+ANSWER_PATH = "scripts/data/answer.json"
 TEMP_CODE_DIR = "temp_code"
 
 # API配置
@@ -1644,38 +1645,1431 @@ os.makedirs("data", exist_ok=True)
 
 ```txt
 openai>=1.0.0
+flask>=2.3.0
+flask-cors>=4.0.0
 ```
 
-## test_api.py
 
-```py
-import openai
-from config import AI_APIS
 
-def test_all_apis():
-    """测试所有API连接"""
-    for api_name, api_config in AI_APIS.items():
-        print(f"\nTesting {api_name} ({api_config['model']})...")
+
+
+# trace_var_test
+
+## for c/cpp
+
+### 工作结构
+
+```
+工作目录/
+├── test.c
+├── test.cpp
+├── gdb_trace.py
+├── auto_trace.bat
+└── output.txt
+```
+
+#### test.cpp
+
+```c
+#define _USE_MATH_DEFINES
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+template<int N> struct ModifiedFibonacci
+{
+    static constexpr int value = ModifiedFibonacci<N - 1>::value + ModifiedFibonacci<N - 2>::value;
+};
+
+template<> struct ModifiedFibonacci<0>
+{
+    static constexpr int value = 13;
+};
+
+template<> struct ModifiedFibonacci<1>
+{
+    static constexpr int value = 21;
+};
+
+constexpr int getPackageWeight(int index)
+{
+    return ModifiedFibonacci<0>::value * (index == 0) +
+           ModifiedFibonacci<1>::value * (index == 1) +
+           ModifiedFibonacci<2>::value * (index == 2) +
+           ModifiedFibonacci<3>::value * (index == 3) +
+           ModifiedFibonacci<4>::value * (index == 4) +
+           ModifiedFibonacci<5>::value * (index == 5) +
+           ModifiedFibonacci<6>::value * (index == 6) +
+           ModifiedFibonacci<7>::value * (index == 7) +
+           ModifiedFibonacci<8>::value * (index == 8) +
+           ModifiedFibonacci<9>::value * (index == 9);
+}
+
+int main()
+{
+    const int truckCapacity = 2000;
+    std::vector<int> packageWeights;
+
+    // Generate package weights following modified Fibonacci sequence
+    for (int i = 0; i < 10; ++i)
+    {
+        packageWeights.push_back(getPackageWeight(i));
+    }
+
+    // Sort packages in ascending order for greedy approach
+    std::sort(packageWeights.begin(), packageWeights.end());
+
+    // Greedy algorithm: load as many packages as possible
+    int loadedPackages = 0;
+    int currentLoad = 0;
+
+    for (int weight : packageWeights)
+    {
+        if (currentLoad + weight <= truckCapacity)
+        {
+            currentLoad += weight;
+            loadedPackages++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    std::cout << "Result: " << loadedPackages << std::endl;
+    return 0;
+}
+```
+
+#### gdb_trace.py
+
+```
+# gdb_trace.py
+import gdb
+import sys
+
+print("=== GDB Python 脚本已加载 ===", file=sys.stderr)
+
+class SimpleVariableTracer:
+    def __init__(self):
+        self.step_count = 0
+        print("=== 追踪器初始化 ===", file=sys.stderr)
         
-        client = openai.OpenAI(
-            api_key=api_config['api_key'],
-            base_url=api_config['base_url']
-        )
-        
+    def is_user_code(self):
+        """检查是否是用户代码"""
         try:
-            response = client.chat.completions.create(
-                model=api_config['model'],
-                messages=[{"role": "user", "content": "Hello, can you respond with just the number 42?"}],
-                max_tokens=10
-            )
+            frame = gdb.selected_frame()
+            sal = frame.find_sal()
+            if sal.symtab:
+                filename = sal.symtab.filename.lower()
+                print(f"=== 检查文件: {filename} ===", file=sys.stderr)
+                exclude_patterns = ['mingw', 'msvcrt', 'stdio', '/usr/', 
+                                   'c:\\windows', 'cygwin', 'include', 
+                                   'bits/', 'sys/', 'libc']
+                is_user = not any(pattern in filename for pattern in exclude_patterns)
+                print(f"=== 是用户代码: {is_user} ===", file=sys.stderr)
+                return is_user
+        except Exception as e:
+            print(f"=== is_user_code 异常: {e} ===", file=sys.stderr)
+        return False
+    
+    def get_all_variables(self):
+        """获取所有可见变量"""
+        result = {}
+        try:
+            frame = gdb.selected_frame()
+            block = frame.block()
             
-            result = response.choices[0].message.content
-            print(f"✓ {api_name}: {result}")
+            while block:
+                for symbol in block:
+                    if symbol.is_argument or symbol.is_variable:
+                        try:
+                            var_name = symbol.name
+                            value = frame.read_var(var_name)
+                            
+                            if value.type.code == gdb.TYPE_CODE_INT:
+                                result[var_name] = int(value)
+                            elif value.type.code == gdb.TYPE_CODE_FLT:
+                                result[var_name] = float(value)
+                            else:
+                                result[var_name] = str(value)
+                        except Exception as e:
+                            pass
+                
+                if block.function:
+                    break
+                block = block.superblock
+        except Exception as e:
+            print(f"=== get_all_variables 异常: {e} ===", file=sys.stderr)
+        
+        return result
+    
+    def record_step(self):
+        """记录当前步骤并输出"""
+        if not self.is_user_code():
+            return False
+            
+        try:
+            frame = gdb.selected_frame()
+            sal = frame.find_sal()
+            line_num = sal.line
+            
+            variables = self.get_all_variables()
+            
+            # 排序变量名
+            sorted_vars = sorted(variables.keys())
+            
+            if sorted_vars:
+                var_names = ','.join(sorted_vars)
+                var_values = ','.join([str(variables[v]) for v in sorted_vars])
+                output = f"{line_num} [{var_names}] [{var_values}]"
+            else:
+                output = f"{line_num} [] []"
+            
+            print(output)
+            sys.stdout.flush()
+            
+            self.step_count += 1
+            return True
             
         except Exception as e:
-            print(f"✗ {api_name}: Error - {str(e)}")
+            print(f"=== record_step 异常: {e} ===", file=sys.stderr)
+            return False
+
+class TraceVarsCommand(gdb.Command):
+    """自动追踪变量的命令"""
+    
+    def __init__(self):
+        super(TraceVarsCommand, self).__init__("trace-vars", gdb.COMMAND_USER)
+        print("=== trace-vars 命令已注册 ===", file=sys.stderr)
+        
+    def invoke(self, arg, from_tty):
+        print("=== trace-vars 开始执行 ===", file=sys.stderr)
+        tracer = SimpleVariableTracer()
+        
+        try:
+            while True:
+                tracer.record_step()
+                gdb.execute("next", to_string=True)
+        except gdb.error as e:
+            print(f"=== GDB 错误: {e} ===", file=sys.stderr)
+        except KeyboardInterrupt:
+            print("=== 被中断 ===", file=sys.stderr)
+        
+        print(f"=== 追踪完成,共 {tracer.step_count} 步 ===", file=sys.stderr)
+
+# 注册命令
+TraceVarsCommand()
+print("=== 脚本加载完成 ===", file=sys.stderr)
+```
+
+#### auto_trace.bat
+
+```bat
+@echo off
+chcp 65001 >nul
+
+echo ========================================
+echo 自动化 GDB 变量追踪系统
+echo ========================================
+
+REM 自动检测源文件类型
+set SOURCE_FILE=
+if exist test.cpp (
+    set SOURCE_FILE=test.cpp
+    set COMPILER=g++
+) else if exist test.c (
+    set SOURCE_FILE=test.c
+    set COMPILER=gcc
+) else (
+    echo 错误: 找不到 test.c 或 test.cpp
+    pause
+    exit /b 1
+)
+
+set EXECUTABLE=test_program.exe
+set OUTPUT_FILE=output.txt
+
+echo 找到源文件: %SOURCE_FILE%
+echo 使用编译器: %COMPILER%
+
+echo [1/3] 编译源文件...
+%COMPILER% -g -O0 %SOURCE_FILE% -o %EXECUTABLE%
+if errorlevel 1 (
+    echo 编译失败!
+    pause
+    exit /b 1
+)
+echo √ 编译成功
+
+echo [2/3] 生成 GDB 命令...
+(
+echo set pagination off
+echo set confirm off
+echo source gdb_trace.py
+echo break main
+echo run
+echo trace-vars
+echo quit
+) > .gdb_commands
+
+echo [3/3] 执行 GDB 追踪...
+gdb -batch -x .gdb_commands %EXECUTABLE% 2>&1 > .temp_output.txt
+
+REM 过滤：只保留以数字+空格开头，且不包含 "in " 的行
+powershell -Command "Get-Content .temp_output.txt | Where-Object { $_ -match '^\d+\s+' -and $_ -notmatch '\sin\s+' } | Out-File -FilePath %OUTPUT_FILE% -Encoding UTF8"
+
+echo.
+echo ========================================
+echo 追踪结果:
+echo ========================================
+type %OUTPUT_FILE%
+echo ========================================
+
+REM 清理临时文件
+del .gdb_commands .temp_output.txt 2>nul
+
+echo.
+echo 完成!
+pause
+```
+
+#### output.txt
+
+```txt
+37	    const int truckCapacity = 2000;
+37 [currentLoad,loadedPackages,truckCapacity] [0,81,8]
+38	    std::vector<int> packageWeights;
+38 [currentLoad,loadedPackages,truckCapacity] [0,81,2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,0,81,std::vector of length 0, capacity 0,2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,0,81,std::vector of length 0, capacity 0,2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,0,81,std::vector of length 1, capacity 1 = {13},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,1,81,std::vector of length 1, capacity 1 = {13},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,1,81,std::vector of length 2, capacity 2 = {13, 21},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,2,81,std::vector of length 2, capacity 2 = {13, 21},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,2,81,std::vector of length 3, capacity 4 = {13, 21, 34},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,3,81,std::vector of length 3, capacity 4 = {13, 21, 34},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,3,81,std::vector of length 4, capacity 4 = {13, 21, 34, 55},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,4,81,std::vector of length 4, capacity 4 = {13, 21, 34, 55},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,4,81,std::vector of length 5, capacity 8 = {13, 21, 34, 55, 89},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,5,81,std::vector of length 5, capacity 8 = {13, 21, 34, 55, 89},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,5,81,std::vector of length 6, capacity 8 = {13, 21, 34, 55, 89, 144},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,6,81,std::vector of length 6, capacity 8 = {13, 21, 34, 55, 89, 144},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,6,81,std::vector of length 7, capacity 8 = {13, 21, 34, 55, 89, 144, 233},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,7,81,std::vector of length 7, capacity 8 = {13, 21, 34, 55, 89, 144, 233},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,7,81,std::vector of length 8, capacity 8 = {13, 21, 34, 55, 89, 144, 233, 377},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,8,81,std::vector of length 8, capacity 8 = {13, 21, 34, 55, 89, 144, 233, 377},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,8,81,std::vector of length 9, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,9,81,std::vector of length 9, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,9,81,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+47	    std::sort(packageWeights.begin(), packageWeights.end());
+47 [currentLoad,loadedPackages,packageWeights,truckCapacity] [0,81,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+50	    int loadedPackages = 0;
+50 [currentLoad,loadedPackages,packageWeights,truckCapacity] [0,81,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+51	    int currentLoad = 0;
+51 [currentLoad,loadedPackages,packageWeights,truckCapacity] [0,0,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [<error reading variable: Cannot access memory at address 0x7ff700000000>,0,0,0,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,0]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [13,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},0,0,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,13]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [13,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},0,0,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,13]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [13,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},13,0,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,13]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [13,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},13,1,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,13]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [21,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},13,1,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,21]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [21,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},13,1,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,21]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [21,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},34,1,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,21]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [21,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},34,2,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,21]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [34,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},34,2,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,34]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [34,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},34,2,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,34]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [34,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},68,2,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,34]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [34,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},68,3,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,34]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [55,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},68,3,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,55]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [55,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},68,3,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,55]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [55,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},123,3,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,55]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [55,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},123,4,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,55]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [89,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},123,4,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,89]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [89,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},123,4,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,89]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [89,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},212,4,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,89]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [89,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},212,5,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,89]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [144,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},212,5,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,144]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [144,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},212,5,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,144]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [144,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},356,5,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,144]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [144,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},356,6,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,144]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [233,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},356,6,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,233]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [233,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},356,6,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,233]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [233,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},589,6,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,233]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [233,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},589,7,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,233]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [377,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},589,7,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,377]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [377,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},589,7,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,377]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [377,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},966,7,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,377]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [377,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},966,8,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,377]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [610,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},966,8,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,610]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [610,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},966,8,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,610]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [610,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},1576,8,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,610]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [610,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,610]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [987,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,987]
+62	            break;
+62 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [987,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,987]
+66	    std::cout << "Result: " << loadedPackages << std::endl;
+66 [currentLoad,loadedPackages,packageWeights,truckCapacity] [1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+67	    return 0;
+67 [currentLoad,loadedPackages,packageWeights,truckCapacity] [1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+68	}
+68 [currentLoad,loadedPackages,packageWeights,truckCapacity] [1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+
+```
+
+### 介绍
+
+```
+分享：如何得到C/C++文件的运行流——GDB
+GDB（GNU Debugger）
+> 主要用于调试C、C++等编译型语言程序
+> 1988年由Richard Stallman开发提出
+> 特点：命令行界面、支持脚本自动化
+> 主要功能：
+>> 断点调试：在程序任意位置设置断点，执行到断点就会停止执行
+>> 单步执行：可以逐行执行代码，方便追踪程序执行流程
+>> 变量检查：可以查看和修改变量的值，包括局部变量、全局变量、静态变量等。还可以监视变量的变化。
+关键指令与注意事项
+1. gcc -g -o program program.c 
+需要-g编译，这样编译器会在可执行文件中保留符号信息与行号映射
+2. gdb program：启动GDB并加载程序
+3. break：设置断点
+4. next：单步执行
+5. print variable：打印变量值
+6. list：显示源代码
+7. set logging on：保存GDB输出到指定文件
+工作流：
+Step1：准备源代码
+Step2：带调试信息编译    gcc/g++ -g -O0 test.cpp -o test_program.exe
+> (-g: 保留调试符号和行号信息)  (-O0: 禁用优化，保证变量可见)
+Step3：bat 脚本自动生成GDB命令文件 .gdb_commands
+> set pagination off (禁用分页)、set confirm off (禁用确认提示)
+> source gdb_trace.py (加载Python脚本)、break main (在main函数设置断点)
+> run (运行程序)、trace-vars (执行自定义追踪命令)、quit (退出GDB)
+Step4：执行GDB追踪
+> gdb -batch -x .gdb_commands test_program.exe
+> GDB加载gdb_trace.py脚本、注册trace-vars命令、逐行记录信息
+Step5：过滤输出，格式化输出形式
+> 最终得到运行流：行号 该行语句 \n 行号 [变量名列表] [变量值列表]
+
+```
+
+## for python
+
+### 工作结构
+
+```
+工作目录/
+├── test.py
+├── trace_python.py
+├── auto_trace.bat
+└── output.txt
+```
+
+#### test.py
+
+```
+def main():
+    a = 1
+    b = 2
+    for i in range(3):
+        a = a + 1
+    print(a)
+    return 0
+
+if __name__ == '__main__':
+    main()
+```
+
+#### trace_python.py
+
+```
+# trace_python.py
+import sys
+import linecache
+from typing import Any, Dict, List, Optional
+
+class PythonTracer:
+    def __init__(self, target_file: str, output_file: str = 'output.txt'):
+        self.target_file = target_file
+        self.output_file = output_file
+        self.traces: List[str] = []
+        self.last_line = -1
+        self.in_main = False
+        self.pending_trace = None  # 待输出的追踪信息
+        
+    def format_value(self, value: Any) -> str:
+        """格式化变量值"""
+        try:
+            if isinstance(value, bool):
+                return str(int(value))
+            elif isinstance(value, (int, float)):
+                return str(value)
+            elif isinstance(value, str):
+                return f'"{value}"'
+            elif isinstance(value, list):
+                items = ','.join([self.format_value(v) for v in value])
+                return f'[{items}]'
+            elif isinstance(value, dict):
+                items = ','.join([f'{k}:{self.format_value(v)}' for k, v in value.items()])
+                return f'{{{items}}}'
+            elif callable(value):
+                return None
+            else:
+                return str(value)
+        except:
+            return '<error>'
+    
+    def get_source_line(self, filename: str, lineno: int) -> str:
+        """获取源代码行"""
+        line = linecache.getline(filename, lineno).rstrip()
+        return line if line else ''
+    
+    def filter_variables(self, frame) -> Dict[str, Any]:
+        """过滤并获取有效变量"""
+        local_vars: Dict[str, Any] = {}
+        
+        for var_name, var_value in frame.f_locals.items():
+            if (not var_name.startswith('__') and 
+                not callable(var_value) and
+                not isinstance(var_value, type) and
+                type(var_value).__name__ not in ['module', 'range', 'range_iterator']):
+                
+                formatted = self.format_value(var_value)
+                if formatted is not None:
+                    local_vars[var_name] = var_value
+        
+        return local_vars
+    
+    def output_pending_trace(self, current_vars: Dict[str, Any]):
+        """输出待处理的追踪信息（使用当前变量状态）"""
+        if self.pending_trace is None:
+            return
+        
+        line_num, source_line = self.pending_trace
+        
+        # 排序变量名
+        var_names = sorted(current_vars.keys())
+        
+        # 格式化输出
+        if var_names:
+            var_names_str = ','.join(var_names)
+            var_values_str = ','.join([self.format_value(current_vars[v]) for v in var_names])
+            trace_line = f"{line_num} [{var_names_str}] [{var_values_str}]"
+        else:
+            trace_line = f"{line_num} [] []"
+        
+        # 添加源代码行
+        if line_num != self.last_line:
+            self.traces.append(f"{line_num}\t{source_line}")
+            self.last_line = line_num
+        
+        # 添加变量追踪行
+        self.traces.append(trace_line)
+        
+        self.pending_trace = None
+    
+    def trace_handler(self, frame, event, arg):
+        """追踪处理器"""
+        if event != 'line':
+            return self.trace_handler
+        
+        code = frame.f_code
+        filename = code.co_filename
+        func_name = code.co_name
+        
+        # 只追踪目标文件
+        if not filename.endswith(self.target_file):
+            return self.trace_handler
+        
+        # 只追踪main函数内部
+        if func_name == 'main':
+            self.in_main = True
+        elif func_name == '<module>':
+            return self.trace_handler
+        
+        if not self.in_main:
+            return self.trace_handler
+        
+        line_num = frame.f_lineno
+        source_line = self.get_source_line(filename, line_num)
+        
+        # 过滤空行和注释
+        if not source_line.strip() or source_line.strip().startswith('#'):
+            return self.trace_handler
+        
+        # 获取当前变量（这是执行当前行之前的状态）
+        current_vars = self.filter_variables(frame)
+        
+        # 输出上一行的追踪（使用当前变量状态，即上一行执行后的状态）
+        if self.pending_trace is not None:
+            self.output_pending_trace(current_vars)
+        
+        # 保存当前行信息，等待下一次调用时输出
+        self.pending_trace = (line_num, source_line)
+        
+        return self.trace_handler
+    
+    def trace_return_handler(self, frame, event, arg):
+        """处理函数返回事件"""
+        if event == 'return':
+            code = frame.f_code
+            func_name = code.co_name
+            
+            if func_name == 'main' and self.in_main:
+                # 函数即将返回，输出最后一行的追踪
+                current_vars = self.filter_variables(frame)
+                if self.pending_trace is not None:
+                    self.output_pending_trace(current_vars)
+                self.in_main = False
+        
+        return self.trace_all_handler
+    
+    def trace_all_handler(self, frame, event, arg):
+        """统一处理器"""
+        if event == 'line':
+            return self.trace_handler(frame, event, arg)
+        elif event == 'return':
+            return self.trace_return_handler(frame, event, arg)
+        return self.trace_all_handler
+    
+    def run(self):
+        """执行追踪"""
+        sys.settrace(self.trace_all_handler)
+        
+        try:
+            with open(self.target_file, 'r', encoding='utf-8') as f:
+                code = compile(f.read(), self.target_file, 'exec')
+                exec(code, {'__name__': '__main__', '__file__': self.target_file})
+        except SystemExit:
+            pass
+        except Exception as e:
+            print(f"执行错误: {e}", file=sys.stderr)
+            import traceback
+            traceback.print_exc()
+        finally:
+            sys.settrace(None)
+        
+        # 保存输出
+        with open(self.output_file, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(self.traces))
+        
+        return len(self.traces)
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print("用法: python trace_python.py <目标文件.py>")
+        sys.exit(1)
+    
+    target = sys.argv[1]
+    tracer = PythonTracer(target)
+    count = tracer.run()
+    print(f"追踪完成,共 {count} 行")
+```
+
+#### auto_trace.bat
+
+```
+@echo off
+chcp 65001 >nul
+
+echo ==================================================
+echo Python 自动变量追踪系统
+echo ==================================================
+
+REM 检测源文件
+set SOURCE_FILE=
+if exist test.py (
+    set SOURCE_FILE=test.py
+) else (
+    echo 错误: 找不到 test.py
+    pause
+    exit /b 1
+)
+
+echo.
+echo 找到源文件: %SOURCE_FILE%
+
+set OUTPUT_FILE=output.txt
+
+echo.
+echo [1/2] 执行追踪...
+python trace_python.py %SOURCE_FILE%
+if errorlevel 1 (
+    echo 追踪失败!
+    pause
+    exit /b 1
+)
+echo √ 追踪成功
+
+echo.
+echo [2/2] 追踪结果:
+echo ==================================================
+type %OUTPUT_FILE%
+echo ==================================================
+
+echo.
+echo 完成! 结果已保存到: %OUTPUT_FILE%
+pause
+```
+
+#### output.txt
+
+```
+2	    a = 1
+2 [a] [1]
+3	    b = 2
+3 [a,b] [1,2]
+4	    for i in range(3):
+4 [a,b,i] [1,2,0]
+5	        a = a + 1
+5 [a,b,i] [2,2,0]
+4	    for i in range(3):
+4 [a,b,i] [2,2,1]
+5	        a = a + 1
+5 [a,b,i] [3,2,1]
+4	    for i in range(3):
+4 [a,b,i] [3,2,2]
+5	        a = a + 1
+5 [a,b,i] [4,2,2]
+4	    for i in range(3):
+4 [a,b,i] [4,2,2]
+6	    print(a)
+6 [a,b,i] [4,2,2]
+```
+
+### 介绍
+
+```
+sys.settrace()
+> Python内置的调试和追踪机制
+> 通过设置追踪函数来监控程序执行过程
+> 特点：纯Python实现、无需外部工具、可编程控制
+> 主要功能：
+>> 行级追踪：监控每一行代码的执行
+>> 变量监控：实时获取局部变量和全局变量的值
+>> 函数调用追踪：监控函数的进入和返回
+>> 自定义输出格式：可以按需定制追踪信息的格式
+技术细节与关键函数：
+1. sys.settrace(trace_function)
+设置追踪函数,trace_function会在每个事件发生时被调用
+2. 追踪函数签名: trace_function(frame, event, arg)
+> frame: 当前执行帧,包含代码对象、局部变量等信息
+> event: 事件类型 ('call', 'line', 'return', 'exception')
+> arg: 事件相关参数(如return事件的返回值)
+3. linecache.getline(filename, lineno)
+获取指定文件的指定行源代码
+工作流：
+Step1:准备源代码(test.py)
+Step2:编写追踪脚本(trace_python.py)
+> 定义PythonTracer类,实现追踪逻辑
+> 实现trace_handler处理'line'事件,记录每行执行前后的变量状态
+> 实现trace_return_handler处理'return'事件,确保函数返回前输出最后一行
+> 使用pending_trace机制:延迟输出,确保记录的是代码执行后的变量状态
+Step3:bat脚本自动化执行
+> python trace_python.py test.py
+> 自动执行追踪并生成output.txt
+Step4:输出格式化结果
+> 最终得到运行流:行号 该行语句 \n 行号 [变量名列表] [变量值列表]
+```
+
+## forCOT
+
+我在单独的文件夹里尝试“从运行流由AI调用生成信噪比高cot” 大概思路就是： 根据json里的问题和case信息，和txt里的运行流细节，给出比较好的cot。 cot应该是从后往前推导，比如就是我们需要得到某一行的某一个变量，他与哪些变量有关，相关他们在哪里变化的，这种静态分析思维的cot逻辑。我希望cot不要太白话，更格式化更高信噪比，但一定要有足够的信息量和可理解性，能有效地传达出代码推理的帮助指导作用。
+
+### 工作结构
+
+```
+forCOT/
+├── data/
+│   ├── case1.json
+│   ├── trace_var_1.txt
+│   ├── case2.json
+│   └── trace_var_2.txt
+├── generate_cot_from_trace.py
+└── config.py
+```
+
+### case1.json
+
+```
+{
+"id": "SL-MIX-S121",
+"metadata": {
+    "category": "Statement-Level",
+    "language": "python",
+    "difficulty": 3,
+    "intervention": 7
+},
+"task": {
+    "description": "A priority task scheduler uses a min-heap to manage execution order. Tasks have priority levels and dependencies. The scheduler processes tasks with short-circuit logic to skip dependent tasks when a parent fails. After processing the initial task queue, what is the value of variable 'completed_task_count' at execution point Y?",
+    "code": "import heapq\nfrom functools import reduce\nfrom collections import namedtuple\n\ntask_tuple = namedtuple('Task', ['id', 'priority', 'dependencies', 'execution_time'])\n\n# Task scheduler with priority queue and dependency tracking\nclass TaskScheduler:\n    def __init__(self):\n        self.task_queue = []\n        self.completed = {}\n        self.failure_log = set()\n    \n    def add_task(self, task):\n        heapq.heappush(self.task_queue, (task.priority, task))\n    \n    def process_tasks(self):\n        completed_count = 0\n        while self.task_queue:\n            _, task = heapq.heappop(self.task_queue)\n            # Short-circuit: skip if any dependency failed\n            if any(dep in self.failure_log for dep in task.dependencies):\n                continue\n            # Simulate task execution with potential failure\n            success = task.execution_time % 3 != 0\n            if success:\n                self.completed[task.id] = True\n                completed_count += 1\n            else:\n                self.failure_log.add(task.id)\n        return completed_count\n\n# Initialize scheduler with tasks\nscheduler = TaskScheduler()\ntasks_data = [\n    task_tuple('render_engine', 2, [], 5),\n    task_tuple('texture_loader', 1, ['render_engine'], 3),\n    task_tuple('physics_sim', 3, ['render_engine'], 4),\n    task_tuple('ai_behavior', 4, ['physics_sim'], 6),\n    task_tuple('audio_mixer', 2, ['texture_loader'], 9),\n    task_tuple('network_sync', 5, ['ai_behavior', 'audio_mixer'], 2)\n]\n\n# Add tasks using functional approach\nlist(map(scheduler.add_task, tasks_data))\n\n# Process all tasks and count completions\ncompleted_task_count = scheduler.process_tasks()\nprint(f\"Result: {completed_task_count}\")",
+    "answer": 2,
+    "cot": ""
+}
+}
+```
+
+### trace_var_1.txt
+
+```
+1 import heapq
+1 [] []
+2 from functools import reduce
+2 [] []
+3 from collections import namedtuple
+3 [] []
+5 task_tuple = namedtuple('Task', ['id', 'priority', 'dependencies', 'execution_time'])
+5 [] []
+8 class TaskScheduler:
+8 [] []
+8 class TaskScheduler:
+8 [] []
+9     def __init__(self):
+9 [] []
+14     def add_task(self, task):
+14 [] []
+17     def process_tasks(self):
+17 [] []
+34 scheduler = TaskScheduler()
+34 ['self'] ['<TaskScheduler object>']
+10         self.task_queue = []
+10 ['self'] ['<TaskScheduler object>']
+11         self.completed = {}
+11 ['self'] ['<TaskScheduler object>']
+12         self.failure_log = set()
+12 ['self'] ['<TaskScheduler object>']
+36     task_tuple('render_engine', 2, [], 5),
+36 ['scheduler'] ['<TaskScheduler object>']
+37     task_tuple('texture_loader', 1, ['render_engine'], 3),
+37 ['scheduler'] ['<TaskScheduler object>']
+38     task_tuple('physics_sim', 3, ['render_engine'], 4),
+38 ['scheduler'] ['<TaskScheduler object>']
+39     task_tuple('ai_behavior', 4, ['physics_sim'], 6),
+39 ['scheduler'] ['<TaskScheduler object>']
+40     task_tuple('audio_mixer', 2, ['texture_loader'], 9),
+40 ['scheduler'] ['<TaskScheduler object>']
+41     task_tuple('network_sync', 5, ['ai_behavior', 'audio_mixer'], 2)
+41 ['scheduler'] ['<TaskScheduler object>']
+35 tasks_data = [
+35 ['scheduler', 'tasks_data'] ['<TaskScheduler object>', "[Task(id='render_engine', priority=2, dependencies=[], execution_time=5), Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3), Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4), Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6), Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9), Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)]"]
+45 list(map(scheduler.add_task, tasks_data))
+45 ['self', 'task'] ['<TaskScheduler object>', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9)"]
+15         heapq.heappush(self.task_queue, (task.priority, task))
+15 ['self', 'task'] ['<TaskScheduler object>', "Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)"]
+48 completed_task_count = scheduler.process_tasks()
+48 ['self'] ['<TaskScheduler object>']
+18         completed_count = 0
+18 ['self', 'completed_count'] ['<TaskScheduler object>', '0']
+19         while self.task_queue:
+19 ['self', 'completed_count'] ['<TaskScheduler object>', '0']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task'] ['<TaskScheduler object>', '0', '1', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)"]
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x000001ABB8BCAB30>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x000001ABB8BCAB30>', "'render_engine'", '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x000001ABB8BCAB30>', "'render_engine'", '<TaskScheduler object>']
+25             success = task.execution_time % 3 != 0
+25 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '1', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)", 'False']
+26             if success:
+26 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '1', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)", 'False']
+30                 self.failure_log.add(task.id)
+30 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '1', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)", 'False']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '1', "Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3)", 'False']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9)", 'False']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x000001ABB8BCAA70>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x000001ABB8BCAA70>', "'texture_loader'", '<TaskScheduler object>']
+23                 continue
+23 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9)", 'False']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9)", 'False']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'False']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x000001ABB8BCAA70>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x000001ABB8BCAA70>', '<TaskScheduler object>']
+25             success = task.execution_time % 3 != 0
+25 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'True']
+26             if success:
+26 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'True']
+27                 self.completed[task.id] = True
+27 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '0', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'True']
+28                 completed_count += 1
+28 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'True']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '2', "Task(id='render_engine', priority=2, dependencies=[], execution_time=5)", 'True']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x000001ABB8BCAA70>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x000001ABB8BCAA70>', "'render_engine'", '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x000001ABB8BCAA70>', "'render_engine'", '<TaskScheduler object>']
+25             success = task.execution_time % 3 != 0
+25 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+26             if success:
+26 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+27                 self.completed[task.id] = True
+27 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '1', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+28                 completed_count += 1
+28 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '3', "Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4)", 'True']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '4', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)", 'True']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x000001ABB8BCAA70>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x000001ABB8BCAA70>', "'physics_sim'", '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x000001ABB8BCAA70>', "'physics_sim'", '<TaskScheduler object>']
+25             success = task.execution_time % 3 != 0
+25 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '4', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)", 'False']
+26             if success:
+26 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '4', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)", 'False']
+30                 self.failure_log.add(task.id)
+30 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '4', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)", 'False']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '4', "Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6)", 'False']
+20             _, task = heapq.heappop(self.task_queue)
+20 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '5', "Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)", 'False']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'self'] ['<list_iterator object at 0x000001ABB8BCAAD0>', '<TaskScheduler object>']
+22             if any(dep in self.failure_log for dep in task.dependencies):
+22 ['.0', 'dep', 'self'] ['<list_iterator object at 0x000001ABB8BCAAD0>', "'ai_behavior'", '<TaskScheduler object>']
+23                 continue
+23 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '5', "Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)", 'False']
+19         while self.task_queue:
+19 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '5', "Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)", 'False']
+31         return completed_count
+31 ['self', 'completed_count', '_', 'task', 'success'] ['<TaskScheduler object>', '2', '5', "Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)", 'False']
+49 print(f"Result: {completed_task_count}")
+49 ['scheduler', 'tasks_data', 'completed_task_count'] ['<TaskScheduler object>', "[Task(id='render_engine', priority=2, dependencies=[], execution_time=5), Task(id='texture_loader', priority=1, dependencies=['render_engine'], execution_time=3), Task(id='physics_sim', priority=3, dependencies=['render_engine'], execution_time=4), Task(id='ai_behavior', priority=4, dependencies=['physics_sim'], execution_time=6), Task(id='audio_mixer', priority=2, dependencies=['texture_loader'], execution_time=9), Task(id='network_sync', priority=5, dependencies=['ai_behavior', 'audio_mixer'], execution_time=2)]", '2']
+```
+
+### case2.json
+
+```
+{
+  "id": "SL-MIX-S037",
+  "metadata": {
+    "category": "Statement-Level",
+    "language": "c",
+    "difficulty": 0,
+    "intervention": 8
+  },
+  "task": {
+    "description": "A memory management system tracks allocation sizes using a binary tree where each node stores the size of an allocated block. Nodes are inserted such that for any node, all left descendants are smaller and right descendants are larger. The system uses a ternary operator to decide insertion paths. After inserting blocks of sizes 128, 64, 256, 32, 96, 192, and 512 bytes, what is the value of the right child of the root node's allocation_size?",
+    "code": "#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct TreeNode {\n    int allocation_size;\n    struct TreeNode* left;\n    struct TreeNode* right;\n} TreeNode;\n\nTreeNode* createNode(int size) {\n    TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));\n    node->allocation_size = size;\n    node->left = NULL;\n    node->right = NULL;\n    return node;\n}\n\nvoid insertNode(TreeNode* root, int size) {\n    TreeNode** current = &root;\n    while (*current != NULL) {\n        current = (size < (*current)->allocation_size) ? &(*current)->left : &(*current)->right;\n    }\n    *current = createNode(size);\n}\n\nint main() {\n    TreeNode* root = createNode(128);\n    insertNode(root, 64);\n    insertNode(root, 256);\n    insertNode(root, 32);\n    insertNode(root, 96);\n    insertNode(root, 192);\n    insertNode(root, 512);\n    \n    int target_result = root->right->allocation_size;\n    printf(\"Target result: %d\\n\", target_result);\n    \n    return 0;\n}",
+    "answer": 256,
+    "cot": "Step 1: 未找到目标变量 'result'"
+  }
+}
+```
+
+### trace_var_2.txt
+
+```
+37	    const int truckCapacity = 2000;
+37 [currentLoad,loadedPackages,truckCapacity] [0,81,8]
+38	    std::vector<int> packageWeights;
+38 [currentLoad,loadedPackages,truckCapacity] [0,81,2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,0,81,std::vector of length 0, capacity 0,2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,0,81,std::vector of length 0, capacity 0,2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,0,81,std::vector of length 1, capacity 1 = {13},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,1,81,std::vector of length 1, capacity 1 = {13},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,1,81,std::vector of length 2, capacity 2 = {13, 21},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,2,81,std::vector of length 2, capacity 2 = {13, 21},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,2,81,std::vector of length 3, capacity 4 = {13, 21, 34},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,3,81,std::vector of length 3, capacity 4 = {13, 21, 34},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,3,81,std::vector of length 4, capacity 4 = {13, 21, 34, 55},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,4,81,std::vector of length 4, capacity 4 = {13, 21, 34, 55},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,4,81,std::vector of length 5, capacity 8 = {13, 21, 34, 55, 89},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,5,81,std::vector of length 5, capacity 8 = {13, 21, 34, 55, 89},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,5,81,std::vector of length 6, capacity 8 = {13, 21, 34, 55, 89, 144},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,6,81,std::vector of length 6, capacity 8 = {13, 21, 34, 55, 89, 144},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,6,81,std::vector of length 7, capacity 8 = {13, 21, 34, 55, 89, 144, 233},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,7,81,std::vector of length 7, capacity 8 = {13, 21, 34, 55, 89, 144, 233},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,7,81,std::vector of length 8, capacity 8 = {13, 21, 34, 55, 89, 144, 233, 377},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,8,81,std::vector of length 8, capacity 8 = {13, 21, 34, 55, 89, 144, 233, 377},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,8,81,std::vector of length 9, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610},2000]
+43	        packageWeights.push_back(getPackageWeight(i));
+43 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,9,81,std::vector of length 9, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610},2000]
+41	    for (int i = 0; i < 10; ++i)
+41 [currentLoad,i,loadedPackages,packageWeights,truckCapacity] [0,9,81,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+47	    std::sort(packageWeights.begin(), packageWeights.end());
+47 [currentLoad,loadedPackages,packageWeights,truckCapacity] [0,81,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+50	    int loadedPackages = 0;
+50 [currentLoad,loadedPackages,packageWeights,truckCapacity] [0,81,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+51	    int currentLoad = 0;
+51 [currentLoad,loadedPackages,packageWeights,truckCapacity] [0,0,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [<error reading variable: Cannot access memory at address 0x7ff700000000>,0,0,0,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,0]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [13,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},0,0,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,13]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [13,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},0,0,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,13]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [13,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},13,0,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,13]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [13,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},13,1,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,13]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [21,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},13,1,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,21]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [21,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},13,1,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,21]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [21,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},34,1,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,21]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [21,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},34,2,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,21]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [34,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},34,2,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,34]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [34,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},34,2,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,34]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [34,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},68,2,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,34]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [34,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},68,3,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,34]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [55,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},68,3,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,55]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [55,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},68,3,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,55]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [55,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},123,3,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,55]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [55,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},123,4,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,55]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [89,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},123,4,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,89]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [89,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},123,4,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,89]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [89,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},212,4,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,89]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [89,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},212,5,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,89]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [144,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},212,5,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,144]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [144,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},212,5,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,144]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [144,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},356,5,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,144]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [144,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},356,6,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,144]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [233,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},356,6,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,233]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [233,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},356,6,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,233]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [233,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},589,6,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,233]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [233,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},589,7,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,233]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [377,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},589,7,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,377]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [377,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},589,7,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,377]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [377,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},966,7,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,377]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [377,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},966,8,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,377]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [610,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},966,8,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,610]
+57	            currentLoad += weight;
+57 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [610,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},966,8,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,610]
+58	            loadedPackages++;
+58 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [610,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},1576,8,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,610]
+53	    for (int weight : packageWeights)
+53 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [610,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,610]
+55	        if (currentLoad + weight <= truckCapacity)
+55 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [987,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,987]
+62	            break;
+62 [__for_begin,__for_end,__for_range,currentLoad,loadedPackages,packageWeights,truckCapacity,weight] [987,-1163005939,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000,987]
+66	    std::cout << "Result: " << loadedPackages << std::endl;
+66 [currentLoad,loadedPackages,packageWeights,truckCapacity] [1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+67	    return 0;
+67 [currentLoad,loadedPackages,packageWeights,truckCapacity] [1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+68	}
+68 [currentLoad,loadedPackages,packageWeights,truckCapacity] [1576,9,std::vector of length 10, capacity 16 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987},2000]
+
+```
+
+### config.py
+
+```
+# config.py
+
+API_CONFIG = {
+    'api_key': 'sk-tT9Ddv4cOCl5BXW4kivhRQ',
+    'base_url': 'https://llmapi.paratera.com/v1',
+    'model': 'Qwen3-235B-A22B-Instruct-2507'
+}
+
+# 数据路径
+DATA_DIR = "data"
+
+
+```
+
+### generate_cot_from_trace.py
+
+~~~py
+# generate_cot_from_trace.py
+
+import json
+import os
+import re
+from openai import OpenAI
+from config import API_CONFIG, DATA_DIR
+
+
+class CoTGenerator:
+    def __init__(self):
+        self.client = OpenAI(
+            api_key=API_CONFIG['api_key'],
+            base_url=API_CONFIG['base_url']
+        )
+        self.model = API_CONFIG['model']
+    
+    def load_case_data(self, case_file: str, trace_file: str) -> tuple:
+        """Load case JSON and execution trace data."""
+        case_path = os.path.join(DATA_DIR, case_file)
+        trace_path = os.path.join(DATA_DIR, trace_file)
+        
+        with open(case_path, 'r', encoding='utf-8') as f:
+            case_data = json.load(f)
+        
+        with open(trace_path, 'r', encoding='utf-8') as f:
+            trace_data = f.read()
+        
+        return case_data, trace_data
+    
+    def parse_trace_info(self, trace_data: str) -> dict:
+        """Extract key information from execution trace."""
+        lines = trace_data.strip().split('\n')
+        
+        trace_info = {
+            'execution_steps': [],
+            'variable_changes': {},
+            'final_state': None
+        }
+        
+        for line in lines:
+            parts = line.split('\t')
+            if len(parts) >= 3:
+                line_num = parts[0].strip()
+                code_line = parts[1].strip() if len(parts) > 1 else ""
+                var_info = parts[2].strip() if len(parts) > 2 else ""
+                
+                trace_info['execution_steps'].append({
+                    'line': line_num,
+                    'code': code_line,
+                    'variables': var_info
+                })
+        
+        if trace_info['execution_steps']:
+            trace_info['final_state'] = trace_info['execution_steps'][-1]
+        
+        return trace_info
+    
+    def generate_cot_prompt(self, case_data: dict, trace_data: str) -> str:
+        """Generate the prompt for CoT generation."""
+        
+        task_desc = case_data['task']['description']
+        code = case_data['task']['code']
+        answer = case_data['task']['answer']
+        language = case_data['metadata']['language']
+        
+        prompt = f"""You are an expert in program analysis and static reasoning. Generate a high signal-to-noise ratio Chain-of-Thought (CoT) that explains how to derive the target answer through backward reasoning from execution traces.
+
+        ## Task Information
+        **Language**: {language}
+        **Description**: {task_desc}
+        **Expected Answer**: {answer}
+
+        ## Code
+        ```{language}
+        {code}
+        ```
+        ## Execution Trace
+        ```
+        {trace_data}
+        ```
+        Requirements
+Generate a backward reasoning chain following this EXACT format:
+
+Start with the target : Identify the final variable and its value
+Format:Target: variable_name@LineNumber = value
+
+Backward trace : List execution steps in REVERSE chronological order
+
+Number each step (1, 2, 3, ...)
+Include line numbers (L##)
+Show variable state changes with arrows (old→new)
+Explain conditions and branching decisions
+Track dependencies and data flow
+Critical dependencies : Summarize key logic
+
+What determines the final result?
+What are the control flow conditions?
+What is the execution order?
+Any important state transformations?
+Example Format:
+Target: result@L50 = 5
+
+Backward trace:
+
+L45: return total → total@L45 = 5
+L42: total += value (2nd addition) → total: 3→5
+L40: value = compute(x) → value = 2
+L35: total += value (1st addition) → total: 0→3
+L33: value = compute(y) → value = 3
+...
+Critical dependencies:
+
+Final value depends on: two additions
+Computation order: y processed before x
+Initial state: total = 0
+Important:
+Use precise line numbers from the trace
+Show ALL intermediate steps
+Explain WHY each step happens (conditions, loops, etc.)
+Use concise technical language
+End with: "Thus, variable_name@LineNumber = value"
+Generate the CoT now. Output ONLY the CoT text, no JSON wrapper needed."""
+        return prompt
+    def call_llm(self, prompt):
+        """Call LLM API to generate CoT."""
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are an expert in static program analysis and execution trace interpretation. You generate precise, high signal-to-noise ratio reasoning chains."
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+                temperature=0.3,
+                max_tokens=4096
+            )
+            
+            return response.choices[0].message.content
+            
+        except Exception as e:
+            print(f"Error calling LLM API: {e}")
+            return None
+    
+    def extract_cot_from_response(self, response):
+        """Extract CoT from LLM response."""
+        try:
+            # Remove any JSON code blocks if present
+            json_block_match = re.search(r'```json\s*\{[\s\S]*?"cot"\s*:\s*"([\s\S]*?)"\s*\}[\s\S]*?```', response)
+            if json_block_match:
+                return json_block_match.group(1).replace('\\n', '\n')
+            
+            # Remove markdown code blocks
+            response = re.sub(r'```[a-z]*\n', '', response)
+            response = re.sub(r'```', '', response)
+            
+            # Try to extract JSON object
+            json_match = re.search(r'\{\s*"cot"\s*:\s*"([\s\S]*?)"\s*\}', response)
+            if json_match:
+                return json_match.group(1).replace('\\n', '\n')
+            
+            # If response starts with "Target:", assume it's already the CoT
+            if response.strip().startswith('Target:'):
+                return response.strip()
+            
+            # Fallback: return cleaned response
+            return response.strip()
+            
+        except Exception as e:
+            print(f"Error extracting CoT: {e}")
+            return response.strip()
+
+    def generate_cot(self, case_file, trace_file, output_file=None):
+        """Main function to generate CoT for a case."""
+        print(f"Loading data from {case_file} and {trace_file}...")
+        case_data, trace_data = self.load_case_data(case_file, trace_file)
+        
+        print("Generating CoT prompt...")
+        prompt = self.generate_cot_prompt(case_data, trace_data)
+        
+        print("Calling LLM to generate CoT...")
+        response = self.call_llm(prompt)
+        
+        if response is None:
+            print("Failed to generate CoT")
+            return None
+        
+        print("Extracting CoT from response...")
+        cot = self.extract_cot_from_response(response)
+        
+        # Update case data with generated CoT
+        case_data['task']['cot'] = cot
+        
+        # Save updated case data
+        if output_file:
+            output_path = os.path.join(DATA_DIR, output_file)
+        else:
+            output_path = os.path.join(DATA_DIR, case_file.replace('.json', '_with_cot.json'))
+        
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(case_data, f, indent=2, ensure_ascii=False)
+        
+        print(f"CoT saved to {output_path}")
+        print("\n=== Generated CoT ===")
+        print(cot)
+        print("=" * 50)
+        
+        return cot
+    
+    def batch_generate(self, case_trace_pairs):
+        """Generate CoT for multiple cases."""
+        results = []
+        
+        for case_file, trace_file in case_trace_pairs:
+            print(f"\n{'='*60}")
+            print(f"Processing: {case_file}")
+            print(f"{'='*60}")
+            
+            try:
+                cot = self.generate_cot(case_file, trace_file)
+                results.append({
+                    'case': case_file,
+                    'status': 'success',
+                    'cot': cot
+                })
+            except Exception as e:
+                print(f"Error processing {case_file}: {e}")
+                results.append({
+                    'case': case_file,
+                    'status': 'error',
+                    'error': str(e)
+                })
+        
+        return results
+
+def main():
+    """Example usage."""
+    generator = CoTGenerator()
+    
+    # Single case generation
+    # print("Generating CoT for case1...")
+    # generator.generate_cot('case1.json', 'trace_var_1.txt')
+    
+    print("\n" + "="*60)
+    print("Generating CoT for case2...")
+    generator.generate_cot('case2.json', 'trace_var_2.txt')
+    
+    # Batch generation example (uncomment to use)
+    # case_pairs = [
+    #     ('case1.json', 'trace_var_1.txt'),
+    #     ('case2.json', 'trace_var_2.txt'),
+    # ]
+    # results = generator.batch_generate(case_pairs)
+    # print("\nBatch generation completed:")
+    # for result in results:
+    #     print(f"  {result['case']}: {result['status']}")
+
 
 if __name__ == "__main__":
-    test_all_apis()
-```
+    main()
+~~~
 

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COT 逐行展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #252526;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .title {
+            color: #4ec9b0;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3e3e42;
+        }
+        
+        .line {
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .line:hover {
+            background: #2d2d30;
+            border-left-color: #007acc;
+        }
+        
+        .target {
+            color: #ce9178;
+            border-left-color: #ce9178;
+            background: #2d2d30;
+        }
+        
+        .section-header {
+            color: #569cd6;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .code {
+            color: #9cdcfe;
+        }
+        
+        .variable {
+            color: #4fc1ff;
+        }
+        
+        .operator {
+            color: #d4d4d4;
+        }
+        
+        .number {
+            color: #b5cea8;
+        }
+        
+        .arrow {
+            color: #c586c0;
+        }
+        
+        .comment {
+            color: #6a9955;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Target: completed_task_count@L48 = 2</div>
+        
+        <div class="section-header">Backward trace:</div>
+        
+        <div class="line">L31: return completed_count <span class="arrow">→</span> <span class="variable">completed_count@L31</span> <span class="operator">=</span> <span class="number">2</span></div>
+        
+        <div class="line">L19: while self.task_queue: loop exits because task_queue is empty after final pop <span class="arrow">→</span> loop terminates</div>
+        
+        <div class="line">L20: _, task = heapq.heappop(self.task_queue) (6th iteration) <span class="arrow">→</span> popped 'network_sync', <span class="variable">task@L20</span> = Task(id='network_sync', ...)</div>
+        
+        <div class="line">L22: if any(dep in self.failure_log for dep in task.dependencies): evaluates to True because 'ai_behavior' ∈ failure_log <span class="arrow">→</span> triggers continue</div>
+        
+        <div class="line">L30: self.failure_log.add(task.id) from earlier execution <span class="arrow">→</span> 'ai_behavior' added to failure_log when execution_time % 3 == 0 (<span class="number">6</span> % <span class="number">3</span> = <span class="number">0</span>)</div>
+        
+        <div class="line">L25: success = task.execution_time % 3 != 0 <span class="arrow">→</span> <span class="number">6</span> % <span class="number">3</span> == <span class="number">0</span> <span class="arrow">→</span> <span class="variable">success</span> = <span class="number">False</span> for 'ai_behavior'</div>
+        
+        <div class="line">L20: _, task = heapq.heappop(self.task_queue) (5th iteration) <span class="arrow">→</span> popped 'ai_behavior', <span class="variable">task@L20</span> = Task(id='ai_behavior', ...)</div>
+        
+        <div class="line">L28: completed_count += 1 <span class="arrow">→</span> <span class="variable">completed_count</span>: <span class="number">1</span><span class="arrow">→</span><span class="number">2</span> after processing 'physics_sim' successfully</div>
+        
+        <div class="line">L27: self.completed[task.id] = True <span class="arrow">→</span> 'physics_sim' marked as completed</div>
+        
+        <div class="line">L25: success = task.execution_time % 3 != 0 <span class="arrow">→</span> <span class="number">4</span> % <span class="number">3</span> = <span class="number">1</span> ≠ <span class="number">0</span> <span class="arrow">→</span> <span class="variable">success</span> = <span class="number">True</span> for 'physics_sim'</div>
+        
+        <div class="line">L22: any(dep in self.failure_log for dep in task.dependencies) <span class="arrow">→</span> checks 'render_engine' ∈ failure_log? No <span class="arrow">→</span> proceeds</div>
+        
+        <div class="line">L20: _, task = heapq.heappop(self.task_queue) (4th iteration) <span class="arrow">→</span> popped 'physics_sim'</div>
+        
+        <div class="line">L28: completed_count += 1 <span class="arrow">→</span> <span class="variable">completed_count</span>: <span class="number">0</span><span class="arrow">→</span><span class="number">1</span> after processing 'render_engine'</div>
+        
+        <div class="line">L27: self.completed[task.id] = True <span class="arrow">→</span> 'render_engine' marked as completed</div>
+        
+        <div class="line">L25: success = task.execution_time % 3 != 0 <span class="arrow">→</span> <span class="number">5</span> % <span class="number">3</span> = <span class="number">2</span> ≠ <span class="number">0</span> <span class="arrow">→</span> <span class="variable">success</span> = <span class="number">True</span> for 'render_engine'</div>
+        
+        <div class="line">L22: task.dependencies is empty <span class="arrow">→</span> any(...) over empty list is False <span class="arrow">→</span> does not skip</div>
+        
+        <div class="line">L20: _, task = heapq.heappop(self.task_queue) (3rd iteration) <span class="arrow">→</span> popped 'render_engine'</div>
+        
+        <div class="line">L23: continue executed <span class="arrow">→</span> skips 'audio_mixer' due to dependency on failed 'texture_loader'</div>
+        
+        <div class="line">L22: any(dep in self.failure_log for dep in task.dependencies) <span class="arrow">→</span> 'texture_loader' ∈ failure_log <span class="arrow">→</span> True</div>
+        
+        <div class="line">L30: self.failure_log.add(task.id) <span class="arrow">→</span> 'texture_loader' added after failure (execution_time=3, 3%3==0 <span class="arrow">→</span> success=False)</div>
+        
+        <div class="line">L25: success = task.execution_time % 3 != 0 <span class="arrow">→</span> <span class="number">3</span> % <span class="number">3</span> == <span class="number">0</span> <span class="arrow">→</span> <span class="variable">success</span> = <span class="number">False</span> for 'texture_loader'</div>
+        
+        <div class="line">L20: _, task = heapq.heappop(self.task_queue) (2nd iteration) <span class="arrow">→</span> popped 'audio_mixer'</div>
+        
+        <div class="line">L20: _, task = heapq.heappop(self.task_queue) (1st iteration) <span class="arrow">→</span> popped 'texture_loader' (lowest priority=1)</div>
+        
+        <div class="line">L15: all tasks pushed via heapq.heappush <span class="arrow">→</span> min-heap orders by priority: texture_loader(1), render_engine/audio_mixer(2), physics_sim(3), ai_behavior(4), network_sync(5)</div>
+        
+        <div class="line">L45: list(map(scheduler.add_task, tasks_data)) <span class="arrow">→</span> all six tasks enqueued in heap order</div>
+        
+        <div class="section-header">Critical dependencies:</div>
+        
+        <div class="line"><span class="comment">What determines the final result?</span></div>
+        <div class="line">- Only tasks without failed dependencies and with execution_time % 3 != 0 succeed.</div>
+        <div class="line">- Execution order follows min-heap priority: lowest priority number first.</div>
+        
+        <div class="section-header">Control flow conditions:</div>
+        
+        <div class="line">- Short-circuit logic skips any task whose dependencies are in failure_log.</div>
+        <div class="line">- A task fails if execution_time % 3 == 0 <span class="arrow">→</span> added to failure_log.</div>
+        <div class="line">- Loop continues until task_queue is empty.</div>
+        
+        <div class="section-header">Execution order (by priority):</div>
+        
+        <div class="line">1. texture_loader (prio 1) <span class="arrow">→</span> fails (3%3==0) <span class="arrow">→</span> failure_log.add('texture_loader')</div>
+        <div class="line">2. audio_mixer (prio 2) <span class="arrow">→</span> skipped (depends on 'texture_loader' in failure_log)</div>
+        <div class="line">3. render_engine (prio 2) <span class="arrow">→</span> succeeds (5%3≠0) <span class="arrow">→</span> completed_count +=1</div>
+        <div class="line">4. physics_sim (prio 3) <span class="arrow">→</span> succeeds (4%3≠0), depends on 'render_engine' (completed, not failed) <span class="arrow">→</span> completed_count +=1</div>
+        <div class="line">5. ai_behavior (prio 4) <span class="arrow">→</span> fails (6%3==0) <span class="arrow">→</span> failure_log.add('ai_behavior')</div>
+        <div class="line">6. network_sync (prio 5) <span class="arrow">→</span> skipped (depends on 'ai_behavior' in failure_log)</div>
+        
+        <div class="section-header">Important state transformations:</div>
+        
+        <div class="line">- failure_log starts empty, grows to {'texture_loader', 'ai_behavior'}</div>
+        <div class="line">- completed_count starts at 0, increments only for 'render_engine' and 'physics_sim'</div>
+        <div class="line">- task_queue is drained completely despite failures and skips</div>
+        
+        <div class="line target" style="margin-top: 20px;">Thus, completed_task_count@L48 = 2</div>
+    </div>
+</body>
+</html>
