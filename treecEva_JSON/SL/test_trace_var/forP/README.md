@@ -4,7 +4,7 @@
 
 ## 背景
 
-我正在构建一系列Python代码训练集,用于提升大模型的代码推理能力。每个数据样本包含以下四个部分:
+正构建一系列Python代码训练集,用于提升大模型的代码推理能力。每个数据样本包含以下四个部分:
 
 - **代码**: 完整的Python代码片段
 - **提问**: 询问某一行执行后某个变量的值
@@ -492,16 +492,1003 @@ def generate_cot_from_template(trimmed_trace):
    第7行: d = d+a  → 前一行必须有a和d
    ```
 
-## 已有代码（可参考）
+## 目前代码框架
 
-trace_python.py
+### 项目结构
+
+```
+项目目录/ 
+├── config.py           	   # 配置和模板
+├── tracer.py          		   # 代码追踪
+├── pruner.py                  # 依赖分析和剪枝
+├── cot_generator.py           # COT生成
+├── main.py                    # 主流程
+├── test.py                    # 测试代码
+└── data_test/                 # 测试代码对应数据目录（自动创建）
+    ├── trace_test.txt         # 完整追踪
+    ├── trimmed_trace_test.txt # 剪枝后的追踪
+    └── final_cot_test.txt     # 最终COT
+```
+
+### 运行流程
+
+```
+准备一个python文件，假设为test_10.py
+确定要预测的行号n和目标变量target_variable
+在命令行中输入 python main.py test_10.py n target_variable即可
+```
+
+> 值得一提的是，如果目标行是循环中的行，我们默认是从最后一次迭代往回走，保留所有迭代记录。
+
+### 代码细节
+
+#### config.py
 
 ```py
+"""
+配置文件和COT模板定义
+"""
+
+# COT生成模板
+COT_TEMPLATES = {
+    'assign_constant': {
+        'template': "第{line}行: {code}\n→ 将变量{var}赋值为{value}",
+        'with_state': True
+    },
+    
+    'assign_expr': {
+        'template': "第{line}行: {code}\n→ 计算右侧表达式: {expr_detail}\n→ 结果: {var} = {result}",
+        'with_state': True
+    },
+    
+    'aug_assign': {
+        'template': "第{line}行: {code}\n→ 计算: {var} = {old_val} {op} {operand} = {result}",
+        'with_state': True
+    },
+    
+    'for_start': {
+        'template': "第{line}行: {code}\n→ 进入循环，循环变量{iter_var}={iter_val}，开始第1次迭代",
+        'with_state': True
+    },
+    
+    'for_continue': {
+        'template': "第{line}行: {code}\n→ 继续循环，{iter_var}={iter_val}，开始第{iter_count}次迭代",
+        'with_state': True
+    },
+    
+    'for_end': {
+        'template': "第{line}行: {code}\n→ 循环结束，已遍历完所有元素",
+        'with_state': True
+    },
+    
+    'while_start': {
+        'template': "第{line}行: {code}\n→ 进入while循环，条件为真",
+        'with_state': True
+    },
+    
+    'while_continue': {
+        'template': "第{line}行: {code}\n→ 继续while循环，条件仍为真",
+        'with_state': True
+    },
+    
+    'while_end': {
+        'template': "第{line}行: {code}\n→ while循环结束，条件为假",
+        'with_state': True
+    },
+    
+    'if_true': {
+        'template': "第{line}行: {code}\n→ 条件为真，进入if分支",
+        'with_state': False
+    },
+    
+    'if_false': {
+        'template': "第{line}行: {code}\n→ 条件为假，跳过if分支",
+        'with_state': False
+    },
+    
+    'else': {
+        'template': "第{line}行: {code}\n→ 进入else分支",
+        'with_state': False
+    },
+    
+    'elif_true': {
+        'template': "第{line}行: {code}\n→ elif条件为真，进入该分支",
+        'with_state': False
+    },
+    
+    'elif_false': {
+        'template': "第{line}行: {code}\n→ elif条件为假，继续检查",
+        'with_state': False
+    },
+    
+    'return': {
+        'template': "第{line}行: {code}\n→ 返回值: {value}",
+        'with_state': False
+    },
+    
+    'function_def': {
+        'template': "第{line}行: {code}\n→ 定义函数{func_name}",
+        'with_state': False
+    },
+    
+    'function_call': {
+        'template': "第{line}行: {code}\n→ 调用函数，参数: {params}，返回: {result}",
+        'with_state': True
+    },
+    
+    'print_statement': {
+        'template': "第{line}行: {code}\n→ 打印输出: {print_content}",
+        'with_state': True
+    },
+}
+
+# 步骤划分配置
+STEP_CONFIG = {
+    'lines_per_step': 8,  # 每个步骤最多包含的行数
+    'auto_title': True,   # 是否自动生成步骤标题
+}
+
+# 状态输出配置
+STATE_CONFIG = {
+    'show_state': True,      # 是否显示状态
+    'state_frequency': 1,    # 每N行显示一次状态（1表示每行都显示）
+}
+```
+
+#### cot_generator.py
+
+```py
+"""
+基于模板的COT生成器
+"""
+
+import ast
+import re
+from config import COT_TEMPLATES, STEP_CONFIG, STATE_CONFIG
+
+
+class CodeClassifier:
+    """代码行分类器"""
+    
+    def __init__(self):
+        self.loop_counters = {}  # 追踪循环迭代次数
+        self.last_lineno = None
+        self.in_loop_header = {}  # 记录是否在循环头部
+    
+    def classify(self, line, prev_line=None, next_line=None):
+        """分类代码行"""
+        code = line.code.strip()
+        lineno = line.lineno
+        
+        # Print语句
+        if code.startswith('print('):
+            return 'print_statement'
+        
+        # For循环特殊处理
+        if code.startswith('for '):
+            if lineno not in self.loop_counters:
+                self.loop_counters[lineno] = 1
+                self.in_loop_header[lineno] = True
+                return 'for_start'
+            else:
+                self.loop_counters[lineno] += 1
+                # 检查是否是最后一次迭代
+                if next_line and next_line.lineno != lineno:
+                    return 'for_end'
+                else:
+                    return 'for_continue'
+        
+        # While循环
+        if code.startswith('while '):
+            if lineno not in self.loop_counters:
+                self.loop_counters[lineno] = 1
+                return 'while_start'
+            else:
+                self.loop_counters[lineno] += 1
+                if next_line and next_line.lineno != lineno:
+                    return 'while_end'
+                else:
+                    return 'while_continue'
+        
+        # If语句
+        if code.startswith('if '):
+            return 'if_true'  # 假设执行到就是True
+        
+        if code.startswith('elif '):
+            return 'elif_true'
+        
+        if code.startswith('else:'):
+            return 'else'
+        
+        # Return语句
+        if code.startswith('return'):
+            return 'return'
+        
+        # 函数定义
+        if code.startswith('def '):
+            return 'function_def'
+        
+        # 赋值语句
+        if '=' in code:
+            # 增强赋值
+            if re.search(r'\w+\s*[+\-*/]=', code):
+                return 'aug_assign'
+            
+            # 判断是常量还是表达式
+            try:
+                tree = ast.parse(code)
+                for node in ast.walk(tree):
+                    if isinstance(node, ast.Assign):
+                        # 检查右值
+                        if isinstance(node.value, (ast.Constant, ast.Num, ast.Str)):
+                            return 'assign_constant'
+                        else:
+                            return 'assign_expr'
+            except:
+                # 简单判断
+                if re.match(r'^\s*\w+\s*=\s*[\d\'"]+\s*$', code):
+                    return 'assign_constant'
+                else:
+                    return 'assign_expr'
+        
+        return 'unknown'
+
+
+class ParameterExtractor:
+    """参数提取器"""
+    
+    def extract(self, line, line_type, classifier):
+        """提取模板参数"""
+        params = {
+            'line': line.lineno,
+            'code': line.code.strip(),
+        }
+        
+        var_dict = line.get_var_dict()
+        
+        # Print语句
+        if line_type == 'print_statement':
+            # 提取print的内容
+            match = re.search(r'print\((.*)\)', line.code)
+            if match:
+                print_arg = match.group(1).strip()
+                # 尝试从变量字典获取值
+                if print_arg in var_dict:
+                    params['print_content'] = f"{print_arg} = {var_dict[print_arg]}"
+                else:
+                    # 可能是表达式或常量
+                    params['print_content'] = print_arg
+        
+        # 提取变量名
+        if line_type in ['assign_constant', 'assign_expr', 'aug_assign']:
+            lvalues = self._extract_lvalue(line.code)
+            if lvalues:
+                params['var'] = lvalues[0]
+                params['value'] = var_dict.get(lvalues[0], '?')
+                params['result'] = params['value']
+        
+        # 表达式展开
+        if line_type == 'assign_expr':
+            params['expr_detail'] = self._expand_expression(line.code, var_dict)
+        
+        # 增强赋值
+        if line_type == 'aug_assign':
+            var = params['var']
+            # 提取操作符
+            match = re.search(r'([+\-*/])=', line.code)
+            if match:
+                params['op'] = match.group(1)
+            
+            # 提取操作数
+            parts = line.code.split('=', 1)
+            if len(parts) > 1:
+                operand = parts[1].strip()
+                params['operand'] = operand
+            
+            # 需要从前一个状态获取old_val
+            params['old_val'] = '?'  # 这个需要从前一行获取
+        
+        # For循环
+        if line_type.startswith('for'):
+            # 提取循环变量
+            match = re.match(r'for\s+(\w+)\s+in', line.code)
+            if match:
+                iter_var = match.group(1)
+                params['iter_var'] = iter_var
+                params['iter_val'] = var_dict.get(iter_var, '?')
+                params['iter_count'] = classifier.loop_counters.get(line.lineno, 1)
+        
+        # While循环
+        if line_type.startswith('while'):
+            params['condition'] = line.code.replace('while', '').replace(':', '').strip()
+        
+        # Return语句
+        if line_type == 'return':
+            return_val = line.code.replace('return', '').strip()
+            params['value'] = return_val
+        
+        # 函数定义
+        if line_type == 'function_def':
+            match = re.match(r'def\s+(\w+)', line.code)
+            if match:
+                params['func_name'] = match.group(1)
+        
+        return params
+    
+    def _extract_lvalue(self, code):
+        """提取左值"""
+        try:
+            tree = ast.parse(code)
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Assign):
+                    targets = []
+                    for target in node.targets:
+                        if isinstance(target, ast.Name):
+                            targets.append(target.id)
+                    return targets
+                elif isinstance(node, ast.AugAssign):
+                    if isinstance(node.target, ast.Name):
+                        return [node.target.id]
+        except:
+            match = re.match(r'^\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*[=+\-*/]=', code)
+            if match:
+                return [match.group(1)]
+        return []
+    
+    def _expand_expression(self, code, var_dict):
+        """展开表达式，用实际值替换变量"""
+        # 提取右值
+        parts = code.split('=', 1)
+        if len(parts) < 2:
+            return code
+        
+        expr = parts[1].strip()
+        
+        # 简单替换变量
+        expanded = expr
+        for var, val in var_dict.items():
+            expanded = re.sub(r'\b' + var + r'\b', str(val), expanded)
+        
+        # 尝试计算
+        try:
+            result = eval(expanded)
+            return f"{expr} = {expanded} = {result}"
+        except:
+            return f"{expr} = {expanded}"
+
+
+class COTGenerator:
+    """COT生成器"""
+    
+    def __init__(self, pruned_file):
+        self.pruned_file = pruned_file
+        self.target_line = None
+        self.target_var = None
+        self.lines = []
+    
+    def load_pruned_trace(self):
+        """加载剪枝后的追踪文件"""
+        with open(self.pruned_file, 'r', encoding='utf-8') as f:
+            content = f.readlines()
+        
+        # 解析头部
+        self.target_line = int(content[0].strip())
+        self.target_var = content[1].strip()
+        
+        # 解析追踪行
+        from pruner import TraceLine
+        i = 3  # 跳过前三行（目标行、目标变量、---）
+        while i < len(content):
+            line = content[i].strip()
+            if not line:
+                i += 1
+                continue
+            
+            parts = line.split(' ', 1)
+            if len(parts) < 2:
+                i += 1
+                continue
+            
+            lineno = int(parts[0])
+            code = parts[1]
+            
+            # 检查下一行是否是变量列表
+            var_names = []
+            var_values = []
+            if i + 1 < len(content):
+                next_line = content[i + 1].strip()
+                if next_line.startswith(str(lineno) + ' ['):
+                    try:
+                        parts = next_line.split(' ', 1)
+                        if len(parts) > 1:
+                            var_data = parts[1]
+                            var_names, var_values = self._parse_var_lists(var_data)
+                        i += 1
+                    except:
+                        pass
+            
+            trace_line = TraceLine(lineno, code, var_names, var_values)
+            self.lines.append(trace_line)
+            i += 1
+    
+    def _parse_var_lists(self, var_data):
+        """解析变量列表"""
+        try:
+            parts = var_data.split('] [')
+            if len(parts) == 2:
+                names_str = parts[0] + ']'
+                values_str = '[' + parts[1]
+                names = eval(names_str)
+                values = eval(values_str)
+                return names, values
+        except:
+            pass
+        return [], []
+    
+    def generate(self):
+        """生成COT"""
+        classifier = CodeClassifier()
+        extractor = ParameterExtractor()
+        
+        output_lines = []
+        output_lines.append(f"目标: 求第{self.target_line}行执行后变量{self.target_var}的值\n")
+        
+        # 分类并生成
+        current_step = 1
+        step_lines = []
+        prev_var_dict = {}
+        
+        for i, line in enumerate(self.lines):
+            next_line = self.lines[i + 1] if i + 1 < len(self.lines) else None
+            
+            # 分类
+            line_type = classifier.classify(line, None, next_line)
+            
+            if line_type == 'unknown':
+                continue
+            
+            # 提取参数
+            params = extractor.extract(line, line_type, classifier)
+            
+            # 补充old_val（用于aug_assign）
+            if line_type == 'aug_assign' and 'var' in params:
+                var = params['var']
+                params['old_val'] = prev_var_dict.get(var, '?')
+            
+            # 获取模板
+            template_info = COT_TEMPLATES.get(line_type)
+            if not template_info:
+                continue
+            
+            template = template_info['template']
+            cot_text = template.format(**params)
+            step_lines.append(cot_text)
+            
+            # 添加状态
+            if template_info.get('with_state') and STATE_CONFIG['show_state']:
+                state_text = self._format_state(line.get_var_dict())
+                step_lines.append(state_text)
+            
+            # 记录当前变量状态
+            prev_var_dict = line.get_var_dict()
+            
+            # 步骤划分
+            if len(step_lines) >= STEP_CONFIG['lines_per_step']:
+                step_title = f"步骤{current_step}: {self._generate_step_title(step_lines)}"
+                output_lines.append(step_title)
+                output_lines.extend(step_lines)
+                output_lines.append("")
+                step_lines = []
+                current_step += 1
+        
+        # 剩余行
+        if step_lines:
+            step_title = f"步骤{current_step}: 最终计算"
+            output_lines.append(step_title)
+            output_lines.extend(step_lines)
+            output_lines.append("")
+        
+        # 最终答案
+        final_value = self.lines[-1].get_var_dict().get(self.target_var, '?')
+        output_lines.append(f"最终答案: {final_value}")
+        
+        return '\n'.join(output_lines)
+    
+    def _format_state(self, var_dict):
+        """格式化状态"""
+        if not var_dict:
+            return ""
+        
+        items = [f"{k}={v}" for k, v in var_dict.items()]
+        return f"→ 当前状态: {', '.join(items)}"
+    
+    def _generate_step_title(self, step_lines):
+        """生成步骤标题"""
+        # 简单版本：根据内容判断
+        text = '\n'.join(step_lines)
+        if '循环' in text:
+            return "循环执行"
+        elif '初始化' in text or '赋值' in text:
+            return "初始化变量"
+        elif '打印' in text:
+            return "输出结果"
+        else:
+            return "计算过程"
+    
+    def save_cot(self, output_file):
+        """保存COT"""
+        cot_text = self.generate()
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(cot_text)
+        return output_file
+    
+    @staticmethod
+    def generate_cot(pruned_file, output_file):
+        """静态方法：生成COT"""
+        generator = COTGenerator(pruned_file)
+        generator.load_pruned_trace()
+        return generator.save_cot(output_file)
+```
+
+#### main.py
+
+```py
+"""
+COT生成框架主流程
+"""
+
+import os
+import argparse
+from tracer import PythonTracer
+from pruner import TracePruner
+from cot_generator import COTGenerator
+
+
+class COTFramework:
+    """COT生成框架主类"""
+    
+    def __init__(self, source_file, target_line, target_var):
+        self.source_file = source_file
+        self.target_line = target_line
+        self.target_var = target_var
+        
+        # 生成文件名和目录
+        base_name = os.path.splitext(os.path.basename(source_file))[0]
+        self.data_dir = f"data_{base_name}"
+        
+        # 创建数据目录
+        os.makedirs(self.data_dir, exist_ok=True)
+        
+        # 生成文件路径（存放在data目录中）
+        self.trace_file = os.path.join(self.data_dir, f"trace_{base_name}.txt")
+        self.pruned_file = os.path.join(self.data_dir, f"trimmed_trace_{base_name}.txt")
+        self.cot_file = os.path.join(self.data_dir, f"final_cot_{base_name}.txt")
+    
+    def run(self):
+        """执行完整流程"""
+        print("=" * 60)
+        print("COT生成框架")
+        print("=" * 60)
+        
+        # 步骤1: 代码执行追踪
+        print("\n[步骤1/4] 代码执行追踪...")
+        print(f"  源文件: {self.source_file}")
+        print(f"  数据目录: {self.data_dir}/")
+        PythonTracer.trace_file(self.source_file, self.trace_file)
+        print(f"  ✓ 追踪完成，输出: {self.trace_file}")
+        
+        # 步骤2: 目标定位
+        print("\n[步骤2/4] 目标定位...")
+        print(f"  目标行号: {self.target_line}")
+        print(f"  目标变量: {self.target_var}")
+        print(f"  ✓ 目标已确定")
+        
+        # 步骤3: 智能回溯与剪枝
+        print("\n[步骤3/4] 智能回溯与剪枝...")
+        TracePruner.prune_trace(self.trace_file, self.target_line, 
+                               self.target_var, self.pruned_file)
+        print(f"  ✓ 剪枝完成，输出: {self.pruned_file}")
+        
+        # 步骤4: 模板化COT生成
+        print("\n[步骤4/4] 模板化COT生成...")
+        COTGenerator.generate_cot(self.pruned_file, self.cot_file)
+        print(f"  ✓ COT生成完成，输出: {self.cot_file}")
+        
+        # 显示结果
+        print("\n" + "=" * 60)
+        print("生成完成！")
+        print("=" * 60)
+        print(f"\n数据目录: {self.data_dir}/")
+        print(f"  ├── {os.path.basename(self.trace_file)}")
+        print(f"  ├── {os.path.basename(self.pruned_file)}")
+        print(f"  └── {os.path.basename(self.cot_file)}")
+        
+        # 显示COT内容
+        print("\n" + "-" * 60)
+        print("COT内容预览:")
+        print("-" * 60)
+        with open(self.cot_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+            print(content)
+        
+        return self.cot_file
+
+
+def main():
+    """主函数"""
+    parser = argparse.ArgumentParser(description='COT生成框架')
+    parser.add_argument('source_file', help='Python源代码文件')
+    parser.add_argument('target_line', type=int, help='目标行号')
+    parser.add_argument('target_var', help='目标变量名')
+    
+    args = parser.parse_args()
+    
+    # 检查文件是否存在
+    if not os.path.exists(args.source_file):
+        print(f"错误: 文件 '{args.source_file}' 不存在")
+        return
+    
+    # 运行框架
+    framework = COTFramework(args.source_file, args.target_line, args.target_var)
+    framework.run()
+
+
+if __name__ == '__main__':
+    # 示例用法（无参数时）
+    import sys
+    if len(sys.argv) == 1:
+        print("示例用法:")
+        print("  python main.py test.py 7 d")
+        print("\n正在运行示例...")
+        
+        # 创建示例文件
+        with open('test.py', 'w', encoding='utf-8') as f:
+            f.write("""a = 1
+b = 2
+c = a + b
+d = 1
+for i in range(2):
+    d = d + 1
+d = d + a
+""")
+        
+        framework = COTFramework('test.py', 7, 'd')
+        framework.run()
+    else:
+        main()
+```
+
+#### pruner.py
+
+```py
+"""
+依赖分析和智能剪枝模块
+从目标行回溯，构建依赖图并剪除无关代码
+"""
+
+import ast
+import re
+from typing import Set, Dict, List, Tuple
+
+
+class TraceLine:
+    """表示追踪文件中的一行"""
+    def __init__(self, lineno, code, var_names=None, var_values=None):
+        self.lineno = lineno
+        self.code = code.strip()
+        self.var_names = var_names or []
+        self.var_values = var_values or []
+    
+    def get_var_dict(self):
+        """获取变量字典"""
+        return dict(zip(self.var_names, self.var_values))
+    
+    def __repr__(self):
+        return f"TraceLine({self.lineno}, {self.code[:30]}...)"
+
+
+class DependencyAnalyzer:
+    """依赖分析器"""
+    
+    def __init__(self):
+        self.focused_vars = set()
+        self.var_first_use = {}  # 变量首次使用的行号
+    
+    def extract_lvalue(self, code):
+        """提取赋值语句左值"""
+        try:
+            tree = ast.parse(code)
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Assign):
+                    targets = []
+                    for target in node.targets:
+                        targets.extend(self._extract_names(target))
+                    return targets
+                elif isinstance(node, ast.AugAssign):
+                    return self._extract_names(node.target)
+        except:
+            # 回退到正则匹配
+            match = re.match(r'^\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*[=+\-*/]=', code)
+            if match:
+                return [match.group(1)]
+        return []
+    
+    def _extract_names(self, node):
+        """从AST节点提取变量名"""
+        if isinstance(node, ast.Name):
+            return [node.id]
+        elif isinstance(node, ast.Tuple) or isinstance(node, ast.List):
+            names = []
+            for elt in node.elts:
+                names.extend(self._extract_names(elt))
+            return names
+        elif isinstance(node, ast.Subscript):
+            return self._extract_names(node.value)
+        elif isinstance(node, ast.Attribute):
+            return self._extract_names(node.value)
+        return []
+    
+    def extract_dependencies(self, code):
+        """提取代码行的变量依赖"""
+        deps = set()
+        
+        try:
+            tree = ast.parse(code)
+            
+            for node in ast.walk(tree):
+                # 赋值语句右值
+                if isinstance(node, ast.Assign):
+                    deps.update(self._extract_names_from_expr(node.value))
+                elif isinstance(node, ast.AugAssign):
+                    deps.update(self._extract_names_from_expr(node.value))
+                    deps.update(self._extract_names(node.target))  # a += 1 需要a
+                # 控制流条件
+                elif isinstance(node, (ast.If, ast.While)):
+                    deps.update(self._extract_names_from_expr(node.test))
+                # for循环
+                elif isinstance(node, ast.For):
+                    deps.update(self._extract_names_from_expr(node.iter))
+                # return语句
+                elif isinstance(node, ast.Return):
+                    if node.value:
+                        deps.update(self._extract_names_from_expr(node.value))
+                # print语句
+                elif isinstance(node, ast.Call):
+                    if isinstance(node.func, ast.Name) and node.func.id == 'print':
+                        for arg in node.args:
+                            deps.update(self._extract_names_from_expr(arg))
+        except:
+            # 回退到简单的正则匹配
+            # 匹配所有可能的变量名
+            vars_in_code = re.findall(r'\b([a-zA-Z_][a-zA-Z0-9_]*)\b', code)
+            # 过滤掉Python关键字
+            keywords = {'if', 'else', 'elif', 'for', 'while', 'in', 'range', 
+                       'def', 'class', 'return', 'True', 'False', 'None', 'print'}
+            deps = set(v for v in vars_in_code if v not in keywords)
+        
+        return deps
+    
+    def _extract_names_from_expr(self, expr_node):
+        """从表达式节点提取所有变量名"""
+        names = set()
+        for node in ast.walk(expr_node):
+            if isinstance(node, ast.Name):
+                names.add(node.id)
+        return names
+    
+    def is_control_flow(self, code):
+        """判断是否为控制流语句"""
+        code_stripped = code.strip()
+        control_keywords = ['if ', 'elif ', 'else:', 'for ', 'while ', 
+                           'def ', 'class ', 'try:', 'except:', 'finally:', 
+                           'with ', 'return', 'break', 'continue']
+        return any(code_stripped.startswith(kw) for kw in control_keywords)
+    
+    def is_print_statement(self, code):
+        """判断是否为print语句"""
+        code_stripped = code.strip()
+        return code_stripped.startswith('print(')
+
+
+class TracePruner:
+    """追踪记录剪枝器"""
+    
+    def __init__(self, trace_file):
+        self.trace_file = trace_file
+        self.lines = []
+        self.analyzer = DependencyAnalyzer()
+        self.target_line = None
+    
+    def load_trace(self):
+        """加载追踪文件"""
+        with open(self.trace_file, 'r', encoding='utf-8') as f:
+            content = f.readlines()
+        
+        i = 0
+        while i < len(content):
+            line = content[i].strip()
+            if not line:
+                i += 1
+                continue
+            
+            parts = line.split(' ', 1)
+            if len(parts) < 2:
+                i += 1
+                continue
+            
+            lineno = int(parts[0])
+            code = parts[1]
+            
+            # 检查下一行是否是变量列表
+            var_names = []
+            var_values = []
+            if i + 1 < len(content):
+                next_line = content[i + 1].strip()
+                if next_line.startswith(str(lineno) + ' ['):
+                    # 解析变量列表
+                    try:
+                        parts = next_line.split(' ', 1)
+                        if len(parts) > 1:
+                            var_data = parts[1]
+                            var_names, var_values = self._parse_var_lists(var_data)
+                        i += 1  # 跳过变量行
+                    except:
+                        pass
+            
+            trace_line = TraceLine(lineno, code, var_names, var_values)
+            self.lines.append(trace_line)
+            i += 1
+    
+    def _parse_var_lists(self, var_data):
+        """解析变量列表字符串"""
+        # 格式: ['a', 'b'] ['1', '2']
+        try:
+            # 找到两个列表
+            parts = var_data.split('] [')
+            if len(parts) == 2:
+                names_str = parts[0] + ']'
+                values_str = '[' + parts[1]
+                
+                names = eval(names_str)
+                values = eval(values_str)
+                return names, values
+        except:
+            pass
+        return [], []
+    
+    def prune(self, target_line, target_var):
+        """执行剪枝"""
+        self.target_line = target_line
+        
+        # 第一遍：回溯确定关注变量和保留行
+        focused_vars = {target_var}
+        keep_lines = set()
+        var_enter_line = {}  # 记录变量何时进入关注集合
+        
+        # 从目标行向上回溯
+        for line in reversed(self.lines):
+            if line.lineno > target_line:
+                continue
+            
+            # 如果是目标行，必须保留
+            if line.lineno == target_line:
+                keep_lines.add(line.lineno)
+                # 如果是print语句，提取其中的变量依赖
+                if self.analyzer.is_print_statement(line.code):
+                    deps = self.analyzer.extract_dependencies(line.code)
+                    for dep in deps:
+                        if dep not in focused_vars:
+                            focused_vars.add(dep)
+                            var_enter_line[dep] = line.lineno
+                continue
+            
+            # 控制流语句总是保留
+            if self.analyzer.is_control_flow(line.code):
+                keep_lines.add(line.lineno)
+                # 提取控制流中的依赖
+                deps = self.analyzer.extract_dependencies(line.code)
+                for dep in deps:
+                    if dep not in focused_vars:
+                        focused_vars.add(dep)
+                        var_enter_line[dep] = line.lineno
+                continue
+            
+            # print语句：如果包含关注变量，则保留
+            if self.analyzer.is_print_statement(line.code):
+                deps = self.analyzer.extract_dependencies(line.code)
+                if any(dep in focused_vars for dep in deps):
+                    keep_lines.add(line.lineno)
+                continue
+            
+            # 检查赋值语句
+            lvalues = self.analyzer.extract_lvalue(line.code)
+            
+            # 如果左值在关注集合中，保留此行
+            if any(lv in focused_vars for lv in lvalues):
+                keep_lines.add(line.lineno)
+                
+                # 提取右值依赖
+                deps = self.analyzer.extract_dependencies(line.code)
+                for dep in deps:
+                    if dep not in focused_vars:
+                        focused_vars.add(dep)
+                        var_enter_line[dep] = line.lineno
+        
+        # 第二遍：正向遍历，为每行分配正确的变量列表
+        active_vars = set()
+        pruned_lines = []
+        
+        for line in self.lines:
+            if line.lineno not in keep_lines:
+                continue
+            
+            # 检查是否有新变量在此行进入关注集合
+            for var, enter_line in var_enter_line.items():
+                if enter_line == line.lineno:
+                    active_vars.add(var)
+            
+            # 检查此行是否定义了新变量
+            lvalues = self.analyzer.extract_lvalue(line.code)
+            for lv in lvalues:
+                if lv in focused_vars:
+                    active_vars.add(lv)
+            
+            # 对于print语句，也要包含其使用的变量
+            if self.analyzer.is_print_statement(line.code):
+                deps = self.analyzer.extract_dependencies(line.code)
+                active_vars.update(deps)
+            
+            # 过滤变量列表
+            filtered_names = []
+            filtered_values = []
+            for name, value in zip(line.var_names, line.var_values):
+                if name in active_vars:
+                    filtered_names.append(name)
+                    filtered_values.append(value)
+            
+            pruned_line = TraceLine(line.lineno, line.code, 
+                                   filtered_names, filtered_values)
+            pruned_lines.append(pruned_line)
+        
+        return pruned_lines, focused_vars
+    
+    def save_pruned(self, pruned_lines, target_line, target_var, output_file):
+        """保存剪枝结果"""
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(f"{target_line}\n")
+            f.write(f"{target_var}\n")
+            f.write("---\n")
+            
+            for line in pruned_lines:
+                f.write(f"{line.lineno} {line.code}\n")
+                f.write(f"{line.lineno} {line.var_names} {line.var_values}\n")
+    
+    @staticmethod
+    def prune_trace(trace_file, target_line, target_var, output_file):
+        """静态方法：执行剪枝"""
+        pruner = TracePruner(trace_file)
+        pruner.load_trace()
+        pruned_lines, focused_vars = pruner.prune(target_line, target_var)
+        pruner.save_pruned(pruned_lines, target_line, target_var, output_file)
+        return output_file, pruned_lines
+```
+
+#### tracer.py
+
+```py
+"""
+Python代码执行追踪器
+基于sys.settrace实现变量追踪
+"""
+
 import sys
 import linecache
 import os
 
+
 class PythonTracer:
+    """Python代码执行追踪器"""
+    
     def __init__(self, target_file):
         self.target_file = os.path.abspath(target_file)
         self.trace_active = False
@@ -527,6 +1514,7 @@ class PythonTracer:
         return abs_filename == self.target_file
     
     def trace_handler(self, frame, event, arg):
+        """追踪处理函数"""
         filename = frame.f_code.co_filename
         
         # 只追踪目标文件
@@ -541,13 +1529,13 @@ class PythonTracer:
             self.trace_active = True
             return self.trace_handler
         
-        # 如果没有main函数,追踪模块级代码
+        # 如果没有main函数，追踪模块级代码
         if not self.has_main_function and func_name == '<module>':
             if not self.module_started:
                 self.module_started = True
             self.trace_active = True
         
-        # 如果有main函数但还没进入main,不追踪
+        # 如果有main函数但还没进入main，不追踪
         if self.has_main_function and not self.trace_active:
             return self.trace_handler
         
@@ -560,22 +1548,22 @@ class PythonTracer:
             if self.pending_trace:
                 self.output_pending_trace(local_vars)
             
-            # 保存当前行信息,等待下次输出
+            # 保存当前行信息，等待下次输出
             self.pending_trace = {
                 'lineno': lineno,
                 'source': source_line
             }
         
         elif event == 'return':
-            # 函数返回时,输出最后一行
+            # 函数返回时，输出最后一行
             if self.pending_trace and self.trace_active:
                 self.output_pending_trace(frame.f_locals.copy())
                 self.pending_trace = None
             
-            # 如果是main函数返回,停止追踪
+            # 如果是main函数返回，停止追踪
             if func_name == 'main':
                 self.trace_active = False
-            # 如果是模块级代码返回,停止追踪
+            # 如果是模块级代码返回，停止追踪
             elif func_name == '<module>' and self.module_started:
                 self.trace_active = False
         
@@ -600,7 +1588,7 @@ class PythonTracer:
             self.output_lines.append(f"{lineno} [] []")
     
     def filter_variables(self, local_vars):
-        """过滤变量,只保留数据变量"""
+        """过滤变量，只保留数据变量"""
         filtered = {}
         for name, value in local_vars.items():
             # 跳过内置变量
@@ -613,7 +1601,7 @@ class PythonTracer:
                 continue
             if str(type(value)).startswith("<class 'module"):
                 continue
-            # 跳过namedtuple类型本身(但保留实例)
+            # 跳过namedtuple类型本身（但保留实例）
             if hasattr(value, '__bases__') and tuple in getattr(value, '__bases__', []):
                 continue
             
@@ -663,81 +1651,32 @@ class PythonTracer:
         except:
             return "<error>"
     
-    def save_output(self, output_file='output.txt'):
+    def save_output(self, output_file):
         """保存输出到文件"""
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write('\n'.join(self.output_lines))
-
-if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("Usage: python trace_python.py <script.py>")
-        sys.exit(1)
     
-    script_file = sys.argv[1]
-    
-    # 检查文件是否有main函数
-    tracer = PythonTracer(script_file)
-    tracer.has_main_function = tracer.check_for_main(script_file)
-    
-    # 设置追踪
-    sys.settrace(tracer.trace_handler)
-    
-    # 执行目标脚本
-    with open(script_file, 'r', encoding='utf-8') as f:
-        code = compile(f.read(), script_file, 'exec')
-        exec(code, {'__name__': '__main__'})
-    
-    # 停止追踪
-    sys.settrace(None)
-    
-    # 保存输出
-    tracer.save_output()
-    print(f"Trace saved to output.txt")
+    @staticmethod
+    def trace_file(script_file, output_file='trace_output.txt'):
+        """追踪Python文件的执行"""
+        tracer = PythonTracer(script_file)
+        tracer.has_main_function = tracer.check_for_main(script_file)
+        
+        # 设置追踪
+        sys.settrace(tracer.trace_handler)
+        
+        # 执行目标脚本
+        with open(script_file, 'r', encoding='utf-8') as f:
+            code = compile(f.read(), script_file, 'exec')
+            exec(code, {'__name__': '__main__'})
+        
+        # 停止追踪
+        sys.settrace(None)
+        
+        # 保存输出
+        tracer.save_output(output_file)
+        
+        return output_file
 ```
 
-auto_trace.bat
-
-```bat
-@echo off
-chcp 65001 >nul
-
-echo ==================================================
-echo Python 自动变量追踪系统
-echo ==================================================
-
-REM 检测源文件
-set SOURCE_FILE=
-if exist test.py (
-    set SOURCE_FILE=test.py
-) else (
-    echo 错误: 找不到 test.py
-    pause
-    exit /b 1
-)
-
-echo.
-echo 找到源文件: %SOURCE_FILE%
-
-set OUTPUT_FILE=output.txt
-
-echo.
-echo [1/2] 执行追踪...
-python trace_python.py %SOURCE_FILE%
-if errorlevel 1 (
-    echo 追踪失败!
-    pause
-    exit /b 1
-)
-echo √ 追踪成功
-
-echo.
-echo [2/2] 追踪结果:
-echo ==================================================
-type %OUTPUT_FILE%
-echo ==================================================
-
-echo.
-echo 完成! 结果已保存到: %OUTPUT_FILE%
-pause
-```
-
+## 测试与测试记录
