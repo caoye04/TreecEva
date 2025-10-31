@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COT生成框架 - 测试用例浏览器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 18px;
+        }
+
+        .status-bar {
+            padding: 15px 30px;
+            background: #e3f2fd;
+            border-bottom: 2px solid #2196f3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            color: #1976d2;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4caf50;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .status-dot.error {
+            background: #f44336;
+            animation: none;
+        }
+
+        .search-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 18px 60px 18px 24px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 24px;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:hover {
+            background: #f0f4ff;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item-main {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+            font-size: 16px;
+        }
+
+        .dropdown-item-info {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .file-icons-section {
+            padding: 30px;
+            background: white;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .file-icons-container {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            flex-wrap: wrap;
+        }
+
+        .file-icon {
+            width: 160px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            text-align: center;
+            cursor: grab;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            user-select: none;
+        }
+
+        .file-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .file-icon:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+
+        .file-icon.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+
+        .file-icon-symbol {
+            font-size: 56px;
+            margin-bottom: 12px;
+        }
+
+        .file-icon-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            word-break: break-word;
+        }
+
+        .file-icon-ext {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .py { background: linear-gradient(135deg, #3776ab 0%, #ffd43b 100%); color: white; }
+        .trace { background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%); color: white; }
+        .trimmed { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        .cot { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; }
+
+        .display-section {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .display-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .display-box {
+            background: white;
+            border: 3px dashed #ccc;
+            border-radius: 12px;
+            min-height: 600px;
+            max-height: 700px;
+            padding: 25px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .display-box.drag-over {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .display-box-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #999;
+            pointer-events: none;
+        }
+
+        .display-box-placeholder-icon {
+            font-size: 72px;
+            margin-bottom: 12px;
+            opacity: 0.3;
+        }
+
+        .display-box-placeholder-text {
+            font-size: 16px;
+        }
+
+        .display-box-content {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+        }
+
+        .display-box-content.show {
+            display: flex;
+        }
+
+        .display-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 18px;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 18px;
+        }
+
+        .display-box-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .display-box-close {
+            background: #ff4757;
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 20px;
+        }
+
+        .display-box-close:hover {
+            background: #ff3838;
+            transform: scale(1.1);
+        }
+
+        .display-box-body {
+            flex: 1;
+            overflow-y: auto;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 24px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #010203;
+        }
+
+        .display-box-body::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .display-box-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .display-box-body::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+
+        .display-box-body::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-style: italic;
+            font-size: 15px;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 18px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px solid #f5c6cb;
+            font-size: 15px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 25px;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        @media (max-width: 1200px) {
+            .display-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .file-icons-container {
+                gap: 20px;
+            }
+
+            .file-icon {
+                width: 140px;
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .display-box-body {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🧠 COT生成框架 - 测试用例浏览器</h1>
+            <p>搜索测试用例，拖拽文件图标到展示框查看内容</p>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-indicator">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">正在连接服务器...</span>
+            </div>
+            <div id="testCount" style="font-size: 14px; color: #666;">
+                测试用例: 0
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索测试用例... (例如: test_01, basic_noise, loop)">
+                <span class="search-icon">🔍</span>
+                <div class="dropdown" id="dropdown"></div>
+            </div>
+        </div>
+
+        <!-- File Icons Section -->
+        <div class="file-icons-section">
+            <div class="section-title">📁 当前测试用例文件 <span id="currentTestName" style="color: #667eea;"></span></div>
+            <div class="file-icons-container" id="fileIconsContainer">
+                <div class="file-icon-placeholder" style="text-align: center; color: #999; width: 100%; padding: 40px; font-size: 15px;">
+                    请先搜索并选择一个测试用例
+                </div>
+            </div>
+        </div>
+
+        <!-- Display Section -->
+        <div class="display-section">
+            <div class="section-title">📄 文件内容展示区</div>
+            <div class="display-grid">
+                <!-- Display Box 1 -->
+                <div class="display-box" id="displayBox1" data-box="1">
+                    <div class="display-box-placeholder">
+                        <div class="display-box-placeholder-icon">📂</div>
+                        <div class="display-box-placeholder-text">拖拽文件图标到这里</div>
+                    </div>
+                    <div class="display-box-content" id="displayContent1">
+                        <div class="display-box-header">
+                            <div class="display-box-title" id="displayTitle1"></div>
+                            <button class="display-box-close" onclick="clearBox(1)">×</button>
+                        </div>
+                        <div class="display-box-body" id="displayBody1"></div>
+                    </div>
+                </div>
+
+                <!-- Display Box 2 -->
+                <div class="display-box" id="displayBox2" data-box="2">
+                    <div class="display-box-placeholder">
+                        <div class="display-box-placeholder-icon">📂</div>
+                        <div class="display-box-placeholder-text">拖拽文件图标到这里</div>
+                    </div>
+                    <div class="display-box-content" id="displayContent2">
+                        <div class="display-box-header">
+                            <div class="display-box-title" id="displayTitle2"></div>
+                            <button class="display-box-close" onclick="clearBox(2)">×</button>
+                        </div>
+                        <div class="display-box-body" id="displayBody2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 配置 ====================
+        const API_BASE = 'http://localhost:5000/api';
+
+        // ==================== 全局变量 ====================
+        let testCases = [];
+        let currentTest = null;
+
+        // ==================== 初始化 ====================
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadTestCases();
+            setupEventListeners();
+        });
+
+        // ==================== 更新状态显示 ====================
+        function updateStatus(message, isError = false) {
+            const statusText = document.getElementById('statusText');
+            const statusDot = document.getElementById('statusDot');
+            
+            statusText.textContent = message;
+            
+            if (isError) {
+                statusDot.classList.add('error');
+            } else {
+                statusDot.classList.remove('error');
+            }
+        }
+
+        // ==================== 加载测试用例列表 ====================
+        async function loadTestCases() {
+            updateStatus('正在加载测试用例...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/tests`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    testCases = result.data;
+                    updateStatus(`服务器已连接 - 找到 ${testCases.length} 个测试用例`);
+                    document.getElementById('testCount').textContent = `测试用例: ${testCases.length}`;
+                } else {
+                    throw new Error(result.error);
+                }
+                
+            } catch (error) {
+                updateStatus(`连接失败: ${error.message}`, true);
+                showError(`无法连接到服务器。请确保后端服务器正在运行 (python backend.py)`);
+            }
+        }
+
+        // ==================== 显示错误信息 ====================
+        function showError(message) {
+            const container = document.getElementById('fileIconsContainer');
+            container.innerHTML = `<div class="error-message">❌ ${message}</div>`;
+        }
+
+        // ==================== 设置事件监听器 ====================
+        function setupEventListeners() {
+            const searchInput = document.getElementById('searchInput');
+            const dropdown = document.getElementById('dropdown');
+
+            // 搜索功能
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                
+                if (query === '') {
+                    dropdown.classList.remove('show');
+                    return;
+                }
+
+                const filtered = testCases.filter(test => 
+                    test.filename.toLowerCase().includes(query) ||
+                    test.description.toLowerCase().includes(query) ||
+                    test.number.includes(query)
+                );
+
+                if (filtered.length > 0) {
+                    dropdown.innerHTML = filtered.map(test => `
+                        <div class="dropdown-item" data-test-id="${test.id}">
+                            <div class="dropdown-item-main">${test.filename}</div>
+                            <div class="dropdown-item-info">Test ${test.number}: ${test.description}</div>
+                        </div>
+                    `).join('');
+                    dropdown.classList.add('show');
+
+                    // 添加点击事件
+                    dropdown.querySelectorAll('.dropdown-item').forEach(item => {
+                        item.addEventListener('click', () => {
+                            const testId = item.getAttribute('data-test-id');
+                            selectTest(testId);
+                            dropdown.classList.remove('show');
+                            searchInput.value = '';
+                        });
+                    });
+                } else {
+                    dropdown.innerHTML = '<div class="no-results">未找到匹配的测试用例</div>';
+                    dropdown.classList.add('show');
+                }
+            });
+
+            // 点击外部关闭下拉框
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            // 设置拖放功能
+            setupDragAndDrop();
+        }
+
+        // ==================== 选择测试用例 ====================
+        async function selectTest(testId) {
+            const test = testCases.find(t => t.id === testId);
+            if (!test) return;
+
+            currentTest = test;
+            document.getElementById('currentTestName').textContent = `(${test.filename})`;
+
+            const container = document.getElementById('fileIconsContainer');
+            container.innerHTML = '<div class="loading">🔄 正在加载文件...</div>';
+
+            try {
+                // 从后端加载测试数据
+                const response = await fetch(`${API_BASE}/test/${testId}`);
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error(result.error);
+                }
+
+                // 保存文件内容
+                currentTest.contents = result.data.contents;
+                
+                // 显示文件图标
+                container.innerHTML = `
+                    <div class="file-icon py" draggable="true" data-file="py">
+                        <div class="file-icon-symbol">🐍</div>
+                        <div class="file-icon-name">${test.filename}</div>
+                        <div class="file-icon-ext">.py</div>
+                    </div>
+                    <div class="file-icon trace" draggable="true" data-file="trace">
+                        <div class="file-icon-symbol">📊</div>
+                        <div class="file-icon-name">trace</div>
+                        <div class="file-icon-ext">.txt</div>
+                    </div>
+                    <div class="file-icon trimmed" draggable="true" data-file="trimmed">
+                        <div class="file-icon-symbol">✂️</div>
+                        <div class="file-icon-name">trimmed_trace</div>
+                        <div class="file-icon-ext">.txt</div>
+                    </div>
+                    <div class="file-icon cot" draggable="true" data-file="cot">
+                        <div class="file-icon-symbol">🧠</div>
+                        <div class="file-icon-name">final_cot</div>
+                        <div class="file-icon-ext">.txt</div>
+                    </div>
+                `;
+
+                // 重新设置拖放
+                setupDragAndDrop();
+                updateStatus(`已加载: ${test.filename}`);
+
+            } catch (error) {
+                container.innerHTML = `<div class="error-message">❌ 加载文件失败: ${error.message}</div>`;
+                updateStatus(`加载失败: ${error.message}`, true);
+            }
+        }
+
+        // ==================== 设置拖放功能 ====================
+        function setupDragAndDrop() {
+            const fileIcons = document.querySelectorAll('.file-icon');
+            const displayBoxes = document.querySelectorAll('.display-box');
+
+            fileIcons.forEach(icon => {
+                icon.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('fileType', icon.getAttribute('data-file'));
+                    icon.classList.add('dragging');
+                });
+
+                icon.addEventListener('dragend', () => {
+                    icon.classList.remove('dragging');
+                });
+            });
+
+            displayBoxes.forEach(box => {
+                box.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    box.classList.add('drag-over');
+                });
+
+                box.addEventListener('dragleave', () => {
+                    box.classList.remove('drag-over');
+                });
+
+                box.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    box.classList.remove('drag-over');
+                    
+                    const fileType = e.dataTransfer.getData('fileType');
+                    const boxNum = box.getAttribute('data-box');
+                    displayFile(fileType, boxNum);
+                });
+            });
+        }
+
+        // ==================== 显示文件内容 ====================
+        function displayFile(fileType, boxNum) {
+            if (!currentTest || !currentTest.contents) return;
+
+            const titleMap = {
+                'py': currentTest.filename,
+                'trace': `trace_${currentTest.id}.txt`,
+                'trimmed': `trimmed_trace_${currentTest.id}.txt`,
+                'cot': `final_cot_${currentTest.id}.txt`
+            };
+
+            const content = currentTest.contents[fileType];
+            if (!content) return;
+
+            document.getElementById(`displayTitle${boxNum}`).textContent = titleMap[fileType];
+            document.getElementById(`displayBody${boxNum}`).textContent = content;
+            document.querySelector(`#displayBox${boxNum} .display-box-placeholder`).style.display = 'none';
+            document.getElementById(`displayContent${boxNum}`).classList.add('show');
+        }
+
+        // ==================== 清空展示框 ====================
+        function clearBox(boxNum) {
+            document.querySelector(`#displayBox${boxNum} .display-box-placeholder`).style.display = 'block';
+            document.getElementById(`displayContent${boxNum}`).classList.remove('show');
+            document.getElementById(`displayBody${boxNum}`).textContent = '';
+        }
+    </script>
+</body>
+</html>

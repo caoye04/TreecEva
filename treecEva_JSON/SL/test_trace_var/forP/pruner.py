@@ -66,19 +66,20 @@ class DependencyAnalyzer:
         return []
     
     def extract_dependencies(self, code):
-        """提取代码行的变量依赖"""
+        """提取代码行的变量依赖（右值使用的变量）"""
         deps = set()
         
         try:
             tree = ast.parse(code)
             
             for node in ast.walk(tree):
-                # 赋值语句右值
+                # 赋值语句：只分析右值
                 if isinstance(node, ast.Assign):
                     deps.update(self._extract_names_from_expr(node.value))
                 elif isinstance(node, ast.AugAssign):
+                    # 增强赋值：a += b 需要读取 a 和 b
                     deps.update(self._extract_names_from_expr(node.value))
-                    deps.update(self._extract_names(node.target))  # a += 1 需要a
+                    deps.update(self._extract_names(node.target))
                 # 控制流条件
                 elif isinstance(node, (ast.If, ast.While)):
                     deps.update(self._extract_names_from_expr(node.test))
@@ -96,21 +97,51 @@ class DependencyAnalyzer:
                             deps.update(self._extract_names_from_expr(arg))
         except:
             # 回退到简单的正则匹配
-            # 匹配所有可能的变量名
-            vars_in_code = re.findall(r'\b([a-zA-Z_][a-zA-Z0-9_]*)\b', code)
+            # 如果是赋值语句，只分析右侧
+            if '=' in code:
+                # 处理增强赋值
+                for op in ['+=', '-=', '*=', '/=', '//=', '%=', '&=', '|=', '^=', '>>=', '<<=']:
+                    if op in code:
+                        parts = code.split(op, 1)
+                        if len(parts) == 2:
+                            left_var = parts[0].strip()
+                            right_expr = parts[1].strip()
+                            # 左侧变量也会被读取
+                            deps.add(left_var)
+                            # 分析右侧
+                            vars_in_right = re.findall(r'\b([a-zA-Z_][a-zA-Z0-9_]*)\b', right_expr)
+                            deps.update(vars_in_right)
+                        break
+                else:
+                    # 普通赋值，只分析右侧
+                    parts = code.split('=', 1)
+                    if len(parts) == 2:
+                        right_expr = parts[1]
+                        vars_in_right = re.findall(r'\b([a-zA-Z_][a-zA-Z0-9_]*)\b', right_expr)
+                        deps.update(vars_in_right)
+            else:
+                # 不是赋值，分析整行
+                vars_in_code = re.findall(r'\b([a-zA-Z_][a-zA-Z0-9_]*)\b', code)
+                deps.update(vars_in_code)
+            
             # 过滤掉Python关键字
             keywords = {'if', 'else', 'elif', 'for', 'while', 'in', 'range', 
-                       'def', 'class', 'return', 'True', 'False', 'None', 'print'}
-            deps = set(v for v in vars_in_code if v not in keywords)
+                       'def', 'class', 'return', 'True', 'False', 'None', 'print',
+                       'and', 'or', 'not', 'is', 'with', 'as', 'try', 'except',
+                       'finally', 'raise', 'break', 'continue', 'pass', 'lambda',
+                       'yield', 'import', 'from', 'global', 'nonlocal'}
+            deps = deps - keywords
         
         return deps
     
     def _extract_names_from_expr(self, expr_node):
-        """从表达式节点提取所有变量名"""
+        """从表达式节点提取所有变量名（只提取Load上下文）"""
         names = set()
         for node in ast.walk(expr_node):
             if isinstance(node, ast.Name):
-                names.add(node.id)
+                # 只提取被读取的变量（Load上下文）
+                if isinstance(node.ctx, ast.Load):
+                    names.add(node.id)
         return names
     
     def is_control_flow(self, code):
@@ -197,10 +228,30 @@ class TracePruner:
         """执行剪枝"""
         self.target_line = target_line
         
-        # 第一遍：回溯确定关注变量和保留行
+        print(f"\n===== 剪枝分析 =====")
+        print(f"目标行: {target_line}, 目标变量: {target_var}")
+        
+        # ========== 第一遍：回溯确定关注变量和保留行 ==========
         focused_vars = {target_var}
         keep_lines = set()
         var_enter_line = {}  # 记录变量何时进入关注集合
+        
+        # 找到目标行，分析其依赖
+        target_line_obj = None
+        for line in self.lines:
+            if line.lineno == target_line:
+                target_line_obj = line
+        
+        if target_line_obj:
+            # 分析目标行使用的所有变量
+            deps = self.analyzer.extract_dependencies(target_line_obj.code)
+            print(f"\n目标行代码: {target_line_obj.code}")
+            print(f"目标行依赖: {deps}")
+            focused_vars.update(deps)
+            for dep in deps:
+                var_enter_line[dep] = target_line
+        
+        print(f"初始关注变量集合: {focused_vars}\n")
         
         # 从目标行向上回溯
         for line in reversed(self.lines):
@@ -210,13 +261,6 @@ class TracePruner:
             # 如果是目标行，必须保留
             if line.lineno == target_line:
                 keep_lines.add(line.lineno)
-                # 如果是print语句，提取其中的变量依赖
-                if self.analyzer.is_print_statement(line.code):
-                    deps = self.analyzer.extract_dependencies(line.code)
-                    for dep in deps:
-                        if dep not in focused_vars:
-                            focused_vars.add(dep)
-                            var_enter_line[dep] = line.lineno
                 continue
             
             # 控制流语句总是保留
@@ -224,9 +268,12 @@ class TracePruner:
                 keep_lines.add(line.lineno)
                 # 提取控制流中的依赖
                 deps = self.analyzer.extract_dependencies(line.code)
-                for dep in deps:
-                    if dep not in focused_vars:
-                        focused_vars.add(dep)
+                new_deps = deps - focused_vars
+                if new_deps:
+                    print(f"第{line.lineno}行(控制流): {line.code.strip()}")
+                    print(f"  新增依赖: {new_deps}")
+                    focused_vars.update(new_deps)
+                    for dep in new_deps:
                         var_enter_line[dep] = line.lineno
                 continue
             
@@ -235,6 +282,8 @@ class TracePruner:
                 deps = self.analyzer.extract_dependencies(line.code)
                 if any(dep in focused_vars for dep in deps):
                     keep_lines.add(line.lineno)
+                    print(f"第{line.lineno}行(print): {line.code.strip()}")
+                    print(f"  使用了关注变量: {deps & focused_vars}")
                 continue
             
             # 检查赋值语句
@@ -244,42 +293,68 @@ class TracePruner:
             if any(lv in focused_vars for lv in lvalues):
                 keep_lines.add(line.lineno)
                 
+                print(f"第{line.lineno}行(赋值): {line.code.strip()}")
+                print(f"  定义了关注变量: {set(lvalues) & focused_vars}")
+                
                 # 提取右值依赖
                 deps = self.analyzer.extract_dependencies(line.code)
-                for dep in deps:
-                    if dep not in focused_vars:
-                        focused_vars.add(dep)
+                new_deps = deps - focused_vars
+                
+                if new_deps:
+                    print(f"  新增依赖: {new_deps}")
+                    focused_vars.update(new_deps)
+                    for dep in new_deps:
                         var_enter_line[dep] = line.lineno
         
-        # 第二遍：正向遍历，为每行分配正确的变量列表
-        active_vars = set()
+        print(f"\n最终关注变量集合: {focused_vars}")
+        print(f"保留的行号: {sorted(keep_lines)}\n")
+        
+        # ========== 第二遍：为每行计算真正需要的变量 ==========
+        # 只保留那些"已经定义 且 后续会使用"的变量
+        
+        kept_lines = [line for line in self.lines if line.lineno in keep_lines]
+        
+        print("===== 变量精简分析 =====")
+        
+        # 为每个保留的行计算需要保留的变量
         pruned_lines = []
         
-        for line in self.lines:
-            if line.lineno not in keep_lines:
-                continue
+        for i, line in enumerate(kept_lines):
+            # 收集从下一行到最后，哪些变量会被使用
+            future_uses = set()
             
-            # 检查是否有新变量在此行进入关注集合
-            for var, enter_line in var_enter_line.items():
-                if enter_line == line.lineno:
-                    active_vars.add(var)
+            for j in range(i + 1, len(kept_lines)):
+                future_line = kept_lines[j]
+                
+                # 提取这一行使用的变量
+                uses = self.analyzer.extract_dependencies(future_line.code)
+                future_uses.update(uses & focused_vars)
             
-            # 检查此行是否定义了新变量
-            lvalues = self.analyzer.extract_lvalue(line.code)
-            for lv in lvalues:
-                if lv in focused_vars:
-                    active_vars.add(lv)
+            # 当前行定义的变量
+            current_defines = set(self.analyzer.extract_lvalue(line.code))
             
-            # 对于print语句，也要包含其使用的变量
-            if self.analyzer.is_print_statement(line.code):
-                deps = self.analyzer.extract_dependencies(line.code)
-                active_vars.update(deps)
+            # 当前行使用的变量
+            current_uses = self.analyzer.extract_dependencies(line.code)
+            
+            # 需要保留的变量 = 
+            # 1. 当前行使用的关注变量（右侧需要）
+            # 2. 当前行定义的关注变量（左侧）
+            # 3. 后续行会使用的关注变量（传播给后续）
+            vars_to_keep = (current_uses & focused_vars) | \
+                          (current_defines & focused_vars) | \
+                          (future_uses & focused_vars)
+            
+            print(f"第{line.lineno}行: {line.code.strip()}")
+            print(f"  当前使用: {current_uses & focused_vars}")
+            print(f"  当前定义: {current_defines & focused_vars}")
+            print(f"  后续需要: {future_uses & focused_vars}")
+            print(f"  保留变量: {vars_to_keep}")
             
             # 过滤变量列表
             filtered_names = []
             filtered_values = []
             for name, value in zip(line.var_names, line.var_values):
-                if name in active_vars:
+                if name in vars_to_keep:
                     filtered_names.append(name)
                     filtered_values.append(value)
             
@@ -287,6 +362,7 @@ class TracePruner:
                                    filtered_names, filtered_values)
             pruned_lines.append(pruned_line)
         
+        print()
         return pruned_lines, focused_vars
     
     def save_pruned(self, pruned_lines, target_line, target_var, output_file):

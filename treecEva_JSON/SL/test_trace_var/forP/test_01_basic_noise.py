@@ -1,0 +1,9 @@
+a = 1
+b = 2
+noise1 = 100
+noise2 = 200
+c = a + b
+noise3 = noise1 + noise2
+d = c * 2
+noise4 = d - 5
+result = d + a
