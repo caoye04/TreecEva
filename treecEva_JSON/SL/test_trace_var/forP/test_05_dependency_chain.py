@@ -1,9 +1,0 @@
-a = 1
-noise1 = 999
-b = a + 2
-noise2 = noise1 * 2
-c = b + 3
-noise3 = noise2 - noise1
-d = c + 4
-noise4 = 888
-e = d + 5

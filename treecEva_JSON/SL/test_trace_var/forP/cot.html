@@ -277,7 +277,7 @@
         }
 
         .display-box-placeholder-text {
-            font-size: 16px;
+            font-size: 20;
         }
 
         .display-box-content {
@@ -328,15 +328,15 @@
         .display-box-body {
             flex: 1;
             overflow-y: auto;
-            background: #f8f9fa;
+            background: #1e1e1e;
             padding: 20px;
             border-radius: 10px;
             font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            font-size: 24px;
-            line-height: 1.8;
+            font-size: 18px;
+            line-height: 1.6;
             white-space: pre-wrap;
             word-wrap: break-word;
-            color: #010203;
+            color: #d4d4d4;
         }
 
         .display-box-body::-webkit-scrollbar {
@@ -344,18 +344,59 @@
         }
 
         .display-box-body::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #2d2d2d;
             border-radius: 5px;
         }
 
         .display-box-body::-webkit-scrollbar-thumb {
-            background: #888;
+            background: #5a5a5a;
             border-radius: 5px;
         }
 
         .display-box-body::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            background: #6a6a6a;
         }
+
+        /* ==================== 代码高亮样式 ==================== */
+        .highlight-py .keyword { color: #569cd6; font-weight: bold; }
+        .highlight-py .string { color: #ce9178; }
+        .highlight-py .comment { color: #6a9955; font-style: italic; }
+        .highlight-py .function { color: #dcdcaa; }
+        .highlight-py .number { color: #b5cea8; }
+        .highlight-py .operator { color: #d4d4d4; }
+        .highlight-py .builtin { color: #4ec9b0; }
+        .highlight-py .decorator { color: #4ec9b0; font-style: italic; }
+
+        /* ==================== 文本高亮样式 ==================== */
+        .highlight-trace .section-header { 
+            color: #4fc3f7; 
+            font-weight: bold; 
+            background: rgba(79, 195, 247, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .highlight-trace .file-path { color: #81c784; }
+        .highlight-trace .line-number { color: #ffb74d; }
+        .highlight-trace .variable-name { color: #ba68c8; font-weight: bold; }
+        .highlight-trace .value { color: #64b5f6; }
+        .highlight-trace .type-info { color: #90a4ae; font-style: italic; }
+
+        .highlight-trimmed .kept-line { color: #81c784; }
+        .highlight-trimmed .removed-line { color: #ef5350; text-decoration: line-through; opacity: 0.6; }
+        .highlight-trimmed .important { color: #ffb74d; font-weight: bold; }
+
+        .highlight-cot .step-number { 
+            color: #4fc3f7; 
+            font-weight: bold;
+            background: rgba(79, 195, 247, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+        .highlight-cot .thought { color: #ba68c8; }
+        .highlight-cot .action { color: #81c784; font-weight: bold; }
+        .highlight-cot .result { color: #64b5f6; }
+        .highlight-cot .conclusion { color: #ffb74d; font-weight: bold; }
 
         .no-results {
             text-align: center;
@@ -404,7 +445,7 @@
             }
 
             .display-box-body {
-                font-size: 14px;
+                font-size: 13px;
             }
         }
     </style>
@@ -414,7 +455,7 @@
         <!-- Header -->
         <div class="header">
             <h1>🧠 COT生成框架 - 测试用例浏览器</h1>
-            <p>搜索测试用例，拖拽文件图标到展示框查看内容</p>
+            <p>搜索测试用例,拖拽文件图标到展示框查看内容</p>
         </div>
 
         <!-- Status Bar -->
@@ -689,6 +730,113 @@
             });
         }
 
+        // ==================== Python语法高亮 ====================
+        function highlightPython(code) {
+            // Python关键字
+            const keywords = /\b(def|class|if|elif|else|for|while|return|import|from|as|try|except|finally|with|pass|break|continue|yield|lambda|assert|del|global|nonlocal|raise|and|or|not|in|is|None|True|False)\b/g;
+            
+            // 内置函数
+            const builtins = /\b(print|len|range|str|int|float|list|dict|set|tuple|open|input|type|isinstance|enumerate|zip|map|filter|sorted|reversed|sum|min|max|abs|all|any)\b/g;
+            
+            // 字符串
+            const strings = /("""[\s\S]*?"""|'''[\s\S]*?'''|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g;
+            
+            // 注释
+            const comments = /(#.*$)/gm;
+            
+            // 数字
+            const numbers = /\b(\d+\.?\d*)\b/g;
+            
+            // 装饰器
+            const decorators = /(@\w+)/g;
+            
+            // 函数定义
+            const functions = /\bdef\s+(\w+)/g;
+
+            let result = code;
+            
+            // 先处理字符串和注释,避免关键字被误高亮
+            result = result.replace(strings, '<span class="string">$1</span>');
+            result = result.replace(comments, '<span class="comment">$1</span>');
+            result = result.replace(decorators, '<span class="decorator">$1</span>');
+            result = result.replace(functions, 'def <span class="function">$1</span>');
+            result = result.replace(keywords, '<span class="keyword">$1</span>');
+            result = result.replace(builtins, '<span class="builtin">$1</span>');
+            result = result.replace(numbers, '<span class="number">$1</span>');
+            
+            return result;
+        }
+
+        // ==================== Trace文件高亮 ====================
+        function highlightTrace(text) {
+            let result = text;
+            
+            // 高亮section headers (如 "=== XXX ===")
+            result = result.replace(/(===.*?===)/g, '<span class="section-header">$1</span>');
+            
+            // 高亮文件路径
+            result = result.replace(/([A-Za-z]:\\[^\s]+|\/[^\s]+)/g, '<span class="file-path">$1</span>');
+            
+            // 高亮行号 (如 "Line 42:")
+            result = result.replace(/(Line\s+\d+:?)/g, '<span class="line-number">$1</span>');
+            
+            // 高亮变量名 (通常在等号前)
+            result = result.replace(/(\w+)\s*=/g, '<span class="variable-name">$1</span> =');
+            
+            // 高亮类型信息 (如 "<type 'int'>")
+            result = result.replace(/(&lt;.*?&gt;|<.*?>)/g, '<span class="type-info">$1</span>');
+            
+            return result;
+        }
+
+        // ==================== Trimmed trace高亮 ====================
+        function highlightTrimmed(text) {
+            let lines = text.split('\n');
+            return lines.map(line => {
+                if (line.includes('[KEPT]') || line.includes('✓')) {
+                    return `<span class="kept-line">${escapeHtml(line)}</span>`;
+                } else if (line.includes('[REMOVED]') || line.includes('✗')) {
+                    return `<span class="removed-line">${escapeHtml(line)}</span>`;
+                } else if (line.includes('IMPORTANT') || line.includes('!!!')) {
+                    return `<span class="important">${escapeHtml(line)}</span>`;
+                }
+                return escapeHtml(line);
+            }).join('\n');
+        }
+
+        // ==================== COT高亮 ====================
+        function highlightCOT(text) {
+            let result = text;
+            
+            // 高亮步骤编号 (如 "Step 1:", "步骤1:", "1.")
+            result = result.replace(/((?:Step|步骤)\s*\d+:?|\d+\.)/gi, '<span class="step-number">$1</span>');
+            
+            // 高亮思考过程
+            result = result.replace(/(思考|Thought|推理|Reasoning)[:：](.*?)(?=\n|$)/gi, 
+                '$1: <span class="thought">$2</span>');
+            
+            // 高亮行动
+            result = result.replace(/(行动|Action|操作|Operation)[:：](.*?)(?=\n|$)/gi, 
+                '$1: <span class="action">$2</span>');
+            
+            // 高亮结果
+            result = result.replace(/(结果|Result|输出|Output)[:：](.*?)(?=\n|$)/gi, 
+                '$1: <span class="result">$2</span>');
+            
+            // 高亮结论
+            result = result.replace(/(结论|Conclusion|总结|Summary)[:：](.*?)(?=\n|$)/gi, 
+                '$1: <span class="conclusion">$2</span>');
+            
+            return result;
+        }
+
+        // ==================== HTML转义 ====================
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
         // ==================== 显示文件内容 ====================
         function displayFile(fileType, boxNum) {
             if (!currentTest || !currentTest.contents) return;
@@ -703,8 +851,39 @@
             const content = currentTest.contents[fileType];
             if (!content) return;
 
+            const bodyElement = document.getElementById(`displayBody${boxNum}`);
+            
+            // 移除之前的高亮类
+            bodyElement.className = 'display-box-body';
+            
+            // 根据文件类型应用不同的高亮
+            let highlightedContent;
+            switch(fileType) {
+                case 'py':
+                    bodyElement.classList.add('highlight-py');
+                    highlightedContent = highlightPython(escapeHtml(content));
+                    bodyElement.innerHTML = highlightedContent;
+                    break;
+                case 'trace':
+                    bodyElement.classList.add('highlight-trace');
+                    highlightedContent = highlightTrace(escapeHtml(content));
+                    bodyElement.innerHTML = highlightedContent;
+                    break;
+                case 'trimmed':
+                    bodyElement.classList.add('highlight-trimmed');
+                    highlightedContent = highlightTrimmed(content);
+                    bodyElement.innerHTML = highlightedContent;
+                    break;
+                case 'cot':
+                    bodyElement.classList.add('highlight-cot');
+                    highlightedContent = highlightCOT(escapeHtml(content));
+                    bodyElement.innerHTML = highlightedContent;
+                    break;
+                default:
+                    bodyElement.textContent = content;
+            }
+
             document.getElementById(`displayTitle${boxNum}`).textContent = titleMap[fileType];
-            document.getElementById(`displayBody${boxNum}`).textContent = content;
             document.querySelector(`#displayBox${boxNum} .display-box-placeholder`).style.display = 'none';
             document.getElementById(`displayContent${boxNum}`).classList.add('show');
         }
@@ -713,7 +892,7 @@
         function clearBox(boxNum) {
             document.querySelector(`#displayBox${boxNum} .display-box-placeholder`).style.display = 'block';
             document.getElementById(`displayContent${boxNum}`).classList.remove('show');
-            document.getElementById(`displayBody${boxNum}`).textContent = '';
+            document.getElementById(`displayBody${boxNum}`).innerHTML = '';
         }
     </script>
 </body>

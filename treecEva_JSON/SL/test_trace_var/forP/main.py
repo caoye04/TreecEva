@@ -50,8 +50,13 @@ class COTFramework:
         
         # 步骤3: 智能回溯与剪枝
         print("\n[步骤3/4] 智能回溯与剪枝...")
-        TracePruner.prune_trace(self.trace_file, self.target_line, 
-                               self.target_var, self.pruned_file)
+        TracePruner.prune_trace(
+            self.trace_file, 
+            self.target_line, 
+            self.target_var, 
+            self.pruned_file,
+            source_file=self.source_file  # 添加源文件参数
+        )
         print(f"  ✓ 剪枝完成，输出: {self.pruned_file}")
         
         # 步骤4: 模板化COT生成

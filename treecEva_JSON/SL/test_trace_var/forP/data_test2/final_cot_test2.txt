@@ -1,0 +1,10 @@
+目标: 求第30行执行后变量 result 的值
+
+ 21  addr = Address("Beijing", "Chaoyang Road", "100000")  # 计算: Address("Beijing", "Chaoyang Road", "100000") = Address(city='Beijing', street='Chaoyang Road', zipcode='100000')
+ 22  company = Company("TechCorp", addr, 500)  # 计算: Company("TechCorp", addr, 500), 其中 addr=Address(...)(来自第21行) = Company(name='TechCorp', address=Address(city='Beijing', street='Chaoyang Road', zipcode='100000'), employee_count=500)
+ 23  person = Person("Bob", 30, company)  # 计算: Person("Bob", 30, company), 其中 company=Company(...)(来自第22行) = Person(name='Bob', age=30, company=Company(name='TechCorp', address=Address(...), employee_count=500), hobby='reading')
+ 26  city_name = person.company.address.city  # 计算: person.company.address.city, 其中 person=Person(company=Company(name='TechCorp', address=Address(...), employee_count=500))(来自第23行), company=Company(...)(来自第22行) = 'Beijing'
+ 27  print(f"City: {city_name}")  # 输出: f"City: {city_name}"
+ 30  result = len(city_name) + person.age  # 计算: len(city_name) + person.age, 其中 city_name='Beijing'(来自第26行), person=Person(age=30)(来自第23行) = 37
+
+答案: result = 37 (最后在第30行更新)
