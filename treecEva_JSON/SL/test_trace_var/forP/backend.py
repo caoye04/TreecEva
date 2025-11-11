@@ -150,11 +150,12 @@ def get_test_data(test_id):
                 'error': error_msg
             }), 404
         
-        # 文件名格式
+        # 文件名格式（新增 reverse_cot）
         files_to_read = {
             'trace': f'trace_{test_id}.txt',
             'trimmed': f'trimmed_trace_{test_id}.txt',
-            'cot': f'final_cot_{test_id}.txt'
+            'cot': f'final_cot_{test_id}.txt',
+            'reverse_cot': f'reverse_cot_{test_id}.txt'  # ★ 新增倒序COT
         }
         
         file_contents = {
@@ -215,7 +216,8 @@ def get_file_content(test_id, file_type):
             file_map = {
                 'trace': f'trace_{test_id}.txt',
                 'trimmed': f'trimmed_trace_{test_id}.txt',
-                'cot': f'final_cot_{test_id}.txt'
+                'cot': f'final_cot_{test_id}.txt',
+                'reverse_cot': f'reverse_cot_{test_id}.txt'  # ★ 新增倒序COT
             }
             
             if file_type not in file_map:

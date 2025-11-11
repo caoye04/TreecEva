@@ -231,6 +231,7 @@
         .trace { background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%); color: white; }
         .trimmed { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
         .cot { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; }
+        .reverse-cot { background: linear-gradient(135deg, #e0e0e0 0%, #9e9e9e 100%); color: white; }
 
         .display-section {
             padding: 30px;
@@ -277,7 +278,7 @@
         }
 
         .display-box-placeholder-text {
-            font-size: 20;
+            font-size: 20px;
         }
 
         .display-box-content {
@@ -398,6 +399,31 @@
         .highlight-cot .result { color: #64b5f6; }
         .highlight-cot .conclusion { color: #ffb74d; font-weight: bold; }
 
+        /* ==================== 倒序COT高亮样式（黑白风格）==================== */
+        .highlight-reverse-cot .step-number { 
+            color: #b0b0b0; 
+            font-weight: bold;
+            background: rgba(176, 176, 176, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+        .highlight-reverse-cot .backward-arrow { 
+            color: #888888; 
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .highlight-reverse-cot .requirement { color: #cccccc; font-weight: bold; }
+        .highlight-reverse-cot .derivation { color: #a0a0a0; }
+        .highlight-reverse-cot .source { color: #909090; font-style: italic; }
+        .highlight-reverse-cot .target-info { 
+            color: #bbbbbb; 
+            font-weight: bold;
+            background: rgba(187, 187, 187, 0.15);
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+
         .no-results {
             text-align: center;
             padding: 20px;
@@ -455,7 +481,7 @@
         <!-- Header -->
         <div class="header">
             <h1>🧠 COT生成框架 - 测试用例浏览器</h1>
-            <p>搜索测试用例,拖拽文件图标到展示框查看内容</p>
+            <p>搜索测试用例，拖拽文件图标到展示框查看内容</p>
         </div>
 
         <!-- Status Bar -->
@@ -659,7 +685,7 @@
                 // 保存文件内容
                 currentTest.contents = result.data.contents;
                 
-                // 显示文件图标
+                // 显示文件图标（新增倒序COT图标）
                 container.innerHTML = `
                     <div class="file-icon py" draggable="true" data-file="py">
                         <div class="file-icon-symbol">🐍</div>
@@ -679,6 +705,11 @@
                     <div class="file-icon cot" draggable="true" data-file="cot">
                         <div class="file-icon-symbol">🧠</div>
                         <div class="file-icon-name">final_cot</div>
+                        <div class="file-icon-ext">.txt</div>
+                    </div>
+                    <div class="file-icon reverse-cot" draggable="true" data-file="reverse_cot">
+                        <div class="file-icon-symbol">🔄</div>
+                        <div class="file-icon-name">reverse_cot</div>
                         <div class="file-icon-ext">.txt</div>
                     </div>
                 `;
@@ -830,6 +861,34 @@
             return result;
         }
 
+        // ==================== 倒序COT高亮（黑白风格）====================
+        function highlightReverseCOT(text) {
+            let result = text;
+            
+            // 高亮目标和答案行
+            result = result.replace(/(目标:|答案:)(.*?)(?=\n|$)/gi, 
+                '<span class="target-info">$1</span>$2');
+            
+            // 高亮倒推箭头 ←
+            result = result.replace(/(←)/g, '<span class="backward-arrow">$1</span>');
+            
+            // 高亮"需要"关键词
+            result = result.replace(/(需要|Need|Required)/gi, '<span class="requirement">$1</span>');
+            
+            // 高亮"来自"关键词和来源信息
+            result = result.replace(/(来自|from)(.*?)(?=\)|,|，|\n|$)/gi, 
+                '<span class="source">$1$2</span>');
+            
+            // 高亮"由计算"、"从...更新"等推导信息
+            result = result.replace(/(由计算|从.*?更新|直接赋值|循环.*?次)/g, 
+                '<span class="derivation">$1</span>');
+            
+            // 高亮步骤编号（行号）
+            result = result.replace(/^\s*(\d+)\s+/gm, '<span class="step-number">$1</span> ');
+            
+            return result;
+        }
+
         // ==================== HTML转义 ====================
         function escapeHtml(text) {
             const div = document.createElement('div');
@@ -845,7 +904,8 @@
                 'py': currentTest.filename,
                 'trace': `trace_${currentTest.id}.txt`,
                 'trimmed': `trimmed_trace_${currentTest.id}.txt`,
-                'cot': `final_cot_${currentTest.id}.txt`
+                'cot': `final_cot_${currentTest.id}.txt`,
+                'reverse_cot': `reverse_cot_${currentTest.id}.txt`
             };
 
             const content = currentTest.contents[fileType];
@@ -877,6 +937,11 @@
                 case 'cot':
                     bodyElement.classList.add('highlight-cot');
                     highlightedContent = highlightCOT(escapeHtml(content));
+                    bodyElement.innerHTML = highlightedContent;
+                    break;
+                case 'reverse_cot':
+                    bodyElement.classList.add('highlight-reverse-cot');
+                    highlightedContent = highlightReverseCOT(escapeHtml(content));
                     bodyElement.innerHTML = highlightedContent;
                     break;
                 default:

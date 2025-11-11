@@ -73,6 +73,77 @@ INLINE_COT_TEMPLATES = {
     },
 }
 
+# ============ 倒序COT模板（新增） ============
+REVERSE_COT_TEMPLATES = {
+    'assign_constant': {
+        'template': "  # ← 需要 {var}={value}，此行直接赋值",
+    },
+    
+    'assign_expr': {
+        'template': "  # ← 需要 {var}={result}，由计算 {expr_detail} 得到",
+    },
+    
+    'aug_assign': {
+        'template': "  # ← 需要 {var}={result}，从第{def_line}行的 {old_val} 更新为 {old_val}{op}{operand}",
+    },
+    
+    'for_start': {
+        'template': "  # ← 循环开始，{iter_var}={iter_val} (第1次迭代)",
+    },
+    
+    'for_continue': {
+        'template': "  # ← 循环第{iter_count}次，{iter_var}={iter_val}",
+    },
+    
+    'for_end': {
+        'template': "  # ← 循环结束检查",
+    },
+    
+    'while_start': {
+        'template': "  # ← while循环开始",
+    },
+    
+    'while_continue': {
+        'template': "  # ← while循环继续",
+    },
+    
+    'while_end': {
+        'template': "  # ← while循环结束",
+    },
+    
+    'if_true': {
+        'template': "  # ← 条件为真，执行此分支",
+    },
+    
+    'if_false': {
+        'template': "  # ← 条件为假，跳过",
+    },
+    
+    'else': {
+        'template': "  # ← else分支",
+    },
+    
+    'elif_true': {
+        'template': "  # ← elif条件为真",
+    },
+    
+    'elif_false': {
+        'template': "  # ← elif条件为假",
+    },
+    
+    'return': {
+        'template': "  # ← 返回 {value}",
+    },
+    
+    'function_def': {
+        'template': "  # ← 函数定义",
+    },
+    
+    'print_statement': {
+        'template': "  # ← 输出 {print_content}",
+    },
+}
+
 # COT输出配置
 COT_CONFIG = {
     'show_line_numbers': True,

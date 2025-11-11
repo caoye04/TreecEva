@@ -1,0 +1,8 @@
+目标: 求第14行执行后变量 final 的值
+答案: final = 100
+
+倒推过程（从结果往回推导）:
+
+ 14  final = student.score.math + 5  # ← 需要 final=100，由计算 student.score.math + 5, 其中 student=Student(score=Score(math=95, english=88))(来自第13行), score=Score(...)(来自第12行) 得到
+ 13  student = Student("Alice", 18, score)  # ← 需要 student=Student(name='Alice', age=18, score=Score(math=95, english=88))，由计算 Student("Alice", 18, score), 其中 score=Score(...)(来自第12行) 得到
+ 12  score = Score(95, 88)  # ← 需要 score=Score(math=95, english=88)，由计算 Score(95, 88) 得到

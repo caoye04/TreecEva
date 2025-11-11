@@ -7,6 +7,7 @@ import argparse
 from tracer import PythonTracer
 from pruner import TracePruner
 from cot_generator import COTGenerator
+from reverse_cot_generator import ReverseCOTGenerator  # 新增导入
 
 
 class COTFramework:
@@ -28,6 +29,7 @@ class COTFramework:
         self.trace_file = os.path.join(self.data_dir, f"trace_{base_name}.txt")
         self.pruned_file = os.path.join(self.data_dir, f"trimmed_trace_{base_name}.txt")
         self.cot_file = os.path.join(self.data_dir, f"final_cot_{base_name}.txt")
+        self.reverse_cot_file = os.path.join(self.data_dir, f"reverse_cot_{base_name}.txt")  # 新增
     
     def run(self):
         """执行完整流程"""
@@ -36,33 +38,38 @@ class COTFramework:
         print("=" * 60)
         
         # 步骤1: 代码执行追踪
-        print("\n[步骤1/4] 代码执行追踪...")
+        print("\n[步骤1/5] 代码执行追踪...")
         print(f"  源文件: {self.source_file}")
         print(f"  数据目录: {self.data_dir}/")
         PythonTracer.trace_file(self.source_file, self.trace_file)
         print(f"  ✓ 追踪完成，输出: {self.trace_file}")
         
         # 步骤2: 目标定位
-        print("\n[步骤2/4] 目标定位...")
+        print("\n[步骤2/5] 目标定位...")
         print(f"  目标行号: {self.target_line}")
         print(f"  目标变量: {self.target_var}")
         print(f"  ✓ 目标已确定")
         
         # 步骤3: 智能回溯与剪枝
-        print("\n[步骤3/4] 智能回溯与剪枝...")
+        print("\n[步骤3/5] 智能回溯与剪枝...")
         TracePruner.prune_trace(
             self.trace_file, 
             self.target_line, 
             self.target_var, 
             self.pruned_file,
-            source_file=self.source_file  # 添加源文件参数
+            source_file=self.source_file
         )
         print(f"  ✓ 剪枝完成，输出: {self.pruned_file}")
         
-        # 步骤4: 模板化COT生成
-        print("\n[步骤4/4] 模板化COT生成...")
+        # 步骤4: 模板化COT生成（正序）
+        print("\n[步骤4/5] 模板化COT生成（正序）...")
         COTGenerator.generate_cot(self.pruned_file, self.cot_file)
-        print(f"  ✓ COT生成完成，输出: {self.cot_file}")
+        print(f"  ✓ 正序COT生成完成，输出: {self.cot_file}")
+        
+        # 步骤5: 倒序COT生成（新增）
+        print("\n[步骤5/5] 倒序COT生成...")
+        ReverseCOTGenerator.generate_reverse_cot(self.pruned_file, self.reverse_cot_file)
+        print(f"  ✓ 倒序COT生成完成，输出: {self.reverse_cot_file}")
         
         # 显示结果
         print("\n" + "=" * 60)
@@ -71,13 +78,22 @@ class COTFramework:
         print(f"\n数据目录: {self.data_dir}/")
         print(f"  ├── {os.path.basename(self.trace_file)}")
         print(f"  ├── {os.path.basename(self.pruned_file)}")
-        print(f"  └── {os.path.basename(self.cot_file)}")
+        print(f"  ├── {os.path.basename(self.cot_file)}")
+        print(f"  └── {os.path.basename(self.reverse_cot_file)}")  # 新增
         
-        # 显示COT内容
+        # 显示正序COT内容
         print("\n" + "-" * 60)
-        print("COT内容预览:")
+        print("正序COT内容预览:")
         print("-" * 60)
         with open(self.cot_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+            print(content)
+        
+        # 显示倒序COT内容（新增）
+        print("\n" + "-" * 60)
+        print("倒序COT内容预览:")
+        print("-" * 60)
+        with open(self.reverse_cot_file, 'r', encoding='utf-8') as f:
             content = f.read()
             print(content)
         
