@@ -1,43 +1,39 @@
-from math import factorial
-from functools import reduce
+import math
+from functools import lru_cache
 
-def sensor_combinator(reading_values, combo_size):
-    if combo_size <= 0 or combo_size > len(reading_values):
-        return []
-    if combo_size == 1:
-        return [[x] for x in reading_values]
-    result = []
-    for i in range(len(reading_values)):
-        sub_combos = sensor_combinator(reading_values[i+1:], combo_size-1)
-        for sub in sub_combos:
-            result.append([reading_values[i]] + sub)
-    return result
+def calculate_sharpe(returns, volatility):
+    return returns / volatility if volatility != 0 else 0
 
-def aggregate_readings(sensor_data):
-    return reduce(lambda acc, val: acc + val if val > 0 else acc, sensor_data, 0)
+class Portfolio:
+    def __init__(self, assets):
+        self.assets = assets
+        
+    @lru_cache(maxsize=None)
+    def get_optimal_weight(self, index, remaining_budget):
+        if index >= len(self.assets) or remaining_budget <= 0:
+            return 0.0
+        
+        asset_return, asset_risk = self.assets[index]
+        max_sharpe = 0.0
+        
+        for weight in range(0, int(remaining_budget) + 1):
+            allocated = weight * 0.1
+            current_sharpe = calculate_sharpe(asset_return * allocated, asset_risk * allocated)
+            future_sharpe = self.get_optimal_weight(index + 1, remaining_budget - weight)
+            total_sharpe = current_sharpe + future_sharpe * 0.95  # Discount factor
+            max_sharpe = max(max_sharpe, total_sharpe)
+            
+        return max_sharpe
 
-environmental_readings = [3, -1, 4, 1, 5, -9, 2, 6, 5, 3, 5]
-positive_readings = [r for r in environmental_readings if r > 0]
-
-# Calculate combinations of positive readings taken 3 at a time
-reading_combinations = sensor_combinator(positive_readings, 3)
-
-# Process combinations with a lambda-based transformation
-processed_combinations = [
-    list(map(lambda x: x**2 if x % 2 == 0 else x**3, combo))
-    for combo in reading_combinations
+# Asset tuples: (expected_return, risk)
+financial_assets = [
+    (0.08, 0.12),
+    (0.15, 0.25),
+    (0.12, 0.18),
+    (0.06, 0.09),
+    (0.20, 0.30)
 ]
 
-# Calculate aggregate metrics
-combo_sums = [sum(combo) for combo in processed_combinations]
-filtered_sums = [s for s in combo_sums if s > 100]
-
-# Apply statistical transformation
-mean_sum = sum(filtered_sums) / len(filtered_sums) if filtered_sums else 0
-variance = sum((x - mean_sum)**2 for x in filtered_sums) / len(filtered_sums) if filtered_sums else 0
-
-# Final metric calculation using ternary logic and combinatorics
-combinatorial_factor = factorial(len(positive_readings)) // (factorial(3) * factorial(len(positive_readings) - 3))
-final_metric = int(mean_sum + variance) if combinatorial_factor > 100 else int(mean_sum - variance)
-
-print(f"Result: {final_metric}")
+portfolio_optimizer = Portfolio(financial_assets)
+optimal_sharpe_ratio = portfolio_optimizer.get_optimal_weight(0, 10)
+print(f"Result: {round(optimal_sharpe_ratio, 6)}")

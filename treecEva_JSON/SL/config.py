@@ -1,8 +1,8 @@
 import os
 
 # 文件路径配置
-DATASET_PATH = "scripts/data/Statement-Level-MIX.json"
-ANSWER_PATH = "scripts/data/answer.json"
+DATASET_PATH = "data/TreecEva_data.json"
+ANSWER_PATH = "data/answer.json"
 TEMP_CODE_DIR = "temp_code"
 
 # API配置

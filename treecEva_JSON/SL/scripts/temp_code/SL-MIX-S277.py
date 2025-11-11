@@ -1,44 +1,38 @@
-from collections import defaultdict
 import math
+from functools import reduce
+from collections import Counter
 
-def tokenize_signature(raw_signature):
-    tokens = []
-    for i in range(0, len(raw_signature), 4):
-        token = raw_signature[i:i+4]
-        if len(token) == 4:
-            tokens.append(int.from_bytes(token.encode(), 'big'))
-    return tokens
+network_logs = [120, 256, 97, 512, 101, 79, 300, 1024, 103, 200, 400, 89, 150, 600, 750]
 
-def is_suspicious_pattern(token):
-    # Check if token has alternating bit pattern (e.g., 0101... or 1010...)
-    return (token & 0xAAAAAAAA) == 0 or (token & 0x55555555) == 0
+# Helper function to check if a number is prime
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
-class PacketAnalyzer:
-    def __init__(self):
-        self.pattern_frequency = defaultdict(int)
-        self.threat_score = 0
-    
-    def process_packet_batch(self, packet_signatures):
-        batch_threat = 0
-        for signature in packet_signatures:
-            tokens = tokenize_signature(signature)
-            for token in tokens:
-                if is_suspicious_pattern(token):
-                    self.pattern_frequency[token] += 1
-                    # Bitwise operations to calculate threat level
-                    threat_indicator = (token & 0xFF) ^ ((token >> 8) & 0xFF)
-                    batch_threat += threat_indicator * self.pattern_frequency[token]
-        self.threat_score += batch_threat & 0xFFFF
+# Calculate mean and standard deviation
+packet_count = len(network_logs)
+total_size = sum(network_logs)
+mean_size = total_size / packet_count
+variance = sum((x - mean_size) ** 2 for x in network_logs) / packet_count
+std_dev = math.sqrt(variance)
 
-# Simulate processing a batch of 128 network packets
-analyzer = PacketAnalyzer()
-packet_data = [
-    "PKT001THREAT_SIG1",
-    "PKT002SAFE_PATTERN",
-    "PKT003THREAT_SIG2",
-    "PKT004THREAT_SIG1",
-    "PKT005THREAT_SIG3"
-] * 25 + ["PKT126THREAT_SIG1", "PKT127THREAT_SIG2", "PKT128THREAT_SIG1"]
+# Threshold for anomaly detection
+threshold = mean_size + std_dev
 
-analyzer.process_packet_batch(packet_data)
-print(f"Result: {analyzer.threat_score}")
+# Identify primes using list comprehension and filter
+prime_packets = [size for size in network_logs if is_prime(size)]
+
+# Count anomalies using short-circuit evaluation and ternary operator
+anomaly_count = sum(1 for p in prime_packets if p > threshold)
+
+print(f"Result: {anomaly_count}")

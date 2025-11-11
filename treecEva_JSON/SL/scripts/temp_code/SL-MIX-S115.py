@@ -1,67 +1,76 @@
-from functools import reduce
+import math
+from collections import defaultdict, deque
 
-class FuelTracker:
-    def __init__(self):
-        self.consumption = 0
+class DistrictNode:
+    def __init__(self, district_id, vehicle_emissions):
+        self.district_id = district_id
+        self.vehicle_emissions = vehicle_emissions
+        self.children = []
     
-    def __enter__(self):
-        return self
-    
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
-    
-    def add_fuel(self, amount):
-        self.consumption += amount
+    def add_child(self, child_node):
+        self.children.append(child_node)
 
-def calculate_route_fuel(weights, depth=0):
-    if not weights:
-        return 0
-    
-    current_weight = weights[0]
-    remaining_weights = weights[1:]
-    
-    # Calculate base fuel for current package
-    base_fuel = (current_weight * 2) + 1
-    
-    # Recursive calculation for remaining packages
-    remaining_fuel = calculate_route_fuel(remaining_weights, depth+1)
-    
-    # Apply depth-based optimization (lighter packages get priority)
-    if depth > 0 and current_weight < 5:
-        base_fuel = base_fuel // 2
-    
-    return base_fuel + remaining_fuel
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
-def process_deliveries(package_manifest):
-    # Filter out packages that are too heavy (>20 units)
-    valid_packages = list(filter(lambda pkg: pkg[1] <= 20, package_manifest))
-    
-    # Extract weights
-    weights = list(map(lambda pkg: pkg[1], valid_packages))
-    
-    # Calculate fuel using recursive function
-    initial_fuel = calculate_route_fuel(weights)
-    
-    # Apply global optimization using reduce
-    optimized_fuel = reduce(lambda acc, w: acc + (w // 3) if w % 3 == 0 else acc + w, weights, 0)
-    
-    # Return the maximum of both calculations
-    return max(initial_fuel, optimized_fuel)
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
 
-# Package manifest: (destination_id, weight)
-logistics_schedule = [
-    ("DP001", 7),
-    ("DP002", 12),
-    ("DP003", 3),
-    ("DP004", 15),
-    ("DP005", 8),
-    ("DP006", 22),  # This package will be filtered out
-    ("DP007", 4)
-]
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)
 
-with FuelTracker() as tracker:
-    required_fuel = process_deliveries(logistics_schedule)
-    tracker.add_fuel(required_fuel)
-    total_fuel_consumption = tracker.consumption
+def calculate_pollution_score(emissions):
+    # Modular arithmetic with geometry - emissions mod circle circumference (2*pi*10)
+    circumference = 2 * math.pi * 10
+    return int((emissions * 17) % circumference)
 
-print(f"Result: {total_fuel_consumption}")
+def compute_compliance_modifier(district_id, pollution_score):
+    if is_prime(district_id):
+        # Prime districts get compliance boost based on LCM with fixed value
+        return lcm(pollution_score, 12)
+    else:
+        # Non-prime districts get penalty based on GCD
+        return -gcd(pollution_score, 15)
+
+# Build district tree
+root_district = DistrictNode(1, 250)
+child_2 = DistrictNode(2, 180)
+child_3 = DistrictNode(3, 320)
+child_4 = DistrictNode(4, 95)
+child_5 = DistrictNode(5, 140)
+child_6 = DistrictNode(6, 210)
+
+root_district.add_child(child_2)
+root_district.add_child(child_3)
+child_2.add_child(child_4)
+child_2.add_child(child_5)
+child_3.add_child(child_6)
+
+# Process districts using stack for DFS
+processing_stack = [root_district]
+cumulative_compliance_score = 0
+
+while processing_stack:
+    current_district = processing_stack.pop()
+    pollution = calculate_pollution_score(current_district.vehicle_emissions)
+    compliance_mod = compute_compliance_modifier(current_district.district_id, pollution)
+    cumulative_compliance_score += compliance_mod
+    
+    # Add children to stack (reversed to maintain left-to-right processing)
+    for child in reversed(current_district.children):
+        processing_stack.append(child)
+
+print(f"Result: {cumulative_compliance_score}")

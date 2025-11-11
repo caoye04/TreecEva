@@ -1,9 +1,25 @@
-recipe_names = ['Lasagna', 'Beef Wellington', 'Tiramisu', 'Caesar Salad']
-vowel_set = {'a', 'e', 'i', 'o', 'u'}
-total_vowel_count = 0
-for name in recipe_names:
-    lower_name = name.lower()
-    for char in lower_name:
-        if char in vowel_set:
-            total_vowel_count += 1
-print(f'Result: {total_vowel_count}')
+from dataclasses import dataclass
+
+@dataclass
+class Pastry:
+    name: str
+    price: float
+    units_sold: int
+
+# Daily sales report
+sales_data = {
+    'croissant': Pastry('croissant', 2.5, 45),
+    'muffin': Pastry('muffin', 3.0, 67),
+    'danish': Pastry('danish', 3.5, 120),
+    'scone': Pastry('scone', 2.0, 34)
+}
+
+top_seller_units = 0
+for item_name, pastry in sales_data.items():
+    if pastry.units_sold > 100:
+        top_seller_units = pastry.units_sold
+        break
+    elif pastry.units_sold > top_seller_units:
+        top_seller_units = pastry.units_sold
+
+print(f"Result: {top_seller_units}")

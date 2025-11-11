@@ -1,44 +1,40 @@
-from collections import defaultdict
-from itertools import permutations
-import statistics
+from functools import reduce
+from collections import namedtuple
 
-def calculate_satisfaction(votes):
-    # Count occurrences of each vote type
-    vote_counter = defaultdict(int)
-    for vote in votes:
-        vote_counter[vote] += 1
-    
-    # Generate all permutations of unique votes
-    unique_votes = list(vote_counter.keys())
-    perm_count = 0
-    valid_perms = []
-    
-    for p in permutations(unique_votes):
-        perm_count += 1
-        # Check if permutation satisfies logical condition
-        if all(x <= y for x, y in zip(p, p[1:])) and len(p) > 1:
-            valid_perms.append(p)
-    
-    # Compute scores for valid permutations
-    scores = []
-    for perm in valid_perms:
-        # Calculate weighted score based on frequency
-        score = sum(vote_counter[vote] * (i + 1) for i, vote in enumerate(perm))
-        scores.append(score)
-    
-    # Return mean of scores or 0 if no valid permutations
-    return statistics.mean(scores) if scores else 0
+# Define a trade record structure
+Trade = namedtuple('Trade', ['volume', 'timestamp'])
 
-# Simulation data
-voter_preferences = [3, 1, 2, 3, 2, 1, 3, 3, 2]
+# Trade data: volume in USD, timestamp as integer
+trades_ledger = [
+    Trade(12500, 162345),
+    Trade(8750, 162346),
+    Trade(15000, 162347),
+    Trade(3200, 162348)
+]
 
-# Short-circuit evaluation in assignment
-is_diverse = len(set(voter_preferences)) > 1 and max(voter_preferences) <= 5
+# Fee tiers: volume threshold -> rate
+fee_tiers = [(10000, 0.001), (5000, 0.0015), (0, 0.002)]
 
-final_score = 0
-if is_diverse:
-    final_score = calculate_satisfaction(voter_preferences)
-else:
-    final_score = -1  # Indicates insufficient diversity
+def calculate_tiered_rate(trade_volume):
+    for threshold, rate in fee_tiers:
+        if trade_volume >= threshold:
+            return rate
+    return fee_tiers[-1][1]  # fallback to lowest tier
 
-print(f"Result: {final_score}")
+# Volume discount function
+volume_discount = lambda vol: 0.05 if vol > 10000 else (0.02 if vol > 5000 else 0)
+
+# Compute discounted fees using list comprehension and functional constructs
+fees_list = [
+    trade.volume * calculate_tiered_rate(trade.volume) * (1 - volume_discount(trade.volume))
+    for trade in trades_ledger
+]
+
+# Apply greedy reduction to accumulate fees with a bonus adjustment
+final_accumulated_fee = reduce(
+    lambda acc, fee: acc + fee + (0.0001 if fee > 10 else 0), 
+    fees_list, 
+    0.0
+)
+
+print(f"Result: {round(final_accumulated_fee, 4)}")

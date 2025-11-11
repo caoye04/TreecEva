@@ -1,39 +1,63 @@
-import itertools
+from collections import defaultdict
+import math
 
-def max_non_adjacent_load(weights):
-    n = len(weights)
-    if n == 0:
+class SignalNode:
+    def __init__(self, value=0, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+# Initialize signal processing tree
+root = SignalNode(15)
+root.left = SignalNode(7)
+root.right = SignalNode(22)
+root.left.left = SignalNode(3)
+root.left.right = SignalNode(11)
+root.right.left = SignalNode(19)
+root.right.right = SignalNode(25)
+
+# Signal processing function
+def process_signal(node):
+    if not node:
         return 0
-    elif n == 1:
-        return weights[0]
     
-    # Dynamic programming array
-    dp = [0] * n
-    dp[0] = weights[0]
-    dp[1] = max(weights[0], weights[1])
+    # Apply logarithmic transformation if value > 10
+    transformed_value = math.log(node.value) if node.value > 10 else node.value
     
-    for i in range(2, n):
-        dp[i] = max(dp[i-1], dp[i-2] + weights[i])
+    # Recursively process children and combine with bitwise operations
+    left_result = process_signal(node.left)
+    right_result = process_signal(node.right)
     
-    return dp[-1]
+    # Combine results using XOR for left, OR for right
+    combined = (int(transformed_value) ^ int(left_result)) | int(right_result)
+    
+    return combined
 
-# Package weights
-package_weights = [2, 1, 4, 9, 3, 8, 6]
+# Initial signal parameters
+signal_amplitudes = [2, 4, 8, 16, 32]
+attenuation_factors = [0.5, 0.25, 0.75, 0.125, 1.0]
 
-# Compute maximum non-adjacent load
-base_load = max_non_adjacent_load(package_weights)
+# Apply attenuation and collect results
+attenuated_signals = [amp * att for amp, att in zip(signal_amplitudes, attenuation_factors)]
 
-# Dictionary comprehension for adjustment factors
-adjustments = {i: (0.9 if w > 5 else 1.1) for i, w in enumerate(package_weights)}
+# Create lookup for processed signals
+signal_lookup = defaultdict(lambda: 0)
+for i, signal in enumerate(attenuated_signals):
+    signal_lookup[i] = int(signal) if signal.is_integer() else round(signal, 2)
 
-# Merge with default adjustments
-default_adjustments = {i: 1.0 for i in range(len(package_weights))}
-final_adjustments = {**default_adjustments, **adjustments}
+# Process the signal tree
+tree_result = process_signal(root)
 
-# Apply adjustment using ternary operator
-adjusted_load = base_load * (0.95 if len(package_weights) > 6 else 1.05)
+# Apply final transformation using collected signals
+processed_signal_strength = tree_result
+for key in sorted(signal_lookup.keys(), reverse=True):
+    if key % 2 == 0 and signal_lookup[key] > 5:
+        processed_signal_strength = processed_signal_strength & int(signal_lookup[key])
+    elif key % 2 != 0 or signal_lookup[key] <= 5:
+        processed_signal_strength = processed_signal_strength | int(signal_lookup[key])
 
-# Final optimization
-optimized_load = int(adjusted_load) if adjusted_load > 20 else int(adjusted_load) + 5
+# Final adjustment
+if processed_signal_strength > 20:
+    processed_signal_strength = processed_signal_strength >> 1
 
-print(f"Result: {optimized_load}")
+print(f"Result: {processed_signal_strength}")

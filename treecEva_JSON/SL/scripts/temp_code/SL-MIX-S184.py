@@ -1,44 +1,39 @@
-import heapq
 from functools import reduce
+from collections import defaultdict
 
-def calculate_route_efficiency(scores):
-    # Using dynamic programming to calculate maximum efficiency
-    n = len(scores)
-    if n == 0:
-        return 0
-    dp = [0] * (n + 1)
-    dp[1] = scores[0]
-    for i in range(2, n + 1):
-        dp[i] = max(dp[i-1], dp[i-2] + scores[i-1])
-    return dp[n]
+def compute_adjusted_performance(transactions):
+    volume_weights = defaultdict(float)
+    daily_returns = []
+    
+    for day, trades in enumerate(transactions):
+        daily_volume = sum(trade['quantity'] for trade in trades)
+        if daily_volume == 0:
+            continue
+            
+        weighted_return = 0.0
+        for trade in trades:
+            weight = trade['quantity'] / daily_volume
+            volume_weights[trade['symbol']] += weight
+            weighted_return += weight * trade['return_rate']
+            
+        if day > 0 and abs(weighted_return) > 0.05:
+            weighted_return *= 1.1  # Volatility adjustment
+            
+        daily_returns.append(weighted_return)
+    
+    avg_daily_return = reduce(lambda x, y: x + y, daily_returns) / len(daily_returns) if daily_returns else 0
+    concentration_factor = reduce(lambda acc, w: acc + w**2, volume_weights.values(), 0)
+    
+    portfolio_index = round((avg_daily_return * 1000) / (1 + concentration_factor), 2)
+    return portfolio_index
 
-# Initial priority queue of route efficiency scores
-route_scores = [15, 10, 18, 9, 22, 12, 17]
-heap = route_scores[:]
-heapq.heapify(heap)
+# Transaction log data
+transaction_log = [
+    [{'symbol': 'TECH', 'quantity': 150, 'return_rate': 0.023}, {'symbol': 'ENERGY', 'quantity': 100, 'return_rate': -0.012}],
+    [{'symbol': 'TECH', 'quantity': 200, 'return_rate': 0.031}, {'symbol': 'HEALTH', 'quantity': 120, 'return_rate': 0.018}],
+    [{'symbol': 'FINANCE', 'quantity': 80, 'return_rate': -0.025}, {'symbol': 'ENERGY', 'quantity': 90, 'return_rate': 0.041}],
+    [{'symbol': 'TECH', 'quantity': 110, 'return_rate': 0.067}, {'symbol': 'HEALTH', 'quantity': 70, 'return_rate': -0.009}]
+]
 
-# Update scores with new values
-updates = [3, -2, 7, 1]
-for update in updates:
-    if heap:
-        current = heapq.heappop(heap)
-        heapq.heappush(heap, current + update)
-
-# Extract final scores from heap
-final_scores = []
-while heap:
-    final_scores.append(heapq.heappop(heap))
-
-# Apply dynamic programming to optimize route efficiency
-optimized_efficiency = calculate_route_efficiency(final_scores)
-
-# Apply a lambda-based transformation to adjust for fuel costs
-adjustment_factor = lambda x: x * 0.95 if x > 20 else x * 1.05
-adjusted_scores = list(map(adjustment_factor, final_scores))
-
-# Combine adjusted scores using reduce
-combined_score = reduce(lambda a, b: a + b, adjusted_scores, 0)
-
-# Final efficiency is the max of optimized and combined scores
-final_efficiency = max(optimized_efficiency, combined_score)
-print(f"Result: {optimized_efficiency}")
+portfolio_index = compute_adjusted_performance(transaction_log)
+print(f"Result: {portfolio_index}")

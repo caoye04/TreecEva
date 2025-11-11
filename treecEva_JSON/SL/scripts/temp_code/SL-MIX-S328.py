@@ -1,71 +1,51 @@
-from functools import reduce
+import math
 
-class DelayNode:
-    def __init__(self, delay, next_node=None):
-        self.delay = delay
-        self.next = next_node
+def calculate_trace(matrix):
+    return sum(matrix[i][i] for i in range(min(len(matrix), len(matrix[0]))))
 
-def build_delay_chain(measurements):
-    head = None
-    for delay in reversed(measurements):
-        head = DelayNode(delay, head)
-    return head
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
 
-class BatchProcessor:
-    def __enter__(self):
-        self.filtered_delays = []
-        return self
+# Instrument metadata
+instruments = [
+    {'id': 12, 'data': [[4, 2], [1, 3]]},
+    {'id': 15, 'data': [[5, 0, 2], [1, 6, 3], [4, 2, 1]]},
+    {'id': 17, 'data': [[9, 3], [2, 7]]},
+    {'id': 21, 'data': [[8, 1, 0], [3, 2, 4], [1, 0, 5]]},
+    {'id': 25, 'data': [[3, 7], [5, 2]]}
+]
+
+# Validation sets
+required_primes = frozenset([2, 3, 5, 7, 11, 13, 17, 19, 23])
+forbidden_ids = {14, 16, 18, 20, 22, 24}
+
+valid_instrument_count = 0
+
+for instrument in instruments:
+    id_value = instrument['id']
+    matrix_data = instrument['data']
     
-    def add_filtered(self, values):
-        self.filtered_delays.extend(values)
+    # Check if ID is not in forbidden set AND (ID is prime OR trace is prime)
+    trace_value = calculate_trace(matrix_data)
+    id_is_valid = id_value not in forbidden_ids
+    id_or_trace_is_prime = is_prime(id_value) or is_prime(trace_value)
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+    # Additional check: if matrix dimensions are square
+    is_square_matrix = len(matrix_data) == len(matrix_data[0])
+    
+    # Final validation: combine all conditions
+    if id_is_valid and id_or_trace_is_prime and is_square_matrix:
+        # Extra condition: check if trace intersects with required primes
+        trace_in_required = trace_value in required_primes
+        if trace_in_required or (id_value % 3 == 0):
+            valid_instrument_count += 1
 
-# Initialize delay measurements for three network nodes
-node_a_measurements = [120, 150, 90, 200, 110]
-nodel_b_measurements = [140, 160, 80, 220, 130]
-nodel_c_measurements = [100, 170, 70, 250, 95]
+# Dictionary comprehension for verification (not used in count but part of validation)
+verification_map = {inst['id']: calculate_trace(inst['data']) for inst in instruments}
 
-# Build linked lists for each node
-chain_a = build_delay_chain(node_a_measurements)
-chain_b = build_delay_chain(nodel_b_measurements)
-chain_c = build_delay_chain(nodel_c_measurements)
-
-# Process measurements with context manager
-with BatchProcessor() as processor:
-    all_chains = [chain_a, chain_b, chain_c]
-    for chain in all_chains:
-        current = chain
-        delays = []
-        while current:
-            delays.append(current.delay)
-            current = current.next
-        # Filter out delays greater than 200 (anomalies)
-        normal_delays = list(filter(lambda x: x <= 200, delays))
-        processor.add_filtered(normal_delays)
-    
-    # Calculate average of filtered delays
-    total_filtered = processor.filtered_delays
-    avg_delay = reduce(lambda a, b: a + b, total_filtered) / len(total_filtered)
-    
-    # Count delays within 20% of average
-    threshold = avg_delay * 0.2
-    low_variation_count = len(list(filter(lambda x: abs(x - avg_delay) <= threshold, total_filtered)))
-    
-    # Reliability scoring logic
-    has_good_average = avg_delay < 150
-    has_low_variation = low_variation_count >= len(total_filtered) * 0.6
-    sufficient_samples = len(total_filtered) >= 10
-    
-    reliability_score = 0
-    if has_good_average and has_low_variation and sufficient_samples:
-        reliability_score = 100
-    elif (has_good_average or has_low_variation) and sufficient_samples:
-        reliability_score = 75
-    elif not has_good_average and not has_low_variation:
-        reliability_score = 25
-    else:
-        reliability_score = 50
-
-print(f"Result: {reliability_score}")
+print(f"Result: {valid_instrument_count}")

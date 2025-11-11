@@ -1,60 +1,56 @@
-from collections import deque
+import itertools
 import math
 
-def calculate_subtree_sum(node):
-    if not node:
-        return 0
-    return node['value'] + calculate_subtree_sum(node['left']) + calculate_subtree_sum(node['right'])
+def calculate_zone_overlap(regions):
+    overlaps = 0
+    for pair in itertools.combinations(regions, 2):
+        if pair[0] & pair[1]:  # Check if sets intersect
+            overlaps += 1
+    return overlaps
 
-def apply_correction_factor(node):
-    if not node:
-        return 0
-    subtree_sum = calculate_subtree_sum(node)
-    correction = math.log(abs(subtree_sum) + 1) if subtree_sum != 0 else 0
-    left_correction = apply_correction_factor(node['left'])
-    right_correction = apply_correction_factor(node['right'])
-    return correction + left_correction + right_correction
+def transform_coordinates(x, y, scale):
+    return (x * scale, y * scale)
 
-def process_transactions(transaction_tree):
-    stack = deque()
-    stack.append(transaction_tree)
-    total_adjustment = 0
+class ProjectionContext:
+    def __init__(self, base_scale=1.5):
+        self.scale = base_scale
+        self.processed_zones = set()
     
-    while stack:
-        current = stack.pop()
-        if current:
-            # Apply bitwise operation to node value
-            adjusted_value = current['value'] ^ (current['value'] >> 2)
-            current['value'] = adjusted_value
-            
-            # Add children to stack
-            if current['left']:
-                stack.append(current['left'])
-            if current['right']:
-                stack.append(current['right'])
-            
-            # Accumulate adjustment
-            total_adjustment += adjusted_value & 0xF
+    def __enter__(self):
+        return self
     
-    # Apply recursive correction
-    correction_factor = apply_correction_factor(transaction_tree)
-    final_adjustment = int(total_adjustment * correction_factor)
-    return final_adjustment
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
 
-# Transaction tree structure
-transaction_tree = {
-    'value': 100,
-    'left': {
-        'value': -50,
-        'left': {'value': 25, 'left': None, 'right': None},
-        'right': {'value': -10, 'left': None, 'right': None}
-    },
-    'right': {
-        'value': 75,
-        'left': {'value': -30, 'left': None, 'right': None},
-        'right': {'value': 40, 'left': None, 'right': None}
-    }
-}
+# Initialize coordinate system
+base_points = [(1, 2), (3, 4), (5, 6)]
+zone_definitions = [
+    frozenset([1, 2, 3]),
+    frozenset([2, 3, 4]),
+    frozenset([4, 5, 6]),
+    frozenset([1, 5, 6])
+]
 
-final_adjustment = process_transactions(transaction_tree)
-print(f"Result: {final_adjustment}")
+with ProjectionContext(2.0) as ctx:
+    # Transform coordinates
+    transformed_points = [transform_coordinates(x, y, ctx.scale) for x, y in base_points]
+    
+    # Calculate geometric properties
+    distances = []
+    for i in range(len(transformed_points)-1):
+        p1, p2 = transformed_points[i], transformed_points[i+1]
+        distance = math.sqrt((p2[0]-p1[0])**2 + (p2[1]-p1[1])**2)
+        distances.append(distance)
+    
+    # Process zone overlaps using short-circuit evaluation
+    total_overlap = calculate_zone_overlap(zone_definitions)
+    has_significant_overlap = total_overlap > 2 and len(zone_definitions) >= 4
+    
+    # Calculate spatial density
+    avg_distance = sum(distances) / len(distances) if distances else 0
+    
+    # Final zone scoring algorithm
+    zone_density = len(zone_definitions) * 1.5
+    final_zone_score = int((avg_distance * zone_density) + (10 if has_significant_overlap else 0))
+
+print(f"Result: {final_zone_score}")

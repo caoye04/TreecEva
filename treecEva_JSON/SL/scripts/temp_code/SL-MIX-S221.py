@@ -1,25 +1,35 @@
-def precision_lock(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return round(result, 2)
-    return wrapper
+import re
+from functools import reduce
+from collections import defaultdict
 
-def transaction_hasher(operation_log):
-    return sum(hash(op) for op in operation_log)
+def haversine_distance(p1, p2):
+    # Simplified distance calculation returning integer meters
+    return int(abs(p1[0] - p2[0]) * 100000 + abs(p1[1] - p2[1]) * 100000)
 
-@precision_lock
-def compute_adjusted_total(transactions):
-    base_sum = sum(transactions)
-    adjustment_factor = 1.0001
-    return base_sum * adjustment_factor
+def extract_coordinates(log_line):
+    match = re.search(r'\(([-+]?\d*\.\d+),\s*([-+]?\d*\.\d+)\)', log_line)
+    if match:
+        return (float(match.group(1)), float(match.group(2)))
+    return None
 
-financial_operations = ['deposit_100.50', 'withdrawal_25.75', 'fee_2.50']
-transaction_values = [100.50, -25.75, -2.50]
+tracking_logs = [
+    "Device_001: (34.0522, -118.2437)",
+    "Device_001: (34.0530, -118.2440)",
+    "Device_001: (34.0545, -118.2455)",
+    "Device_001: (34.0560, -118.2470)",
+    "Device_001: (34.0575, -118.2485)"
+]
 
-hashed_log = transaction_hasher(financial_operations)
-adjusted_total = compute_adjusted_total(transaction_values)
+coordinates_list = list(filter(None, map(extract_coordinates, tracking_logs)))
+dp_min_deviation = defaultdict(lambda: float('inf'))
+dp_min_deviation[0] = 0
 
-checksum_components = [hashed_log, adjusted_total]
-checksum_result = sum(map(lambda x: int(x) % 1000, checksum_components))
+for i in range(1, len(coordinates_list)):
+    for j in range(i):
+        segment_distance = haversine_distance(coordinates_list[j], coordinates_list[i])
+        dp_min_deviation[i] = min(dp_min_deviation[i], dp_min_deviation[j] + segment_distance)
 
-print(f'Result: {checksum_result}')
+straight_line_distance = haversine_distance(coordinates_list[0], coordinates_list[-1])
+migration_efficiency_index = dp_min_deviation[len(coordinates_list)-1] - straight_line_distance
+
+print(f"Result: {migration_efficiency_index}")

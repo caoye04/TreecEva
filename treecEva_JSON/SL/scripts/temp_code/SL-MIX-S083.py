@@ -1,26 +1,21 @@
-import math
-from itertools import combinations
+channels = [
+    {'id': 'CH_A', 'bandwidth': 120, 'latency': 15},
+    {'id': 'CH_B', 'bandwidth': 90, 'latency': 10},
+    {'id': 'CH_C', 'bandwidth': 200, 'latency': 25},
+    {'id': 'CH_D', 'bandwidth': 150, 'latency': 20}
+]
 
-elevations = [120, 150, 130, 125, 140, 135]
-n = len(elevations)
-mean_elevation = sum(elevations) / n
+# Efficiency formula: bandwidth / latency
+channel_efficiencies = {ch['id']: ch['bandwidth'] / ch['latency'] for ch in channels}
 
-# Calculate log-dampened squared differences
-log_dampened_sum = sum(math.log10((x - mean_elevation)**2 + 1) for x in elevations)
+visited_channels = frozenset(['CH_B', 'CH_D'])
+valid_channels = {k: v for k, v in channel_efficiencies.items() if k not in visited_channels}
 
-# Compute base stability score
-base_stability_score = log_dampened_sum ** (1/3)
+max_efficiency = 0
+for cid, eff in valid_channels.items():
+    if eff > max_efficiency:
+        max_efficiency = eff
+    if max_efficiency > 8.0:
+        break
 
-# Count unique elevation pair differences exceeding 10 meters
-elevation_pairs = list(combinations(elevations, 2))
-significant_differences_count = sum(1 for a, b in elevation_pairs if abs(a - b) > 10)
-
-# Apply correction factor if necessary
-correction_factor = 0
-if significant_differences_count > 5:
-    correction_factor = 2 ** (significant_differences_count - 5)
-
-# Final corrected stability score
-final_stability_score = base_stability_score + correction_factor
-
-print(f"Result: {round(final_stability_score)}")
+print(f'Result: {max_efficiency}')

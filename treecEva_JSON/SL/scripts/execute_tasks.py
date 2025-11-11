@@ -22,7 +22,7 @@ class TaskExecutor:
                 f.write(code)
             
             result = subprocess.run(
-                [sys.executable, temp_file],
+               [sys.executable, temp_file],
                 capture_output=True,
                 text=True,
                 timeout=30
@@ -48,111 +48,8 @@ class TaskExecutor:
                 "error": f"Execution error: {str(e)}"
             }
     
-    def execute_cpp_code(self, code, task_id):
-        """执行C++代码"""
-        try:
-            os.makedirs(TEMP_CODE_DIR, exist_ok=True)
-            temp_cpp = os.path.join(TEMP_CODE_DIR, f"{task_id}.cpp")
-            temp_exe = os.path.join(TEMP_CODE_DIR, f"{task_id}.exe")
-            
-            # 为C++代码添加必要的数学常数定义
-            if "#define _USE_MATH_DEFINES" not in code:
-                code = "#define _USE_MATH_DEFINES\n" + code
-            if "#define M_PI" not in code and "M_PI" in code:
-                code = "#define M_PI 3.14159265358979323846\n" + code
-            
-            with open(temp_cpp, 'w', encoding='utf-8') as f:
-                f.write(code)
-            
-            # 编译
-            compile_result = subprocess.run(
-                ["g++", "-o", temp_exe, temp_cpp, "-std=c++17"],
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
-            
-            if compile_result.returncode != 0:
-                return {
-                    "success": False,
-                    "error": f"Compilation error: {compile_result.stderr}"
-                }
-            
-            # 运行
-            run_result = subprocess.run(
-                [temp_exe],
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
-            
-            if run_result.stdout.strip():
-                output = run_result.stdout.strip()
-                return self.extract_result_from_output(output)
-            else:
-                return {
-                    "success": False,
-                    "error": f"Runtime error: {run_result.stderr}"
-                }
-                
-        except Exception as e:
-            return {
-                "success": False,
-                "error": f"Execution error: {str(e)}"
-            }
-    
-    def execute_c_code(self, code, task_id):
-        """执行C代码"""
-        try:
-            os.makedirs(TEMP_CODE_DIR, exist_ok=True)
-            temp_c = os.path.join(TEMP_CODE_DIR, f"{task_id}.c")
-            temp_exe = os.path.join(TEMP_CODE_DIR, f"{task_id}.exe")
-            
-            # 为C代码添加必要的数学常数定义
-            if "#define _USE_MATH_DEFINES" not in code:
-                code = "#define _USE_MATH_DEFINES\n" + code
-            if "#define M_PI" not in code and "M_PI" in code:
-                code = "#define M_PI 3.14159265358979323846\n" + code
-            
-            with open(temp_c, 'w', encoding='utf-8') as f:
-                f.write(code)
-            
-            # 编译
-            compile_result = subprocess.run(
-                ["gcc", "-o", temp_exe, temp_c, "-lm", "-std=c99"],
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
-            
-            if compile_result.returncode != 0:
-                return {
-                    "success": False,
-                    "error": f"Compilation error: {compile_result.stderr}"
-                }
-            
-            # 运行
-            run_result = subprocess.run(
-                [temp_exe],
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
-            
-            if run_result.stdout.strip():
-                output = run_result.stdout.strip()
-                return self.extract_result_from_output(output)
-            else:
-                return {
-                    "success": False,
-                    "error": f"Runtime error: {run_result.stderr}"
-                }
-                
-        except Exception as e:
-            return {
-                "success": False,
-                "error": f"Execution error: {str(e)}"
-            }
+    # (已删除) execute_cpp_code 方法
+    # (已删除) execute_c_code 方法
     
     def extract_result_from_output(self, output):
         """从输出中提取结果"""
@@ -199,7 +96,7 @@ class TaskExecutor:
         }
     
     def execute_task(self, task_data):
-        """执行单个任务"""
+        """执行单个任务 (已修改为仅限Python)"""
         task_id = task_data["id"]
         language = task_data["metadata"]["language"]
         code = task_data["task"]["code"]
@@ -208,14 +105,12 @@ class TaskExecutor:
         
         if language == "python":
             result = self.execute_python_code(code, task_id)
-        elif language in ["cpp", "c++"]:
-            result = self.execute_cpp_code(code, task_id)
-        elif language == "c":
-            result = self.execute_c_code(code, task_id)
         else:
+            # (已修改) 对于非Python任务，直接跳过并报告
+            print(f"  Skipping task {task_id}: Unsupported language ({language})")
             result = {
                 "success": False,
-                "error": f"Unsupported language: {language}"
+                "error": f"Unsupported language (Python-only framework): {language}"
             }
         
         return result
@@ -238,7 +133,10 @@ class TaskExecutor:
                     dataset[i + 1]["task"]["answer"] = result["result"]
                     print(f"✓ Task {task['id']}: Answer updated to {result['result']}")
                 else:
-                    print(f"✗ Task {task['id']}: Execution failed - {result.get('error', 'Unknown error')}")
+                    # 只有在任务是Python但执行失败时才打印错误
+                    if task.get("metadata", {}).get("language") == "python":
+                        print(f"✗ Task {task['id']}: Execution failed - {result.get('error', 'Unknown error')}")
+                    # 非Python任务的跳过信息已在 execute_task 中打印
         
         # 保存执行结果到answer.json
         with open(ANSWER_PATH, 'w', encoding='utf-8') as f:

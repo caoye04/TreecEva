@@ -1,44 +1,45 @@
+import math
 import statistics
+from itertools import combinations
 
-def celsius_converter(temp, unit):
-    if unit == 'F':
-        return (temp - 32) * 5/9
-    elif unit == 'K':
-        return temp - 273.15
-    return temp
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
-def outlier_filter(temps):
-    if len(temps) < 2:
-        return temps
-    mean_temp = statistics.mean(temps)
-    stdev_temp = statistics.stdev(temps) if len(temps) > 1 else 0
-    return [t for t in temps if abs(t - mean_temp) <= 2 * stdev_temp]
+def generate_sequence(length):
+    seq = []
+    for i in range(1, length + 1):
+        if i % 3 == 0:
+            seq.append(i * 2)
+        elif i % 3 == 1:
+            seq.append(i ** 2)
+        else:
+            seq.append(i * (i + 1))
+    return seq
 
-# Sensor data: (temperature, unit)
-sensor_readings = [
-    (25, 'C'),
-    (77, 'F'),
-    (298.15, 'K'),
-    (30, 'C'),
-    (86, 'F'),
-    (310, 'K'),
-    (22, 'C'),
-    (68, 'F')
-]
+# Generate sequence of length 20
+sequence = generate_sequence(20)
 
-# Normalize all temperatures to Celsius
-normalized_temps = [celsius_converter(temp, unit) for temp, unit in sensor_readings]
+# Extract elements at prime indices (1-based indexing)
+prime_indexed_values = [sequence[i] for i in range(len(sequence)) if is_prime(i + 1)]
 
-# Filter outliers
-filtered_temps = outlier_filter(normalized_temps)
+# Compute variance of these values
+variance = statistics.variance(prime_indexed_values)
 
-# Compute reliability score as weighted average
-weights = [0.1, 0.15, 0.2, 0.25, 0.3] * ((len(filtered_temps) // 5) + 1)
-weights = weights[:len(filtered_temps)]
+# Compute combinatorial coefficient C(10, 3)
+comb_coeff = len(list(combinations(range(10), 3)))
 
-weighted_sum = sum(temp * weight for temp, weight in zip(filtered_temps, weights))
-weight_sum = sum(weights)
+# Apply bitwise XOR between variance (as integer) and combinatorial coefficient
+resonance_score = int(variance) ^ comb_coeff
 
-final_reliability_score = weighted_sum / weight_sum if weight_sum != 0 else 0
-
-print(f"Result: {round(final_reliability_score, 2)}")
+print(f"Result: {resonance_score}")

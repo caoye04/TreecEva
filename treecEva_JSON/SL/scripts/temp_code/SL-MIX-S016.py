@@ -1,23 +1,24 @@
-from collections import namedtuple
+import math
+from functools import reduce
 
-# Define item sales record
-SalesRecord = namedtuple('SalesRecord', ['sourdough_count', 'croissant_count', 'day_code'])
+device_readings = [1000, 2500, 4000, 8000]
+device_ids = ['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']
 
-# Sales data
-bakery_sales = SalesRecord(sourdough_count=15, croissant_count=8, day_code=6)
+# Step 1: Apply logarithmic scaling to readings
+scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
 
-# Pricing logic using lambda
-get_prices = lambda day: (12, 5) if day in [5, 6] else (10, 4)
+# Step 2: Compute weights from string hashes
+hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
 
-# Get prices based on day
-sourdough_price, croissant_price = get_prices(bakery_sales.day_code)
+# Step 3: Normalize weights to sum to 1
+weight_sum = sum(hash_weights)
+normalized_weights = [w / weight_sum for w in hash_weights]
 
-# Calculate initial revenue
-initial_revenue = (bakery_sales.sourdough_count * sourdough_price) + \
-                  (bakery_sales.croissant_count * croissant_price)
+# Step 4: Calculate weighted harmonic mean
+harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
+weighted_harmonic_mean = 1 / harmonic_sum
 
-# Apply discount if total items > 20
-total_items = bakery_sales.sourdough_count + bakery_sales.croissant_count
-total_revenue = initial_revenue * 0.9 if total_items > 20 else initial_revenue
+# Step 5: Apply exponentiation for final normalization
+normalized_aggregate = math.exp(weighted_harmonic_mean)
 
-print(f"Result: {total_revenue}")
+print(f"Result: {normalized_aggregate}")

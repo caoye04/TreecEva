@@ -1,20 +1,48 @@
-import math
+from collections import deque
+import functools
 
-elevation_data = [150, 210, 180, 300, 270, 240, 330, 400, 360, 390]
-terrain_distance = [i * 0.5 for i in range(len(elevation_data))]
+call_counter = 0
+def track_calls(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        global call_counter
+        call_counter += 1
+        return func(*args, **kwargs)
+    return wrapper
 
-log_scale_factor = lambda h: math.log(h + 10) if h > 0 else 0
-exp_weight = lambda d: math.exp(-0.2 * d)
+@track_calls
+def process_stage(value, stage_id):
+    if stage_id == 1:
+        return value * 2
+    elif stage_id == 2:
+        return value + 5
+    elif stage_id == 3:
+        return value ^ 3
+    return value
 
-scaled_elevations = [log_scale_factor(h) for h in elevation_data]
-weights = [exp_weight(d) for d in terrain_distance]
+@track_calls
+def validate_output(stack):
+    total = 0
+    while stack:
+        item = stack.pop()
+        if item and (item > 10 or not stack):
+            total += item
+    return total
 
-visibility_index = 0
-for i in range(len(scaled_elevations)):
-    if scaled_elevations[i] > sum(scaled_elevations[:i]) / (i + 1) if i > 0 else True:
-        visibility_index += scaled_elevations[i] * weights[i]
+# Main processing pipeline
+sensor_buffer = deque([7, 3, 9, 1, 4])
+processing_stack = []
+
+while sensor_buffer and call_counter < 10:
+    data = sensor_buffer.popleft()
+    if data and (data < 5 or not sensor_buffer):
+        processed = process_stage(data, 1)
+        if processed > 10:
+            processing_stack.append(processed)
+        else:
+            processing_stack.append(process_stage(processed, 2))
     else:
-        visibility_index -= scaled_elevations[i] * 0.1
+        processing_stack.append(process_stage(data, 3))
 
-visibility_index = round(visibility_index, 2)
-print(f"Result: {visibility_index}")
+final_output = validate_output(processing_stack) + call_counter
+print(f"Result: {final_output}")

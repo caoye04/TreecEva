@@ -1,52 +1,72 @@
-import math
-from collections import deque
-from statistics import mean
+from functools import reduce
+from itertools import combinations
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+def calculate_inspection_score(failures):
+    return reduce(lambda x, y: x ^ (y << 1), failures, 0)
 
-def harmonic_mean(data):
-    if len(data) == 0:
-        return 0
-    return len(data) / sum(1/x for x in data if x != 0)
+def compute_quality_score(inspection_results):
+    base_score = sum(inspection_results) * 3
+    adjustment = 0
+    for combo in combinations(inspection_results, 2):
+        if combo[0] & combo[1]:
+            adjustment += 1
+    return base_score - adjustment
 
-# Simulated daily returns for a portfolio
-portfolio_returns = [0.02, -0.01, 0.03, 0.05, -0.02, 0.04, -0.03, 0.06, 0.01, -0.04, 0.02, 0.03, -0.01, 0.05, 0.04]
+class WidgetStateMachine:
+    def __init__(self):
+        self.state = 'START'
+        self.mechanical_passed = True
+        self.electrical_passed = True
+        self.software_passed = True
+    
+    def process_inspection(self, inspection_type, result):
+        if self.state == 'START' and inspection_type == 'mechanical':
+            self.mechanical_passed = result
+            self.state = 'MECHANICAL_DONE'
+        elif self.state == 'MECHANICAL_DONE' and inspection_type == 'electrical':
+            self.electrical_passed = result
+            self.state = 'ELECTRICAL_DONE'
+        elif self.state == 'ELECTRICAL_DONE' and inspection_type == 'software':
+            self.software_passed = result
+            self.state = 'COMPLETE'
+    
+    def get_failure_flags(self):
+        flags = []
+        if not self.mechanical_passed:
+            flags.append(1)
+        if not self.electrical_passed:
+            flags.append(2)
+        if not self.software_passed:
+            flags.append(4)
+        return flags
 
-# Step 1: Compute mean and standard deviation
-return_mean = sum(portfolio_returns) / len(portfolio_returns)
-return_std = (sum((x - return_mean) ** 2 for x in portfolio_returns) / len(portfolio_returns)) ** 0.5
+# Process batch of widgets
+widget_batch = [WidgetStateMachine() for _ in range(12)]
 
-# Step 2: Filter outliers (z-score > 2.0 or < -2.0)
-filtered_returns = [r for r in portfolio_returns if abs((r - return_mean) / return_std) <= 2.0]
+# Simulate inspection results
+inspection_data = [
+    [('mechanical', True), ('electrical', True), ('software', False)],
+    [('mechanical', False), ('electrical', True), ('software', True)],
+    [('mechanical', True), ('electrical', False), ('software', True)],
+    [('mechanical', True), ('electrical', True), ('software', True)],
+    [('mechanical', False), ('electrical', False), ('software', False)],
+    [('mechanical', True), ('electrical', True), ('software', False)],
+    [('mechanical', False), ('electrical', True), ('software', False)],
+    [('mechanical', True), ('electrical', False), ('software', False)],
+    [('mechanical', False), ('electrical', False), ('software', True)],
+    [('mechanical', True), ('electrical', True), ('software', True)],
+    [('mechanical', False), ('electrical', True), ('software', True)],
+    [('mechanical', True), ('electrical', False), ('software', True)]
+]
 
-# Step 3: Compute EWMA with decay factor 0.9
-ewma_values = []
-if filtered_returns:
-    ewma = filtered_returns[0]
-    for ret in filtered_returns:
-        ewma = 0.9 * ewma + 0.1 * ret
-        ewma_values.append(ewma)
+# Apply inspection data to widgets
+for i, widget in enumerate(widget_batch):
+    for inspection_type, result in inspection_data[i]:
+        widget.process_inspection(inspection_type, result)
 
-# Step 4: Collect prime-indexed returns from original list
-prime_indexed_returns = [portfolio_returns[i] for i in range(len(portfolio_returns)) if is_prime(i)]
+# Calculate scores
+failure_profiles = [widget.get_failure_flags() for widget in widget_batch]
+inspection_scores = [calculate_inspection_score(profile) for profile in failure_profiles]
+final_quality_score = compute_quality_score(inspection_scores)
 
-# Step 5: Compute harmonic mean of prime-indexed returns
-h_mean = harmonic_mean(prime_indexed_returns)
-
-# Step 6: Apply correction factor to latest EWMA value
-latest_ewma = ewma_values[-1] if ewma_values else 0
-adjusted_risk = latest_ewma * (1 + h_mean)
-
-print(f"Result: {adjusted_risk}")
+print(f"Result: {final_quality_score}")

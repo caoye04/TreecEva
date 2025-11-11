@@ -1,47 +1,60 @@
-class TorqueNode:
-    def __init__(self, adjustment, next_node=None):
-        self.adjustment = adjustment
-        self.next = next_node
+import heapq
+import re
 
-def build_torque_chain(values):
-    if not values:
-        return None
-    head = TorqueNode(values[0])
-    current = head
-    for val in values[1:]:
-        current.next = TorqueNode(val)
-        current = current.next
-    return head
+def calculate_priority(weight, distance, urgency):
+    return weight * 0.3 + distance * 0.2 + urgency * 0.5
 
-def compute_final_output(chain_head):
-    from itertools import combinations
-    
-    adjustments = []
-    current = chain_head
-    while current:
-        adjustments.append(current.adjustment)
-        current = current.next
-    
-    # Short-circuit evaluation with cumulative condition
-    valid_combinations = [
-        combo for combo in combinations(adjustments, 3)
-        if (combo[0] > 0 and combo[1] < 100) or 
-           (combo[1] > 0 and combo[2] < 100)
-    ]
-    
-    # Calculate weighted sum
-    total = sum(
-        (a * b) + c 
-        for a, b, c in valid_combinations
-        if a + b + c != 0  # Additional short-circuit condition
-    )
-    
-    return total % 1000
+def extract_numeric_value(code_str):
+    match = re.search(r'\d+', code_str)
+    return int(match.group()) if match else 0
 
-# Initialize torque adjustments
-initial_adjustments = [10, -5, 25, 0, 40, -15, 30]
-torque_chain = build_torque_chain(initial_adjustments)
+def apply_filters(requests):
+    filtered = []
+    for req in requests:
+        if req['weight'] > 10 and req['distance'] < 1000:
+            filtered.append(req)
+    return filtered
 
-# Compute final output
-final_torque_output = compute_final_output(torque_chain)
-print(f"Result: {final_torque_output}")
+def update_weights(requests):
+    for req in requests:
+        code = req['code']
+        numeric_part = extract_numeric_value(code)
+        if numeric_part > 50:
+            req['weight'] *= 1.1
+    return requests
+
+# Initial shipment requests data
+shipment_requests = [
+    {'id': 'PKG001', 'weight': 15, 'distance': 800, 'urgency': 7, 'code': 'EXPRESS55'},
+    {'id': 'PKG002', 'weight': 8, 'distance': 1200, 'urgency': 5, 'code': 'STANDARD20'},
+    {'id': 'PKG003', 'weight': 25, 'distance': 600, 'urgency': 9, 'code': 'PRIORITY75'},
+    {'id': 'PKG004', 'weight': 12, 'distance': 950, 'urgency': 6, 'code': 'REGULAR40'},
+    {'id': 'PKG005', 'weight': 30, 'distance': 400, 'urgency': 8, 'code': 'FAST60'}
+]
+
+# Calculate priorities and create max-heap (using negative values)
+heap = []
+for req in shipment_requests:
+    priority = calculate_priority(req['weight'], req['distance'], req['urgency'])
+    heapq.heappush(heap, (-priority, req))
+
+# Apply filters to remove invalid requests
+filtered_data = apply_filters([item[1] for item in heap])
+
+# Update weights based on code values
+updated_requests = update_weights(filtered_data)
+
+# Rebuild heap with updated data
+heap = []
+for req in updated_requests:
+    priority = calculate_priority(req['weight'], req['distance'], req['urgency'])
+    heapq.heappush(heap, (-priority, req))
+
+# Process the first 3 highest priority requests
+for _ in range(min(3, len(heap))):
+    heapq.heappop(heap)
+
+# Calculate total weight of remaining packages
+remaining_weight_total = sum(item[1]['weight'] for item in heap)
+
+print(f"Result: {remaining_weight_total}")

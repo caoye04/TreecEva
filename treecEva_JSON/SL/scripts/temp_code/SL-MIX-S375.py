@@ -1,17 +1,26 @@
-import re
-from math import pi
+import math
+from functools import reduce
 
-class ParkFeature:
-    def __init__(self, location_str):
-        self.location_str = location_str
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
 
-# Extract coordinates using regex
-feature = ParkFeature('15,20')
-coords_match = re.match(r'(\d+),(\d+)', feature.location_str)
-x, y = map(int, coords_match.groups())
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)
 
-# Calculate area using lambda
-area_calculator = lambda radius: pi * radius ** 2
-fountain_area = area_calculator(7)
+def lcm_of_list(numbers):
+    return reduce(lcm, numbers)
 
-print(f'Result: {round(fountain_area)}')
+# Generate first 5 prime numbers
+primes = [2, 3, 5, 7, 11]
+
+# Calculate LCM of the first 5 primes
+lcm_primes = lcm_of_list(primes)
+
+# Use LCM as exponent in modular exponentiation
+base = 3
+modulus = 1000
+secure_key = pow(base, lcm_primes, modulus)
+
+print(f"Result: {secure_key}")

@@ -1,44 +1,49 @@
-import math
+import statistics
 
-# Package data: (weight, priority)
-packages = [
-    (12.5, 3),
-    (7.2, 5),
-    (15.8, 2),
-    (9.1, 4),
-    (6.4, 6)
-]
+def compute_variance_window(temps, start, end):
+    window = temps[start:end+1]
+    return statistics.variance(window)
 
-# Truck capacities
-truck_capacities = [30.0, 25.0, 20.0]
+def find_stable_period(temps, threshold):
+    sorted_temps = sorted(enumerate(temps), key=lambda x: x[1])
+    low, high = 0, len(sorted_temps) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        idx, temp = sorted_temps[mid]
+        left_bound = max(0, idx - 2)
+        right_bound = min(len(temps) - 1, idx + 2)
+        var = compute_variance_window(temps, left_bound, right_bound)
+        if var < threshold:
+            return idx, var
+        elif temp < temps[idx]:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1, float('inf')
 
-# Greedy assignment based on priority-to-weight ratio
-packages.sort(key=lambda x: x[1]/x[0], reverse=True)
+temperature_readings = [23.5, 24.1, 23.8, 24.0, 23.9, 24.2, 23.7, 24.3, 23.6, 24.4]
+sensor_indices = list(range(len(temperature_readings)))
+stability_threshold = 0.05
 
-# Track assignments
-truck_assignments = {i: [] for i in range(len(truck_capacities))}
-truck_loads = {i: 0.0 for i in range(len(truck_capacities))}
+# Compute initial stability metrics
+window_variances = {i: compute_variance_window(temperature_readings, max(0, i-1), min(len(temperature_readings)-1, i+1)) for i in sensor_indices}
 
-# Assign packages greedily
-for weight, priority in packages:
-    best_truck = -1
-    best_remaining = float('inf')
-    
-    for i in range(len(truck_capacities)):
-        remaining = truck_capacities[i] - truck_loads[i]
-        if remaining >= weight and remaining < best_remaining:
-            best_truck = i
-            best_remaining = remaining
-    
-    if best_truck != -1:
-        truck_assignments[best_truck].append((weight, priority))
-        truck_loads[best_truck] += weight
+# Identify stable regions using binary search
+stable_positions = {}
+for idx in sensor_indices:
+    pos, var = find_stable_period(temperature_readings, stability_threshold * (idx + 1))
+    if pos != -1:
+        stable_positions[pos] = var
 
-# Calculate optimal load using load balancing formula
-load_factors = [truck_loads[i]/truck_capacities[i] for i in range(len(truck_capacities))]
-optimal_load = sum(load_factors) / len(load_factors) * 100
+# Calculate overall stability index
+if stable_positions:
+    stability_index = sum(stable_positions.values()) / len(stable_positions)
+else:
+    stability_index = 0.0
 
-# Adjust for precision
-optimal_load = round(optimal_load, 2)
+# Adjust for sensor distribution skew
+unique_variances = set(window_variances.values())
+if len(unique_variances) > 1:
+    stability_index *= len(unique_variances) / len(window_variances)
 
-print(f"Result: {optimal_load}")
+print(f"Result: {stability_index}")

@@ -1,39 +1,31 @@
-import itertools
+class EventLogger:
+    def __init__(self):
+        self.count = 0
+    
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.count += 1
+        return False
 
-def process_signal_chain():
-    # Initialize state machine components
-    state_flags = 0b1010
-    signal_power = 0.0
-    modulation_index = 3
-    
-    # Define transformation functions
-    transform_ops = [
-        lambda x, s: x ^ (s << 1),
-        lambda x, s: x & ~(s >> 1),
-        lambda x, s: x | (s ^ 0xF)
-    ]
-    
-    # Process signal through state machine
-    for cycle, adjustment in enumerate(itertools.cycle([0.5, -0.25, 0.75])):
-        if cycle >= 6:
-            break
-            
-        # Apply bitwise transformation based on current cycle
-        op_index = cycle % len(transform_ops)
-        state_flags = transform_ops[op_index](state_flags, cycle+1)
-        
-        # Update power measurement with floating point operations
-        signal_power += (state_flags & 0x7) * adjustment
-        
-        # Conditional state modification
-        if signal_power > 8.0:
-            state_flags >>= 1
-        elif signal_power < 0:
-            state_flags <<= 1
-            signal_power = abs(signal_power)
-    
-    return signal_power
+def fibonacci_sequence(n):
+    seq = [0, 1]
+    for _ in range(2, n):
+        seq.append(seq[-1] + seq[-2])
+    return seq[:n]
 
-# Execute processing pipeline
-final_measurement = process_signal_chain()
-print(f"Result: {final_measurement}")
+fib_nums = fibonacci_sequence(12)
+window_size = 4
+threshold = 15
+trigger_count = 0
+
+for i in range(len(fib_nums) - window_size + 1):
+    window = fib_nums[i:i+window_size]
+    weighted_sum = sum(val * (idx + 1) for idx, val in enumerate(window))
+    if weighted_sum > threshold:
+        with EventLogger() as logger:
+            pass
+        trigger_count += 1
+
+print(f"Result: {trigger_count}")

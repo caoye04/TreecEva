@@ -1,39 +1,57 @@
-import re
-from functools import reduce
+class SensorNode:
+    def __init__(self, reading, next_node=None):
+        self.reading = reading
+        self.next = next_node
 
-def calculate_base_score(payload):
-    return sum(ord(c) for c in payload if c.isalnum())
+def binary_search(arr, target):
+    low, high = 0, len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
 
-def is_suspicious_pattern(payload):
-    return bool(re.search(r'[0-9]{4,}', payload))
+def process_sensors(head, valid_range, exclusion_set):
+    current = head
+    filtered_readings = []
+    
+    while current and current.reading < 1000:  # Short-circuit protection
+        reading = current.reading
+        # Apply filtering logic with set operations and short-circuit evaluation
+        if reading >= valid_range[0] and reading <= valid_range[1]:
+            if reading not in exclusion_set and (reading % 2 == 0 or reading > 50):
+                filtered_readings.append(reading)
+        current = current.next
+    
+    # Deduplicate and sort for binary search
+    unique_sorted = sorted(list(frozenset(filtered_readings)))
+    
+    # Find position of special marker value
+    marker = 84
+    position = binary_search(unique_sorted, marker)
+    
+    # Calculate final result based on position and list properties
+    if position != -1 and len(unique_sorted) > 0:
+        target_result = (position + 1) * sum(filter(lambda x: x < marker, unique_sorted))
+    else:
+        target_result = 0
+    
+    return target_result
 
-def contains_hex_sequences(payload):
-    return bool(re.search(r'[a-fA-F0-9]{6,}', payload))
+# Initialize sensor linked list: 12 -> 84 -> 43 -> 84 -> 99 -> 12 -> 150 -> 200 -> ...
+sensor_data = [12, 84, 43, 84, 99, 12, 150, 200, 75, 300, 84, 500]
+head = None
+for val in reversed(sensor_data):
+    head = SensorNode(val, head)
 
-# Encoded payload data
-encoded_payload = "X5k9#abcd1234#ZmFsc2U="  # Base64 for 'false'
+# Define valid range and exclusion set
+operational_range = (10, 250)
+noise_signatures = frozenset([43, 99])
 
-# Decoding step
-import base64
-decoded_payload = base64.b64decode(encoded_payload.split('#')[2]).decode('utf-8')
-
-# Pattern analysis
-suspicious_flags = {
-    'has_long_digits': is_suspicious_pattern(decoded_payload),
-    'has_hex_sequences': contains_hex_sequences(decoded_payload),
-    'is_non_printable': any(not c.isprintable() for c in decoded_payload)
-}
-
-# Scoring logic
-base_score = calculate_base_score(decoded_payload)
-suspicion_indicators = frozenset(flag for flag, value in suspicious_flags.items() if value)
-indicator_weights = {'has_long_digits': 10, 'has_hex_sequences': 15, 'is_non_printable': 20}
-
-# Calculate weighted suspicion score using dictionary comprehension and set operations
-weighted_scores = {indicator: indicator_weights[indicator] for indicator in suspicion_indicators}
-suspicion_score = sum(weighted_scores.values()) if weighted_scores else 0
-
-# Final threat calculation with short-circuit logic
-threat_score = base_score + suspicion_score if not (suspicious_flags['is_non_printable'] and len(decoded_payload) > 10) else 0
-
-print(f"Result: {threat_score}")
+# Process sensors and get result
+target_result = process_sensors(head, operational_range, noise_signatures)
+print(f"Target result: {target_result}")

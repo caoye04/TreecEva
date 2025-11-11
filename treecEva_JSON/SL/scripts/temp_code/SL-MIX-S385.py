@@ -1,56 +1,35 @@
-import math
-from collections import defaultdict
+import re
+from functools import reduce
+from collections import Counter
 
-def calculate_hub_efficiency(weights, distances):
-    if not weights or not distances:
-        return 0
-    avg_weight = sum(weights) / len(weights)
-    total_distance = sum(distances)
-    efficiency = (avg_weight * len(weights)) / (total_distance + 1)  # +1 to avoid division by zero
-    return math.floor(efficiency)
+def ip_to_int(ip_str):
+    parts = list(map(int, ip_str.split('.')))
+    return reduce(lambda acc, octet: (acc << 8) + octet, parts, 0)
 
-def distribute_packages(hub_data):
-    # Divide and conquer approach - split hubs into groups of 2
-    if len(hub_data) <= 2:
-        efficiencies = [
-            calculate_hub_efficiency(weights, distances) 
-            for weights, distances in hub_data
-        ]
-        return sum(efficiencies) if efficiencies else 0
+def count_ones(n):
+    return bin(n).count('1')
+
+log_entry = "Security alert from IP 192.168.1.10 at 2023-07-15T14:30:22Z"
+ip_pattern = r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b'
+match = re.search(ip_pattern, log_entry)
+
+if match and all(0 <= int(x) <= 255 for x in match.group().split('.')):
+    ip_address = match.group()
+    ip_integer = ip_to_int(ip_address)
+    masked_ip = ip_integer & 0xFFFF0000
+    bit_count = count_ones(masked_ip)
     
-    mid = len(hub_data) // 2
-    left_result = distribute_packages(hub_data[:mid])
-    right_result = distribute_packages(hub_data[mid:])
-    return left_result + right_result
+    # Short-circuit evaluation in conditional assignment
+    is_even = bit_count % 2 == 0
+    adjusted_count = bit_count // 2 if is_even else (bit_count - 1) // 2
+    
+    # Additional check for private IP ranges
+    first_octet = int(ip_address.split('.')[0])
+    is_private = first_octet == 10 or first_octet == 172 and 16 <= int(ip_address.split('.')[1]) <= 31 or first_octet == 192 and int(ip_address.split('.')[1]) == 168
+    
+    # Final score calculation with conditional modifier
+    final_score = adjusted_count + (10 if is_private else 0)
+else:
+    final_score = -1
 
-# Hub data: list of tuples (weights, distances)
-logistics_hubs = [
-    ([120, 85, 200], [50, 30, 70]),
-    ([95, 110], [40, 60]),
-    ([75, 130, 90, 115], [25, 80, 45, 55]),
-    ([200, 150], [90, 70]),
-    ([60, 80, 100], [30, 40, 50])
-]
-
-# Process hub data using divide and conquer
-base_distribution_score = distribute_packages(logistics_hubs)
-
-# Apply optimization factors using list comprehension
-optimization_factors = [1.2, 0.9, 1.1, 0.95, 1.05]
-hub_efficiencies = [
-    calculate_hub_efficiency(weights, distances) 
-    for weights, distances in logistics_hubs
-]
-
-# Calculate weighted optimization
-weighted_optimization = sum(
-    eff * factor 
-    for eff, factor in zip(hub_efficiencies, optimization_factors)
-)
-
-# Final calculation combining base score and weighted optimization
-optimized_distribution_score = math.ceil(
-    (base_distribution_score * 0.7) + (weighted_optimization * 0.3)
-)
-
-print(f"Result: {optimized_distribution_score}")
+print(f"Result: {final_score}")

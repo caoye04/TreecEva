@@ -1,38 +1,18 @@
-import heapq
-import itertools
+from collections import defaultdict
 
-def process_spectral_data():
-    # Initialize spectral peaks with their frequencies and amplitudes
-    spectral_peaks = [(120, 8), (95, 15), (210, 6), (78, 12), (165, 9)]
+def simulate_calibration():
+    sensor_readings = [23, -15, 42, -8, 37]
+    adjustment_log = defaultdict(int)
+    base_offset = 100
     
-    # Create max heap using negative values
-    max_heap = [(-amp, freq) for freq, amp in spectral_peaks]
-    heapq.heapify(max_heap)
+    for idx, reading in enumerate(sensor_readings):
+        temp_factor = (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13
+        correction = (temp_factor + idx) % 7
+        adjustment_log[reading] += correction
     
-    # Apply phase correction using XOR with mask 0x0F
-    corrected_frequencies = []
-    while max_heap:
-        neg_amp, freq = heapq.heappop(max_heap)
-        corrected_freq = freq ^ 0x0F
-        corrected_frequencies.append(corrected_freq)
-    
-    # Apply bit-shift scaling: left shift by 2, then right shift by 1
-    scaled_frequencies = []
-    for freq in corrected_frequencies:
-        scaled_freq = (freq << 2) >> 1
-        scaled_frequencies.append(scaled_freq)
-    
-    # Combine with another sequence using itertools
-    base_sequence = [10, 20, 30]
-    combined_values = []
-    for a, b in itertools.product(scaled_frequencies[:3], base_sequence):
-        combined_values.append(a | b)  # Bitwise OR operation
-    
-    # Find maximum value from combined results
-    primary_frequency_component = max(combined_values)
-    
-    return primary_frequency_component
+    aggregate_shift = sum(adjustment_log.values())
+    final_adjustment = (base_offset + aggregate_shift) % 20 if aggregate_shift > 10 else (base_offset - aggregate_shift) % 20
+    return final_adjustment
 
-# Execute processing pipeline
-primary_frequency_component = process_spectral_data()
-print(f"Result: {primary_frequency_component}")
+final_adjustment = simulate_calibration()
+print(f"Result: {final_adjustment}")

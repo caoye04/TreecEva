@@ -1,25 +1,68 @@
-from functools import reduce
+import re
 
-def compute_transform(x, factor):
-    return x * factor + 1
+class PacketNode:
+    def __init__(self, seq_num, payload, next_node=None):
+        self.seq_num = seq_num
+        self.payload = payload
+        self.next = next_node
 
-signals = [3, 7, 2, 9]
-factors = {i: v for i, v in enumerate([2, 3, 1, 4], 1)}
-base_threshold = 5
+def create_packet_chain():
+    # Create a linked list of packets with sequence numbers and payloads
+    packets = [
+        (1001, "AUTH:admin|CMD:read"),
+        (1002, "AUTH:user|CMD:write"),
+        (1003, "AUTH:guest|CMD:read"),
+        (1004, "AUTH:admin|CMD:delete"),
+        (1005, "AUTH:user|CMD:execute")
+    ]
+    
+    head = None
+    for seq, payload in reversed(packets):
+        head = PacketNode(seq, payload, head)
+    return head
 
-processed_signals = []
-for idx, sig in enumerate(signals):
-    factor_key = (idx % len(factors)) + 1
-    if sig >= base_threshold and factor_key in factors:
-        transformed = compute_transform(sig, factors[factor_key])
-        processed_signals.append(transformed)
-    elif sig < base_threshold or factor_key not in factors:
-        processed_signals.append(sig + factors.get(factor_key, 0))
+def validate_packets(head):
+    clearance = 0
+    current = head
+    
+    while current:
+        # Extract command using regex
+        cmd_match = re.search(r'CMD:(\w+)', current.payload)
+        auth_match = re.search(r'AUTH:(\w+)', current.payload)
+        
+        if cmd_match and auth_match:
+            command = cmd_match.group(1)
+            auth_level = auth_match.group(1)
+            
+            # Assign weights based on authorization level
+            auth_weight = {'admin': 3, 'user': 2, 'guest': 1}[auth_level]
+            
+            # Assign command weights
+            cmd_weight = {'read': 1, 'write': 2, 'execute': 3, 'delete': 4}[command]
+            
+            # Calculate packet validity score
+            validity = (current.seq_num % 7) * auth_weight + cmd_weight
+            
+            # Apply bitwise operations for security checksum
+            if validity & 1:  # If odd
+                clearance ^= validity
+            else:
+                clearance |= (validity >> 1)
+        
+        current = current.next
+    
+    # Final adjustment based on packet count
+    packet_count = 0
+    temp = head
+    while temp:
+        packet_count += 1
+        temp = temp.next
+    
+    # Apply final transformation
+    security_clearance_level = (clearance * packet_count) % 128
+    return security_clearance_level
 
-amplification_map = {k: v+1 for k, v in factors.items()}
-combined_map = {**factors, **amplification_map}
-
-final_amplification = reduce(lambda acc, val: acc + (val if val > 5 else 0), processed_signals, 0)
-final_amplification += sum(combined_map.values()) if any(x > 6 for x in processed_signals) else 0
-
-print(f"Result: {final_amplification}")
+# Main execution
+packet_chain = create_packet_chain()
+security_clearance_level = validate_packets(packet_chain)
+print(f"Result: {security_clearance_level}")

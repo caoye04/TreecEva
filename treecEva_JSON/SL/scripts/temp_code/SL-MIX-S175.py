@@ -1,50 +1,75 @@
-import heapq
+class FabricNode:
+    def __init__(self, color_code):
+        self.color_code = color_code
+        self.prev = None
+        self.next = None
 
-def analyze_packet_signatures():
-    # Initialize heap with packet signatures (risk_score, signature_id)
-    packet_heap = [(35, 'SIG001'), (82, 'SIG002'), (17, 'SIG003'), (91, 'SIG004'), (45, 'SIG005')]
-    heapq.heapify(packet_heap)
-    
-    # Security threshold for immediate processing
-    RISK_THRESHOLD = 50
-    
-    # Counter for processed signatures
-    processed_signature_count = 0
-    
-    # Process packets until heap is empty or critical condition met
-    while packet_heap:
-        risk_score, signature_id = heapq.heappop(packet_heap)
-        
-        # If risk score exceeds threshold, process immediately
-        if risk_score > RISK_THRESHOLD:
-            processed_signature_count += 1
-            # Early return if we've processed 2 high-risk signatures
-            if processed_signature_count >= 2:
-                break
-        else:
-            # Apply modular arithmetic to adjust low-risk scores
-            adjusted_score = (risk_score * 3) % 23
-            # Re-insert adjusted signature if score is still significant
-            if adjusted_score > 5:
-                heapq.heappush(packet_heap, (adjusted_score, f'{signature_id}_ADJ'))
-    
-    # Additional check using set operations for signature validation
-    valid_signatures = frozenset(['SIG001', 'SIG003', 'SIG005'])
-    audit_trail = []
-    
-    # Lambda function to validate signature
-    is_valid_sig = lambda sig_id: sig_id.split('_')[0] in valid_signatures
-    
-    # Audit remaining signatures
-    for _, sig_id in packet_heap:
-        if is_valid_sig(sig_id):
-            audit_trail.append(sig_id)
-    
-    # Final adjustment to processed count based on audit
-    processed_signature_count = (processed_signature_count * len(audit_trail)) % 7
-    
-    return processed_signature_count
+# Initialize doubly-linked list with fabric color codes
+head = FabricNode(18)
+node2 = FabricNode(7)
+node3 = FabricNode(23)
+node4 = FabricNode(4)
+node5 = FabricNode(15)
 
-# Execute analysis
-final_count = analyze_packet_signatures()
-print(f"Result: {final_count}")
+head.next = node2
+node2.prev = head
+node2.next = node3
+node3.prev = node2
+node3.next = node4
+node4.prev = node3
+node4.next = node5
+node5.prev = node4
+
+def rotate_bits_left(value, positions):
+    return ((value << positions) | (value >> (8 - positions))) & 0xFF
+
+def process_fabric_sequence(start_node):
+    current = start_node
+    color_values = []
+    while current:
+        # Apply bit rotation based on node position
+        position = 1 if current.prev is None else (2 if current.next is None else 3)
+        rotated = rotate_bits_left(current.color_code, position)
+        color_values.append(rotated)
+        current = current.next
+    return color_values
+
+# Stage 1: Process fabric sequence
+processed_colors = process_fabric_sequence(head)
+
+# Stage 2: Apply filtering and transformation
+filtered_colors = list(filter(lambda x: x & 0x0F != 0, processed_colors))
+transformed_colors = list(map(lambda x: (x ^ 0x55) & 0xFF, filtered_colors))
+
+# Stage 3: Encode into pattern matrix
+pattern_matrix = [[0 for _ in range(4)] for _ in range(4)]
+for i in range(min(len(transformed_colors), 4)):
+    pattern_matrix[i][i] = transformed_colors[i]
+
+# Stage 4: Apply switch-based weaving logic
+def apply_weaving_pattern(matrix):
+    weave_code = 0
+    for i in range(4):
+        for j in range(4):
+            value = matrix[i][j]
+            # Switch/case logic for weaving pattern determination
+            if value == 0:
+                weave_code += 0
+            elif 1 <= value <= 32:
+                weave_type = value % 4
+                if weave_type == 0:
+                    weave_code += value << 1
+                elif weave_type == 1:
+                    weave_code += value << 2
+                elif weave_type == 2:
+                    weave_code += value << 3
+                else:  # weave_type == 3
+                    weave_code += value
+            else:
+                weave_code += value & 0x0F
+    return weave_code
+
+# Stage 5: Final encoding
+final_weave_code = apply_weaving_pattern(pattern_matrix)
+
+print(f"Result: {final_weave_code}")

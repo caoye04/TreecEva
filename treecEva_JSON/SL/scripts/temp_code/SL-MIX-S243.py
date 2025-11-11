@@ -1,31 +1,52 @@
-import heapq
-import math
+from collections import defaultdict
 
-temp_readings = [22.5, 23.1, 24.0, 23.7, 25.2, 26.8, 24.9, 27.3]
-sensor_offsets = { 'S1': 0.3, 'S2': -0.2, 'S3': 0.1 }
-base_calibration = frozenset(['S1', 'S3'])
-active_sensors = {'S1', 'S2', 'S4'}
-operational_set = base_calibration | active_sensors
+class PlantNode:
+    def __init__(self, biomass, left=None, right=None):
+        self.biomass = biomass
+        self.left = left
+        self.right = right
 
-adjusted_readings = []
-for idx, temp in enumerate(temp_readings):
-    sensor_id = f'S{(idx % 3) + 1}'
-    offset = sensor_offsets.get(sensor_id, 0)
-    calibrated_temp = temp + offset
-    if sensor_id in operational_set:
-        adjusted_readings.append(calibrated_temp)
+# Predefined plant growth tree structure
+plant_growth_tree = PlantNode(10,
+    PlantNode(5, 
+        PlantNode(2),
+        PlantNode(3, 
+            PlantNode(1),
+            PlantNode(1)
+        )
+    ),
+    PlantNode(7,
+        PlantNode(4),
+        PlantNode(6, 
+            None,
+            PlantNode(2)
+        )
+    )
+)
 
-anomaly_heap = []
-for reading in adjusted_readings[:5]:
-    heapq.heappush(anomaly_heap, -reading)
+def calculate_efficiency(node):
+    if not node:
+        return 0
+    
+    # Base case: leaf nodes have special efficiency calculation
+    if not node.left and not node.right:
+        return node.biomass * 2
+    
+    # Divide and conquer: calculate efficiency of subtrees
+    left_efficiency = calculate_efficiency(node.left)
+    right_efficiency = calculate_efficiency(node.right)
+    
+    # Combine results with logical conditions
+    subtree_sum = left_efficiency + right_efficiency
+    is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
+    
+    # Apply efficiency formula with logical operations
+    if is_balanced and subtree_sum > 10:
+        return (subtree_sum // 2) + node.biomass
+    elif not is_balanced or subtree_sum <= 5:
+        return subtree_sum + (node.biomass // 2)
+    else:
+        return subtree_sum
 
-if len(anomaly_heap) >= 3:
-    top_three_sum = 0
-    for _ in range(3):
-        top_three_sum += -heapq.heappop(anomaly_heap)
-    average_spike = top_three_sum / 3
-else:
-    average_spike = max(adjusted_readings) if adjusted_readings else 0
-
-peak_anomaly = round(average_spike * 100)
-print(f'Result: {peak_anomaly}')
+cumulative_efficiency = calculate_efficiency(plant_growth_tree)
+print(f"Result: {cumulative_efficiency}")

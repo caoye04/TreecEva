@@ -1,50 +1,36 @@
+from dataclasses import dataclass
+from typing import NamedTuple
 import math
 
-class PrecisionHandler:
-    def __init__(self, precision_bits=8):
-        self.precision_bits = precision_bits
-    
-    def __enter__(self):
-        return self
-    
-    def __exit__(self, exc_type, exc_value, traceback):
-        pass
-    
-    def adjust_precision(self, value):
-        mask = (1 << self.precision_bits) - 1
-        return value & mask
+class SignalConfig(NamedTuple):
+    base_freq: int
+    sampling_rate: int
+    bit_depth: int
 
-def calculate_polygon_diameter(vertices):
-    max_distance = 0
-    for i in range(len(vertices)):
-        for j in range(i+1, len(vertices)):
-            dx = vertices[i][0] - vertices[j][0]
-            dy = vertices[i][1] - vertices[j][1]
-            distance = math.sqrt(dx*dx + dy*dy)
-            if distance > max_distance:
-                max_distance = distance
-    return max_distance
+data = SignalConfig(440, 44100, 16)
+original_amplitude = 0x1FAB
+processed_amplitude = original_amplitude
 
-def compute_circle_area_from_diameter(diameter):
-    radius = diameter / 2.0
-    return math.pi * radius * radius
+# Stage 1: Conditional amplitude adjustment
+if data.base_freq % 100 == 40 and data.sampling_rate > 40000:
+    processed_amplitude ^= 0xFF00
+    if data.bit_depth >= 16:
+        processed_amplitude |= 0x00F0
+else:
+    processed_amplitude &= 0x0FFF
 
-# Vertex coordinates of a convex polygon
-polygon_vertices = [
-    (0, 0),
-    (4, 0),
-    (4, 3),
-    (0, 3)
-]
+# Stage 2: Modular correction
+if processed_amplitude & 0x8000:
+    processed_amplitude = (processed_amplitude + 0x1000) % 0xFFFF
+else:
+    processed_amplitude = (processed_amplitude * 3) % 0xFFFF
 
-with PrecisionHandler() as handler:
-    diameter = calculate_polygon_diameter(polygon_vertices)
-    adjusted_diameter = handler.adjust_precision(int(diameter * 1000))
-    if adjusted_diameter > 5000:
-        final_area = compute_circle_area_from_diameter(adjusted_diameter / 1000.0)
-    else:
-        # Compensate with a fixed value based on bit manipulation
-        compensation = (adjusted_diameter << 2) | 0b11
-        final_area = compute_circle_area_from_diameter(compensation / 1000.0)
+# Stage 3: Final normalization
+if not (processed_amplitude & 0xF000):
+    processed_amplitude <<= 2
+elif processed_amplitude & 0xC000 == 0x8000:
+    processed_amplitude >>= 1
+else:
+    processed_amplitude = processed_amplitude & 0x7FFF
 
-print(f"Result: {round(final_area, 2)}")
+print(f"Result: {processed_amplitude}")

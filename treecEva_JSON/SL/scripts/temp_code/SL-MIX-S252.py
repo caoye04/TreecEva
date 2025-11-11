@@ -1,31 +1,47 @@
-import itertools
 from collections import defaultdict
+import itertools
 
-# Route data: list of stops with efficiency ratings
-routes_data = [
-    [('A', 8.5), ('B', 7.2), ('C', 9.1)],
-    [('B', 7.2), ('D', 6.8), ('E', 8.0)],
-    [('A', 8.5), ('C', 9.1), ('E', 8.0), ('F', 7.5)]
-]
+def calculate_max_packages(weights, capacity):
+    memo = {}
+    n = len(weights)
+    
+    def backtrack(index, current_weight, package_count, bitmask):
+        if current_weight > capacity:
+            return -1
+        
+        if index == n:
+            return package_count
+        
+        if (index, current_weight) in memo:
+            return memo[(index, current_weight)]
+        
+        # Skip current package (short-circuit if weight exceeds capacity)
+        skip = backtrack(index + 1, current_weight, package_count, bitmask)
+        
+        # Take current package (only if it doesn't exceed capacity)
+        take = -1 if current_weight + weights[index] > capacity else backtrack(index + 1, current_weight + weights[index], package_count + 1, bitmask | (1 << index))
+        
+        result = max(skip, take)
+        memo[(index, current_weight)] = result
+        return result
+    
+    return backtrack(0, 0, 0, 0)
 
-# Count frequency of each stop across all routes
-stop_frequency = defaultdict(int)
-for route in routes_data:
-    for stop, _ in route:
-        stop_frequency[stop] += 1
+# Package weights in kilograms
+package_weights = [3, 1, 4, 2, 2, 5, 1]
+truck_capacity = 10  # Maximum load capacity in kilograms
 
-# Calculate weighted efficiency for each route
-route_scores = []
-for route in routes_data:
-    weighted_sum = 0
-    for stop, efficiency in route:
-        weight = stop_frequency[stop]
-        weighted_sum += efficiency * weight
-    route_scores.append(weighted_sum)
+# Calculate optimized loading sequence
+optimized_load_count = calculate_max_packages(package_weights, truck_capacity)
 
-# Compute final efficiency score using combinatorics
-final_efficiency_score = 0
-for combo in itertools.combinations(route_scores, 2):
-    final_efficiency_score += combo[0] * combo[1]
+# Adjust for special logistics rules
+heavy_items = sum(1 for w in package_weights if w > 3)
+fragile_items = sum(1 for w in package_weights if w < 2)
 
-print(f"Result: {final_efficiency_score}")
+optimized_load_count = optimized_load_count + (1 if heavy_items > fragile_items else 0) - (1 if heavy_items < fragile_items else 0)
+
+# Apply company policy modifier
+policy_modifier = 1 if (optimized_load_count & 1) == 0 else -1
+optimized_load_count += policy_modifier if optimized_load_count > 0 else 0
+
+print(f"Result: {optimized_load_count}")

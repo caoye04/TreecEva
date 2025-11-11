@@ -162,26 +162,12 @@ class TaskGenerator:
         return complexity_mapping.get(target_range, complexity_mapping["medium"])
     
     def select_language_and_features(self, distribution):
-        """智能选择语言和特征组合"""
-        language_counts = distribution["language_distribution"]
-        total = distribution["total_tasks"]
+        """智能选择语言和特征组合 (已修改为仅限Python)"""
         
-        # 三种语言的目标比例
-        target_ratios = {"python": 0.40, "cpp": 0.35, "c": 0.25}
+        # (已修改) 硬编码为 "python"
+        selected_language = "python"
         
-        # 计算缺失度
-        language_deficits = {}
-        for lang, target_ratio in target_ratios.items():
-            actual_ratio = language_counts.get(lang, 0) / total if total > 0 else 0
-            language_deficits[lang] = target_ratio - actual_ratio
-        
-        # 70%选择最缺的语言，30%随机
-        if random.random() < 0.7 and total > 0:
-            selected_language = max(language_deficits, key=language_deficits.get)
-        else:
-            selected_language = random.choice(list(target_ratios.keys()))
-        
-        # 为不同语言定义特征池
+        # (已修改) 只保留 Python 的特征池
         language_features = {
             "python": [
                 "decorators and metaclasses",
@@ -194,30 +180,6 @@ class TaskGenerator:
                 "lambda functions and closures",
                 "set operations and frozenset",
                 "dictionary comprehensions and merging"
-            ],
-            "cpp": [
-                "templates and template specialization",
-                "smart pointers (unique_ptr, shared_ptr)",
-                "STL containers and algorithms",
-                "move semantics",
-                "operator overloading",
-                "constexpr functions",
-                "variadic templates",
-                "RAII pattern",
-                "lambda expressions and captures",
-                "std::optional and std::variant"
-            ],
-            "c": [
-                "function pointers and callbacks",
-                "struct bit fields and unions",
-                "pointer arithmetic and array manipulation",
-                "preprocessor macros",
-                "volatile variables",
-                "custom memory management",
-                "linked data structures (lists, trees)",
-                "bitwise operations and masks",
-                "type punning with unions",
-                "flexible array members"
             ]
         }
         
@@ -297,7 +259,7 @@ class TaskGenerator:
             num_paradigms_per_category = random.randint(1, 2)
         
         selected_categories = random.sample(list(all_paradigms.keys()), 
-                                           min(num_categories, len(all_paradigms)))
+                                            min(num_categories, len(all_paradigms)))
         selected_paradigms = []
         
         for category in selected_categories:
@@ -347,7 +309,7 @@ class TaskGenerator:
         
         constraints.append("- CREATE a unique problem scenario NOT similar to recent tasks")
         constraints.append("- USE creative and domain-specific variable names (avoid generic names like 'data', 'result')")
-        constraints.append(f"- FOCUS on {selected_language}-specific idioms and best practices")
+        constraints.append(f"- FOCUS on {selected_language}-specific idioms and best practices") # selected_language 将始终是 python
         constraints.append("- ENSURE the problem context is realistic and interesting")
         
         return "\n".join(constraints)
@@ -379,7 +341,7 @@ class TaskGenerator:
         target_range = self.identify_missing_difficulty_range(distribution)
         complexity_info = self.map_difficulty_range_to_complexity(target_range)
         
-        # 智能选择语言和特征
+        # (已修改) 智能选择语言和特征 (现在只会返回Python)
         selected_language, selected_features = self.select_language_and_features(distribution)
         
         # 选择计算范式
@@ -500,56 +462,49 @@ CRITICAL REMINDERS:
             print(f"  Attempting to fix case, attempt {attempt + 1}/{max_attempts}")
             
             fix_prompt = f"""
-Please help me fix this code task so it can execute correctly and produce a unique numerical output.
+                Please help me fix this code task so it can execute correctly and produce a unique numerical output.
 
-Task Background: This is a dataset for testing AI code reasoning capabilities.
+                Task Background: This is a dataset for testing AI code reasoning capabilities.
 
-Requirements:
-1. The code must compile and execute successfully
-2. The code must have a unique, deterministic numerical output
-3. Ask for the value of a specific variable at some point in the code execution
-4. Maintain the original complexity level
+                Requirements:
+                1. The code must compile and execute successfully
+                2. The code must have a unique, deterministic numerical output
+                3. Ask for the value of a specific variable at some point in the code execution
+                4. Maintain the original complexity level
 
-Current Task Information:
-ID: {current_task['id']}
-Language: {current_task['metadata']['language']}
-Description: {current_task['task']['description']}
+                Current Task Information:
+                ID: {current_task['id']}
+                Language: {current_task['metadata']['language']}
+                Description: {current_task['task']['description']}
 
-Current Code:
-```{current_task['metadata']['language']}
-{current_task['task']['code']}
-```
-Problem Encountered: {error_info}
+                Current Code:
+                ```{current_task['metadata']['language']}
+                {current_task['task']['code']}
+                ```
+                Problem Encountered: {error_info}
 
-Please generate the fixed complete task, ensuring:
+                Please generate the fixed complete task, ensuring:
 
-Fix all compilation/runtime errors
-The code has a clear variable value that can be queried at a key execution point
-This variable value should be a unique, deterministic number
-The code should print this variable value at the end, format: "Target result: {{variable_value}}"
-Maintain similar complexity level
-Please return the fixed task in JSON format:
-```
-{{
-    "id": "{current_task['id']}",
-    "metadata": {{
-        "category": "Statement-Level",
-        "language": "{current_task['metadata']['language']}",
-        "difficulty": 5,
-        "intervention": {current_task['metadata']['intervention']}
-    }},
-    "task": {{
-        "description": "<Fixed description asking for a variable value at some execution point>",
-        "code": "<Fixed executable code>",
-        "answer": <Correct numerical answer>,
-        "cot": ""
-    }}
-}}
-```
-"""
-            
+                Fix all compilation/runtime errors The code has a clear variable value that can be queried at a key execution point This variable value should be a unique, deterministic number The code should print this variable value at the end, format: "Target result: {{variable_value}}" Maintain similar complexity level Please return the fixed task in JSON format:
+                ```{{
+                    "id": "{current_task['id']}",
+                    "metadata": {{
+                        "category": "Statement-Level",
+                        "language": "{current_task['metadata']['language']}",
+                        "difficulty": 5,
+                        "intervention": {current_task['metadata']['intervention']}
+                    }},
+                    "task": {{
+                        "description": "<Fixed description asking for a variable value at some execution point>",
+                        "code": "<Fixed executable code>",
+                        "answer": <Correct numerical answer>,
+                        "cot": ""
+                    }}
+                }}
+                ```
+                """
             response = self.call_api(fix_prompt)
-            
+        
             # 解析修复后的任务
             try:
                 json_match = re.search(r'```json\s*(.*?)\s*```', response, re.DOTALL)
@@ -564,10 +519,10 @@ Please return the fixed task in JSON format:
                 required_fields = ["id", "metadata", "task"]
                 if all(field in fixed_task for field in required_fields):
                     return fixed_task
-                
+            
             except json.JSONDecodeError:
                 continue
-        
+    
         return None
 
     def generate_new_task(self):
@@ -604,7 +559,7 @@ Please return the fixed task in JSON format:
                 print(f"   Level {interv}: {count:2d} tasks ({percentage:5.1f}%) {bar}")
         
         print("\n" + "="*70)
-        print("GENERATING NEW TASK")
+        print("GENERATING NEW TASK (Python-only)")
         print("="*70)
         
         prompt = self.generate_task_prompt()
@@ -656,7 +611,7 @@ Please return the fixed task in JSON format:
         else:
             print("\n⚠️ Task generation failed!")
             return None
-        
-if __name__ == "__main__":
-    generator = TaskGenerator()
+
+if __name__ == "__main__": 
+    generator = TaskGenerator() 
     generator.generate_and_validate_task()

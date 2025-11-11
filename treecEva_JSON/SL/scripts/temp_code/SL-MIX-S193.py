@@ -1,46 +1,66 @@
-import math
-from collections import namedtuple
+import hashlib
+from collections import deque
 
-SignalData = namedtuple('SignalData', ['frequency', 'amplitude', 'phase'])
+class GrowthPhaseNode:
+    def __init__(self, phase_id, growth_factor, left=None, right=None):
+        self.phase_id = phase_id
+        self.growth_factor = growth_factor
+        self.left = left
+        self.right = right
 
-def analyze_cosmic_signal(signals):
-    processed_count = 0
-    cosmic_index = 0
-    energy_signatures = {1, 2, 4, 8, 16}
-    forbidden_frequencies = frozenset([3, 7, 11, 15])
+def compute_environmental_hash(phase_data):
+    return int(hashlib.md5(phase_data.encode()).hexdigest()[:8], 16) % 1000
+
+def simulate_growth_phases(root_phase):
+    if not root_phase:
+        return 0
     
-    for idx, signal in enumerate(signals):
-        if signal.frequency in forbidden_frequencies:
-            continue
-        
-        transformed_freq = signal.frequency % 5
-        
-        match transformed_freq:
-            case 0:
-                cosmic_index += int(math.log2(signal.amplitude)) if signal.amplitude > 0 else 0
-            case 1 | 4:
-                cosmic_index += signal.phase * 2
-            case 2:
-                if signal.amplitude in energy_signatures:
-                    cosmic_index += int(math.log(signal.amplitude))
-                else:
-                    cosmic_index -= 1
-            case _:
-                cosmic_index += signal.frequency
-        
-        processed_count += 1
-        if processed_count >= 3:
-            break
+    processing_stack = [root_phase]
+    bloom_accumulator = 0
     
-    return cosmic_index
+    while processing_stack:
+        current_phase = processing_stack.pop()
+        phase_hash = compute_environmental_hash(current_phase.phase_id)
+        
+        if phase_hash % 3 == 0:
+            bloom_accumulator += current_phase.growth_factor * 2
+        elif phase_hash % 3 == 1:
+            bloom_accumulator -= current_phase.growth_factor // 2
+        else:
+            bloom_accumulator ^= current_phase.growth_factor
+        
+        if current_phase.left and current_phase.right:
+            processing_stack.append(current_phase.left)
+            processing_stack.append(current_phase.right)
+        elif current_phase.left:
+            processing_stack.append(current_phase.left)
+        elif current_phase.right:
+            processing_stack.append(current_phase.right)
+    
+    return bloom_accumulator
 
-observed_signals = [
-    SignalData(frequency=12, amplitude=16, phase=3),
-    SignalData(frequency=7, amplitude=8, phase=5),  # Forbidden frequency
-    SignalData(frequency=9, amplitude=4, phase=2),
-    SignalData(frequency=14, amplitude=32, phase=1),
-    SignalData(frequency=5, amplitude=2, phase=4)
-]
+def transform_species_name(name):
+    vowels = 'aeiou'
+    transformed = ''.join([char.upper() if char in vowels else char.lower() for char in name])
+    return transformed[::-1]
 
-cosmic_index = analyze_cosmic_signal(observed_signals)
-print(f"Result: {cosmic_index}")
+# Construct the growth phase tree
+primary_phase = GrowthPhaseNode("photosynthesis-optimal", 15)
+secondary_left = GrowthPhaseNode("nutrient-rich-soil", 12)
+secondary_right = GrowthPhaseNode("high-humidity", 8)
+tertiary_left = GrowthPhaseNode("low-light", 5)
+tertiary_right = GrowthPhaseNode("wind-exposure", 7)
+
+primary_phase.left = secondary_left
+primary_phase.right = secondary_right
+secondary_left.left = tertiary_left
+secondary_right.right = tertiary_right
+
+# Process the growth simulation
+final_bloom_score = simulate_growth_phases(primary_phase)
+
+# Apply species transformation as final step
+species_code = transform_species_name("Xerophyta_resilience")
+final_bloom_score += len(species_code)
+
+print(f"Result: {final_bloom_score}")

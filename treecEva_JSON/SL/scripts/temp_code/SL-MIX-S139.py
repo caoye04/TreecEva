@@ -1,34 +1,33 @@
-from functools import reduce
+from collections import defaultdict
 
-def calculate_package_checksum(loaded_packages):
-    # Dynamic programming approach to calculate checksum
-    checksum_history = [0] * len(loaded_packages)
-    total_checksum = 0
-    
-    for i in range(1, len(loaded_packages)):
-        # Sum weights of all previous packages that are lighter
-        lighter_sum = sum(weight for weight in loaded_packages[:i] if weight < loaded_packages[i])
-        checksum_history[i] = lighter_sum
-        total_checksum += lighter_sum
-    
-    return total_checksum
+def bit_reverse(num, bits):
+    result = 0
+    for _ in range(bits):
+        result = (result << 1) | (num & 1)
+        num >>= 1
+    return result
 
-# Package weights in kg
-package_weights = [320, 150, 480, 210, 90, 370, 180, 420]
+def custom_sort_key(x):
+    return bit_reverse(x, 4)
 
-# Sort packages by weight in descending order (greedy approach)
-package_weights.sort(reverse=True)
+# Frequency bins from a signal analysis
+freq_bins = [15, 7, 12, 3, 9, 6, 10, 5]
 
-# Truck loading simulation
-truck_capacity = 1000
-loaded_packages = []
-remaining_packages = package_weights.copy()
+# Logical filter: values must be even AND greater than 4
+filtered_bins = list(filter(lambda x: x > 4 and x % 2 == 0, freq_bins))
 
-while remaining_packages and sum(loaded_packages) + remaining_packages[0] <= truck_capacity:
-    next_package = remaining_packages.pop(0)
-    loaded_packages.append(next_package)
+# Sort using custom bit-reversed key
+sorted_bins = sorted(filtered_bins, key=custom_sort_key)
 
-# Calculate logistics checksum using dynamic programming
-logistics_checksum = calculate_package_checksum(loaded_packages)
+# Divide and conquer aggregation using defaultdict
+aggregation = defaultdict(int)
+for idx, val in enumerate(sorted_bins):
+    if idx % 2 == 0:
+        aggregation['even'] += val
+    else:
+        aggregation['odd'] += val
 
-print(f"Result: {logistics_checksum}")
+# Final metric calculation
+final_metric = (aggregation['even'] >> 1) ^ (aggregation['odd'] << 1)
+
+print(f"Result: {final_metric}")

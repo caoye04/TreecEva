@@ -1,33 +1,28 @@
-from collections import Counter
+def is_prime(n):
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    for i in range(3, int(n**0.5)+1, 2):
+        if n % i == 0:
+            return False
+    return True
 
-def modular_power(base, exp, mod):
-    result = 1
-    base = base % mod
-    while exp > 0:
-        if exp % 2 == 1:
-            result = (result * base) % mod
-        exp = exp >> 1
-        base = (base * base) % mod
-    return result
+def sum_of_squares_of_digits(n):
+    return sum(int(digit)**2 for digit in str(n))
 
-def process_cipher_text(text):
-    tokens = list(text)
-    freq_map = Counter(tokens)
-    position_weights = {}
-    for i, char in enumerate(tokens):
-        if char not in position_weights:
-            position_weights[char] = 0
-        position_weights[char] += (i + 1) * freq_map[char]
-    
-    accumulator = 0
-    for char, weight in position_weights.items():
-        mod_weight = weight % 13
-        accumulator = (accumulator + mod_weight * ord(char)) % 1000
-    
-    return accumulator
+candidate_frequencies = [i for i in range(10, 100)]
+resonant_frequencies = []
 
-cipher_message = "HELLO WORLD TEST MESSAGE"
-normalized_message = ''.join(filter(str.isalpha, cipher_message.upper()))
-intermediate_value = process_cipher_text(normalized_message)
-checksum = modular_power(intermediate_value, 17, 1000000007)
-print(f"Result: {checksum}")
+for freq in candidate_frequencies:
+    if is_prime(freq):
+        digit_square_sum = sum_of_squares_of_digits(freq)
+        if is_prime(digit_square_sum):
+            resonant_frequencies.append(freq)
+            if len(resonant_frequencies) == 3:
+                break
+
+third_resonant = resonant_frequencies[2] if len(resonant_frequencies) >= 3 else None
+print(f"Result: {third_resonant}")

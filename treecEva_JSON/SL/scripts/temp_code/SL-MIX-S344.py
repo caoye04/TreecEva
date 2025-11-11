@@ -1,50 +1,51 @@
-import heapq
-from collections import namedtuple
+from contextlib import contextmanager
 
-# Define a sensor as a named tuple with x and y coordinates
-Sensor = namedtuple('Sensor', ['x', 'y'])
+def validate_transaction_chain(transactions, index=0, accumulated_flags=0):
+    if index >= len(transactions):
+        return accumulated_flags
+    
+    current_tx = transactions[index]
+    tx_valid = (current_tx['amount'] > 0) and (current_tx['timestamp'] is not None)
+    
+    if not tx_valid:
+        return validate_transaction_chain(transactions, index + 1, accumulated_flags)
+    
+    checksum_match = (current_tx['checksum'] & 0xFF) == (current_tx['id'] & 0xFF)
+    
+    if checksum_match and current_tx['amount'] < 1000:
+        new_flags = accumulated_flags | (1 << (index % 8))
+        return validate_transaction_chain(transactions, index + 1, new_flags)
+    elif checksum_match:
+        return validate_transaction_chain(transactions, index + 1, accumulated_flags)
+    else:
+        return accumulated_flags
 
-# Initial sensor network
-sensors = [
-    Sensor(2, 3),
-    Sensor(5, 7),
-    Sensor(1, 8),
-    Sensor(9, 2),
-    Sensor(4, 4)
+@contextmanager
+def audit_trail_context(transactions):
+    print(f"Starting audit of {len(transactions)} transactions")
+    try:
+        yield transactions
+    finally:
+        print("Audit completed")
+
+transactions_ledger = [
+    {'id': 1001, 'amount': 1500.0, 'timestamp': '2023-01-01', 'checksum': 0x1F2A},
+    {'id': 1002, 'amount': 750.5, 'timestamp': '2023-01-02', 'checksum': 0x2B02},
+    {'id': 1003, 'amount': -200.0, 'timestamp': '2023-01-03', 'checksum': 0x3C03},
+    {'id': 1004, 'amount': 1200.0, 'timestamp': None, 'checksum': 0x4D04},
+    {'id': 1005, 'amount': 300.0, 'timestamp': '2023-01-05', 'checksum': 0x5E05}
 ]
 
-# Function to calculate Euclidean distance squared between two sensors
-def distance_squared(s1, s2):
-    return (s1.x - s2.x)**2 + (s1.y - s2.y)**2
+compliance_score = 0
 
-# Initialize a min-heap with distances between all pairs of sensors
-heap = []
-for i in range(len(sensors)):
-    for j in range(i + 1, len(sensors)):
-        dist_sq = distance_squared(sensors[i], sensors[j])
-        heapq.heappush(heap, dist_sq)
+with audit_trail_context(transactions_ledger) as ledger:
+    compliance_score = validate_transaction_chain(ledger)
+    
+    # Apply final adjustment based on number of valid transactions
+    valid_count = sum(1 for tx in ledger if tx['amount'] > 0 and tx['timestamp'] is not None)
+    if valid_count >= 3 and (compliance_score & 0b1010) == 0b1010:
+        compliance_score += 100
+    elif valid_count < 3 or not (compliance_score & 0b0101):
+        compliance_score -= 50
 
-# Process sensor updates
-new_sensors = [
-    Sensor(0, 0),
-    Sensor(10, 10)
-]
-
-for sensor in new_sensors:
-    sensors.append(sensor)
-    # Add new distances to heap
-    for i in range(len(sensors) - 1):
-        dist_sq = distance_squared(sensors[i], sensor)
-        heapq.heappush(heap, dist_sq)
-
-# Remove outdated distances from heap (simplified simulation)
-# In a real implementation, we would track valid pairs
-# Here we just pop a few to simulate maintenance
-for _ in range(3):
-    if heap:
-        heapq.heappop(heap)
-
-# The closest distance is the smallest value in the heap
-closest_distance = heapq.heappop(heap)
-
-print(f"Result: {closest_distance}")
+print(f"Result: {compliance_score}")

@@ -1,64 +1,54 @@
-from itertools import combinations
-from statistics import variance
-from functools import lru_cache
+from collections import deque
+import math
 
-class SignalProcessor:
-    def __init__(self):
-        self.coeff_cache = {}
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b) if a and b else 0
+
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+# Audio peak frequency data (Hz)
+audio_peaks = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50]
+window_size = 3
+peak_history = deque(maxlen=window_size)
+harmonic_accumulator = 0
+prime_weight = 0
+
+for idx, freq in enumerate(audio_peaks):
+    # Round to nearest integer for processing
+    rounded_freq = round(freq)
+    peak_history.append(rounded_freq)
     
-    @lru_cache(maxsize=None)
-    def fib_coeff(self, n):
-        if n <= 1:
-            return n
-        return self.fib_coeff(n-1) + self.fib_coeff(n-2)
+    # Statistical validation - check if current frequency is above mean of window
+    if len(peak_history) == window_size:
+        window_mean = sum(peak_history) / len(peak_history)
+        is_above_average = freq > window_mean
+        
+        # Number theory component - weight by prime factors
+        prime_factors = sum(1 for i in range(2, rounded_freq + 1) if rounded_freq % i == 0 and is_prime(i))
+        
+        # Short-circuit evaluation with logical operations
+        if is_above_average and not (prime_factors > 3 or rounded_freq < 300):
+            # Calculate harmonic relationship with previous peaks
+            base_freq = peak_history[0]
+            current_lcm = lcm(base_freq, rounded_freq) if base_freq else 0
+            harmonic_accumulator += current_lcm % 100
+        elif not is_above_average or prime_factors <= 2:
+            prime_weight += prime_factors * 10
     
-    def process(self, amplitudes):
-        # Initialize coefficients
-        for i in range(1, 6):
-            self.coeff_cache[i] = self.fib_coeff(i*2)
-        
-        # Process signal
-        filtered = []
-        for idx, amp in enumerate(amplitudes):
-            if idx % 2 == 0:
-                coeff_key = (idx // 2) % 5 + 1
-                adjusted = amp * self.coeff_cache[coeff_key]
-                if adjusted > 100:
-                    filtered.append(adjusted / 2)
-                else:
-                    filtered.append(adjusted * 2)
-            else:
-                prev_filtered = filtered[-1] if filtered else 0
-                combined = amp + prev_filtered
-                if combined < 0:
-                    filtered.append(combined * -1)
-                else:
-                    filtered.append(combined)
-        
-        # Apply combinatorial enhancement
-        enhanced = []
-        for i in range(len(filtered)):
-            window = filtered[max(0, i-2):i+1]
-            if len(window) >= 2:
-                combos = list(combinations(window, 2))
-                avg_combo = sum(a*b for a, b in combos) / len(combos) if combos else 0
-                enhanced.append(avg_combo)
-            else:
-                enhanced.append(window[0] if window else 0)
-        
-        # Calculate energy using statistical variance
-        if len(enhanced) > 1:
-            processed_signal_energy = int(variance(enhanced) * 1000)
-        else:
-            processed_signal_energy = sum(enhanced)
-        
-        return processed_signal_energy
+    # Apply modulo to prevent overflow
+    harmonic_accumulator %= 1000
 
-def main():
-    processor = SignalProcessor()
-    test_amplitudes = [10, -5, 20, -15, 30, 25, -10, 40]
-    result = processor.process(test_amplitudes)
-    print(f"Result: {result}")
-
-if __name__ == "__main__":
-    main()
+# Final signature calculation
+harmonic_signature = (harmonic_accumulator * prime_weight) % 997
+print(f"Result: {harmonic_signature}")

@@ -1,51 +1,37 @@
-from collections import defaultdict
-import statistics
+from functools import reduce
 
-def decode_sensor_data(raw_data):
-    states = {'START': 0, 'READING': 1, 'END': 2}
-    current_state = states['START']
-    decoded_values = []
-    buffer = ''
-    
-    for char in raw_data:
-        if current_state == states['START']:
-            if char == '[':
-                current_state = states['READING']
-                buffer = ''
-        elif current_state == states['READING']:
-            if char == ']':
-                current_state = states['END']
-                try:
-                    decoded_values.append(int(buffer, 16))
-                except ValueError:
-                    pass
-            elif char.isdigit() or char.lower() in 'abcdef':
-                buffer += char
-            else:
-                buffer = ''
-        elif current_state == states['END']:
-            if char == '[':
-                current_state = states['READING']
-                buffer = ''
-    return decoded_values
+document = "algorithm optimization requires mathematical analysis and logical reasoning"
 
-sensor_readings = [
-    "[1a][2b][3c][4d][5e][6f][7g][8h][9i][aj]",
-    "[ff][ee][dd][cc][bb][aa][99][88][77][66]",
-    "[0][10][20][30][40][50][60][70][80][90]"
-]
+# Tokenize and clean
+words = document.split()
+tokens = list(map(lambda w: w.strip('.').lower(), words))
 
-decoded_temperatures = defaultdict(list)
-for idx, reading in enumerate(sensor_readings):
-    decoded_temperatures[idx] = decode_sensor_data(reading)
+# Unique token set
+unique_tokens = frozenset(tokens)
 
-anomaly_count = 0
-for sensor_id, temps in decoded_temperatures.items():
-    if len(temps) > 1:
-        mean_temp = statistics.mean(temps)
-        stdev_temp = statistics.stdev(temps) if len(temps) > 1 else 0
-        for temp in temps:
-            if abs(temp - mean_temp) > 2 * stdev_temp:
-                anomaly_count += 1
+# Frequency mapping
+token_freq = {token: tokens.count(token) for token in unique_tokens}
 
-print(f"Result: {anomaly_count}")
+# Apply transformation using ternary logic
+adjusted_freq = {k: v*2 if v > 1 else (v+1 if 'a' in k else v) for k, v in token_freq.items()}
+
+# Compute base metric
+frequency_sum = sum(adjusted_freq.values())
+unique_count = len(unique_tokens)
+
+# Decorator for complexity adjustment
+def complexity_adjustment_factor(func):
+    def wrapper(*args, **kwargs):
+        base_value = func(*args, **kwargs)
+        return base_value * 1.5 if base_value % 2 == 0 else base_value * 2.0
+    return wrapper
+
+@complexity_adjustment_factor
+def calculate_base_index(freq_sum, unique_cnt):
+    return freq_sum + unique_cnt
+
+# Calculate final index
+base_index = calculate_base_index(frequency_sum, unique_count)
+final_complexity_index = int(base_index) if base_index > 10 else int(base_index * 3)
+
+print(f'Result: {final_complexity_index}')

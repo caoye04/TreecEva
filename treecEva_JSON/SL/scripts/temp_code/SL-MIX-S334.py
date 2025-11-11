@@ -1,29 +1,28 @@
-from collections import deque
+from collections import defaultdict
 
-def load_truck_packages():
-    truck_capacity = 1000
-    package_weights = [73, 128, 56, 201, 99, 312, 88, 155, 67, 244]
-    modular_constraints = [5, 7, 3, 11, 2, 13, 4, 9, 6, 8]
-    
-    # Apply modular arithmetic to adjust weights
-    adjusted_weights = [(w % m) if m != 0 else w for w, m in zip(package_weights, modular_constraints)]
-    
-    # Greedy selection: prioritize packages with higher adjusted weights
-    sorted_indices = sorted(range(len(adjusted_weights)), key=lambda i: adjusted_weights[i], reverse=True)
-    
-    # Load packages using deque for efficient pops from both ends
-    packages_queue = deque(sorted_indices)
-    remaining_capacity = truck_capacity
-    
-    while packages_queue and remaining_capacity > 0:
-        idx = packages_queue.popleft()
-        weight = package_weights[idx]
-        
-        # Only load if it fits
-        if weight <= remaining_capacity:
-            remaining_capacity -= weight
-    
-    return remaining_capacity
+tokens = ['0x1A3F', '0x4B2C', '0x1A3F', '0xF0F0', '0x4B2C', '0x1A3F', '0xC3A5']
+valid_token_freq = defaultdict(int)
 
-remaining_capacity = load_truck_packages()
-print(f"Result: {remaining_capacity}")
+for hex_token in tokens:
+    # Remove '0x' prefix and convert to uppercase for uniformity
+    clean_token = hex_token[2:].upper()
+    
+    # Calculate checksum by XOR-ing all nibbles
+    checksum = 0
+    for char in clean_token:
+        # Convert hex character to its decimal value
+        nibble_val = int(char, 16)
+        checksum ^= nibble_val
+    
+    # If checksum is zero, consider it a valid token
+    if checksum == 0:
+        valid_token_freq[clean_token] += 1
+
+# Compute security score
+security_score = 0
+for token_hex, freq in valid_token_freq.items():
+    # Convert token back to integer base 10
+    token_numeric = int(token_hex, 16)
+    security_score += token_numeric * freq
+
+print(f"Result: {security_score}")

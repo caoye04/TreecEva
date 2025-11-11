@@ -1,31 +1,53 @@
-encoding_map = {
-    'alpha': 0x4D,
-    'beta': 0x7A,
-    'gamma': 0x5F,
-    'delta': 0x6B
-}
+from dataclasses import dataclass
+from typing import List
 
-decoding_ops = [
-    lambda x: (x >> 2) & 0xFF,
-    lambda x: x ^ 0x3C,
-    lambda x: (x * 3) % 256
+token_weights = {'N': 3, 'S': -3, 'E': 2, 'W': -2, 'NE': 5, 'NW': 1, 'SE': -1, 'SW': -5}
+
+@dataclass
+class SensorData:
+    id: str
+    tokens: List[str]
+
+def process_sensor_data(sensor: SensorData) -> int:
+    cumulative = 0
+    max_cumulative = float('-inf')
+    for token in sensor.tokens:
+        if token in token_weights:
+            cumulative += token_weights[token]
+            if cumulative > max_cumulative:
+                max_cumulative = cumulative
+        else:
+            cumulative = 0
+    return max_cumulative
+
+def classify_zone(score: int) -> str:
+    match score:
+        case s if s >= 10:
+            return 'A'
+        case s if s >= 5:
+            return 'B'
+        case s if s >= 0:
+            return 'C'
+        case _:
+            return 'D'
+
+sensor_readings = [
+    SensorData('S1', ['N', 'NE', 'E', 'SE', 'S']),
+    SensorData('S2', ['W', 'NW', 'N', 'NE', 'E']),
+    SensorData('S3', ['SW', 'W', 'NW', 'N', 'NE'])
 ]
 
-def telemetry_decoder(value, stage):
-    return decoding_ops[stage](value)
+zone_classifications = []
+for sensor in sensor_readings:
+    score = process_sensor_data(sensor)
+    zone = classify_zone(score)
+    zone_classifications.append(zone)
 
-sensor_data = [encoding_map[k] for k in ['alpha', 'gamma', 'beta', 'delta']]
+# Convert to frozenset for immutable set operations
+zones_set = frozenset(zone_classifications)
+target_zones = frozenset(['A', 'B'])
 
-accumulated_value = 0
-for idx, encoded in enumerate(sensor_data):
-    stage_one = telemetry_decoder(encoded, 0)
-    stage_two = telemetry_decoder(stage_one, 1)
-    stage_three = telemetry_decoder(stage_two, 2)
-    accumulated_value = (accumulated_value << 8) | stage_three
+# Greedy selection: count overlapping zones
+optimal_zone_score = len(zones_set.intersection(target_zones)) * 10 + sum(1 for z in zones_set if z in target_zones)
 
-final_telemetry_value = sum([
-    (accumulated_value >> (i * 8)) & 0xFF
-    for i in range(4)
-])
-
-print(f"Result: {final_telemetry_value}")
+print(f"Result: {optimal_zone_score}")

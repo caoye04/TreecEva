@@ -1,35 +1,43 @@
-import math
+def calculate_error_metric(transmitted, received):
+    if len(transmitted) != len(received):
+        return -1
+    
+    errors = [t ^ r for t, r in zip(transmitted, received)]
+    
+    # Early return if no errors
+    if all(e == 0 for e in errors):
+        return 0
+    
+    # Calculate error positions using bitwise operations
+    error_positions = []
+    for i, e in enumerate(errors):
+        if e & 0xFF:  # Check if any bit is set in the byte
+            error_positions.append(i)
+    
+    # If more than half the packets have errors, break for recalibration
+    if len(error_positions) > len(transmitted) // 2:
+        return -2
+    
+    # Calculate aggregate metric using statistical measures
+    import statistics
+    mean_error = statistics.mean(errors)
+    if len(errors) > 1:
+        variance_error = statistics.variance(errors)
+    else:
+        variance_error = 0
+    
+    # Apply bit shifts for normalization
+    normalized_mean = int(mean_error) >> 2
+    normalized_variance = int(variance_error) << 1
+    
+    # Final metric combines mean and variance with XOR
+    aggregate_metric = normalized_mean ^ normalized_variance
+    
+    return aggregate_metric
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+# Simulate packet transmission
+transmitted_packets = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F, 0x70]
+received_packets = [0x1A, 0x2F, 0x3C, 0x49, 0x5E, 0x6B, 0x70]
 
-primes = [i for i in range(2, 50) if is_prime(i)]
-prime_indices = {p: idx for idx, p in enumerate(primes, 1)}
-
-selected_primes = [p for p in primes if p < 20]
-indices = [prime_indices[p] for p in selected_primes]
-lcm_value = indices[0]
-for i in indices[1:]:
-    lcm_value = (lcm_value * i) // math.gcd(lcm_value, i)
-
-bit_shifted = lcm_value << 2
-adjusted_value = bit_shifted if bit_shifted > 1000 else bit_shifted * 3
-
-cryptographic_key = adjusted_value
-if cryptographic_key > 5000 and (cryptographic_key & 0xF) == 0:
-    cryptographic_key += 100
-else:
-    cryptographic_key -= 50
-
-print(f"Result: {cryptographic_key}")
+aggregate_metric = calculate_error_metric(transmitted_packets, received_packets)
+print(f"Result: {aggregate_metric}")

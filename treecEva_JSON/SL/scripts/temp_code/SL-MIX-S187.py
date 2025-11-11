@@ -1,62 +1,42 @@
-import math
-from collections import defaultdict
-from statistics import variance
+import itertools
+import statistics
+from functools import reduce
 
-def calculate_distance(p1, p2):
-    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
+def char_frequency_analyzer(text):
+    freq = {}
+    for char in text:
+        freq[char] = freq.get(char, 0) + 1
+    return freq
 
-def get_quadrant(point):
-    x, y = point
-    if x >= 0 and y >= 0:
-        return 1
-    elif x < 0 and y >= 0:
-        return 2
-    elif x < 0 and y < 0:
-        return 3
-    else:
-        return 4
+def calculate_variance_score(freq_dict):
+    frequencies = list(freq_dict.values())
+    if len(frequencies) < 2:
+        return 0
+    return statistics.variance(frequencies)
 
-# Robotic arm movement sequence
-movement_sequence = [(0, 0), (3, 4), (-2, 5), (-5, -1), (4, -3), (1, 1)]
+cipher_segment = "ABBCDEEFFGHHIJJKKLLMMNNOOPPQQRRSSTTUUVVWWXXYYZZ"
+frequency_map = char_frequency_analyzer(cipher_segment)
+variance_score = calculate_variance_score(frequency_map)
 
-# State machine for tracking operations
-arm_state = {
-    'current_position': (0, 0),
-    'distances': [],
-    'quadrant_visits': defaultdict(int),
-    'operation_count': 0
-}
+# Generate all possible 3-character permutations from unique characters
+unique_chars = list(set(cipher_segment))
+permutations = list(itertools.permutations(unique_chars, 3))
 
-# Process each movement
-for target_position in movement_sequence[1:]:
-    # Calculate distance moved
-    distance = calculate_distance(arm_state['current_position'], target_position)
-    arm_state['distances'].append(distance)
-    
-    # Update position
-    arm_state['current_position'] = target_position
-    
-    # Update quadrant visits using modular arithmetic for cyclic tracking
-    quadrant = get_quadrant(target_position)
-    arm_state['quadrant_visits'][quadrant] = (arm_state['quadrant_visits'][quadrant] + 1) % 3
-    
-    # Increment operation counter
-    arm_state['operation_count'] += 1
+# Apply greedy algorithm to select permutations with highest ASCII sum
+permutation_scores = [(perm, sum(ord(c) for c in perm)) for perm in permutations]
+permutation_scores.sort(key=lambda x: x[1], reverse=True)
+top_permutations = permutation_scores[:10]
 
-# Calculate efficiency using statistical variance
-if len(arm_state['distances']) > 1:
-    base_variance = variance(arm_state['distances'])
-else:
-    base_variance = 0
+# Calculate combinatorial weight factor
+weight_factor = len(list(itertools.combinations(range(10), 3)))
 
-# Apply correction factor based on quadrant balance
-quadrant_counts = [arm_state['quadrant_visits'][i] for i in range(1, 5)]
-imbalance_factor = max(quadrant_counts) - min(quadrant_counts)
+# Encode top permutations into numeric sequence
+encoded_sequence = []
+for perm, score in top_permutations:
+    encoded_value = reduce(lambda acc, char: acc * 256 + ord(char), perm, 0)
+    encoded_sequence.append(encoded_value)
 
-# Final efficiency rating calculation
-efficiency_rating = (base_variance * 100 + imbalance_factor * 5) / arm_state['operation_count']
+# Final cipher score combines variance, weight factor, and encoded sequence properties
+final_cipher_score = int(variance_score * weight_factor + statistics.mean(encoded_sequence) // 1000)
 
-# Apply floating point precision correction
-efficiency_rating = round(efficiency_rating, 2)
-
-print(f"Result: {efficiency_rating}")
+print(f"Result: {final_cipher_score}")

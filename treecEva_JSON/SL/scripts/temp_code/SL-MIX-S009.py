@@ -1,67 +1,28 @@
 import heapq
 
-def nucleotide_hash(nucleotide):
-    mapping = {'A': 1, 'T': 2, 'G': 3, 'C': 4}
-    return mapping.get(nucleotide, 0)
+# Define bird point mapping
+bird_points = {'common': 1, 'rare': 3, 'endangered': 5}
 
-def rolling_hash(sequence, base=5, mod=1000000007):
-    hash_val = 0
-    for char in sequence:
-        hash_val = (hash_val * base + nucleotide_hash(char)) % mod
-    return hash_val
+# Observation batch
+observations = ['common', 'rare', 'common', 'endangered', 'rare']
 
-def max_subseq_sum(seq_values):
-    dp = [0] * len(seq_values)
-    dp[0] = seq_values[0]
-    for i in range(1, len(seq_values)):
-        dp[i] = max(dp[i-1] + seq_values[i], seq_values[i])
-    return max(dp)
+# Calculate base score
+base_score = sum(bird_points[bird] for bird in observations)
 
-class HashCache:
-    def __init__(self):
-        self.cache = {}
-    
-    def get_or_compute(self, s):
-        if s not in self.cache:
-            self.cache[s] = rolling_hash(s)
-        return self.cache[s]
+# Determine weight using ternary operator
+weight = 2 if len(observations) > 5 else 1
 
-def is_palindrome_recursive(s, memo={}):
-    if s in memo:
-        return memo[s]
-    if len(s) <= 1:
-        memo[s] = True
-        return True
-    if s[0] != s[-1]:
-        memo[s] = False
-        return False
-    result = is_palindrome_recursive(s[1:-1], memo)
-    memo[s] = result
-    return result
+# Calculate weighted score
+weighted_score = base_score * weight
 
-# Main processing pipeline
-sequence = 'GATTACA'
-nucleotides = [nucleotide_hash(c) for c in sequence]
-hash_cache = HashCache()
+# Heap to track minimum score
+score_heap = []
+heapq.heappush(score_heap, weighted_score)
 
-# Step 1: Compute rolling hash of entire sequence
-full_hash = hash_cache.get_or_compute(sequence)
+# For demonstration, let's add another dummy batch score
+heapq.heappush(score_heap, 20)
 
-# Step 2: Find maximum sum of any contiguous subsequence using DP
-max_sum = max_subseq_sum(nucleotides)
+# Final score is the minimum from heap
+final_score = heapq.heappop(score_heap)
 
-# Step 3: Identify all palindromic substrings and their hashes
-pal_hashes = []
-for i in range(len(sequence)):
-    for j in range(i+1, len(sequence)+1):
-        substr = sequence[i:j]
-        if is_palindrome_recursive(substr):
-            pal_hashes.append(hash_cache.get_or_compute(substr))
-
-# Step 4: Use min-heap to find smallest 3 palindromic hashes
-heapq.heapify(pal_hashes)
-top_3_min = [heapq.heappop(pal_hashes) for _ in range(min(3, len(pal_hashes)))]
-
-# Final score calculation
-final_score = full_hash + max_sum + sum(top_3_min)
 print(f"Result: {final_score}")

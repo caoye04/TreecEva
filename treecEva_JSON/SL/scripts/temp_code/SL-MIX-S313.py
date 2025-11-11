@@ -1,58 +1,42 @@
-import collections
+import math
 
-class TaskScheduler:
+class EnergyTracker:
     def __init__(self):
-        self.state = 'PENDING'
-        self.interrupt_stack = []
-        self.task_queue = collections.deque()
-        self.interrupt_count = 0
+        self.total_energy_loss = 0
     
-    def digit_square_sum(self, n):
-        return sum(int(digit) ** 2 for digit in str(n))
+    def __enter__(self):
+        return self
     
-    def process_tasks(self, task_ids):
-        # Initialize queue with task IDs
-        for tid in task_ids:
-            self.task_queue.append(tid)
-        
-        while self.task_queue:
-            current_task = self.task_queue.popleft()
-            priority = self.digit_square_sum(current_task)
-            
-            if priority > 50:
-                # Interrupt all pending tasks
-                self.interrupt_count += len(self.task_queue)
-                # Clear queue
-                self.task_queue.clear()
-                # Push interrupt to stack
-                self.interrupt_stack.append(current_task)
-                self.state = 'RUNNING'
-                break
-            else:
-                # Process normally
-                if self.state == 'PENDING':
-                    self.state = 'RUNNING'
-                elif self.state == 'RUNNING':
-                    self.state = 'COMPLETED'
-                # Re-queue for next cycle if not completed
-                if self.state != 'COMPLETED':
-                    self.task_queue.append(current_task)
-                else:
-                    # Reset state for next task
-                    self.state = 'PENDING'
-        
-        # Process any remaining interrupts
-        while self.interrupt_stack:
-            task = self.interrupt_stack.pop()
-            if self.digit_square_sum(task) > 100:
-                self.interrupt_count += 1
-        
-        return self.interrupt_count
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+    
+    def record_loss(self, loss):
+        self.total_energy_loss += loss
 
-# Initialize scheduler
-scheduler = TaskScheduler()
-tasks = [123, 99, 45, 88, 12, 77]
+def correction_factor(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        return result * 1.25 if result > 0 else result * 0.9
+    return wrapper
 
-# Process tasks
-interrupt_count = scheduler.process_tasks(tasks)
-print(f"Result: {interrupt_count}")
+@correction_factor
+def calculate_base_score(particles_count, decay_constant):
+    base = particles_count * math.log(decay_constant)
+    adjusted = base - (particles_count // 3)
+    return adjusted
+
+initial_particles = 120
+constant = 7
+correction_applied = False
+final_score = 0
+
+with EnergyTracker() as tracker:
+    base_score = calculate_base_score(initial_particles, constant)
+    tracker.record_loss(initial_particles * 0.05)
+    corrected_base = base_score - tracker.total_energy_loss
+    if corrected_base > 50:
+        final_score = int(corrected_base * 1.1)
+    else:
+        final_score = int(corrected_base * 0.95)
+
+print(f'Result: {final_score}')

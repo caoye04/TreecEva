@@ -1,49 +1,32 @@
-from collections import defaultdict
-import math
+import heapq
+import statistics
 
-def calculate_route_efficiency(packages, distances, priorities):
-    weight_score = 0
-    distance_score = 0
-    priority_bonus = 0
-    
-    # Calculate weight score with dynamic programming approach
-    weight_dp = defaultdict(int)
-    for i, pkg in enumerate(packages):
-        weight_dp[i] = weight_dp[i-1] + (pkg ** 2) if i > 0 else pkg ** 2
-        weight_score += pkg * (i + 1)
-    
-    # Calculate distance score with sorting and bit operations
-    sorted_distances = sorted(distances, reverse=True)
-    for i, dist in enumerate(sorted_distances):
-        # Use bit shifting for efficient calculation
-        distance_score += dist << (i % 3)
-    
-    # Calculate priority bonus with set operations
-    unique_priorities = frozenset(priorities)
-    priority_levels = {1, 2, 3, 4, 5}
-    missing_priorities = priority_levels - unique_priorities
-    
-    # Bonus is inversely proportional to missing priorities count
-    priority_bonus = 100 >> len(missing_priorities) if len(missing_priorities) < 5 else 0
-    
-    # Apply logical conditions with short-circuit evaluation
-    base_score = weight_score and distance_score and (weight_score | distance_score)
-    
-    # Final efficiency calculation with conditional logic
-    if weight_score > 1000 or (distance_score > 5000 and priority_bonus > 0):
-        final_efficiency_score = base_score ^ priority_bonus
-    elif weight_score < 500 and distance_score < 2000:
-        final_efficiency_score = base_score & priority_bonus
-    else:
-        final_efficiency_score = base_score + priority_bonus
-    
-    return final_efficiency_score
+temperature_readings = [23.5, 25.1, 22.8, 24.3, 26.7, 21.9, 25.0, 23.8, 24.9, 22.4]
+window_size = 3
+stability_heap = []
+thermal_readings = []
 
-# Route parameters
-shipment_weights = [15, 22, 8, 31, 17, 12]
-delivery_distances = [120, 85, 210, 65, 175, 95]
-priority_levels = [1, 3, 5, 3, 2, 1]
+# Process temperature windows and calculate stability metrics
+for i in range(len(temperature_readings) - window_size + 1):
+    window = temperature_readings[i:i+window_size]
+    mean_temp = statistics.mean(window)
+    variance_temp = statistics.variance(window) if len(window) > 1 else 0
+    stability_metric = mean_temp / (1 + variance_temp)
+    heapq.heappush(stability_heap, (-stability_metric, i))  # Max heap using negative values
 
-# Calculate efficiency
-final_efficiency_score = calculate_route_efficiency(shipment_weights, delivery_distances, priority_levels)
-print(f"Result: {final_efficiency_score}")
+# Calculate thermal index from most stable periods
+thermal_weights = {i: 0.0 for i in range(len(temperature_readings))}
+top_stable_periods = min(3, len(stability_heap))
+
+for _ in range(top_stable_periods):
+    neg_metric, start_idx = heapq.heappop(stability_heap)
+    stability_value = -neg_metric
+    for j in range(window_size):
+        idx = start_idx + j
+        if idx < len(temperature_readings):
+            thermal_weights[idx] += stability_value * (window_size - j) / window_size
+
+thermal_index = sum(weight * temp for weight, temp in zip(thermal_weights.values(), temperature_readings))
+thermal_index = round(thermal_index, 2)
+
+print(f"Result: {thermal_index}")

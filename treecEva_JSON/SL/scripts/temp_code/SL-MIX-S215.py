@@ -1,27 +1,36 @@
-portfolio_weights = {'tech': 0.4, 'health': 0.3, 'energy': 0.2, 'finance': 0.1}
-sector_volatility = {'tech': 1.2, 'health': 0.8, 'energy': 1.5, 'finance': 0.9}
-risk_threshold = 1.0
+import math
+import re
+from collections import defaultdict
 
-# Lambda to compute weighted risk
-compute_weighted_risk = lambda weights, volatilities: sum(w * v for w, v in zip(weights.values(), volatilities.values()))
+def process_sensor_data(readings_batch):
+    # Step 1: Apply logarithmic smoothing to all readings
+    smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
+    
+    # Step 2: Identify potential outliers using a ternary condition
+    mean_val = sum(smoothed) / len(smoothed)
+    deviations = [(val - mean_val) ** 2 for val in smoothed]
+    std_dev = math.sqrt(sum(deviations) / len(deviations))
+    
+    # Step 3: Flag values that deviate by more than 1.5 standard deviations
+    outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
+    
+    # Step 4: Pattern matching for specific temperature signatures
+    signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
+    
+    # Step 5: Calculate anomaly score using logical operations and exponentiation
+    base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
+    
+    # Step 6: Apply corrective factor using a ternary operator
+    correction_factor = 1.2 if base_score > 10 else 0.8
+    
+    # Step 7: Final anomaly score calculation
+    anomaly_score = round(base_score * correction_factor, 2) if base_score > 0 else 0
+    
+    return anomaly_score
 
-# Decorator to validate risk scores
-def validate_risk_score(func):
-    def wrapper(*args, **kwargs):
-        score = func(*args, **kwargs)
-        return score if score > 0 else 0
-    return wrapper
+# Sensor readings from a monitoring station
+sensor_readings = [23.45, -15.67, 0, 120.89, -98.77, 24.12, 25.00, -22.33]
 
-@validate_risk_score
-def calculate_base_risk(portfolio_weights, sector_volatility):
-    return compute_weighted_risk(portfolio_weights, sector_volatility)
-
-# Short-circuit evaluation with risk threshold
-base_risk = calculate_base_risk(portfolio_weights, sector_volatility)
-adjusted_risk = base_risk * 1.2 if base_risk > risk_threshold and portfolio_weights['tech'] > 0.3 else base_risk
-
-# Final calculation with hash table lookup
-risk_adjustments = {True: 0.9, False: 1.1}
-final_risk_score = adjusted_risk * risk_adjustments[adjusted_risk > risk_threshold]
-
-print(f'Result: {final_risk_score}')
+# Execute processing pipeline
+anomaly_score = process_sensor_data(sensor_readings)
+print(f"Result: {anomaly_score}")

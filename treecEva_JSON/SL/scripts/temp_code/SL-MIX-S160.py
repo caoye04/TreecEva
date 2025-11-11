@@ -1,36 +1,39 @@
-from collections import defaultdict
-import itertools
+import math
 
-def decode_hex_header(hex_str):
-    return int(hex_str, 16)
-
-def compute_checksum(bits):
-    checksum = 0
-    for b in bits:
-        checksum ^= b
-    return checksum
-
-def process_packets(packet_headers):
-    section_checksums = []
-    for i in range(0, len(packet_headers), 4):
-        segment = packet_headers[i:i+4]
-        decoded_segment = [decode_hex_header(h) for h in segment]
-        checksum = compute_checksum(decoded_segment)
-        section_checksums.append(checksum)
-    return section_checksums
-
-# Simulated packet headers in hex
-network_packets = ['1A3F', 'B2C4', 'D5E6', '7890', '1234', '5678', '9ABC', 'DEF0']
-
-with defaultdict(int) as stats:
-    section_values = process_packets(network_packets)
-    if len(section_values) > 1:
-        # Divide and conquer aggregation
-        mid = len(section_values) // 2
-        left_checksum = compute_checksum(section_values[:mid])
-        right_checksum = compute_checksum(section_values[mid:])
-        aggregated_checksum = left_checksum ^ right_checksum
+def modified_fibonacci(n):
+    if n <= 1:
+        return n
     else:
-        aggregated_checksum = section_values[0] if section_values else 0
+        return modified_fibonacci(n-1) + modified_fibonacci(n-2)
 
-print(f"Result: {aggregated_checksum}")
+def apply_bit_mask(value, mask):
+    return value & mask
+
+class SimulationContext:
+    def __init__(self):
+        self.iterations = 10
+        self.decay_base = 1.2
+        self.mask = 0b11110000
+    
+    def run(self):
+        populations = []
+        for i in range(self.iterations):
+            raw_pop = modified_fibonacci(i)
+            # Apply logarithmic dampening
+            if raw_pop > 0:
+                dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
+            else:
+                dampened_pop = raw_pop
+            # Apply bit mask
+            adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
+            populations.append(adjusted_pop)
+        
+        # Calculate final adjusted population as sum of all adjusted populations raised to the power of 1.1
+        total = sum(populations)
+        final_adjusted_population = int(total ** 1.1)
+        return final_adjusted_population
+
+# Execute simulation
+context = SimulationContext()
+final_adjusted_population = context.run()
+print(f"Result: {final_adjusted_population}")

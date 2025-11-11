@@ -1,12 +1,20 @@
-from functools import reduce
+import statistics
+from collections import namedtuple
 
-item_prices = {'bread': 2.50, 'croissant': 3.75, 'muffin': 4.25}
-items_sold = [12, 8, 15]  # bread, croissant, muffin counts
+# Define a nucleotide mapping
+Nucleotide = namedtuple('Nucleotide', ['symbol', 'value'])
 
-# Calculate revenue per item type
-revenue_per_item = list(map(lambda count, price: count * price, items_sold, item_prices.values()))
+code_map = {
+    'A': Nucleotide('Adenine', 0),
+    'T': Nucleotide('Thymine', 1),
+    'G': Nucleotide('Guanine', 2),
+    'C': Nucleotide('Cytosine', 3)
+}
 
-# Sum up all revenues
-total_revenue = reduce(lambda x, y: x + y, revenue_per_item)
+# Encoded DNA sequence values
+dna_values = [2, 1, 3, 0, 2, 3, 1]
 
-print(f"Result: {total_revenue}")
+# Calculate variance of the encoded sequence
+encoded_variance = statistics.variance(dna_values)
+
+print(f"Result: {encoded_variance}")

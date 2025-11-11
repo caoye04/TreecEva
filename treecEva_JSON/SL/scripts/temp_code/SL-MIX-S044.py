@@ -1,24 +1,58 @@
-def sieve(n):
-    is_prime = [True] * (n+1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(n**0.5)+1):
-        if is_prime[i]:
-            for j in range(i*i, n+1, i):
-                is_prime[j] = False
-    return [i for i in range(2, n+1) if is_prime[i]]
+from collections import deque
 
-def gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
+class SignalProcessor:
+    def __init__(self):
+        self.frequency_stack = []
+        self.temporal_queue = deque()
+        
+    def process(self, frequencies, time_events):
+        # Initialize structures
+        for freq in frequencies:
+            self.frequency_stack.append(freq)
+        
+        for event in time_events:
+            self.temporal_queue.append(event)
+        
+        signal_strength = 0
+        
+        # Process using stack and queue
+        while self.frequency_stack and self.temporal_queue:
+            freq = self.frequency_stack.pop()
+            time = self.temporal_queue.popleft()
+            
+            # Ternary operator determining amplification
+            adjustment = freq * 2 if time % 2 == 0 else freq // 2
+            
+            # Logical operations for signal conditioning
+            is_valid_freq = freq > 0 and freq < 1000
+            is_peak_time = time > 5 or time < 2
+            
+            if is_valid_freq and not is_peak_time:
+                signal_strength += adjustment
+            elif is_valid_freq or is_peak_time:
+                signal_strength -= adjustment // 4
+        
+        # Recursive refinement
+        def refine(signal, depth):
+            if depth == 0:
+                return signal
+            # Divide and conquer approach
+            half = signal // 2
+            return refine(half, depth - 1) + refine(signal - half, depth - 1)
+        
+        # Apply refinement
+        refined_strength = refine(signal_strength, 3)
+        
+        # Final adjustment using lambda
+        adjust_lambda = lambda x: x + 10 if x < 50 else x - 5
+        final_signal_strength = adjust_lambda(refined_strength)
+        
+        return final_signal_strength
 
-primes = sieve(99)
-prime_harmonies = 0
+# Execute processing
+processor = SignalProcessor()
+frequencies = [100, 250, 500, 750]
+time_events = [1, 4, 6, 8]
 
-for i in range(len(primes)):
-    for j in range(i+1, len(primes)):
-        p, q = primes[i], primes[j]
-        if p * q < 100 and gcd(p-1, q-1) > 1:
-            prime_harmonies += 1
-
-print(f"Result: {prime_harmonies}")
+final_signal_strength = processor.process(frequencies, time_events)
+print(f"Result: {final_signal_strength}")

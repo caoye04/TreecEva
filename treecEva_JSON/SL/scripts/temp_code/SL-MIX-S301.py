@@ -1,69 +1,54 @@
-import collections
-import math
+import re
+from statistics import mean
 
-class SignalProcessor:
-    def __init__(self):
-        self.stack = collections.deque()
-        self.accumulator = 0
-        self.transform_map = {}
+def process_telemetry(readings):
+    # State definitions for our finite state machine
+    states = {
+        'stable': {'low_threshold': 10, 'high_threshold': 90},
+        'warning': {'low_threshold': 5, 'high_threshold': 95},
+        'critical': {'low_threshold': 0, 'high_threshold': 100}
+    }
     
-    def load_signal(self, value):
-        self.stack.append(value)
+    current_state = 'stable'
+    stable_values = []
     
-    def apply_transform(self, opcode):
-        if opcode == 0b1010 and len(self.stack) >= 2:
-            a = self.stack.pop()
-            b = self.stack.pop()
-            result = (a ^ b) & 0xFF
-            self.stack.append(result)
-        elif opcode == 0b0101 and self.stack:
-            val = self.stack[-1]
-            shifted = (val << 2) | (val >> 6)
-            self.stack[-1] = shifted & 0xFF
-        elif opcode == 0b1111 and self.stack:
-            val = self.stack.pop()
-            adjusted = math.floor(val * 1.618)  # Golden ratio
-            self.accumulator += adjusted
+    # Lambda to determine next state based on value
+    transition = lambda val: 'critical' if val < 5 or val > 95 else ('warning' if val < 10 or val > 90 else 'stable')
     
-    def synchronize(self):
-        temp_sum = sum(list(self.stack)[:3]) if len(self.stack) >= 3 else sum(self.stack)
-        self.accumulator ^= temp_sum
-        return self.accumulator
+    for entry in readings:
+        # Pattern matching to validate and extract data
+        match = re.match(r'SENSOR_(\w+):(\d+):(\d+\.?\d*)', entry)
+        if not match:
+            continue  # Corrupted data, skip
+        
+        _, timestamp, value_str = match.groups()
+        value = float(value_str)
+        
+        # Update state using our state machine
+        current_state = transition(value)
+        
+        # Store value if in stable state
+        if current_state == 'stable':
+            stable_values.append(value)
+    
+    # Dictionary comprehension to merge with metadata (dummy here)
+    meta = {"processed": len(readings)}
+    stats = {"count": len(stable_values)}
+    merged_info = {**meta, **stats}
+    
+    average_stable_value = mean(stable_values) if stable_values else 0
+    return average_stable_value, merged_info
 
-def build_operation_tree():
-    # Binary tree represented as [root, left, right, left-left, left-right, ...]
-    return [0b1010, 0b0101, 0b1111, 0b1010, 0b0101, None, None]
+# Sensor readings with mixed valid and invalid formats
+sensor_data = [
+    "SENSOR_TEMP:1001:25.3",
+    "SENSOR_HUM:1002:corrupted",
+    "SENSOR_TEMP:1003:5.1",
+    "SENSOR_PRESS:1004:88.0",
+    "INVALID_FORMAT",
+    "SENSOR_TEMP:1005:91.2",
+    "SENSOR_HUM:1006:45.0"
+]
 
-def process_signals():
-    processor = SignalProcessor()
-    ops_tree = build_operation_tree()
-    
-    # Load initial signals
-    signals = [42, 18, 73, 29, 55]
-    for sig in signals:
-        processor.load_signal(sig)
-    
-    # Process according to tree - level order traversal
-    queue = collections.deque([0])  # Start with root index
-    
-    while queue and processor.stack:
-        idx = queue.popleft()
-        if idx < len(ops_tree) and ops_tree[idx] is not None:
-            opcode = ops_tree[idx]
-            processor.apply_transform(opcode)
-            
-            # Add children to queue if they exist
-            left_child = 2 * idx + 1
-            right_child = 2 * idx + 2
-            if left_child < len(ops_tree) and ops_tree[left_child] is not None:
-                queue.append(left_child)
-            if right_child < len(ops_tree) and ops_tree[right_child] is not None:
-                queue.append(right_child)
-    
-    # Final synchronization step
-    final_value = processor.synchronize()
-    return final_value
-
-# Execute processing pipeline
-final_accumulator = process_signals()
-print(f"Result: {final_accumulator}")
+average_stable_value, info = process_telemetry(sensor_data)
+print(f"Result: {average_stable_value}")

@@ -1,43 +1,41 @@
-import re
-from bisect import bisect_left
+import heapq
+import math
 
-def binary_range_filter(values, low, high):
-    sorted_vals = sorted(values)
-    left_idx = bisect_left(sorted_vals, low)
-    right_idx = bisect_left(sorted_vals, high)
-    return sorted_vals[left_idx:right_idx]
+def calculate_priority(distance, weight, urgency):
+    base_score = distance * 0.5 + weight * 2.0
+    adjusted_score = base_score if urgency == 'normal' else base_score * (1.5 if urgency == 'high' else 2.0)
+    return int(adjusted_score)
 
-def compute_weighted_score(filtered_values):
-    weights = [i+1 for i in range(len(filtered_values))]
-    total = sum(val * weight for val, weight in zip(filtered_values, weights))
-    return round(total, 2)
+def process_deliveries(requests_heap):
+    processed_scores = []
+    while requests_heap:
+        priority, distance, weight, urgency = heapq.heappop(requests_heap)
+        if distance > 100 and weight < 50:
+            continue
+        score = calculate_priority(distance, weight, urgency)
+        if urgency != 'low' or score > 100:
+            processed_scores.append(score)
+    return processed_scores
 
-class ExchangePattern:
-    def __init__(self, pattern_regex, threshold):
-        self.pattern = re.compile(pattern_regex)
-        self.threshold = threshold
-
-exchange_log = [
-    "RATE:+0.0023",
-    "RATE:-0.0015",
-    "RATE:+0.0041",
-    "RATE:+0.0009",
-    "RATE:-0.0032",
-    "RATE:+0.0058",
-    "RATE:+0.0017",
-    "RATE:-0.0004"
+delivery_requests = [
+    (10, 120, 45, 'high'),
+    (5, 80, 60, 'normal'),
+    (15, 150, 30, 'low'),
+    (8, 95, 55, 'high'),
+    (12, 200, 25, 'normal')
 ]
 
-pattern_matcher = ExchangePattern(r"RATE:([+-]\d+\.\d+)", 0.002)
-fluctuation_values = []
+# Create max heap using negative priorities
+requests_heap = [(-priority, distance, weight, urgency) for priority, distance, weight, urgency in delivery_requests]
+heapq.heapify(requests_heap)
 
-for entry in exchange_log:
-    match = pattern_matcher.pattern.search(entry)
-    if match:
-        value = float(match.group(1))
-        if abs(value) >= pattern_matcher.threshold:
-            fluctuation_values.append(value)
+processed_scores = process_deliveries(requests_heap)
 
-significant_changes = binary_range_filter(fluctuation_values, -0.005, 0.006)
-final_aggregation_score = compute_weighted_score(significant_changes)
-print(f"Result: {final_aggregation_score}")
+# Calculate final priority score using complex aggregation
+priority_weights = {i: math.log(i+2) for i in range(len(processed_scores))}
+weighted_scores = {i: processed_scores[i] * priority_weights[i] for i in range(len(processed_scores)) if processed_scores[i] > 100}
+
+final_priority_score = sum(weighted_scores.values()) if weighted_scores else 0
+final_priority_score = int(final_priority_score) & 0xFF  # Keep only lower 8 bits
+
+print(f"Result: {final_priority_score}")

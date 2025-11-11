@@ -1,33 +1,30 @@
-from collections import defaultdict
+from functools import reduce
 
-def calculate_subtree_contributions(node_id, dependencies, scores):
-    if node_id not in dependencies or not dependencies[node_id]:
-        return scores.get(node_id, 0)
+def modular_power(base, exp, mod):
+    return pow(base, exp, mod)
+
+def calculate_efficiency(keys, operations):
+    # Map each key to its modular exponentiation result
+    mod_results = {key: modular_power(key, 3, 17) for key in keys}
     
-    direct_sum = sum(scores.get(child, 0) for child in dependencies[node_id])
-    subtree_sum = sum(calculate_subtree_contributions(child, dependencies, scores) for child in dependencies[node_id])
+    # Apply operations using list comprehension and modular arithmetic
+    processed_values = [
+        (mod_results[key] * op + 5) % 13
+        for key, op in zip(mod_results.keys(), operations)
+    ]
     
-    return direct_sum + subtree_sum * 0.5
+    # Use functional programming to calculate the cumulative efficiency
+    efficiency_base = reduce(lambda x, y: (x + y) % 19, processed_values, 0)
+    
+    # Apply final transformation
+    efficiency_score = (efficiency_base ** 2 + 3 * efficiency_base + 7) % 23
+    
+    return efficiency_score
 
-dependencies_map = {
-    'root': ['modA', 'modB'],
-    'modA': ['subX', 'subY'],
-    'modB': ['subZ'],
-    'subX': [],
-    'subY': ['leaf1'],
-    'subZ': ['leaf2', 'leaf3']
-}
+# Encryption key candidates and operation multipliers
+encryption_keys = [7, 11, 13, 19, 23]
+operation_multipliers = [2, 4, 1, 5, 3]
 
-module_scores = {
-    'modA': 10,
-    'modB': 20,
-    'subX': 5,
-    'subY': 7,
-    'subZ': 15,
-    'leaf1': 3,
-    'leaf2': 4,
-    'leaf3': 2
-}
-
-total_contribution = calculate_subtree_contributions('root', dependencies_map, module_scores)
-print(f"Result: {int(total_contribution)}")
+# Calculate the efficiency score
+efficiency_score = calculate_efficiency(encryption_keys, operation_multipliers)
+print(f'Result: {efficiency_score}')

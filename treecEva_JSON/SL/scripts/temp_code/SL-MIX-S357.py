@@ -1,28 +1,40 @@
-import base64
-import itertools
+import heapq
+from collections import defaultdict
 
-default_permissions = 'gA=='  # Base64 for binary 10000000
-team_override_masks = ['AQ==', 'Ag==', 'BQ==']  # Base64 for 00000001, 00000010, 00000101
+# Package weights in kilograms
+package_weights = [12.5, 8.3, 15.7, 6.2, 22.1, 9.8, 18.4, 5.1, 14.6, 11.9]
 
-# Decode default permissions
-default_mask = int.from_bytes(base64.b64decode(default_permissions), 'big')
+# Initialize data structures
+weight_categories = defaultdict(list)
+priority_heap = []
 
-# Decode and combine override masks using XOR chaining
-combined_override = 0
-for enc_mask in team_override_masks:
-    decoded_mask = int.from_bytes(base64.b64decode(enc_mask), 'big')
-    combined_override ^= decoded_mask
+# Categorize packages by weight ranges
+for weight in package_weights:
+    if weight >= 15.0:
+        weight_categories['heavy'].append(weight)
+    elif weight >= 10.0 and weight < 15.0:
+        weight_categories['medium'].append(weight)
+    else:
+        weight_categories['light'].append(weight)
 
-# Apply overrides to default permissions
-final_permission_mask = default_mask | combined_override
+# Process heavy packages with priority calculation
+for weight in weight_categories['heavy']:
+    priority = int(weight * 2.5)
+    heapq.heappush(priority_heap, -priority)  # Max heap using negative values
 
-# Convert to dictionary with bit position analysis
-permission_dict = {i: bool(final_permission_mask & (1 << i)) for i in range(8)}
+# Process medium packages with priority calculation
+for weight in weight_categories['medium']:
+    if weight >= 12.0:  # Short-circuit evaluation
+        priority = int(weight * 1.8)
+        heapq.heappush(priority_heap, -priority)
 
-# Count active permissions using itertools
-active_permissions = sum(itertools.chain(permission_dict.values()))
+# Calculate final priority score
+final_priority_score = 0
+while priority_heap:
+    priority = -heapq.heappop(priority_heap)  # Convert back to positive
+    final_priority_score += priority
+    
+# Apply final transformation
+final_priority_score = sum(map(lambda x: x // 2, [final_priority_score]))
 
-# Final calculation combines mask value with active count
-security_index = final_permission_mask + active_permissions
-
-print(f'Result: {security_index}')
+print(f"Result: {final_priority_score}")

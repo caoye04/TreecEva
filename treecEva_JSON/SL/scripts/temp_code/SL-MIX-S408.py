@@ -1,27 +1,13 @@
-from collections import defaultdict
-from itertools import cycle
+from typing import NamedTuple
 
-def verify_packets(packet_data):
-    masks = [0x1A, 0x2B, 0x3C, 0x4D]
-    mask_cycle = cycle(masks)
-    accumulator = 0xF0F0
-    
-    for idx, packet in enumerate(packet_data):
-        # Short-circuit evaluation with bitwise operations
-        if (packet & 0xFF) != 0 and (packet >> 8) & 0xFF:
-            current_mask = next(mask_cycle)
-            accumulator ^= (packet & 0xFFFF)  # XOR with lower 16 bits
-            accumulator &= ~(current_mask << 4)  # Clear bits at position
-            accumulator |= ((packet >> 16) & 0xF) << 8  # Set specific bits
-        elif packet == 0:
-            accumulator >>= 2  # Right shift by 2
-        else:
-            accumulator <<= 1  # Left shift
-            accumulator &= 0xFFFF  # Keep within 16 bits
-    
-    return accumulator
+class Book(NamedTuple):
+    title: str
+    price: float
 
-# Packet sequence representing network traffic
-packets = [0x123456, 0x0, 0x789ABC, 0xDEF012, 0x345678]
-final_mask = verify_packets(packets)
-print(f"Result: {final_mask}")
+discount_calculator = lambda original_price, percent_off: original_price * (1 - percent_off / 100)
+
+book_record = Book(title="The Python Guide", price=45.0)
+discount_percent = 20
+final_price = discount_calculator(book_record.price, discount_percent)
+
+print(f"Result: {final_price}")

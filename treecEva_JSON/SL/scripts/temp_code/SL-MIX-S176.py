@@ -1,66 +1,61 @@
-from collections import defaultdict
-import math
+import heapq
+import base64
+from collections import deque
 
-def calculate_entropy(data):
-    if not data:
-        return 0
-    frequency = defaultdict(int)
-    for char in data:
-        frequency[char] += 1
-    entropy = 0
-    data_len = len(data)
-    for freq in frequency.values():
-        probability = freq / data_len
-        entropy -= probability * math.log2(probability)
-    return entropy
+def call_tracker(func):
+    calls = []
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        calls.append(result)
+        return result
+    wrapper.calls = calls
+    return wrapper
 
-def transform_header(header_str):
-    transformed = ''
-    for i, char in enumerate(header_str):
-        if i % 2 == 0:
-            transformed += char.upper()
-        else:
-            transformed += char.lower()
-    return transformed[::-1]  # Reverse the string
-
-packet_headers = [
-    "src=192.168.1.1;dst=10.0.0.1;port=80",
-    "src=172.16.0.1;dst=192.168.1.100;port=443",
-    "src=10.0.0.5;dst=172.16.0.10;port=22",
-    "src=192.168.1.50;dst=8.8.8.8;port=53"
-]
-
-# Initialize threat scoring system
-threat_scores = defaultdict(lambda: 0)
-threat_accumulator = 0
-
-for header in packet_headers:
-    # Transform header for analysis
-    processed_header = transform_header(header)
+class ResourcePool:
+    def __init__(self, resources):
+        self.resources = resources
+        self.active = []
     
-    # Calculate base threat score using entropy
-    base_score = int(calculate_entropy(processed_header) * 10)
+    def __enter__(self):
+        self.active = list(self.resources)
+        return self.active
     
-    # Extract port number for additional scoring
-    port_str = header.split('port=')[1]
-    port_num = int(port_str)
-    
-    # Apply port-based modifiers
-    if port_num in [22, 443]:  # SSH or HTTPS
-        port_modifier = 5
-    elif port_num == 80:  # HTTP
-        port_modifier = 2
-    else:  # Other ports
-        port_modifier = 1
-    
-    # Calculate final packet threat score
-    packet_score = base_score + (port_modifier * 3)
-    
-    # Update accumulator with weighted score
-    threat_accumulator += packet_score * len(header) // 10
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.active.clear()
 
-# Apply final adjustment based on total packets processed
-final_adjustment = (len(packet_headers) ** 2) & 0xF  # Bitwise AND with 15
-threat_accumulator ^= final_adjustment  # XOR with adjustment
+@call_tracker
+def encode_message(msg):
+    return base64.b64encode(msg.encode()).decode()
 
-print(f"Result: {threat_accumulator}")
+@call_tracker
+def decode_message(encoded_msg):
+    return base64.b64decode(encoded_msg).decode()
+
+messages = ['alpha', 'beta', 'gamma', 'delta']
+priorities = [3, 1, 4, 2]
+heap = list(zip(priorities, messages))
+heapq.heapify(heap)
+
+processing_stack = []
+output_queue = deque()
+
+with ResourcePool([1, 2, 3]) as pool:
+    while heap:
+        priority, msg = heapq.heappop(heap)
+        encoded = encode_message(msg)
+        processing_stack.append((priority, encoded))
+    
+    while processing_stack:
+        priority, encoded = processing_stack.pop()
+        decoded = decode_message(encoded)
+        output_queue.appendleft((priority, decoded))
+    
+    checksum_components = []
+    while output_queue:
+        priority, text = output_queue.popleft()
+        text_hash = hash(text) % 1000
+        checksum_components.append(text_hash ^ priority)
+    
+    final_checksum = sum(checksum_components) & 0xFF
+
+print(f"Result: {final_checksum}")

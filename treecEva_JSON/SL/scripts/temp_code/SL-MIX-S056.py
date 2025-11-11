@@ -1,32 +1,13 @@
-import itertools
+from collections import Counter
 
-def load_trucks_greedy(package_weights, truck_capacity=1000):
-    # Sort packages in descending order for greedy selection
-    sorted_weights = sorted(package_weights, reverse=True)
-    trucks = []
-    
-    for weight in sorted_weights:
-        # Try to fit package in existing truck
-        placed = False
-        for truck in trucks:
-            if truck['remaining'] >= weight:
-                truck['remaining'] -= weight
-                truck['packages'].append(weight)
-                placed = True
-                break
-        
-        # If package doesn't fit in any existing truck, create new truck
-        if not placed:
-            new_truck = {'remaining': truck_capacity - weight, 'packages': [weight]}
-            trucks.append(new_truck)
-    
-    return trucks
+daily_sales = Counter({'bread': 45, 'croissant': 30, 'muffin': 25, 'cookie': 15})
+prices = {'bread': 2.50, 'croissant': 3.00, 'muffin': 2.00, 'cookie': 1.50}
 
-# Package weights in kg
-packages = [350, 200, 150, 400, 300, 250, 100, 500, 175, 225, 325, 275]
-loaded_trucks = load_trucks_greedy(packages)
+total_items = sum(daily_sales.values())
+total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
 
-# Calculate total unused capacity
-unused_capacity = sum(truck['remaining'] for truck in loaded_trucks)
+if total_items > 100:
+    total_revenue *= 0.9
 
-print(f"Result: {unused_capacity}")
+final_revenue = int(total_revenue * 100)  # Convert to cents for precise integer handling
+print(f'Result: {final_revenue}')

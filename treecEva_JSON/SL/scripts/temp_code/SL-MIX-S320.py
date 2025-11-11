@@ -1,45 +1,44 @@
-import math
-from collections import defaultdict
+import functools
 
-def calculate_attenuation_factor(signal_strength, distance):
-    return math.exp(-0.1 * distance) * signal_strength
+def signal_band_optimizer(frequency_bands):
+    # Dynamic programming table for optimal bit allocation
+    dp_table = [0] * (len(frequency_bands) + 1)
+    
+    for i in range(1, len(frequency_bands) + 1):
+        current_band_energy = frequency_bands[i-1]
+        # Bit allocation strategy using arithmetic and bitwise operations
+        optimal_bits = (current_band_energy << 2) - (current_band_energy >> 1)
+        dp_table[i] = max(dp_table[i-1], dp_table[i-1] + optimal_bits)
+    
+    return dp_table[len(frequency_bands)]
 
-def is_critical_zone(zone_id, signal_history):
-    return zone_id in signal_history and signal_history[zone_id] > 100
+# Audio signal characteristics for analysis
+audio_spectrum = [15, 23, 9, 31, 17, 28, 12, 35]
 
-def compute_weighted_log_sum(values, weights):
-    return sum(math.log(v + 1) * w for v, w in zip(values, weights) if v > 0)
+# Apply functional transformation to spectrum data
+transformed_spectrum = list(map(lambda x: x * 3 if x % 2 == 0 else x * 2, audio_spectrum))
 
-# Signal data processing pipeline
-signal_readings = [45.2, 89.7, 120.1, 67.3, 200.5]
-distance_metrics = [10, 25, 5, 30, 15]
-zone_identifiers = ['Z1', 'Z2', 'Z3', 'Z4', 'Z5']
-zone_histories = defaultdict(float, {'Z1': 95.2, 'Z2': 105.8, 'Z3': 80.0, 'Z5': 150.3})
-attenuation_weights = [0.5, 0.7, 0.9, 0.6, 0.8]
+# Calculate base efficiency using dynamic programming
+base_efficiency = signal_band_optimizer(transformed_spectrum)
 
-adjusted_signals = [
-    calculate_attenuation_factor(sig, dist) 
-    for sig, dist in zip(signal_readings, distance_metrics)
-]
+# Apply decorator-based enhancement factor
+def enhancement_decorator(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        original_result = func(*args, **kwargs)
+        # Enhancement calculation using arithmetic operations
+        enhancement_factor = (original_result & 0xFF) ^ 0x55
+        return original_result + enhancement_factor
+    return wrapper
 
-critical_mask = [
-    is_critical_zone(zone, zone_histories) and att > 50.0
-    for zone, att in zip(zone_identifiers, adjusted_signals)
-]
+@enhancement_decorator
+def calculate_refined_efficiency(base_value):
+    # Refinement using bit manipulation and arithmetic
+    refined = (base_value | 0xF0) - (base_value & 0x0F)
+    return refined
 
-filtered_weights = [
-    weight if mask else 0.1 
-    for weight, mask in zip(attenuation_weights, critical_mask)
-]
+# Compute final efficiency score
+refined_efficiency = calculate_refined_efficiency(base_efficiency)
+final_efficiency_score = refined_efficiency - sum(filter(lambda x: x > 50, transformed_spectrum))
 
-logarithmic_components = [
-    math.log(signal + 1) if signal > 0 else 0 
-    for signal in adjusted_signals
-]
-
-weighted_log_sum = compute_weighted_log_sum(logarithmic_components, filtered_weights)
-
-# Final degradation index calculation
-final_degradation_index = math.pow(weighted_log_sum, 1.5) * 100
-
-print(f"Result: {final_degradation_index:.6f}")
+print(f"Result: {final_efficiency_score}")

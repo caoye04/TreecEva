@@ -1,27 +1,43 @@
-from functools import reduce
+from collections import deque
 
-def palindrome_contributions(seq):
-    n = len(seq)
-    dp = [0] * (n + 1)
-    for i in range(n):
-        for j in range(i, n):
-            substr = seq[i:j+1]
-            if substr == substr[::-1]:
-                dp[j+1] = max(dp[j+1], dp[i] + (j-i+1))
-    return dp
+class ScopeStack:
+    def __init__(self):
+        self.stack = []
+    
+    def enter(self):
+        self.stack.append(len(self.stack)+1)
+    
+    def exit(self):
+        if self.stack:
+            return self.stack.pop()
+        return 0
+    
+    def depth(self):
+        return len(self.stack)
 
-@lambda f: lambda x: 2 * f(x) - 1
-def transform_score(value):
-    return value + 3
+def tokenize(input_str):
+    return input_str.split()
 
-sequences = ['ATGCA', 'CGTAC', 'TACGT']
-scores = []
-for seq in sequences:
-    raw_scores = palindrome_contributions(seq)
-    max_raw = max(raw_scores)
-    transformed = transform_score(max_raw)
-    scores.append(transformed)
+def transform_token(t):
+    mapper = lambda x: ''.join(sorted(set(x)))
+    return mapper(t)
 
-sorted_scores = sorted(scores)
-regulatory_score = reduce(lambda acc, x: acc + x if x > 10 else acc, sorted_scores, 0)
-print(f"Result: {regulatory_score}")
+token_stream = "begin alpha beta gamma end begin delta epsilon end"
+tokens = tokenize(token_stream)
+scopes = ScopeStack()
+active_transforms = set()
+
+for token in tokens:
+    hashed = hash(transform_token(token)) % 100
+    if token == 'begin':
+        scopes.enter()
+        active_transforms.add(hashed)
+    elif token == 'end' and scopes.depth() > 0:
+        scopes.exit()
+        active_transforms.discard(hashed)
+    else:
+        if hashed in active_transforms:
+            pass  # Normally would apply transform
+
+scope_depth = scopes.depth()
+print(f"Result: {scope_depth}")

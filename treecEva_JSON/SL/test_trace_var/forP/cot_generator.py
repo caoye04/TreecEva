@@ -1,10 +1,13 @@
 """
 基于行内注释的COT生成器 - 最终修复版
+- 支持中英双语
+- 支持长循环总结
+- 支持 [line n] + [explain] 双行格式
 """
 
 import ast
 import re
-from config import INLINE_COT_TEMPLATES, COT_CONFIG
+from config import TEMPLATES
 
 
 class CodeClassifier:
@@ -118,11 +121,13 @@ class CodeClassifier:
 
 
 class VariableTracker:
-    """变量来源追踪器"""
+    """变量来源追踪器 (支持多语言)"""
     
-    def __init__(self):
+    def __init__(self, lang='en'):
         self.var_definitions = {}
         self.var_history = {}
+        self.lang = lang
+        self.templates = TEMPLATES[lang]
     
     def update_var(self, var_name, lineno, value):
         """更新变量定义"""
@@ -139,15 +144,18 @@ class VariableTracker:
         """获取变量来源信息"""
         def_line = self.var_definitions.get(var_name)
         if def_line:
-            return f"第{def_line}行"
-        return "未知"
+            # 格式化: "[line n]" 或 "[第n行]"
+            # **注意**: 这里的格式是用于 *注释内部* 的, 不是行首的
+            return self.templates['var_source'].format(def_line=def_line)
+        return self.templates['var_unknown']
 
 
 class ParameterExtractor:
-    """参数提取器"""
+    """参数提取器 (支持多语言)"""
     
-    def __init__(self, var_tracker):
+    def __init__(self, var_tracker, lang='en'):
         self.var_tracker = var_tracker
+        self.lang = lang
     
     def extract(self, line, line_type, classifier, prev_var_dict=None):
         """提取模板参数"""
@@ -165,7 +173,7 @@ class ParameterExtractor:
                 print_arg = match.group(1).strip()
                 if print_arg in var_dict:
                     source = self.var_tracker.get_var_source_info(print_arg)
-                    params['print_content'] = f"{print_arg}={var_dict[print_arg]} (来自{source})"
+                    params['print_content'] = f"{print_arg}={var_dict[print_arg]} (from {source})"
                 else:
                     params['print_content'] = print_arg
         
@@ -241,7 +249,14 @@ class ParameterExtractor:
             # 获取旧值和定义行
             if var and prev_var_dict:
                 params['old_val'] = prev_var_dict.get(var, '?')
-                params['def_line'] = self.var_tracker.get_def_line(var) or '?'
+                # 格式化: "[line n]" 或 "[第n行]"
+                def_line_num = self.var_tracker.get_def_line(var)
+                params['def_line'] = self.var_tracker.get_var_source_info(var) if def_line_num else '?'
+                
+                # 兼容中文模板，它只需要行号
+                if self.lang == 'zh':
+                     params['def_line'] = self.var_tracker.get_var_source_info(var)
+
             else:
                 params['old_val'] = '?'
                 params['def_line'] = '?'
@@ -274,7 +289,7 @@ class ParameterExtractor:
             return_val = line.code.replace('return', '').strip()
             if return_val in var_dict:
                 source = self.var_tracker.get_var_source_info(return_val)
-                params['value'] = f"{return_val}={var_dict[return_val]} (来自{source})"
+                params['value'] = f"{return_val}={var_dict[return_val]} (from {source})"
             else:
                 params['value'] = return_val
         
@@ -329,10 +344,13 @@ class ParameterExtractor:
         
         # 构建详细说明
         var_details = []
+        unique_vars = set() # 确保每个变量只解释一次
+        
         for var in variables:
             # 检查是否是Python关键字或内置函数
-            if var in ['range', 'len', 'sum', 'max', 'min', 'int', 'str', 'list', 'dict', 'True', 'False', 'None']:
+            if var in ['range', 'len', 'sum', 'max', 'min', 'int', 'str', 'list', 'dict', 'True', 'False', 'None'] or var in unique_vars:
                 continue
+            unique_vars.add(var)
             
             # 如果变量是左值（在赋值语句左边，如 d = d + 1），使用 prev_var_dict（修改前的值）
             # 如果变量是右值（只在表达式中读取），使用当前行的 var_dict（已经过属性精简）
@@ -341,20 +359,21 @@ class ParameterExtractor:
                 if prev_var_dict and var in prev_var_dict:
                     val = prev_var_dict[var]
                     source = self.var_tracker.get_var_source_info(var)
-                    var_details.append(f"{var}={val}(来自{source})")
+                    var_details.append(f"{var}={val}(from {source})")
             else:
                 # 右值：优先使用当前行的精简值（已根据当前行属性访问精简）
                 if var in var_dict:
                     val = var_dict[var]
                     source = self.var_tracker.get_var_source_info(var)
-                    var_details.append(f"{var}={val}(来自{source})")
+                    var_details.append(f"{var}={val}(from {source})")
                 elif prev_var_dict and var in prev_var_dict:
                     val = prev_var_dict[var]
                     source = self.var_tracker.get_var_source_info(var)
-                    var_details.append(f"{var}={val}(来自{source})")
+                    var_details.append(f"{var}={val}(from {source})")
         
         if var_details:
-            return f"{expr}, 其中 {', '.join(var_details)}"
+            detail_str = f", where {', '.join(var_details)}" if self.lang == 'en' else f", 其中 {', '.join(var_details)}"
+            return f"{expr}{detail_str}"
         else:
             return expr
 
@@ -362,12 +381,14 @@ class ParameterExtractor:
 class COTGenerator:
     """行内注释式COT生成器"""
     
-    def __init__(self, pruned_file):
+    def __init__(self, pruned_file, lang='en'):
         self.pruned_file = pruned_file
+        self.lang = lang
+        self.templates = TEMPLATES[lang]
         self.target_line = None
         self.target_var = None
         self.lines = []
-        self.var_tracker = VariableTracker()
+        self.var_tracker = VariableTracker(lang=self.lang)
     
     def load_pruned_trace(self):
         """加载剪枝后的追踪文件"""
@@ -426,15 +447,41 @@ class COTGenerator:
         return [], []
     
     def generate(self):
-        """生成行内注释式COT"""
-        classifier = CodeClassifier()
-        extractor = ParameterExtractor(self.var_tracker)
+        """生成行内注释式COT（支持长循环总结）"""
+        
+        # --- 步骤 1: 预计算循环总数 (Dry Run) ---
+        total_counts = {}
+        dry_classifier = CodeClassifier()
+        prev_line = None
+        for i, line in enumerate(self.lines):
+            next_line = self.lines[i + 1] if i + 1 < len(self.lines) else None
+            dry_classifier.classify(line, prev_line, next_line)
+            prev_line = line
+        total_counts = dry_classifier.loop_counters
+
+        # --- 步骤 2: 实际生成 ---
+        classifier = CodeClassifier() # 使用新的分类器进行实际生成
+        extractor = ParameterExtractor(self.var_tracker, lang=self.lang)
         
         output_lines = []
-        output_lines.append(f"目标: 求第{self.target_line}行执行后变量 {self.target_var} 的值\n")
+        header_template = self.templates['header']
+        footer_template = self.templates['footer']
+        inline_templates = self.templates['inline']
+        
+        output_lines.append(header_template.format(
+            target_line=self.target_line, 
+            target_var=self.target_var
+        ))
         
         prev_var_dict = {}
         prev_line_obj = None
+        
+        current_loop_header = None
+        loop_skip_state = {} # 存储循环头的行号: True (正在跳过) / False (正在打印)
+
+        LOOP_SUMMARY_THRESHOLD = 5 # 迭代次数 > 5 才触发总结
+        SKIP_AFTER_ITER = 2      # 显示前 2 次
+        RESUME_BEFORE_ITER = 2     # 显示后 2 次
         
         for i, line in enumerate(self.lines):
             next_line = self.lines[i + 1] if i + 1 < len(self.lines) else None
@@ -442,6 +489,45 @@ class COTGenerator:
             # 分类
             line_type = classifier.classify(line, prev_line_obj, next_line)
             
+            # --- 循环总结逻辑 ---
+            if line_type in ('for_start', 'while_start'):
+                current_loop_header = line.lineno
+                loop_skip_state[current_loop_header] = False # 默认开始打印
+            
+            if current_loop_header:
+                total_iter = total_counts.get(current_loop_header, 0)
+                current_iter = classifier.loop_counters.get(current_loop_header, 0)
+                
+                # 计算开始跳过和恢复打印的迭代次数
+                START_SKIP_ITER = SKIP_AFTER_ITER + 1
+                RESUME_ITER = total_iter - RESUME_BEFORE_ITER + 1
+
+                is_summarizable = total_iter > LOOP_SUMMARY_THRESHOLD
+                
+                if is_summarizable:
+                    if current_iter == START_SKIP_ITER:
+                        # 这是第3次迭代，打印总结行并开始跳过
+                        num_skipped = total_iter - SKIP_AFTER_ITER - RESUME_BEFORE_ITER
+                        summary_template = {
+                            'en': f"\n... [Line {current_loop_header}] repeats {num_skipped} more times ...\n",
+                            'zh': f"\n... [第{current_loop_header}行] 额外循环了 {num_skipped} 次 ...\n"
+                        }
+                        output_lines.append(summary_template[self.lang].strip()) 
+                    
+                    elif current_iter == RESUME_ITER:
+                        # 这是倒数第2次迭代，停止跳过
+                        loop_skip_state[current_loop_header] = False
+                        
+                # 检查是否应跳过当前行
+                if loop_skip_state.get(current_loop_header, False):
+                    # 必须更新状态，即使不打印
+                    prev_var_dict = line.get_var_dict()
+                    prev_line_obj = line
+                    if line_type in ('for_end', 'while_end'):
+                        current_loop_header = None # 退出循环
+                    continue # 跳过本行
+            # --- 结束循环总结逻辑 ---
+
             if line_type == 'unknown':
                 prev_var_dict = line.get_var_dict()
                 prev_line_obj = line
@@ -451,30 +537,61 @@ class COTGenerator:
             params = extractor.extract(line, line_type, classifier, prev_var_dict)
             
             # 获取模板
-            template_info = INLINE_COT_TEMPLATES.get(line_type)
+            template_info = inline_templates.get(line_type)
             if not template_info:
                 prev_var_dict = line.get_var_dict()
                 prev_line_obj = line
                 continue
             
-            # 生成行内注释
-            code_line = f"{line.lineno:3d}  {line.code}"
+
+            # -------------------------------------------------
+            # 目标格式:
+            # [line 1]  a = 1
+            # [explain] Assign: a = 1
+            # -------------------------------------------------
             
+            # 1. 获取注释文本 (不带 '#')
+            comment_text = ""
             try:
-                comment = template_info['template'].format(**params)
+                # 模板格式为: "  # Assign: {var} = {value}"
+                comment_with_prefix = template_info['template'].format(**params)
+                # 移除前导空格、'#'号和之后的空格
+                comment_text = comment_with_prefix.lstrip().lstrip('#').lstrip()
             except KeyError as e:
-                comment = f"  # (缺少参数: {e})"
+                comment_text = f"(Missing param: {e})"
+
+            # 2. 格式化代码行和解释行
+            if self.lang == 'zh':
+                # 中文版
+                code_line = f"[第{line.lineno}行]  {line.code}"
+                explain_line = f"[解释] {comment_text}"
+            else:
+                # 英文版
+                code_line = f"[line {line.lineno}]  {line.code}"
+                explain_line = f"[explain] {comment_text}"
             
-            output_lines.append(code_line + comment)
+            # 3. 添加两行到输出 (并确保解释非空)
+            output_lines.append(code_line)
+            if comment_text:
+                output_lines.append(explain_line)
+            # -------------------------------------------------
             
             # 更新prev_var_dict和prev_line_obj
             prev_var_dict = line.get_var_dict()
             prev_line_obj = line
+            
+            if line_type in ('for_end', 'while_end'):
+                current_loop_header = None # 退出循环
         
         # 最终答案
         final_value = self.lines[-1].get_var_dict().get(self.target_var, '?')
         source_info = self.var_tracker.get_var_source_info(self.target_var)
-        output_lines.append(f"\n答案: {self.target_var} = {final_value} (最后在{source_info}更新)")
+        
+        output_lines.append(footer_template.format(
+            target_var=self.target_var,
+            final_value=final_value,
+            source_info=source_info
+        ))
         
         return '\n'.join(output_lines)
     
@@ -486,8 +603,8 @@ class COTGenerator:
         return output_file
     
     @staticmethod
-    def generate_cot(pruned_file, output_file):
+    def generate_cot(pruned_file, output_file, lang='en'):
         """静态方法：生成COT"""
-        generator = COTGenerator(pruned_file)
+        generator = COTGenerator(pruned_file, lang=lang)
         generator.load_pruned_trace()
         return generator.save_cot(output_file)

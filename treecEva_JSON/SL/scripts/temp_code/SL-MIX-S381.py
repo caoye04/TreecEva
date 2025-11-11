@@ -1,23 +1,33 @@
-from collections import defaultdict
+from functools import reduce
 
-# Initial drone setup
-waypoints = [(2, 3), (-1, 4), (3, -2), (-2, -1), (0, 5), (1, -3)]
-energy_map = defaultdict(int)
-initial_position = (0, 0)
-current_position = list(initial_position)
+def process_telemetry(readings):
+    processed_values = []
+    
+    # State machine for processing
+    for sensor_id, value in readings:
+        if sensor_id % 2 == 0:  # Even sensor ID
+            processed_values.append(value ** 2)
+        else:  # Odd sensor ID
+            processed_values.append(abs(value))
+    
+    # Sorting in descending order
+    sorted_values = sorted(processed_values, reverse=True)
+    
+    # Compute product of top 3 values
+    top_three = sorted_values[:3]
+    final_product = reduce(lambda x, y: x * y, top_three, 1)
+    
+    return final_product
 
-# Movement and energy collection
-for dx, dy in waypoints:
-    current_position[0] += dx
-    current_position[1] += dy
-    coord_tuple = tuple(current_position)
-    energy_map[coord_tuple] += sum(abs(x) for x in coord_tuple) + 1
+# Telemetry data: list of (sensor_id, value) tuples
+sensor_readings = [
+    (1, -5),
+    (2, 3),
+    (3, -7),
+    (4, 4),
+    (5, -2),
+    (6, -6)
+]
 
-# Calculate energy from even-coordinate locations
-total_even_energy = sum(
-    energy
-    for (x, y), energy in energy_map.items()
-    if x % 2 == 0 and y % 2 == 0
-)
-
-print(f"Result: {total_even_energy}")
+final_product = process_telemetry(sensor_readings)
+print(f"Result: {final_product}")

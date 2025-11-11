@@ -1,50 +1,56 @@
 import math
+import re
+from collections import deque
 from functools import reduce
-from itertools import combinations
 
-def triangle_area(vertices):
-    (x1, y1), (x2, y2), (x3, y3) = vertices
-    return abs((x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2)) / 2)
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
 
-def triangle_perimeter(vertices):
-    (x1, y1), (x2, y2), (x3, y3) = vertices
-    side1 = math.sqrt((x2-x1)**2 + (y2-y1)**2)
-    side2 = math.sqrt((x3-x2)**2 + (y3-y2)**2)
-    side3 = math.sqrt((x1-x3)**2 + (y1-y3)**2)
-    return side1 + side2 + side3
+def compute_deviation(altitudes):
+    deviations = []
+    for i in range(1, len(altitudes)):
+        diff = abs(altitudes[i] - altitudes[i-1])
+        fib_weight = fibonacci(i)
+        deviations.append(diff * fib_weight)
+    return deviations
 
-# Triangle vertex coordinates in a mesh
-mesh_triangles = [
-    [(0, 0), (4, 0), (2, 3)],
-    [(4, 0), (6, 2), (2, 3)],
-    [(2, 3), (6, 2), (3, 5)],
-    [(0, 0), (2, 3), (-1, 2)]
-]
+def trig_smoothing(values):
+    smoothed = [math.sin(v) if v < 1 else math.cos(v) for v in values]
+    return smoothed
 
-# Calculate quality scores for each triangle
-triangle_scores = {}
-for i, vertices in enumerate(mesh_triangles):
-    area = triangle_area(vertices)
-    perimeter = triangle_perimeter(vertices)
-    # Quality score combines logarithmic area with exponential perimeter weighting
-    score = math.log(area + 1) * math.exp(perimeter / 10) if area > 0 else 0
-    triangle_scores[f'T{i+1}'] = score
+def hash_filter(segments):
+    registry = {}
+    filtered = []
+    for s in segments:
+        key = hash(round(s, 4)) % 1000
+        if key not in registry:
+            registry[key] = True
+            filtered.append(s)
+    return filtered
 
-# Generate combinatorial connections between triangles
-triangle_ids = list(triangle_scores.keys())
-connections = list(combinations(triangle_ids, 2))
+telemetry_log = "ALT:100.5,102.3,99.8,105.0,103.2,107.1"
+match = re.search(r'ALT:(.*)', telemetry_log)
+altitude_data = list(map(float, match.group(1).split(',')))
 
-# Connection strength based on score similarity
-connection_weights = {
-    (t1, t2): math.exp(-abs(triangle_scores[t1] - triangle_scores[t2]))
-    for t1, t2 in connections
-}
+# Step 1: Compute Fibonacci-weighted deviations
+weighted_deviations = compute_deviation(altitude_data)
 
-# Mesh stability index calculation
-score_sum = sum(triangle_scores.values())
-weight_product = reduce(lambda x, y: x * y, connection_weights.values(), 1)
-combined_factor = math.log(score_sum + 1) if score_sum > 0 else 0
+# Step 2: Apply trigonometric smoothing
+smoothed_values = trig_smoothing(weighted_deviations)
 
-mesh_stability_index = round((combined_factor * weight_product) ** (1/3), 6)
+# Step 3: Filter using hash-based registry
+unique_segments = hash_filter(smoothed_values)
 
-print(f"Result: {mesh_stability_index}")
+# Step 4: Aggregate into stability score using stack-like reduction
+stack = deque(unique_segments)
+aggregated = 0
+while stack:
+    val = stack.pop()
+    aggregated = math.atan2(val, aggregated) if aggregated != 0 else val
+
+# Final stability score
+final_stability_score = round(aggregated * 1000)
+print(f"Result: {final_stability_score}")

@@ -1,49 +1,61 @@
+import math
+import heapq
 from functools import reduce
-import hashlib
+from collections import defaultdict
 
-def tokenize_dna(sequence):
-    return [sequence[i:i+3] for i in range(0, len(sequence), 3)]
+def fibonacci_mod_log(n, mod):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    a, b = 0, 1
+    for i in range(2, n+1):
+        c = (a + b) % mod
+        if i % 3 == 0:
+            log_factor = int(math.log(i) * 10) % mod
+            c = (c - log_factor) % mod
+        a, b = b, c
+    return b
 
-def hash_substrings(tokens):
-    return {token: hashlib.md5(token.encode()).hexdigest()[:8] for token in tokens}
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
-def compute_frequency(tokens):
-    freq = {}
-    for token in tokens:
-        freq[token] = freq.get(token, 0) + 1
-    return freq
+def insert_level_order(arr, root, i, n):
+    if i < n:
+        temp = TreeNode(arr[i])
+        root = temp
+        root.left = insert_level_order(arr, root.left, 2 * i + 1, n)
+        root.right = insert_level_order(arr, root.right, 2 * i + 2, n)
+    return root
 
-def dynamic_score(freq_map):
-    keys = sorted(freq_map.keys())
-    dp = [0] * (len(keys) + 1)
-    for i in range(1, len(keys) + 1):
-        current = freq_map[keys[i-1]]
-        dp[i] = max(dp[i-1], dp[i-2] + current if i >= 2 else current)
-    return dp[len(keys)]
+def inorder_traversal(root, result):
+    if root:
+        inorder_traversal(root.left, result)
+        result.append(root.val)
+        inorder_traversal(root.right, result)
 
-def process_genomic_data(dna_sequence):
-    # Tokenization step
-    codons = tokenize_dna(dna_sequence)
-    
-    # Hash all unique codons
-    codon_hashes = hash_substrings(codons)
-    
-    # Compute frequency of each codon
-    frequency_map = compute_frequency(codons)
-    
-    # Apply dynamic programming to maximize non-adjacent codon frequency score
-    dp_score = dynamic_score(frequency_map)
-    
-    # Sort codons by frequency (descending) then by hash (ascending)
-    sorted_codons = sorted(frequency_map.items(), key=lambda x: (-x[1], codon_hashes[x[0]]))
-    
-    # Calculate weighted sum based on position and frequency
-    weighted_sum = sum((i + 1) * freq for i, (codon, freq) in enumerate(sorted_codons))
-    
-    # Final score combines dynamic programming result with weighted sum
-    final_score = dp_score * 1000 + weighted_sum
-    
-    return final_score
+# Generate sequence
+mod = 100
+sequence = [fibonacci_mod_log(i, mod) for i in range(7)]
 
-# Experimental DNA sequence
-experiment_sequence = "ATGCGTACGTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAG......
+# Build binary tree
+root = None
+root = insert_level_order(sequence, root, 0, len(sequence))
+
+# Inorder traversal to get node values in list
+node_values = []
+inorder_traversal(root, node_values)
+
+# Metadata dictionary comprehension with merging
+metadata_base = {i: f"phase_{i}" for i in range(len(node_values))}
+metadata_extra = {i: {"value": val, "hash": hash(f"phase_{i}") % 1000} for i, val in enumerate(node_values)}
+merged_metadata = {k: {"name": metadata_base[k], **metadata_extra[k]} for k in metadata_base}
+
+# Cumulative sum of transformed string hashes
+hashes = [abs(hash(v["name"]) ^ v["hash"]) for v in merged_metadata.values()]
+cumulative_hash_sum = reduce(lambda x, y: (x + y) % mod, hashes, 0)
+
+print(f"Result: {cumulative_hash_sum}")

@@ -1,68 +1,60 @@
-import hashlib
-from collections import defaultdict
-from dataclasses import dataclass
-from typing import List, Set
+from functools import reduce
+from math import gcd
 
-def hash_particle_id(particle_id: str) -> int:
-    return int(hashlib.md5(particle_id.encode()).hexdigest()[:8], 16) % 1000
+def calculate_centroid(vertices):
+    x = sum(v[0] for v in vertices) / len(vertices)
+    y = sum(v[1] for v in vertices) / len(vertices)
+    return (x, y)
 
-@dataclass(frozen=True)
-class ParticleInteraction:
-    particle_a: str
-    particle_b: str
-    interaction_energy: float
+def area_of_triangle(v1, v2, v3):
+    return abs((v1[0]*(v2[1]-v3[1]) + v2[0]*(v3[1]-v1[1]) + v3[0]*(v1[1]-v2[1])) / 2.0)
+
+def lcm(a, b):
+    return abs(a*b) // gcd(a, b) if a and b else 0
+
+initial_triangle = [(0, 0), (4, 0), (2, 3)]
+triangle_stack = [initial_triangle]
+refinement_count = 0
+max_refinements = 5
+
+while triangle_stack and refinement_count < max_refinements:
+    current_triangle = triangle_stack.pop(0)
+    area = area_of_triangle(*current_triangle)
     
-    def __hash__(self):
-        return hash((self.particle_a, self.particle_b))
-
-# Particle tracking system
-particle_registry = {
-    'H2O_molecule_001': ['O_001', 'H_002', 'H_003'],
-    'CO2_complex_002': ['C_004', 'O_005', 'O_006'],
-    'NH3_structure_003': ['N_007', 'H_008', 'H_009', 'H_010']
-}
-
-interaction_map = defaultdict(set)
-total_interactions = 0
-unique_interactions = set()
-
-# Process particle groups
-for molecule_id, particles in particle_registry.items():
-    group_hash = hash_particle_id(molecule_id)
+    # Number theory condition: area must be divisible by a computed LCM
+    area_lcm = lcm(int(current_triangle[0][0])+1, int(current_triangle[1][1])+1)
     
-    # Create interactions within molecule
-    for i in range(len(particles)):
-        for j in range(i + 1, len(particles)):
-            interaction = ParticleInteraction(
-                particle_a=particles[i],
-                particle_b=particles[j],
-                interaction_energy=(i+j) * 0.5
-            )
-            unique_interactions.add(interaction)
-            interaction_map[group_hash].add(interaction)
+    if area_lcm == 0 or area % area_lcm != 0:
+        continue
+        
+    centroid = calculate_centroid(current_triangle)
     
-    # Cross-molecule interactions
-    for other_molecule_id, other_particles in particle_registry.items():
-        if other_molecule_id != molecule_id:
-            other_group_hash = hash_particle_id(other_molecule_id)
-            key = tuple(sorted([group_hash, other_group_hash]))
-            
-            # Only process each pair once
-            if key not in interaction_map:
-                for p1 in particles:
-                    for p2 in other_particles:
-                        if p1 != p2:  # Prevent self-interaction
-                            interaction = ParticleInteraction(
-                                particle_a=p1,
-                                particle_b=p2,
-                                interaction_energy=1.0
-                            )
-                            unique_interactions.add(interaction)
-                            interaction_map[key].add(interaction)
+    # Generate three new triangles from the centroid
+    new_triangles = [
+        [current_triangle[0], current_triangle[1], centroid],
+        [current_triangle[1], current_triangle[2], centroid],
+        [current_triangle[2], current_triangle[0], centroid]
+    ]
+    
+    valid_triangles = list(filter(lambda t: area_of_triangle(*t) > 0.5, new_triangles))
+    
+    if len(valid_triangles) >= 2:
+        triangle_stack.extend(valid_triangles[:2])
+        refinement_count += 1
+    
+    # Early termination if we've hit our limit
+    if refinement_count >= max_refinements:
+        break
 
-# Calculate total weighted interactions
-for interaction_set in interaction_map.values():
-    for interaction in interaction_set:
-        total_interactions += int(interaction.interaction_energy * 10)
+# Additional geometric filtering using set operations
+vertex_set = set()
+for triangle in triangle_stack:
+    for vertex in triangle:
+        vertex_set.add(vertex)
+        
+unique_vertex_count = len(vertex_set)
 
-print(f"Result: {total_interactions}")
+if unique_vertex_count > 10:
+    refinement_count += 1
+
+print(f"Result: {refinement_count}")

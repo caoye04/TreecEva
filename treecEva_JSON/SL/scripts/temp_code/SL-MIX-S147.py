@@ -1,30 +1,33 @@
-from collections import namedtuple
+import itertools
+import statistics
 
-def fibonacci_sequence(n):
-    if n <= 0: return []
-    elif n == 1: return [0]
-    elif n == 2: return [0, 1]
-    fib = [0, 1]
-    for _ in range(2, n):
-        fib.append(fib[-1] + fib[-2])
-    return fib
+def calculate_hash_distance(word1, word2):
+    return abs(hash(word1) - hash(word2)) % 1000
 
-def transform_char_code(char, fib_index):
-    base_code = ord(char)
-    transformed = (base_code + fib_index) % 127
-    return transformed
+def compute_semantic_coherence(word_groups):
+    total_distances = []
+    for group in word_groups:
+        pairwise_distances = []
+        # Generate all 2-combinations within each group
+        for combo in itertools.combinations(group, 2):
+            dist = calculate_hash_distance(combo[0], combo[1])
+            pairwise_distances.append(dist)
+        if pairwise_distances:
+            # Compute mean distance for the group
+            mean_dist = statistics.mean(pairwise_distances)
+            total_distances.append(mean_dist)
+    
+    if not total_distances:
+        return 0
+    # Return the variance of all group means
+    return statistics.variance(total_distances) if len(total_distances) > 1 else 0
 
-CipherConfig = namedtuple('CipherConfig', ['message', 'modulus'])
-config = CipherConfig(message="SECRET", modulus=97)
+# Ancient text word groups
+ancient_vocabulary = [
+    ['solar', 'lunar', 'stellar'],
+    ['river', 'mountain', 'forest', 'ocean'],
+    ['scribe', 'papyrus', 'ink', 'tablet', 'glyph']
+]
 
-fib_indices = fibonacci_sequence(len(config.message))
-char_transformations = [transform_char_code(ch, fib_indices[i]) for i, ch in enumerate(config.message)]
-
-security_key = 1
-for i, code in enumerate(char_transformations):
-    if i % 2 == 0:
-        security_key = (security_key * code) % config.modulus
-    else:
-        security_key = (security_key + code) % config.modulus
-
-print(f"Result: {security_key}")
+final_coherence_score = compute_semantic_coherence(ancient_vocabulary)
+print(f"Result: {final_coherence_score}")

@@ -1,34 +1,17 @@
-from collections import deque
+from collections import namedtuple
 
-class Operation:
-    def __init__(self, name, base_priority):
-        self.name = name
-        self.base_priority = base_priority
+# Define item prices
+Item = namedtuple('Item', ['name', 'price'])
+croissant = Item('croissant', 2.5)
+muffin = Item('muffin', 3.0)
+scone = Item('scone', 2.0)
 
-def compute_adjustment(op, factor):
-    return op.base_priority * factor + (7 & (op.base_priority >> 1))
+# Daily sales quantities
+sales_quantities = [40, 25, 30]  # croissants, muffins, scones
 
-operation_stack = []
-movement_queue = deque()
+# Calculate total revenue using list comprehension
+prices = [croissant.price, muffin.price, scone.price]
+revenues = [qty * price for qty, price in zip(sales_quantities, prices)]
+total_revenue = sum(revenues) if all(revenues) else 0
 
-op1 = Operation('GRAB', 12)
-op2 = Operation('LIFT', 8)
-op3 = Operation('ROTATE', 15)
-
-operation_stack.append(op1)
-movement_queue.append(op2)
-operation_stack.append(op3)
-
-priority_accumulator = 0
-adjustment_factor = 3
-
-while operation_stack:
-    current_op = operation_stack.pop()
-    if movement_queue and current_op.base_priority > 10:
-        queued_op = movement_queue.popleft()
-        priority_accumulator += compute_adjustment(current_op, adjustment_factor) - queued_op.base_priority
-    else:
-        priority_accumulator += compute_adjustment(current_op, adjustment_factor) // 2
-
-final_adjustment = priority_accumulator + (len(operation_stack) << 2)
-print(f'Result: {final_adjustment}')
+print(f'Total revenue: {total_revenue}')

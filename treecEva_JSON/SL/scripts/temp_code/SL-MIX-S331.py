@@ -1,31 +1,39 @@
-from functools import reduce
-
-def calculate_compatibility(package_ids):
-    return reduce(lambda x, y: x ^ y, [pid * 3 + 7 for pid in package_ids], 0)
-
-def find_optimal_combination(packages, capacity, current_load=0, index=0, selected=[]):
-    if current_load > capacity:
-        return -1, []
-    if index == len(packages):
-        score = calculate_compatibility(selected)
-        return score, selected[:]
+class DailyLogger:
+    def __enter__(self):
+        self.log = []
+        return self
     
-    # Exclude current package
-    exclude_score, exclude_combo = find_optimal_combination(packages, capacity, current_load, index+1, selected)
+    def __exit__(self, exc_type, exc_value, traceback):
+        pass
     
-    # Include current package
-    selected.append(packages[index][0])
-    include_score, include_combo = find_optimal_combination(packages, capacity, current_load + packages[index][1], index+1, selected)
-    selected.pop()
+    def log_sales(self, day, sales):
+        self.log.append((day, sales))
+
+fib_prev, fib_curr = 1, 1
+total_pies = 1
+discount_day = -1
+
+with DailyLogger() as logger:
+    logger.log_sales(1, 1)
+    if 1 % 5 == 0 and 1 % 2 == 0:
+        discount_day = 1
     
-    if include_score > exclude_score:
-        return include_score, include_combo
-    else:
-        return exclude_score, exclude_combo
+    if discount_day == -1:
+        total_pies += 1
+        logger.log_sales(2, 1)
+        if total_pies % 5 == 0 and 2 % 2 == 0:
+            discount_day = 2
+    
+    day = 3
+    while discount_day == -1:
+        fib_next = fib_prev + fib_curr
+        total_pies += fib_next
+        logger.log_sales(day, fib_next)
+        
+        if total_pies % 5 == 0 and day % 2 == 0:
+            discount_day = day
+        
+        fib_prev, fib_curr = fib_curr, fib_next
+        day += 1
 
-# Package data: (package_id, weight)
-delivery_packages = [(101, 12), (102, 7), (103, 5), (104, 9), (105, 14), (106, 3)]
-truck_capacity = 25
-
-optimal_score, best_combo = find_optimal_combination(delivery_packages, truck_capacity)
-print(f"Result: {optimal_score}")
+print(f"Result: {discount_day}")

@@ -1,40 +1,27 @@
-import hashlib
-from collections import defaultdict
+pastry_data = {
+    'croissant': (20, 30),
+    'muffin': (15, 20),
+    'danish': (25, 35),
+    'scone': (10, 15),
+    'bagel': (30, 40)
+}
 
-tokens = ['lambda', 'yield', 'async', 'await', 'global']
-node_weights = defaultdict(int)
+# Transform pastry data to list of (popularity, cost, name)
+pastry_list = [(pop, cost, name) for name, (pop, cost) in pastry_data.items()]
 
-# Tree construction with hash-based node IDs
-def compute_node_id(token, level):
-    hash_obj = hashlib.md5((token + str(level)).encode())
-    return int(hash_obj.hexdigest(), 16) % 100
+# Calculate popularity per cost ratio and sort in descending order
+pastry_efficiency = sorted(
+    [(pop / cost, pop, cost, name) for pop, cost, name in pastry_list],
+    key=lambda x: x[0],
+    reverse=True
+)
 
-def calculate_leaf_score(token):
-    score = 0
-    for char in token:
-        char_code = ord(char)
-        # Bitwise operations for score computation
-        score ^= (char_code << 2) & 0xFF
-        score |= char_code >> 1
-    return score
+budget = 100
+max_popularity = 0
 
-# Build 3-level tree
-for token in tokens:
-    level1_id = compute_node_id(token, 1)
-    level2_id = compute_node_id(token, 2)
-    level3_id = compute_node_id(token, 3)
-    
-    # Ternary operator to determine if node is leaf
-    is_leaf = True if level3_id % 3 == 0 else False
-    
-    if is_leaf:
-        leaf_score = calculate_leaf_score(token)
-        node_weights[level3_id] += leaf_score
-    else:
-        node_weights[level2_id] += len(token)
+for _, pop, cost, name in pastry_efficiency:
+    if cost <= budget:
+        max_popularity += pop
+        budget -= cost
 
-# Final aggregation using set operations
-unique_weights = frozenset(node_weights.values())
-final_score = sum(unique_weights) if len(unique_weights) > 3 else 0
-
-print(f"Result: {final_score}")
+print(f'Result: {max_popularity}')

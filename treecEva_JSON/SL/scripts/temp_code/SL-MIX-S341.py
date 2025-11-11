@@ -1,38 +1,42 @@
-from collections import deque
+from collections import defaultdict
 
-class PacketProcessor:
+class FractalPlant:
     def __init__(self):
-        self.packet_stack = []
-        self.key_queue = deque([0x1F, 0x2A, 0x3B, 0x4C])
-        self.encryption_key = 0xAA
+        self.tree = {}
+        self.flowering_leaves = 0
     
-    def process_packets(self, packet_ids):
-        for pid in packet_ids:
-            # Push packet to stack
-            self.packet_stack.append(pid)
-            
-            # Update encryption key using XOR with packet id and queue front
-            if self.key_queue:
-                modifier = self.key_queue.popleft()
-                self.encryption_key ^= (pid & 0xFF) ^ modifier
-                
-                # Rotate queue element to end with bit shift
-                shifted_modifier = ((modifier >> 1) | (modifier << 7)) & 0xFF
-                self.key_queue.append(shifted_modifier)
+    def hash_path(self, path):
+        return hash(''.join(map(str, path))) % 1000
+    
+    def build_tree(self, node_id, depth, max_depth, path):
+        if depth == max_depth:
+            # Terminal node (leaf)
+            node_hash = self.hash_path(path)
+            self.tree[node_id] = {'hash': node_hash, 'children': {}, 'is_leaf': True}
+            if node_hash % 2 == 0:  # Even hash indicates flowering
+                self.flowering_leaves += 1
+            return
         
-        # Final key derivation uses stack popping and bitwise operations
-        while self.packet_stack:
-            popped_packet = self.packet_stack.pop()
-            top_queue = self.key_queue.pop() if self.key_queue else 0
-            self.encryption_key = (self.encryption_key ^ popped_packet ^ top_queue) & 0xFF
+        # Internal node
+        node_hash = self.hash_path(path)
+        self.tree[node_id] = {'hash': node_hash, 'children': {}, 'is_leaf': False}
         
-        return self.encryption_key
+        # Binary branching
+        left_child = f"{node_id}L"
+        right_child = f"{node_id}R"
+        
+        self.tree[node_id]['children']['left'] = left_child
+        self.tree[node_id]['children']['right'] = right_child
+        
+        # Recursive construction
+        self.build_tree(left_child, depth+1, max_depth, path + [0])
+        self.build_tree(right_child, depth+1, max_depth, path + [1])
 
-def main():
-    processor = PacketProcessor()
-    packet_sequence = [0xC5, 0x9A, 0xF2, 0x7D]
-    final_decryption_key = processor.process_packets(packet_sequence)
-    print(f"Result: {final_decryption_key}")
+def simulate_growth():
+    plant = FractalPlant()
+    plant.build_tree('ROOT', 0, 3, [])
+    return plant.flowering_leaves
 
-if __name__ == "__main__":
-    main()
+# Execute simulation
+final_count = simulate_growth()
+print(f"Result: {final_count}")

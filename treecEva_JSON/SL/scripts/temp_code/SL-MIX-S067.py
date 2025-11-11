@@ -1,35 +1,18 @@
-import math
-from collections import defaultdict
+import hashlib
 
-# Package data: (weight, priority_factor)
-packages = [(16, 2), (9, 3), (25, 1), (4, 4), (36, 2)]
-truck_capacity = 30
+def process_device_id(d_id):
+    reversed_id = d_id[::-1]
+    hashed = hashlib.md5(reversed_id.encode()).hexdigest()
+    hex_sum = sum(ord(c) for c in hashed[:8])
+    return (hex_sum * 3) % 17
 
-# Initialize DP table
-# dp[i][w] = maximum value achievable with first i packages and weight limit w
-dp = defaultdict(lambda: defaultdict(float))
+device_pool = ['DEV001', 'SEN202', 'MON303', 'ALR404']
+transformed_values = {d: process_device_id(d) for d in device_pool}
 
-# Fill DP table
-for i in range(1, len(packages) + 1):
-    weight, priority = packages[i-1]
-    value = math.sqrt(weight) * priority
-    for w in range(truck_capacity + 1):
-        # Don't take the current package
-        dp[i][w] = dp[i-1][w]
-        # Take the current package if it fits
-        if weight <= w:
-            dp[i][w] = max(dp[i][w], dp[i-1][w-weight] + value)
+enhanced_pool = {k: v + (7 if k.startswith('D') else 13) for k, v in transformed_values.items()}
+filtered_pool = dict(filter(lambda item: item[1] > 10, enhanced_pool.items()))
 
-# Find optimal load value
-optimal_load_value = dp[len(packages)][truck_capacity]
+aggregated_score = sum(map(lambda x: x**2, filtered_pool.values())) % 23
+validation_checksum = (aggregated_score * 5 + 7) % 19
 
-# Apply a correction factor based on unused capacity
-unused_capacity = truck_capacity - max(w for w in range(truck_capacity + 1) if dp[len(packages)][w] == optimal_load_value)
-correction_factor = 1.0 + (unused_capacity / truck_capacity) * 0.1
-optimal_load_value *= correction_factor
-
-# Final adjustment using a lambda function
-adjustment = lambda x: round(x, 2) if x % 1 != 0 else int(x)
-optimal_load_value = adjustment(optimal_load_value)
-
-print(f"Result: {optimal_load_value}")
+print(f"Result: {validation_checksum}")

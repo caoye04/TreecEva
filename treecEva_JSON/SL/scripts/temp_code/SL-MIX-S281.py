@@ -1,68 +1,53 @@
-from collections import defaultdict
-from math import factorial
-from functools import wraps
+from functools import reduce
 
-def growth_logger(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result
-    return wrapper
-
-class FungalNode:
-    def __init__(self, spores=0):
-        self.spores = spores
-        self.left = None
-        self.right = None
+def calculate_portfolio_index():
+    # Transaction records: [timestamp, amount, type]
+    transactions = [
+        [1001, 5000, 'DEPOSIT'],
+        [1002, -1200, 'WITHDRAWAL'],
+        [1003, 800, 'DEPOSIT'],
+        [1004, -300, 'FEE'],
+        [1005, 1500, 'DEPOSIT']
+    ]
     
-    def is_active(self):
-        return self.spores > 0
-
-@growth_logger
-def calculate_combinations(n, r):
-    if r > n or r < 0:
-        return 0
-    return factorial(n) // (factorial(r) * factorial(n - r))
-
-@growth_logger
-def simulate_growth(root_node):
-    if not root_node or not root_node.is_active():
-        return 0
+    # Step 1: Categorize transactions using switch-like dictionary
+    category_map = {
+        'DEPOSIT': lambda x: x * 1.02,  # 2% bonus on deposits
+        'WITHDRAWAL': lambda x: x * 1.01,  # 1% processing fee
+        'FEE': lambda x: x * 1.05  # 5% fee surcharge
+    }
     
-    # Growth pattern: each active colony splits into two with spores//2 each
-    # But only if spores >= 4 (short-circuit evaluation)
-    if root_node.spores >= 4 and root_node.left is None and root_node.right is None:
-        split_spores = root_node.spores // 2
-        root_node.left = FungalNode(split_spores)
-        root_node.right = FungalNode(split_spores)
+    # Step 2: Apply category adjustments
+    adjusted_amounts = list(map(lambda t: category_map[t[2]](t[1]), transactions))
     
-    # Recursive growth
-    left_growth = simulate_growth(root_node.left) if root_node.left else 0
-    right_growth = simulate_growth(root_node.right) if root_node.right else 0
+    # Step 3: Create hash table for cumulative tracking
+    cumulative_tracker = {}
+    running_sum = 0
+    for i, amount in enumerate(adjusted_amounts):
+        running_sum += amount
+        cumulative_tracker[i] = running_sum
     
-    # Calculate diversity based on spore distribution
-    total_spores = root_node.spores + left_growth + right_growth
-    return total_spores
+    # Step 4: Apply divide and conquer to find median adjustment
+    def find_median(lst):
+        n = len(lst)
+        if n <= 1:
+            return lst[0] if lst else 0
+        mid = n // 2
+        if n % 2 == 1:
+            return sorted(lst)[mid]
+        else:
+            return (sorted(lst)[mid-1] + sorted(lst)[mid]) / 2
+    
+    median_adjustment = find_median(adjusted_amounts)
+    
+    # Step 5: Calculate performance weights using functional reduction
+    weights = list(map(lambda x: x / median_adjustment if median_adjustment != 0 else 0, adjusted_amounts))
+    weight_product = reduce(lambda a, b: a * b, weights, 1)
+    
+    # Step 6: Compute final index
+    final_index = int(sum(cumulative_tracker.values()) * weight_product)
+    
+    return final_index
 
-# Initialize fungal network
-primary_colony = FungalNode(12)
-
-# Dictionary to track colony types
-fungi_types = defaultdict(int)
-fungi_types['Ascomycota'] = 5
-fungi_types['Basidiomycota'] = 3
-
-# Merge with rare species data
-rare_species = {'Chytridiomycota': 2, 'Zygomycota': 1}
-fungi_types = fungi_types | rare_species
-
-# Calculate potential growth patterns using combinatorics
-potential_paths = calculate_combinations(sum(fungi_types.values()), 3)
-
-# Simulate growth
-simulated_spores = simulate_growth(primary_colony)
-
-# Calculate mycelium diversity index
-mycelium_diversity_index = (simulated_spores * potential_paths) % 1000 + len(fungi_types.keys())
-
-print(f'Result: {mycelium_diversity_index}')
+final_index = calculate_portfolio_index()
+print(f"Result: {final_index}")
