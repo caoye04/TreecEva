@@ -2317,3 +2317,20 @@ class PythonTracer:
         return output_file
 ```
 
+
+```
+
+# 只生成正序COT（英文）
+python main.py test.py 7 d
+
+# 生成正序COT（中英文）
+python main.py test.py 7 d --zh
+
+# 生成正序和倒序COT（英文）
+python main.py test.py 7 d --reverse
+
+# 生成正序和倒序COT（中英文）
+python main.py test.py 7 d --zh --reverse
+
+```
+

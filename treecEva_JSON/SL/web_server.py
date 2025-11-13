@@ -9,6 +9,10 @@ import threading
 import queue
 from config import DATASET_PATH, ANSWER_PATH
 
+BASE_DIR = Path(__file__).parent
+DATASET_PATH = BASE_DIR / "scripts" / "data" / "TreecEva_data.json"
+ANSWER_PATH = BASE_DIR / "scripts" / "data" / "answer.json"
+
 app = Flask(__name__)
 CORS(app)  # 允许跨域请求
 
