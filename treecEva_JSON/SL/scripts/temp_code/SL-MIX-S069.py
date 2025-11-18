@@ -1,36 +1,33 @@
 from functools import reduce
-import statistics
+import itertools
 
-def calculate_transaction_impact(transactions):
-    return sum(map(lambda t: abs(t) * 0.01, transactions))
+def fibonacci_sequence(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
 
-def adjusted_returns(returns, fees):
-    return list(map(lambda r, f: r - f, returns, fees))
+def apply_fibonacci_filter(signals):
+    fib_weights = list(fibonacci_sequence(len(signals)))
+    weighted_signals = [s * w for s, w in zip(signals, fib_weights)]
+    return reduce(lambda x, y: x + y, weighted_signals)
 
-portfolio_transactions = [1000, -500, 2000, -1500, 3000]
-expected_gains = [1.05, 0.98, 1.12, 0.95, 1.08]
+def normalize_signal(signal_value, normalization_factor=10):
+    return signal_value / normalization_factor if normalization_factor != 0 else 0
 
-# Calculate fee impact using functional programming
-fee_impacts = list(map(calculate_transaction_impact, [[t] for t in portfolio_transactions]))
+# Deep space signal measurements (arbitrary units)
+space_signals = [5, 8, 13, 21, 34]
 
-# Adjust expected gains with fee impacts
-adj_gains = adjusted_returns(expected_gains, fee_impacts)
+# Apply transformation process
+weighted_sum = apply_fibonacci_filter(space_signals)
+filtered_signal_strength = normalize_signal(weighted_sum)
 
-# Greedy selection of top performing assets
-performance_ranking = {i: adj_gains[i] for i in range(len(adj_gains))}
-sorted_assets = sorted(performance_ranking.items(), key=lambda x: x[1], reverse=True)
+# Additional processing step
+if filtered_signal_strength > 10:
+    adjustment_factor = len(list(itertools.combinations(range(3), 2)))
+    filtered_signal_strength += adjustment_factor
+else:
+    adjustment_factor = len(set(space_signals)) - len(frozenset(space_signals))
+    filtered_signal_strength -= adjustment_factor
 
-# Select top 3 assets using greedy approach
-selected_indices = [idx for idx, _ in sorted_assets[:3]]
-selected_returns = [adj_gains[i] for i in selected_indices]
-
-# Statistical analysis on selected assets
-mean_return = statistics.mean(selected_returns)
-variance_return = statistics.variance(selected_returns)
-
-# Calculate optimal adjustment with closure
-adjustment_factor = 0.75
-calculate_optimal = lambda m, v: (m * 1000) / (1 + v) * adjustment_factor
-optimal_adjustment = calculate_optimal(mean_return, variance_return)
-
-print(f"Result: {round(optimal_adjustment, 2)}")
+print(f"Result: {filtered_signal_strength}")

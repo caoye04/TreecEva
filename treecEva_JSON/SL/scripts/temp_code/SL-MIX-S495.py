@@ -1,40 +1,29 @@
-from collections import deque
+def transform_tracker(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        wrapper.call_count += 1
+        return result
+    wrapper.call_count = 0
+    return wrapper
 
-def fibonacci(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n+1):
-        a, b = b, a + b
-    return b
+data_segments = [15, 22, 8, 37, 45]
+segment_weights = [2, 3, 1, 4, 5]
+adjusted_values = []
 
-def calculate_harmonic_score(note_durations, interval_sequence):
-    duration_queue = deque(note_durations)
-    interval_stack = []
-    harmonic_complexity_score = 0
-    
-    # Process note durations and build interval stack
-    while duration_queue:
-        duration = duration_queue.popleft()
-        if duration > 0:
-            # Calculate interval based on duration
-            interval = (duration * 3) % 7 + 1
-            interval_stack.append(interval)
-    
-    # Calculate harmonic complexity using Fibonacci weights
-    position = 1
-    while interval_stack:
-        interval = interval_stack.pop()
-        fib_weight = fibonacci(position)
-        harmonic_complexity_score += interval * fib_weight
-        position += 1
-    
-    return harmonic_complexity_score
+@transform_tracker
+def process_segment(value, weight):
+    adjusted = (value * weight) % 17 if value > 20 else (value + weight) % 13
+    return adjusted
 
-# Musical composition data
-note_durations = [4, 2, 8, 1, 6, 3]
-interval_sequence = [2, 5, 1, 4, 3]
+for i in range(len(data_segments)):
+    val = data_segments[i]
+    wt = segment_weights[i]
+    adjusted_val = process_segment(val, wt)
+    adjusted_values.append(adjusted_val)
 
-# Calculate the harmonic complexity score
-harmonic_complexity_score = calculate_harmonic_score(note_durations, interval_sequence)
-print(f"Result: {harmonic_complexity_score}")
+valid_adjustments = [x for x in adjusted_values if x > 3 and x < 12]
+transformation_count = process_segment.call_count
+aggregate_sum = sum(valid_adjustments)
+final_metric = aggregate_sum if transformation_count >= 3 else 0
+
+print(f'Result: {final_metric}')

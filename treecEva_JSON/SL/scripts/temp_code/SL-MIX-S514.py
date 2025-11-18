@@ -1,40 +1,52 @@
-from collections import deque
+from functools import wraps
 
-def fibonacci(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n+1):
-        a, b = b, a + b
-    return b
+class TransactionNode:
+    def __init__(self, amount):
+        self.amount = amount
+        self.next = None
 
-def calculate_harmonic_score(note_durations, interval_sequence):
-    duration_queue = deque(note_durations)
-    interval_stack = []
-    harmonic_complexity_score = 0
+def tax_decorator(func):
+    @wraps(func)
+    def wrapper(amount):
+        taxed_amount = func(amount)
+        return taxed_amount * 0.9  # 10% tax
+    return wrapper
+
+@tax_decorator
+def calculate_profit(amount):
+    return amount * 1.05  # 5% profit margin
+
+def process_transactions(head):
+    profit_map = {}
+    current = head
+    total = 0.0
     
-    # Process note durations and build interval stack
-    while duration_queue:
-        duration = duration_queue.popleft()
-        if duration > 0:
-            # Calculate interval based on duration
-            interval = (duration * 3) % 7 + 1
-            interval_stack.append(interval)
+    while current:
+        profit = calculate_profit(current.amount)
+        total += profit
+        profit_map[current.amount] = profit
+        current = current.next
     
-    # Calculate harmonic complexity using Fibonacci weights
-    position = 1
-    while interval_stack:
-        interval = interval_stack.pop()
-        fib_weight = fibonacci(position)
-        harmonic_complexity_score += interval * fib_weight
-        position += 1
+    # Apply bonus if more than 3 transactions
+    count = 0
+    temp = head
+    while temp:
+        count += 1
+        temp = temp.next
+        
+    if count > 3:
+        total += sum(profit_map.values()) * 0.02  # 2% bonus
     
-    return harmonic_complexity_score
+    return total
 
-# Musical composition data
-note_durations = [4, 2, 8, 1, 6, 3]
-interval_sequence = [2, 5, 1, 4, 3]
+# Build linked list: 100 -> 200 -> 150 -> 300
+node1 = TransactionNode(100)
+node2 = TransactionNode(200)
+node3 = TransactionNode(150)
+node4 = TransactionNode(300)
+node1.next = node2
+node2.next = node3
+node3.next = node4
 
-# Calculate the harmonic complexity score
-harmonic_complexity_score = calculate_harmonic_score(note_durations, interval_sequence)
-print(f"Result: {harmonic_complexity_score}")
+final_profit = process_transactions(node1)
+print(f"Result: {final_profit}")

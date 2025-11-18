@@ -1,35 +1,65 @@
-import heapq
+import itertools
 from collections import defaultdict
 
-def calculate_route_efficiency(urgencies):
-    dp = [0] * (len(urgencies) + 1)
-    for i in range(1, len(urgencies) + 1):
-        dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
-    return dp[len(urgencies)]
+def tokenize_sentences(document):
+    return [sentence.strip() for sentence in document.split('.') if sentence]
 
-# Shipment data: (origin, urgency)
-shipments = [
-    ('NYC', 10),
-    ('LA', 15),
-    ('CHI', 7),
-    ('SEA', 20),
-    ('BOS', 5)
-]
+def calculate_word_stats(words):
+    length_sum = 0
+    char_set = set()
+    for word in words:
+        length_sum += len(word)
+        char_set.update(word.lower())
+    return length_sum, len(char_set)
 
-# Track unique origins
-origins = frozenset(origin for origin, _ in shipments)
+def compute_complexity(sentences):
+    stats = []
+    for sentence in sentences:
+        words = sentence.split()
+        if not words:
+            continue
+        length_sum, unique_chars = calculate_word_stats(words)
+        avg_length = length_sum / len(words)
+        diversity_ratio = unique_chars / 26.0
+        stats.append((avg_length, diversity_ratio))
+    
+    if not stats:
+        return 0
+    
+    total_avg = sum(s[0] for s in stats) / len(stats)
+    total_diversity = sum(s[1] for s in stats) / len(stats)
+    
+    return round(total_avg * total_diversity * 100)
 
-# Process urgencies with min-heap
-urgency_heap = [u for _, u in shipments]
-heapq.heapify(urgency_heap)
+def process_document(document):
+    sentences = tokenize_sentences(document)
+    if not sentences:
+        return 0
+    
+    complexity_scores = []
+    for i in range(min(3, len(sentences))):  # Process up to 3 sentences
+        subset = sentences[i:]
+        score = compute_complexity(subset)
+        complexity_scores.append(score)
+        if score > 50:  # Early termination condition
+            break
+    
+    if not complexity_scores:
+        return 0
+    
+    # Calculate final score using weighted average
+    weights = [3, 2, 1][:len(complexity_scores)]
+    weighted_sum = sum(score * weight for score, weight in zip(complexity_scores, weights))
+    total_weight = sum(weights)
+    
+    return round(weighted_sum / total_weight)
 
-processed_urgencies = []
-while urgency_heap:
-    processed_urgencies.append(heapq.heappop(urgency_heap))
+document = "The quick brown fox jumps over the lazy dog. Python programming is fun and versatile. Natural language processing opens new possibilities."
+sentences = tokenize_sentences(document)
+complexity_score = compute_complexity(sentences[:2])
+if complexity_score > 40:
+    final_score = process_document(document)
+else:
+    final_score = complexity_score + 10
 
-# Calculate efficiency score using dynamic programming
-route_efficiency = calculate_route_efficiency(processed_urgencies)
-
-# Final score combines route efficiency with origin count
-final_score = route_efficiency + len(origins)
-print(f'Result: {final_score}')
+print(f"Result: {final_score}")

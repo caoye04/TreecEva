@@ -1,42 +1,60 @@
-import functools
-import base64
+from functools import reduce
+from contextlib import contextmanager
 
-def length_normalize(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        tokens = func(*args, **kwargs)
-        return [token if len(token) <= 10 else token[:10] for token in tokens]
-    return wrapper
+class PortfolioManager:
+    def __init__(self):
+        self.portfolio_value = 1000.0
+        self.risk_multiplier = 1.05
+        self.transaction_log = []
+    
+    def apply_market_condition(self, condition_factor):
+        self.portfolio_value *= condition_factor
+        return self.portfolio_value
+    
+    def log_transaction(self, amount):
+        self.transaction_log.append(amount)
+    
+    @contextmanager
+    def risk_adjustment_context(self, risk_factor):
+        old_multiplier = self.risk_multiplier
+        self.risk_multiplier *= risk_factor
+        try:
+            yield
+        finally:
+            self.risk_multiplier = old_multiplier
 
-@length_normalize
-def tokenize_and_filter(text):
-    stop_words = {'the', 'is', 'in', 'at', 'which', 'on', 'a', 'an'}
-    tokens = text.lower().replace(',', '').replace('.', '').split()
-    return [t for t in tokens if t not in stop_words]
+# Initialize portfolio
+portfolio = PortfolioManager()
 
-original_text = "The quick brown fox jumps over the lazy dog in the marketplace at dawn."
-vocabulary_base = {
-    'quick': 'qck', 'brown': 'brwn', 'fox': 'fx', 'jumps': 'jmps', 
-    'over': 'ovr', 'lazy': 'lzy', 'dog': 'dg', 'marketplace': 'mrktplc', 'dawn': 'dwn'
+# Market data hash table
+market_conditions = {
+    'bull': 1.12,
+    'bear': 0.92,
+    'neutral': 1.01
 }
-additional_vocab = {
-    'quick': 'QUICK', 'jumps': 'JUMPS', 'dog': 'DOG', 'unknown': 'UNK'
-}
 
-merged_vocab = {**vocabulary_base, **additional_vocab}
-filtered_tokens = tokenize_and_filter(original_text)
-encoded_tokens = []
-normalized_char_count = 0
+# Tokenized transaction rules
+transaction_rules = "ADD:500.0;APPLY:bull;ADD:200.0;APPLY:risk_context_1.2;ADD:300.0"
 
-for i, token in enumerate(filtered_tokens):
-    if i > 5:
-        break
-    encoded_token = merged_vocab.get(token, base64.b64encode(token.encode()).decode()[:8])
-    if len(encoded_token) == 0:
-        continue
-    encoded_tokens.append(encoded_token)
-    normalized_char_count += len(encoded_token)
-    if normalized_char_count > 20:
-        break
+# Parse and process transactions
+tokens = transaction_rules.split(';')
 
-print(f"Result: {normalized_char_count}")
+for token in tokens:
+    operation, value = token.split(':')
+    if operation == 'ADD':
+        adjustment = float(value)
+        portfolio.portfolio_value += adjustment
+        portfolio.log_transaction(adjustment)
+    elif operation == 'APPLY':
+        if value.startswith('risk_context_'):
+            factor = float(value.split('_')[2])
+            with portfolio.risk_adjustment_context(factor):
+                portfolio.portfolio_value = portfolio.apply_market_condition(market_conditions['bull'])
+        else:
+            factor = market_conditions[value]
+            portfolio.portfolio_value = portfolio.apply_market_condition(factor)
+
+# Final adjustment with risk multiplier
+final_portfolio_value = portfolio.portfolio_value * portfolio.risk_multiplier
+
+print(f"Result: {final_portfolio_value}")

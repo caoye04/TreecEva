@@ -1,36 +1,19 @@
-def calculate_optimal_priority():
-    # Package data: (weight, priority)
-    shipment_manifest = [
-        (2, 3), (3, 4), (4, 5), (5, 6),
-        (1, 2), (6, 8), (2, 3), (3, 4),
-        (7, 9), (1, 1), (4, 4), (2, 2)
-    ]
-    
-    # Remove duplicate packages using set operations
-    unique_packages = list(set(shipment_manifest))
-    
-    # Sort packages by priority-to-weight ratio (greedy approach)
-    unique_packages.sort(key=lambda x: x[1]/x[0], reverse=True)
-    
-    # Initialize truck parameters
-    truck_capacity = 15
-    loaded_weight = 0
-    total_priority = 0
-    
-    # Greedily load packages
-    for weight, priority in unique_packages:
-        if loaded_weight + weight <= truck_capacity:
-            loaded_weight += weight
-            total_priority += priority
-    
-    # Apply functional transformation to verify constraints
-    weight_check = list(map(lambda x: x[0], filter(lambda p: p[0] <= 5, unique_packages)))
-    
-    # Conditional adjustment based on special cargo rules
-    if len(weight_check) > 3:
-        total_priority += sum(weight_check[:3])
-    
-    return total_priority
+def encode_token(token):
+    return sum(ord(c) << (i*3) for i, c in enumerate(token))
 
-final_score = calculate_optimal_priority()
-print(f"Result: {final_score}")
+def decode_token(encoded):
+    token = ''
+    while encoded > 0:
+        token += chr(encoded & 0xFF)
+        encoded >>= 3
+    return token
+
+token_set_a = {'knowledge', 'wisdom', 'understanding'}
+token_set_b = {'wisdom', 'insight', 'comprehension'}
+encoded_tokens_a = {encode_token(t) for t in token_set_a}
+encoded_tokens_b = {encode_token(t) for t in token_set_b}
+common_encoded = encoded_tokens_a & encoded_tokens_b
+transform_map = {k: decode_token(k).upper() for k in common_encoded}
+base_score = len(transform_map) if transform_map else 0
+semantic_overlap_score = base_score + (10 if any('WISDOM' in v for v in transform_map.values()) else 0) and base_score * 2
+print(f'Result: {semantic_overlap_score}')

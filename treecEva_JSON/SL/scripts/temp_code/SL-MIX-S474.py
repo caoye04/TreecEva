@@ -1,39 +1,18 @@
-from collections import defaultdict
-import math
+import itertools
 
-document = "The quick brown fox jumps over the lazy dog. The dog was really lazy and very sleepy. The fox was quick and brown."
+# Genetic marker indices
+markers = frozenset([1, 2, 3, 4, 5, 6])
 
-# Tokenize into sentences
-sentences = [s.strip() for s in document.split('.') if s.strip()]
+# Function to calculate combination score
+score_func = lambda combo: sum(a ^ b for a, b in itertools.combinations(combo, 2)) + sum(combo)
 
-# Initialize data structures
-word_freq = defaultdict(int)
-sentence_scores = []
+# Generate all 3-marker combinations
+combinations = list(itertools.combinations(markers, 3))
 
-# Process each sentence
-for sentence in sentences:
-    words = sentence.lower().split()
-    # Update word frequencies
-    for word in words:
-        word_freq[word] += 1
-    
-    # Calculate sentence complexity: average word length * unique words
-    unique_words = len(set(words))
-    avg_length = sum(len(word) for word in words) / len(words) if words else 0
-    sentence_score = avg_length * unique_words
-    sentence_scores.append(sentence_score)
+# Calculate scores for all combinations
+combination_scores = [score_func(combo) for combo in combinations]
 
-# Compute aggregate score
-frequency_weights = {word: math.log(freq + 1) for word, freq in word_freq.items()}
-weighted_sentence_scores = []
+# Find the highest score
+max_score = max(combination_scores)
 
-for i, sentence in enumerate(sentences):
-    words = sentence.lower().split()
-    weight_sum = sum(frequency_weights[word] for word in words)
-    weighted_score = sentence_scores[i] * weight_sum
-    weighted_sentence_scores.append(weighted_score)
-
-# Final aggregation using a polynomial combination
-aggregate_score = sum(weighted_sentence_scores) + math.sqrt(sum(sentence_scores))
-
-print(f"Result: {round(aggregate_score, 2)}")
+print(f"Result: {max_score}")

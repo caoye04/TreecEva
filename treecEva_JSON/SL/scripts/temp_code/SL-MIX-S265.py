@@ -1,35 +1,32 @@
-from functools import reduce
-from collections import Counter
+import heapq
+import statistics
 
-def compute_modular_hash(timestamps):
-    return reduce(lambda x, y: (x * 31 + y) % 1009, timestamps, 0)
+temperature_readings = [23.5, 25.1, 22.8, 24.3, 26.7, 21.9, 25.0, 23.8, 24.9, 22.4]
+window_size = 3
+stability_heap = []
+thermal_readings = []
 
-def get_role_weights(roles):
-    weights = {'admin': 97, 'operator': 71, 'analyst': 53, 'guest': 11}
-    return [weights[r] for r in roles if r in weights]
+# Process temperature windows and calculate stability metrics
+for i in range(len(temperature_readings) - window_size + 1):
+    window = temperature_readings[i:i+window_size]
+    mean_temp = statistics.mean(window)
+    variance_temp = statistics.variance(window) if len(window) > 1 else 0
+    stability_metric = mean_temp / (1 + variance_temp)
+    heapq.heappush(stability_heap, (-stability_metric, i))  # Max heap using negative values
 
-# System configuration
-active_roles = ['operator', 'analyst', 'guest', 'admin']
-time_markers = [1623456789, 1623456889, 1623456989, 1623457089]
+# Calculate thermal index from most stable periods
+thermal_weights = {i: 0.0 for i in range(len(temperature_readings))}
+top_stable_periods = min(3, len(stability_heap))
 
-# Token generation process
-role_weights = get_role_weights(active_roles)
-hash_value = compute_modular_hash(time_markers)
+for _ in range(top_stable_periods):
+    neg_metric, start_idx = heapq.heappop(stability_heap)
+    stability_value = -neg_metric
+    for j in range(window_size):
+        idx = start_idx + j
+        if idx < len(temperature_readings):
+            thermal_weights[idx] += stability_value * (window_size - j) / window_size
 
-# Clearance computation with short-circuit logic
-is_critical_window = (time_markers[-1] % 86400) > 75600  # Last 3 hours of day
-has_admin_role = 'admin' in active_roles
+thermal_index = sum(weight * temp for weight, temp in zip(thermal_weights.values(), temperature_readings))
+thermal_index = round(thermal_index, 2)
 
-if is_critical_window and has_admin_role:
-    clearance_boost = 2
-elif is_critical_window or not has_admin_role:
-    clearance_boost = 1
-else:
-    clearance_boost = 0
-
-# Final clearance calculation
-base_clearance = sum(role_weights) % 100
-weighted_hash = (hash_value * clearance_boost) % 100
-final_clearance_level = (base_clearance + weighted_hash) % 50
-
-print(f'Result: {final_clearance_level}')
+print(f"Result: {thermal_index}")

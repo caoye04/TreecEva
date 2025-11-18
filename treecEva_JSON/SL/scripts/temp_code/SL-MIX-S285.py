@@ -1,68 +1,54 @@
-import heapq
-from functools import reduce
+from collections import deque
+import math
 
-def calculate_priority(distance, urgency):
-    return distance * 2 + urgency * 3
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
 
-class DeliveryRequest:
-    def __init__(self, id, distance, urgency):
-        self.id = id
-        self.distance = distance
-        self.urgency = urgency
-        self.priority = calculate_priority(distance, urgency)
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b) if a and b else 0
+
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+# Audio peak frequency data (Hz)
+audio_peaks = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50]
+window_size = 3
+peak_history = deque(maxlen=window_size)
+harmonic_accumulator = 0
+prime_weight = 0
+
+for idx, freq in enumerate(audio_peaks):
+    # Round to nearest integer for processing
+    rounded_freq = round(freq)
+    peak_history.append(rounded_freq)
     
-    def update_urgency(self, new_urgency):
-        self.urgency = new_urgency
-        self.priority = calculate_priority(self.distance, new_urgency)
+    # Statistical validation - check if current frequency is above mean of window
+    if len(peak_history) == window_size:
+        window_mean = sum(peak_history) / len(peak_history)
+        is_above_average = freq > window_mean
+        
+        # Number theory component - weight by prime factors
+        prime_factors = sum(1 for i in range(2, rounded_freq + 1) if rounded_freq % i == 0 and is_prime(i))
+        
+        # Short-circuit evaluation with logical operations
+        if is_above_average and not (prime_factors > 3 or rounded_freq < 300):
+            # Calculate harmonic relationship with previous peaks
+            base_freq = peak_history[0]
+            current_lcm = lcm(base_freq, rounded_freq) if base_freq else 0
+            harmonic_accumulator += current_lcm % 100
+        elif not is_above_average or prime_factors <= 2:
+            prime_weight += prime_factors * 10
+    
+    # Apply modulo to prevent overflow
+    harmonic_accumulator %= 1000
 
-# Initialize priority queue with negative values for max-heap behavior
-priority_queue = []
-
-# Create initial delivery requests
-requests = [
-    DeliveryRequest('DL001', 10, 5),
-    DeliveryRequest('DL002', 15, 3),
-    DeliveryRequest('DL003', 8, 7),
-    DeliveryRequest('DL004', 12, 4)
-]
-
-# Add requests to priority queue
-for req in requests:
-    heapq.heappush(priority_queue, (-req.priority, req.id, req))
-
-# Add new request
-new_request = DeliveryRequest('DL005', 20, 2)
-heapq.heappush(priority_queue, (-new_request.priority, new_request.id, new_request))
-
-# Update urgency of DL003
-for i in range(len(priority_queue)):
-    if priority_queue[i][1] == 'DL003':
-        priority_queue[i][2].update_urgency(9)
-        # Re-heapify after update
-        heapq.heapify(priority_queue)
-        break
-
-# Remove two highest priority items
-if priority_queue:
-    heapq.heappop(priority_queue)
-if priority_queue:
-    heapq.heappop(priority_queue)
-
-# Add another request
-extra_request = DeliveryRequest('DL006', 5, 8)
-heapq.heappush(priority_queue, (-extra_request.priority, extra_request.id, extra_request))
-
-# Check if any request has both distance > 10 AND urgency > 5
-high_priority_exists = any(req.distance > 10 and req.urgency > 5 for _, _, req in priority_queue)
-
-# Calculate final priority score
-final_score = 0
-if priority_queue and high_priority_exists:
-    highest_priority_request = priority_queue[0][2]
-    final_score = highest_priority_request.priority
-elif priority_queue:
-    # If no high priority exists, use a complex calculation
-    priorities = [req.priority for _, _, req in priority_queue]
-    final_score = reduce(lambda x, y: x | y, [p << 1 for p in priorities], 0) & 0xFF
-
-print(f"Result: {final_score}")
+# Final signature calculation
+harmonic_signature = (harmonic_accumulator * prime_weight) % 997
+print(f"Result: {harmonic_signature}")

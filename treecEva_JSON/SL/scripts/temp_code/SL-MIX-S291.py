@@ -1,51 +1,60 @@
-from functools import reduce
+class SignalNode:
+    def __init__(self, value=0, next_node=None):
+        self.value = value
+        self.next = next_node
 
-def knapsack_01(weights, values, capacity):
-    n = len(weights)
-    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
-    
-    for i in range(1, n + 1):
-        for w in range(capacity + 1):
-            if weights[i-1] <= w:
-                dp[i][w] = max(dp[i-1][w], dp[i-1][w - weights[i-1]] + values[i-1])
+def process_signal_chain(chain_head, transform_map):
+    current = chain_head
+    accumulator = 0
+    while current:
+        if current.value in transform_map:
+            transformed = transform_map[current.value]
+            if transformed & 1:
+                accumulator ^= (current.value << 1) % 17
             else:
-                dp[i][w] = dp[i-1][w]
-    
-    # Backtrack to find selected items
-    selected = []
-    w = capacity
-    for i in range(n, 0, -1):
-        if dp[i][w] != dp[i-1][w]:
-            selected.append(i-1)
-            w -= weights[i-1]
-    
-    return selected
+                accumulator = (accumulator + transformed) & 0xFF
+        else:
+            accumulator = (accumulator * 3) % 13
+        current = current.next
+    return accumulator
 
-# Package data
-package_weights = [10, 20, 30]
-package_values = [60, 100, 120]
-vehicle_capacity = 50
+def build_signal_chain(values):
+    if not values:
+        return None
+    head = SignalNode(values[0])
+    current = head
+    for val in values[1:]:
+        current.next = SignalNode(val)
+        current = current.next
+    return head
 
-# Strategy 1: Standard loading
-strategy_one_selection = knapsack_01(package_weights, package_values, vehicle_capacity)
+# Initialize transformation lookup table
+transform_lookup = {
+    5: 12,
+    10: 7,
+    3: 15,
+    8: 2,
+    12: 9
+}
 
-# Strategy 2: Priority high-value items
-high_value_packages = [i for i, v in enumerate(package_values) if v >= 100]
-strategy_two_selection = knapsack_01(
-    [package_weights[i] for i in high_value_packages], 
-    [package_values[i] for i in high_value_packages], 
-    vehicle_capacity
-)
-strategy_two_selection = [high_value_packages[i] for i in strategy_two_selection]
+# Create signal chain
+signal_values = [5, 10, 3, 8, 12, 1, 7]
+signal_chain = build_signal_chain(signal_values)
 
-# Find common packages using set operations
-common_packages = set(strategy_one_selection) & frozenset(strategy_two_selection)
+# Process the signal chain
+intermediate_result = process_signal_chain(signal_chain, transform_lookup)
 
-# Count packages that are either in common or have high value
-high_value_indices = {i for i, v in enumerate(package_values) if v >= 100}
-qualified_packages = common_packages | high_value_indices
+# Apply final transformation
+final_signal_strength = 0
+for i in range(4):
+    mask = (intermediate_result >> (i * 2)) & 0x3
+    if mask == 0:
+        final_signal_strength += 1 << i
+    elif mask & 0x1:
+        final_signal_strength ^= (mask << (i + 1))
+    else:
+        final_signal_strength &= ~(mask >> 1)
 
-# Final count using functional programming
-final_selection_count = reduce(lambda acc, idx: acc + 1 if idx in qualified_packages else acc, range(len(package_weights)), 0)
-
-print(f"Result: {final_selection_count}")
+# Apply modular correction
+final_signal_strength = (final_signal_strength ^ 0xF) % 11
+print(f"Result: {final_signal_strength}")

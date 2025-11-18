@@ -1,35 +1,37 @@
-import hashlib
-import heapq
+import math
+from functools import reduce
 
-def hash_subsequence(subseq):
-    return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
+def modular_sqrt_sum(values, mod):
+    return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
 
-def is_palindrome(s):
-    return s == s[::-1]
+def process_frequency_bins(base_freq, harmonics):
+    bins = [base_freq * h for h in harmonics]
+    windowed = [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))]
+    normalized = [int(w) % 1000 for w in windowed]
+    return normalized
 
-dna_strand = "ATGCCGTAATGCCGTAATGCCGTAATGCCGTA"
-palindromic_hashes = set()
+def aggregate_chunks(data, chunk_size):
+    chunks = [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)]
+    sums = [reduce(lambda a, b: a + b, chunk, 0) for chunk in chunks]
+    return reduce(lambda a, b: a + b, sums, 0)
 
-for i in range(len(dna_strand) - 3):
-    subseq = dna_strand[i:i+4]
-    if is_palindrome(subseq):
-        palindromic_hashes.add(hash_subsequence(subseq))
+# Signal processing parameters
+harmonic_series = [1, 2, 3, 5, 8, 13, 21]
+fundamental_frequency = 440.0
 
-# Convert to sorted list for deterministic heap operations
-sorted_hashes = sorted(list(palindromic_hashes))
+# Process the frequency bins with windowing
+processed_bins = process_frequency_bins(fundamental_frequency, harmonic_series)
 
-# Create a max heap using negative values
-hash_heap = [-x for x in sorted_hashes]
-heapq.heapify(hash_heap)
+# Apply modular square root transformation
+transformed_values = [modular_sqrt_sum([x], 97) for x in processed_bins]
 
-# Process heap elements
-signature_components = []
-while len(hash_heap) > 1:
-    first = -heapq.heappop(hash_heap)
-    second = -heapq.heappop(hash_heap)
-    combined = (first ^ second) & 0xFFFF  # XOR and mask to 16 bits
-    heapq.heappush(hash_heap, -combined)
-    signature_components.append(combined)
+# Remove zero values and convert to set for uniqueness
+unique_signals = frozenset(filter(lambda x: x > 0, transformed_values))
 
-final_signature = sum(signature_components) % 10000
-print(f"Result: {final_signature}")
+# Convert back to list and sort for divide-and-conquer aggregation
+signal_list = sorted(list(unique_signals))
+
+# Perform chunked aggregation using divide and conquer
+sync_metric = aggregate_chunks(signal_list, 3)
+
+print(f"Result: {sync_metric}")

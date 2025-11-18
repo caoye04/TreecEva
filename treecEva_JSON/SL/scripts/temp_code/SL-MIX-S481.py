@@ -1,47 +1,62 @@
+import itertools
 import math
-from functools import reduce
 
-def compute_gcd_list(numbers):
-    return reduce(math.gcd, numbers)
-
-# Audio channel harmonic frequencies (Hz) and energy levels
-harmonic_frequencies = [110, 220, 330, 440, 550, 660, 770, 880]
-energy_levels = [15, 32, 28, 45, 38, 50, 42, 55]
-
-# Calculate minimum separation using GCD of frequencies
-frequency_gcd = compute_gcd_list(harmonic_frequencies)
-min_separation = frequency_gcd * 2
-
-# Filter frequencies maintaining minimum separation
-selected_indices = []
-last_selected = -min_separation
-
-for i, freq in enumerate(harmonic_frequencies):
-    if freq >= last_selected + min_separation:
-        selected_indices.append(i)
-        last_selected = freq
-
-# Apply greedy selection for maximum energy (non-adjacent constraint)
-def max_energy_selection(energies):
-    if not energies:
-        return 0
-    if len(energies) == 1:
-        return energies[0]
+def process_protein_sequence():
+    # Amino acid molecular weights (g/mol)
+    amino_weights = {
+        'A': 89.09, 'R': 174.20, 'N': 132.12, 'D': 133.10,
+        'C': 121.16, 'E': 147.13, 'Q': 146.15, 'G': 75.07,
+        'H': 155.16, 'I': 131.17, 'L': 131.17, 'K': 146.19,
+        'M': 149.21, 'F': 165.19, 'P': 115.13, 'S': 105.09,
+        'T': 119.12, 'W': 204.23, 'Y': 181.19, 'V': 117.15
+    }
     
-    prev_max = energies[0]
-    curr_max = max(energies[0], energies[1])
+    # Marker sequence for analysis
+    marker = "MKQH"
     
-    for i in range(2, len(energies)):
-        temp = max(curr_max, prev_max + energies[i])
-        prev_max = curr_max
-        curr_max = temp
+    # Process 1: Create encoded sequence with positional adjustments
+    encoded_seq = {i: math.floor(amino_weights[aa] * (i+1) * 100) for i, aa in enumerate(marker)}
     
-    return curr_max
+    # Process 2: Apply sliding window transformation
+    window_sums = {}
+    for i in range(len(encoded_seq)):
+        window_sum = 0
+        for j in range(i, min(i+3, len(encoded_seq))):
+            window_sum += encoded_seq[j]
+        window_sums[i] = window_sum
+    
+    # Process 3: Find maximum window and apply special encoding
+    max_window_index = max(window_sums, key=window_sums.get)
+    if window_sums[max_window_index] > 50000:
+        special_factor = 1.5
+    else:
+        special_factor = 1.2
+    
+    # Process 4: Generate combinations and calculate marker value
+    marker_combinations = list(itertools.combinations(marker, 2))
+    combination_weights = []
+    
+    for combo in marker_combinations:
+        combo_weight = 0
+        for aa in combo:
+            combo_weight += amino_weights[aa]
+        combination_weights.append(math.floor(combo_weight * 100))
+    
+    # Process 5: Calculate final marker value
+    base_value = sum(combination_weights)
+    adjusted_value = math.floor(base_value * special_factor)
+    
+    # Process 6: Apply final transformation with early return logic
+    if adjusted_value % 2 == 0:
+        final_marker_value = adjusted_value + (adjusted_value // 10)
+    else:
+        final_marker_value = adjusted_value - (adjusted_value // 7)
+    
+    # Process 7: Apply encoding correction
+    correction_factor = len(str(final_marker_value))
+    final_marker_value = final_marker_value * correction_factor
+    
+    return final_marker_value
 
-# Extract energies of separated frequencies
-separated_energies = [energy_levels[i] for i in selected_indices]
-
-# Compute maximum energy sum with non-adjacent constraint
-max_energy_sum = max_energy_selection(separated_energies)
-
-print(f"Result: {max_energy_sum}")
+final_marker_value = process_protein_sequence()
+print(f"Result: {final_marker_value}")

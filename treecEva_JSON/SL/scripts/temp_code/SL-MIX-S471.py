@@ -1,48 +1,47 @@
-import re
+import math
 from functools import reduce
-from itertools import combinations
 
-def is_prime(n):
-    if n < 2:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
+def compute_gcd_list(numbers):
+    return reduce(math.gcd, numbers)
 
-def fibonacci_mod(n, mod):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, (a + b) % mod
-    return a
+# Audio channel harmonic frequencies (Hz) and energy levels
+harmonic_frequencies = [110, 220, 330, 440, 550, 660, 770, 880]
+energy_levels = [15, 32, 28, 45, 38, 50, 42, 55]
 
-def derive_session_key(seed):
-    # Step 1: Encode seed as hexadecimal string
-    hex_seed = hex(seed)[2:]
-    
-    # Step 2: Apply regex pattern matching to extract digits
-    digits = ''.join(re.findall(r'\d', hex_seed))
-    digit_sum = sum(int(d) for d in digits)
-    
-    # Step 3: Bitwise operations
-    xor_result = seed ^ (seed << 3) & 0xFFFF
-    and_result = xor_result & ((1 << 8) - 1)
-    
-    # Step 4: Prime validation and adjustment
-    candidate = and_result + digit_sum
-    while not is_prime(candidate):
-        candidate += 1
-    
-    # Step 5: Fibonacci scrambling
-    fib_index = candidate % 20
-    fib_value = fibonacci_mod(fib_index, 256)
-    
-    # Step 6: Final key combination
-    session_key = (candidate << 8) | fib_value
-    
-    return session_key
+# Calculate minimum separation using GCD of frequencies
+frequency_gcd = compute_gcd_list(harmonic_frequencies)
+min_separation = frequency_gcd * 2
 
-# Protocol execution
-initial_seed = 0x1A3F
-session_key = derive_session_key(initial_seed)
-print(f"Result: {session_key}")
+# Filter frequencies maintaining minimum separation
+selected_indices = []
+last_selected = -min_separation
+
+for i, freq in enumerate(harmonic_frequencies):
+    if freq >= last_selected + min_separation:
+        selected_indices.append(i)
+        last_selected = freq
+
+# Apply greedy selection for maximum energy (non-adjacent constraint)
+def max_energy_selection(energies):
+    if not energies:
+        return 0
+    if len(energies) == 1:
+        return energies[0]
+    
+    prev_max = energies[0]
+    curr_max = max(energies[0], energies[1])
+    
+    for i in range(2, len(energies)):
+        temp = max(curr_max, prev_max + energies[i])
+        prev_max = curr_max
+        curr_max = temp
+    
+    return curr_max
+
+# Extract energies of separated frequencies
+separated_energies = [energy_levels[i] for i in selected_indices]
+
+# Compute maximum energy sum with non-adjacent constraint
+max_energy_sum = max_energy_selection(separated_energies)
+
+print(f"Result: {max_energy_sum}")

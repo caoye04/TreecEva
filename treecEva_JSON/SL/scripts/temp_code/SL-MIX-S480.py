@@ -1,28 +1,41 @@
-from functools import lru_cache
+from collections import defaultdict
+import hashlib
 
-def generate_key(n):
-    if n <= 1:
-        return n
-    return (generate_key(n-1) ^ generate_key(n-2)) & 0xFF
-
-def process_signal(base_signal, iterations):
-    key = generate_key(iterations)
-    adjusted = base_signal
-    
-    for i in range(3):
-        if i & 1:
-            adjusted = (adjusted * 1.5) if (key & (1 << i)) else (adjusted / 2.0)
+def process_genomic_segment(segment_data):
+    decoded_bytes = bytes.fromhex(segment_data)
+    masked_data = bytearray()
+    for byte_val in decoded_bytes:
+        if (byte_val & 0xF0) != 0:
+            masked_data.append(byte_val ^ 0xAA)
         else:
-            adjusted = (adjusted + 10.0) if not (key & (1 << i)) else (adjusted - 5.0)
+            masked_data.append(byte_val)
+    return bytes(masked_data)
+
+class GenomicValidator:
+    def __init__(self):
+        self.checksum_map = defaultdict(int)
     
-    return int(adjusted) ^ key
+    def update_validation(self, processed_data):
+        hash_val = hashlib.sha256(processed_data).hexdigest()
+        char_sum = sum(ord(c) for c in hash_val[:8] if c.isdigit() or c.isalpha())
+        return char_sum % 100
 
-# Audio processing pipeline
-base_level = 42.5
-processing_rounds = 7
-intermediate_result = process_signal(base_level, processing_rounds)
+segment_registry = {
+    'segA': '48656c6c6f20',
+    'segB': '576f726c6421',
+    'segC': '47656e6f6d696373'
+}
 
-# Final adjustment using bitwise operations
-final_amplitude = (intermediate_result << 2) & 0xFF if (intermediate_result > 100) else (intermediate_result | 0x0F)
+validator = GenomicValidator()
+intermediate_mask = 0x0F
+validation_score = 0
 
-print(f"Result: {final_amplitude}")
+with open('temp_seq.tmp', 'w') as f:
+    f.write(segment_registry['segA'])
+
+for seg_id, hex_data in segment_registry.items():
+    processed = process_genomic_segment(hex_data)
+    score_part = validator.update_validation(processed)
+    validation_score += score_part if (score_part & intermediate_mask) != 0 else -1
+
+print(f"Result: {validation_score}")

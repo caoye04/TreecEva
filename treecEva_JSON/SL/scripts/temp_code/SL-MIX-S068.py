@@ -1,43 +1,36 @@
-from math import gcd
 from functools import reduce
+import statistics
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+def calculate_transaction_impact(transactions):
+    return sum(map(lambda t: abs(t) * 0.01, transactions))
 
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
+def adjusted_returns(returns, fees):
+    return list(map(lambda r, f: r - f, returns, fees))
 
-# Frequency measurements from deep space signals
-signal_frequencies = [22, 7, 14, 19, 25, 3, 11, 30, 13, 8]
+portfolio_transactions = [1000, -500, 2000, -1500, 3000]
+expected_gains = [1.05, 0.98, 1.12, 0.95, 1.08]
 
-# Filter out prime frequencies
-prime_frequencies = list(filter(is_prime, signal_frequencies))
+# Calculate fee impact using functional programming
+fee_impacts = list(map(calculate_transaction_impact, [[t] for t in portfolio_transactions]))
 
-# Compute LCM of all prime frequencies
-lcm_of_primes = reduce(lcm, prime_frequencies)
+# Adjust expected gains with fee impacts
+adj_gains = adjusted_returns(expected_gains, fee_impacts)
 
-# Dynamic programming table for stability scores
-stability_scores = [0] * (len(prime_frequencies) + 1)
-stability_scores[0] = 1
+# Greedy selection of top performing assets
+performance_ranking = {i: adj_gains[i] for i in range(len(adj_gains))}
+sorted_assets = sorted(performance_ranking.items(), key=lambda x: x[1], reverse=True)
 
-for i in range(1, len(prime_frequencies) + 1):
-    stability_scores[i] = stability_scores[i-1] * prime_frequencies[i-1] + i
+# Select top 3 assets using greedy approach
+selected_indices = [idx for idx, _ in sorted_assets[:3]]
+selected_returns = [adj_gains[i] for i in selected_indices]
 
-# Apply weighting function
-weighted_sum = sum(map(lambda x, y: x * y, prime_frequencies, stability_scores[:-1]))
+# Statistical analysis on selected assets
+mean_return = statistics.mean(selected_returns)
+variance_return = statistics.variance(selected_returns)
 
-# Final stability score calculation
-final_stability_score = (lcm_of_primes + weighted_sum) % 1000
+# Calculate optimal adjustment with closure
+adjustment_factor = 0.75
+calculate_optimal = lambda m, v: (m * 1000) / (1 + v) * adjustment_factor
+optimal_adjustment = calculate_optimal(mean_return, variance_return)
 
-print(f"Result: {final_stability_score}")
+print(f"Result: {round(optimal_adjustment, 2)}")

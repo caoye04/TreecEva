@@ -1,59 +1,35 @@
-from collections import defaultdict
+import math
+from functools import reduce
 
-events = [
-    {'type': 'request', 'amount': 10},
-    {'type': 'request', 'amount': 25},
-    {'type': 'utilization', 'level': 80},
-    {'type': 'request', 'amount': 5},
-    {'type': 'release', 'threshold': 30},
-    {'type': 'utilization', 'level': 45}
-]
+def signal_validator(sequence, depth=0):
+    if depth >= 3:
+        return sum(sequence)
+    transformed = []
+    for i, val in enumerate(sequence):
+        if i % 2 == 0:
+            transformed.append(val ^ (depth + 1))
+        else:
+            transformed.append(val | (depth + 1))
+    return signal_validator(transformed, depth + 1)
 
-state = 'reserve'
-bandwidth_pool = 0
-reservation_buffer = []
-utilization_history = []
+def process_signals(raw_data):
+    # Apply initial filtering using lambda and map
+    filtered = list(map(lambda x: x if x > 0 else 0, raw_data))
+    
+    # Segment into chunks for parallel processing
+    segments = [filtered[i:i+4] for i in range(0, len(filtered), 4)]
+    
+    # Process each segment with validator
+    scores = []
+    for seg in segments:
+        score = signal_validator(seg)
+        scores.append(score)
+    
+    # Combine scores using reduce and mathematical operations
+    combined = reduce(lambda a, b: (a * b) // max(1, abs(a - b)), scores, 1)
+    return combined
 
-# State transition logic with short-circuit guards
-for event in events:
-    if state == 'reserve' and event['type'] == 'request':
-        reservation_buffer.append(event['amount'])
-        buffer_sum = sum(reservation_buffer)
-        # Short-circuit: Only check balance condition if buffer is non-empty
-        if reservation_buffer and buffer_sum >= 30:
-            state = 'balance'
-    elif state == 'reserve' and event['type'] == 'utilization':
-        utilization_history.append(event['level'])
-        # Short-circuit: Transition to release only if last two readings are low
-        if len(utilization_history) >= 2 and utilization_history[-1] < 50 and utilization_history[-2] < 50:
-            state = 'release'
-    elif state == 'balance':
-        # Greedy redistribution: allocate half of excess over 30
-        excess = max(0, sum(reservation_buffer) - 30)
-        bandwidth_pool += excess // 2
-        reservation_buffer = [x for x in reservation_buffer if x > 0]  # Reset buffer
-        state = 'reserve'
-    elif state == 'release' and event['type'] == 'release':
-        # Release policy: free up to threshold amount
-        released = min(bandwidth_pool, event['threshold'])
-        bandwidth_pool -= released
-        state = 'reserve'
-
-# Final aggregation using dictionary comprehension
-metrics = {
-    'pool': bandwidth_pool,
-    'buffer_total': sum(reservation_buffer),
-    'history_avg': sum(utilization_history) // len(utilization_history) if utilization_history else 0
-}
-
-# Merge with derived metrics
-enhanced_metrics = {
-    **metrics,
-    **{k + '_scaled': v * 2 for k, v in metrics.items()}
-}
-
-# Compute final bandwidth using a lambda reduction
-compute_final = lambda d: d['pool'] + d.get('buffer_total', 0) - d.get('history_avg', 0)
-final_bandwidth = compute_final(enhanced_metrics)
-
-print(f"Result: {final_bandwidth}")
+# Deep space signal data (arbitrary units)
+cosmic_observations = [7, -2, 15, 3, 9, -1, 12, 6, 4, 8, -5, 11]
+transmission_score = process_signals(cosmic_observations)
+print(f"Result: {transmission_score}")

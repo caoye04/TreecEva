@@ -1,60 +1,42 @@
-import itertools
-from collections import deque
+def analyze_dna_patterns(sequences):
+    pattern_scores = {}
+    nucleotide_pairs = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
+    
+    for seq_id, sequence in enumerate(sequences):
+        complement_seq = ''.join([nucleotide_pairs.get(nuc, 'N') for nuc in sequence])
+        reverse_complement = complement_seq[::-1]
+        
+        palindromic_matches = 0
+        for i in range(len(sequence) - 2):
+            for j in range(i + 3, len(sequence) + 1):
+                substring = sequence[i:j]
+                if substring == reverse_complement[i:j]:
+                    palindromic_matches += 1
+        
+        pattern_scores[seq_id] = palindromic_matches
+    
+    return pattern_scores
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+def calculate_regulatory_index(pattern_map, weight_factors):
+    regulatory_index = 0
+    for seq_id, matches in pattern_map.items():
+        if matches > 0:
+            weighted_value = matches * weight_factors.get(seq_id, 1)
+            regulatory_index += weighted_value if weighted_value % 2 == 0 else -weighted_value
+    return regulatory_index
 
-def next_prime(n):
-    while True:
-        n += 1
-        if is_prime(n):
-            return n
+# DNA sequences under analysis
+chromosome_fragments = [
+    "ATCGATCG",
+    "GCATGCAT",
+    "TTAACGTTAA",
+    "CCGGCCGG"
+]
 
-# Audio processing parameters
-sample_rate = 44100
-bit_depth = 16
-channel_count = 2
+# Weight factors for different sequence segments
+segment_weights = {0: 2, 1: 3, 2: 1, 3: 4}
 
-# Calculate base threshold using modular arithmetic
-base_threshold = (sample_rate * bit_depth) % 1000
-scaled_threshold = (base_threshold * channel_count + 7) % 97
-
-# Initialize processing queue with Fibonacci sequence
-fib_queue = deque()
-a, b = 1, 1
-for _ in range(10):
-    fib_queue.append(a)
-    a, b = b, (a + b) % 100
-
-# Sliding window analysis
-window_candidates = []
-for i in range(min(len(fib_queue), 8)):
-    candidate = fib_queue.popleft()
-    adjusted_candidate = (candidate * scaled_threshold) % 42
-    if adjusted_candidate > 10:
-        window_candidates.append(adjusted_candidate)
-    if len(window_candidates) >= 3:
-        break
-
-# Determine final window size
-if not window_candidates:
-    final_window_size = next_prime(20)
-else:
-    max_candidate = max(window_candidates)
-    if max_candidate % 3 == 0:
-        final_window_size = next_prime(max_candidate + 5)
-    else:
-        final_window_size = next_prime(max_candidate)
-
-print(f"Result: {final_window_size}")
+# Analysis pipeline
+pattern_analysis = analyze_dna_patterns(chromosome_fragments)
+regulatory_score = calculate_regulatory_index(pattern_analysis, segment_weights)
+print(f"Result: {regulatory_score}")

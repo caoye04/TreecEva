@@ -1,39 +1,50 @@
-def process_sensor_data():
-    readings = [15, 29, 42, 8, 33, 19, 7]
-    cache = {}
-    transformations = []
-    
-    # Stage 1: Apply dynamic programming to compute optimal XOR combinations
-    for i in range(len(readings)):
-        if i == 0:
-            cache[i] = readings[i]
-        else:
-            cache[i] = cache[i-1] ^ readings[i]
-        
-    # Stage 2: Nested loop for applying bit shifts and generating transformation map
-    for idx, val in enumerate(readings):
-        temp_transforms = []
-        for shift in range(3):
-            if (idx & 1) == 0:  # Even index
-                transformed = (val << shift) & 0xFF
-            else:  # Odd index
-                transformed = (val >> shift) & 0xFF
-            temp_transforms.append(transformed)
-        transformations.append(temp_transforms)
-    
-    # Stage 3: Compute final checksum using switch-like logic and previous results
-    encoded_checksum = 0
-    for i in range(len(transformations)):
-        selector = i % 3
-        if selector == 0:
-            encoded_checksum ^= (cache[i] & 0xFF) | (transformations[i][0] & 0xFF)
-        elif selector == 1:
-            encoded_checksum ^= (cache[i] & 0xFF) & (transformations[i][1] & 0xFF)
-        else:  # selector == 2
-            encoded_checksum ^= (cache[i] & 0xFF) ^ (transformations[i][2] & 0xFF)
-    
-    return encoded_checksum
+import statistics
 
-# Execute the processing pipeline
-encoded_checksum = process_sensor_data()
-print(f"Result: {encoded_checksum}")
+def call_tracker(func):
+    def wrapper(*args, **kwargs):
+        wrapper.call_count += 1
+        return func(*args, **kwargs)
+    wrapper.call_count = 0
+    return wrapper
+
+def process_ancient_text():
+    # Ancient text word frequencies
+    word_frequencies = [12, 8, 15, 22, 9, 18, 9, 11, 14, 16, 7, 20, 13, 10, 17]
+    
+    # Filter out low frequency words
+    significant_words = [freq for freq in word_frequencies if freq > 10]
+    
+    # Apply transformations using set operations
+    unique_freq_set = frozenset(significant_words)
+    transformed_freqs = []
+    
+    # Process each frequency with potential multiple transformations
+    for freq in unique_freq_set:
+        # Short-circuit evaluation pattern
+        if freq > 15 and (freq % 2 == 0 or freq > 18):
+            transformed_freqs.append(freq * 2)
+        elif freq <= 15 or freq < 12:
+            transformed_freqs.append(freq + 5)
+        else:
+            transformed_freqs.append(freq)
+    
+    # Calculate statistical measures
+    mean_freq = statistics.mean(transformed_freqs)
+    variance_freq = statistics.variance(transformed_freqs) if len(transformed_freqs) > 1 else 0
+    
+    # Apply final scoring algorithm
+    @call_tracker
+    def calculate_score(base_value, modifier):
+        return base_value * modifier + len(transformed_freqs)
+    
+    # Multiple function calls to test decorator
+    score1 = calculate_score(mean_freq, 1.5)
+    score2 = calculate_score(variance_freq, 0.75)
+    
+    # Final calculation combining all factors
+    final_score = int(score1 + score2 + calculate_score.call_count)
+    
+    return final_score
+
+final_score = process_ancient_text()
+print(f"Result: {final_score}")

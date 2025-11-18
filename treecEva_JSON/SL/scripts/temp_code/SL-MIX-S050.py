@@ -1,38 +1,40 @@
-from collections import deque
-import math
+from itertools import compress
 
-def process_packets(packet_ids):
-    # Layer 1: Apply XOR with a shifting key
-    layer1 = [pid ^ (pid << 2) for pid in packet_ids]
+class NucleotideEncoder:
+    def __init__(self):
+        self.mapping = {'A': 1, 'T': 2, 'G': 3, 'C': 4}
     
-    # Layer 2: Exponentiate and normalize
-    layer2 = [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1]
-    
-    # Layer 3: Sort and apply deque-based transformation
-    sorted_packets = sorted(layer2)
-    packet_queue = deque(sorted_packets)
-    
-    # Simulate stack-like processing with bitwise AND reduction
-    stack_reduction = 0
-    while packet_queue:
-        left = packet_queue.popleft()
-        if packet_queue:
-            right = packet_queue.pop()
-            stack_reduction ^= (left & right)
+    def encode(self, sequence):
+        return [self.mapping[nuc] for nuc in sequence]
+
+def analyze_marker(seq_values):
+    # Apply bitwise transformations
+    transformed = []
+    for i, val in enumerate(seq_values):
+        if i % 2 == 0:
+            transformed.append(val << 1)  # Left shift even indices
         else:
-            stack_reduction ^= left
+            transformed.append(val & 3)   # Bitwise AND with 3 for odd indices
     
-    # Final checksum: Combine with lambda-based accumulator
-    accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
-    final_checksum = 0
-    for val in sorted_packets:
-        final_checksum = accumulator(final_checksum, val)
+    # Apply logical filtering using short-circuit evaluation
+    valid_positions = [
+        (t > 2) and (t < 10) or (t == 1) 
+        for t in transformed
+    ]
     
-    # Adjust with stack reduction
-    final_checksum ^= stack_reduction
-    return final_checksum
+    # Extract values where valid_positions is True
+    filtered_values = list(compress(transformed, valid_positions))
+    
+    # Calculate marker code using XOR
+    marker_code = 0
+    for val in filtered_values:
+        marker_code ^= val
+    
+    return marker_code
 
-# Simulate packet flow
-network_packets = [12, 7, 23, 8, 15, 4]
-final_checksum = process_packets(network_packets)
-print(f"Result: {final_checksum}")
+# Main processing
+encoder = NucleotideEncoder()
+sequence = "ATGCAT"
+encoded_sequence = encoder.encode(sequence)
+marker_code = analyze_marker(encoded_sequence)
+print(f"Result: {marker_code}")

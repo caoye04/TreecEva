@@ -1,33 +1,50 @@
-import itertools
+import re
+from collections import defaultdict
 
-def hash_subseq(subseq):
-    return hash(''.join(subseq)) % 1000
+def calculate_palindrome_weights(sequence):
+    palindromes = defaultdict(int)
+    n = len(sequence)
+    
+    # Find all palindromic substrings using expanding window technique
+    for i in range(n):
+        # Odd length palindromes
+        left, right = i, i
+        while left >= 0 and right < n and sequence[left] == sequence[right]:
+            if right - left + 1 >= 3:  # Only consider palindromes of length 3 or more
+                palindromes[right - left + 1] += 1
+            left -= 1
+            right += 1
+        
+        # Even length palindromes
+        left, right = i, i + 1
+        while left >= 0 and right < n and sequence[left] == sequence[right]:
+            if right - left + 1 >= 4:  # Only consider palindromes of length 4 or more
+                palindromes[right - left + 1] += 1
+            left -= 1
+            right += 1
+    
+    return palindromes
 
-def is_palindrome(subseq):
-    return subseq == subseq[::-1]
+def compute_genomic_score(palindrome_map):
+    # Apply weighting formula: weight = length^2 * count
+    total = sum(length**2 * count for length, count in palindrome_map.items())
+    return total
 
-dna_sequence = "ATGCCGTAATGC"
-target_length = 4
-unique_hashes = set()
-palindrome_count = 0
+# Main analysis pipeline
+dna_sequence = "ATGCCGTAATCGGCTA"
+pattern_match = re.search(r'([ATGC]{4,})', dna_sequence)
+selected_segment = pattern_match.group(1) if pattern_match else dna_sequence[:8]
 
-for i in range(len(dna_sequence) - target_length + 1):
-    subseq = dna_sequence[i:i+target_length]
-    if is_palindrome(subseq):
-        h = hash_subseq(subseq)
-        if h in unique_hashes:
-            palindrome_count += 1
-            break
-        else:
-            unique_hashes.add(h)
-    if len(unique_hashes) > 5:
-        break
+# Short-circuit evaluation for quality control
+is_valid_sequence = len(selected_segment) >= 8 and all(base in 'ATGC' for base in selected_segment)
+selected_segment = selected_segment if is_valid_sequence else dna_sequence[:8]
 
-# Additional processing with itertools
-for combo in itertools.combinations(unique_hashes, 2):
-    if sum(combo) % 7 == 0:
-        palindrome_count += 1
-        if palindrome_count > 3:
-            break
+# Palindrome analysis
+palindrome_data = calculate_palindrome_weights(selected_segment)
+raw_score = compute_genomic_score(palindrome_data)
 
-print(f"Result: {palindrome_count}")
+# Apply normalization using ternary operator
+normalization_factor = 0.5 if raw_score > 100 else (0.75 if raw_score > 50 else 1.0)
+final_score = int(raw_score * normalization_factor) if palindrome_data else 0
+
+print(f"Result: {final_score}")

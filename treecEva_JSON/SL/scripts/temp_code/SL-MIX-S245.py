@@ -1,59 +1,50 @@
-from collections import defaultdict
+class SensorNode:
+    def __init__(self, value, position):
+        self.value = value
+        self.position = position
+        self.next = None
 
-def calculate_loading_efficiency(weights):
-    # Step 1: Initialize containers
-    weight_groups = defaultdict(list)
-    efficiency_score = 0
-    
-    # Step 2: Group weights by their magnitude ranges
-    for w in weights:
-        if w < 10:
-            weight_groups['light'].append(w)
-        elif 10 <= w < 50:
-            weight_groups['medium'].append(w)
+def build_sensor_list(readings):
+    head = None
+    current = None
+    for i, val in enumerate(readings):
+        node = SensorNode(val, i+1)
+        if head is None:
+            head = node
+            current = node
         else:
-            weight_groups['heavy'].append(w)
-    
-    # Step 3: Apply efficiency calculation for each group
-    for group_name, group_weights in weight_groups.items():
-        if not group_weights:
-            continue
-        
-        # Sort weights in descending order for optimal loading
-        group_weights.sort(reverse=True)
-        
-        # Calculate group efficiency using divide and conquer approach
-        def group_efficiency(sub_weights):
-            n = len(sub_weights)
-            if n == 0:
-                return 0
-            if n == 1:
-                return sub_weights[0] * 2
-            
-            mid = n // 2
-            left_eff = group_efficiency(sub_weights[:mid])
-            right_eff = group_efficiency(sub_weights[mid:])
-            
-            # Combine results with penalty for imbalance
-            balance_penalty = abs(sum(sub_weights[:mid]) - sum(sub_weights[mid:]))
-            return left_eff + right_eff - balance_penalty
-        
-        # Add group efficiency to total score
-        efficiency_score += group_efficiency(group_weights)
-    
-    # Step 4: Apply final adjustment based on loading pattern
-    light_count = len(weight_groups['light'])
-    medium_count = len(weight_groups['medium'])
-    heavy_count = len(weight_groups['heavy'])
-    
-    if light_count > medium_count and light_count > heavy_count:
-        efficiency_score *= 1.1
-    elif heavy_count > medium_count and heavy_count > light_count:
-        efficiency_score *= 0.9
-    
-    return int(efficiency_score)
+            current.next = node
+            current = node
+    return head
 
-# Main execution
-package_weights = [5, 15, 25, 35, 45, 55, 65, 75, 85, 95]
-efficiency_score = calculate_loading_efficiency(package_weights)
-print(f"Result: {efficiency_score}")
+def decode_value(node):
+    key = (node.position << 2) & 0xFF
+    return node.value ^ key
+
+def compute_checksum_divide_conquer(nodes_list):
+    if not nodes_list:
+        return 0
+    if len(nodes_list) == 1:
+        return decode_value(nodes_list[0])
+    mid = len(nodes_list) // 2
+    left_checksum = compute_checksum_divide_conquer(nodes_list[:mid])
+    right_checksum = compute_checksum_divide_conquer(nodes_list[mid:])
+    return (left_checksum + right_checksum) & 0xFF
+
+def collect_nodes(head):
+    nodes = []
+    current = head
+    while current:
+        nodes.append(current)
+        current = current.next
+    return nodes
+
+def main():
+    sensor_readings = [0x3C, 0x7A, 0x5F, 0x1D, 0x9B]
+    sensor_head = build_sensor_list(sensor_readings)
+    node_collection = collect_nodes(sensor_head)
+    final_checksum = compute_checksum_divide_conquer(node_collection)
+    print(f"Result: {final_checksum}")
+
+if __name__ == "__main__":
+    main()

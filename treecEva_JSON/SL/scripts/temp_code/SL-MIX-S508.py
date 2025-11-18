@@ -1,29 +1,34 @@
-from itertools import combinations
+from collections import defaultdict
+import re
 
-genetic_markers = ['A1', 'B2', 'C3', 'D4', 'E5', 'F6']
-marker_scores = {'A1': 7, 'B2': 3, 'C3': 9, 'D4': 2, 'E5': 8, 'F6': 4}
+def tokenize(transactions):
+    tokens = []
+    for txn in transactions:
+        parts = re.split(r'[:]', txn)
+        tokens.append((parts[0], int(parts[1]), float(parts[2])))
+    return tokens
 
-# Define filtering criteria using lambda functions
-valid_marker = lambda m: marker_scores[m] > 3
-high_score_marker = lambda m: marker_scores[m] > 6
-not_adjacent = lambda m1, m2: abs(ord(m1[0]) - ord(m2[0])) != 1
+scoring_fn = lambda category, count, amount: (count * 3 + int(amount)) & ~(1 << 2)
 
-# Generate all possible 3-marker combinations
-all_combinations = list(combinations(genetic_markers, 3))
-
-# Apply filtering logic with multiple conditions
-filtered_combinations = [
-    combo for combo in all_combinations
-    if all(valid_marker(marker) for marker in combo) and
-       any(high_score_marker(marker) for marker in combo) and
-       not_adjacent(combo[0], combo[1]) and
-       not_adjacent(combo[1], combo[2])
+raw_txns = [
+    "grocery:5:49.99",
+    "utility:2:120.75",
+    "entertainment:7:85.40",
+    "grocery:3:22.30",
+    "utility:1:95.00"
 ]
 
-# Count valid combinations satisfying additional constraint
-filtered_combinations_count = len([
-    combo for combo in filtered_combinations
-    if sum(marker_scores[marker] for marker in combo) % 2 == 1
-])
+scores = defaultdict(int)
+tokenized = tokenize(raw_txns)
 
-print(f"Result: {filtered_combinations_count}")
+for cat, cnt, amt in tokenized:
+    score = scoring_fn(cat, cnt, amt)
+    scores[cat] += score
+
+score_list = [(k, v) for k, v in scores.items()]
+score_list.sort(key=lambda x: x[1], reverse=True)
+
+weighted_scores = [value * (i + 1) for i, (key, value) in enumerate(score_list)]
+aggregated_score = sum(weighted_scores) // len(weighted_scores)
+
+print(f"Result: {aggregated_score}")

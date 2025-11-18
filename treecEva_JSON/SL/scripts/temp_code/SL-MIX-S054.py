@@ -1,59 +1,46 @@
-from collections import deque
+import re
+from collections import defaultdict
 
-def calculate_priority(items):
-    return sum(item ** 2 if item > 0 else -item for item in items)
+class PacketHeader:
+    def __init__(self, source_ip, dest_ip, flags):
+        self.source_ip = source_ip
+        self.dest_ip = dest_ip
+        self.flags = flags
 
-def process_inventory():
-    shipments_stack = []
-    orders_queue = deque()
-    
-    # Incoming shipments with item values
-    shipments_data = [
-        [3, -2, 5],
-        [-1, 4, -3],
-        [2, 2, 2, 2],
-        [-5, -5]
-    ]
-    
-    # Outgoing orders with item requests
-    orders_data = [
-        [1, -1, 2],
-        [-2, 3],
-        [4, 4, -3, -3]
-    ]
-    
-    # Load shipments into stack with their priorities
-    for shipment_items in shipments_data:
-        priority = calculate_priority(shipment_items)
-        shipments_stack.append(priority)
-    
-    # Load orders into queue with their priorities
-    for order_items in orders_data:
-        priority = calculate_priority(order_items)
-        orders_queue.append(priority)
-    
-    # Process shipments and orders
-    while shipments_stack and orders_queue:
-        top_shipment = shipments_stack[-1]
-        front_order = orders_queue[0]
+packet_data = [
+    "192.168.1.10:10.0.0.5:SYN",
+    "10.0.0.5:192.168.1.10:SYN-ACK",
+    "192.168.1.10:10.0.0.5:PSH-ACK|URG",  # Suspicious: URG flag
+    "192.168.1.15:10.0.0.5:FIN",           # Suspicious: unexpected FIN
+    "192.168.1.10:10.0.0.5:ACK"
+]
+
+flag_counter = defaultdict(int)
+suspicious_patterns = [r'URG', r'FIN']
+suspicious_score = 0
+
+for entry in packet_data:
+    parts = entry.split(':')
+    if len(parts) == 3:
+        src, dst, flag_str = parts
+        flags = flag_str.split('|')
+        header = PacketHeader(src, dst, flags)
         
-        if top_shipment >= front_order:
-            # Shipment fulfills order
-            shipments_stack.pop()
-            orders_queue.popleft()
-        else:
-            # Cannot fulfill, check next shipment
-            if len(shipments_stack) > 1:
-                shipments_stack.pop()  # Remove lower priority shipment
-            else:
-                break  # Cannot proceed further
-    
-    # Calculate discrepancy
-    highest_remaining_shipment = max(shipments_stack) if shipments_stack else 0
-    earliest_pending_order = orders_queue[0] if orders_queue else 0
-    discrepancy = highest_remaining_shipment - earliest_pending_order
-    
-    return discrepancy
+        # Count flags
+        for f in header.flags:
+            flag_counter[f] += 1
+        
+        # Pattern check with short-circuit: only check if TCP handshake flags aren't dominant
+        is_not_handshake_dominant = not (flag_counter['SYN'] > 2 and flag_counter['ACK'] > 2)
+        has_suspicious_flag = any(re.search(pattern, flag_str) for pattern in suspicious_patterns)
+        
+        if is_not_handshake_dominant and has_suspicious_flag:
+            suspicious_score += 10
+        elif not is_not_handshake_dominant or not has_suspicious_flag:
+            suspicious_score -= 1  # Decrease score for normal traffic
 
-final_discrepancy = process_inventory()
-print(f"Result: {final_discrepancy}")
+# Final adjustment based on flag distribution
+if flag_counter['RST'] > 0:
+    suspicious_score += 15
+
+print(f"Result: {suspicious_score}")

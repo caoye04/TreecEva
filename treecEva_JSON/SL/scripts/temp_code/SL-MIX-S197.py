@@ -1,49 +1,56 @@
-from collections import defaultdict
+class PackageNode:
+    def __init__(self, weight, priority):
+        self.weight = weight
+        self.priority = priority
+        self.next = None
 
-def apply_security_layer(packet_sig, layer_config):
-    operation = layer_config['op']
-    mask = layer_config['mask']
-    condition = layer_config.get('condition', None)
-    
-    if condition and not condition(packet_sig):
-        return packet_sig
-    
-    if operation == 'AND':
-        return packet_sig & mask
-    elif operation == 'OR':
-        return packet_sig | mask
-    elif operation == 'XOR':
-        return packet_sig ^ mask
-    elif operation == 'LSHIFT':
-        return (packet_sig << mask) & 0xFF
-    elif operation == 'RSHIFT':
-        return packet_sig >> mask
-    return packet_sig
+def build_package_chain(weights, priorities):
+    head = PackageNode(weights[0], priorities[0])
+    current = head
+    for i in range(1, len(weights)):
+        current.next = PackageNode(weights[i], priorities[i])
+        current = current.next
+    return head
 
-def is_high_priority(sig):
-    return sig > 0x80
+def calculate_adjusted_priority(node):
+    adjustment_factor = 3
+    return (node.weight * 2 + node.priority) // adjustment_factor
 
-def is_low_priority(sig):
-    return sig < 0x40
+def update_chain_priorities(head):
+    current = head
+    while current:
+        current.priority = calculate_adjusted_priority(current)
+        current = current.next
 
-# Security layer configurations
-layer_configs = [
-    {'op': 'XOR', 'mask': 0x3C},
-    {'op': 'AND', 'mask': 0xF0, 'condition': is_high_priority},
-    {'op': 'LSHIFT', 'mask': 2},
-    {'op': 'OR', 'mask': 0x0F, 'condition': lambda x: x < 0xC0}
-]
+# Initialize package data
+package_weights = [15, 22, 18, 30]
+package_priorities = [4, 7, 5, 9]
 
-# Packet processing pipeline
-initial_packet_signature = 0x5F
-packet_tracker = defaultdict(list)
-packet_tracker['signatures'].append(initial_packet_signature)
+# Build the linked list
+logistics_chain = build_package_chain(package_weights, package_priorities)
 
-for i, config in enumerate(layer_configs):
-    current_sig = packet_tracker['signatures'][-1]
-    new_sig = apply_security_layer(current_sig, config)
-    packet_tracker['signatures'].append(new_sig)
-    packet_tracker['layers'].append(f'Layer_{i+1}')
+# Update priorities based on weight calculations
+update_chain_priorities(logistics_chain)
 
-final_packet_signature = packet_tracker['signatures'][-1] if len(packet_tracker['signatures']) > 0 else 0
-print(f'Result: {final_packet_signature}')
+# Dictionary comprehension to map weights to updated priorities
+priority_mapping = {node.weight: node.priority for node in [
+    logistics_chain, 
+    logistics_chain.next, 
+    logistics_chain.next.next, 
+    logistics_chain.next.next.next
+]}
+
+# Merge with base operational factors
+base_factors = {15: 2, 22: 3, 18: 1, 30: 4}
+merged_data = {**base_factors, **priority_mapping}
+
+# Lambda to compute final score
+compute_final_score = lambda mapping: sum(
+    (weight + priority) * 2 - 1 
+    for weight, priority in mapping.items()
+    if weight > 20
+)
+
+# Calculate the final priority score
+final_priority_score = compute_final_score(merged_data)
+print(f"Result: {final_priority_score}")

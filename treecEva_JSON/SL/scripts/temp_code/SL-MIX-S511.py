@@ -1,32 +1,33 @@
-import itertools
 from functools import reduce
 
-# Sensor readings: each sublist represents one sensor's sequence of readings
-sensor_readings = [
-    [10, 12, 14, 13, 15],
-    [5, 7, 6, 8, 9, 7],
-    [20, 22, 21, 23, 25, 24, 26],
-    [1, 3, 2, 4, 6, 5]
-]
+# Packet header values from network capture
+packet_headers = [0x1A3F, 0x7B2C, 0x4E81, 0xF056, 0x29DA]
 
-def calculate_stability_score(readings):
-    if len(readings) < 2:
-        return 0
-    # Step 1: Calculate pairwise differences
-    differences = [readings[i+1] - readings[i] for i in range(len(readings)-1)]
-    # Step 2: Count differences within threshold
-    count_within_threshold = sum(1 for diff in differences if abs(diff) <= 2)
-    # Step 3: Calculate sum of readings
-    sum_readings = sum(readings)
-    # Stability score is count * sum
-    return count_within_threshold * sum_readings
+# Initialize security tracking variables
+packet_risk_scores = []
+cumulative_security_score = 0
 
-# Calculate stability scores for all sensors
-stability_scores = list(map(calculate_stability_score, sensor_readings))
+# Process each packet header to compute risk scores
+for idx, header in enumerate(packet_headers):
+    # Extract relevant bit fields using masking
+    priority_bits = (header & 0xF000) >> 12  # Upper 4 bits
+    protocol_bits = (header & 0x0FF0) >> 4   # Middle 8 bits
+    flag_bits = header & 0x000F              # Lower 4 bits
+    
+    # Calculate base risk using XOR of priority and flags
+    base_risk = priority_bits ^ flag_bits
+    
+    # Apply protocol modifier using AND operation
+    protocol_modifier = protocol_bits & 0x07  # Only consider 3 LSBs
+    
+    # Compute enhanced risk with short-circuit evaluation
+    enhanced_risk = base_risk if protocol_modifier == 0 else (base_risk | protocol_modifier)
+    
+    # Add to collection
+    packet_risk_scores.append(enhanced_risk)
 
-# Find median stability score
-stability_scores.sort()
-n = len(stability_scores)
-median_stability_score = stability_scores[n//2] if n % 2 == 1 else (stability_scores[n//2 - 1] + stability_scores[n//2]) // 2
+# Calculate cumulative score using reduction and bit shifting
+if packet_risk_scores:  # Short-circuit check
+    cumulative_security_score = reduce(lambda acc, score: (acc << 1) ^ score, packet_risk_scores, 0)
 
-print(f"Result: {median_stability_score}")
+print(f"Result: {cumulative_security_score}")

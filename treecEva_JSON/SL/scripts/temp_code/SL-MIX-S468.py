@@ -1,65 +1,53 @@
-from collections import defaultdict
+import math
+from itertools import combinations
+from functools import reduce
 
-def tokenize_stream(input_stream):
-    tokens = []
-    i = 0
-    while i < len(input_stream):
-        if input_stream[i] == '<':
-            j = input_stream.find('>', i)
-            if j != -1:
-                tokens.append(('TAG', input_stream[i+1:j]))
-                i = j + 1
-                continue
-        if input_stream[i].isalpha():
-            j = i
-            while j < len(input_stream) and input_stream[j].isalnum():
-                j += 1
-            tokens.append(('ID', input_stream[i:j]))
-            i = j
-            continue
-        if input_stream[i].isdigit():
-            j = i
-            while j < len(input_stream) and input_stream[j].isdigit():
-                j += 1
-            tokens.append(('VAL', int(input_stream[i:j])))
-            i = j
-            continue
-        i += 1
-    return tokens
+class CipherEngine:
+    def __init__(self, base_key):
+        self.base_key = base_key
+        self.encoded_sequence = []
+    
+    def encode_step(self, value):
+        return math.log(value, self.base_key)
+    
+    def transform_sequence(self, data_list):
+        self.encoded_sequence = [self.encode_step(x) for x in data_list]
+        return self.encoded_sequence
 
-tag_weights = defaultdict(lambda: 1, {
-    'bold': 3,
-    'italic': 2,
-    'underline': 4
-})
+def binary_search_closest(arr, target):
+    low, high = 0, len(arr) - 1
+    closest = float('inf')
+    while low <= high:
+        mid = (low + high) // 2
+        if abs(arr[mid] - target) < abs(closest - target):
+            closest = arr[mid]
+        if arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return closest
 
-transformers = {
-    'ID': lambda x: x.upper(),
-    'VAL': lambda x: x * 2,
-    'TAG': lambda x: tag_weights[x]
-}
+def process_cipher(base_key, input_values):
+    engine = CipherEngine(base_key)
+    encoded = engine.transform_sequence(input_values)
+    target = math.exp(1)  # e
+    
+    # Find closest encoded value to e
+    closest_val = binary_search_closest(encoded, target)
+    
+    # Apply lambda transformation
+    transform_func = lambda x: math.pow(x, 1.5) if x > 1 else math.pow(x, 2.5)
+    transformed = transform_func(closest_val)
+    
+    # Combine with combinatorial operation
+    combo_sum = sum(len(list(combinations(input_values, 2))) for _ in range(int(transformed)))
+    
+    # Final cipher value
+    final_cipher_value = int(transformed * combo_sum % 1000)
+    return final_cipher_value
 
-token_categories = {
-    'ID': 1,
-    'VAL': 2,
-    'TAG': 3
-}
-
-def process_tokens(tokens):
-    score = 0
-    for token_type, token_value in tokens:
-        transformed = transformers[token_type](token_value)
-        category = token_categories[token_type]
-        match category:
-            case 1:  # ID
-                score += len(transformed)
-            case 2:  # VAL
-                score += transformed
-            case 3:  # TAG
-                score *= transformed
-    return score
-
-input_stream = "<bold>hello123<italic>world456"
-tokens = tokenize_stream(input_stream)
-final_score = process_tokens(tokens)
-print(f"Result: {final_score}")
+# Execution
+base_key = 7
+input_values = [49, 343, 2401, 16807]
+final_cipher_value = process_cipher(base_key, input_values)
+print(f"Result: {final_cipher_value}")

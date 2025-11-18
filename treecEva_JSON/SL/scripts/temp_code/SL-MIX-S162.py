@@ -1,48 +1,40 @@
-import math
+import heapq
+from collections import defaultdict
 
-class TriangleNode:
-    def __init__(self, area=0, left=None, right=None):
-        self.area = area
-        self.left = left
-        self.right = right
+def cipher_transform(timestamp_str):
+    transformed = ''
+    for char in timestamp_str:
+        if char.isdigit():
+            transformed += str((int(char) + 3) % 10)
+        else:
+            transformed += char
+    return transformed
 
-def calculate_leaf_areas(node):
-    if not node:
-        return []
-    if not node.left and not node.right:
-        return [node.area]
-    return calculate_leaf_areas(node.left) + calculate_leaf_areas(node.right)
+logs = [
+    (5, "2023-10-01T12:34:56"),
+    (2, "2023-10-01T11:22:33"),
+    (8, "2023-10-01T10:10:10"),
+    (1, "2023-10-01T09:08:07"),
+    (7, "2023-10-01T13:14:15")
+]
 
-def combinatorial_aggregation(areas):
-    if len(areas) < 2:
-        return sum(areas)
-    combinations_set = set()
-    for i in range(len(areas)):
-        for j in range(i+1, len(areas)):
-            combinations_set.add(areas[i] + areas[j])
-    return sum(combinations_set)
+priority_heap = []
+transformed_logs = {}
 
-# Constructing the binary tree
-#       10
-#      /  \
-#     5    15
-#    / \   / \
-#   3   7 12  20
-root = TriangleNode(10)
-root.left = TriangleNode(5)
-root.right = TriangleNode(15)
-root.left.left = TriangleNode(3)
-root.left.right = TriangleNode(7)
-root.right.left = TriangleNode(12)
-root.right.right = TriangleNode(20)
+for priority, timestamp in logs:
+    new_timestamp = cipher_transform(timestamp)
+    transformed_logs[new_timestamp] = priority
+    heapq.heappush(priority_heap, (priority, new_timestamp))
 
-# Extract leaf areas
-leaf_areas = calculate_leaf_areas(root)
+# Process the top 3 alerts
+alert_scores = []
+for _ in range(min(3, len(priority_heap))):
+    score, _ = heapq.heappop(priority_heap)
+    alert_scores.append(score)
 
-# Apply combinatorial aggregation using a lambda for transformation
-transformed_areas = list(map(lambda x: round(math.sqrt(x), 2), leaf_areas))
+# Calculate security index as the product of top alert scores
+security_index = 1
+for score in alert_scores:
+    security_index *= score
 
-# Calculate final aggregated surface area
-aggregated_surface_area = combinatorial_aggregation(transformed_areas)
-
-print(f"Result: {aggregated_surface_area}")
+print(f"Result: {security_index}")

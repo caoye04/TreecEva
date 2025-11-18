@@ -1,44 +1,42 @@
-from dataclasses import dataclass
-from typing import List, Union
+from collections import defaultdict
+from math import gcd
+from functools import reduce
 
-def compute_file_hash(name: str) -> int:
-    return hash(name)
+def calculate_lcm(a, b):
+    return abs(a * b) // gcd(a, b)
 
-def compute_folder_hash(children: List[int]) -> int:
-    return sum(children)
+# Cryptographic key components
+key_primes = [17, 19, 23, 29, 31]
+key_exponents = [3, 2, 4, 1, 5]
 
-@dataclass
-class FileNode:
-    name: str
-    def get_hash(self) -> int:
-        return compute_file_hash(self.name)
+# Initialize DP table for storing intermediate GCD results
+gcd_memo = defaultdict(int)
+score_tracker = defaultdict(lambda: defaultdict(int))
 
-@dataclass
-class FolderNode:
-    name: str
-    children: List[Union['FolderNode', FileNode]]
-    
-    def get_hash(self) -> int:
-        child_hashes = [child.get_hash() for child in self.children]
-        return compute_folder_hash(child_hashes)
+# Calculate base scores using prime exponents
+base_scores = list(map(lambda x: x[0] * x[1], zip(key_primes, key_exponents)))
 
-# Directory structure:
-# root/
-# ├── config.txt
-# ├── src/
-# │   ├── main.py
-# │   └── utils.py
-# └── docs/
-#     └── readme.md
+# Dynamic programming phase for calculating overlapping GCD strengths
+for i in range(len(base_scores)):
+    for j in range(i+1, len(base_scores)):
+        if i == 0:
+            gcd_memo[(i,j)] = gcd(base_scores[i], base_scores[j])
+        else:
+            gcd_memo[(i,j)] = gcd(gcd_memo[(i-1,j)], base_scores[i])
+        
+        # Apply conditional scoring based on GCD values
+        if gcd_memo[(i,j)] > 10:
+            score_tracker[i][j] = base_scores[i] + base_scores[j]
+        elif gcd_memo[(i,j)] > 5:
+            score_tracker[i][j] = calculate_lcm(base_scores[i], base_scores[j])
+        else:
+            score_tracker[i][j] = base_scores[i] * base_scores[j]
 
-config_file = FileNode("config.txt")
-main_file = FileNode("main.py")
-utils_file = FileNode("utils.py")
-readme_file = FileNode("readme.md")
+# Aggregate final score using reduction
+final_components = []
+for i in range(len(base_scores)):
+    for j in range(i+1, len(base_scores)):
+        final_components.append(score_tracker[i][j])
 
-src_folder = FolderNode("src", [main_file, utils_file])
-docs_folder = FolderNode("docs", [readme_file])
-root_folder = FolderNode("root", [config_file, src_folder, docs_folder])
-
-root_hash = root_folder.get_hash()
-print(f"Result: {root_hash}")
+final_score = reduce(lambda acc, val: acc + (val if val % 2 == 0 else val * 2), final_components, 0)
+print(f"Result: {final_score}")

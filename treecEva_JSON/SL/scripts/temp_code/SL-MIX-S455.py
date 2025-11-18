@@ -1,57 +1,49 @@
-from collections import defaultdict
-import itertools
+import heapq
+from functools import wraps
 
-def process_packets():
-    # Packet header tokens (simulated)
-    packet_headers = [
-        "TCP SRC:192.168.1.1 DST:10.0.0.1 PORT:80",
-        "UDP SRC:192.168.1.2 DST:10.0.0.2 PORT:53",
-        "TCP SRC:10.0.0.1 DST:192.168.1.1 PORT:80",
-        "ICMP SRC:192.168.1.3 DST:10.0.0.3 TYPE:8"
-    ]
-    
-    # State machine for connection tracking
-    state_machine = {
-        'INIT': {'TCP': 'TCP_CONN', 'UDP': 'UDP_CONN', 'ICMP': 'ICMP_CONN'},
-        'TCP_CONN': {'ACK': 'ESTABLISHED', 'RST': 'CLOSED'},
-        'UDP_CONN': {'DATA': 'ACTIVE', 'TIMEOUT': 'CLOSED'},
-        'ICMP_CONN': {'REPLY': 'COMPLETED', 'TIMEOUT': 'CLOSED'}
-    }
-    
-    connection_states = defaultdict(str)
-    anomaly_counter = 0
-    security_weights = {'TCP': 3, 'UDP': 2, 'ICMP': 1}
-    
-    for header in packet_headers:
-        tokens = header.split()
-        protocol = tokens[0]
-        src_ip = tokens[1].split(':')[1]
-        dst_ip = tokens[2].split(':')[1]
-        
-        # Encoding source IP to numerical value
-        src_encoded = sum(ord(c) for c in src_ip)
-        
-        # State machine transition
-        current_state = connection_states[(src_ip, dst_ip)]
-        if not current_state:
-            connection_states[(src_ip, dst_ip)] = state_machine['INIT'].get(protocol, 'UNKNOWN')
-        else:
-            # Simulate state transition based on protocol
-            if protocol == 'TCP' and 'ACK' in header:
-                connection_states[(src_ip, dst_ip)] = state_machine.get(current_state, {}).get('ACK', current_state)
-            elif protocol == 'ICMP' and 'REPLY' in header:
-                connection_states[(src_ip, dst_ip)] = state_machine.get(current_state, {}).get('REPLY', current_state)
-        
-        # Detect anomalies (simplified)
-        if src_encoded > 1000:
-            anomaly_counter += 1
-    
-    # Calculate final security score
-    state_scores = {'INIT': 0, 'TCP_CONN': 5, 'UDP_CONN': 3, 'ICMP_CONN': 2, 'ESTABLISHED': 10, 'ACTIVE': 7, 'COMPLETED': 8, 'CLOSED': 1, 'UNKNOWN': 0}
-    total_state_score = sum(state_scores[state] for state in connection_states.values())
-    final_security_score = (total_state_score * anomaly_counter) - sum(security_weights.values())
-    
-    return final_security_score
+def log_balance_changes(func):
+    @wraps(func)
+    def wrapper(balance, adjustment):
+        new_balance = func(balance, adjustment)
+        return new_balance
+    return wrapper
 
-final_security_score = process_packets()
-print(f"Result: {final_security_score}")
+@log_balance_changes
+def apply_adjustment(balance, adjustment):
+    return balance + adjustment
+
+# Initialize transaction min-heap with priority values
+transactions = [
+    (3, lambda x: x * 1.02),   # Priority 3: 2% gain
+    (1, lambda x: x - 100),     # Priority 1: $100 fee
+    (2, lambda x: x + 50),      # Priority 2: $50 bonus
+    (5, lambda x: x * 0.95),    # Priority 5: 5% loss
+    (4, lambda x: x + 200)      # Priority 4: $200 deposit
+]
+
+heapq.heapify(transactions)
+initial_balance = 1000
+ledger_balance = initial_balance
+processed_count = 0
+
+while transactions and processed_count < 4:
+    priority, adjustment_func = heapq.heappop(transactions)
+    
+    # Skip if adjustment would result in negative balance
+    temp_balance = adjustment_func(ledger_balance)
+    if temp_balance < 0:
+        continue
+    
+    # Apply adjustment with logging decorator
+    ledger_balance = apply_adjustment(ledger_balance, temp_balance - ledger_balance)
+    processed_count += 1
+    
+    # Early return condition for specific priority
+    if priority == 2:
+        break
+
+# Additional adjustment outside loop
+final_adjustment = lambda x: x - (x % 10)
+final_balance = final_adjustment(ledger_balance)
+
+print(f"Result: {final_balance}")

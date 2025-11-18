@@ -1,42 +1,46 @@
-import itertools
-import statistics
 from functools import reduce
 
-def char_frequency_analyzer(text):
-    freq = {}
-    for char in text:
-        freq[char] = freq.get(char, 0) + 1
-    return freq
+# Sensor readings from 3 different sensors
+sensor_readings = [
+    [12, -5, 8, -3, 17],
+    [4, 9, -2, 15, -7],
+    [-6, 11, 3, -9, 13]
+]
 
-def calculate_variance_score(freq_dict):
-    frequencies = list(freq_dict.values())
-    if len(frequencies) < 2:
-        return 0
-    return statistics.variance(frequencies)
+# Initialize stability index
+stability_index = 0
 
-cipher_segment = "ABBCDEEFFGHHIJJKKLLMMNNOOPPQQRRSSTTUUVVWWXXYYZZ"
-frequency_map = char_frequency_analyzer(cipher_segment)
-variance_score = calculate_variance_score(frequency_map)
+# Process each sensor's readings
+for readings in sensor_readings:
+    # Apply modular transformation to each reading (mod 10)
+    mod_readings = list(map(lambda x: x % 10, readings))
+    
+    # Filter out zero values
+    filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+    
+    # If no readings remain after filtering, skip this sensor
+    if not filtered_readings:
+        continue
+    
+    # Create a set of unique readings and a frozenset for comparison
+    unique_readings = set(filtered_readings)
+    frozen_readings = frozenset(filtered_readings)
+    
+    # Check if the set and frozenset have the same number of elements
+    if len(unique_readings) == len(frozen_readings):
+        # Calculate product of unique readings using reduce
+        product = reduce(lambda a, b: a * b, unique_readings, 1)
+        
+        # Apply modular arithmetic (mod 7) to the product
+        mod_product = product % 7
+        
+        # Update stability index with the modular product
+        stability_index += mod_product
+    else:
+        # If duplicate elements exist, break out of the loop
+        break
 
-# Generate all possible 3-character permutations from unique characters
-unique_chars = list(set(cipher_segment))
-permutations = list(itertools.permutations(unique_chars, 3))
+# Apply final adjustment to stability index
+stability_index = (stability_index * 3) - 2
 
-# Apply greedy algorithm to select permutations with highest ASCII sum
-permutation_scores = [(perm, sum(ord(c) for c in perm)) for perm in permutations]
-permutation_scores.sort(key=lambda x: x[1], reverse=True)
-top_permutations = permutation_scores[:10]
-
-# Calculate combinatorial weight factor
-weight_factor = len(list(itertools.combinations(range(10), 3)))
-
-# Encode top permutations into numeric sequence
-encoded_sequence = []
-for perm, score in top_permutations:
-    encoded_value = reduce(lambda acc, char: acc * 256 + ord(char), perm, 0)
-    encoded_sequence.append(encoded_value)
-
-# Final cipher score combines variance, weight factor, and encoded sequence properties
-final_cipher_score = int(variance_score * weight_factor + statistics.mean(encoded_sequence) // 1000)
-
-print(f"Result: {final_cipher_score}")
+print(f"Result: {stability_index}")

@@ -1,27 +1,31 @@
-from math import factorial
-from functools import wraps
-
-def process_signal(func):
-    @wraps(func)
+def call_counter(func):
     def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return round(result * 1.75, 2)
+        wrapper.calls += 1
+        return func(*args, **kwargs)
+    wrapper.calls = 0
     return wrapper
 
-@process_signal
-def compute_spectral_features(n, k):
-    if n < k:
-        return 0.0
-    return factorial(n) / (factorial(k) * factorial(n - k))
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
 
-# Signal processing pipeline
-signal_length = 10
-feature_window = 4
-combination_count = compute_spectral_features(signal_length, feature_window)
+processor_load = lambda x, y: (x * 2 + y) % 7
 
-# Advanced metric calculation
-base_value = combination_count * 2.5
-adjusted_value = base_value - (signal_length * 1.2)
-final_metric = int(adjusted_value) ^ 42  # Bitwise XOR operation
+@call_counter
+def simulate_processor_signal(processor_id, load):
+    delay = (processor_id * 3 + load * 2) % 5
+    return delay
 
-print(f'Result: {final_metric}')
+total_propagation_delay = 0
+network_size = 6
+
+for i in range(1, network_size):
+    fib_index = fibonacci(i)
+    for j in range(fib_index % 4 + 1):  # Nested loop with dynamic bound
+        load = processor_load(i, j)
+        delay = simulate_processor_signal(i, load)
+        total_propagation_delay += delay
+
+print(f"Result: {total_propagation_delay}")

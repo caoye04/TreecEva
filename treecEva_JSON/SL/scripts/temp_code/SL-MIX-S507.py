@@ -1,63 +1,58 @@
-import re
-from functools import wraps
+from functools import reduce
 
-def hex_transformer(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return hex(result)[2:] if isinstance(result, int) else result
-    return wrapper
-
-class MarkerProcessor:
-    def __init__(self, markers):
-        self.markers = markers
-        self.processed_values = {}
+def validate_tokens(token_stream):
+    # State definitions
+    STATE_IDLE = 0
+    STATE_PROCESSING = 1
+    STATE_VALIDATED = 2
     
-    @hex_transformer
-    def compute_value(self, marker):
-        # Convert hex string to integer for processing
-        numeric_val = int(marker, 16)
-        # Apply bit manipulation: XOR with 0xF0 and shift right by 2
-        transformed = (numeric_val ^ 0xF0) >> 2
-        return transformed
+    # System registers
+    authCounter = 0
+    currentState = STATE_IDLE
+    validationKey = 0b11010111
     
-    def process_all(self):
-        for marker in self.markers:
-            pattern_match = re.match(r'^([A-F0-9]{2})([A-F0-9]{2})$', marker)
-            if pattern_match:
-                first_byte, second_byte = pattern_match.groups()
-                val1 = int(first_byte, 16)
-                val2 = int(second_byte, 16)
-                # Conditional logic chain
-                if (val1 & 0x80) == 0 and (val2 | 0x0F) > 0x1F:
-                    computed = self.compute_value(marker)
-                    self.processed_values[marker] = computed
-                elif (val1 | val2) >= 0xC0:
-                    self.processed_values[marker] = 'SKIP'
-                else:
-                    self.processed_values[marker] = 'DEFAULT'
-        return self.processed_values
+    # Token registry
+    validTokens = {}
+    
+    for idx, encryptedToken in enumerate(token_stream):
+        if currentState == STATE_IDLE:
+            # Transition to processing if token passes initial check
+            if encryptedToken & 0xFF != 0 and (encryptedToken >> 4) > 0:
+                currentState = STATE_PROCESSING
+        
+        if currentState == STATE_PROCESSING:
+            # Decrypt token using XOR with rotating key
+            decrypted = encryptedToken ^ (validationKey << (idx % 3))
+            
+            # Check if decrypted token meets validation criteria
+            isValid = (decrypted & 0xF0) != 0 and bool(decrypted & 0x0F)
+            
+            if isValid and not (len(validTokens) >= 10 and idx > 5):  # Short-circuit
+                # Register valid token
+                tokenId = f"TKN{idx:02d}"
+                validTokens[tokenId] = decrypted
+                
+                # Update counter with bitwise manipulation
+                authCounter = (authCounter + 1) | (decrypted & 0x07)
+                currentState = STATE_VALIDATED
+            else:
+                # Reset state if invalid
+                currentState = STATE_IDLE
+        
+        if currentState == STATE_VALIDATED:
+            # Merge with system metrics
+            metrics = {f"metric_{k}": v & 0xFF for k, v in validTokens.items()}
+            enhancedMetrics = {**metrics, f"aggregate_{idx}": reduce(lambda x, y: x ^ y, validTokens.values(), 0)}
+            
+            # Update counter based on aggregated metrics
+            authCounter ^= enhancedMetrics[f"aggregate_{idx}"]
+            currentState = STATE_IDLE
+    
+    return authCounter
 
-genomic_markers = ['A1B2', 'C3D4', 'E5F6', '1234']
-processor = MarkerProcessor(genomic_markers)
-results_map = processor.process_all()
+# Encrypted token stream
+tokenStream = [0x4A, 0x73, 0x9C, 0x2F, 0xE8, 0x1D, 0xB6, 0x89, 0x55, 0xAC]
 
-# Dictionary comprehension to filter and transform results
-filtered_results = {k: int(v, 16) for k, v in results_map.items() if v != 'SKIP' and v != 'DEFAULT'}
-
-# Merge with default scoring map
-scoring_defaults = {'A1B2': 100, 'C3D4': 200, 'E5F6': 300, '1234': 400}
-merged_scores = {**scoring_defaults, **filtered_results}
-
-# Calculate final marker value using logical conditions
-final_marker_value = 0
-for key, score in merged_scores.items():
-    byte1, byte2 = int(key[:2], 16), int(key[2:], 16)
-    condition_a = (byte1 & 0x0F) == (byte2 >> 4)
-    condition_b = not ((byte1 | 0xF0) == 0xFF)
-    if condition_a and condition_b:
-        final_marker_value += score
-    elif not condition_a or (condition_b and score > 150):
-        final_marker_value -= score // 2
-
-print(f"Result: {final_marker_value}")
+# Process tokens and get result
+finalCount = validate_tokens(tokenStream)
+print(f"Result: {finalCount}")

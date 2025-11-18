@@ -1,55 +1,59 @@
-import heapq
 from collections import deque
 
-def calculate_urgency(code):
-    return sum(ord(c) for c in code)
+def calculate_priority(items):
+    return sum(item ** 2 if item > 0 else -item for item in items)
 
-def process_deliveries():
-    priority_queue = []
-    special_stack = []
+def process_inventory():
+    shipments_stack = []
+    orders_queue = deque()
     
-    # Initial packages with encoded IDs
-    package_ids = ['X2K9', 'M4N1', 'Q8B3']
+    # Incoming shipments with item values
+    shipments_data = [
+        [3, -2, 5],
+        [-1, 4, -3],
+        [2, 2, 2, 2],
+        [-5, -5]
+    ]
     
-    # Encode and add to queue with calculated urgencies
-    for pid in package_ids:
-        urgency = calculate_urgency(pid)
-        heapq.heappush(priority_queue, (urgency, pid))
+    # Outgoing orders with item requests
+    orders_data = [
+        [1, -1, 2],
+        [-2, 3],
+        [4, 4, -3, -3]
+    ]
     
-    # Special handling items added to stack
-    special_items = ['Z1H7', 'Y6G2']
-    for item in special_items:
-        special_stack.append(item)
+    # Load shipments into stack with their priorities
+    for shipment_items in shipments_data:
+        priority = calculate_priority(shipment_items)
+        shipments_stack.append(priority)
     
-    # Process one normal delivery
-    if priority_queue:
-        heapq.heappop(priority_queue)
+    # Load orders into queue with their priorities
+    for order_items in orders_data:
+        priority = calculate_priority(order_items)
+        orders_queue.append(priority)
     
-    # Add more packages
-    new_packages = ['V3F5', 'U7E4']
-    for np in new_packages:
-        urgency = calculate_urgency(np)
-        heapq.heappush(priority_queue, (urgency, np))
+    # Process shipments and orders
+    while shipments_stack and orders_queue:
+        top_shipment = shipments_stack[-1]
+        front_order = orders_queue[0]
+        
+        if top_shipment >= front_order:
+            # Shipment fulfills order
+            shipments_stack.pop()
+            orders_queue.popleft()
+        else:
+            # Cannot fulfill, check next shipment
+            if len(shipments_stack) > 1:
+                shipments_stack.pop()  # Remove lower priority shipment
+            else:
+                break  # Cannot proceed further
     
-    # Process special item if exists
-    special_code = 0
-    if special_stack:
-        item = special_stack.pop()
-        special_code = calculate_urgency(item)
+    # Calculate discrepancy
+    highest_remaining_shipment = max(shipments_stack) if shipments_stack else 0
+    earliest_pending_order = orders_queue[0] if orders_queue else 0
+    discrepancy = highest_remaining_shipment - earliest_pending_order
     
-    # Early return condition check
-    if len(priority_queue) > 3:
-        total = 0
-        while priority_queue:
-            total += heapq.heappop(priority_queue)[0]
-        return total + special_code
-    
-    # Final processing
-    score_accumulator = special_code
-    while priority_queue:
-        score_accumulator += heapq.heappop(priority_queue)[0]
-    
-    return score_accumulator
+    return discrepancy
 
-final_score = process_deliveries()
-print(f"Result: {final_score}")
+final_discrepancy = process_inventory()
+print(f"Result: {final_discrepancy}")

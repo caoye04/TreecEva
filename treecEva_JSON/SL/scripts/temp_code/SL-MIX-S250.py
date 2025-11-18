@@ -1,29 +1,41 @@
-from collections import deque
 from functools import reduce
+from itertools import combinations
 
-def process_id(tid):
-    return ''.join(chr((ord(c) - ord('A') + 3) % 26 + ord('A')) for c in tid)
+def modular_power(base, exp, mod):
+    return pow(base, exp, mod)
 
-def compute_weight(code):
-    return sum(ord(c) for c in code) % 100
+def compute_coefficients(sequence):
+    # Generate all 2-element combinations and compute their products
+    combo_products = [a * b for a, b in combinations(sequence, 2)]
+    # Apply modular arithmetic to each product
+    mod_products = [p % 17 for p in combo_products]
+    # Sum all modular products
+    return sum(mod_products) % 17
 
-tracking_ids = ['XYZ987', 'ABC123', 'DEF456']
-processing_queue = deque()
-checksum_stack = []
+def transform_value(initial, coeffs):
+    # Apply a series of transformations using modular arithmetic
+    transformed = initial
+    for i, coeff in enumerate(coeffs):
+        transformed = (transformed * coeff + i) % 19
+    return transformed
 
-for tid in tracking_ids:
-    processed = process_id(tid)
-    if len(processed) >= 6 and processed[:3].isalpha():
-        processing_queue.append(processed)
+def cryptographic_hash(initial_value, data_sequence):
+    # Step 1: Compute coefficients from data sequence
+    coefficients = compute_coefficients(data_sequence)
+    
+    # Step 2: Generate a secondary transformation sequence
+    secondary_seq = [modular_power(x, 3, 13) for x in data_sequence]
+    
+    # Step 3: Apply transformations
+    interim_result = transform_value(initial_value, secondary_seq)
+    
+    # Step 4: Apply final transformation using coefficients
+    final_hash = (interim_result * coefficients + 7) % 23
+    
+    return final_hash
 
-while processing_queue:
-    item = processing_queue.popleft()
-    weight = compute_weight(item)
-    if weight > 50 or (weight % 7 == 0 and weight != 0):
-        checksum_stack.append(weight)
-    else:
-        adjusted = weight + 10 if weight <= 25 else weight - 5
-        checksum_stack.append(adjusted)
-
-final_checksum = reduce(lambda x, y: (x ^ y) & 0xFF, checksum_stack, 0)
-print(f"Result: {final_checksum}")
+# Execution
+sensor_readings = [4, 7, 2, 9, 5]
+baseline_value = 11
+final_hash = cryptographic_hash(baseline_value, sensor_readings)
+print(f"Result: {final_hash}")

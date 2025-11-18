@@ -1,23 +1,18 @@
-from collections import deque
+def amplification_decorator(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        return result * 1.5 if result > 0 else result * 0.5
+    return wrapper
 
-class MigrationNode:
-    def __init__(self, distance, next_node=None):
-        self.distance = distance
-        self.next = next_node
+@amplification_decorator
+def signal_transform(value, depth=3):
+    if depth <= 0:
+        return value
+    elif value % 2 == 0:
+        return signal_transform(value // 2, depth - 1)
+    else:
+        return signal_transform(3 * value + 1, depth - 1)
 
-# Create linked list: 12 -> 18 -> 9 -> 15 -> 7
-node5 = MigrationNode(7)
-node4 = MigrationNode(15, node5)
-node3 = MigrationNode(9, node4)
-node2 = MigrationNode(18, node3)
-node1 = MigrationNode(12, node2)
-
-# Process using deque
-migration_queue = deque()
-current = node1
-while current:
-    migration_queue.append(current.distance)
-    current = current.next
-
-migration_total = sum(migration_queue)
-print(f"Result: {migration_total}")
+incoming_packets = [5, 12, 7]
+processed_signal = sum(signal_transform(packet) for packet in incoming_packets if packet > 3)
+print(f"Result: {processed_signal}")

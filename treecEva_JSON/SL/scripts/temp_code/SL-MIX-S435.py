@@ -1,36 +1,49 @@
-import re
-from functools import reduce
+import math
 
-# Delivery manifest: format is "priority:weight;priority:weight;..."
-delivery_manifest = "1:150;3:200;2:100;1:300;3:75;2:120;1:180;2:90;3:250;1:160"
+def tokenize(transactions_str):
+    return [t.strip() for t in transactions_str.split(',')]
 
-# Parse manifest into list of (priority, weight) tuples
-token_pattern = r'(\d+):(\d+)'
-parsed_packages = [(int(p), int(w)) for p, w in re.findall(token_pattern, delivery_manifest)]
+transaction_weights = {
+    'buy': lambda x: x * 1.2,
+    'sell': lambda x: x * 0.9,
+    'hold': lambda x: x * 1.05
+}
 
-# Truck capacities
-truck_capacities = [500, 400, 600]
-
-# Sort packages by priority (1 is highest) and then by weight (heaviest first for same priority)
-sorted_packages = sorted(parsed_packages, key=lambda x: (x[0], -x[1]))
-
-# Greedy loading: load packages in priority order until truck is full
-remaining_packages = sorted_packages[:]
-unused_capacity = 0
-
-for capacity in truck_capacities:
-    loaded_weight = 0
-    i = 0
-    while i < len(remaining_packages):
-        priority, weight = remaining_packages[i]
-        if loaded_weight + weight <= capacity:
-            loaded_weight += weight
-            remaining_packages.pop(i)
+class TransactionProcessor:
+    def __init__(self):
+        self.cache = {}
+    
+    def compute_score(self, action, amount):
+        if (action, amount) in self.cache:
+            return self.cache[(action, amount)]
+        
+        base = amount
+        if action == 'buy':
+            score = base + (base * 0.1)  # 10% bonus
+        elif action == 'sell':
+            score = base - (base * 0.05)  # 5% penalty
         else:
-            i += 1
-    unused_capacity += (capacity - loaded_weight)
+            score = base
+        
+        weighted_score = transaction_weights[action](score)
+        self.cache[(action, amount)] = weighted_score
+        return weighted_score
 
-# Calculate final result using functional programming
-final_result = reduce(lambda x, y: x + y, [capacity for capacity in truck_capacities]) - (reduce(lambda x, y: x + y, [w for p, w in sorted_packages]) - reduce(lambda x, y: x + y, [w for p, w in remaining_packages]))
+processor = TransactionProcessor()
+raw_data = "buy 100, sell 50, hold 75, buy 200, sell 30"
+tokens = tokenize(raw_data)
 
-print(f"Result: {unused_capacity}")
+score_map = {}
+for token in tokens:
+    parts = token.split()
+    action, amount_str = parts[0], parts[1]
+    amount = int(amount_str)
+    score = processor.compute_score(action, amount)
+    if action in score_map:
+        score_map[action] += score
+    else:
+        score_map[action] = score
+
+aggregated = {k: round(v) for k, v in score_map.items()}
+final_score = sum(aggregated.values())
+print(f"Result: {final_score}")

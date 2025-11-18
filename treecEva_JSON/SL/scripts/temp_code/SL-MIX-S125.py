@@ -1,30 +1,31 @@
-def fibonacci_sequence(n):
-    if n <= 1:
-        return n
-    else:
-        return fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
+import re
+from collections import defaultdict
 
-sensor_readings = [3.7, 5.1, 2.8, 9.3, 4.6]
-fib_indices = [i for i in range(len(sensor_readings))]
-fib_values = [fibonacci_sequence(i) for i in fib_indices]
+def custom_hash(token, modulus):
+    hash_val = 0
+    for char in token:
+        hash_val = (hash_val * 31 + ord(char)) % modulus
+    return hash_val
 
-transformed_readings = []
-for i, reading in enumerate(sensor_readings):
-    transformed_value = int(reading * 10) & fib_values[i]
-    transformed_readings.append(transformed_value)
+def is_hex_token(s):
+    return bool(re.match(r'^[0-9a-fA-F]+$', s))
 
-checksum = 0
-for val in transformed_readings:
-    checksum ^= val
+token_stream = ['a1b2', 'c3d4', 'e5f6', 'a1b2', 'g7h8', 'c3d4', 'i9j0', 'a1b2', 'k1l2']
+hash_freq = defaultdict(int)
+collision_counter = 0
+threshold = 3
+modulus = 1009
 
-selected_values = []
-remaining = checksum
-while remaining > 0:
-    msb = 1 << (remaining.bit_length() - 1)
-    selected_values.append(msb)
-    remaining ^= msb
+for idx, token in enumerate(token_stream):
+    if not is_hex_token(token):
+        continue
+    hash_val = custom_hash(token, modulus)
+    hash_freq[hash_val] += 1
+    if hash_freq[hash_val] == 2:
+        collision_counter += 1
+    elif hash_freq[hash_val] > 2:
+        collision_counter += hash_freq[hash_val] - 1
+    if collision_counter >= threshold:
+        break
 
-greedy_sum = sum(selected_values[:3])
-checksum = checksum ^ greedy_sum
-
-print(f"Result: {checksum}")
+print(f"Result: {collision_counter}")

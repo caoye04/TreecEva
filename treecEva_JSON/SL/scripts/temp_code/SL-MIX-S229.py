@@ -1,37 +1,38 @@
-import math
-from functools import reduce
+import re
 
-def modular_sqrt_sum(values, mod):
-    return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
+# Package data: (package_id, weight, priority, destination_zone)
+packages = [
+    ('PKG001', 15, 40, 'ZONE_A'),
+    ('PKG002', 10, 25, 'ZONE_B'),
+    ('PKG003', 20, 45, 'ZONE_A'),
+    ('PKG004', 8, 20, 'ZONE_C'),
+    ('PKG005', 12, 30, 'ZONE_A'),
+    ('PKG006', 25, 50, 'ZONE_B'),
+    ('PKG007', 5, 15, 'ZONE_C'),
+    ('PKG008', 18, 35, 'ZONE_A')
+]
 
-def process_frequency_bins(base_freq, harmonics):
-    bins = [base_freq * h for h in harmonics]
-    windowed = [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))]
-    normalized = [int(w) % 1000 for w in windowed]
-    return normalized
+truck_capacity = 50
+zone_filter_pattern = r'ZONE_[AB]'
 
-def aggregate_chunks(data, chunk_size):
-    chunks = [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)]
-    sums = [reduce(lambda a, b: a + b, chunk, 0) for chunk in chunks]
-    return reduce(lambda a, b: a + b, sums, 0)
+# Step 1: Filter packages matching zone pattern
+filtered_packages = [pkg for pkg in packages if re.match(zone_filter_pattern, pkg[3])]
 
-# Signal processing parameters
-harmonic_series = [1, 2, 3, 5, 8, 13, 21]
-fundamental_frequency = 440.0
+# Step 2: Calculate priority-to-weight ratio and sort descending (greedy approach)
+ranked_packages = sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
 
-# Process the frequency bins with windowing
-processed_bins = process_frequency_bins(fundamental_frequency, harmonic_series)
+# Step 3: Greedily select packages within capacity
+loaded_packages = []
+current_weight = 0
+for pkg in ranked_packages:
+    if current_weight + pkg[1] <= truck_capacity:
+        loaded_packages.append(pkg)
+        current_weight += pkg[1]
 
-# Apply modular square root transformation
-transformed_values = [modular_sqrt_sum([x], 97) for x in processed_bins]
+# Step 4: Create loading sequence mapping using dictionary comprehension
+loading_sequence = {pkg[0]: idx+1 for idx, pkg in enumerate(loaded_packages)}
 
-# Remove zero values and convert to set for uniqueness
-unique_signals = frozenset(filter(lambda x: x > 0, transformed_values))
+# Step 5: Compute total priority score of loaded packages
+total_priority_score = sum(pkg[2] for pkg in loaded_packages)
 
-# Convert back to list and sort for divide-and-conquer aggregation
-signal_list = sorted(list(unique_signals))
-
-# Perform chunked aggregation using divide and conquer
-sync_metric = aggregate_chunks(signal_list, 3)
-
-print(f"Result: {sync_metric}")
+print(f"Result: {total_priority_score}")

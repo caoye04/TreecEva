@@ -1,37 +1,58 @@
-from itertools import combinations
+import math
+from collections import deque
 
-class Palette:
-    def __init__(self, hues):
-        self.hues = hues
-        self.length = len(hues)
+class PriceNode:
+    def __init__(self, price_change, next_node=None):
+        self.price_change = price_change
+        self.next = next_node
+
+def calculate_volatility(head_node):
+    volatility_stack = []
+    transaction_queue = deque()
+    volatility_score = 0.0
     
-    def compute_harmony(self, subset_indices):
-        if not subset_indices:
-            return 0
-        product = 1
-        for idx in subset_indices:
-            product *= (idx + 1) * self.hues[idx]
-        return product + sum(subset_indices)
+    # Initialize queue with absolute values of changes
+    current = head_node
+    while current:
+        transaction_queue.append(abs(current.price_change))
+        current = current.next
+    
+    # Process transactions
+    while transaction_queue:
+        change = transaction_queue.popleft()
+        if change == 0:
+            continue
+        elif change < 0.5:
+            # Small change case - use linear scaling
+            scaled_change = change * 2
+            volatility_stack.append(scaled_change)
+        elif change >= 0.5 and change < 2.0:
+            # Medium change case - use logarithmic scaling
+            scaled_change = math.log(change + 1)
+            volatility_stack.append(scaled_change)
+        else:
+            # Large change case - use exponential dampening
+            scaled_change = 1 - math.exp(-change)
+            volatility_stack.append(scaled_change)
+    
+    # Calculate final score
+    while volatility_stack:
+        value = volatility_stack.pop()
+        if value > 0.8:
+            volatility_score += value * 1.5
+        elif value > 0.3:
+            volatility_score += value
+        else:
+            volatility_score += value * 0.5
+    
+    return round(volatility_score, 6)
 
-# Initialize palette with specific hue values
-artistic_hues = [2, -1, 3, 0, 4]
-creative_palette = Palette(artistic_hues)
+# Create linked list: 0.1 -> 1.5 -> 3.0 -> 0.0 -> 0.75
+node5 = PriceNode(0.75)
+node4 = PriceNode(0.0, node5)
+node3 = PriceNode(3.0, node4)
+node2 = PriceNode(1.5, node3)
+node1 = PriceNode(0.1, node2)
 
-# Dynamic programming table for storing max harmony up to index i
-harmony_table = [float('-inf')] * creative_palette.length
-harmony_table[0] = creative_palette.compute_harmony([0])
-
-# Combinatorial exploration with dynamic programming
-for idx in range(1, creative_palette.length):
-    # Calculate all combinations including current index
-    current_max = float('-inf')
-    for r in range(1, idx+2):  # r is the size of combination
-        for combo in combinations(range(idx+1), r):
-            if idx in combo:  # Only consider combos that include current index
-                score = creative_palette.compute_harmony(list(combo))
-                if score > current_max:
-                    current_max = score
-    harmony_table[idx] = max(harmony_table[idx-1], current_max)
-
-max_harmony_score = harmony_table[-1]
-print(f"Result: {max_harmony_score}")
+volatility_score = calculate_volatility(node1)
+print(f"Result: {volatility_score}")

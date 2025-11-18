@@ -1,52 +1,35 @@
+from collections import deque
 from functools import reduce
-import math
 
-def is_prime(n):
+def compute_threat_sequence(n):
     if n <= 1:
-        return False
-    for i in range(2, int(math.sqrt(n)) + 1):
-        if n % i == 0:
-            return False
-    return True
+        return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
 
-def gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
+packet_timestamps = [3, 5, 7, 11, 13]
+threat_scores = []
+window_size = 3
 
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
+for i in range(len(packet_timestamps)):
+    score = compute_threat_sequence(packet_timestamps[i] % 10)
+    threat_scores.append(score)
 
-# Stock performance returns over the last quarter (in percentages)
-stock_returns = [2.5, -1.2, 3.8, 0, -0.5, 4.1, -2.3, 1.9, 3.3, -1.1]
+sliding_window = deque(maxlen=window_size)
+window_scores = []
 
-# Step 1: Filter out non-positive returns and sort them
-positive_returns = sorted(filter(lambda x: x > 0, stock_returns))
+for score in threat_scores:
+    sliding_window.append(score)
+    if len(sliding_window) == window_size:
+        window_sum = sum(sliding_window)
+        window_scores.append(window_sum)
 
-# Step 2: Apply a greedy selection of top performing stocks up to a limit
-max_stocks = 5
-selected_returns = []
-for r in reversed(positive_returns):  # Greedy: pick from highest
-    if len(selected_returns) < max_stocks and r > 1.0:
-        selected_returns.append(r)
+stack = []
+for score in window_scores:
+    if score > 10:
+        stack.append(score)
 
-# Step 3: Compute mean and variance of selected returns
-if selected_returns:
-    mean_return = sum(selected_returns) / len(selected_returns)
-    variance = sum((x - mean_return) ** 2 for x in selected_returns) / len(selected_returns)
-else:
-    mean_return, variance = 0, 0
-
-# Step 4: Find prime numbers related to the length of selected returns
-length_related_number = len(selected_returns) * 10
-primes_in_range = [i for i in range(2, length_related_number + 1) if is_prime(i)]
-prime_count = len(primes_in_range)
-
-# Step 5: Calculate adjustment coefficient using number theory and statistics
-if prime_count > 0 and variance > 0:
-    lcm_value = reduce(lcm, primes_in_range[:min(3, len(primes_in_range))], 1)
-    adjustment_coefficient = (mean_return * prime_count) / math.sqrt(variance) + lcm_value
-else:
-    adjustment_coefficient = 0
-
-print(f"Result: {adjustment_coefficient}")
+final_threat_score = reduce(lambda x, y: x + y, stack, 0)
+print(f"Result: {final_threat_score}")

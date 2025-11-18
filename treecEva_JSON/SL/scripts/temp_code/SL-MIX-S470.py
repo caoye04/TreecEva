@@ -1,57 +1,28 @@
-from functools import wraps
+from functools import lru_cache
 
-def filter_signal(func):
-    cache = {}
-    
-    @wraps(func)
-    def wrapper(signal_segment):
-        segment_id = id(signal_segment)
-        if segment_id in cache:
-            return cache[segment_id]
-        result = func(signal_segment)
-        cache[segment_id] = result
-        return result
-    return wrapper
-
-@filter_signal
-def smooth_audio(samples):
-    n = len(samples)
+def generate_key(n):
     if n <= 1:
-        return samples[:]
-    dp = [0] * n
-    dp[0] = samples[0]
-    dp[1] = max(samples[0], samples[1])
-    for i in range(2, n):
-        dp[i] = max(dp[i-1], dp[i-2] + samples[i])
-    return dp
+        return n
+    return (generate_key(n-1) ^ generate_key(n-2)) & 0xFF
+
+def process_signal(base_signal, iterations):
+    key = generate_key(iterations)
+    adjusted = base_signal
+    
+    for i in range(3):
+        if i & 1:
+            adjusted = (adjusted * 1.5) if (key & (1 << i)) else (adjusted / 2.0)
+        else:
+            adjusted = (adjusted + 10.0) if not (key & (1 << i)) else (adjusted - 5.0)
+    
+    return int(adjusted) ^ key
 
 # Audio processing pipeline
-raw_samples = [3, 1, 4, 1, 5, 9, 2, 6]
-processed_segments = []
+base_level = 42.5
+processing_rounds = 7
+intermediate_result = process_signal(base_level, processing_rounds)
 
-for i in range(len(raw_samples)):
-    segment = raw_samples[:i+1]
-    smoothed = smooth_audio(segment)
-    processed_segments.append(smoothed[-1])
+# Final adjustment using bitwise operations
+final_amplitude = (intermediate_result << 2) & 0xFF if (intermediate_result > 100) else (intermediate_result | 0x0F)
 
-# Apply boolean logic to select qualified outputs
-qualified_outputs = [
-    val for val in processed_segments 
-    if val > 5 and not (val % 2 == 0 and val < 10)
-]
-
-# Calculate final output using logical operations and aggregation
-final_output = 0
-if qualified_outputs:
-    max_val = max(qualified_outputs)
-    min_val = min(qualified_outputs)
-    condition_a = max_val > 10
-    condition_b = min_val >= 3
-    if condition_a or condition_b:
-        final_output = sum(qualified_outputs) if condition_a and condition_b else max_val ^ min_val
-    else:
-        final_output = max_val + min_val
-else:
-    final_output = -1
-
-print(f"Result: {final_output}")
+print(f"Result: {final_amplitude}")

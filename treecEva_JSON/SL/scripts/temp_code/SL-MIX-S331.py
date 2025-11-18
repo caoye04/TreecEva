@@ -1,39 +1,8 @@
-class DailyLogger:
-    def __enter__(self):
-        self.log = []
-        return self
-    
-    def __exit__(self, exc_type, exc_value, traceback):
-        pass
-    
-    def log_sales(self, day, sales):
-        self.log.append((day, sales))
+import itertools
 
-fib_prev, fib_curr = 1, 1
-total_pies = 1
-discount_day = -1
-
-with DailyLogger() as logger:
-    logger.log_sales(1, 1)
-    if 1 % 5 == 0 and 1 % 2 == 0:
-        discount_day = 1
-    
-    if discount_day == -1:
-        total_pies += 1
-        logger.log_sales(2, 1)
-        if total_pies % 5 == 0 and 2 % 2 == 0:
-            discount_day = 2
-    
-    day = 3
-    while discount_day == -1:
-        fib_next = fib_prev + fib_curr
-        total_pies += fib_next
-        logger.log_sales(day, fib_next)
-        
-        if total_pies % 5 == 0 and day % 2 == 0:
-            discount_day = day
-        
-        fib_prev, fib_curr = fib_curr, fib_next
-        day += 1
-
-print(f"Result: {discount_day}")
+genetic_markers = [12, 28, 45, 63, 79]
+marker_pairs = list(itertools.combinations(genetic_markers, 2))
+encoded_differences = {abs(a ^ b) for a, b in marker_pairs}
+filtered_codes = {code for code in encoded_differences if bin(code).count('1') > 3}
+uniqueness_score = sum(filtered_codes) % 1000
+print(f"Result: {uniqueness_score}")

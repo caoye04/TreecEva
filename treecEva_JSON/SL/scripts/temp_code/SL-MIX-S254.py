@@ -1,41 +1,24 @@
-from functools import reduce
-from itertools import combinations
+import heapq
+from dataclasses import dataclass
 
-def modular_power(base, exp, mod):
-    return pow(base, exp, mod)
+@dataclass
+class SharkPosition:
+    name: str
+    longitude: float
+    latitude: float
 
-def compute_coefficients(sequence):
-    # Generate all 2-element combinations and compute their products
-    combo_products = [a * b for a, b in combinations(sequence, 2)]
-    # Apply modular arithmetic to each product
-    mod_products = [p % 17 for p in combo_products]
-    # Sum all modular products
-    return sum(mod_products) % 17
+shark_data = [
+    SharkPosition("Alpha", -152.37, 37.42),
+    SharkPosition("Beta", -155.29, 36.81),
+    SharkPosition("Gamma", -150.85, 38.22)
+]
 
-def transform_value(initial, coeffs):
-    # Apply a series of transformations using modular arithmetic
-    transformed = initial
-    for i, coeff in enumerate(coeffs):
-        transformed = (transformed * coeff + i) % 19
-    return transformed
+longitudes = [shark.longitude for shark in shark_data]
+heap = longitudes.copy()
+heapq.heapify(heap)
 
-def cryptographic_hash(initial_value, data_sequence):
-    # Step 1: Compute coefficients from data sequence
-    coefficients = compute_coefficients(data_sequence)
-    
-    # Step 2: Generate a secondary transformation sequence
-    secondary_seq = [modular_power(x, 3, 13) for x in data_sequence]
-    
-    # Step 3: Apply transformations
-    interim_result = transform_value(initial_value, secondary_seq)
-    
-    # Step 4: Apply final transformation using coefficients
-    final_hash = (interim_result * coefficients + 7) % 23
-    
-    return final_hash
+smallest = heapq.heappop(heap)
+largest = heapq.heappop(heap)
+convergence_longitude = heapq.heappop(heap)
 
-# Execution
-sensor_readings = [4, 7, 2, 9, 5]
-baseline_value = 11
-final_hash = cryptographic_hash(baseline_value, sensor_readings)
-print(f"Result: {final_hash}")
+print(f"Result: {convergence_longitude}")

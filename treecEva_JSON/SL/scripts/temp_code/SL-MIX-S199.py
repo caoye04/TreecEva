@@ -1,56 +1,72 @@
-class PackageNode:
-    def __init__(self, weight, priority):
-        self.weight = weight
-        self.priority = priority
-        self.next = None
+from functools import reduce
+from itertools import combinations
 
-def build_package_chain(weights, priorities):
-    head = PackageNode(weights[0], priorities[0])
-    current = head
-    for i in range(1, len(weights)):
-        current.next = PackageNode(weights[i], priorities[i])
-        current = current.next
-    return head
+def calculate_inspection_score(failures):
+    return reduce(lambda x, y: x ^ (y << 1), failures, 0)
 
-def calculate_adjusted_priority(node):
-    adjustment_factor = 3
-    return (node.weight * 2 + node.priority) // adjustment_factor
+def compute_quality_score(inspection_results):
+    base_score = sum(inspection_results) * 3
+    adjustment = 0
+    for combo in combinations(inspection_results, 2):
+        if combo[0] & combo[1]:
+            adjustment += 1
+    return base_score - adjustment
 
-def update_chain_priorities(head):
-    current = head
-    while current:
-        current.priority = calculate_adjusted_priority(current)
-        current = current.next
+class WidgetStateMachine:
+    def __init__(self):
+        self.state = 'START'
+        self.mechanical_passed = True
+        self.electrical_passed = True
+        self.software_passed = True
+    
+    def process_inspection(self, inspection_type, result):
+        if self.state == 'START' and inspection_type == 'mechanical':
+            self.mechanical_passed = result
+            self.state = 'MECHANICAL_DONE'
+        elif self.state == 'MECHANICAL_DONE' and inspection_type == 'electrical':
+            self.electrical_passed = result
+            self.state = 'ELECTRICAL_DONE'
+        elif self.state == 'ELECTRICAL_DONE' and inspection_type == 'software':
+            self.software_passed = result
+            self.state = 'COMPLETE'
+    
+    def get_failure_flags(self):
+        flags = []
+        if not self.mechanical_passed:
+            flags.append(1)
+        if not self.electrical_passed:
+            flags.append(2)
+        if not self.software_passed:
+            flags.append(4)
+        return flags
 
-# Initialize package data
-package_weights = [15, 22, 18, 30]
-package_priorities = [4, 7, 5, 9]
+# Process batch of widgets
+widget_batch = [WidgetStateMachine() for _ in range(12)]
 
-# Build the linked list
-logistics_chain = build_package_chain(package_weights, package_priorities)
+# Simulate inspection results
+inspection_data = [
+    [('mechanical', True), ('electrical', True), ('software', False)],
+    [('mechanical', False), ('electrical', True), ('software', True)],
+    [('mechanical', True), ('electrical', False), ('software', True)],
+    [('mechanical', True), ('electrical', True), ('software', True)],
+    [('mechanical', False), ('electrical', False), ('software', False)],
+    [('mechanical', True), ('electrical', True), ('software', False)],
+    [('mechanical', False), ('electrical', True), ('software', False)],
+    [('mechanical', True), ('electrical', False), ('software', False)],
+    [('mechanical', False), ('electrical', False), ('software', True)],
+    [('mechanical', True), ('electrical', True), ('software', True)],
+    [('mechanical', False), ('electrical', True), ('software', True)],
+    [('mechanical', True), ('electrical', False), ('software', True)]
+]
 
-# Update priorities based on weight calculations
-update_chain_priorities(logistics_chain)
+# Apply inspection data to widgets
+for i, widget in enumerate(widget_batch):
+    for inspection_type, result in inspection_data[i]:
+        widget.process_inspection(inspection_type, result)
 
-# Dictionary comprehension to map weights to updated priorities
-priority_mapping = {node.weight: node.priority for node in [
-    logistics_chain, 
-    logistics_chain.next, 
-    logistics_chain.next.next, 
-    logistics_chain.next.next.next
-]}
+# Calculate scores
+failure_profiles = [widget.get_failure_flags() for widget in widget_batch]
+inspection_scores = [calculate_inspection_score(profile) for profile in failure_profiles]
+final_quality_score = compute_quality_score(inspection_scores)
 
-# Merge with base operational factors
-base_factors = {15: 2, 22: 3, 18: 1, 30: 4}
-merged_data = {**base_factors, **priority_mapping}
-
-# Lambda to compute final score
-compute_final_score = lambda mapping: sum(
-    (weight + priority) * 2 - 1 
-    for weight, priority in mapping.items()
-    if weight > 20
-)
-
-# Calculate the final priority score
-final_priority_score = compute_final_score(merged_data)
-print(f"Result: {final_priority_score}")
+print(f"Result: {final_quality_score}")

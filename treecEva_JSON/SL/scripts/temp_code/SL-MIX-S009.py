@@ -1,28 +1,22 @@
-import heapq
+def circuit_test_decorator(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        return result
+    return wrapper
 
-# Define bird point mapping
-bird_points = {'common': 1, 'rare': 3, 'endangered': 5}
+test_values = [0b11001010, 0b10101100, 0b10011101]
 
-# Observation batch
-observations = ['common', 'rare', 'common', 'endangered', 'rare']
+@circuit_test_decorator
+def apply_circuit_operations(values):
+    accumulator = 0
+    for val in values:
+        accumulator |= val
+    return accumulator
 
-# Calculate base score
-base_score = sum(bird_points[bird] for bird in observations)
+with open('circuit_log.txt', 'w') as log_file:
+    initial_mask = 0b00001111
+    test_result = apply_circuit_operations(test_values)
+    verification_mask = (test_result & 0xFF) ^ initial_mask
+    log_file.write(f'Verification mask: {verification_mask}')
 
-# Determine weight using ternary operator
-weight = 2 if len(observations) > 5 else 1
-
-# Calculate weighted score
-weighted_score = base_score * weight
-
-# Heap to track minimum score
-score_heap = []
-heapq.heappush(score_heap, weighted_score)
-
-# For demonstration, let's add another dummy batch score
-heapq.heappush(score_heap, 20)
-
-# Final score is the minimum from heap
-final_score = heapq.heappop(score_heap)
-
-print(f"Result: {final_score}")
+print(f'Result: {verification_mask}')

@@ -1,30 +1,36 @@
-import math
 import hashlib
+from collections import defaultdict
 
-user_segments = ['tech_enthusiast', 'casual_browser', 'content_creator', 'social_influencer']
-interaction_weights = {'like': 1.2, 'share': 2.5, 'comment': 3.0, 'follow': 1.8}
-base_transforms = {'tech_enthusiast': 'click_stream', 'casual_browser': 'view_history', 'content_creator': 'post_activity', 'social_influencer': 'engagement_matrix'}
+def encode_header(header_str):
+    return hashlib.sha256(header_str.encode()).hexdigest()[:8]
 
-entropy_components = []
-for segment in user_segments:
-    transform_key = base_transforms[segment]
-    combined_string = f"{segment}_{transform_key}"
-    hashed = hashlib.md5(combined_string.encode()).hexdigest()
-    hash_sum = sum(ord(c) for c in hashed[:8])
+def decode_header(encoded_str):
+    return int(encoded_str, 16)
+
+packet_headers = [
+    "SRC:192.168.1.1|DST:10.0.0.1|PORT:8080",
+    "SRC:192.168.1.2|DST:10.0.0.2|PORT:80",
+    "SRC:192.168.1.3|DST:10.0.0.3|PORT:443",
+    "SRC:192.168.1.4|DST:10.0.0.4|PORT:22"
+]
+
+encoded_packets = [encode_header(header) for header in packet_headers]
+
+decoded_values = [decode_header(packet) for packet in encoded_packets]
+
+threshold_map = defaultdict(lambda: 0x10000000)
+threshold_map['high_risk'] = 0x50000000
+threshold_map['medium_risk'] = 0x30000000
+
+anomaly_score = 0
+for value in decoded_values:
+    risk_level = 'high_risk' if value > threshold_map['high_risk'] else \
+                 'medium_risk' if value > threshold_map['medium_risk'] else 'low_risk'
     
-    if hash_sum % 3 == 0:
-        weighted_value = hash_sum * interaction_weights['share']
-    elif hash_sum % 3 == 1:
-        weighted_value = hash_sum * interaction_weights['comment']
-    else:
-        weighted_value = hash_sum * interaction_weights['follow']
+    is_suspicious = (value & 0xF0000000) != 0
+    weight = 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1)
     
-    log_scaled = math.log(weighted_value + 1)
-    entropy_components.append(log_scaled)
+    anomaly_score += weight if is_suspicious else 0
 
-product_accum = 1.0
-for component in entropy_components:
-    product_accum *= math.exp(component)
-
-final_metric = round(product_accum / len(entropy_components), 6)
-print(f"Result: {final_metric}")
+anomaly_score = anomaly_score if anomaly_score > 0 else -1
+print(f"Result: {anomaly_score}")

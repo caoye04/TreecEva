@@ -1,33 +1,75 @@
-import itertools
-import statistics
+import math
 
-def calculate_hash_distance(word1, word2):
-    return abs(hash(word1) - hash(word2)) % 1000
+# Asset data: {asset_id: expected_return}
+assets = {
+    'AAPL': 0.08,
+    'GOOGL': 0.12,
+    'MSFT': 0.10,
+    'AMZN': 0.15,
+    'TSLA': 0.20
+}
 
-def compute_semantic_coherence(word_groups):
-    total_distances = []
-    for group in word_groups:
-        pairwise_distances = []
-        # Generate all 2-combinations within each group
-        for combo in itertools.combinations(group, 2):
-            dist = calculate_hash_distance(combo[0], combo[1])
-            pairwise_distances.append(dist)
-        if pairwise_distances:
-            # Compute mean distance for the group
-            mean_dist = statistics.mean(pairwise_distances)
-            total_distances.append(mean_dist)
+# Correlation matrix between assets (simplified)
+correlations = {
+    ('AAPL', 'GOOGL'): 0.7,
+    ('AAPL', 'MSFT'): 0.6,
+    ('AAPL', 'AMZN'): 0.5,
+    ('AAPL', 'TSLA'): 0.3,
+    ('GOOGL', 'MSFT'): 0.8,
+    ('GOOGL', 'AMZN'): 0.4,
+    ('GOOGL', 'TSLA'): 0.2,
+    ('MSFT', 'AMZN'): 0.6,
+    ('MSFT', 'TSLA'): 0.4,
+    ('AMZN', 'TSLA'): 0.1
+}
+
+# Convert to symmetric matrix
+symmetric_correlations = {}
+for (a, b), corr in correlations.items():
+    symmetric_correlations[(a, b)] = corr
+    symmetric_correlations[(b, a)] = corr
+
+# Add diagonal (self-correlation = 1.0)
+for asset in assets:
+    symmetric_correlations[(asset, asset)] = 1.0
+
+# Greedy selection function
+selection_score = lambda asset, selected: (
+    assets[asset] - 0.3 * sum(symmetric_correlations[(asset, s)] for s in selected)
+)
+
+# Initialize
+selected_assets = []
+portfolio_weights = {}
+
+# Greedy selection (3 iterations)
+for _ in range(3):
+    best_asset = None
+    best_score = -float('inf')
     
-    if not total_distances:
-        return 0
-    # Return the variance of all group means
-    return statistics.variance(total_distances) if len(total_distances) > 1 else 0
+    for asset in assets:
+    
+        if asset not in selected_assets:
+            score = selection_score(asset, selected_assets)
+            if score > best_score:
+                best_score = score
+                best_asset = asset
+    
+    if best_asset:
+        selected_assets.append(best_asset)
+        # Weight calculation (simplified)
+        weight = round(math.sqrt(assets[best_asset]) / sum(math.sqrt(assets[a]) for a in selected_assets), 4)
+        portfolio_weights[best_asset] = weight
 
-# Ancient text word groups
-ancient_vocabulary = [
-    ['solar', 'lunar', 'stellar'],
-    ['river', 'mountain', 'forest', 'ocean'],
-    ['scribe', 'papyrus', 'ink', 'tablet', 'glyph']
-]
+# Calculate diversity score
+portfolio_diversity_score = 0.0
+for i, asset1 in enumerate(selected_assets):
+    for asset2 in selected_assets[i+1:]:
+        correlation = symmetric_correlations[(asset1, asset2)]
+        weight_product = portfolio_weights[asset1] * portfolio_weights[asset2]
+        portfolio_diversity_score += weight_product * (1.0 - correlation)
 
-final_coherence_score = compute_semantic_coherence(ancient_vocabulary)
-print(f"Result: {final_coherence_score}")
+# Normalize and scale
+portfolio_diversity_score = round(portfolio_diversity_score * 100, 2)
+
+print(f"Result: {portfolio_diversity_score}")

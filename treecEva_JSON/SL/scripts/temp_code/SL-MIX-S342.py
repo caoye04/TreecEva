@@ -1,37 +1,40 @@
 import math
-from collections import defaultdict
+from collections import deque
 
-def encode_point(x, y):
-    return (x << 8) | y
+def triangle_area(a, b, c):
+    # Using Heron's formula
+    s = (a + b + c) / 2
+    return math.sqrt(s * (s - a) * (s - b) * (s - c))
 
-def decode_point(encoded):
-    x = encoded >> 8
-    y = encoded & 0xFF
-    return (x, y)
+# Initial mesh stack with triangle side lengths
+mesh_stack = deque([
+    (3, 4, 5),
+    (5, 12, 13),
+    (8, 15, 17)
+])
 
-def calculate_centroid(vertices):
-    cx = sum(v[0] for v in vertices) / len(vertices)
-    cy = sum(v[1] for v in vertices) / len(vertices)
-    return (cx, cy)
+# Transformation operations
+scale_factor = 2
+area_multiplier = lambda x: x * scale_factor ** 2
 
-# Encoded vertex data for a triangle
-encoded_vertices = [0x0A05, 0x1E0F, 0x1419]
+# Process mesh transformations
+processed_areas = []
+while mesh_stack:
+    sides = mesh_stack.pop()
+    base_area = triangle_area(*sides)
+    transformed_area = area_multiplier(base_area)
+    processed_areas.append(transformed_area)
 
-# Decode vertices
-vertices = [decode_point(e) for e in encoded_vertices]
+# Apply combinatorial aggregation
+from itertools import combinations
+aggregated_values = []
+for combo in combinations(processed_areas, 2):
+    aggregated_values.append(sum(combo) * math.log(sum(combo), 2))
 
-# Calculate centroid
-centroid = calculate_centroid(vertices)
+# Calculate final surface area using matrix operations
+import numpy as np
+area_matrix = np.array(aggregated_values).reshape(3, 1)
+weight_matrix = np.array([[1, -1, 2]])
+final_surface_area = np.dot(weight_matrix, area_matrix)[0]
 
-# Spatial adjustment based on quadrant
-if centroid[0] >= 0 and centroid[1] >= 0:
-    adjusted_x = int(centroid[0]) + 10
-    adjusted_y = int(centroid[1]) + 20
-else:
-    adjusted_x = int(centroid[0]) - 5
-    adjusted_y = int(centroid[1]) - 5
-
-# Encode the adjusted centroid
-encoded_result = encode_point(adjusted_x, adjusted_y)
-
-print(f"Result: {encoded_result}")
+print(f"Result: {final_surface_area}")

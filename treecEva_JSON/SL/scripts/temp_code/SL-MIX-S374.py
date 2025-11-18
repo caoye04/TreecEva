@@ -1,103 +1,49 @@
-import heapq
-from collections import defaultdict
+from itertools import permutations
 
-def tokenize(expr):
-    tokens = []
-    i = 0
-    while i < len(expr):
-        if expr[i].isspace():
-            i += 1
-            continue
-        if expr[i] in '+-*/()':
-            tokens.append(expr[i])
-            i += 1
+def transform_mask(mask, shift_ops):
+    for op in shift_ops:
+        if op > 0:
+            mask = mask << op
         else:
-            num = ''
-            while i < len(expr) and expr[i].isdigit():
-                num += expr[i]
-                i += 1
-            tokens.append(int(num))
-    return tokens
+            mask = mask >> abs(op)
+        mask = mask & 0xFFFF  # 16-bit mask
+    return mask
 
-def hash_token(token):
-    if isinstance(token, int):
-        return hash(str(token)) % 1000
-    else:
-        return hash(token) % 1000
-
-# Priority queue for operators
-operator_queue = []
-# Stack for operands
-operand_stack = []
-# Accumulator for expression value
-expression_value = 0
-
-# Transformation function
-transform = lambda x: x * 2 if isinstance(x, int) else ord(x[0])
-
-# Input expression
-input_expression = "3 + 5 * ( 2 + 8 )"
-tokens = tokenize(input_expression)
-
-precedence = {'+': 1, '-': 1, '*': 2, '/': 2}
-
-for token in tokens:
-    token_hash = hash_token(token)
-    transformed_token = transform(token)
+def generate_verification_sequence(base_masks, operations):
+    checksum = 0
+    perm_count = 0
     
-    if isinstance(token, int):
-        operand_stack.append(transformed_token)
-    elif token == '(':
-        heapq.heappush(operator_queue, (0, token))
-    elif token == ')':
-        while operator_queue and operator_queue[0][1] != '(':
-            op = heapq.heappop(operator_queue)[1]
-            if len(operand_stack) >= 2:
-                b = operand_stack.pop()
-                a = operand_stack.pop()
-                if op == '+':
-                    operand_stack.append(a + b)
-                elif op == '-':
-                    operand_stack.append(a - b)
-                elif op == '*':
-                    operand_stack.append(a * b)
-                elif op == '/':
-                    operand_stack.append(a // b)
-        if operator_queue:
-            heapq.heappop(operator_queue)  # Remove the '('
-    elif token in precedence:
-        while (operator_queue and 
-               operator_queue[0][1] != '(' and
-               precedence.get(operator_queue[0][1], 0) >= precedence[token]):
-            op = heapq.heappop(operator_queue)[1]
-            if len(operand_stack) >= 2:
-                b = operand_stack.pop()
-                a = operand_stack.pop()
-                if op == '+':
-                    operand_stack.append(a + b)
-                elif op == '-':
-                    operand_stack.append(a - b)
-                elif op == '*':
-                    operand_stack.append(a * b)
-                elif op == '/':
-                    operand_stack.append(a // b)
-        heapq.heappush(operator_queue, (precedence[token], token))
+    # Generate all permutations of base masks taken 3 at a time
+    for perm in permutations(base_masks, 3):
+        combined_mask = perm[0]
+        
+        # Apply XOR with subsequent masks in permutation
+        for i in range(1, len(perm)):
+            combined_mask ^= perm[i]
+        
+        # Transform the combined mask
+        transformed = transform_mask(combined_mask, operations[perm_count % len(operations)])
+        
+        # Update checksum with dynamic programming approach
+        checksum = (checksum + transformed) ^ (perm_count & 0xFF)
+        perm_count += 1
+        
+        # Early termination condition for efficiency
+        if perm_count >= 12:
+            break
+    
+    return checksum
 
-while operator_queue:
-    op = heapq.heappop(operator_queue)[1]
-    if len(operand_stack) >= 2:
-        b = operand_stack.pop()
-        a = operand_stack.pop()
-        if op == '+':
-            operand_stack.append(a + b)
-        elif op == '-':
-            operand_stack.append(a - b)
-        elif op == '*':
-            operand_stack.append(a * b)
-        elif op == '/':
-            operand_stack.append(a // b)
+# Base 16-bit bitmask configurations
+initial_masks = [0x1A3F, 0x7B2C, 0x4E5D, 0xF0A1, 0xC3B2]
 
-if operand_stack:
-    expression_value = operand_stack[0]
+# Shift operations sequences
+shift_sequences = [
+    [2, -1, 3],
+    [-2, 1],
+    [4, -3, 2, -1]
+]
 
-print(f"Result: {expression_value}")
+# Execute verification process
+verification_checksum = generate_verification_sequence(initial_masks, shift_sequences)
+print(f"Result: {verification_checksum}")

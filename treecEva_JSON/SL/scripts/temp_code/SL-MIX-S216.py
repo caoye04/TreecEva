@@ -1,51 +1,29 @@
-import math
+import heapq
+from functools import reduce
 
-def compute_rms(values):
-    if not values:
-        return 0
-    return math.sqrt(sum(x**2 for x in values) / len(values))
-
-def process_waveform(waveform_data, threshold=5.0):
-    # Extract amplitude values from nested structure
-    amplitudes = [amp for component in waveform_data.values() 
-                  for amp in component['amplitude_values']]
+def calculate_arbitrage_opportunities(rates):
+    # Preprocess rates using functional programming
+    normalized_rates = list(map(lambda x: round(x * 1000), rates))
     
-    # Filter high-amplitude components using list comprehension
-    significant_amps = [a for a in amplitudes if a > threshold]
+    # Filter out unprofitable initial rates
+    profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
     
-    # Short-circuit evaluation for early exit
-    if not significant_amps or len(significant_amps) < 2:
-        return 0
+    # Use a heap to process smallest opportunities first
+    heapq.heapify(profitable_rates)
     
-    # Compute weighted RMS
-    rms = compute_rms(significant_amps)
-    weight = 1.5 if len(significant_amps) > 5 else 1.2
-    return rms * weight
+    # Divide and conquer aggregation of profits
+    def merge_profits(a, b):
+        return (a + b) // 2 if a and b else (a or b)
+    
+    total_profit = reduce(merge_profits, profitable_rates, 0)
+    
+    # Apply logical filters for final validation
+    isValid = total_profit > 5000 and not (total_profit % 100 == 0)
+    final_profit_margin = total_profit if isValid else 0
+    
+    return final_profit_margin
 
-# Audio waveform data representation
-waveforms = {
-    'bass': {
-        'f100': {'amplitude_values': [2.1, 4.3, 6.7, 8.9]},
-        'f200': {'amplitude_values': [1.2, 3.4, 5.6, 7.8, 9.1]}
-    },
-    'treble': {
-        'f1000': {'amplitude_values': [0.5, 2.3, 4.5, 6.7, 8.9, 10.1]},
-        'f2000': {'amplitude_values': [1.1, 2.2, 3.3]}
-    }
-}
-
-# Process each waveform category
-processed_scores = {}
-for category, data in waveforms.items():
-    score = process_waveform(data)
-    processed_scores[category] = score
-
-# Calculate overall quality with conditional branching
-if processed_scores.get('bass', 0) > processed_scores.get('treble', 0):
-    quality_score = processed_scores['bass'] * 1.1
-else:
-    # Dictionary comprehension for bonus calculation
-    bonuses = {k: v * 0.05 for k, v in processed_scores.items() if v > 0}
-    quality_score = sum(processed_scores.values()) + sum(bonuses.values())
-
-print(f"Result: {round(quality_score, 2)}")
+# Simulated currency rates (multiples for precision)
+exchange_rates = [1.005, 1.02, 0.99, 1.01, 1.03, 1.007, 0.98]
+final_profit_margin = calculate_arbitrage_opportunities(exchange_rates)
+print(f"Result: {final_profit_margin}")

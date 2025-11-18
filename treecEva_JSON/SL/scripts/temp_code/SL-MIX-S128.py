@@ -1,94 +1,60 @@
+from collections import defaultdict
 import math
-from collections import deque
 
-def priority_calculator(weight_factor):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            base_value = func(*args, **kwargs)
-            return base_value * weight_factor + 10
-        return wrapper
-    return decorator
+class SensorNode:
+    def __init__(self, delay):
+        self.delay = delay
+        self.connections = []
+    
+    def connect(self, other):
+        self.connections.append(other)
 
-class OperationLogger:
-    def __enter__(self):
-        self.log = []
-        return self
+def calculate_cumulative_delay(node, memo):
+    if node in memo:
+        return memo[node]
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+    if not node.connections:
+        memo[node] = node.delay
+        return node.delay
     
-    def record(self, operation):
-        self.log.append(operation)
+    max_subdelay = 0
+    for connected_node in node.connections:
+        subdelay = calculate_cumulative_delay(connected_node, memo)
+        max_subdelay = max(max_subdelay, subdelay)
+    
+    total_delay = node.delay + max_subdelay
+    memo[node] = total_delay
+    return total_delay
 
-def binary_search(arr, target):
-    left, right = 0, len(arr) - 1
-    while left <= right:
-        mid = (left + right) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-    return -1
+def build_sensor_network():
+    nodes = [SensorNode(i * 2) for i in range(1, 6)]
+    
+    # Create connections forming a directed acyclic graph
+    nodes[0].connect(nodes[1])
+    nodes[0].connect(nodes[2])
+    nodes[1].connect(nodes[3])
+    nodes[2].connect(nodes[3])
+    nodes[3].connect(nodes[4])
+    
+    return nodes
 
-@priority_calculator(3)
-def calculate_base_priority(items):
-    return sum(items) % 7
+def main():
+    network = build_sensor_network()
+    memoization_table = {}
+    
+    # Calculate delays for all nodes using dynamic programming
+    delays = [calculate_cumulative_delay(node, memoization_table) for node in network]
+    
+    # Apply a transformation using array operations
+    transformed_delays = [math.floor(d / 3) for d in delays]
+    
+    # Find the maximum transformed delay
+    max_transformed = max(transformed_delays)
+    
+    # Calculate final delay using a combinatorial approach
+    final_delay = sum(transformed_delays) * max_transformed
+    
+    return final_delay
 
-shipment_stack = []
-order_queue = deque()
-
-with OperationLogger() as logger:
-    # Process incoming shipments
-    shipment_stack.append([5, 12, 8])
-    logger.record("Pushed shipment 1")
-    
-    shipment_stack.append([3, 9, 15])
-    logger.record("Pushed shipment 2")
-    
-    shipment_stack.append([7, 4, 11])
-    logger.record("Pushed shipment 3")
-    
-    shipment_stack.append([2, 14, 6])
-    logger.record("Pushed shipment 4")
-    
-    # Process outgoing orders
-    order_queue.append((1, 20))
-    logger.record("Queued order 1")
-    
-    order_queue.append((2, 25))
-    logger.record("Queued order 2")
-    
-    order_queue.append((3, 30))
-    logger.record("Queued order 3")
-    
-    # Calculate priorities
-    priorities = []
-    temp_stack = []
-    
-    # Pop all from stack and calculate priorities
-    while shipment_stack:
-        items = shipment_stack.pop()
-        priority = calculate_base_priority(items)
-        priorities.append(priority)
-        temp_stack.append(priority)
-    
-    # Restore stack
-    while temp_stack:
-        shipment_stack.append(temp_stack.pop())
-    
-    # Process orders using queue
-    processed_orders = 0
-    while order_queue and processed_orders < 3:
-        order_id, amount = order_queue.popleft()
-        # Find matching priority using binary search
-        sorted_priorities = sorted(priorities)
-        index = binary_search(sorted_priorities, amount % 10)
-        if index != -1:
-            priorities[index] += order_id
-        processed_orders += 1
-    
-    final_priority_score = sum(priorities) + len(logger.log)
-
-print(f"Result: {final_priority_score}")
+final_delay = main()
+print(f"Result: {final_delay}")

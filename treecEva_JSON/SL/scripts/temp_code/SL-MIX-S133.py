@@ -1,18 +1,28 @@
-from collections import Counter
+def fibonacci(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n+1):
+        a, b = b, a + b
+    return b
 
-recipes_text = [
-    "flour eggs butter sugar",
-    "flour milk sugar eggs",
-    "butter flour sugar",
-    "eggs flour milk"
-]
+tokens = ['sin', '(', 'x', ')', '+', 'cos', '(', 'y', ')']
+fib_cache = {}
+char_positions = set()
+unique_chars = frozenset(''.join(tokens))
 
-ingredient_tokens = []
-for recipe in recipes_text:
-    tokens = recipe.split()
-    ingredient_tokens.extend(tokens)
+with open('temp_tokens.txt', 'w') as f:
+    for i, token in enumerate(tokens):
+        f.write(f'{token}\n')
+        for ch in token:
+            char_positions.add(ord(ch) * fibonacci(i+1))
 
-ingredient_counter = Counter(ingredient_tokens)
-flour_count = ingredient_counter['flour']
+checksum = 0
+if char_positions and unique_chars:
+    weighted_sum = sum(char_positions)
+    unique_count = len(unique_chars)
+    checksum = (weighted_sum % unique_count) if unique_count else 0
+else:
+    checksum = -1
 
-print(f"Result: {flour_count}")
+print(f'Result: {checksum}')

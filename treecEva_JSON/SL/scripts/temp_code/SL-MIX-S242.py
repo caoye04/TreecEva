@@ -1,77 +1,59 @@
-from itertools import combinations
+from collections import defaultdict
 
-def analyze_dna_palindromes(dna_sequence):
-    n = len(dna_sequence)
-    palindrome_count = 0
+def calculate_loading_efficiency(weights):
+    # Step 1: Initialize containers
+    weight_groups = defaultdict(list)
+    efficiency_score = 0
     
-    # Dynamic programming table for palindrome checking
-    is_palindrome = [[False] * n for _ in range(n)]
+    # Step 2: Group weights by their magnitude ranges
+    for w in weights:
+        if w < 10:
+            weight_groups['light'].append(w)
+        elif 10 <= w < 50:
+            weight_groups['medium'].append(w)
+        else:
+            weight_groups['heavy'].append(w)
     
-    # Every single character is a palindrome
-    for i in range(n):
-        is_palindrome[i][i] = True
-    
-    # Check for palindromes of length 2
-    for i in range(n - 1):
-        if dna_sequence[i] == dna_sequence[i + 1]:
-            is_palindrome[i][i + 1] = True
-    
-    # Check for palindromes of length 3 and more
-    for length in range(3, n + 1):
-        for i in range(n - length + 1):
-            j = i + length - 1
-            if dna_sequence[i] == dna_sequence[j] and is_palindrome[i + 1][j - 1]:
-                is_palindrome[i][j] = True
-    
-    # Count valid palindromes with specific constraints
-    for i in range(n):
-        for j in range(i, n):
-            if is_palindrome[i][j]:
-                segment_length = j - i + 1
-                segment = dna_sequence[i:j+1]
-                
-                # Constraint: length between 3 and 8
-                # AND must contain at least one 'C' and one 'G'
-                # AND must not have more than 2 'A's
-                if (3 <= segment_length <= 8 and
-                    'C' in segment and 'G' in segment and
-                    segment.count('A') <= 2):
-                    palindrome_count += 1
-    
-    return palindrome_count
-
-def main():
-    dna_seq = "ATCGATCGATCG"
-    
-    # Using a context manager for analysis tracking
-    class AnalysisTracker:
-        def __init__(self, name):
-            self.name = name
-            self.completed = False
+    # Step 3: Apply efficiency calculation for each group
+    for group_name, group_weights in weight_groups.items():
+        if not group_weights:
+            continue
         
-        def __enter__(self):
-            return self
+        # Sort weights in descending order for optimal loading
+        group_weights.sort(reverse=True)
         
-        def __exit__(self, exc_type, exc_val, exc_tb):
-            self.completed = True
-            return False
+        # Calculate group efficiency using divide and conquer approach
+        def group_efficiency(sub_weights):
+            n = len(sub_weights)
+            if n == 0:
+                return 0
+            if n == 1:
+                return sub_weights[0] * 2
+            
+            mid = n // 2
+            left_eff = group_efficiency(sub_weights[:mid])
+            right_eff = group_efficiency(sub_weights[mid:])
+            
+            # Combine results with penalty for imbalance
+            balance_penalty = abs(sum(sub_weights[:mid]) - sum(sub_weights[mid:]))
+            return left_eff + right_eff - balance_penalty
+        
+        # Add group efficiency to total score
+        efficiency_score += group_efficiency(group_weights)
     
-    with AnalysisTracker("DNA_Palindrome_Analysis") as tracker:
-        if tracker.name == "DNA_Palindrome_Analysis":
-            result = analyze_dna_palindromes(dna_seq)
-            tracker.result = result
+    # Step 4: Apply final adjustment based on loading pattern
+    light_count = len(weight_groups['light'])
+    medium_count = len(weight_groups['medium'])
+    heavy_count = len(weight_groups['heavy'])
     
-    # Additional filtering using set operations
-    valid_nucleotides = frozenset(['A', 'T', 'C', 'G'])
-    sequence_set = set(dna_seq)
+    if light_count > medium_count and light_count > heavy_count:
+        efficiency_score *= 1.1
+    elif heavy_count > medium_count and heavy_count > light_count:
+        efficiency_score *= 0.9
     
-    # Only proceed if sequence contains valid nucleotides
-    if sequence_set.issubset(valid_nucleotides) and tracker.completed:
-        palindrome_count = tracker.result
-    else:
-        palindrome_count = 0
-    
-    print(f"Result: {palindrome_count}")
+    return int(efficiency_score)
 
-if __name__ == "__main__":
-    main()
+# Main execution
+package_weights = [5, 15, 25, 35, 45, 55, 65, 75, 85, 95]
+efficiency_score = calculate_loading_efficiency(package_weights)
+print(f"Result: {efficiency_score}")

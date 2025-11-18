@@ -1,16 +1,52 @@
-from functools import reduce
-from bisect import bisect_left
-def binary_search(arr, x):
-    i = bisect_left(arr, x)
-    return i != len(arr) and arr[i] == x
+from collections import defaultdict
+from itertools import permutations
+from functools import wraps
+import time
 
-tags_collection = frozenset(['alpha', 'beta', 'gamma', 'delta', 'epsilon'])
-transformed_tags = list(map(lambda s: len(s), tags_collection))
-transformed_tags.sort()
-filtered_lengths = list(filter(lambda n: n > 4, transformed_tags))
-checksum = reduce(lambda a, b: a ^ b, filtered_lengths, 0)
-reference_values = [3, 5, 7, 9, 11]
-matches = sum(1 for val in filtered_lengths if binary_search(reference_values, val))
-validation_flags = [len(filtered_lengths) > 2, checksum != 0, matches >= 1]
-final_validation_score = sum(1 << i for i, flag in enumerate(validation_flags) if flag)
-print(f'Result: {final_validation_score}')
+def timing_decorator(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        wrapper.execution_time = end - start
+        return result
+    return wrapper
+
+class ResourceContext:
+    def __enter__(self):
+        self.resource_data = defaultdict(int)
+        return self.resource_data
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
+@timing_decorator
+def compute_similarity(tokens1, tokens2):
+    # Compute similarity as number of common permutations of length 2
+    perms1 = set(permutations(tokens1, 2))
+    perms2 = set(permutations(tokens2, 2))
+    return len(perms1.intersection(perms2))
+
+documents = [
+    "machine learning algorithms",
+    "deep learning neural networks",
+    "reinforcement learning agents"
+]
+
+tokenized_docs = [doc.split() for doc in documents]
+
+aggregate_score = 0
+
+with ResourceContext() as resources:
+    for i in range(len(tokenized_docs)):
+        for j in range(i+1, len(tokenized_docs)):
+            score = compute_similarity(tokenized_docs[i], tokenized_docs[j])
+            aggregate_score += score * (i+j)
+            resources[f'doc_pair_{i}_{j}'] = score
+
+# Apply correction factor based on decorator timing
+if hasattr(compute_similarity, 'execution_time'):
+    aggregate_score = int(aggregate_score / (compute_similarity.execution_time * 1000 + 1))
+
+print(f"Result: {aggregate_score}")

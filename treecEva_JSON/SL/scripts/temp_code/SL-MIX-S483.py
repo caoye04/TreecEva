@@ -1,62 +1,61 @@
-import hashlib
 import math
-from collections import defaultdict
 
-def hash_coordinate(x, y, scale=100):
-    scaled_x, scaled_y = int(x * scale), int(y * scale)
-    coord_str = f"{scaled_x},{scaled_y}"
-    return hashlib.md5(coord_str.encode()).hexdigest()[:8]
+class PacketNode:
+    def __init__(self, seq_num, size):
+        self.seq_num = seq_num
+        self.size = size
+        self.next = None
+        self.prev = None
 
-def get_influence_zone(centroid_x, centroid_y, radius, grid_res=0.5):
-    cells = set()
-    steps = int(radius / grid_res)
-    for dx in range(-steps, steps + 1):
-        for dy in range(-steps, steps + 1):
-            grid_x = centroid_x + dx * grid_res
-            grid_y = centroid_y + dy * grid_res
-            dist = math.sqrt((grid_x - centroid_x)**2 + (grid_y - centroid_y)**2)
-            if dist <= radius and (dist > 0 or True):  # Short-circuit pattern
-                cells.add(hash_coordinate(grid_x, grid_y))
-    return cells
+class CircularPacketBuffer:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.size = 0
+        self.head = None
+        self.tail = None
+    
+    def add_packet(self, seq_num, size):
+        new_node = PacketNode(seq_num, size)
+        if self.size == 0:
+            self.head = self.tail = new_node
+            new_node.next = new_node.prev = new_node
+        else:
+            new_node.next = self.head
+            new_node.prev = self.tail
+            self.head.prev = new_node
+            self.tail.next = new_node
+            self.head = new_node
+            if self.size == self.capacity:
+                # Remove the oldest packet (tail)
+                self.tail = self.tail.prev
+                self.tail.next = self.head
+                self.head.prev = self.tail
+            else:
+                self.size += 1
+        if self.size < self.capacity:
+            self.size += 1
 
-# Building data: (x, y, influence_radius)
-buildings = [
-    (1.2, 3.7, 2.0),
-    (5.1, 2.8, 1.5),
-    (3.3, 6.2, 1.0)
-]
+def is_perfect_square(n):
+    root = int(math.sqrt(n))
+    return root * root == n
 
-# Combinatorics: Generate all unique pairs of buildings
-building_pairs = [
-    (buildings[i], buildings[j])
-    for i in range(len(buildings))
-    for j in range(i+1, len(buildings))
-]
+# Initialize buffer with capacity 10
+packet_buffer = CircularPacketBuffer(10)
 
-# Initialize coverage tracking
-coverage_map = defaultdict(int)
+# Process 15 packets
+seq_start = 100
+size_start = 512
+for i in range(15):
+    seq_num = seq_start + i
+    size = (size_start + i * 64) % 1024 or 1024  # Ensures size wraps at 1024 and is never 0
+    packet_buffer.add_packet(seq_num, size)
 
-# Process individual building zones
-for building in buildings:
-    zone_cells = get_influence_zone(building[0], building[1], building[2])
-    for cell in zone_cells:
-        coverage_map[cell] += 1
+# Calculate sum of sizes for packets with perfect square sequence numbers
+target_sum = 0
+current = packet_buffer.head
+for _ in range(packet_buffer.size):
+    if is_perfect_square(current.seq_num):
+        target_sum += current.size
+    current = current.next
 
-# Process pairwise intersections with encoding
-encoded_intersections = [
-    get_influence_zone(b1[0], b1[1], b1[2]) & get_influence_zone(b2[0], b2[1], b2[2])
-    for b1, b2 in building_pairs
-]
-
-# Count cells covered by at least two buildings
-multi_coverage_cells = set()
-for intersection in encoded_intersections:
-    multi_coverage_cells.update(intersection)
-
-# Final count with ternary operator logic
-covered_cells_count = len(coverage_map) if len(multi_coverage_cells) > 0 else 0
-
-# Adjust for overlapping regions
-covered_cells_count = covered_cells_count - (len(multi_coverage_cells) // 2)
-
-print(f"Result: {covered_cells_count}")
+print(f"Result: {target_sum}")

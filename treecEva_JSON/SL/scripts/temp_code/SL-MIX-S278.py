@@ -1,20 +1,36 @@
-import statistics
-from collections import namedtuple
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 
-# Define a nucleotide mapping
-Nucleotide = namedtuple('Nucleotide', ['symbol', 'value'])
+def count_accesses(head):
+    access_count = {}
+    current = head
+    while current:
+        ip = current.val
+        access_count[ip] = access_count.get(ip, 0) + 1
+        current = current.next
+    return access_count
 
-code_map = {
-    'A': Nucleotide('Adenine', 0),
-    'T': Nucleotide('Thymine', 1),
-    'G': Nucleotide('Guanine', 2),
-    'C': Nucleotide('Cytosine', 3)
-}
+def create_linked_list(elements):
+    if not elements:
+        return None
+    head = ListNode(elements[0])
+    current = head
+    for elem in elements[1:]:
+        current.next = ListNode(elem)
+        current = current.next
+    return head
 
-# Encoded DNA sequence values
-dna_values = [2, 1, 3, 0, 2, 3, 1]
+# Simulated access log as a linked list
+access_logs = ["192.168.1.1", "10.0.0.1", "192.168.1.1", "172.16.0.1", "192.168.1.1", "10.0.0.1", "10.0.0.1"]
+ip_list_head = create_linked_list(access_logs)
 
-# Calculate variance of the encoded sequence
-encoded_variance = statistics.variance(dna_values)
+# Count accesses using functional approach
+access_counts = count_accesses(ip_list_head)
 
-print(f"Result: {encoded_variance}")
+# Use ternary to determine whitelisting
+whitelist = frozenset(ip for ip, count in access_counts.items() if count >= 3)
+
+final_whitelist_size = len(whitelist)
+print(f"Result: {final_whitelist_size}")

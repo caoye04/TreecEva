@@ -1,23 +1,22 @@
-import re
-from collections import namedtuple
+def str_length_decorator(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        return len(result)
+    return wrapper
 
-# Define a LogEntry structure
-LogEntry = namedtuple('LogEntry', ['timestamp', 'ip_address', 'user_agent'])
+@str_length_decorator
+def format_profile(profile_dict):
+    return "Name: {}, Age: {}, City: {}".format(
+        profile_dict['name'], 
+        profile_dict['age'], 
+        profile_dict['city']
+    )
 
-# Sample log entries
-log_entries = [
-    LogEntry('2023-05-15 10:23:01', '192.168.1.10', 'Mozilla/5.0'),
-    LogEntry('2023-05-15 10:25:12', '192.168.1.12', 'Chrome/90.0'),
-    LogEntry('2023-05-15 10:27:45', '10.0.0.5', 'Safari/14.0'),
-    LogEntry('2023-05-15 10:30:01', '192.168.1.10', 'Mozilla/5.0'),
-    LogEntry('2023-05-15 10:32:17', '192.168.2.15', 'Firefox/88.0'),
-    LogEntry('2023-05-15 10:35:22', '172.16.0.1', 'Edge/91.0')
-]
+engineer_profile = {
+    'name': 'Alice',
+    'age': 30,
+    'city': 'New York'
+}
 
-# Extract IP addresses matching the pattern 192.168.x.x
-subnet_pattern = r'^192\.168\.\d{1,3}\.\d{1,3}$'
-suspicious_ips = {entry.ip_address for entry in log_entries if re.match(subnet_pattern, entry.ip_address)}
-
-# Count unique device IPs
-unique_device_count = len(suspicious_ips)
-print(f'Result: {unique_device_count}')
+formatted_length = format_profile(engineer_profile)
+print(f'Result: {formatted_length}')

@@ -1,60 +1,52 @@
-import heapq
-import re
+import math
+from collections import defaultdict
 
-def calculate_priority(weight, distance, urgency):
-    return weight * 0.3 + distance * 0.2 + urgency * 0.5
+def volatility_weight(x):
+    return 1.0 + abs(math.log(1.0 + abs(x)))
 
-def extract_numeric_value(code_str):
-    match = re.search(r'\d+', code_str)
-    return int(match.group()) if match else 0
+def risk_transform(value, threshold=0.05):
+    return value ** 2 if value > threshold else math.sqrt(abs(value))
 
-def apply_filters(requests):
-    filtered = []
-    for req in requests:
-        if req['weight'] > 10 and req['distance'] < 1000:
-            filtered.append(req)
-    return filtered
-
-def update_weights(requests):
-    for req in requests:
-        code = req['code']
-        numeric_part = extract_numeric_value(code)
-        if numeric_part > 50:
-            req['weight'] *= 1.1
-    return requests
-
-# Initial shipment requests data
-shipment_requests = [
-    {'id': 'PKG001', 'weight': 15, 'distance': 800, 'urgency': 7, 'code': 'EXPRESS55'},
-    {'id': 'PKG002', 'weight': 8, 'distance': 1200, 'urgency': 5, 'code': 'STANDARD20'},
-    {'id': 'PKG003', 'weight': 25, 'distance': 600, 'urgency': 9, 'code': 'PRIORITY75'},
-    {'id': 'PKG004', 'weight': 12, 'distance': 950, 'urgency': 6, 'code': 'REGULAR40'},
-    {'id': 'PKG005', 'weight': 30, 'distance': 400, 'urgency': 8, 'code': 'FAST60'}
+# Simulated daily returns for 5 assets over 10 days
+asset_returns = [
+    [0.02, -0.01, 0.03, -0.02, 0.01, 0.04, -0.03, 0.02, -0.01, 0.05],
+    [-0.01, 0.02, -0.02, 0.03, -0.01, 0.02, -0.04, 0.03, -0.02, 0.01],
+    [0.03, 0.01, -0.03, 0.02, -0.02, 0.01, -0.01, 0.04, -0.03, 0.02],
+    [-0.02, 0.03, 0.01, -0.01, 0.04, -0.02, 0.03, -0.01, 0.02, -0.03],
+    [0.01, -0.02, 0.04, -0.03, 0.02, -0.01, 0.05, -0.02, 0.01, -0.04]
 ]
 
-# Calculate priorities and create max-heap (using negative values)
-heap = []
-for req in shipment_requests:
-    priority = calculate_priority(req['weight'], req['distance'], req['urgency'])
-    heapq.heappush(heap, (-priority, req))
+# Asset weights in portfolio
+asset_weights = [0.2, 0.15, 0.3, 0.25, 0.1]
 
-# Apply filters to remove invalid requests
-filtered_data = apply_filters([item[1] for item in heap])
+# Calculate daily portfolio returns
+portfolio_daily_returns = []
+for day_idx in range(len(asset_returns[0])):
+    daily_return = sum(asset_returns[asset_idx][day_idx] * asset_weights[asset_idx] 
+                       for asset_idx in range(len(asset_weights)))
+    portfolio_daily_returns.append(daily_return)
 
-# Update weights based on code values
-updated_requests = update_weights(filtered_data)
+# Apply volatility weighting and risk transformation
+weighted_returns = [risk_transform(ret) * volatility_weight(ret) for ret in portfolio_daily_returns]
 
-# Rebuild heap with updated data
-heap = []
-for req in updated_requests:
-    priority = calculate_priority(req['weight'], req['distance'], req['urgency'])
-    heapq.heappush(heap, (-priority, req))
+# Compute base risk metrics
+avg_daily_return = sum(portfolio_daily_returns) / len(portfolio_daily_returns)
+volatility = math.sqrt(sum((r - avg_daily_return) ** 2 for r in portfolio_daily_returns) / (len(portfolio_daily_returns) - 1))
 
-# Process the first 3 highest priority requests
-for _ in range(min(3, len(heap))):
-    heapq.heappop(heap)
+# Risk adjustment logic with short-circuit evaluation
+is_high_volatility = volatility > 0.02
+has_negative_trend = sum(1 for r in portfolio_daily_returns if r < 0) > len(portfolio_daily_returns) // 2
 
-# Calculate total weight of remaining packages
-remaining_weight_total = sum(item[1]['weight'] for item in heap)
+# Conditional risk scoring
+if is_high_volatility and has_negative_trend:
+    risk_factor = 1.5
+elif is_high_volatility or has_negative_trend:
+    risk_factor = 1.2
+else:
+    risk_factor = 1.0
 
-print(f"Result: {remaining_weight_total}")
+# Final risk score calculation
+raw_risk_score = sum(weighted_returns) * risk_factor
+portfolio_risk_score = round(raw_risk_score * 1000, 2)
+
+print(f"Result: {portfolio_risk_score}")

@@ -1,40 +1,24 @@
-from collections import defaultdict
+class ListNode:
+    def __init__(self, book_id=0, next=None):
+        self.book_id = book_id
+        self.next = next
 
-def process_restock(restock_event, inventory, max_capacity):
-    product, amount = restock_event
-    current = inventory[product]
-    inventory[product] = min(current + amount, max_capacity[product])
-    return max_capacity[product] - inventory[product]
+# Initialize linked list: 101 -> 202 -> 103 -> 404 -> 105
+head = ListNode(101)
+head.next = ListNode(202)
+head.next.next = ListNode(103)
+head.next.next.next = ListNode(404)
+head.next.next.next.next = ListNode(105)
 
-def update_state_machine(state, event_type):
-    transitions = {
-        'IDLE': {'RESTOCK': 'PROCESSING', 'SERVE': 'IDLE'},
-        'PROCESSING': {'COMPLETE': 'IDLE', 'RESTOCK': 'PROCESSING'}
-    }
-    return transitions.get(state, {}).get(event_type, state)
+# Traverse linked list and collect book IDs
+node = head
+book_ids = []
+while node:
+    book_ids.append(node.book_id)
+    node = node.next
 
-# Initialize inventory system
-inventory_levels = defaultdict(int)
-max_product_capacity = {'SODA': 20, 'CHIPS': 15, 'CANDY': 25}
-state_machine = 'IDLE'
+# Use list comprehension to find even book IDs
+even_book_ids = [book_id for book_id in book_ids if book_id % 2 == 0]
 
-# Restocking events
-restocking_queue = [
-    ('SODA', 8),
-    ('CHIPS', 10),
-    ('CANDY', 5),
-    ('SODA', 7),
-    ('CHIPS', 8)
-]
-
-# Process events with state machine control
-remaining_capacity = 0
-for event in restocking_queue:
-    state_machine = update_state_machine(state_machine, 'RESTOCK')
-    remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
-    state_machine = update_state_machine(state_machine, 'COMPLETE')
-
-# Final adjustment using ternary logic
-remaining_capacity = remaining_capacity if remaining_capacity > 0 else sum(max_product_capacity.values()) - sum(inventory_levels.values())
-
-print(f"Result: {remaining_capacity}")
+even_book_count = len(even_book_ids)
+print(f"Result: {even_book_count}")

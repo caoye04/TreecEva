@@ -1,57 +1,51 @@
 import math
-from contextlib import contextmanager
+from itertools import combinations
 
-def log_decorator(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result
-    return wrapper
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
 
-class StateMachine:
-    def __init__(self):
-        self.state = 'IDLE'
-    
-    @log_decorator
-    def process(self, input_signal):
-        if self.state == 'IDLE' and input_signal > 0:
-            self.state = 'ACTIVE'
-            return 1
-        elif self.state == 'ACTIVE':
-            if input_signal == 0:
-                self.state = 'LATCHED'
-                return 2
-            else:
-                return (input_signal ** 2) % 7
-        elif self.state == 'LATCHED':
-            if input_signal < 0:
-                self.state = 'ERROR'
-                return -1
-            else:
-                return int(math.log(input_signal + 1)) if input_signal > 0 else 0
-        else:  # ERROR state
-            return 0
+def compute_lcm(a, b):
+    return abs(a * b) // math.gcd(a, b)
 
-@contextmanager
-def circuit_context():
-    sm = StateMachine()
-    try:
-        yield sm
-    finally:
-        pass
+# Character codes for a cryptographic key seed
+seed_chars = [65, 66, 67, 68, 69]  # A, B, C, D, E
 
-signals = [3, -1, 5, 0, 2, -3]
-circuit_output = 0
+# Step 1: Generate all 3-character combinations
+char_combinations = list(combinations(seed_chars, 3))
 
-with circuit_context() as machine:
-    for i, sig in enumerate(signals):
-        intermediate = machine.process(sig)
-        if i % 2 == 0:
-            circuit_output = circuit_output | intermediate
-        else:
-            circuit_output = circuit_output & (intermediate ^ ((sig * 3) % 5))
-        
-        # Short-circuit evaluation check
-        if circuit_output > 10 or (circuit_output < 0 and machine.state != 'ERROR'):
-            circuit_output = circuit_output ^ 0xF
+# Step 2: For each combination, compute a score based on number theory
+combination_scores = []
+for combo in char_combinations:
+    a, b, c = combo
+    # Compute LCM of first two
+    lcm_ab = compute_lcm(a, b)
+    # Compute GCD of result with third
+    gcd_result = math.gcd(lcm_ab, c)
+    # If the GCD is prime, square it; otherwise take log base 2
+    if is_prime(gcd_result):
+        score = gcd_result ** 2
+    else:
+        score = math.log2(gcd_result) if gcd_result > 0 else 0
+    combination_scores.append(score)
 
-print(f"Result: {circuit_output}")
+# Step 3: Apply floating point operations to normalize scores
+normalized_scores = [score / max(combination_scores) for score in combination_scores]
+
+# Step 4: Use list comprehension to filter scores above threshold
+threshold = 0.5
+filtered_scores = [score for score in normalized_scores if score > threshold]
+
+# Step 5: Compute final cipher strength using exponentiation
+cipherStrength = 0
+for i, score in enumerate(filtered_scores):
+    cipherStrength += score * (2 ** i)
+
+# Apply final transformation
+cipherStrength = int(math.floor(cipherStrength * 1000))
+
+print(f"Result: {cipherStrength}")

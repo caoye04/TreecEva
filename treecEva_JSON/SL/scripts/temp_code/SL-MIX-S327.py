@@ -1,43 +1,25 @@
-class SignalProcessor:
-    def __init__(self):
-        self.frequency_stack = []
-        self.metadata_buffer = 0
-    
-    def push_frequency(self, freq):
-        self.frequency_stack.append(freq % 1024)
-    
-    def pop_frequency(self):
-        return self.frequency_stack.pop() if self.frequency_stack else 0
-    
-    def update_metadata(self, value):
-        self.metadata_buffer = (self.metadata_buffer ^ value) & 0xFF
-    
-    def process_signal_chain(self, operations):
-        for op in operations:
-            if op['type'] == 'push':
-                self.push_frequency(op['value'])
-            elif op['type'] == 'pop':
-                popped = self.pop_frequency()
-                self.update_metadata(popped)
-            elif op['type'] == 'encode':
-                self.metadata_buffer = (self.metadata_buffer << 2) | (self.metadata_buffer >> 6)
-                self.metadata_buffer &= 0xFF
-        return self.metadata_buffer
+import heapq
 
-# Initialize processor
-processor = SignalProcessor()
+def process_bakery_orders():
+    # Priority mapping: higher number means higher priority
+    priorities = {'apple': 3, 'cherry': 2, 'blueberry': 1}
+    
+    # Orders received throughout the day
+    orders = ['blueberry', 'apple', 'cherry', 'apple', 'blueberry', 'cherry', 'apple']
+    
+    # Initialize max heap (using negative values since heapq is min heap)
+    priority_heap = []
+    
+    # Process each order
+    for pie_type in orders:
+        heapq.heappush(priority_heap, -priorities[pie_type])
+    
+    # Calculate sum of priorities in the heap
+    priority_sum = 0
+    while priority_heap:
+        priority_sum += (-heapq.heappop(priority_heap))
+    
+    return priority_sum
 
-# Define operation sequence
-signal_operations = [
-    {'type': 'push', 'value': 1234},
-    {'type': 'push', 'value': 5678},
-    {'type': 'pop'},
-    {'type': 'encode'},
-    {'type': 'push', 'value': 9012},
-    {'type': 'pop'},
-    {'type': 'encode'}
-]
-
-# Process signals
-encoded_metadata = processor.process_signal_chain(signal_operations)
-print(f"Result: {encoded_metadata}")
+final_priority_sum = process_bakery_orders()
+print(f"Result: {final_priority_sum}")

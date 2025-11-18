@@ -1,64 +1,44 @@
-class TextProcessor:
-    def __init__(self):
-        self.state = 'START'
-        self.position = 0
-        self.encoded_chars = []
+import re
+from itertools import combinations
+
+def tokenize(expr):
+    return re.findall(r'\w+|[^\w\s]', expr)
+
+def hash_token(token):
+    val = 0
+    for char in token:
+        val = (val * 31 + ord(char)) & 0xFF
+    return val
+
+class TokenProcessor:
+    def __init__(self, modifiers=None):
+        self.modifiers = modifiers or []
     
-    def process_char(self, char):
-        if self.state == 'START':
-            if char.isalpha():
-                self.state = 'ALPHA'
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            elif char.isdigit():
-                self.state = 'DIGIT'
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            else:
-                self.state = 'OTHER'
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        elif self.state == 'ALPHA':
-            if char.isalpha():
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            elif char.isdigit():
-                self.state = 'DIGIT'
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            else:
-                self.state = 'OTHER'
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        elif self.state == 'DIGIT':
-            if char.isdigit():
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            elif char.isalpha():
-                self.state = 'ALPHA'
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            else:
-                self.state = 'OTHER'
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        elif self.state == 'OTHER':
-            if char.isalpha():
-                self.state = 'ALPHA'
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            elif char.isdigit():
-                self.state = 'DIGIT'
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            else:
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        self.position += 1
+    def process(self, tokens):
+        scores = []
+        for t in tokens:
+            base = hash_token(t)
+            if any(c.isdigit() for c in t):
+                base *= 2
+            elif t.isupper():
+                base += 100
+            scores.append(base)
+        
+        # Apply modifier functions if any
+        for mod in self.modifiers:
+            scores = [mod(s) for s in scores]
+        
+        # Compute pairwise XOR of all combinations of 2
+        xor_results = [a ^ b for a, b in combinations(scores, 2)]
+        
+        # Return sum modulo a prime
+        return sum(xor_results) % 1291
 
-# Greedy algorithm to select optimal chunk sizes for processing
-input_text = "Hello42World!"
-processor = TextProcessor()
+def double_if_even(x):
+    return x * 2 if x % 2 == 0 else x
 
-for i, char in enumerate(input_text):
-    processor.process_char(char)
-
-# Divide and conquer approach to finalize encoding
-encoded_length = len(processor.encoded_chars)
-print(f"Result: {encoded_length}")
+token_processor = TokenProcessor([double_if_even])
+input_sequence = "SECURITY2023 TOKEN_abc DEF456x"
+tokens = tokenize(input_sequence)
+final_score = token_processor.process(tokens)
+print(f"Result: {final_score}")

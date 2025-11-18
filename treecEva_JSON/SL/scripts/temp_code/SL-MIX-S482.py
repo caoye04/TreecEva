@@ -1,35 +1,32 @@
-from collections import defaultdict
-import statistics
+import itertools
+from functools import reduce
 
-temperature_readings = [
-    {'sensor_id': 'A', 'values': [23.5, 24.0, None, 25.1, 22.8]},
-    {'sensor_id': 'B', 'values': [21.0, 21.5, 22.0, 21.8, None]},
-    {'sensor_id': 'C', 'values': [None, 19.5, 20.0, 19.8, 20.2]}
+# Sensor readings: each sublist represents one sensor's sequence of readings
+sensor_readings = [
+    [10, 12, 14, 13, 15],
+    [5, 7, 6, 8, 9, 7],
+    [20, 22, 21, 23, 25, 24, 26],
+    [1, 3, 2, 4, 6, 5]
 ]
 
-sensor_valid_data = defaultdict(list)
-quality_scores = {}
+def calculate_stability_score(readings):
+    if len(readings) < 2:
+        return 0
+    # Step 1: Calculate pairwise differences
+    differences = [readings[i+1] - readings[i] for i in range(len(readings)-1)]
+    # Step 2: Count differences within threshold
+    count_within_threshold = sum(1 for diff in differences if abs(diff) <= 2)
+    # Step 3: Calculate sum of readings
+    sum_readings = sum(readings)
+    # Stability score is count * sum
+    return count_within_threshold * sum_readings
 
-for reading in temperature_readings:
-    sensor = reading['sensor_id']
-    values = [v for v in reading['values'] if v is not None]
-    sensor_valid_data[sensor].extend(values)
-    
-    # Short-circuit evaluation in quality check
-    if len(values) > 0 and statistics.mean(values) > 20:
-        base_score = len(values) * 10
-        variance_bonus = 5 if statistics.variance(values) < 1 else 0
-        quality_scores[sensor] = base_score + variance_bonus
-    else:
-        quality_scores[sensor] = 0
+# Calculate stability scores for all sensors
+stability_scores = list(map(calculate_stability_score, sensor_readings))
 
-# Calculate system-wide metrics
-all_valid_values = [v for values in sensor_valid_data.values() for v in values]
-system_mean = statistics.mean(all_valid_values) if all_valid_values else 0
+# Find median stability score
+stability_scores.sort()
+n = len(stability_scores)
+median_stability_score = stability_scores[n//2] if n % 2 == 1 else (stability_scores[n//2 - 1] + stability_scores[n//2]) // 2
 
-# Final score computation with lambda function
-weight_function = lambda s: 1.5 if quality_scores[s] > 50 else 1.0
-weighted_scores = [quality_scores[sensor] * weight_function(sensor) for sensor in quality_scores]
-
-final_score = int(sum(weighted_scores) * system_mean / 10)
-print(f"Result: {final_score}")
+print(f"Result: {median_stability_score}")

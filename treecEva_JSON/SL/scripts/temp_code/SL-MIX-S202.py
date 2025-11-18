@@ -1,18 +1,28 @@
-from functools import reduce
+import itertools
 
-def custom_hash(token):
-    return reduce(lambda acc, char: (acc * 31 + ord(char)) & 0xFFFFFFFF, token, 0)
+def rotating_xor_key(data, keys):
+    return [datum ^ keys[i % len(keys)] for i, datum in enumerate(data)]
 
-tokens = ['def', 'class', 'import', 'lambda', 'return']
-filtered_tokens = list(filter(lambda t: len(t) > 4, tokens))
-mapped_hashes = list(map(custom_hash, filtered_tokens))
-transformed_values = [
-    hash_val if hash_val % 2 == 0 else (hash_val >> 2) & 0xFFFFFFFF
-    for hash_val in mapped_hashes
-]
-checksum_components = [
-    val if val < 0x80000000 else (val ^ 0xDEADBEEF)
-    for val in transformed_values
-]
-final_checksum = reduce(lambda x, y: (x + y) & 0xFFFFFFFF, checksum_components, 0) if checksum_components else 0
-print(f"Result: {final_checksum}")
+def ascii_transform(token):
+    return [ord(c) for c in token]
+
+# Cryptographic tokens
+mystery_tokens = ['py', 'thon', 'code', 'eval']
+
+# Transformation keys
+xor_keys = [0x5A, 0x3C, 0xF1]
+
+# Process tokens through transformation pipeline
+transformed_sequences = list(map(lambda t: rotating_xor_key(ascii_transform(t), xor_keys), mystery_tokens))
+
+# Flatten all transformed sequences
+flattened_values = list(itertools.chain.from_iterable(transformed_sequences))
+
+# Validation function with short-circuit evaluation
+valid_token_count = 0
+for val in flattened_values:
+    # Complex condition: value must be > 50 AND (value has even parity OR value is divisible by 3)
+    if val > 50 and (bin(val).count('1') % 2 == 0 or val % 3 == 0):
+        valid_token_count += 1
+
+print(f"Result: {valid_token_count}")

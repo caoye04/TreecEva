@@ -1,41 +1,34 @@
-import re
-from statistics import variance
-from itertools import compress
+import math
 
-def calculate_adjusted_volatility(transactions):
-    # Filter transactions matching the pattern: starts with 'TX', followed by 4 digits, then optional '-REF\d+'
-    pattern = r'^TX\d{4}(?:-REF\d+)?$'
-    valid_flags = [bool(re.match(pattern, tx)) for tx in transactions]
+def compute_portfolio_score(returns, categories):
+    # Normalize returns using logarithmic scaling
+    scaled_returns = [math.log(r + 1) for r in returns]
     
-    # Extract numeric values from valid transactions
-    amounts = []
-    for tx in compress(transactions, valid_flags):
-        # Extract all digits and convert to integer (assuming single numeric value per transaction)
-        nums = re.findall(r'\d+', tx)
-        if nums:
-            amounts.append(int(nums[0]))
+    # Greedy selection: pick top 2 returns
+    scaled_returns.sort(reverse=True)
+    selected = scaled_returns[:2]
     
-    # Calculate base variance
-    if len(amounts) < 2:
-        return 0
-    base_var = variance(amounts)
+    # Calculate exponential weight sum
+    weighted_sum = sum(math.exp(r) for r in selected)
     
-    # Adjust based on number of valid transactions
-    adjustment_factor = len([f for f in valid_flags if f]) * 0.5
-    adjusted_volatility_index = base_var * adjustment_factor
+    # Set operations on categories
+    unique_categories = frozenset(categories)
+    base_set = {'equity', 'bond', 'commodity'}
+    intersection = unique_categories & base_set
     
-    return adjusted_volatility_index
+    # Logical operations to determine bonus
+    has_equity = 'equity' in intersection
+    has_bond = 'bond' in intersection
+    bonus = 1.5 if (has_equity and not has_bond) else 1.0
+    
+    # Final score calculation
+    final_score = weighted_sum * len(intersection) * bonus
+    return final_score
 
-# Transaction log data
-transaction_log = [
-    'TX1234',
-    'TX5678-REF99',
-    'TXABCD',
-    'TX9999-REF01',
-    'INVALID123',
-    'TX0001',
-    'TX2222-REF55'
-]
+# Portfolio data
+asset_returns = [0.05, 0.12, 0.08, 0.15, 0.03]
+asset_categories = ['equity', 'real_estate', 'equity', 'commodity', 'bond']
 
-adjusted_volatility_index = calculate_adjusted_volatility(transaction_log)
-print(f"Result: {adjusted_volatility_index}")
+# Compute and print result
+final_score = compute_portfolio_score(asset_returns, asset_categories)
+print(f"Result: {final_score}")

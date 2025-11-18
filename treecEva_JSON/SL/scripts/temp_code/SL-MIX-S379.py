@@ -1,80 +1,35 @@
-import math
-from collections import defaultdict
+import re
+from functools import reduce
+from collections import Counter
 
-class ElevationProfileProcessor:
-    def __init__(self, data_stream):
-        self.data_stream = data_stream
-        self.elevations = []
-        self.metrics = defaultdict(float)
-    
-    def __enter__(self):
-        # Tokenize and decode elevation data
-        tokens = self.data_stream.split(';')
-        for token in tokens:
-            if token.startswith('E'):
-                # Decode elevation values (E followed by base36 encoded number)
-                elevation_value = int(token[1:], 36)
-                self.elevations.append(elevation_value)
-        return self
-    
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
-    
-    def compute_spatial_metrics(self):
-        if not self.elevations:
-            return
-        
-        # Calculate Fibonacci-weighted elevation changes
-        fib_cache = {}
-        def fib(n):
-            if n in fib_cache:
-                return fib_cache[n]
-            if n <= 1:
-                return n
-            fib_cache[n] = fib(n-1) + fib(n-2)
-            return fib_cache[n]
-        
-        # Geometry calculations for spatial profiling
-        peak_elevation = max(self.elevations)
-        valley_elevation = min(self.elevations)
-        peak_index = self.elevations.index(peak_elevation)
-        valley_index = self.elevations.index(valley_elevation)
-        
-        # Spatial distance using Euclidean distance
-        horizontal_distance = abs(peak_index - valley_index)
-        vertical_distance = abs(peak_elevation - valley_elevation)
-        spatial_distance = math.sqrt(horizontal_distance**2 + vertical_distance**2)
-        
-        # Calculate Fibonacci-weighted elevation changes
-        elevation_changes = []
-        for i in range(1, len(self.elevations)):
-            change = self.elevations[i] - self.elevations[i-1]
-            weight = fib(i % 10)  # Use Fibonacci weight cycling every 10 points
-            elevation_changes.append(change * weight)
-        
-        # Aggregate metrics using dictionary comprehension
-        self.metrics = {
-            'peak': peak_elevation,
-            'valley': valley_elevation,
-            'spatial_distance': spatial_distance,
-            'weighted_changes_sum': sum(elevation_changes),
-            'average_change': sum(elevation_changes) / len(elevation_changes) if elevation_changes else 0
-        }
-        
-        # Calculate peak elevation delta using trigonometric adjustment
-        angle_factor = math.sin(math.radians(30))  # 30-degree angle factor
-        peak_elevation_delta = int(peak_elevation - (valley_elevation * angle_factor))
-        
-        # Early return condition for special cases
-        if peak_elevation > 1000:
-            peak_elevation_delta = peak_elevation_delta * 2
-            return peak_elevation_delta
-        
-        return peak_elevation_delta
+def ip_to_int(ip_str):
+    parts = list(map(int, ip_str.split('.')))
+    return reduce(lambda acc, octet: (acc << 8) + octet, parts, 0)
 
-data_stream = "E1a;E2t;E1k;E3c;E2v;E4f;E1z;E5j;E3h;E6g"
+def count_ones(n):
+    return bin(n).count('1')
 
-with ElevationProfileProcessor(data_stream) as processor:
-    peak_elevation_delta = processor.compute_spatial_metrics()
+log_entry = "Security alert from IP 192.168.1.10 at 2023-07-15T14:30:22Z"
+ip_pattern = r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b'
+match = re.search(ip_pattern, log_entry)
+
+if match and all(0 <= int(x) <= 255 for x in match.group().split('.')):
+    ip_address = match.group()
+    ip_integer = ip_to_int(ip_address)
+    masked_ip = ip_integer & 0xFFFF0000
+    bit_count = count_ones(masked_ip)
     
-print(f"Result: {peak_elevation_delta}")
+    # Short-circuit evaluation in conditional assignment
+    is_even = bit_count % 2 == 0
+    adjusted_count = bit_count // 2 if is_even else (bit_count - 1) // 2
+    
+    # Additional check for private IP ranges
+    first_octet = int(ip_address.split('.')[0])
+    is_private = first_octet == 10 or first_octet == 172 and 16 <= int(ip_address.split('.')[1]) <= 31 or first_octet == 192 and int(ip_address.split('.')[1]) == 168
+    
+    # Final score calculation with conditional modifier
+    final_score = adjusted_count + (10 if is_private else 0)
+else:
+    final_score = -1
+
+print(f"Result: {final_score}")

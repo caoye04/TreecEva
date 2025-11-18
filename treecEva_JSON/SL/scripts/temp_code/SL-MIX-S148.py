@@ -1,75 +1,46 @@
-import math
+from collections import defaultdict
 
-# Asset data: {asset_id: expected_return}
-assets = {
-    'AAPL': 0.08,
-    'GOOGL': 0.12,
-    'MSFT': 0.10,
-    'AMZN': 0.15,
-    'TSLA': 0.20
-}
+class SensorReading:
+    def __init__(self, start_time, end_time, animal_count):
+        self.start_time = start_time
+        self.end_time = end_time
+        self.animal_count = animal_count
 
-# Correlation matrix between assets (simplified)
-correlations = {
-    ('AAPL', 'GOOGL'): 0.7,
-    ('AAPL', 'MSFT'): 0.6,
-    ('AAPL', 'AMZN'): 0.5,
-    ('AAPL', 'TSLA'): 0.3,
-    ('GOOGL', 'MSFT'): 0.8,
-    ('GOOGL', 'AMZN'): 0.4,
-    ('GOOGL', 'TSLA'): 0.2,
-    ('MSFT', 'AMZN'): 0.6,
-    ('MSFT', 'TSLA'): 0.4,
-    ('AMZN', 'TSLA'): 0.1
-}
-
-# Convert to symmetric matrix
-symmetric_correlations = {}
-for (a, b), corr in correlations.items():
-    symmetric_correlations[(a, b)] = corr
-    symmetric_correlations[(b, a)] = corr
-
-# Add diagonal (self-correlation = 1.0)
-for asset in assets:
-    symmetric_correlations[(asset, asset)] = 1.0
-
-# Greedy selection function
-selection_score = lambda asset, selected: (
-    assets[asset] - 0.3 * sum(symmetric_correlations[(asset, s)] for s in selected)
-)
-
-# Initialize
-selected_assets = []
-portfolio_weights = {}
-
-# Greedy selection (3 iterations)
-for _ in range(3):
-    best_asset = None
-    best_score = -float('inf')
+def calculate_max_animals(sensor_data):
+    # Sort sensors by end time
+    sensor_data.sort(key=lambda x: x.end_time)
     
-    for asset in assets:
+    # Dynamic programming array to store maximum animals up to each sensor
+    dp = [0] * (len(sensor_data) + 1)
     
-        if asset not in selected_assets:
-            score = selection_score(asset, selected_assets)
-            if score > best_score:
-                best_score = score
-                best_asset = asset
+    # For each sensor, calculate maximum animals
+    for i in range(1, len(sensor_data) + 1):
+        # Current sensor index in original array
+        current = i - 1
+        
+        # Find latest non-overlapping sensor
+        latest_non_overlap = 0
+        for j in range(current - 1, -1, -1):
+            if sensor_data[j].end_time <= sensor_data[current].start_time:
+                latest_non_overlap = j + 1
+                break
+        
+        # Choose maximum between including or excluding current sensor
+        dp[i] = max(dp[i-1], dp[latest_non_overlap] + sensor_data[current].animal_count)
     
-    if best_asset:
-        selected_assets.append(best_asset)
-        # Weight calculation (simplified)
-        weight = round(math.sqrt(assets[best_asset]) / sum(math.sqrt(assets[a]) for a in selected_assets), 4)
-        portfolio_weights[best_asset] = weight
+    return dp[len(sensor_data)]
 
-# Calculate diversity score
-portfolio_diversity_score = 0.0
-for i, asset1 in enumerate(selected_assets):
-    for asset2 in selected_assets[i+1:]:
-        correlation = symmetric_correlations[(asset1, asset2)]
-        weight_product = portfolio_weights[asset1] * portfolio_weights[asset2]
-        portfolio_diversity_score += weight_product * (1.0 - correlation)
+# Sensor data: (start_time, end_time, animal_count)
+sensor_readings = [
+    SensorReading(1, 4, 5),
+    SensorReading(3, 5, 1),
+    SensorReading(0, 6, 8),
+    SensorReading(4, 7, 4),
+    SensorReading(3, 8, 6),
+    SensorReading(5, 9, 2),
+    SensorReading(6, 10, 7),
+    SensorReading(8, 11, 3)
+]
 
-# Normalize and scale
-portfolio_diversity_score = round(portfolio_diversity_score * 100, 2)
-
-print(f"Result: {portfolio_diversity_score}")
+max_animals_tracked = calculate_max_animals(sensor_readings)
+print(f"Result: {max_animals_tracked}")

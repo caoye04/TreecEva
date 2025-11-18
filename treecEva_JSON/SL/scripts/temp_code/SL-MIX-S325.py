@@ -1,66 +1,88 @@
 import re
-from collections import defaultdict
+import math
+from functools import wraps
 
-def hash_string(s, mod):
-    hash_val = 0
-    for char in s:
-        hash_val = (hash_val * 31 + ord(char)) % mod
-    return hash_val
+def encode_dna_sequence(sequence):
+    mapping = {'A': '00', 'T': '01', 'C': '10', 'G': '11'}
+    return ''.join(mapping[nucleotide] for nucleotide in sequence)
 
-def explore_combinations(prefix, remaining, target_hash, mod):
-    if len(prefix) == 3:
-        if hash_string(prefix, mod) == target_hash:
-            return prefix
-        return None
+def decode_dna_sequence(encoded):
+    mapping = {'00': 'A', '01': 'T', '10': 'C', '11': 'G'}
+    return ''.join(mapping[encoded[i:i+2]] for i in range(0, len(encoded), 2))
+
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
+class GeneticAnalyzer:
+    def __init__(self):
+        self.marker_values = []
     
-    for i, char in enumerate(remaining):
-        result = explore_combinations(prefix + char, remaining[:i] + remaining[i+1:], target_hash, mod)
-        if result:
-            return result
-    return None
-
-class DocumentSegment:
-    def __init__(self, content):
-        self.content = content
-        self.processed = False
-        self.hash_map = defaultdict(list)
+    def add_marker(self, value):
+        self.marker_values.append(value)
     
-    def process(self, mod):
-        self.processed = True
-        segments = re.split(r'[.!?]', self.content)
-        for seg in segments:
-            clean_seg = re.sub(r'[^a-zA-Z]', '', seg).lower()
-            if len(clean_seg) >= 3:
-                key = hash_string(clean_seg[:3], mod)
-                self.hash_map[key].append(clean_seg)
+    def calculate_variance(self):
+        if not self.marker_values:
+            return 0
+        mean = sum(self.marker_values) / len(self.marker_values)
+        return sum((x - mean) ** 2 for x in self.marker_values) / len(self.marker_values)
+
+def retry_analysis(max_attempts=3):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            for attempt in range(max_attempts):
+                try:
+                    return func(*args, **kwargs)
+                except Exception:
+                    if attempt == max_attempts - 1:
+                        raise
+            return None
+        return wrapper
+    return decorator
+
+@retry_analysis(max_attempts=2)
+def process_genetic_data(dna_sequence):
+    # Encode sequence
+    encoded = encode_dna_sequence(dna_sequence)
     
-    def find_match(self, target_hash, mod):
-        if not self.processed:
-            self.process(mod)
-        
-        candidates = self.hash_map.get(target_hash, [])
-        for candidate in candidates:
-            if hash_string(candidate, mod) == target_hash:
-                return candidate
-        
-        # If not found, try to construct a 3-char string with matching hash
-        charset = ''.join(set(''.join(candidates)))
-        result = explore_combinations('', charset, target_hash, mod)
-        return result
+    # Apply transformation using Fibonacci
+    transformed = ''
+    for i, bit in enumerate(encoded):
+        fib_val = fibonacci(i+1) % 2
+        transformed += str(int(bit) ^ fib_val)  # XOR with Fibonacci bit
+    
+    # Decode back
+    decoded = decode_dna_sequence(transformed)
+    
+    # Extract marker patterns
+    analyzer = GeneticAnalyzer()
+    marker_pattern = re.compile(r'[AT]{2,}')
+    matches = marker_pattern.findall(decoded)
+    
+    for match in matches:
+        # Calculate marker value based on length and composition
+        at_count = match.count('A') + match.count('T')
+        cg_count = match.count('C') + match.count('G')
+        marker_value = (at_count * 2) + (cg_count * 3) if at_count > cg_count else (cg_count * 4) - (at_count * 1)
+        analyzer.add_marker(marker_value)
+    
+    return analyzer.calculate_variance()
 
-doc_content = "Natural language processing involves statistical models. These models often use neural networks!"
-segment = DocumentSegment(doc_content)
-modulus = 1009
-target_checksum = 523
+# Main analysis
+original_sequence = "ATCGATCGATCG"
 
-match_result = segment.find_match(target_checksum, modulus)
+with open('genetic_analysis.log', 'w') as log_file:
+    log_file.write(f"Starting analysis of {original_sequence}\n")
+    
+    # Check if sequence meets quality criteria
+    quality_check = len(original_sequence) >= 10 and \
+                   original_sequence.count('N') == 0  # N represents unknown nucleotides
+    
+    final_genetic_marker_score = quality_check and process_genetic_data(original_sequence) or 0
+    
+    log_file.write(f"Analysis complete. Score: {final_genetic_marker_score}\n")
 
-# Execution Point Y
-checksum = 0
-if match_result:
-    for c in match_result:
-        checksum = (checksum * 26 + (ord(c) - ord('a') + 1)) % 1000000007
-else:
-    checksum = -1
-
-print(f"Result: {checksum}")
+print(f"Result: {final_genetic_marker_score}")

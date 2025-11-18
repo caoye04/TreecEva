@@ -1,54 +1,59 @@
-import itertools
+from collections import defaultdict
 
-def custom_hash(s):
-    hash_val = 0
-    for char in s:
-        hash_val = (hash_val * 31 + ord(char)) & 0xFFFFFFFF
-    return hash_val
+events = [
+    {'type': 'request', 'amount': 10},
+    {'type': 'request', 'amount': 25},
+    {'type': 'utilization', 'level': 80},
+    {'type': 'request', 'amount': 5},
+    {'type': 'release', 'threshold': 30},
+    {'type': 'utilization', 'level': 45}
+]
 
-def transform_fragment(fragment):
-    transformed = ''
-    for i, char in enumerate(fragment):
-        if i % 2 == 0:
-            transformed += char.upper()
-        else:
-            transformed += char.lower()
-    return transformed[::-1]  # Reverse the string
+state = 'reserve'
+bandwidth_pool = 0
+reservation_buffer = []
+utilization_history = []
 
-def get_protein_marker(fragment):
-    transformed = transform_fragment(fragment)
-    hash_val = custom_hash(transformed)
-    
-    # Protein marker mapping
-    if hash_val % 7 == 0:
-        return 1000 + (hash_val % 100)
-    elif hash_val % 5 == 0:
-        return 2000 + (hash_val % 100)
-    elif hash_val % 3 == 0:
-        return 3000 + (hash_val % 100)
-    else:
-        return 4000 + (hash_val % 100)
+# State transition logic with short-circuit guards
+for event in events:
+    if state == 'reserve' and event['type'] == 'request':
+        reservation_buffer.append(event['amount'])
+        buffer_sum = sum(reservation_buffer)
+        # Short-circuit: Only check balance condition if buffer is non-empty
+        if reservation_buffer and buffer_sum >= 30:
+            state = 'balance'
+    elif state == 'reserve' and event['type'] == 'utilization':
+        utilization_history.append(event['level'])
+        # Short-circuit: Transition to release only if last two readings are low
+        if len(utilization_history) >= 2 and utilization_history[-1] < 50 and utilization_history[-2] < 50:
+            state = 'release'
+    elif state == 'balance':
+        # Greedy redistribution: allocate half of excess over 30
+        excess = max(0, sum(reservation_buffer) - 30)
+        bandwidth_pool += excess // 2
+        reservation_buffer = [x for x in reservation_buffer if x > 0]  # Reset buffer
+        state = 'reserve'
+    elif state == 'release' and event['type'] == 'release':
+        # Release policy: free up to threshold amount
+        released = min(bandwidth_pool, event['threshold'])
+        bandwidth_pool -= released
+        state = 'reserve'
 
-# DNA fragment analysis
-fragments = ['atgctag', 'ccggaatt', 'ggccttaa', 'ttaaccgg']
-marker_id = 0
+# Final aggregation using dictionary comprehension
+metrics = {
+    'pool': bandwidth_pool,
+    'buffer_total': sum(reservation_buffer),
+    'history_avg': sum(utilization_history) // len(utilization_history) if utilization_history else 0
+}
 
-for fragment in fragments:
-    if len(fragment) > 7:
-        # Process only longer fragments
-        sub_fragments = [fragment[i:i+6] for i in range(len(fragment)-5)]
-        for sub in sub_fragments:
-            if 'GG' in sub.upper():
-                marker_id += get_protein_marker(sub)
-                break  # Early return to avoid double counting
-    else:
-        # For shorter fragments, combine with others
-        combinations = itertools.combinations(fragments, 2)
-        for combo in combinations:
-            if fragment in combo:
-                combined = ''.join(combo)
-                if len(set(combined)) <= 6:  # If 6 or fewer unique nucleotides
-                    marker_id += get_protein_marker(combined)
-                    break  # Early return
+# Merge with derived metrics
+enhanced_metrics = {
+    **metrics,
+    **{k + '_scaled': v * 2 for k, v in metrics.items()}
+}
 
-print(f'Result: {marker_id}')
+# Compute final bandwidth using a lambda reduction
+compute_final = lambda d: d['pool'] + d.get('buffer_total', 0) - d.get('history_avg', 0)
+final_bandwidth = compute_final(enhanced_metrics)
+
+print(f"Result: {final_bandwidth}")

@@ -1,6 +1,33 @@
-import math
-phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-cumulative_sum = lambda d: {k: sum(list(d.values())[:i+1]) for i, k in enumerate(d.keys())}
-cumulative_phases = cumulative_sum(phase_changes)
-final_phase = cumulative_phases[10] % (2 * math.pi)
-print(f'Result: {final_phase}')
+from collections import defaultdict
+
+def bit_reverse(num, bits):
+    result = 0
+    for _ in range(bits):
+        result = (result << 1) | (num & 1)
+        num >>= 1
+    return result
+
+def custom_sort_key(x):
+    return bit_reverse(x, 4)
+
+# Frequency bins from a signal analysis
+freq_bins = [15, 7, 12, 3, 9, 6, 10, 5]
+
+# Logical filter: values must be even AND greater than 4
+filtered_bins = list(filter(lambda x: x > 4 and x % 2 == 0, freq_bins))
+
+# Sort using custom bit-reversed key
+sorted_bins = sorted(filtered_bins, key=custom_sort_key)
+
+# Divide and conquer aggregation using defaultdict
+aggregation = defaultdict(int)
+for idx, val in enumerate(sorted_bins):
+    if idx % 2 == 0:
+        aggregation['even'] += val
+    else:
+        aggregation['odd'] += val
+
+# Final metric calculation
+final_metric = (aggregation['even'] >> 1) ^ (aggregation['odd'] << 1)
+
+print(f"Result: {final_metric}")

@@ -1,46 +1,36 @@
-from collections import defaultdict
+from collections import Counter
 
-class SensorReading:
-    def __init__(self, start_time, end_time, animal_count):
-        self.start_time = start_time
-        self.end_time = end_time
-        self.animal_count = animal_count
+def transform_token(token):
+    return ''.join(sorted(token.lower()))
 
-def calculate_max_animals(sensor_data):
-    # Sort sensors by end time
-    sensor_data.sort(key=lambda x: x.end_time)
+def aggregate_scores(scores):
+    if not scores:
+        return 0
+    n = len(scores)
+    if n == 1:
+        return scores[0]
+    mid = n // 2
+    left = aggregate_scores(scores[:mid])
+    right = aggregate_scores(scores[mid:])
+    return (left + right) / 2 + abs(left - right) * 0.1
+
+@staticmethod
+def calculate_base(token_count):
+    return sum(count ** 2 for count in token_count.values())
+
+class TextAnalyzer:
+    def __init__(self, text):
+        self.tokens = text.split()
+        self.transformed_tokens = [transform_token(t) for t in self.tokens]
+        self.token_counter = Counter(self.transformed_tokens)
     
-    # Dynamic programming array to store maximum animals up to each sensor
-    dp = [0] * (len(sensor_data) + 1)
-    
-    # For each sensor, calculate maximum animals
-    for i in range(1, len(sensor_data) + 1):
-        # Current sensor index in original array
-        current = i - 1
-        
-        # Find latest non-overlapping sensor
-        latest_non_overlap = 0
-        for j in range(current - 1, -1, -1):
-            if sensor_data[j].end_time <= sensor_data[current].start_time:
-                latest_non_overlap = j + 1
-                break
-        
-        # Choose maximum between including or excluding current sensor
-        dp[i] = max(dp[i-1], dp[latest_non_overlap] + sensor_data[current].animal_count)
-    
-    return dp[len(sensor_data)]
+    def compute_complexity(self):
+        base_score = calculate_base(self.token_counter)
+        frequency_list = list(self.token_counter.values())
+        aggregated = aggregate_scores(frequency_list)
+        return base_score * aggregated
 
-# Sensor data: (start_time, end_time, animal_count)
-sensor_readings = [
-    SensorReading(1, 4, 5),
-    SensorReading(3, 5, 1),
-    SensorReading(0, 6, 8),
-    SensorReading(4, 7, 4),
-    SensorReading(3, 8, 6),
-    SensorReading(5, 9, 2),
-    SensorReading(6, 10, 7),
-    SensorReading(8, 11, 3)
-]
-
-max_animals_tracked = calculate_max_animals(sensor_readings)
-print(f"Result: {max_animals_tracked}")
+# Execution point Y
+analyzer = TextAnalyzer("Data data DATA dAtA structure Structure algorithm Algorithm")
+final_complexity_score = int(analyzer.compute_complexity())
+print(f"Result: {final_complexity_score}")

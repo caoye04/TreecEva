@@ -1,41 +1,33 @@
-from collections import defaultdict
-import hashlib
+import math
 
-def process_genomic_segment(segment_data):
-    decoded_bytes = bytes.fromhex(segment_data)
-    masked_data = bytearray()
-    for byte_val in decoded_bytes:
-        if (byte_val & 0xF0) != 0:
-            masked_data.append(byte_val ^ 0xAA)
-        else:
-            masked_data.append(byte_val)
-    return bytes(masked_data)
-
-class GenomicValidator:
-    def __init__(self):
-        self.checksum_map = defaultdict(int)
+def compute_synchronization_signal(base_freqs, phase_offsets):
+    sync_metric = 0.0
+    harmonics = [2, 3, 5]
     
-    def update_validation(self, processed_data):
-        hash_val = hashlib.sha256(processed_data).hexdigest()
-        char_sum = sum(ord(c) for c in hash_val[:8] if c.isdigit() or c.isalpha())
-        return char_sum % 100
+    for idx, freq in enumerate(base_freqs):
+        if freq <= 0:
+            continue
+        channel_energy = 0.0
+        
+        for harmonic in harmonics:
+            adjusted_freq = freq * harmonic
+            phase = phase_offsets[idx] * harmonic
+            component = math.sin(adjusted_freq + phase) * math.log(freq + 1)
+            channel_energy += component
+            
+            if component > 1.5:
+                sync_metric += component * 0.5
+                break
+        
+        sync_metric += channel_energy * 0.1
+        
+        if sync_metric > 10.0:
+            sync_metric = sync_metric % 7.0
+    
+    return sync_metric
 
-segment_registry = {
-    'segA': '48656c6c6f20',
-    'segB': '576f726c6421',
-    'segC': '47656e6f6d696373'
-}
-
-validator = GenomicValidator()
-intermediate_mask = 0x0F
-validation_score = 0
-
-with open('temp_seq.tmp', 'w') as f:
-    f.write(segment_registry['segA'])
-
-for seg_id, hex_data in segment_registry.items():
-    processed = process_genomic_segment(hex_data)
-    score_part = validator.update_validation(processed)
-    validation_score += score_part if (score_part & intermediate_mask) != 0 else -1
-
-print(f"Result: {validation_score}")
+frequencies = [1.2, 2.5, 0, 4.8, 3.3]
+phases = [0.1, 0.4, 0.7, 0.9, 1.2]
+sync_metric = compute_synchronization_signal(frequencies, phases)
+sync_metric = round(sync_metric, 6)
+print(f"Result: {sync_metric}")

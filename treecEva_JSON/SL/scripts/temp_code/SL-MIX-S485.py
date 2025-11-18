@@ -1,55 +1,40 @@
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+from collections import deque
 
-def build_network_topology():
-    # Build a binary tree with 7 nodes
-    root = TreeNode(12)
-    root.left = TreeNode(7)
-    root.right = TreeNode(15)
-    root.left.left = TreeNode(3)
-    root.left.right = TreeNode(9)
-    root.right.left = TreeNode(11)
-    root.right.right = TreeNode(13)
-    return root
+def fibonacci(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n+1):
+        a, b = b, a + b
+    return b
 
-def process_packets_through_network(root, packets):
-    routing_accumulator = 0
+def calculate_harmonic_score(note_durations, interval_sequence):
+    duration_queue = deque(note_durations)
+    interval_stack = []
+    harmonic_complexity_score = 0
     
-    for packet_id in packets:
-        current_node = root
-        path_xor = packet_id
-        
-        # Traverse the tree, applying XOR at each node
-        while current_node:
-            path_xor ^= current_node.val
-            # Greedy choice: go left if path_xor is even, else go right
-            if path_xor & 1 == 0:
-                current_node = current_node.left
-            else:
-                current_node = current_node.right
-        
-        routing_accumulator ^= path_xor
+    # Process note durations and build interval stack
+    while duration_queue:
+        duration = duration_queue.popleft()
+        if duration > 0:
+            # Calculate interval based on duration
+            interval = (duration * 3) % 7 + 1
+            interval_stack.append(interval)
     
-    return routing_accumulator
+    # Calculate harmonic complexity using Fibonacci weights
+    position = 1
+    while interval_stack:
+        interval = interval_stack.pop()
+        fib_weight = fibonacci(position)
+        harmonic_complexity_score += interval * fib_weight
+        position += 1
+    
+    return harmonic_complexity_score
 
-def calculate_final_key(base_key, modifier_sequence):
-    result = base_key
-    for mod in modifier_sequence:
-        if mod & 0x80:  # Check sign bit in 8-bit representation
-            result = (result << 1) & 0xFF  # Left shift with masking
-        else:
-            result = (result >> 1)  # Right shift
-        result ^= mod  # Apply modifier
-    return result
+# Musical composition data
+note_durations = [4, 2, 8, 1, 6, 3]
+interval_sequence = [2, 5, 1, 4, 3]
 
-# Main execution
-network_root = build_network_topology()
-incoming_packets = [42, 18, 73, 29]
-routing_result = process_packets_through_network(network_root, incoming_packets)
-shift_modifiers = [0xC3, 0x4A, 0xF1, 0x88]
-final_routing_key = calculate_final_key(routing_result, shift_modifiers)
-
-print(f"Result: {final_routing_key}")
+# Calculate the harmonic complexity score
+harmonic_complexity_score = calculate_harmonic_score(note_durations, interval_sequence)
+print(f"Result: {harmonic_complexity_score}")

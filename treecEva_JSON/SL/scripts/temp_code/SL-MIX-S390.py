@@ -1,22 +1,45 @@
-def is_prime(n):
-    if n <= 1:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
+from math import log2
 
-primes = []
-for num in range(2, 30):
-    if is_prime(num):
-        primes.append(num)
+def compute_fragmentation_score(block_size, block_type):
+    match block_type:
+        case 'A':
+            return (block_size << 2) ^ 0xF0
+        case 'B':
+            return (block_size >> 1) | 0x0F
+        case 'C':
+            return block_size & 0xAA
+        case _:
+            return block_size
 
-transform = lambda x: x * 2
-transformed_primes = list(map(transform, primes))
+def process_blocks(blocks):
+    scores = []
+    for size, btype in blocks:
+        base_score = compute_fragmentation_score(size, btype)
+        if base_score > 100:
+            adjusted = base_score - (base_score % 10)
+        else:
+            adjusted = base_score + (10 - (base_score % 10))
+        scores.append(adjusted)
+    return scores
 
-from math import gcd
-final_sum = 0
-for p in transformed_primes:
-    final_sum += gcd(p, 15)
+def calculate_final_score(scores):
+    # Divide and conquer approach to sum scores
+    if len(scores) == 1:
+        return scores[0]
+    mid = len(scores) // 2
+    left_sum = calculate_final_score(scores[:mid])
+    right_sum = calculate_final_score(scores[mid:])
+    return left_sum + right_sum
 
-print(f"Result: {final_sum}")
+# Data blocks: (size, type)
+data_blocks = [
+    (120, 'A'),
+    (65, 'B'),
+    (200, 'C'),
+    (42, 'A'),
+    (88, 'B')
+]
+
+processed_scores = process_blocks(data_blocks)
+final_score = calculate_final_score(processed_scores)
+print(f"Result: {final_score}")

@@ -1,34 +1,42 @@
-from itertools import permutations
-from dataclasses import dataclass
-from typing import List
+import functools
+import base64
 
-def hash_token(token: str) -> int:
-    return hash(token) % 10000
+def length_normalize(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        tokens = func(*args, **kwargs)
+        return [token if len(token) <= 10 else token[:10] for token in tokens]
+    return wrapper
 
-def xor_reduce(values: List[int]) -> int:
-    result = 0
-    for v in values:
-        result ^= v
-    return result
+@length_normalize
+def tokenize_and_filter(text):
+    stop_words = {'the', 'is', 'in', 'at', 'which', 'on', 'a', 'an'}
+    tokens = text.lower().replace(',', '').replace('.', '').split()
+    return [t for t in tokens if t not in stop_words]
 
-@dataclass
-class TokenSet:
-    items: List[str]
-    
-    def get_permutation_hashes(self) -> List[int]:
-        hashes = [hash_token(t) for t in self.items]
-        perm_hashes = []
-        for p in permutations(hashes):
-            perm_value = xor_reduce(list(p)[:3])
-            perm_hashes.append(perm_value)
-        return perm_hashes
+original_text = "The quick brown fox jumps over the lazy dog in the marketplace at dawn."
+vocabulary_base = {
+    'quick': 'qck', 'brown': 'brwn', 'fox': 'fx', 'jumps': 'jmps', 
+    'over': 'ovr', 'lazy': 'lzy', 'dog': 'dg', 'marketplace': 'mrktplc', 'dawn': 'dwn'
+}
+additional_vocab = {
+    'quick': 'QUICK', 'jumps': 'JUMPS', 'dog': 'DOG', 'unknown': 'UNK'
+}
 
-tokens = TokenSet(['alpha', 'beta', 'gamma'])
+merged_vocab = {**vocabulary_base, **additional_vocab}
+filtered_tokens = tokenize_and_filter(original_text)
+encoded_tokens = []
+normalized_char_count = 0
 
-with open('temp_log.txt', 'w') as f:
-    f.write("Processing tokens\n")
-    hashes_list = tokens.get_permutation_hashes()
-    secure_key = sum(hashes_list) % 997
-    f.write(f"Secure key: {secure_key}\n")
+for i, token in enumerate(filtered_tokens):
+    if i > 5:
+        break
+    encoded_token = merged_vocab.get(token, base64.b64encode(token.encode()).decode()[:8])
+    if len(encoded_token) == 0:
+        continue
+    encoded_tokens.append(encoded_token)
+    normalized_char_count += len(encoded_token)
+    if normalized_char_count > 20:
+        break
 
-print(f"Result: {secure_key}")
+print(f"Result: {normalized_char_count}")

@@ -1,37 +1,31 @@
-# Daily closing prices
-prices = [100, 103, 101, 105, 108, 106, 110, 112]
+text = "abcabdabcabc"
 
-# Step 1: Calculate daily returns
-returns = []
-for i in range(1, len(prices)):
-    daily_return = prices[i] - prices[i-1]
-    returns.append(daily_return)
+# Step 1: Extract all 2-character substrings
+substrings = []
+for i in range(len(text) - 1):
+    substr = text[i:i+2]
+    substrings.append(substr)
 
-# Step 2: Find longest positive streak
-max_positive_streak = 0
-current_streak = 0
-for ret in returns:
-    if ret > 0:
-        current_streak += 1
-        if current_streak > max_positive_streak:
-            max_positive_streak = current_streak
+# Step 2: Count frequencies
+freq_map = {}
+for substr in substrings:
+    if substr in freq_map:
+        freq_map[substr] += 1
     else:
-        current_streak = 0
+        freq_map[substr] = 1
 
-# Step 3: Calculate momentum score
-positive_returns = [r for r in returns if r > 0]
-if positive_returns:
-    avg_positive = sum(positive_returns) / len(positive_returns)
-    momentum_score = int(max_positive_streak * avg_positive * 10)
-else:
-    momentum_score = 0
+# Step 3: Find top 2 most frequent patterns
+sorted_patterns = sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+top_patterns = sorted_patterns[:2]
 
-# Step 4: Generate trading signal
-if momentum_score > 50:
-    trading_signal = 2  # Strong buy
-elif momentum_score > 25:
-    trading_signal = 1  # Buy
-else:
-    trading_signal = 0  # Hold
+# Calculate compression savings
+total_occurrences = sum(count for pattern, count in top_patterns)
+original_chars = total_occurrences * 2
+compressed_chars = len(top_patterns) * 2 + total_occurrences
+savings = original_chars - compressed_chars
 
-print(f"Result: {trading_signal}")
+# Step 4: Apply hash function
+pattern_sum = sum(ord(p[0]) + ord(p[1]) for p, c in top_patterns)
+compression_hash = (savings * 10 + pattern_sum) % 256
+
+print(f"Result: {compression_hash}")

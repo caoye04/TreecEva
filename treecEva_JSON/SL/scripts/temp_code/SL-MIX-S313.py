@@ -1,42 +1,62 @@
-import math
+from dataclasses import dataclass
+from typing import Dict, List
 
-class EnergyTracker:
-    def __init__(self):
-        self.total_energy_loss = 0
+@dataclass
+class Product:
+    code: str
+    price: int
+    quantity: int
+
+def process_vending_requests(products: Dict[str, Product], requests: List[str]) -> int:
+    # State machine states
+    STATE_READY = 'ready'
+    STATE_PROCESSING = 'processing'
+    STATE_OUT_OF_STOCK = 'out_of_stock'
     
-    def __enter__(self):
-        return self
+    state = STATE_READY
+    total_revenue = 0
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+    for request in requests:
+        # Ternary operator to determine if request is valid
+        is_valid_request = True if len(request) == 3 and request.isalnum() else False
+        
+        if not is_valid_request:
+            continue
+            
+        state = STATE_PROCESSING
+        
+        # Greedy algorithm: find cheapest available product with matching prefix
+        candidates = [p for p in products.values() if p.code.startswith(request[0]) and p.quantity > 0]
+        
+        if not candidates:
+            state = STATE_OUT_OF_STOCK
+            continue
+            
+        # Select cheapest item (greedy approach)
+        selected_product = min(candidates, key=lambda p: p.price)
+        
+        # Process purchase
+        selected_product.quantity -= 1
+        total_revenue += selected_product.price
+        
+        state = STATE_READY
     
-    def record_loss(self, loss):
-        self.total_energy_loss += loss
+    # Calculate remaining inventory value
+    remaining_value = sum(p.price * p.quantity for p in products.values())
+    return remaining_value
 
-def correction_factor(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result * 1.25 if result > 0 else result * 0.9
-    return wrapper
+# Initialize inventory
+inventory = {
+    'A01': Product('A01', 150, 3),
+    'A02': Product('A02', 200, 2),
+    'B01': Product('B01', 75, 5),
+    'B02': Product('B02', 120, 1),
+    'C01': Product('C01', 90, 4),
+    'C02': Product('C02', 250, 2)
+}
 
-@correction_factor
-def calculate_base_score(particles_count, decay_constant):
-    base = particles_count * math.log(decay_constant)
-    adjusted = base - (particles_count // 3)
-    return adjusted
+# Process requests
+purchase_requests = ['A00', 'B00', 'C00', 'A00', 'B00']
 
-initial_particles = 120
-constant = 7
-correction_applied = False
-final_score = 0
-
-with EnergyTracker() as tracker:
-    base_score = calculate_base_score(initial_particles, constant)
-    tracker.record_loss(initial_particles * 0.05)
-    corrected_base = base_score - tracker.total_energy_loss
-    if corrected_base > 50:
-        final_score = int(corrected_base * 1.1)
-    else:
-        final_score = int(corrected_base * 0.95)
-
-print(f'Result: {final_score}')
+remaining_inventory_value = process_vending_requests(inventory, purchase_requests)
+print(f'Result: {remaining_inventory_value}')

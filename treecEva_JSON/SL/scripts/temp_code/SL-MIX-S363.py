@@ -1,35 +1,29 @@
-import itertools
+from collections import defaultdict
 
-def process_neuronal_signals(signals):
-    # Apply combinatorial pairing and calculate XOR metrics
-    paired_metrics = [
-        a ^ b for a, b in itertools.combinations(signals, 2)
-        if (a + b) % 3 == 0
-    ]
-    
-    # Sort metrics in descending order
-    sorted_metrics = sorted(paired_metrics, reverse=True)
-    
-    # Compute adaptive threshold using ternary logic
-    threshold = sum(sorted_metrics[:3]) // len(sorted_metrics[:3]) if sorted_metrics else 0
-    
-    # Filter metrics above threshold
-    filtered_metrics = [m for m in sorted_metrics if m > threshold]
-    
-    # Calculate final metric as alternating sum of top 4 values
-    sign = 1
-    aggregate = 0
-    for i, val in enumerate(filtered_metrics[:4]):
-        aggregate += sign * val
-        sign *= -1
-    
-    # Normalize using ternary operator based on list length
-    final_metric = aggregate // 2 if len(filtered_metrics) >= 4 else aggregate * 2
-    return final_metric
+def hash_color(r, g, b):
+    return (r * 31 + g) * 31 + b
 
-# Neuronal signal dataset
-signals_data = [13, 22, 35, 46, 57, 68, 79, 81, 92, 103]
+def transform_pixel(canvas, x, y):
+    if x < 0 or y < 0 or x >= len(canvas) or y >= len(canvas[0]):
+        return 0
+    r, g, b = canvas[x][y]
+    # Neighbor influence: average of immediate neighbors' red values
+    neighbors = [(x-1,y), (x+1,y), (x,y-1), (x,y+1)]
+    neighbor_reds = [canvas[nx][ny][0] for nx, ny in neighbors if 0 <= nx < len(canvas) and 0 <= ny < len(canvas[0])]
+    avg_red = sum(neighbor_reds) // len(neighbor_reds) if neighbor_reds else r
+    # Transformation: increase blue by neighbor influence
+    new_b = min(255, b + (avg_red // 10))
+    return hash_color(r, g, new_b)
 
-# Process the signals
-final_metric = process_neuronal_signals(signals_data)
-print(f"Result: {final_metric}")
+canvas = [
+    [(100, 150, 200), (120, 160, 180)],
+    [(110, 155, 190), (125, 165, 185)]
+]
+
+artistic_score = 0
+for i in range(len(canvas)):
+    for j in range(len(canvas[0])):
+        transformed_hash = transform_pixel(canvas, i, j)
+        artistic_score += transformed_hash
+
+print(f"Result: {artistic_score}")

@@ -1,29 +1,30 @@
-from itertools import combinations
+import heapq
+from collections import deque
 
-genetic_markers = ['A1', 'B2', 'C3', 'D4', 'E5', 'F6']
-marker_scores = {'A1': 7, 'B2': 3, 'C3': 9, 'D4': 2, 'E5': 8, 'F6': 4}
+# Define blacklisted zones as a frozenset for immutable and fast lookup
+blacklisted_zones = frozenset([3, 7, 11])
 
-# Define filtering criteria using lambda functions
-valid_marker = lambda m: marker_scores[m] > 3
-high_score_marker = lambda m: marker_scores[m] > 6
-not_adjacent = lambda m1, m2: abs(ord(m1[0]) - ord(m2[0])) != 1
+# Package records: (priority, zone_id)
+packages_queue = [(2, 5), (4, 3), (1, 9), (5, 7), (3, 11), (6, 2)]
 
-# Generate all possible 3-marker combinations
-all_combinations = list(combinations(genetic_markers, 3))
+# Initialize max-heap using negative priorities (Python heapq is min-heap by default)
+max_heap = []
+for priority, zone in packages_queue:
+    adjusted_priority = priority * 2 if zone in blacklisted_zones else priority
+    heapq.heappush(max_heap, (-adjusted_priority, zone))
 
-# Apply filtering logic with multiple conditions
-filtered_combinations = [
-    combo for combo in all_combinations
-    if all(valid_marker(marker) for marker in combo) and
-       any(high_score_marker(marker) for marker in combo) and
-       not_adjacent(combo[0], combo[1]) and
-       not_adjacent(combo[1], combo[2])
-]
+# Process packages from the heap
+processed_priorities = []
+while max_heap:
+    neg_priority, zone = heapq.heappop(max_heap)
+    current_priority = -neg_priority
+    # Apply ternary-based conditional adjustment
+    current_priority = current_priority + 10 if zone % 2 == 0 else current_priority - 5
+    processed_priorities.append(current_priority)
 
-# Count valid combinations satisfying additional constraint
-filtered_combinations_count = len([
-    combo for combo in filtered_combinations
-    if sum(marker_scores[marker] for marker in combo) % 2 == 1
-])
+# Final step: apply reduction using functional approach
+final_priority = processed_priorities[0] if len(processed_priorities) <= 1 else (
+    processed_priorities[0] - sum(processed_priorities[1:])
+)
 
-print(f"Result: {filtered_combinations_count}")
+print(f"Result: {final_priority}")

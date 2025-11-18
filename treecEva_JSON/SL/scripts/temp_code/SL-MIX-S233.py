@@ -1,43 +1,57 @@
-import heapq
-from collections import defaultdict
+import math
+from contextlib import contextmanager
 
-def compute_fibonacci(n):
-    a, b = 1, 1
-    for _ in range(n - 1):
-        a, b = b, a + b
-    return a
+def log_decorator(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        return result
+    return wrapper
 
-returns_data = [0.05, -0.02, 0.03, 0.07, -0.01, 0.04, 0.06]
-fib_weights = [compute_fibonacci(i+1) for i in range(len(returns_data))]
+class StateMachine:
+    def __init__(self):
+        self.state = 'IDLE'
+    
+    @log_decorator
+    def process(self, input_signal):
+        if self.state == 'IDLE' and input_signal > 0:
+            self.state = 'ACTIVE'
+            return 1
+        elif self.state == 'ACTIVE':
+            if input_signal == 0:
+                self.state = 'LATCHED'
+                return 2
+            else:
+                return (input_signal ** 2) % 7
+        elif self.state == 'LATCHED':
+            if input_signal < 0:
+                self.state = 'ERROR'
+                return -1
+            else:
+                return int(math.log(input_signal + 1)) if input_signal > 0 else 0
+        else:  # ERROR state
+            return 0
 
-weighted_returns = [r * w for r, w in zip(returns_data, fib_weights)]
+@contextmanager
+def circuit_context():
+    sm = StateMachine()
+    try:
+        yield sm
+    finally:
+        pass
 
-# Compute mean of weighted returns
-mean_return = sum(weighted_returns) / len(weighted_returns)
+signals = [3, -1, 5, 0, 2, -3]
+circuit_output = 0
 
-# Compute variance
-variance = sum((x - mean_return) ** 2 for x in weighted_returns) / len(weighted_returns)
+with circuit_context() as machine:
+    for i, sig in enumerate(signals):
+        intermediate = machine.process(sig)
+        if i % 2 == 0:
+            circuit_output = circuit_output | intermediate
+        else:
+            circuit_output = circuit_output & (intermediate ^ ((sig * 3) % 5))
+        
+        # Short-circuit evaluation check
+        if circuit_output > 10 or (circuit_output < 0 and machine.state != 'ERROR'):
+            circuit_output = circuit_output ^ 0xF
 
-# Hash table to store metrics
-metrics = defaultdict(float)
-metrics['mean'] = mean_return
-metrics['variance'] = variance
-
-# Use a max heap (negate values) to find top 3 weighted returns
-heap = [-x for x in weighted_returns]
-heapq.heapify(heap)
-top_three_sum = sum(-heapq.heappop(heap) for _ in range(3))
-
-# Statistical adjustment factor using a lambda
-adjustment_factor = (lambda m, v, top: (m + top) / (1 + v) if v > 0 else m)(mean_return, variance, top_three_sum)
-
-# Final portfolio score calculation
-risk_free_rate = 0.01
-sharpe_ratio = (adjustment_factor - risk_free_rate) / (variance ** 0.5) if variance > 0 else 0
-
-# Apply set-based filtering for positive contributions
-positive_contributions = {r for r in weighted_returns if r > 0}
-filtered_mean = sum(positive_contributions) / len(positive_contributions) if positive_contributions else 0
-
-final_score = round(sharpe_ratio * filtered_mean * 1000)
-print(f"Result: {final_score}")
+print(f"Result: {circuit_output}")

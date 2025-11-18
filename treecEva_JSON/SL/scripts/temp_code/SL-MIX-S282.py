@@ -1,47 +1,54 @@
-import re
-from collections import defaultdict
+from dataclasses import dataclass
+import hashlib
 
-def calculate_octet_score(octet):
-    binary_repr = bin(int(octet))[2:].zfill(8)
-    xor_result = 0
-    for i, bit in enumerate(binary_repr):
-        if i % 2 == 0:
-            xor_result ^= int(bit)
-    return (int(octet) * 3 + xor_result) % 256
+def boundary_correction(position, boundary=100):
+    return position % boundary
 
-def process_log_entries(log_data):
-    ip_pattern = r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b'
-    threat_scores = defaultdict(int)
-    
-    for entry in log_data:
-        ips = re.findall(ip_pattern, entry)
-        for ip in ips:
-            octets = ip.split('.')
-            ip_score = 0
-            for i, octet in enumerate(octets):
-                if int(octet) > 127 and i < 3:
-                    ip_score += calculate_octet_score(octet) << (i*2)
-                else:
-                    ip_score += calculate_octet_score(octet)
-            threat_scores[ip] = max(threat_scores[ip], ip_score)
-    
-    total_threat_level = 0
-    suspicious_ips = frozenset({ip for ip, score in threat_scores.items() if score > 1000})
-    
-    for ip in suspicious_ips:
-        octets = ip.split('.')
-        adjustment = sum(int(octet) for octet in octets if int(octet) % 2 == 0)
-        total_threat_level += threat_scores[ip] - adjustment
-    
-    return total_threat_level
+def energy_filter(particle_hash):
+    return int(hashlib.md5(particle_hash.encode()).hexdigest(), 16) % 100 > 75
 
-network_logs = [
-    "Authentication failed from 192.168.1.105 at 14:32:10",
-    "Connection established to 203.0.113.195 on port 443",
-    "Suspicious activity detected from 198.51.100.17 at 14:32:15",
-    "Firewall blocked request from 192.0.2.200 at 14:32:20",
-    "Multiple login attempts from 203.0.113.195 and 198.51.100.17"
+def interaction_energy(pos1, pos2):
+    distance = abs(pos1 - pos2)
+    return 100 / (distance + 1) if distance > 0 else 0
+
+@dataclass
+class Particle:
+    id: str
+    x: int
+    y: int
+    z: int
+    
+    def corrected_position(self):
+        return (boundary_correction(self.x), 
+                boundary_correction(self.y), 
+                boundary_correction(self.z))
+    
+    def hash_id(self):
+        pos = self.corrected_position()
+        return hashlib.sha1(f"{self.id}-{pos}".encode()).hexdigest()[:16]
+
+particles_data = [
+    ('P001', 123, 456, 789),
+    ('P002', 234, 567, 890),
+    ('P003', 345, 678, 901),
+    ('P004', 456, 789, 123),
+    ('P005', 567, 890, 234)
 ]
 
-final_security_metric = process_log_entries(network_logs)
-print(f"Result: {final_security_metric}")
+particles = [Particle(*data) for data in particles_data]
+significant_interactions_count = 0
+
+for i in range(len(particles)):
+    for j in range(i+1, len(particles)):
+        p1, p2 = particles[i], particles[j]
+        hash1, hash2 = p1.hash_id(), p2.hash_id()
+        
+        if energy_filter(hash1) and energy_filter(hash2):
+            pos1 = p1.corrected_position()
+            pos2 = p2.corrected_position()
+            avg_distance = sum(abs(a-b) for a,b in zip(pos1,pos2))/3
+            
+            if avg_distance > 10 and interaction_energy(sum(pos1), sum(pos2)) > 5:
+                significant_interactions_count += 1
+
+print(f"Result: {significant_interactions_count}")

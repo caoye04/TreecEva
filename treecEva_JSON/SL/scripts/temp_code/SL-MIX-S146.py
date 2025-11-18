@@ -1,16 +1,33 @@
-import math
+import itertools
+import statistics
 
-# Define radius of flower bed and path width
-flower_bed_radius = 3
-path_width = 1.5
+def calculate_hash_distance(word1, word2):
+    return abs(hash(word1) - hash(word2)) % 1000
 
-# Calculate outer radius including the path
-outer_radius = flower_bed_radius + path_width
+def compute_semantic_coherence(word_groups):
+    total_distances = []
+    for group in word_groups:
+        pairwise_distances = []
+        # Generate all 2-combinations within each group
+        for combo in itertools.combinations(group, 2):
+            dist = calculate_hash_distance(combo[0], combo[1])
+            pairwise_distances.append(dist)
+        if pairwise_distances:
+            # Compute mean distance for the group
+            mean_dist = statistics.mean(pairwise_distances)
+            total_distances.append(mean_dist)
+    
+    if not total_distances:
+        return 0
+    # Return the variance of all group means
+    return statistics.variance(total_distances) if len(total_distances) > 1 else 0
 
-# Using list comprehension to calculate areas
-areas = [math.pi * r**2 for r in [flower_bed_radius, outer_radius]]
+# Ancient text word groups
+ancient_vocabulary = [
+    ['solar', 'lunar', 'stellar'],
+    ['river', 'mountain', 'forest', 'ocean'],
+    ['scribe', 'papyrus', 'ink', 'tablet', 'glyph']
+]
 
-# Calculate total area (area of outer circle)
-total_area = areas[1]
-
-print(f"Result: {total_area}")
+final_coherence_score = compute_semantic_coherence(ancient_vocabulary)
+print(f"Result: {final_coherence_score}")

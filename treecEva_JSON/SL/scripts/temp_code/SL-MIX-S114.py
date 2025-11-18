@@ -1,35 +1,76 @@
 import math
-from functools import reduce
+from collections import defaultdict, deque
 
-# Sensor network configuration
-sensor_readings = [[2, 4, 6], [3, 5, 7], [1, 8, 9]]
-weight_factors = [0.5, 1.5, 2.0]
-
-# Lambda function for signal adjustment
-adjust_signal = lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF
-
-# Initialize accumulator for processed signal strength
-processed_signal_strength = 0
-
-# Process sensor readings across multiple time intervals
-for interval_idx in range(len(sensor_readings)):
-    interval_readings = sensor_readings[interval_idx]
+class DistrictNode:
+    def __init__(self, district_id, vehicle_emissions):
+        self.district_id = district_id
+        self.vehicle_emissions = vehicle_emissions
+        self.children = []
     
-    # Apply weight factors and nested processing
-    for sensor_idx in range(len(interval_readings)):
-        raw_value = interval_readings[sensor_idx]
-        weight = weight_factors[sensor_idx]
-        
-        # Apply adjustment and accumulate
-        adjusted_value = adjust_signal(raw_value, weight)
-        processed_signal_strength += adjusted_value
-        
-        # Apply additional transformation for every second interval
-        if interval_idx % 2 == 1:
-            processed_signal_strength ^= raw_value
+    def add_child(self, child_node):
+        self.children.append(child_node)
 
-# Final transformation using functional programming
-final_transform = list(map(lambda x: x & 0xF, [processed_signal_strength]))
-processed_signal_strength = reduce(lambda a, b: a + b, final_transform)
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
-print(f"Result: {processed_signal_strength}")
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)
+
+def calculate_pollution_score(emissions):
+    # Modular arithmetic with geometry - emissions mod circle circumference (2*pi*10)
+    circumference = 2 * math.pi * 10
+    return int((emissions * 17) % circumference)
+
+def compute_compliance_modifier(district_id, pollution_score):
+    if is_prime(district_id):
+        # Prime districts get compliance boost based on LCM with fixed value
+        return lcm(pollution_score, 12)
+    else:
+        # Non-prime districts get penalty based on GCD
+        return -gcd(pollution_score, 15)
+
+# Build district tree
+root_district = DistrictNode(1, 250)
+child_2 = DistrictNode(2, 180)
+child_3 = DistrictNode(3, 320)
+child_4 = DistrictNode(4, 95)
+child_5 = DistrictNode(5, 140)
+child_6 = DistrictNode(6, 210)
+
+root_district.add_child(child_2)
+root_district.add_child(child_3)
+child_2.add_child(child_4)
+child_2.add_child(child_5)
+child_3.add_child(child_6)
+
+# Process districts using stack for DFS
+processing_stack = [root_district]
+cumulative_compliance_score = 0
+
+while processing_stack:
+    current_district = processing_stack.pop()
+    pollution = calculate_pollution_score(current_district.vehicle_emissions)
+    compliance_mod = compute_compliance_modifier(current_district.district_id, pollution)
+    cumulative_compliance_score += compliance_mod
+    
+    # Add children to stack (reversed to maintain left-to-right processing)
+    for child in reversed(current_district.children):
+        processing_stack.append(child)
+
+print(f"Result: {cumulative_compliance_score}")

@@ -1,28 +1,36 @@
-def is_prime(n):
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-    for i in range(3, int(n**0.5)+1, 2):
-        if n % i == 0:
-            return False
-    return True
+from collections import deque
+from functools import reduce
+from operator import xor
 
-def sum_of_squares_of_digits(n):
-    return sum(int(digit)**2 for digit in str(n))
+def process_packets():
+    packet_headers = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
+    accepted_signatures = deque(maxlen=3)
+    validation_keys = {0x10, 0x20, 0x30}
+    mask = 0xF0
+    
+    for header in packet_headers:
+        # Step 1: Bitwise filtering
+        if header & mask != 0:
+            # Step 2: Signature generation using XOR
+            signature = header ^ 0xAA
+            
+            # Step 3: Check if signature is in validation keys
+            if signature in validation_keys:
+                # Step 4: Add to sliding window (queue)
+                accepted_signatures.append(signature)
+            else:
+                # Step 5: Apply secondary filter using set operations
+                temp_set = frozenset([signature & 0x0F, (signature >> 4) & 0x0F])
+                if len(temp_set.intersection(validation_keys)) > 0:
+                    accepted_signatures.append(signature)
+    
+    # Step 6: Generate final verification code using reduce and XOR
+    if accepted_signatures:
+        final_verification_code = reduce(xor, accepted_signatures, 0)
+    else:
+        final_verification_code = 0
+    
+    return final_verification_code
 
-candidate_frequencies = [i for i in range(10, 100)]
-resonant_frequencies = []
-
-for freq in candidate_frequencies:
-    if is_prime(freq):
-        digit_square_sum = sum_of_squares_of_digits(freq)
-        if is_prime(digit_square_sum):
-            resonant_frequencies.append(freq)
-            if len(resonant_frequencies) == 3:
-                break
-
-third_resonant = resonant_frequencies[2] if len(resonant_frequencies) >= 3 else None
-print(f"Result: {third_resonant}")
+final_verification_code = process_packets()
+print(f"Result: {final_verification_code}")

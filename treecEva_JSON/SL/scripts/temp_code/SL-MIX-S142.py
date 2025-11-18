@@ -1,35 +1,28 @@
-import itertools
+from functools import wraps
+from itertools import permutations
 
-def process_signals(frequencies):
-    # Step 1: Transform frequencies using a lambda-based mapping
-    transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
-    
-    # Step 2: Group transformed values into sets based on magnitude ranges
-    low_freq = {x for x in transformed if x < 100}
-    high_freq = {x for x in transformed if x >= 100}
-    
-    # Step 3: Compute intersection and union of frequency sets
-    common_freq = low_freq & high_freq
-    all_freq = low_freq | high_freq
-    
-    # Step 4: Apply a ternary scoring rule
-    base_score = len(common_freq) * 10 if len(common_freq) > 0 else len(all_freq) * 5
-    
-    # Step 5: Adjust score using a string-based encoding of the largest element
-    max_element = max(all_freq) if all_freq else 0
-    encoded_max = ''.join(filter(str.isdigit, str(max_element)))
-    adjusted_score = base_score + int(encoded_max) if encoded_max else base_score
-    
-    # Step 6: Use itertools to compute pairwise differences and sum them
-    sorted_values = sorted(all_freq)
-    differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
-    diff_sum = sum(differences)
-    
-    # Final coherence score computation
-    coherence_score = adjusted_score + (diff_sum // 100)
-    return coherence_score
+def step_counter(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        wrapper.steps += 1
+        return result
+    wrapper.steps = 0
+    return wrapper
 
-# Observed signal frequencies
-frequencies = [2, 3, 5, 8, 12]
-coherence_score = process_signals(frequencies)
-print(f"Result: {coherence_score}")
+@step_counter
+def calculate_bonding_arrangements(ring_atoms):
+    # Generate all possible permutations of atom positions
+    all_perms = list(permutations(ring_atoms))
+    # Use set to eliminate duplicates considering rotational symmetry
+    unique_configs = set()
+    for perm in all_perms:
+        # Normalize by rotating to start with the smallest element
+        min_rotation = min([perm[i:] + perm[:i] for i in range(len(perm))])
+        unique_configs.add(min_rotation)
+    return len(unique_configs)
+
+# Carbon atoms in a hexagonal ring
+carbon_ring = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6']
+total_arrangements = calculate_bonding_arrangements(carbon_ring)
+print(f'Result: {total_arrangements}')

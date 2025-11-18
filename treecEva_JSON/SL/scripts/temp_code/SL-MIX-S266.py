@@ -1,42 +1,43 @@
-def analyze_dna_patterns(sequences):
-    pattern_scores = {}
-    nucleotide_pairs = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
+import math
+from collections import defaultdict
+
+def calculate_zone_capacity(zone_id):
+    return 50 + (zone_id * 15) % 100
+
+def simulate_visitor_flow():
+    zones = {i: {'capacity': calculate_zone_capacity(i), 'current': 0} for i in range(1, 6)}
+    overflow_counter = 0
+    visitor_patterns = [
+        [1, 3, 2, 5],
+        [2, 4, 1, 3],
+        [3, 1, 4, 2],
+        [4, 2, 5, 1],
+        [5, 3, 1, 4]
+    ]
     
-    for seq_id, sequence in enumerate(sequences):
-        complement_seq = ''.join([nucleotide_pairs.get(nuc, 'N') for nuc in sequence])
-        reverse_complement = complement_seq[::-1]
-        
-        palindromic_matches = 0
-        for i in range(len(sequence) - 2):
-            for j in range(i + 3, len(sequence) + 1):
-                substring = sequence[i:j]
-                if substring == reverse_complement[i:j]:
-                    palindromic_matches += 1
-        
-        pattern_scores[seq_id] = palindromic_matches
+    # Lambda to check if zone can accept more visitors
+    is_available = lambda z: zones[z]['current'] < zones[z]['capacity']
     
-    return pattern_scores
+    for cycle in range(10):
+        for pattern in visitor_patterns:
+            for zone in pattern:
+                if is_available(zone):
+                    zones[zone]['current'] += 1
+                    break
+                else:
+                    continue
+            else:
+                # Visitor could not enter any preferred zone
+                overflow_counter += 1
+        
+        # Reset every 3 cycles with modulo arithmetic
+        if (cycle + 1) % 3 == 0:
+            for zone_id in zones:
+                reset_amount = zones[zone_id]['current'] // 2
+                zones[zone_id]['current'] = zones[zone_id]['current'] - reset_amount
+    
+    return overflow_counter
 
-def calculate_regulatory_index(pattern_map, weight_factors):
-    regulatory_index = 0
-    for seq_id, matches in pattern_map.items():
-        if matches > 0:
-            weighted_value = matches * weight_factors.get(seq_id, 1)
-            regulatory_index += weighted_value if weighted_value % 2 == 0 else -weighted_value
-    return regulatory_index
-
-# DNA sequences under analysis
-chromosome_fragments = [
-    "ATCGATCG",
-    "GCATGCAT",
-    "TTAACGTTAA",
-    "CCGGCCGG"
-]
-
-# Weight factors for different sequence segments
-segment_weights = {0: 2, 1: 3, 2: 1, 3: 4}
-
-# Analysis pipeline
-pattern_analysis = analyze_dna_patterns(chromosome_fragments)
-regulatory_score = calculate_regulatory_index(pattern_analysis, segment_weights)
-print(f"Result: {regulatory_score}")
+# Main execution
+final_overflow_count = simulate_visitor_flow()
+print(f"Result: {final_overflow_count}")

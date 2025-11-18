@@ -1,22 +1,28 @@
-def key_validator(func):
-    def wrapper(key_segment):
-        if key_segment & 0xF0 == 0xA0 and key_segment >> 4 != 0xB:
-            return func(key_segment)
-        return 0
-    return wrapper
+from functools import reduce
 
-@key_validator
-def encrypt_segment(segment):
-    return (segment ^ 0x55) & 0xFF
+def custom_hash(s):
+    return reduce(lambda acc, c: (acc * 31 + ord(c)) % 1000003, s, 0)
 
-key_parts = [0xA3, 0xB7, 0xA9, 0xC2, 0xA1]
-encrypted_output = 0
+class PaperMetadata:
+    def __init__(self, title, authors, year):
+        self.title = title
+        self.authors = authors
+        self.year = year
 
-for i, part in enumerate(key_parts):
-    if i % 2 == 0 or (part | 0x0F) != 0xBF:
-        processed = encrypt_segment(part)
-        encrypted_output = encrypted_output | (processed << (i*8))
-    else:
-        encrypted_output = encrypted_output ^ (part << (i*8))
+metadata = PaperMetadata("Advanced Cryptographic Protocols", ["Dr. Smith", "Prof. Johnson"], 2023)
+author_set = frozenset(metadata.authors)
+sorted_authors = sorted(list(author_set))
+primary_author_hash = custom_hash(sorted_authors[0])
+title_length = len(metadata.title)
+year_mod = metadata.year % 17
 
-print(f"Result: {encrypted_output}")
+# Calculate verification components
+component_a = (primary_author_hash * 7) % 1009
+component_b = (title_length ** 2) % 1009
+component_c = (year_mod * 13) % 1009
+
+# Verification code calculation using ternary logic
+intermediate_result = component_a if component_a > component_b else component_b
+verification_code = (intermediate_result + component_c) % 1009 if (component_a + component_b + component_c) % 2 == 0 else (intermediate_result * component_c) % 1009
+
+print(f"Result: {verification_code}")

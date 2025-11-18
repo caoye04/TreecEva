@@ -1,24 +1,37 @@
-def process_recipes():
-    appetizer_ingredients = {'bread', 'cheese', 'olives', 'tomato'}
-    main_course_ingredients = {'rice', 'chicken', 'broccoli', 'carrot'}
-    dessert_ingredients = {'sugar', 'flour', 'butter', 'eggs', 'milk'}
-    
-    # Some ingredients overlap between recipes
-    shared_dessert_appetizer = {'bread'}
-    shared_dessert_main = {'eggs'}
-    
-    # Remove shared items from dessert set
-    exclusive_dessert = dessert_ingredients - shared_dessert_appetizer - shared_dessert_main
-    
-    return len(exclusive_dessert)
+import itertools
+import math
+from dataclasses import dataclass
+from typing import List, Tuple
 
-# Using a dictionary comprehension to simulate a switch-case pattern
-recipe_operations = {
-    'appetizer': lambda: None,
-    'main_course': lambda: None,
-    'dessert': process_recipes
-}
+def hexagon_moment_of_inertia(weights: List[float]) -> float:
+    # Positions of vertices in a regular hexagon (unit radius)
+    angles = [math.pi/3 * i for i in range(6)]
+    positions = [(math.cos(a), math.sin(a)) for a in angles]
+    
+    min_moment = float('inf')
+    
+    # Try all permutations of weights
+    for perm in itertools.permutations(weights):
+        moment = 0.0
+        for i in range(6):
+            x, y = positions[i]
+            distance_squared = x**2 + y**2
+            moment += perm[i] * distance_squared
+        min_moment = min(min_moment, moment)
+    
+    return round(min_moment, 2)
 
-selected_recipe = 'dessert'
-final_count = recipe_operations.get(selected_recipe, lambda: 0)()
-print(f'Result: {final_count}')
+def greedy_initial_sort(weights: List[float]) -> List[float]:
+    # Sort weights in descending order for initial arrangement
+    return sorted(weights, reverse=True)
+
+# Package weights in kilograms
+package_weights = [2.5, 3.7, 1.2, 4.8, 2.1, 3.3]
+
+# Apply greedy algorithm first
+initial_arrangement = greedy_initial_sort(package_weights)
+
+# Calculate optimized moment of inertia
+optimized_moment = hexagon_moment_of_inertia(initial_arrangement)
+
+print(f"Result: {optimized_moment}")

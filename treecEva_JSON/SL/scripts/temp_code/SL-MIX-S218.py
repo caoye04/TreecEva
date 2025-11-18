@@ -1,35 +1,35 @@
+import re
 from functools import reduce
 from collections import defaultdict
 
-# Daily market signals for portfolio adjustments
-daily_signals = [3, -1, 4, -2, 5, -3, 2]
+def haversine_distance(p1, p2):
+    # Simplified distance calculation returning integer meters
+    return int(abs(p1[0] - p2[0]) * 100000 + abs(p1[1] - p2[1]) * 100000)
 
-# Initialize adjustment tracking
-adjustment_history = defaultdict(int)
-total_impact = 0
-final_adjustment_score = 0
+def extract_coordinates(log_line):
+    match = re.search(r'\(([-+]?\d*\.\d+),\s*([-+]?\d*\.\d+)\)', log_line)
+    if match:
+        return (float(match.group(1)), float(match.group(2)))
+    return None
 
-# Process each signal with dynamic programming approach
-for idx, signal in enumerate(daily_signals):
-    # Greedy adjustment based on previous day's impact
-    if idx > 0 and adjustment_history[idx-1] > 0:
-        adjustment = signal * 2 if signal > 0 else signal
-    else:
-        adjustment = signal
-    
-    # Apply short-circuit logic for risk management
-    is_high_risk_day = signal < 0 and (idx > 0 and daily_signals[idx-1] > 0)
-    adjusted_signal = adjustment if not is_high_risk_day else adjustment // 2
-    
-    # Update history and accumulate impact
-    adjustment_history[idx] = adjusted_signal
-    total_impact += adjusted_signal
+tracking_logs = [
+    "Device_001: (34.0522, -118.2437)",
+    "Device_001: (34.0530, -118.2440)",
+    "Device_001: (34.0545, -118.2455)",
+    "Device_001: (34.0560, -118.2470)",
+    "Device_001: (34.0575, -118.2485)"
+]
 
-# Calculate final adjustment score using functional reduction
-final_adjustment_score = reduce(lambda acc, val: acc + (val if val > 0 else -val * 2), adjustment_history.values(), 0)
+coordinates_list = list(filter(None, map(extract_coordinates, tracking_logs)))
+dp_min_deviation = defaultdict(lambda: float('inf'))
+dp_min_deviation[0] = 0
 
-# Apply final risk adjustment using logical operations
-if total_impact > 10 and not (len(daily_signals) % 2 == 0 or total_impact < 15):
-    final_adjustment_score *= 2
+for i in range(1, len(coordinates_list)):
+    for j in range(i):
+        segment_distance = haversine_distance(coordinates_list[j], coordinates_list[i])
+        dp_min_deviation[i] = min(dp_min_deviation[i], dp_min_deviation[j] + segment_distance)
 
-print(f"Result: {final_adjustment_score}")
+straight_line_distance = haversine_distance(coordinates_list[0], coordinates_list[-1])
+migration_efficiency_index = dp_min_deviation[len(coordinates_list)-1] - straight_line_distance
+
+print(f"Result: {migration_efficiency_index}")

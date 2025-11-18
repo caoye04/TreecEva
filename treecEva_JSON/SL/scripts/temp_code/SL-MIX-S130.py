@@ -1,25 +1,24 @@
-from dataclasses import dataclass
+import re
+from collections import defaultdict
 
-@dataclass
-class Pastry:
-    name: str
-    price: float
-    units_sold: int
+document = "The quick brown fox jumps over the lazy dog. The dog was really lazy."
+stop_words = {'the', 'over', 'was', 'really'}
 
-# Daily sales report
-sales_data = {
-    'croissant': Pastry('croissant', 2.5, 45),
-    'muffin': Pastry('muffin', 3.0, 67),
-    'danish': Pastry('danish', 3.5, 120),
-    'scone': Pastry('scone', 2.0, 34)
-}
+# Tokenize and normalize
+tokens = re.findall(r'\b\w+\b', document.lower())
 
-top_seller_units = 0
-for item_name, pastry in sales_data.items():
-    if pastry.units_sold > 100:
-        top_seller_units = pastry.units_sold
-        break
-    elif pastry.units_sold > top_seller_units:
-        top_seller_units = pastry.units_sold
+# Filter out stop words
+filtered_tokens = [word for word in tokens if word not in stop_words]
 
-print(f"Result: {top_seller_units}")
+# Count frequencies using defaultdict
+freq_map = defaultdict(int)
+for word in filtered_tokens:
+    freq_map[word] += 1
+
+# Create a dictionary of words with frequency 1 using dictionary comprehension
+single_occurrence = {word: count for word, count in freq_map.items() if count == 1}
+
+# Count unique words that occur exactly once
+unique_word_count = len(single_occurrence)
+
+print(f"Result: {unique_word_count}")

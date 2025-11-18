@@ -1,28 +1,52 @@
-def fibonacci(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n+1):
-        a, b = b, a + b
-    return b
+import math
 
-tokens = ['sin', '(', 'x', ')', '+', 'cos', '(', 'y', ')']
-fib_cache = {}
-char_positions = set()
-unique_chars = frozenset(''.join(tokens))
+class FrequencyNode:
+    def __init__(self, frequency, gain):
+        self.frequency = frequency
+        self.gain = gain
+        self.left = None
+        self.right = None
 
-with open('temp_tokens.txt', 'w') as f:
-    for i, token in enumerate(tokens):
-        f.write(f'{token}\n')
-        for ch in token:
-            char_positions.add(ord(ch) * fibonacci(i+1))
+def build_frequency_tree():
+    root = FrequencyNode(1000, 2.5)
+    root.left = FrequencyNode(500, 1.8)
+    root.right = FrequencyNode(2000, 3.2)
+    root.left.left = FrequencyNode(250, 1.2)
+    root.left.right = FrequencyNode(750, 2.1)
+    root.right.left = FrequencyNode(1500, 2.8)
+    root.right.right = FrequencyNode(4000, 4.0)
+    return root
 
-checksum = 0
-if char_positions and unique_chars:
-    weighted_sum = sum(char_positions)
-    unique_count = len(unique_chars)
-    checksum = (weighted_sum % unique_count) if unique_count else 0
-else:
-    checksum = -1
+def process_band_gain(node):
+    if not node:
+        return 0
+    
+    # Process left subtree
+    left_result = process_band_gain(node.left)
+    
+    # Apply gain processing with modular arithmetic
+    processed_gain = (math.floor(node.gain * 10) % 7) + 1
+    
+    # Early return for specific condition
+    if node.frequency == 750:
+        return processed_gain * 3
+    
+    # Process right subtree
+    right_result = process_band_gain(node.right)
+    
+    # Combine results with floating point operations
+    combined = (left_result + right_result + processed_gain) * 0.5
+    
+    return combined
 
-print(f'Result: {checksum}')
+def compute_signal_output():
+    tree = build_frequency_tree()
+    raw_output = process_band_gain(tree)
+    
+    # Apply final transformations
+    final_output = math.ceil(raw_output * 100) / 100
+    
+    return final_output
+
+final_output = compute_signal_output()
+print(f"Result: {final_output}")

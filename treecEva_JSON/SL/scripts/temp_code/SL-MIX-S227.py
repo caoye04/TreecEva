@@ -1,10 +1,26 @@
-import math
+def count_unique_categories(func):
+    unique_categories = set()
+    
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if isinstance(result, (set, frozenset)):
+            unique_categories.update(result)
+        return len(unique_categories)
+    return wrapper
 
-amplitude_measurements = [0.05, 0.2, 1.5, 0.8, 3.2, 0.1]
-max_amplitude = max(amplitude_measurements)
-min_amplitude = min(amplitude_measurements)
+@count_unique_categories
+def process_recipe_1():
+    return frozenset({'protein', 'vegetable', 'spice'})
 
-# Calculate dynamic range in decibels using logarithmic scale
-dynamic_range_db = 20 * math.log10(max_amplitude / min_amplitude)
+@count_unique_categories
+def process_recipe_2():
+    return frozenset({'dairy', 'grain', 'spice'})
 
-print(f"Result: {dynamic_range_db}")
+@count_unique_categories
+def process_recipe_3():
+    return frozenset({'protein', 'dairy', 'fruit'})
+
+process_recipe_1()
+process_recipe_2()
+total_categories = process_recipe_3()
+print(f'Result: {total_categories}')

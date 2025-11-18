@@ -1,32 +1,66 @@
-import math
-from contextlib import contextmanager
+from collections import defaultdict, deque
 
-@contextmanager
-def navigation_context():
-    yield
+class FunctionNode:
+    def __init__(self, node_id, cost):
+        self.node_id = node_id
+        self.cost = cost
+        self.children = []
 
-waypoint_ids = [b'A1', b'B2', b'C3']
-waypoint_coords = [(0, 0), (3, 4), (6, 8)]
+def build_tree():
+    # Create nodes
+    nodes = {i: FunctionNode(i, cost) for i, cost in enumerate([12, -5, 7, 20, -3, 15, 8, -10, 9, 11])}
+    # Define tree structure (parent: [children])
+    edges = {
+        0: [1, 2],
+        1: [3, 4],
+        2: [5, 6],
+        3: [7, 8],
+        5: [9]
+    }
+    for parent, children in edges.items():
+        nodes[parent].children = [nodes[child] for child in children]
+    return nodes[0]  # Return root
 
-is_valid_waypoint = lambda x, y: x >= 0 and y >= 0 and math.sqrt(x**2 + y**2) <= 10
-
-decode_id = lambda enc: enc.decode('utf-8')
-
-with navigation_context():
-    checksum_components = [
-        ord(char) 
-        for wid in waypoint_ids 
-        for char in decode_id(wid)
-        if is_valid_waypoint(*waypoint_coords[waypoint_ids.index(wid)])
-    ]
+def prune_and_calculate_max_cost(root):
+    # Prune nodes with cost < 0
+    def prune(node):
+        if not node:
+            return None
+        if node.cost < 0:
+            return None
+        node.children = [prune(child) for child in node.children]
+        node.children = [child for child in node.children if child is not None]
+        return node
     
-    cumulative_distance = sum(
-        math.sqrt((waypoint_coords[i][0] - waypoint_coords[i-1][0])**2 + 
-                  (waypoint_coords[i][1] - waypoint_coords[i-1][1])**2)
-        for i in range(1, len(waypoint_coords))
-        if is_valid_waypoint(*waypoint_coords[i]) and is_valid_waypoint(*waypoint_coords[i-1])
-    )
+    root = prune(root)
+    if not root:
+        return 0
     
-    final_checksum = sum(checksum_components) + int(cumulative_distance)
+    # Dynamic programming to find max path cost
+    memo = {}
+    def dp(node):
+        if not node:
+            return 0
+        if node.node_id in memo:
+            return memo[node.node_id]
+        if not node.children:
+            memo[node.node_id] = node.cost
+            return node.cost
+        
+        max_child_cost = float('-inf')
+        for child in node.children:
+            child_cost = dp(child)
+            if child_cost > max_child_cost:
+                max_child_cost = child_cost
+            if child_cost < 0:  # Early termination logic
+                break
+        
+        result = node.cost + max_child_cost
+        memo[node.node_id] = result
+        return result
+    
+    return dp(root)
 
-print(f"Result: {final_checksum}")
+tree_root = build_tree()
+max_path_cost = prune_and_calculate_max_cost(tree_root)
+print(f"Result: {max_path_cost}")

@@ -1,18 +1,43 @@
-import hashlib
+from math import gcd
+from functools import reduce
 
-def process_device_id(d_id):
-    reversed_id = d_id[::-1]
-    hashed = hashlib.md5(reversed_id.encode()).hexdigest()
-    hex_sum = sum(ord(c) for c in hashed[:8])
-    return (hex_sum * 3) % 17
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
-device_pool = ['DEV001', 'SEN202', 'MON303', 'ALR404']
-transformed_values = {d: process_device_id(d) for d in device_pool}
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)
 
-enhanced_pool = {k: v + (7 if k.startswith('D') else 13) for k, v in transformed_values.items()}
-filtered_pool = dict(filter(lambda item: item[1] > 10, enhanced_pool.items()))
+# Frequency measurements from deep space signals
+signal_frequencies = [22, 7, 14, 19, 25, 3, 11, 30, 13, 8]
 
-aggregated_score = sum(map(lambda x: x**2, filtered_pool.values())) % 23
-validation_checksum = (aggregated_score * 5 + 7) % 19
+# Filter out prime frequencies
+prime_frequencies = list(filter(is_prime, signal_frequencies))
 
-print(f"Result: {validation_checksum}")
+# Compute LCM of all prime frequencies
+lcm_of_primes = reduce(lcm, prime_frequencies)
+
+# Dynamic programming table for stability scores
+stability_scores = [0] * (len(prime_frequencies) + 1)
+stability_scores[0] = 1
+
+for i in range(1, len(prime_frequencies) + 1):
+    stability_scores[i] = stability_scores[i-1] * prime_frequencies[i-1] + i
+
+# Apply weighting function
+weighted_sum = sum(map(lambda x, y: x * y, prime_frequencies, stability_scores[:-1]))
+
+# Final stability score calculation
+final_stability_score = (lcm_of_primes + weighted_sum) % 1000
+
+print(f"Result: {final_stability_score}")

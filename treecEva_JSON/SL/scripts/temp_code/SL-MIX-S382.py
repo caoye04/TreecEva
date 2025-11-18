@@ -1,40 +1,54 @@
+import math
 from collections import defaultdict
 
-class SecurityContext:
-    def __init__(self, segments):
-        self.segments = segments
-        self.filtered = []
+def compute_sensor_centroid_offset(readings):
+    x_components = []
+    y_components = []
+    weights = []
     
-    def __enter__(self):
-        # Apply first filter: only segments with even number of octets
-        self.filtered = [seg for seg in self.segments if len(seg.split('.')) % 2 == 0]
-        return self
+    for angle_deg, distance in readings.items():
+        angle_rad = math.radians(angle_deg)
+        x_comp = distance * math.cos(angle_rad)
+        y_comp = distance * math.sin(angle_rad)
+        weight = 1.0 / (1 + math.exp(-distance))
+        
+        x_components.append(x_comp)
+        y_components.append(y_comp)
+        weights.append(weight)
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+    weighted_x = sum(x * w for x, w in zip(x_components, weights))
+    weighted_y = sum(y * w for y, w in zip(y_components, weights))
+    total_weight = sum(weights)
+    
+    if total_weight == 0:
+        return 0.0
+    
+    centroid_x = weighted_x / total_weight
+    centroid_y = weighted_y / total_weight
+    
+    return math.sqrt(centroid_x**2 + centroid_y**2)
 
-ip_segments = ['192.168.1.0', '10.0.0.0', '172.16.0.0', '192.168.0.0', '10.10.10.10']
-suspicious_count = 0
+# Sensor readings: {angular_position_in_degrees: radial_distance}
+sensor_readings_map = {
+    0: 10.0,
+    45: 14.14,
+    90: 10.0,
+    135: 14.14,
+    180: 10.0,
+    225: 14.14,
+    270: 10.0,
+    315: 14.14
+}
 
-with SecurityContext(ip_segments) as ctx:
-    # Apply second filter: segments where first octet is > 100 AND (third octet exists OR second octet is odd)
-    secondary_filtered = []
-    for segment in ctx.filtered:
-        octets = segment.split('.')
-        first_octet = int(octets[0])
-        if first_octet > 100 and (len(octets) >= 3 or (len(octets) >= 2 and int(octets[1]) % 2 == 1)):
-            secondary_filtered.append(segment)
-    
-    # Apply final counting logic with short-circuit evaluation
-    octet_sum_map = defaultdict(int)
-    for segment in secondary_filtered:
-        octets = [int(o) for o in segment.split('.')]
-        octet_sum = sum(octets)
-        # Only count if sum is > 200 AND (at least 3 octets OR first octet > 150)
-        if octet_sum > 200 and (len(octets) >= 3 or octets[0] > 150):
-            octet_sum_map[octet_sum] += 1
-    
-    # Final suspicious count is the number of unique sums that appear exactly twice
-    suspicious_count = sum(1 for count in octet_sum_map.values() if count == 2)
+# Processing pipeline with functional transformations
+adjusted_readings = dict(map(lambda item: (item[0], item[1] * 0.9 if item[1] > 12 else item[1]), sensor_readings_map.items()))
+filtered_readings = dict(filter(lambda item: item[1] >= 9.0, adjusted_readings.items()))
 
-print(f"Result: {suspicious_count}")
+# Compute the centroid offset using the processed readings
+offset_magnitude = compute_sensor_centroid_offset(filtered_readings)
+
+# Calculate the final metric incorporating geometric properties
+angular_span = len(filtered_readings) * 45  # Each reading covers 45 degrees
+radial_displacement_index = round((offset_magnitude * angular_span) / 360.0, 2)
+
+print(f"Result: {radial_displacement_index}")

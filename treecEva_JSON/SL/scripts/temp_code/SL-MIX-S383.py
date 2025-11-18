@@ -1,35 +1,22 @@
-from functools import reduce
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+primes = []
+for num in range(2, 30):
+    if is_prime(num):
+        primes.append(num)
+
+transform = lambda x: x * 2
+transformed_primes = list(map(transform, primes))
+
 from math import gcd
+final_sum = 0
+for p in transformed_primes:
+    final_sum += gcd(p, 15)
 
-def polygon_area(vertices):
-    n = len(vertices)
-    area = 0
-    for i in range(n):
-        j = (i + 1) % n
-        area += vertices[i][0] * vertices[j][1]
-        area -= vertices[j][0] * vertices[i][1]
-    return abs(area) / 2.0
-
-def boundary_points(vertices):
-    n = len(vertices)
-    boundary = 0
-    for i in range(n):
-        j = (i + 1) % n
-        dx = vertices[j][0] - vertices[i][0]
-        dy = vertices[j][1] - vertices[i][1]
-        boundary += gcd(abs(dx), abs(dy))
-    return boundary
-
-# Vertices of the polygon (must be lattice points)
-vertex_coordinates = [(0, 0), (4, 0), (4, 3), (0, 3)]
-
-# Calculate area using the shoelace formula
-computed_area = polygon_area(vertex_coordinates)
-
-# Count boundary lattice points
-boundary_lattice_points = boundary_points(vertex_coordinates)
-
-# Apply Pick's theorem: Area = I + B/2 - 1 => I = Area - B/2 + 1
-interior_points = int(computed_area - boundary_lattice_points / 2 + 1)
-
-print(f"Result: {interior_points}")
+print(f"Result: {final_sum}")

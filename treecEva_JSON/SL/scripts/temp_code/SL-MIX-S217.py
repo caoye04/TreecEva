@@ -1,66 +1,54 @@
-import re
-from contextlib import contextmanager
+import math
+from collections import deque
 from dataclasses import dataclass
-from typing import Set
+from functools import reduce
 
-def hash_string(s: str) -> int:
-    return hash(s) % 1000000
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
-@contextmanager
-def hash_tracker():
-    matched_hashes: Set[int] = set()
-    try:
-        yield matched_hashes
-    finally:
-        pass
+def build_tree():
+    # Build a binary tree with specific values
+    root = TreeNode(12)
+    root.left = TreeNode(7)
+    root.right = TreeNode(15)
+    root.left.left = TreeNode(3)
+    root.left.right = TreeNode(9)
+    root.right.left = TreeNode(13)
+    root.right.right = TreeNode(18)
+    return root
 
-@dataclass
-class PasswordEntry:
-    username: str
-    password_hash: int
-    is_compromised: bool = False
-
-# Password database
-password_entries = [
-    PasswordEntry("admin", hash_string("password123")),
-    PasswordEntry("user1", hash_string("qwerty")),
-    PasswordEntry("guest", hash_string("guest123")),
-    PasswordEntry("dev", hash_string("devpass!")),
-]
-
-# Common weak password patterns
-weak_patterns = [r"password", r"qwerty", r"123", r"admin", r"guest"]
-
-# Known compromised hashes
-compromised_hashes = {hash_string("password123"), hash_string("qwerty"), hash_string("123456")}
-
-vulnerability_score = 0
-
-with hash_tracker() as tracked:
-    for entry in password_entries:
-        # Check if hash is in compromised set
-        if entry.password_hash in compromised_hashes:
-            entry.is_compromised = True
-            vulnerability_score += 10
-            tracked.add(entry.password_hash)
+def compute_security_key(root):
+    if not root:
+        return 0
+    
+    queue = deque([root])
+    xor_accumulator = 0
+    log_sum = 0.0
+    
+    while queue:
+        node = queue.popleft()
+        # Apply bitwise XOR with shifted value
+        shifted_val = node.val << 2
+        xor_accumulator ^= shifted_val
         
-        # Check for pattern matches
-        pattern_match = False
-        for pattern in weak_patterns:
-            if re.search(pattern, entry.username, re.IGNORECASE):
-                pattern_match = True
-                break
+        # Apply logarithmic transformation
+        if node.val > 0:
+            log_sum += math.log2(node.val)
         
-        # Apply scoring logic
-        if entry.is_compromised and not pattern_match:
-            vulnerability_score += 5
-        elif not entry.is_compromised and pattern_match:
-            vulnerability_score += 3
-        elif entry.is_compromised and pattern_match:
-            vulnerability_score += 7
-        
-        # Additional check for admin accounts
-        if entry.username == "admin" and entry.is_compromised:
-            vulnerability_score *= 2
+        # Add children to queue
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)
+    
+    # Final security key computation
+    exponent_part = int(math.pow(2, log_sum % 3))
+    security_key = xor_accumulator & exponent_part
+    return security_key
 
-print(f"Result: {vulnerability_score}")
+tree_root = build_tree()
+security_key = compute_security_key(tree_root)
+print(f"Result: {security_key}")

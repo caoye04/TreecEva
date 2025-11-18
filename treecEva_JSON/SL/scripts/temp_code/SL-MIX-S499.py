@@ -1,30 +1,17 @@
-import heapq
-from collections import deque
+import re
 
-# Define blacklisted zones as a frozenset for immutable and fast lookup
-blacklisted_zones = frozenset([3, 7, 11])
+def adjust_quantities(recipe, factor):
+    if not recipe:
+        return {}
+    return {k: v * factor if isinstance(v, (int, float)) else adjust_quantities(v, factor) for k, v in recipe.items()}
 
-# Package records: (priority, zone_id)
-packages_queue = [(2, 5), (4, 3), (1, 9), (5, 7), (3, 11), (6, 2)]
+base_recipe = {'flour': 2, 'sugar': 1, 'eggs': 3}
+special_additions = {'chocolate_chips': 0.5, 'vanilla_extract': 0.2}
 
-# Initialize max-heap using negative priorities (Python heapq is min-heap by default)
-max_heap = []
-for priority, zone in packages_queue:
-    adjusted_priority = priority * 2 if zone in blacklisted_zones else priority
-    heapq.heappush(max_heap, (-adjusted_priority, zone))
+updated_recipe = {**base_recipe, **special_additions}
+adjusted_recipe = adjust_quantities(updated_recipe, 2)
 
-# Process packages from the heap
-processed_priorities = []
-while max_heap:
-    neg_priority, zone = heapq.heappop(max_heap)
-    current_priority = -neg_priority
-    # Apply ternary-based conditional adjustment
-    current_priority = current_priority + 10 if zone % 2 == 0 else current_priority - 5
-    processed_priorities.append(current_priority)
+pattern = r'^(chocolate|vanilla).*'
+final_quantity = sum(v for k, v in adjusted_recipe.items() if re.match(pattern, k))
 
-# Final step: apply reduction using functional approach
-final_priority = processed_priorities[0] if len(processed_priorities) <= 1 else (
-    processed_priorities[0] - sum(processed_priorities[1:])
-)
-
-print(f"Result: {final_priority}")
+print(f"Result: {final_quantity}")

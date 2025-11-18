@@ -1,36 +1,18 @@
-import hashlib
-from collections import defaultdict
+from functools import wraps
 
-def encode_header(header_str):
-    return hashlib.sha256(header_str.encode()).hexdigest()[:8]
+def price_tracker(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        base_price = func(*args, **kwargs)
+        return round(base_price * 1.2, 2)
+    return wrapper
 
-def decode_header(encoded_str):
-    return int(encoded_str, 16)
+@price_tracker
+def compute_batch_expense(flour_kg, butter_kg, yeast_units):
+    flour_cost = flour_kg * 3.50
+    butter_cost = butter_kg * 7.80
+    yeast_cost = yeast_units * 0.15
+    return flour_cost + butter_cost + yeast_cost
 
-packet_headers = [
-    "SRC:192.168.1.1|DST:10.0.0.1|PORT:8080",
-    "SRC:192.168.1.2|DST:10.0.0.2|PORT:80",
-    "SRC:192.168.1.3|DST:10.0.0.3|PORT:443",
-    "SRC:192.168.1.4|DST:10.0.0.4|PORT:22"
-]
-
-encoded_packets = [encode_header(header) for header in packet_headers]
-
-decoded_values = [decode_header(packet) for packet in encoded_packets]
-
-threshold_map = defaultdict(lambda: 0x10000000)
-threshold_map['high_risk'] = 0x50000000
-threshold_map['medium_risk'] = 0x30000000
-
-anomaly_score = 0
-for value in decoded_values:
-    risk_level = 'high_risk' if value > threshold_map['high_risk'] else \
-                 'medium_risk' if value > threshold_map['medium_risk'] else 'low_risk'
-    
-    is_suspicious = (value & 0xF0000000) != 0
-    weight = 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1)
-    
-    anomaly_score += weight if is_suspicious else 0
-
-anomaly_score = anomaly_score if anomaly_score > 0 else -1
-print(f"Result: {anomaly_score}")
+final_batch_cost = compute_batch_expense(10.5, 5.2, 200)
+print(f'Result: {final_batch_cost}')

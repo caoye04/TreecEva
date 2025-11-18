@@ -1,61 +1,47 @@
-import math
+from collections import deque
+from math import factorial as fact
 
-class PacketNode:
-    def __init__(self, seq_num, size):
-        self.seq_num = seq_num
-        self.size = size
-        self.next = None
-        self.prev = None
+def combinatorial_selection(n, k):
+    if k > n or k < 0:
+        return 0
+    return fact(n) // (fact(k) * fact(n - k))
 
-class CircularPacketBuffer:
-    def __init__(self, capacity):
-        self.capacity = capacity
-        self.size = 0
-        self.head = None
-        self.tail = None
+class ForestSimulation:
+    def __init__(self, initial_pairs):
+        self.mature_pairs = initial_pairs
+        self.offspring_queue = deque([0] * 3)
+        self.genetic_scores = []
     
-    def add_packet(self, seq_num, size):
-        new_node = PacketNode(seq_num, size)
-        if self.size == 0:
-            self.head = self.tail = new_node
-            new_node.next = new_node.prev = new_node
-        else:
-            new_node.next = self.head
-            new_node.prev = self.tail
-            self.head.prev = new_node
-            self.tail.next = new_node
-            self.head = new_node
-            if self.size == self.capacity:
-                # Remove the oldest packet (tail)
-                self.tail = self.tail.prev
-                self.tail.next = self.head
-                self.head.prev = self.tail
-            else:
-                self.size += 1
-        if self.size < self.capacity:
-            self.size += 1
+    def next_generation(self):
+        # Fibonacci-like reproduction with environmental factor
+        new_offspring = self.mature_pairs + self.offspring_queue[0]
+        survival_rate = 0.7 if new_offspring > 10 else 0.9
+        
+        # Update queue and mature pairs
+        self.offspring_queue.append(new_offspring)
+        matured = self.offspring_queue.popleft()
+        self.mature_pairs += matured
+        
+        # Genetic diversity calculation using combinatorics
+        genetic_options = combinatorial_selection(self.mature_pairs, 2)
+        diversity_score = genetic_options * survival_rate
+        self.genetic_scores.append(diversity_score)
+        
+        return diversity_score
 
-def is_perfect_square(n):
-    root = int(math.sqrt(n))
-    return root * root == n
+# Initialize simulation
+ecosystem = ForestSimulation(3)
+simulation_cycles = 5
+survival_index = 0
 
-# Initialize buffer with capacity 10
-packet_buffer = CircularPacketBuffer(10)
+# Run simulation
+for cycle in range(simulation_cycles):
+    score = ecosystem.next_generation()
+    survival_index = survival_index + score if cycle % 2 == 0 else survival_index
 
-# Process 15 packets
-seq_start = 100
-size_start = 512
-for i in range(15):
-    seq_num = seq_start + i
-    size = (size_start + i * 64) % 1024 or 1024  # Ensures size wraps at 1024 and is never 0
-    packet_buffer.add_packet(seq_num, size)
+# Apply final adjustment based on total genetic health
+final_genetic_pool = sum(ecosystem.genetic_scores)
+total_mature_pairs = ecosystem.mature_pairs
+survival_index = int(survival_index * 0.5) if final_genetic_pool > total_mature_pairs * 10 else int(survival_index * 0.8)
 
-# Calculate sum of sizes for packets with perfect square sequence numbers
-target_sum = 0
-current = packet_buffer.head
-for _ in range(packet_buffer.size):
-    if is_perfect_square(current.seq_num):
-        target_sum += current.size
-    current = current.next
-
-print(f"Result: {target_sum}")
+print(f"Target result: {survival_index}")

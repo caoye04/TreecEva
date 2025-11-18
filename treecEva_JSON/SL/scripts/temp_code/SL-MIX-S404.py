@@ -1,35 +1,77 @@
-import math
-import cmath
+from functools import reduce
 
-# Vacuum's path as a sequence of complex number moves
-path_sequence = [1+0j, 1+0j, 0+1j, 1+0j, 0+1j, 0+1j, -1+0j, -1+0j, 0-1j, 0-1j, -1+0j, 0-1j]
+def calculate_shipping_cost(weight, distance):
+    base_rate = 2.5
+    return base_rate * weight * (distance / 100)
 
-# Initial state
-vacuum_position = 0+0j
-visited_cells = {vacuum_position}
-efficiency_score = 0.0
+def apply_divide_and_conquer_discount(weights, costs):
+    if len(weights) <= 1:
+        return costs
+    mid = len(weights) // 2
+    left_weights, right_weights = weights[:mid], weights[mid:]
+    left_costs, right_costs = costs[:mid], costs[mid:]
+    return apply_divide_and_conquer_discount(left_weights, left_costs) + apply_divide_and_conquer_discount(right_weights, right_costs)
 
-for move in path_sequence:
-    # Update position
-    vacuum_position += move
-    visited_cells.add(vacuum_position)
+def process_shipments():
+    # State machine for package routing
+    states = {'A': ['B', 'C'], 'B': ['C', 'D'], 'C': ['D'], 'D': []}
+    current_city = 'A'
     
-    # Calculate distance squared from origin
-    distance_squared = (vacuum_position.real**2 + vacuum_position.imag**2)
+    # Shipment data: (weight, destination)
+    shipments = [(15, 'D'), (8, 'C'), (22, 'D'), (5, 'B'), (12, 'D')]
+    distances = {'A': {'B': 120, 'C': 200}, 'B': {'C': 80, 'D': 150}, 'C': {'D': 70}}
     
-    # Prevent log(0) error
-    if distance_squared == 0:
-        distance_squared = 1
+    total_cost = 0
+    shipment_weights = []
+    shipment_costs = []
     
-    # Calculate efficiency score
-    unique_count = len(visited_cells)
-    efficiency_score = unique_count * math.log10(distance_squared)
+    for weight, destination in shipments:
+        if weight > 25:
+            return 0  # Early return for overweight packages
+        
+        path_cost = 0
+        temp_city = current_city
+        
+        # Route package through cities using state machine
+        while temp_city != destination:
+            if not states[temp_city]:
+                break
+            next_cities = states[temp_city]
+            if destination in next_cities:
+                path_cost += calculate_shipping_cost(weight, distances[temp_city][destination])
+                break
+            else:
+                # Move to first available city
+                next_city = next_cities[0]
+                if temp_city in distances and next_city in distances[temp_city]:
+                    path_cost += calculate_shipping_cost(weight, distances[temp_city][next_city])
+                temp_city = next_city
+                
+                if temp_city == destination:
+                    break
+        
+        shipment_weights.append(weight)
+        shipment_costs.append(path_cost)
+        total_cost += path_cost
     
-    # Check for return condition
-    if efficiency_score > 10.0:
-        vacuum_position = 0+0j
-        visited_cells = {vacuum_position}
-        # Note: efficiency_score is not reset
+    # Sort weights for divide and conquer discount application
+    sorted_indices = sorted(range(len(shipment_weights)), key=lambda i: shipment_weights[i])
+    sorted_weights = [shipment_weights[i] for i in sorted_indices]
+    sorted_costs = [shipment_costs[i] for i in sorted_indices]
+    
+    # Apply discount: 10% off for shipments >= 10 weight units
+    discounted_costs = [
+        cost * 0.9 if weight >= 10 else cost 
+        for weight, cost in zip(sorted_weights, sorted_costs)
+    ]
+    
+    # Use divide and conquer to finalize costs
+    final_costs = apply_divide_and_conquer_discount(sorted_weights, discounted_costs)
+    
+    # Sum all discounted costs
+    total_discounted_cost = reduce(lambda x, y: x + y, final_costs, 0)
+    
+    return total_discounted_cost
 
-# The final value of efficiency_score before any potential final return
-print(f"Target result: {efficiency_score}")
+result = process_shipments()
+print(f"Result: {result}")

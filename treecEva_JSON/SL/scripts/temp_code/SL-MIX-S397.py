@@ -1,45 +1,35 @@
-from math import log2
+import math
+import cmath
 
-def compute_fragmentation_score(block_size, block_type):
-    match block_type:
-        case 'A':
-            return (block_size << 2) ^ 0xF0
-        case 'B':
-            return (block_size >> 1) | 0x0F
-        case 'C':
-            return block_size & 0xAA
-        case _:
-            return block_size
+# Vacuum's path as a sequence of complex number moves
+path_sequence = [1+0j, 1+0j, 0+1j, 1+0j, 0+1j, 0+1j, -1+0j, -1+0j, 0-1j, 0-1j, -1+0j, 0-1j]
 
-def process_blocks(blocks):
-    scores = []
-    for size, btype in blocks:
-        base_score = compute_fragmentation_score(size, btype)
-        if base_score > 100:
-            adjusted = base_score - (base_score % 10)
-        else:
-            adjusted = base_score + (10 - (base_score % 10))
-        scores.append(adjusted)
-    return scores
+# Initial state
+vacuum_position = 0+0j
+visited_cells = {vacuum_position}
+efficiency_score = 0.0
 
-def calculate_final_score(scores):
-    # Divide and conquer approach to sum scores
-    if len(scores) == 1:
-        return scores[0]
-    mid = len(scores) // 2
-    left_sum = calculate_final_score(scores[:mid])
-    right_sum = calculate_final_score(scores[mid:])
-    return left_sum + right_sum
+for move in path_sequence:
+    # Update position
+    vacuum_position += move
+    visited_cells.add(vacuum_position)
+    
+    # Calculate distance squared from origin
+    distance_squared = (vacuum_position.real**2 + vacuum_position.imag**2)
+    
+    # Prevent log(0) error
+    if distance_squared == 0:
+        distance_squared = 1
+    
+    # Calculate efficiency score
+    unique_count = len(visited_cells)
+    efficiency_score = unique_count * math.log10(distance_squared)
+    
+    # Check for return condition
+    if efficiency_score > 10.0:
+        vacuum_position = 0+0j
+        visited_cells = {vacuum_position}
+        # Note: efficiency_score is not reset
 
-# Data blocks: (size, type)
-data_blocks = [
-    (120, 'A'),
-    (65, 'B'),
-    (200, 'C'),
-    (42, 'A'),
-    (88, 'B')
-]
-
-processed_scores = process_blocks(data_blocks)
-final_score = calculate_final_score(processed_scores)
-print(f"Result: {final_score}")
+# The final value of efficiency_score before any potential final return
+print(f"Target result: {efficiency_score}")

@@ -1,51 +1,30 @@
-from contextlib import contextmanager
+import math
+import numpy as np
+from functools import reduce
 
-def validate_transaction_chain(transactions, index=0, accumulated_flags=0):
-    if index >= len(transactions):
-        return accumulated_flags
-    
-    current_tx = transactions[index]
-    tx_valid = (current_tx['amount'] > 0) and (current_tx['timestamp'] is not None)
-    
-    if not tx_valid:
-        return validate_transaction_chain(transactions, index + 1, accumulated_flags)
-    
-    checksum_match = (current_tx['checksum'] & 0xFF) == (current_tx['id'] & 0xFF)
-    
-    if checksum_match and current_tx['amount'] < 1000:
-        new_flags = accumulated_flags | (1 << (index % 8))
-        return validate_transaction_chain(transactions, index + 1, new_flags)
-    elif checksum_match:
-        return validate_transaction_chain(transactions, index + 1, accumulated_flags)
-    else:
-        return accumulated_flags
+def log_normalize(values):
+    return [math.log(x + 1) for x in values]
 
-@contextmanager
-def audit_trail_context(transactions):
-    print(f"Starting audit of {len(transactions)} transactions")
-    try:
-        yield transactions
-    finally:
-        print("Audit completed")
+def exp_smooth(values, alpha=0.3):
+    smoothed = []
+    prev = values[0]
+    for v in values:
+        current = alpha * v + (1 - alpha) * prev
+        smoothed.append(current)
+        prev = current
+    return smoothed
 
-transactions_ledger = [
-    {'id': 1001, 'amount': 1500.0, 'timestamp': '2023-01-01', 'checksum': 0x1F2A},
-    {'id': 1002, 'amount': 750.5, 'timestamp': '2023-01-02', 'checksum': 0x2B02},
-    {'id': 1003, 'amount': -200.0, 'timestamp': '2023-01-03', 'checksum': 0x3C03},
-    {'id': 1004, 'amount': 1200.0, 'timestamp': None, 'checksum': 0x4D04},
-    {'id': 1005, 'amount': 300.0, 'timestamp': '2023-01-05', 'checksum': 0x5E05}
-]
+temperature_readings = [25.3, 26.1, 24.8, 27.5, 26.9, 25.0, 28.2, 27.1]
+normalized_temps = log_normalize(temperature_readings)
+smoothed_temps = exp_smooth(normalized_temps)
+filtered_temps = list(filter(lambda x: x > math.log(26), smoothed_temps))
 
-compliance_score = 0
+if len(filtered_temps) > 0:
+    matrix_a = np.array([[len(filtered_temps), sum(filtered_temps)], 
+                         [sum(filtered_temps), sum([x**2 for x in filtered_temps])]])
+    eigenvals = np.linalg.eigvals(matrix_a)
+    stability_index = round(reduce(lambda a, b: a + b, eigenvals), 4)
+else:
+    stability_index = 0
 
-with audit_trail_context(transactions_ledger) as ledger:
-    compliance_score = validate_transaction_chain(ledger)
-    
-    # Apply final adjustment based on number of valid transactions
-    valid_count = sum(1 for tx in ledger if tx['amount'] > 0 and tx['timestamp'] is not None)
-    if valid_count >= 3 and (compliance_score & 0b1010) == 0b1010:
-        compliance_score += 100
-    elif valid_count < 3 or not (compliance_score & 0b0101):
-        compliance_score -= 50
-
-print(f"Result: {compliance_score}")
+print(f"Result: {stability_index}")

@@ -1,35 +1,36 @@
-from itertools import combinations
+import statistics
 
-def transform_sequence(bits, depth=0):
-    if depth >= 3:
-        return bits
+def compute_portfolio_risk():
+    # Portfolio asset data: {asset_id: (value, volatility, correlation_factor)}
+    assets = {
+        'AAPL': (120000, 0.25, 0.8),
+        'GOOGL': (95000, 0.30, 0.7),
+        'TSLA': (75000, 0.45, 0.9),
+        'AMZN': (110000, 0.28, 0.75)
+    }
     
-    # Apply XOR folding
-    folded = 0
-    for i in range(len(bits)):
-        folded ^= bits[i] << (i % 8)
+    # Lambda for dynamic risk weighting based on asset value
+    risk_weight = lambda value: 1.2 if value > 100000 else 0.9
     
-    # Generate combinatorial mask
-    mask_elements = list(combinations(range(8), 3))
-    comb_mask = 0
-    for idx in mask_elements[depth if depth < len(mask_elements) else -1]:
-        comb_mask |= (1 << idx)
+    # Dictionary comprehension to calculate weighted risks
+    weighted_risks = {asset: volatility * risk_weight(value) * correlation
+                      for asset, (value, volatility, correlation) in assets.items()
+                      if value > 50000 and volatility > 0.2}
     
-    # Apply mask and shift
-    masked = folded & comb_mask
-    shifted = masked >> (depth + 1)
+    # Short-circuit evaluation for conditional risk adjustment
+    high_risk_flag = len([v for v in assets.values() if v[1] > 0.4]) > 0
+    market_condition_factor = 1.1 if high_risk_flag and len(assets) >= 4 else 1.0
     
-    # Recursive call with modified sequence
-    new_bits = [(shifted >> i) & 1 for i in range(8)]
-    return transform_sequence(new_bits, depth + 1)
+    # Calculate portfolio risk score using statistical measures
+    raw_risks = list(weighted_risks.values())
+    avg_risk = statistics.mean(raw_risks)
+    risk_variance = statistics.variance(raw_risks) if len(raw_risks) > 1 else 0
+    
+    # Final risk score calculation
+    portfolio_risk_score = (avg_risk * market_condition_factor) + (risk_variance * 10)
+    
+    return portfolio_risk_score
 
-# Initial bit sequence for encryption
-initial_bits = [1, 0, 1, 1, 0, 1, 0, 0]
-transformed = transform_sequence(initial_bits)
-
-# Compute security key from transformed bits
-security_key = 0
-for i, bit in enumerate(transformed):
-    security_key |= (bit << i)
-    
-print(f"Result: {security_key}")
+# Execute and print result
+portfolio_risk_score = compute_portfolio_risk()
+print(f"Result: {portfolio_risk_score}")

@@ -1,24 +1,24 @@
-class SignalSimulator:
-    def __enter__(self):
-        return self
-    
-    def __exit__(self, exc_type, exc_value, traceback):
-        pass
+import math
+from functools import reduce
 
-mask_pattern = 0b11001010
-input_signal = 0b10110110
-control_flag = True
-error_condition = False
+device_readings = [1000, 2500, 4000, 8000]
+device_ids = ['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']
 
-with SignalSimulator() as sim:
-    if control_flag and not error_condition:
-        intermediate_result = input_signal ^ mask_pattern
-    else:
-        intermediate_result = 0
-    
-    if intermediate_result or error_condition:
-        validated_signal = intermediate_result & mask_pattern
-    else:
-        validated_signal = 0
+# Step 1: Apply logarithmic scaling to readings
+scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
 
-print(f"Result: {validated_signal}")
+# Step 2: Compute weights from string hashes
+hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
+
+# Step 3: Normalize weights to sum to 1
+weight_sum = sum(hash_weights)
+normalized_weights = [w / weight_sum for w in hash_weights]
+
+# Step 4: Calculate weighted harmonic mean
+harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
+weighted_harmonic_mean = 1 / harmonic_sum
+
+# Step 5: Apply exponentiation for final normalization
+normalized_aggregate = math.exp(weighted_harmonic_mean)
+
+print(f"Result: {normalized_aggregate}")

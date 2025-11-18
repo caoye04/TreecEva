@@ -1,60 +1,66 @@
-import functools
+import re
+from contextlib import contextmanager
+from dataclasses import dataclass
+from typing import Set
 
-def calculate_priority_score(weight, distance):
-    return weight * distance
+def hash_string(s: str) -> int:
+    return hash(s) % 1000000
 
-def load_packages_greedy(truck_capacity, package_list):
-    # Sort packages by priority score descending (greedy)
-    scored_packages = [(pkg[0], pkg[1], calculate_priority_score(pkg[0], pkg[1])) for pkg in package_list]
-    scored_packages.sort(key=lambda x: x[2], reverse=True)
-    
-    # Initialize data structures
-    loaded_stack = []
-    pending_queue = scored_packages[:]
-    current_load = 0
-    
-    # Process using greedy + backtracking approach
-    def backtrack_load(remaining_capacity, index):
-        if index >= len(pending_queue):
-            return 0
-        
-        weight, _, _ = pending_queue[index]
-        
-        # Try loading current package (if fits)
-        if weight <= remaining_capacity:
-            loaded_stack.append(weight)
-            taken = 1 + backtrack_load(remaining_capacity - weight, index + 1)
-            loaded_stack.pop()
-        else:
-            taken = 0
-            
-        # Skip current package
-        skipped = backtrack_load(remaining_capacity, index + 1)
-        
-        return max(taken, skipped)
-    
-    # Execute greedy loading first
-    for pkg in scored_packages:
-        if current_load + pkg[0] <= truck_capacity:
-            current_load += pkg[0]
-            loaded_stack.append(pkg[0])
-    
-    # Refine with backtracking
-    final_load_count = backtrack_load(truck_capacity, 0)
-    return final_load_count
+@contextmanager
+def hash_tracker():
+    matched_hashes: Set[int] = set()
+    try:
+        yield matched_hashes
+    finally:
+        pass
 
-# Define truck specs and packages
-max_capacity = 50
-packages = [
-    (10, 5),   # (weight, delivery_distance)
-    (20, 3),
-    (15, 4),
-    (12, 6),
-    (8, 2),
-    (25, 1),
-    (5, 8)
+@dataclass
+class PasswordEntry:
+    username: str
+    password_hash: int
+    is_compromised: bool = False
+
+# Password database
+password_entries = [
+    PasswordEntry("admin", hash_string("password123")),
+    PasswordEntry("user1", hash_string("qwerty")),
+    PasswordEntry("guest", hash_string("guest123")),
+    PasswordEntry("dev", hash_string("devpass!")),
 ]
 
-# Compute optimized loading
-final_load_count = load_packages_greedy(max_capacity, packages)
-print(f"Result: {final_load_count}")
+# Common weak password patterns
+weak_patterns = [r"password", r"qwerty", r"123", r"admin", r"guest"]
+
+# Known compromised hashes
+compromised_hashes = {hash_string("password123"), hash_string("qwerty"), hash_string("123456")}
+
+vulnerability_score = 0
+
+with hash_tracker() as tracked:
+    for entry in password_entries:
+        # Check if hash is in compromised set
+        if entry.password_hash in compromised_hashes:
+            entry.is_compromised = True
+            vulnerability_score += 10
+            tracked.add(entry.password_hash)
+        
+        # Check for pattern matches
+        pattern_match = False
+        for pattern in weak_patterns:
+            if re.search(pattern, entry.username, re.IGNORECASE):
+                pattern_match = True
+                break
+        
+        # Apply scoring logic
+        if entry.is_compromised and not pattern_match:
+            vulnerability_score += 5
+        elif not entry.is_compromised and pattern_match:
+            vulnerability_score += 3
+        elif entry.is_compromised and pattern_match:
+            vulnerability_score += 7
+        
+        # Additional check for admin accounts
+        if entry.username == "admin" and entry.is_compromised:
+            vulnerability_score *= 2
+
+print(f"Result: {vulnerability_score}")

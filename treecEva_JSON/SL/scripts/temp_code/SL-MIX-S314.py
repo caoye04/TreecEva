@@ -1,45 +1,49 @@
-import math
 from collections import defaultdict
 
-# Sensor readings: each sublist represents readings from one sensor
-sensor_readings = [
-    [12, 28, 35, 42],
-    [7, 15, 23, 31],
-    [5, 18, 29, 38]
-]
+class CurrencyNode:
+    def __init__(self, name, score=0.0):
+        self.name = name
+        self.score = score
+        self.children = {}
 
-# Initialize a dictionary to store transformed readings
-transformed_signals = defaultdict(list)
+def build_preference_tree():
+    root = CurrencyNode('USD')
+    root.children['GBP'] = CurrencyNode('GBP', 1.25)
+    root.children['JPY'] = CurrencyNode('JPY', 0.95)
+    
+    root.children['GBP'].children['CHF'] = CurrencyNode('CHF', 1.1)
+    root.children['GBP'].children['EUR'] = CurrencyNode('EUR', 1.15)
+    
+    root.children['JPY'].children['CAD'] = CurrencyNode('CAD', 0.85)
+    root.children['JPY'].children['AUD'] = CurrencyNode('AUD', 0.9)
+    
+    root.children['GBP'].children['CHF'].children['EUR'] = CurrencyNode('EUR', 1.05)
+    
+    return root
 
-# Process each sensor's readings
-for sensor_id, readings in enumerate(sensor_readings):
-    for reading in readings:
-        # Apply modular arithmetic with a prime base
-        mod_value = (reading ** 2) % 17
+def traverse_greedy_path(root):
+    current = root
+    path_score = 0.0
+    visited_currencies = frozenset([root.name])
+    
+    while current.name != 'EUR':
+        if not current.children:
+            break
         
-        # Apply logarithmic transformation if mod_value is non-zero
-        if mod_value > 0:
-            log_value = math.log(mod_value)
-            # Apply exponential transformation
-            exp_value = math.exp(log_value / 2)
-            transformed_signals[sensor_id].append(exp_value)
-        else:
-            transformed_signals[sensor_id].append(0)
+        # Greedily select child with highest score not in visited_currencies
+        candidates = {name: node for name, node in current.children.items() 
+                     if name not in visited_currencies}
+        
+        if not candidates:
+            break
+            
+        next_currency = max(candidates.keys(), key=lambda x: candidates[x].score)
+        path_score += candidates[next_currency].score
+        current = candidates[next_currency]
+        visited_currencies |= {current.name}
+    
+    return path_score
 
-# Calculate aggregate signal strength
-aggregate_signal_strength = 0
-for sensor_id, signals in transformed_signals.items():
-    # Apply nested loops to compute pairwise products
-    for i in range(len(signals)):
-        for j in range(i+1, len(signals)):
-            product = signals[i] * signals[j]
-            # Conditional branch based on product value
-            if product > 10:
-                aggregate_signal_strength += product * 0.5
-            else:
-                aggregate_signal_strength += product * 0.1
-
-# Final adjustment using modular arithmetic
-aggregate_signal_strength = int(aggregate_signal_strength) % 100
-
-print(f"Result: {aggregate_signal_strength}")
+tree_root = build_preference_tree()
+final_score = traverse_greedy_path(tree_root)
+print(f'Result: {final_score}')

@@ -1,78 +1,71 @@
-from collections import defaultdict
+from collections import deque
 
-class PermissionNode:
-    def __init__(self, level):
-        self.level = level
+class WarehouseNode:
+    def __init__(self, x, y, items=0):
+        self.x = x
+        self.y = y
+        self.items = items
         self.left = None
         self.right = None
 
-def build_permission_tree():
-    root = PermissionNode(1)
-    root.left = PermissionNode(2)
-    root.right = PermissionNode(3)
-    root.left.left = PermissionNode(4)
-    root.left.right = PermissionNode(5)
+def build_warehouse_tree():
+    # Level 0
+    root = WarehouseNode(0, 0, 10)
+    
+    # Level 1
+    root.left = WarehouseNode(1, 1, 15)
+    root.right = WarehouseNode(2, 0, 8)
+    
+    # Level 2
+    root.left.left = WarehouseNode(3, 1, 12)
+    root.left.right = WarehouseNode(4, 2, 20)
+    root.right.left = WarehouseNode(5, 1, 6)
+    root.right.right = WarehouseNode(6, 0, 18)
+    
+    # Level 3
+    root.left.left.left = WarehouseNode(7, 1, 9)
+    root.left.left.right = WarehouseNode(8, 2, 14)
+    root.left.right.left = WarehouseNode(9, 3, 11)
+    root.left.right.right = WarehouseNode(10, 4, 25)
+    root.right.left.left = WarehouseNode(11, 5, 7)
+    root.right.left.right = WarehouseNode(12, 6, 13)
+    root.right.right.left = WarehouseNode(13, 7, 5)
+    root.right.right.right = WarehouseNode(14, 8, 16)
+    
     return root
 
-def calculate_clearance(node):
-    if not node:
-        return 0
-    return node.level + max(calculate_clearance(node.left), calculate_clearance(node.right))
+def process_warehouse():
+    warehouse = build_warehouse_tree()
+    stack = [warehouse]
+    total_items = 0
+    processed_nodes = 0
+    max_depth = 3
+    
+    # Track depth using a queue with (node, depth) tuples
+    queue = deque([(warehouse, 0)])
+    
+    while queue and processed_nodes < 15:  # 2^(max_depth+1) - 1 = 15 nodes
+        current_node, depth = queue.popleft()
+        
+        if depth > max_depth:
+            break
+            
+        # Process the node
+        if current_node.x % 2 == 0 and current_node.y % 2 == 0:
+            current_node.items *= 2
+        elif current_node.x % 2 != 0 or current_node.y % 2 != 0:
+            current_node.items //= 2
+        
+        total_items += current_node.items
+        processed_nodes += 1
+        
+        # Add children to queue for processing
+        if current_node.left and depth < max_depth:
+            queue.append((current_node.left, depth + 1))
+        if current_node.right and depth < max_depth:
+            queue.append((current_node.right, depth + 1))
+    
+    return total_items
 
-# Staff roles with base access levels
-staff_roles = {
-    'junior_researcher': 10,
-    'senior_researcher': 20,
-    'curator': 30,
-    'senior_curator': 40
-}
-
-# Additional access points from special projects
-special_projects = {
-    'egyptian_collection',
-    'renaissance_paintings',
-    'modern_sculptures'
-}
-
-# Seniority bonuses (years of service)
-seniority_bonus = defaultdict(int, {
-    'junior_researcher': 2,
-    'senior_researcher': 5,
-    'curator': 8,
-    'senior_curator': 12
-})
-
-# Calculate base clearance
-permission_tree = build_permission_tree()
-tree_clearance_value = calculate_clearance(permission_tree)
-
-# Greedy assignment of project access
-project_access = {}
-roles_list = sorted(staff_roles.keys(), key=lambda x: staff_roles[x], reverse=True)
-projects_list = list(special_projects)
-
-for i, role in enumerate(roles_list):
-    if i < len(projects_list):
-        project_access[role] = {projects_list[i]}
-    else:
-        project_access[role] = set()
-
-# Calculate final clearance for senior curator
-base_clearance = staff_roles['senior_curator']
-tree_bonus = tree_clearance_value
-seniority_points = seniority_bonus['senior_curator']
-project_bonus = len(project_access['senior_curator']) * 3
-
-# Apply a greedy optimization for maximum access
-available_clearance_points = {1, 2, 4, 8, 16}
-used_points = set()
-total_bonus = 0
-
-for point in sorted(available_clearance_points, reverse=True):
-    if point <= (tree_bonus + seniority_points + project_bonus) and point not in used_points:
-        total_bonus += point
-        used_points.add(point)
-
-senior_curator_clearance = base_clearance + tree_bonus + seniority_points + project_bonus + total_bonus
-
-print(f"Result: {senior_curator_clearance}")
+final_item_count = process_warehouse()
+print(f"Result: {final_item_count}")

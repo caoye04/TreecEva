@@ -1,33 +1,41 @@
-import math
-from collections import defaultdict
+from collections import deque
+import heapq
 
-def gaussian_window(N, sigma):
-    return {n: math.exp(-0.5 * ((n - (N-1)/2) / sigma) ** 2) for n in range(N)}
-
-def apply_gain(window_dict, gain_factor):
-    return {k: v * gain_factor for k, v in window_dict.items()}
-
-def compute_energy(window_dict):
-    return sum(v**2 for v in window_dict.values())
-
-# Signal processing pipeline
-window_cache = {}
-signal_segments = [128, 256, 512]
-gain_schedule = [0.8, 1.2, 0.9]
-
-processed_energies = []
-for i, (segment_size, gain) in enumerate(zip(signal_segments, gain_schedule)):
-    if segment_size not in window_cache:
-        # Compute and cache window coefficients
-        window_cache[segment_size] = gaussian_window(segment_size, segment_size/8)
+def prepare_ingredients():
+    ingredients = [
+        {'name': 'saffron', 'priority': 3, 'prep_time': 5},
+        {'name': 'truffle', 'priority': 1, 'prep_time': 10},
+        {'name': 'lobster', 'priority': 2, 'prep_time': 7},
+        {'name': 'caviar', 'priority': 4, 'prep_time': 3}
+    ]
     
-    # Apply dynamic gain adjustment
-    adjusted_window = apply_gain(window_cache[segment_size], gain)
+    # Priority queue for ingredients (min-heap based on priority)
+    priority_queue = []
+    for ingredient in ingredients:
+        heapq.heappush(priority_queue, (ingredient['priority'], ingredient['prep_time'], ingredient['name']))
     
-    # Compute energy of processed segment
-    segment_energy = compute_energy(adjusted_window)
-    processed_energies.append(segment_energy)
+    # Stack for preparation steps
+    prep_stack = deque()
+    
+    # Process ingredients
+    total_time = 0
+    while priority_queue:
+        priority, prep_time, name = heapq.heappop(priority_queue)
+        total_time += prep_time
+        prep_stack.append((name, total_time))
+    
+    # Calculate final score based on preparation efficiency
+    final_score = 0
+    step_count = 0
+    while prep_stack:
+        name, time = prep_stack.pop()
+        step_count += 1
+        if step_count % 2 == 0:
+            final_score += time * 2
+        else:
+            final_score -= time
+    
+    return final_score
 
-# Calculate final energy metric
-final_energy = round(sum(processed_energies) * 1000)
-print(f"Result: {final_energy}")
+final_score = prepare_ingredients()
+print(f"Result: {final_score}")

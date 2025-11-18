@@ -1,42 +1,56 @@
-import heapq
-from itertools import combinations
+import math
+import re
+from collections import deque
+from functools import reduce
 
-def calculate_entropy(key):
-    return len(set(key))  # Simplified entropy as unique character count
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
 
-def key_score_aggregate(keys):
-    return sum(hash(k) % 100 for k in keys)  # Simplified scoring
+def compute_deviation(altitudes):
+    deviations = []
+    for i in range(1, len(altitudes)):
+        diff = abs(altitudes[i] - altitudes[i-1])
+        fib_weight = fibonacci(i)
+        deviations.append(diff * fib_weight)
+    return deviations
 
-# Initial set of encryption keys
-encryption_keys = ['abc123', 'xyz789', 'def456', 'abc123', 'uvw000']
-key_heap = []
+def trig_smoothing(values):
+    smoothed = [math.sin(v) if v < 1 else math.cos(v) for v in values]
+    return smoothed
 
-# Populate heap with (entropy, key) tuples
-for key in encryption_keys:
-    entropy = calculate_entropy(key)
-    heapq.heappush(key_heap, (entropy, key))
+def hash_filter(segments):
+    registry = {}
+    filtered = []
+    for s in segments:
+        key = hash(round(s, 4)) % 1000
+        if key not in registry:
+            registry[key] = True
+            filtered.append(s)
+    return filtered
 
-# Process: Remove keys with entropy < 5 or duplicate keys
-processed_keys = set()
-filtered_heap = []
+telemetry_log = "ALT:100.5,102.3,99.8,105.0,103.2,107.1"
+match = re.search(r'ALT:(.*)', telemetry_log)
+altitude_data = list(map(float, match.group(1).split(',')))
 
-while key_heap:
-    entropy, key = heapq.heappop(key_heap)
-    # Short-circuit evaluation: check entropy first, then duplication
-    if entropy >= 5 and key not in processed_keys:
-        processed_keys.add(key)
-        heapq.heappush(filtered_heap, (entropy, key))
-    
-# Add new keys from combinatorial generation
-base_components = ['a', 'b', 'c', '1', '2', '3']
-generated_keys = [''.join(combo) for combo in combinations(base_components, 4)]
+# Step 1: Compute Fibonacci-weighted deviations
+weighted_deviations = compute_deviation(altitude_data)
 
-for key in generated_keys[:10]:  # Limit to first 10 combinations
-    entropy = calculate_entropy(key)
-    if entropy >= 3:  # Only add keys with minimum entropy
-        heapq.heappush(filtered_heap, (entropy, key))
+# Step 2: Apply trigonometric smoothing
+smoothed_values = trig_smoothing(weighted_deviations)
 
-# Final processing: calculate aggregate score of remaining keys
-final_key_score = key_score_aggregate([key for _, key in filtered_heap])
+# Step 3: Filter using hash-based registry
+unique_segments = hash_filter(smoothed_values)
 
-print(f"Result: {final_key_score}")
+# Step 4: Aggregate into stability score using stack-like reduction
+stack = deque(unique_segments)
+aggregated = 0
+while stack:
+    val = stack.pop()
+    aggregated = math.atan2(val, aggregated) if aggregated != 0 else val
+
+# Final stability score
+final_stability_score = round(aggregated * 1000)
+print(f"Result: {final_stability_score}")

@@ -1,24 +1,43 @@
-import math
+import re
 from functools import reduce
+from collections import namedtuple
 
-device_readings = [1000, 2500, 4000, 8000]
-device_ids = ['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']
+def decode_token_segment(segment):
+    if len(segment) <= 2:
+        return sum(ord(c) for c in segment)
+    mid = len(segment) // 2
+    left_result = decode_token_segment(segment[:mid])
+    right_result = decode_token_segment(segment[mid:])
+    return left_result ^ right_result
 
-# Step 1: Apply logarithmic scaling to readings
-scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
+class EncodingProcessor:
+    def __init__(self):
+        self.transform_rules = [
+            lambda x: x >> 1,
+            lambda x: x ^ 0xFF,
+            lambda x: (x * 3) & 0xFF
+        ]
+    
+    def process_sequence(self, tokens):
+        processed = []
+        for token in tokens:
+            if re.match(r'^[A-Z]{2,}$', token):
+                value = decode_token_segment(token)
+                for rule in self.transform_rules:
+                    value = rule(value)
+                processed.append(value)
+            else:
+                processed.append(0)
+        return processed
 
-# Step 2: Compute weights from string hashes
-hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
+TokenSequence = namedtuple('TokenSequence', ['primary', 'secondary'])
+token_data = TokenSequence(['ABCD', 'EFGH'], ['XYZ', 'ABC123'])
 
-# Step 3: Normalize weights to sum to 1
-weight_sum = sum(hash_weights)
-normalized_weights = [w / weight_sum for w in hash_weights]
+processor = EncodingProcessor()
+primary_results = processor.process_sequence(token_data.primary)
+secondary_results = processor.process_sequence(token_data.secondary)
 
-# Step 4: Calculate weighted harmonic mean
-harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-weighted_harmonic_mean = 1 / harmonic_sum
+combined_results = [a | b for a, b in zip(primary_results, secondary_results)]
+decoded_value = reduce(lambda x, y: (x + y) & 0xFF, combined_results, 0)
 
-# Step 5: Apply exponentiation for final normalization
-normalized_aggregate = math.exp(weighted_harmonic_mean)
-
-print(f"Result: {normalized_aggregate}")
+print(f"Result: {decoded_value}")

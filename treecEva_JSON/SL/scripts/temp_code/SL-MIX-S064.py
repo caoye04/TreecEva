@@ -1,29 +1,23 @@
-from functools import reduce
+import math
 
-def calculate_modular_weights(weights, modulus_base):
-    return list(map(lambda w: w % modulus_base, weights))
+def tokenize(message):
+    return [ord(c) for c in message]
 
-def compute_loading_efficiency(processed_weights, capacity):
-    loaded = 0
-    efficiency_scores = []
-    for weight in sorted(processed_weights, reverse=True):
-        if loaded + weight <= capacity:
-            loaded += weight
-            efficiency_scores.append(weight * (loaded % 7))
-    return efficiency_scores
+def hash_token(token):
+    return (token * 31) % 256
 
-# Package weights for the current delivery run
-shipment_weights = [23, 45, 12, 67, 89, 34, 56, 78]
-truck_capacity = 150
-mod_base = 17
+def process_layer(tokens, shift_val):
+    hashed = [hash_token(t) for t in tokens]
+    shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+    xor_result = 0
+    for s in shifted:
+        xor_result ^= s
+    return xor_result >> shift_val
 
-# Process weights using modular arithmetic
-modular_weights = calculate_modular_weights(shipment_weights, mod_base)
-
-# Apply greedy loading algorithm
-efficiency_scores = compute_loading_efficiency(modular_weights, truck_capacity)
-
-# Calculate final efficiency score using functional reduction
-final_efficiency_score = reduce(lambda acc, score: (acc + score) % 13, efficiency_scores, 0)
-
-print(f"Result: {final_efficiency_score}")
+token_sequence = tokenize("SECURE")
+layer1_result = process_layer(token_sequence, 1)
+layer2_result = process_layer(token_sequence[::-1], 2)
+auth_signature = (layer1_result ^ layer2_result) & 0xFF
+exp_component = int(math.log2(layer1_result + 1)) if layer1_result > 0 else 0
+auth_signature = (auth_signature << 2) | exp_component
+print(f"Result: {auth_signature}")

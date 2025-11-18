@@ -1,35 +1,40 @@
-import re
+import math
 
-def process_phonemes(phoneme_corpus):
-    base_sets = [frozenset(phoneme) for phoneme in phoneme_corpus]
-    vowel_pattern = re.compile(r'[aeiou]')
-    
-    # Filter phoneme sets containing vowels using regex
-    vowel_sets = [
-        ph_set for ph_set in base_sets
-        if any(vowel_pattern.match(char) for char in ph_set)
-    ]
-    
-    # Lambda to compute cardinality product
-    cardinality_product = lambda s1, s2: len(s1) * len(s2)
-    
-    # Short-circuit evaluation with set intersection check
-    score = 0
-    for i in range(len(vowel_sets)):
-        for j in range(i+1, len(vowel_sets)):
-            if vowel_sets[i] and vowel_sets[j] and (vowel_sets[i] & vowel_sets[j]):
-                score += cardinality_product(vowel_sets[i], vowel_sets[j])
-    return score
+def call_tracker(func):
+    def wrapper(*args, **kwargs):
+        wrapper.call_count += 1
+        return func(*args, **kwargs)
+    wrapper.call_count = 0
+    return wrapper
 
-# Corpus data
-phoneme_data = [
-    ['a', 'b', 'c'],
-    ['d', 'e', 'f', 'g'],
-    ['h', 'i'],
-    ['j', 'k', 'l', 'm', 'n'],
-    ['o', 'p', 'q'],
-    ['r', 's', 't', 'u']
-]
+@call_tracker
+def process_frequency_band(band_data, attenuation_factor):
+    return [math.floor(x * attenuation_factor) for x in band_data]
 
-metric_score = process_phonemes(phoneme_data)
-print(f"Result: {metric_score}")
+@call_tracker
+def apply_noise_gate(signal_values, threshold):
+    return list(map(lambda x: x if x > threshold else 0, signal_values))
+
+# Audio signal processing pipeline
+frequency_bands = [[120, 180, 240], [95, 155, 215], [110, 170, 230]]
+attenuation_matrix = [0.8, 0.7, 0.9]
+noise_threshold = 100
+
+processed_signals = []
+for i in range(len(frequency_bands)):
+    if i % 2 == 0:
+        processed_band = process_frequency_band(frequency_bands[i], attenuation_matrix[i])
+    else:
+        processed_band = apply_noise_gate(frequency_bands[i], noise_threshold)
+    processed_signals.append(processed_band)
+
+# Final signal strength calculation
+signal_weights = {0: 1.2, 1: 1.5, 2: 1.1}
+weighted_sum = sum(
+    signal_weights[band_idx] * sum(processed_signals[band_idx])
+    for band_idx in range(len(processed_signals))
+    if sum(processed_signals[band_idx]) > 0
+)
+
+final_signal_strength = math.ceil(weighted_sum / (process_frequency_band.call_count + apply_noise_gate.call_count))
+print(f"Result: {final_signal_strength}")

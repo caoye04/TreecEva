@@ -1,30 +1,38 @@
-from functools import reduce
+import math
+from collections import defaultdict
 
-def modular_power(base, exp, mod):
-    return pow(base, exp, mod)
+def calculate_diversity_index(species_data):
+    return int(math.log(sum(species_data)) * 100)
 
-def calculate_efficiency(keys, operations):
-    # Map each key to its modular exponentiation result
-    mod_results = {key: modular_power(key, 3, 17) for key in keys}
-    
-    # Apply operations using list comprehension and modular arithmetic
-    processed_values = [
-        (mod_results[key] * op + 5) % 13
-        for key, op in zip(mod_results.keys(), operations)
-    ]
-    
-    # Use functional programming to calculate the cumulative efficiency
-    efficiency_base = reduce(lambda x, y: (x + y) % 19, processed_values, 0)
-    
-    # Apply final transformation
-    efficiency_score = (efficiency_base ** 2 + 3 * efficiency_base + 7) % 23
-    
-    return efficiency_score
+# Observation data from three monitoring zones
+primary_zone_observations = {12, 15, 19, 23, 29}
+secondary_zone_observations = {7, 11, 13, 17, 19}
+tertiary_zone_observations = {5, 7, 11, 13, 17}
 
-# Encryption key candidates and operation multipliers
-encryption_keys = [7, 11, 13, 19, 23]
-operation_multipliers = [2, 4, 1, 5, 3]
+# Calculate zone-specific metrics
+primary_metrics = frozenset({x**2 for x in primary_zone_observations})
+secondary_metrics = frozenset({x*2 for x in secondary_zone_observations})
+tertiary_metrics = frozenset({x+3 for x in tertiary_zone_observations})
 
-# Calculate the efficiency score
-efficiency_score = calculate_efficiency(encryption_keys, operation_multipliers)
-print(f'Result: {efficiency_score}')
+# Determine shared species between zones
+shared_species = primary_metrics.intersection(secondary_metrics, tertiary_metrics)
+
+# Build species frequency map
+frequency_map = defaultdict(int)
+for zone_data in [primary_metrics, secondary_metrics, tertiary_metrics]:
+    for value in zone_data:
+        frequency_map[value] += 1
+
+# Identify endemic species (appearing in only one zone)
+endemic_species = {k for k, v in frequency_map.items() if v == 1}
+
+# Apply diversity transformation
+transformed_endemic = {calculate_diversity_index({x}) for x in endemic_species if x > 20}
+
+# Compute final index using logarithmic scaling
+if transformed_endemic:
+    endemic_richness_index = int(math.exp(len(transformed_endemic) / len(endemic_species)) * 1000)
+else:
+    endemic_richness_index = 0
+
+print(f"Result: {endemic_richness_index}")

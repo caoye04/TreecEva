@@ -1,39 +1,40 @@
-from functools import reduce
+import re
 
-def transform_readings(readings):
-    # Apply a non-linear transformation using modular exponentiation
-    return [pow(r, 3, 17) for r in readings]
-
-def adjust_values(transformed_vals):
-    # Conditional adjustment based on value parity
-    adjusted = []
-    for val in transformed_vals:
-        if val % 2 == 0:
-            adjusted.append(val + 5)
+def count_palindromic_subsequences(s):
+    n = len(s)
+    # dp[i][j] will store count of palindromic subsequences in s[i:j+1]
+    dp = [[0] * n for _ in range(n)]
+    
+    # Every single character is a palindrome
+    for i in range(n):
+        dp[i][i] = 1
+    
+    # Fill for substrings of length 2
+    for i in range(n-1):
+        if s[i] == s[i+1]:
+            dp[i][i+1] = 3  # s[i], s[i+1], s[i]+s[i+1]
         else:
-            adjusted.append(val - 3)
-    return adjusted
+            dp[i][i+1] = 2  # s[i], s[i+1]
+    
+    # Fill for substrings of length 3 and more
+    for length in range(3, n+1):
+        for i in range(n-length+1):
+            j = i + length - 1
+            if s[i] == s[j]:
+                dp[i][j] = dp[i+1][j] + dp[i][j-1] + 1
+            else:
+                dp[i][j] = dp[i+1][j] + dp[i][j-1] - dp[i+1][j-1]
+    
+    return dp[0][n-1]
 
-def compute_checksum(vals):
-    # Divide and conquer reduction with modular arithmetic
-    if len(vals) <= 1:
-        return vals[0] if vals else 0
-    mid = len(vals) // 2
-    left_checksum = compute_checksum(vals[:mid])
-    right_checksum = compute_checksum(vals[mid:])
-    combined = (left_checksum * 2 + right_checksum * 3) % 19
-    return combined
+# Ancient manuscript encoding
+manuscript = "aaba"
 
-# Sensor readings from a device
-sensor_readings = [7, 2, 9, 4, 11, 6, 13]
+# Filter for significant linguistic markers using regex
+filtered_chars = re.findall(r'[ab]', manuscript)
+refined_text = ''.join(filtered_chars)
 
-# Step 1: Transform readings
-transformed_readings = transform_readings(sensor_readings)
+# Apply dynamic programming to count palindromic subsequences
+palindrome_count = count_palindromic_subsequences(refined_text)
 
-# Step 2: Adjust values conditionally
-adjusted_readings = adjust_values(transformed_readings)
-
-# Step 3: Compute synchronization checksum using divide and conquer
-sync_checksum = compute_checksum(adjusted_readings)
-
-print(f"Result: {sync_checksum}")
+print(f"Result: {palindrome_count}")
