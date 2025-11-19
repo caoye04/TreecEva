@@ -1,0 +1,38 @@
+Target: Find the value of variable final_adjustment after [line 14] executes
+
+[line 4]  sensor_readings = [23, -15, 42, -8, 37]
+Compute: [23, -15, 42, -8, 37] = [23, -15, 42, -8, 37]
+[line 5]  adjustment_log = defaultdict(int)
+Call function defaultdict(int)
+[line 6]  base_offset = 100
+Assign: base_offset = 100
+[line 8]  for idx, reading in enumerate(sensor_readings):
+(Missing param: 'iter_var')
+[line 9]  temp_factor = (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13
+Compute: (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13, where reading=23 (an unknown source) = 1
+[line 10]  correction = (temp_factor + idx) % 7
+Compute: (temp_factor + idx) % 7, where temp_factor=1 (defined at [line 9]), idx=0 (an unknown source) = 1
+[line 8]  for idx, reading in enumerate(sensor_readings):
+(Missing param: 'iter_var')
+[line 9]  temp_factor = (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13
+Compute: (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13, where reading=-15 (an unknown source) = 4
+[line 10]  correction = (temp_factor + idx) % 7
+Compute: (temp_factor + idx) % 7, where temp_factor=4 (defined at [line 9]), idx=1 (an unknown source) = 5
+... [Line 8] repeats 2 more times ...
+... [Line 8] repeats 2 more times ...
+... [Line 8] repeats 2 more times ...
+... [Line 8] repeats 2 more times ...
+[line 8]  for idx, reading in enumerate(sensor_readings):
+(Missing param: 'iter_var')
+[line 9]  temp_factor = (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13
+Compute: (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13, where reading=37 (an unknown source) = 9
+[line 10]  correction = (temp_factor + idx) % 7
+Compute: (temp_factor + idx) % 7, where temp_factor=9 (defined at [line 9]), idx=4 (an unknown source) = 6
+[line 8]  for idx, reading in enumerate(sensor_readings):
+Loop End: Iteration finished
+[line 13]  aggregate_shift = sum(adjustment_log.values())
+Call function sum(adjustment_log.values())
+[line 14]  final_adjustment = (base_offset + aggregate_shift) % 20 if aggregate_shift > 10 else (base_offset - aggregate_shift) % 20
+Compute: (base_offset + aggregate_shift) % 20 if aggregate_shift > 10 else (base_offset - aggregate_shift) % 20, where base_offset=100 (defined at [line 6]), aggregate_shift=20 (defined at [line 13]) = 0
+
+Answer: final_adjustment = 0 (last updated on defined at [line 14])

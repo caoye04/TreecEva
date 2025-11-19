@@ -1,0 +1,53 @@
+22
+normalized_aggregate
+---
+4 device_readings = [1000, 2500, 4000, 8000]
+4 ['device_readings'] ['[1000, 2500, 4000, 8000]']
+5 device_ids = ['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']
+5 ['device_readings', 'device_ids'] ['[1000, 2500, 4000, 8000]', "['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']"]
+8 scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
+8 ['device_readings', 'device_ids'] ['[1000, 2500, 4000, 8000]', "['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']"]
+8 scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
+8 ['x'] ['1000']
+8 scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
+8 ['x'] ['2500']
+8 scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
+8 ['x'] ['4000']
+8 scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
+8 ['x'] ['8000']
+11 hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
+11 ['device_ids', 'scaled_readings'] ["['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']", '[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]']
+11 hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
+11 ['s'] ["'sensor_a'"]
+11 hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
+11 ['s'] ["'sensor_b'"]
+11 hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
+11 ['s'] ["'sensor_c'"]
+11 hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
+11 ['s'] ["'sensor_d'"]
+14 weight_sum = sum(hash_weights)
+14 ['scaled_readings', 'hash_weights', 'weight_sum'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284']
+15 normalized_weights = [w / weight_sum for w in hash_weights]
+15 ['scaled_readings', 'hash_weights', 'weight_sum', 'w'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284', '59']
+15 normalized_weights = [w / weight_sum for w in hash_weights]
+15 ['scaled_readings', 'hash_weights', 'weight_sum', 'w'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284', '98']
+15 normalized_weights = [w / weight_sum for w in hash_weights]
+15 ['scaled_readings', 'hash_weights', 'weight_sum', 'w'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284', '50']
+15 normalized_weights = [w / weight_sum for w in hash_weights]
+15 ['scaled_readings', 'hash_weights', 'weight_sum', 'w'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284', '77']
+15 normalized_weights = [w / weight_sum for w in hash_weights]
+15 ['scaled_readings', 'hash_weights', 'weight_sum', 'normalized_weights'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284', '[0.20774647887323944, 0.34507042253521125, 0.176056338028169, 0.2711267605633803]']
+18 harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
+18 ['scaled_readings', 'normalized_weights'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[0.20774647887323944, 0.34507042253521125, 0.176056338028169, 0.2711267605633803]']
+18 harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
+18 ['acc', 'pair'] ['0', '(2.9999999999999996, 0.20774647887323944)']
+18 harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
+18 ['acc', 'pair'] ['0.06924882629107983', '(3.397940008672037, 0.34507042253521125)']
+18 harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
+18 ['acc', 'pair'] ['0.1708016558450276', '(3.602059991327962, 0.176056338028169)']
+18 harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
+18 ['acc', 'pair'] ['0.21967822604431037', '(3.9030899869919433, 0.2711267605633803)']
+19 weighted_harmonic_mean = 1 / harmonic_sum
+19 ['harmonic_sum', 'weighted_harmonic_mean'] ['0.28914287109912085', '3.458497856781642']
+22 normalized_aggregate = math.exp(weighted_harmonic_mean)
+22 ['weighted_harmonic_mean', 'normalized_aggregate'] ['3.458497856781642', '31.769218737658147']

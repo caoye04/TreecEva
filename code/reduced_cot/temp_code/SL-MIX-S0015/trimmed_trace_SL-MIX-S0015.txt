@@ -1,0 +1,21 @@
+13
+final_checksum
+---
+12 packet_seed = 0b11001010
+12 ['packet_seed'] ['202']
+13 final_checksum = transform_packet(packet_seed)
+13 ['packet_seed'] ['202']
+PARAM_MAPPING {'seed': {'actual_var': 'packet_seed', 'value': 202}}
+FUNCTION_ENTER 1 transform_packet def transform_packet(seed):
+1 ['seed'] [{'_type': 'int', '_value': 202}]
+3 stage1 = (seed << 3) & 0xFF
+3 ['seed', 'stage1'] ['202', '80']
+5 stage2 = stage1 ^ 0xAA
+5 ['seed', 'stage1', 'stage2'] ['202', '80', '250']
+7 stage3 = (stage2 >> 2) & 0xFF
+7 ['seed', 'stage2', 'stage3'] ['202', '250', '62']
+9 final_checksum = stage3 ^ seed
+9 ['seed', 'stage3', 'final_checksum'] ['202', '62', '244']
+10 return final_checksum
+10 ['final_checksum'] ['244']
+FUNCTION_RETURN 10 transform_packet {'_type': 'int', '_value': 244}

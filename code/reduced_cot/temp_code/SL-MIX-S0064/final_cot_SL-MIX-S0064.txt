@@ -1,0 +1,77 @@
+Target: Find the value of variable auth_signature after [line 22] executes
+
+[line 17]  token_sequence = tokenize("SECURE")
+Call function tokenize("SECURE")
+[line 4]  return [ord(c) for c in message]
+Return: [ord(c) for c in message]
+[line 18]  layer1_result = process_layer(token_sequence, 1)
+Call function process_layer(token_sequence=[83, 69, 67, 85, 82, ...] (defined at [line 17]), 1)
+[line 9]  def process_layer(tokens, shift_val):
+Enter function process_layer: tokens=[83, 69, 67, 85, 82, ...] (token_sequence defined at [line 17]), shift_val=1
+  [line 10]  hashed = [hash_token(t) for t in tokens]
+  Compute: [hash_token(t) for t in tokens], where t=83 (an unknown source), tokens=[83, 69, 67, 85, 82, ...] (parameter tokens defined at [line 17]) = ?
+  [line 7]  return (token * 31) % 256
+  Return: (token * 31) % 256
+  [line 7]  return (token * 31) % 256
+  Return: (token * 31) % 256
+  [line 7]  return (token * 31) % 256
+  Return: (token * 31) % 256
+  [line 7]  return (token * 31) % 256
+  Return: (token * 31) % 256
+  [line 7]  return (token * 31) % 256
+  Return: (token * 31) % 256
+  [line 7]  return (token * 31) % 256
+  Return: (token * 31) % 256
+  [line 11]  shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+  Compute: [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)], where h=13 (an unknown source), i=0 (an unknown source), hashed=[13, 91, 29, 75, 238, ...] (defined at [line 10]) = ?
+  [line 12]  xor_result = 0
+  Assign: xor_result = 0
+  [line 13]  for s in shifted:
+  Loop Start: s takes its first value 13
+  [line 13]  for s in shifted:
+  Loop Iteration: s is now 182 (iteration 2)
+... [Line 13] repeats 10 more times ...
+... [Line 13] repeats 10 more times ...
+  [line 15]  return xor_result >> shift_val
+  Return: xor_result >> shift_val
+Function process_layer returns 26
+[line 19]  layer2_result = process_layer(token_sequence[::-1], 2)
+Call function process_layer(token_sequence[::-1], 2)
+[line 7]  return (token * 31) % 256
+Return: (token * 31) % 256
+[line 7]  return (token * 31) % 256
+Return: (token * 31) % 256
+[line 7]  return (token * 31) % 256
+Return: (token * 31) % 256
+[line 7]  return (token * 31) % 256
+Return: (token * 31) % 256
+[line 7]  return (token * 31) % 256
+Return: (token * 31) % 256
+[line 7]  return (token * 31) % 256
+Return: (token * 31) % 256
+[line 12]  xor_result = 0
+Assign: xor_result = 0
+[line 13]  for s in shifted:
+Loop Iteration: s is now 91 (iteration 8)
+[line 13]  for s in shifted:
+Loop Iteration: s is now 220 (iteration 9)
+[line 13]  for s in shifted:
+Loop Iteration: s is now 44 (iteration 10)
+[line 13]  for s in shifted:
+Loop Iteration: s is now 29 (iteration 11)
+[line 13]  for s in shifted:
+Loop Iteration: s is now 182 (iteration 12)
+[line 13]  for s in shifted:
+Loop Iteration: s is now 52 (iteration 13)
+[line 13]  for s in shifted:
+Loop Iteration: s is now 52 (iteration 14)
+[line 15]  return xor_result >> shift_val
+Return: xor_result >> shift_val
+[line 20]  auth_signature = (layer1_result ^ layer2_result) & 0xFF
+Compute: (layer1_result ^ layer2_result) & 0xFF, where layer1_result=26 (defined at [line 18]), layer2_result=13 (defined at [line 19]) = 23
+[line 21]  exp_component = int(math.log2(layer1_result + 1)) if layer1_result > 0 else 0
+Compute: int(math.log2(layer1_result + 1)) if layer1_result > 0 else 0, where layer1_result=26 (defined at [line 18]) = 4
+[line 22]  auth_signature = (auth_signature << 2) | exp_component
+Compute: (auth_signature << 2) | exp_component, where auth_signature=23 (defined at [line 20]), exp_component=4 (defined at [line 21]) = 92
+
+Answer: auth_signature = 92 (last updated on defined at [line 22])

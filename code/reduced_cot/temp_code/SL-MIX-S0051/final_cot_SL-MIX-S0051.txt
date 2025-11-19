@@ -1,0 +1,25 @@
+Target: Find the value of variable final_signal after [line 19] executes
+
+[line 1]  def simulate_circuit(input_signal):
+Enter function simulate_circuit: input_signal=214
+  [line 3]  stage1 = (input_signal << 2) & 0xFF  # Shift left by 2, mask to 8 bits
+  Compute: (input_signal << 2) & 0xFF  # Shift left by 2, mask to 8 bits, where input_signal=214 (parameter input_signal) = 88
+  [line 6]  if (stage1 > 100) and not (stage1 & 0x0F == 0):  # Check if greater than 100 and lower nibble is non-zero
+  Condition: True, entering 'if' block
+  [line 9]  stage2 = stage1 | 0xAA  # OR with 0xAA
+  Compute: stage1 | 0xAA  # OR with 0xAA, where stage1=88 (defined at [line 3]) = 250
+  [line 12]  if (bin(stage2).count('1') % 2) == 0:  # Check if even parity
+  Condition: True, entering 'if' block
+  [line 13]  stage3 = stage2 & 0xF0  # Mask upper nibble
+  Compute: stage2 & 0xF0  # Mask upper nibble, where stage2=250 (defined at [line 9]) = 240
+  [line 18]  adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
+  Compute: lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1) = ?
+  [line 19]  final_signal = adjust(stage3)
+  Call function adjust(stage3=240 (defined at [line 13]))
+  [line 18]  adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
+  Compute: lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1), where x=240 (an unknown source) = ?
+  [line 21]  return final_signal
+  Return: final_signal=120 (defined at [line 19])
+Function simulate_circuit returns 120
+
+Answer: final_signal = 120 (last updated on defined at [line 19])

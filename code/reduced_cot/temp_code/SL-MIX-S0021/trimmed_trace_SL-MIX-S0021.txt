@@ -1,0 +1,69 @@
+42
+final_output
+---
+31 raw_coefficients = [4, -3, 8, 0, 15, -6, 2]
+31 ['raw_coefficients'] ['[4, -3, 8, 0, 15, ...]']
+32 signal_chain = build_signal_chain(raw_coefficients)
+32 ['raw_coefficients'] ['[4, -3, 8, 0, 15, ...]']
+10 if not coeff_list:
+10 ['coeff_list'] ['[4, -3, 8, 0, 15, ...]']
+12 head = SignalNode(coeff_list[0])
+12 ['coeff_list'] ['[4, -3, 8, 0, 15, ...]']
+14 for coeff in coeff_list[1:]:
+14 ['coeff_list', 'head', 'coeff'] ['[4, -3, 8, 0, 15, ...]', 'SignalNode(...)', '-3']
+14 for coeff in coeff_list[1:]:
+14 ['coeff_list', 'head', 'coeff'] ['[4, -3, 8, 0, 15, ...]', 'SignalNode(...)', '8']
+14 for coeff in coeff_list[1:]:
+14 ['coeff_list', 'head', 'coeff'] ['[4, -3, 8, 0, 15, ...]', 'SignalNode(...)', '0']
+14 for coeff in coeff_list[1:]:
+14 ['coeff_list', 'head', 'coeff'] ['[4, -3, 8, 0, 15, ...]', 'SignalNode(...)', '15']
+14 for coeff in coeff_list[1:]:
+14 ['coeff_list', 'head', 'coeff'] ['[4, -3, 8, 0, 15, ...]', 'SignalNode(...)', '-6']
+14 for coeff in coeff_list[1:]:
+14 ['coeff_list', 'head', 'coeff'] ['[4, -3, 8, 0, 15, ...]', 'SignalNode(...)', '2']
+14 for coeff in coeff_list[1:]:
+14 ['coeff_list', 'head', 'coeff'] ['[4, -3, 8, 0, 15, ...]', 'SignalNode(...)', '2']
+17 return head
+17 ['head'] ['SignalNode(...)']
+35 transformed_values = traverse_and_transform(signal_chain, selective_filter)
+35 ['signal_chain'] ['SignalNode(...)']
+20 values = []
+20 ['values'] ['[]']
+22 while current and current.freq_coeff != 0:
+22 ['values'] ['[]']
+28 return x if x > 0 and x % 2 == 0 else 0
+28 ['x'] ['4']
+22 while current and current.freq_coeff != 0:
+22 ['values'] ['[4]']
+28 return x if x > 0 and x % 2 == 0 else 0
+28 ['x'] ['-3']
+22 while current and current.freq_coeff != 0:
+22 ['values'] ['[4, 0]']
+28 return x if x > 0 and x % 2 == 0 else 0
+28 ['x'] ['8']
+22 while current and current.freq_coeff != 0:
+22 ['values'] ['[4, 0, 8]']
+25 return values
+25 ['values'] ['[4, 0, 8]']
+36 filtered_map = map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
+36 ['transformed_values', 'filtered_map'] ['[4, 0, 8]', '<map object at 0x000001FD4AC21810>']
+37 reduction_result = reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map, 0)
+37 ['transformed_values', 'filtered_map'] ['[4, 0, 8]', '<map object at 0x000001FD4AC21810>']
+36 filtered_map = map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
+36 ['x'] ['4']
+37 reduction_result = reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map, 0)
+37 ['acc', 'val'] ['0', '8']
+36 filtered_map = map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
+36 ['x'] ['0']
+37 reduction_result = reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map, 0)
+37 ['acc', 'val'] ['8', '0']
+36 filtered_map = map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
+36 ['x'] ['8']
+37 reduction_result = reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map, 0)
+37 ['acc', 'val'] ['8', '16']
+40 cache = defaultdict(int)
+40 ['reduction_result', 'cache'] ['24', '{}']
+41 validation_passed = reduction_result > 0 and cache['checksum'] == 0
+41 ['reduction_result', 'cache', 'validation_passed'] ['24', '{checksum: 0}', 'True']
+42 final_output = reduction_result * 2 if validation_passed else -1
+42 ['reduction_result', 'validation_passed', 'final_output'] ['24', 'True', '48']

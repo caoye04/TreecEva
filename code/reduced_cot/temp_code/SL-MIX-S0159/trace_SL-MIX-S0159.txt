@@ -1,0 +1,2154 @@
+1 import math
+1 [] []
+FUNCTION_ENTER 12 SimulationContext class SimulationContext:
+FUNCTION_RETURN 18 SimulationContext {'_type': 'None'}
+37 context = SimulationContext()
+37 [] []
+FUNCTION_ENTER 13 __init__     def __init__(self):
+13 ['self'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {}}]
+DEPTH_2 14         self.iterations = 10
+14 ['self'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}}}]
+DEPTH_2 15         self.decay_base = 1.2
+15 ['self'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}}}]
+DEPTH_2 16         self.mask = 0b11110000
+16 ['self'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}]
+FUNCTION_RETURN 16 __init__ {'_type': 'None'}
+38 final_adjusted_population = context.run()
+38 ['context'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}]
+FUNCTION_ENTER 18 run     def run(self):
+18 ['self'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}]
+DEPTH_2 19         populations = []
+19 ['self', 'populations'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [], '_len': 0}]
+DEPTH_2 20         for i in range(self.iterations):
+20 ['self', 'populations', 'i'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}]
+DEPTH_2 21             raw_pop = modified_fibonacci(i)
+21 ['self', 'populations', 'i'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}]
+PARAM_MAPPING modified_fibonacci {'n': {'actual_var': 'i', 'value': 0}}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_3 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_3 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+DEPTH_2 23             if raw_pop > 0:
+23 ['self', 'populations', 'i', 'raw_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+DEPTH_2 26                 dampened_pop = raw_pop
+26 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+DEPTH_2 28             adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
+28 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+PARAM_MAPPING apply_bit_mask {'value': {'actual_var': 'dampened_pop', 'value': 0}, 'mask': {'actual_var': 'self.mask', 'value': 'self.mask'}}
+FUNCTION_ENTER 9 apply_bit_mask def apply_bit_mask(value, mask):
+9 ['value', 'mask'] [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}]
+DEPTH_3 10     return value & mask
+10 ['value', 'mask'] [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}]
+FUNCTION_RETURN 10 apply_bit_mask {'_type': 'int', '_value': 0}
+DEPTH_2 29             populations.append(adjusted_pop)
+29 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}], '_len': 1}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+DEPTH_2 20         for i in range(self.iterations):
+20 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}], '_len': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+DEPTH_2 21             raw_pop = modified_fibonacci(i)
+21 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}], '_len': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+PARAM_MAPPING modified_fibonacci {'n': {'actual_var': 'i', 'value': 1}}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_3 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_3 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+DEPTH_2 23             if raw_pop > 0:
+23 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}], '_len': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+DEPTH_2 24                 dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
+24 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}], '_len': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+DEPTH_2 28             adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
+28 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}], '_len': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+PARAM_MAPPING apply_bit_mask {'value': {'actual_var': 'dampened_pop', 'value': 1}, 'mask': {'actual_var': 'self.mask', 'value': 'self.mask'}}
+FUNCTION_ENTER 9 apply_bit_mask def apply_bit_mask(value, mask):
+9 ['value', 'mask'] [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 240}]
+DEPTH_3 10     return value & mask
+10 ['value', 'mask'] [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 240}]
+FUNCTION_RETURN 10 apply_bit_mask {'_type': 'int', '_value': 0}
+DEPTH_2 29             populations.append(adjusted_pop)
+29 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+DEPTH_2 20         for i in range(self.iterations):
+20 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+DEPTH_2 21             raw_pop = modified_fibonacci(i)
+21 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+PARAM_MAPPING modified_fibonacci {'n': {'actual_var': 'i', 'value': 2}}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_3 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_3 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_4 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_4 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+DEPTH_2 23             if raw_pop > 0:
+23 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+DEPTH_2 24                 dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
+24 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+DEPTH_2 28             adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
+28 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+PARAM_MAPPING apply_bit_mask {'value': {'actual_var': 'dampened_pop', 'value': 1}, 'mask': {'actual_var': 'self.mask', 'value': 'self.mask'}}
+FUNCTION_ENTER 9 apply_bit_mask def apply_bit_mask(value, mask):
+9 ['value', 'mask'] [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 240}]
+DEPTH_3 10     return value & mask
+10 ['value', 'mask'] [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 240}]
+FUNCTION_RETURN 10 apply_bit_mask {'_type': 'int', '_value': 0}
+DEPTH_2 29             populations.append(adjusted_pop)
+29 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 3}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+DEPTH_2 20         for i in range(self.iterations):
+20 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 3}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+DEPTH_2 21             raw_pop = modified_fibonacci(i)
+21 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 3}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+PARAM_MAPPING modified_fibonacci {'n': {'actual_var': 'i', 'value': 3}}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_3 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_3 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_5 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_5 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_4 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+DEPTH_2 23             if raw_pop > 0:
+23 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 3}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 0}]
+DEPTH_2 24                 dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
+24 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 3}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 0}]
+DEPTH_2 28             adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
+28 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 3}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 0}]
+PARAM_MAPPING apply_bit_mask {'value': {'actual_var': 'dampened_pop', 'value': -1}, 'mask': {'actual_var': 'self.mask', 'value': 'self.mask'}}
+FUNCTION_ENTER 9 apply_bit_mask def apply_bit_mask(value, mask):
+9 ['value', 'mask'] [{'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+DEPTH_3 10     return value & mask
+10 ['value', 'mask'] [{'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+FUNCTION_RETURN 10 apply_bit_mask {'_type': 'int', '_value': 240}
+DEPTH_2 29             populations.append(adjusted_pop)
+29 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}], '_len': 4}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+DEPTH_2 20         for i in range(self.iterations):
+20 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}], '_len': 4}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+DEPTH_2 21             raw_pop = modified_fibonacci(i)
+21 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}], '_len': 4}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+PARAM_MAPPING modified_fibonacci {'n': {'actual_var': 'i', 'value': 4}}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_3 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_3 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_5 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_5 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_5 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+DEPTH_2 23             if raw_pop > 0:
+23 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}], '_len': 4}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+DEPTH_2 24                 dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
+24 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}], '_len': 4}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 28             adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
+28 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}], '_len': 4}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+PARAM_MAPPING apply_bit_mask {'value': {'actual_var': 'dampened_pop', 'value': -3}, 'mask': {'actual_var': 'self.mask', 'value': 'self.mask'}}
+FUNCTION_ENTER 9 apply_bit_mask def apply_bit_mask(value, mask):
+9 ['value', 'mask'] [{'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_3 10     return value & mask
+10 ['value', 'mask'] [{'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+FUNCTION_RETURN 10 apply_bit_mask {'_type': 'int', '_value': 240}
+DEPTH_2 29             populations.append(adjusted_pop)
+29 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 5}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 20         for i in range(self.iterations):
+20 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 5}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 21             raw_pop = modified_fibonacci(i)
+21 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 5}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+PARAM_MAPPING modified_fibonacci {'n': {'actual_var': 'i', 'value': 5}}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_3 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_3 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_5 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+DEPTH_2 23             if raw_pop > 0:
+23 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 5}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 24                 dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
+24 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 5}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 28             adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
+28 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 5}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+PARAM_MAPPING apply_bit_mask {'value': {'actual_var': 'dampened_pop', 'value': -3}, 'mask': {'actual_var': 'self.mask', 'value': 'self.mask'}}
+FUNCTION_ENTER 9 apply_bit_mask def apply_bit_mask(value, mask):
+9 ['value', 'mask'] [{'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_3 10     return value & mask
+10 ['value', 'mask'] [{'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+FUNCTION_RETURN 10 apply_bit_mask {'_type': 'int', '_value': 240}
+DEPTH_2 29             populations.append(adjusted_pop)
+29 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 6}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 20         for i in range(self.iterations):
+20 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 6}, {'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 21             raw_pop = modified_fibonacci(i)
+21 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 6}, {'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+PARAM_MAPPING modified_fibonacci {'n': {'actual_var': 'i', 'value': 6}}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_3 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_3 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 6}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 8}
+DEPTH_2 23             if raw_pop > 0:
+23 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 6}, {'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 24                 dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
+24 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 6}, {'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 28             adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
+28 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 6}, {'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+PARAM_MAPPING apply_bit_mask {'value': {'actual_var': 'dampened_pop', 'value': -3}, 'mask': {'actual_var': 'self.mask', 'value': 'self.mask'}}
+FUNCTION_ENTER 9 apply_bit_mask def apply_bit_mask(value, mask):
+9 ['value', 'mask'] [{'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_3 10     return value & mask
+10 ['value', 'mask'] [{'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+FUNCTION_RETURN 10 apply_bit_mask {'_type': 'int', '_value': 240}
+DEPTH_2 29             populations.append(adjusted_pop)
+29 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 7}, {'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 20         for i in range(self.iterations):
+20 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 7}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 21             raw_pop = modified_fibonacci(i)
+21 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 7}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+PARAM_MAPPING modified_fibonacci {'n': {'actual_var': 'i', 'value': 7}}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 7}]
+DEPTH_3 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 7}]
+DEPTH_3 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 7}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 6}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 8}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_6 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 13}
+DEPTH_2 23             if raw_pop > 0:
+23 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 7}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 13}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 240}]
+DEPTH_2 24                 dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
+24 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 7}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 13}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+DEPTH_2 28             adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
+28 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 7}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 13}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+PARAM_MAPPING apply_bit_mask {'value': {'actual_var': 'dampened_pop', 'value': -1}, 'mask': {'actual_var': 'self.mask', 'value': 'self.mask'}}
+FUNCTION_ENTER 9 apply_bit_mask def apply_bit_mask(value, mask):
+9 ['value', 'mask'] [{'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+DEPTH_3 10     return value & mask
+10 ['value', 'mask'] [{'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+FUNCTION_RETURN 10 apply_bit_mask {'_type': 'int', '_value': 240}
+DEPTH_2 29             populations.append(adjusted_pop)
+29 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 8}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 13}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+DEPTH_2 20         for i in range(self.iterations):
+20 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 8}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 13}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+DEPTH_2 21             raw_pop = modified_fibonacci(i)
+21 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 8}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 13}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+PARAM_MAPPING modified_fibonacci {'n': {'actual_var': 'i', 'value': 8}}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 8}]
+DEPTH_3 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 8}]
+DEPTH_3 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 8}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 7}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 7}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 7}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 6}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 8}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 13}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 6}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 8}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 21}
+DEPTH_2 23             if raw_pop > 0:
+23 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 8}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 240}]
+DEPTH_2 24                 dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
+24 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 8}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 240}]
+DEPTH_2 28             adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
+28 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}], '_len': 8}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 240}]
+PARAM_MAPPING apply_bit_mask {'value': {'actual_var': 'dampened_pop', 'value': 5}, 'mask': {'actual_var': 'self.mask', 'value': 'self.mask'}}
+FUNCTION_ENTER 9 apply_bit_mask def apply_bit_mask(value, mask):
+9 ['value', 'mask'] [{'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 240}]
+DEPTH_3 10     return value & mask
+10 ['value', 'mask'] [{'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 240}]
+FUNCTION_RETURN 10 apply_bit_mask {'_type': 'int', '_value': 0}
+DEPTH_2 29             populations.append(adjusted_pop)
+29 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 0}], '_len': 9}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 0}]
+DEPTH_2 20         for i in range(self.iterations):
+20 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 0}], '_len': 9}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 0}]
+DEPTH_2 21             raw_pop = modified_fibonacci(i)
+21 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 0}], '_len': 9}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 0}]
+PARAM_MAPPING modified_fibonacci {'n': {'actual_var': 'i', 'value': 9}}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 9}]
+DEPTH_3 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 9}]
+DEPTH_3 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 9}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 8}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 8}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 8}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 7}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 7}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 7}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 6}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_9 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_10 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_11 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_11 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_11 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_11 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 8}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 13}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 6}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 8}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 21}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 7}]
+DEPTH_4 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 7}]
+DEPTH_4 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 7}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 6}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 6}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_9 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_10 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 8}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_5 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 5}]
+DEPTH_5 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 4}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_8 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_9 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 3}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 3}]
+DEPTH_6 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 2}]
+DEPTH_7 7         return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+7 ['n'] [{'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 0}]
+DEPTH_8 5         return n
+5 ['n'] [{'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 0}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_ENTER 3 modified_fibonacci def modified_fibonacci(n):
+3 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 4     if n <= 1:
+4 ['n'] [{'_type': 'int', '_value': 1}]
+DEPTH_7 5         return n
+5 ['n'] [{'_type': 'int', '_value': 1}]
+FUNCTION_RETURN 5 modified_fibonacci {'_type': 'int', '_value': 1}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 2}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 5}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 13}
+FUNCTION_RETURN 7 modified_fibonacci {'_type': 'int', '_value': 34}
+DEPTH_2 23             if raw_pop > 0:
+23 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 0}], '_len': 9}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 34}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 0}]
+DEPTH_2 24                 dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
+24 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 0}], '_len': 9}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 34}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 0}]
+DEPTH_2 28             adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
+28 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 0}], '_len': 9}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 34}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 0}]
+PARAM_MAPPING apply_bit_mask {'value': {'actual_var': 'dampened_pop', 'value': 15}, 'mask': {'actual_var': 'self.mask', 'value': 'self.mask'}}
+FUNCTION_ENTER 9 apply_bit_mask def apply_bit_mask(value, mask):
+9 ['value', 'mask'] [{'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 240}]
+DEPTH_3 10     return value & mask
+10 ['value', 'mask'] [{'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 240}]
+FUNCTION_RETURN 10 apply_bit_mask {'_type': 'int', '_value': 0}
+DEPTH_2 29             populations.append(adjusted_pop)
+29 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 10}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 34}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 0}]
+DEPTH_2 20         for i in range(self.iterations):
+20 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 10}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 34}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 0}]
+DEPTH_2 32         total = sum(populations)
+32 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop', 'total'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 10}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 34}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 1200}]
+DEPTH_2 33         final_adjusted_population = int(total ** 1.1)
+33 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop', 'total', 'final_adjusted_population'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 10}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 34}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 1200}, {'_type': 'int', '_value': 2438}]
+DEPTH_2 34         return final_adjusted_population
+34 ['self', 'populations', 'i', 'raw_pop', 'dampened_pop', 'adjusted_pop', 'total', 'final_adjusted_population'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}], '_len': 10}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 34}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 1200}, {'_type': 'int', '_value': 2438}]
+FUNCTION_RETURN 34 run {'_type': 'int', '_value': 2438}
+39 print(f"Result: {final_adjusted_population}")
+39 ['context', 'final_adjusted_population'] [{'_type': 'object', '_class': 'SimulationContext', '_attrs': {'iterations': {'_type': 'int', '_value': 10}, 'decay_base': {'_type': 'float', '_value': 1.2}, 'mask': {'_type': 'int', '_value': 240}}}, {'_type': 'int', '_value': 2438}]

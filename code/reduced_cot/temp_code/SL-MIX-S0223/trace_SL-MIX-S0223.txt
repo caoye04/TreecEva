@@ -1,0 +1,408 @@
+1 import hashlib
+1 [] []
+2 import heapq
+2 [] []
+10 dna_strand = "ATGCCGTAATGCCGTAATGCCGTAATGCCGTA"
+10 ['dna_strand'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}]
+11 palindromic_hashes = set()
+11 ['dna_strand', 'palindromic_hashes'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}]
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}, {'_type': 'str', '_value': 'ATGC'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}, {'_type': 'str', '_value': 'ATGC'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 1}, {'_type': 'str', '_value': 'ATGC'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 1}, {'_type': 'str', '_value': 'TGCC'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 1}, {'_type': 'str', '_value': 'TGCC'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'TGCC'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'GCCG'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
+16         palindromic_hashes.add(hash_subsequence(subseq))
+16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
+4 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
+DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
+5 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 45667}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 3}, {'_type': 'str', '_value': 'GCCG'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 3}, {'_type': 'str', '_value': 'CCGT'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 3}, {'_type': 'str', '_value': 'CCGT'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 4}, {'_type': 'str', '_value': 'CCGT'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 4}, {'_type': 'str', '_value': 'CGTA'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 4}, {'_type': 'str', '_value': 'CGTA'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 5}, {'_type': 'str', '_value': 'CGTA'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 5}, {'_type': 'str', '_value': 'GTAA'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 5}, {'_type': 'str', '_value': 'GTAA'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 6}, {'_type': 'str', '_value': 'GTAA'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 6}, {'_type': 'str', '_value': 'TAAT'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 6}, {'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
+16         palindromic_hashes.add(hash_subsequence(subseq))
+16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 6}, {'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
+4 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
+DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
+5 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 805730}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': 'TAAT'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': 'AATG'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': 'AATG'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'AATG'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'AATG'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 8}, {'_type': 'str', '_value': 'AATG'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 8}, {'_type': 'str', '_value': 'ATGC'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 8}, {'_type': 'str', '_value': 'ATGC'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'ATGC'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'TGCC'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'TGCC'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 10}, {'_type': 'str', '_value': 'TGCC'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 10}, {'_type': 'str', '_value': 'GCCG'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 10}, {'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
+16         palindromic_hashes.add(hash_subsequence(subseq))
+16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 10}, {'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
+4 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
+DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
+5 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 45667}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'GCCG'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'CCGT'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'CCGT'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 12}, {'_type': 'str', '_value': 'CCGT'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 12}, {'_type': 'str', '_value': 'CGTA'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 12}, {'_type': 'str', '_value': 'CGTA'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 13}, {'_type': 'str', '_value': 'CGTA'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 13}, {'_type': 'str', '_value': 'GTAA'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 13}, {'_type': 'str', '_value': 'GTAA'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 14}, {'_type': 'str', '_value': 'GTAA'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 14}, {'_type': 'str', '_value': 'TAAT'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 14}, {'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
+16         palindromic_hashes.add(hash_subsequence(subseq))
+16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 14}, {'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
+4 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
+DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
+5 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 805730}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 15}, {'_type': 'str', '_value': 'TAAT'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 15}, {'_type': 'str', '_value': 'AATG'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 15}, {'_type': 'str', '_value': 'AATG'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'AATG'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'AATG'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 16}, {'_type': 'str', '_value': 'AATG'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 16}, {'_type': 'str', '_value': 'ATGC'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 16}, {'_type': 'str', '_value': 'ATGC'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 17}, {'_type': 'str', '_value': 'ATGC'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 17}, {'_type': 'str', '_value': 'TGCC'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 17}, {'_type': 'str', '_value': 'TGCC'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 18}, {'_type': 'str', '_value': 'TGCC'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 18}, {'_type': 'str', '_value': 'GCCG'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 18}, {'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
+16         palindromic_hashes.add(hash_subsequence(subseq))
+16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 18}, {'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
+4 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
+DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
+5 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 45667}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 19}, {'_type': 'str', '_value': 'GCCG'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 19}, {'_type': 'str', '_value': 'CCGT'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 19}, {'_type': 'str', '_value': 'CCGT'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 20}, {'_type': 'str', '_value': 'CCGT'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 20}, {'_type': 'str', '_value': 'CGTA'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 20}, {'_type': 'str', '_value': 'CGTA'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 21}, {'_type': 'str', '_value': 'CGTA'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 21}, {'_type': 'str', '_value': 'GTAA'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 21}, {'_type': 'str', '_value': 'GTAA'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 22}, {'_type': 'str', '_value': 'GTAA'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 22}, {'_type': 'str', '_value': 'TAAT'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 22}, {'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
+16         palindromic_hashes.add(hash_subsequence(subseq))
+16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 22}, {'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
+4 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
+DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
+5 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
+FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 805730}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 23}, {'_type': 'str', '_value': 'TAAT'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 23}, {'_type': 'str', '_value': 'AATG'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 23}, {'_type': 'str', '_value': 'AATG'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'AATG'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'AATG'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 24}, {'_type': 'str', '_value': 'AATG'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 24}, {'_type': 'str', '_value': 'ATGC'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 24}, {'_type': 'str', '_value': 'ATGC'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 25}, {'_type': 'str', '_value': 'ATGC'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 25}, {'_type': 'str', '_value': 'TGCC'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 25}, {'_type': 'str', '_value': 'TGCC'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 26}, {'_type': 'str', '_value': 'TGCC'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 26}, {'_type': 'str', '_value': 'GCCG'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 26}, {'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
+16         palindromic_hashes.add(hash_subsequence(subseq))
+16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 26}, {'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
+4 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
+DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
+5 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
+FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 45667}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 27}, {'_type': 'str', '_value': 'GCCG'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 27}, {'_type': 'str', '_value': 'CCGT'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 27}, {'_type': 'str', '_value': 'CCGT'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CCGT'}]
+14     subseq = dna_strand[i:i+4]
+14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}]
+15     if is_palindrome(subseq):
+15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}]
+FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
+7 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
+DEPTH_2 8     return s == s[::-1]
+8 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
+FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
+13 for i in range(len(dna_strand) - 3):
+13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}]
+19 sorted_hashes = sorted(list(palindromic_hashes))
+19 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}]
+22 hash_heap = [-x for x in sorted_hashes]
+22 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'x'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'int', '_value': 45667}]
+22 hash_heap = [-x for x in sorted_hashes]
+22 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'x'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'int', '_value': 805730}]
+22 hash_heap = [-x for x in sorted_hashes]
+22 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -45667}, {'_type': 'int', '_value': -805730}], '_len': 2}]
+23 heapq.heapify(hash_heap)
+23 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -805730}, {'_type': 'int', '_value': -45667}], '_len': 2}]
+26 signature_components = []
+26 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -805730}, {'_type': 'int', '_value': -45667}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}]
+27 while len(hash_heap) > 1:
+27 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -805730}, {'_type': 'int', '_value': -45667}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}]
+28     first = -heapq.heappop(hash_heap)
+28 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -45667}], '_len': 1}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 805730}]
+29     second = -heapq.heappop(hash_heap)
+29 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}]
+30     combined = (first ^ second) & 0xFFFF  # XOR and mask to 16 bits
+30 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}]
+31     heapq.heappush(hash_heap, -combined)
+31 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -63745}], '_len': 1}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}]
+32     signature_components.append(combined)
+32 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -63745}], '_len': 1}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 63745}], '_len': 1}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}]
+27 while len(hash_heap) > 1:
+27 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -63745}], '_len': 1}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 63745}], '_len': 1}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}]
+34 final_signature = sum(signature_components) % 10000
+34 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined', 'final_signature'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -63745}], '_len': 1}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 63745}], '_len': 1}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}, {'_type': 'int', '_value': 3745}]
+35 print(f"Result: {final_signature}")
+35 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined', 'final_signature'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -63745}], '_len': 1}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 63745}], '_len': 1}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}, {'_type': 'int', '_value': 3745}]

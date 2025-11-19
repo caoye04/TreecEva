@@ -1,0 +1,20 @@
+12 packet_seed = 0b11001010
+12 ['packet_seed'] [{'_type': 'int', '_value': 202}]
+13 final_checksum = transform_packet(packet_seed)
+13 ['packet_seed'] [{'_type': 'int', '_value': 202}]
+PARAM_MAPPING transform_packet {'seed': {'actual_var': 'packet_seed', 'value': 202}}
+FUNCTION_ENTER 1 transform_packet def transform_packet(seed):
+1 ['seed'] [{'_type': 'int', '_value': 202}]
+DEPTH_2 3     stage1 = (seed << 3) & 0xFF
+3 ['seed', 'stage1'] [{'_type': 'int', '_value': 202}, {'_type': 'int', '_value': 80}]
+DEPTH_2 5     stage2 = stage1 ^ 0xAA
+5 ['seed', 'stage1', 'stage2'] [{'_type': 'int', '_value': 202}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 250}]
+DEPTH_2 7     stage3 = (stage2 >> 2) & 0xFF
+7 ['seed', 'stage1', 'stage2', 'stage3'] [{'_type': 'int', '_value': 202}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 62}]
+DEPTH_2 9     final_checksum = stage3 ^ seed
+9 ['seed', 'stage1', 'stage2', 'stage3', 'final_checksum'] [{'_type': 'int', '_value': 202}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 62}, {'_type': 'int', '_value': 244}]
+DEPTH_2 10     return final_checksum
+10 ['seed', 'stage1', 'stage2', 'stage3', 'final_checksum'] [{'_type': 'int', '_value': 202}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 62}, {'_type': 'int', '_value': 244}]
+FUNCTION_RETURN 10 transform_packet {'_type': 'int', '_value': 244}
+14 print(f'Result: {final_checksum}')
+14 ['packet_seed', 'final_checksum'] [{'_type': 'int', '_value': 202}, {'_type': 'int', '_value': 244}]

@@ -1,0 +1,124 @@
+1 import heapq
+1 [] []
+2 from functools import reduce
+2 [] []
+27 exchange_rates = [1.005, 1.02, 0.99, 1.01, 1.03, 1.007, 0.98]
+27 ['exchange_rates'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 1.005}, {'_type': 'float', '_value': 1.02}, {'_type': 'float', '_value': 0.99}, {'_type': 'float', '_value': 1.01}, {'_type': 'float', '_value': 1.03}, {'_type': 'float', '_value': 1.007}, {'_type': 'float', '_value': 0.98}], '_len': 7}]
+28 final_profit_margin = calculate_arbitrage_opportunities(exchange_rates)
+28 ['exchange_rates'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 1.005}, {'_type': 'float', '_value': 1.02}, {'_type': 'float', '_value': 0.99}, {'_type': 'float', '_value': 1.01}, {'_type': 'float', '_value': 1.03}, {'_type': 'float', '_value': 1.007}, {'_type': 'float', '_value': 0.98}], '_len': 7}]
+PARAM_MAPPING calculate_arbitrage_opportunities {'rates': {'actual_var': 'exchange_rates', 'value': [1.005, 1.02, 0.99, 1.01, 1.03, 1.007, 0.98]}}
+FUNCTION_ENTER 4 calculate_arbitrage_opportunities def calculate_arbitrage_opportunities(rates):
+4 ['rates'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 1.005}, {'_type': 'float', '_value': 1.02}, {'_type': 'float', '_value': 0.99}, {'_type': 'float', '_value': 1.01}, {'_type': 'float', '_value': 1.03}, {'_type': 'float', '_value': 1.007}, {'_type': 'float', '_value': 0.98}], '_len': 7}]
+DEPTH_2 6     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['rates'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 1.005}, {'_type': 'float', '_value': 1.02}, {'_type': 'float', '_value': 0.99}, {'_type': 'float', '_value': 1.01}, {'_type': 'float', '_value': 1.03}, {'_type': 'float', '_value': 1.007}, {'_type': 'float', '_value': 0.98}], '_len': 7}]
+FUNCTION_ENTER 6 <lambda>     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 1.005}]
+DEPTH_3 6     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 1.005}]
+FUNCTION_RETURN 6 <lambda> {'_type': 'int', '_value': 1005}
+FUNCTION_ENTER 6 <lambda>     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 1.02}]
+DEPTH_3 6     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 1.02}]
+FUNCTION_RETURN 6 <lambda> {'_type': 'int', '_value': 1020}
+FUNCTION_ENTER 6 <lambda>     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 0.99}]
+DEPTH_3 6     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 0.99}]
+FUNCTION_RETURN 6 <lambda> {'_type': 'int', '_value': 990}
+FUNCTION_ENTER 6 <lambda>     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 1.01}]
+DEPTH_3 6     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 1.01}]
+FUNCTION_RETURN 6 <lambda> {'_type': 'int', '_value': 1010}
+FUNCTION_ENTER 6 <lambda>     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 1.03}]
+DEPTH_3 6     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 1.03}]
+FUNCTION_RETURN 6 <lambda> {'_type': 'int', '_value': 1030}
+FUNCTION_ENTER 6 <lambda>     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 1.007}]
+DEPTH_3 6     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 1.007}]
+FUNCTION_RETURN 6 <lambda> {'_type': 'int', '_value': 1007}
+FUNCTION_ENTER 6 <lambda>     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 0.98}]
+DEPTH_3 6     normalized_rates = list(map(lambda x: round(x * 1000), rates))
+6 ['x'] [{'_type': 'float', '_value': 0.98}]
+FUNCTION_RETURN 6 <lambda> {'_type': 'int', '_value': 980}
+DEPTH_2 9     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['rates', 'normalized_rates'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 1.005}, {'_type': 'float', '_value': 1.02}, {'_type': 'float', '_value': 0.99}, {'_type': 'float', '_value': 1.01}, {'_type': 'float', '_value': 1.03}, {'_type': 'float', '_value': 1.007}, {'_type': 'float', '_value': 0.98}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1020}, {'_type': 'int', '_value': 990}, {'_type': 'int', '_value': 1010}, {'_type': 'int', '_value': 1030}, {'_type': 'int', '_value': 1007}, {'_type': 'int', '_value': 980}], '_len': 7}]
+FUNCTION_ENTER 9 <lambda>     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 1005}]
+DEPTH_3 9     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 1005}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+FUNCTION_ENTER 9 <lambda>     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 1020}]
+DEPTH_3 9     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 1020}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+FUNCTION_ENTER 9 <lambda>     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 990}]
+DEPTH_3 9     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 990}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda>     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 1010}]
+DEPTH_3 9     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 1010}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+FUNCTION_ENTER 9 <lambda>     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 1030}]
+DEPTH_3 9     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 1030}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+FUNCTION_ENTER 9 <lambda>     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 1007}]
+DEPTH_3 9     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 1007}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+FUNCTION_ENTER 9 <lambda>     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 980}]
+DEPTH_3 9     profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
+9 ['x'] [{'_type': 'int', '_value': 980}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+DEPTH_2 12     heapq.heapify(profitable_rates)
+12 ['rates', 'normalized_rates', 'profitable_rates'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 1.005}, {'_type': 'float', '_value': 1.02}, {'_type': 'float', '_value': 0.99}, {'_type': 'float', '_value': 1.01}, {'_type': 'float', '_value': 1.03}, {'_type': 'float', '_value': 1.007}, {'_type': 'float', '_value': 0.98}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1020}, {'_type': 'int', '_value': 990}, {'_type': 'int', '_value': 1010}, {'_type': 'int', '_value': 1030}, {'_type': 'int', '_value': 1007}, {'_type': 'int', '_value': 980}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1007}, {'_type': 'int', '_value': 1010}, {'_type': 'int', '_value': 1030}, {'_type': 'int', '_value': 1020}], '_len': 5}]
+DEPTH_2 18     total_profit = reduce(merge_profits, profitable_rates, 0)
+18 ['rates', 'normalized_rates', 'profitable_rates'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 1.005}, {'_type': 'float', '_value': 1.02}, {'_type': 'float', '_value': 0.99}, {'_type': 'float', '_value': 1.01}, {'_type': 'float', '_value': 1.03}, {'_type': 'float', '_value': 1.007}, {'_type': 'float', '_value': 0.98}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1020}, {'_type': 'int', '_value': 990}, {'_type': 'int', '_value': 1010}, {'_type': 'int', '_value': 1030}, {'_type': 'int', '_value': 1007}, {'_type': 'int', '_value': 980}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1007}, {'_type': 'int', '_value': 1010}, {'_type': 'int', '_value': 1030}, {'_type': 'int', '_value': 1020}], '_len': 5}]
+PARAM_MAPPING merge_profits {'a': {'actual_var': 'merge_profits', 'value': <function calculate_arbitrage_opportunities.<locals>.merge_profits at 0x000001D3D97F7420>}, 'b': {'actual_var': 'profitable_rates', 'value': [1005, 1007, 1010, 1030, 1020]}}
+FUNCTION_ENTER 15 merge_profits     def merge_profits(a, b):
+15 ['a', 'b'] [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 1005}]
+DEPTH_3 16         return (a + b) // 2 if a and b else (a or b)
+16 ['a', 'b'] [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 1005}]
+FUNCTION_RETURN 16 merge_profits {'_type': 'int', '_value': 1005}
+FUNCTION_ENTER 15 merge_profits     def merge_profits(a, b):
+15 ['a', 'b'] [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1007}]
+DEPTH_3 16         return (a + b) // 2 if a and b else (a or b)
+16 ['a', 'b'] [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1007}]
+FUNCTION_RETURN 16 merge_profits {'_type': 'int', '_value': 1006}
+FUNCTION_ENTER 15 merge_profits     def merge_profits(a, b):
+15 ['a', 'b'] [{'_type': 'int', '_value': 1006}, {'_type': 'int', '_value': 1010}]
+DEPTH_3 16         return (a + b) // 2 if a and b else (a or b)
+16 ['a', 'b'] [{'_type': 'int', '_value': 1006}, {'_type': 'int', '_value': 1010}]
+FUNCTION_RETURN 16 merge_profits {'_type': 'int', '_value': 1008}
+FUNCTION_ENTER 15 merge_profits     def merge_profits(a, b):
+15 ['a', 'b'] [{'_type': 'int', '_value': 1008}, {'_type': 'int', '_value': 1030}]
+DEPTH_3 16         return (a + b) // 2 if a and b else (a or b)
+16 ['a', 'b'] [{'_type': 'int', '_value': 1008}, {'_type': 'int', '_value': 1030}]
+FUNCTION_RETURN 16 merge_profits {'_type': 'int', '_value': 1019}
+FUNCTION_ENTER 15 merge_profits     def merge_profits(a, b):
+15 ['a', 'b'] [{'_type': 'int', '_value': 1019}, {'_type': 'int', '_value': 1020}]
+DEPTH_3 16         return (a + b) // 2 if a and b else (a or b)
+16 ['a', 'b'] [{'_type': 'int', '_value': 1019}, {'_type': 'int', '_value': 1020}]
+FUNCTION_RETURN 16 merge_profits {'_type': 'int', '_value': 1019}
+DEPTH_2 21     isValid = total_profit > 5000 and not (total_profit % 100 == 0)
+21 ['rates', 'normalized_rates', 'profitable_rates', 'total_profit', 'isValid'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 1.005}, {'_type': 'float', '_value': 1.02}, {'_type': 'float', '_value': 0.99}, {'_type': 'float', '_value': 1.01}, {'_type': 'float', '_value': 1.03}, {'_type': 'float', '_value': 1.007}, {'_type': 'float', '_value': 0.98}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1020}, {'_type': 'int', '_value': 990}, {'_type': 'int', '_value': 1010}, {'_type': 'int', '_value': 1030}, {'_type': 'int', '_value': 1007}, {'_type': 'int', '_value': 980}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1007}, {'_type': 'int', '_value': 1010}, {'_type': 'int', '_value': 1030}, {'_type': 'int', '_value': 1020}], '_len': 5}, {'_type': 'int', '_value': 1019}, {'_type': 'bool', '_value': False}]
+DEPTH_2 22     final_profit_margin = total_profit if isValid else 0
+22 ['rates', 'normalized_rates', 'profitable_rates', 'total_profit', 'isValid', 'final_profit_margin'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 1.005}, {'_type': 'float', '_value': 1.02}, {'_type': 'float', '_value': 0.99}, {'_type': 'float', '_value': 1.01}, {'_type': 'float', '_value': 1.03}, {'_type': 'float', '_value': 1.007}, {'_type': 'float', '_value': 0.98}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1020}, {'_type': 'int', '_value': 990}, {'_type': 'int', '_value': 1010}, {'_type': 'int', '_value': 1030}, {'_type': 'int', '_value': 1007}, {'_type': 'int', '_value': 980}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1007}, {'_type': 'int', '_value': 1010}, {'_type': 'int', '_value': 1030}, {'_type': 'int', '_value': 1020}], '_len': 5}, {'_type': 'int', '_value': 1019}, {'_type': 'bool', '_value': False}, {'_type': 'int', '_value': 0}]
+DEPTH_2 24     return final_profit_margin
+24 ['rates', 'normalized_rates', 'profitable_rates', 'total_profit', 'isValid', 'final_profit_margin'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 1.005}, {'_type': 'float', '_value': 1.02}, {'_type': 'float', '_value': 0.99}, {'_type': 'float', '_value': 1.01}, {'_type': 'float', '_value': 1.03}, {'_type': 'float', '_value': 1.007}, {'_type': 'float', '_value': 0.98}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1020}, {'_type': 'int', '_value': 990}, {'_type': 'int', '_value': 1010}, {'_type': 'int', '_value': 1030}, {'_type': 'int', '_value': 1007}, {'_type': 'int', '_value': 980}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1005}, {'_type': 'int', '_value': 1007}, {'_type': 'int', '_value': 1010}, {'_type': 'int', '_value': 1030}, {'_type': 'int', '_value': 1020}], '_len': 5}, {'_type': 'int', '_value': 1019}, {'_type': 'bool', '_value': False}, {'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 24 calculate_arbitrage_opportunities {'_type': 'int', '_value': 0}
+29 print(f"Result: {final_profit_margin}")
+29 ['exchange_rates', 'final_profit_margin'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 1.005}, {'_type': 'float', '_value': 1.02}, {'_type': 'float', '_value': 0.99}, {'_type': 'float', '_value': 1.01}, {'_type': 'float', '_value': 1.03}, {'_type': 'float', '_value': 1.007}, {'_type': 'float', '_value': 0.98}], '_len': 7}, {'_type': 'int', '_value': 0}]

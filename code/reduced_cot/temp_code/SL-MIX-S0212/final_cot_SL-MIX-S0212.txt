@@ -1,0 +1,31 @@
+Target: Find the value of variable anomaly_score after [line 35] executes
+
+[line 32]  sensor_readings = [23.45, -15.67, 0, 120.89, -98.77, 24.12, 25.00, -22.33]
+Compute: [23.45, -15.67, 0, 120.89, -98.77, 24.12, 25.00, -22.33] = [23.45, -15.67, 0, 120.89, -98.77, ...]
+[line 35]  anomaly_score = process_sensor_data(sensor_readings)
+Call function process_sensor_data(sensor_readings=[23.45, -15.67, 0, 120.89, -98.77, ...] (defined at [line 32]))
+[line 5]  def process_sensor_data(readings_batch):
+Enter function process_sensor_data: readings_batch=[23.45, -15.67, 0, 120.89, -98.77, ...] (sensor_readings defined at [line 32])
+  [line 7]  smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
+  Compute: [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch], where temp=23.45 (an unknown source), readings_batch=[23.45, -15.67, 0, 120.89, -98.77, ...] (parameter readings_batch defined at [line 32]) = ?
+  [line 10]  mean_val = sum(smoothed) / len(smoothed)
+  Compute: sum(smoothed) / len(smoothed), where smoothed=[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...] (defined at [line 7]) = 3.1309660517414457
+  [line 11]  deviations = [(val - mean_val) ** 2 for val in smoothed]
+  Compute: [(val - mean_val) ** 2 for val in smoothed], where val=3.196630215920881 (an unknown source), mean_val=3.1309660517414457 (defined at [line 10]), smoothed=[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...] (defined at [line 7]) = ?
+  [line 12]  std_dev = math.sqrt(sum(deviations) / len(deviations))
+  (Missing param: 'func_name')
+  [line 15]  outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
+  Compute: [abs(val - mean_val) > 1.5 * std_dev for val in smoothed], where val=3.196630215920881 (an unknown source), mean_val=3.1309660517414457 (defined at [line 10]), std_dev=1.3645361702240464 (an unknown source), smoothed=[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...] (defined at [line 7]) = ?
+  [line 18]  signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
+  Compute: [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch], where temp=23.45 (an unknown source), readings_batch=[23.45, -15.67, 0, 120.89, -98.77, ...] (parameter readings_batch defined at [line 32]) = ?
+  [line 21]  base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
+  Call function sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
+  [line 24]  correction_factor = 1.2 if base_score > 10 else 0.8
+  Compute: 1.2 if base_score > 10 else 0.8, where base_score=0 (defined at [line 21]) = 0.8
+  [line 27]  anomaly_score = round(base_score * correction_factor, 2) if base_score > 0 else 0
+  Compute: round(base_score * correction_factor, 2) if base_score > 0 else 0, where base_score=0 (defined at [line 21]), correction_factor=0.8 (defined at [line 24]) = 0
+  [line 29]  return anomaly_score
+  Return: anomaly_score=0 (defined at [line 27])
+Function process_sensor_data returns 0
+
+Answer: anomaly_score = 0 (last updated on defined at [line 27])

@@ -1,0 +1,60 @@
+Target: Find the value of variable encoded_result after [line 50] executes
+
+[line 40]  elevations = [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric
+Compute: [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric, where p=(10.5, 20.3, 1) (an unknown source), elevation_data=[(10.5, 20.3, 1), (15.2, 25.1, 2), (12.8, 22.7, 3), (18.9, 30.4, 4), (14.6, 24.8, 5), ...] (an unknown source) = ?
+[line 40]  elevations = [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric
+Compute: [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric, where p=(15.2, 25.1, 2) (an unknown source), elevation_data=[(10.5, 20.3, 1), (15.2, 25.1, 2), (12.8, 22.7, 3), (18.9, 30.4, 4), (14.6, 24.8, 5), ...] (an unknown source) = ?
+[line 40]  elevations = [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric
+Compute: [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric, where p=(12.8, 22.7, 3) (an unknown source), elevation_data=[(10.5, 20.3, 1), (15.2, 25.1, 2), (12.8, 22.7, 3), (18.9, 30.4, 4), (14.6, 24.8, 5), ...] (an unknown source) = ?
+[line 40]  elevations = [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric
+Compute: [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric, where p=(18.9, 30.4, 4) (an unknown source), elevation_data=[(10.5, 20.3, 1), (15.2, 25.1, 2), (12.8, 22.7, 3), (18.9, 30.4, 4), (14.6, 24.8, 5), ...] (an unknown source) = ?
+[line 40]  elevations = [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric
+Compute: [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric, where p=(14.6, 24.8, 5) (an unknown source), elevation_data=[(10.5, 20.3, 1), (15.2, 25.1, 2), (12.8, 22.7, 3), (18.9, 30.4, 4), (14.6, 24.8, 5), ...] (an unknown source) = ?
+[line 40]  elevations = [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric
+Compute: [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric, where p=(16.3, 26.9, 6) (an unknown source), elevation_data=[(10.5, 20.3, 1), (15.2, 25.1, 2), (12.8, 22.7, 3), (18.9, 30.4, 4), (14.6, 24.8, 5), ...] (an unknown source) = ?
+[line 40]  elevations = [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric
+Compute: [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric, where p=(16.3, 26.9, 6) (an unknown source), elevation_data=[(10.5, 20.3, 1), (15.2, 25.1, 2), (12.8, 22.7, 3), (18.9, 30.4, 4), (14.6, 24.8, 5), ...] (an unknown source) = [213, 381, 290, 574, 362, ...]
+[line 41]  avg_elevation = calculate_elevation_stats(elevations)
+Call function calculate_elevation_stats(elevations=[213, 381, 290, 574, 362, ...] (defined at [line 40]))
+[line 24]  def calculate_elevation_stats(elevations):
+Enter function calculate_elevation_stats: elevations=[213, 381, 290, 574, 362, ...] (elevations defined at [line 40])
+  [line 25]  total = sum(elevations)
+  Call function sum(elevations=[213, 381, 290, 574, 362, ...] (parameter elevations defined at [line 40]))
+  [line 26]  count = len(elevations)
+  Call function len(elevations=[213, 381, 290, 574, 362, ...] (parameter elevations defined at [line 40]))
+  [line 27]  avg = total // count if count else 0
+  Compute: total // count if count else 0, where total=2258 (defined at [line 25]), count=6 (defined at [line 26]) = 376
+  [line 28]  return avg
+  Return: avg=376 (defined at [line 27])
+Function calculate_elevation_stats returns 376
+[line 44]  filtered_points = [p for p in elevation_data if int(p[0]*p[1]) > avg_elevation]
+Compute: [p for p in elevation_data if int(p[0]*p[1]) > avg_elevation], where p=(10.5, 20.3, 1) (an unknown source), elevation_data=[(10.5, 20.3, 1), (15.2, 25.1, 2), (12.8, 22.7, 3), (18.9, 30.4, 4), (14.6, 24.8, 5), ...] (an unknown source), avg_elevation=376 (defined at [line 41]) = ?
+[line 47]  triangulation_result = greedy_triangulation(filtered_points)
+Call function greedy_triangulation(filtered_points=[(15.2, 25.1, 2), (18.9, 30.4, 4), (16.3, 26.9, 6)] (defined at [line 44]))
+[line 15]  triangles = []
+Compute: [] = []
+[line 18]  for i in range(len(points) - 2):
+Loop Start: i takes its first value 0
+[line 19]  triangle = (points[i][2], points[i+1][2], points[i+2][2])  # Use point IDs
+Compute: (points[i][2], points[i+1][2], points[i+2][2])  # Use point IDs, where points=[(15.2, 25.1, 2), (16.3, 26.9, 6), (18.9, 30.4, 4)] (an unknown source), i=0 (defined at [line 18]) = (2, 6, 4)
+[line 18]  for i in range(len(points) - 2):
+Loop End: Iteration finished
+[line 22]  return triangles
+Return: triangles=[(2, 4, 6)] (defined at [line 15])
+[line 50]  encoded_result = encode_triangulation(triangulation_result)
+Call function encode_triangulation(triangulation_result=[(2, 4, 6)] (defined at [line 47]))
+[line 4]  def encode_triangulation(triangles):
+Enter function encode_triangulation: triangles=[(2, 4, 6)] (triangulation_result defined at [line 47])
+  [line 5]  encoded = 0
+  Assign: encoded = 0
+  [line 6]  for i, triangle in enumerate(triangles):
+  (Missing param: 'iter_var')
+  [line 8]  value = sum(triangle) << (i % 8)
+  Compute: sum(triangle) << (i % 8), where triangle=(2, 4, 6) (defined at [line 19]), i=0 (defined at [line 18]) = 12
+  [line 6]  for i, triangle in enumerate(triangles):
+  Loop End: Iteration finished
+  [line 10]  return encoded
+  Return: encoded=12 (defined at [line 5])
+Function encode_triangulation returns 12
+
+Answer: encoded_result = 12 (last updated on defined at [line 50])

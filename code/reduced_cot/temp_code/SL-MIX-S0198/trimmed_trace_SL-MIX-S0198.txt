@@ -1,0 +1,95 @@
+29
+final_checksum
+---
+3 raw_packets = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
+3 ['raw_packets'] ['[26, 43, 60, 77, 94]']
+7 chained_values = []
+7 ['raw_packets', 'chained_values'] ['[26, 43, 60, 77, 94]', '[]']
+8 for i, packet in enumerate(raw_packets):
+8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[]', '0', '26']
+8 for i, packet in enumerate(raw_packets):
+8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[101]', '1', '43']
+8 for i, packet in enumerate(raw_packets):
+8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[101, 213]', '2', '60']
+8 for i, packet in enumerate(raw_packets):
+8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[101, 213, 193]', '3', '77']
+8 for i, packet in enumerate(raw_packets):
+8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[101, 213, 193, 182]', '4', '94']
+8 for i, packet in enumerate(raw_packets):
+8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[101, 213, 193, 182, 169]', '4', '94']
+14 unique_packets = list(set(chained_values))
+14 ['chained_values', 'unique_packets'] ['[101, 213, 193, 182, 169]', '[193, 101, 169, 213, 182]']
+17 transform = lambda x: (x * 3 + 7) % 256
+17 ['unique_packets'] ['[193, 101, 169, 213, 182]']
+18 transformed_packets = [transform(p) for p in unique_packets]
+18 ['unique_packets', 'p'] ['[193, 101, 169, 213, 182]', '193']
+17 transform = lambda x: (x * 3 + 7) % 256
+17 ['x'] ['193']
+18 transformed_packets = [transform(p) for p in unique_packets]
+18 ['unique_packets', 'p'] ['[193, 101, 169, 213, 182]', '101']
+17 transform = lambda x: (x * 3 + 7) % 256
+17 ['x'] ['101']
+18 transformed_packets = [transform(p) for p in unique_packets]
+18 ['unique_packets', 'p'] ['[193, 101, 169, 213, 182]', '169']
+17 transform = lambda x: (x * 3 + 7) % 256
+17 ['x'] ['169']
+18 transformed_packets = [transform(p) for p in unique_packets]
+18 ['unique_packets', 'p'] ['[193, 101, 169, 213, 182]', '213']
+17 transform = lambda x: (x * 3 + 7) % 256
+17 ['x'] ['213']
+18 transformed_packets = [transform(p) for p in unique_packets]
+18 ['unique_packets', 'p'] ['[193, 101, 169, 213, 182]', '182']
+17 transform = lambda x: (x * 3 + 7) % 256
+17 ['x'] ['182']
+18 transformed_packets = [transform(p) for p in unique_packets]
+18 ['unique_packets', 'transformed_packets'] ['[193, 101, 169, 213, 182]', '[74, 54, 2, 134, 41]']
+21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+21 ['transformed_packets', 'p'] ['[74, 54, 2, 134, 41]', '74']
+21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+21 ['transformed_packets', 'p'] ['[74, 54, 2, 134, 41]', '54']
+21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+21 ['transformed_packets', 'p'] ['[74, 54, 2, 134, 41]', '2']
+21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+21 ['transformed_packets', 'p'] ['[74, 54, 2, 134, 41]', '134']
+21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+21 ['transformed_packets', 'p'] ['[74, 54, 2, 134, 41]', '41']
+21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+21 ['transformed_packets', 'packet_string'] ['[74, 54, 2, 134, 41]', "'4a3628629'"]
+22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
+22 [] []
+22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
+22 ['c'] ["'4'"]
+22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
+22 ['c'] ["'a'"]
+22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
+22 ['c'] ["'3'"]
+22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
+22 ['c'] ["'6'"]
+22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
+22 ['c'] ["'2'"]
+22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
+22 ['c'] ["'8'"]
+22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
+22 ['c'] ["'6'"]
+22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
+22 ['c'] ["'2'"]
+22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
+22 ['c'] ["'9'"]
+22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
+22 ['c'] ["'9'"]
+25 checksum_components = [p ^ hash_id for p in transformed_packets]
+25 ['transformed_packets', 'hash_id', 'p'] ['[74, 54, 2, 134, 41]', '9', '74']
+25 checksum_components = [p ^ hash_id for p in transformed_packets]
+25 ['transformed_packets', 'hash_id', 'p'] ['[74, 54, 2, 134, 41]', '9', '54']
+25 checksum_components = [p ^ hash_id for p in transformed_packets]
+25 ['transformed_packets', 'hash_id', 'p'] ['[74, 54, 2, 134, 41]', '9', '2']
+25 checksum_components = [p ^ hash_id for p in transformed_packets]
+25 ['transformed_packets', 'hash_id', 'p'] ['[74, 54, 2, 134, 41]', '9', '134']
+25 checksum_components = [p ^ hash_id for p in transformed_packets]
+25 ['transformed_packets', 'hash_id', 'p'] ['[74, 54, 2, 134, 41]', '9', '41']
+25 checksum_components = [p ^ hash_id for p in transformed_packets]
+25 ['transformed_packets', 'hash_id', 'checksum_components'] ['[74, 54, 2, 134, 41]', '9', '[67, 63, 11, 143, 32]']
+26 intermediate_sum = sum(checksum_components) & 0xFFFF
+26 ['checksum_components', 'intermediate_sum'] ['[67, 63, 11, 143, 32]', '316']
+29 final_checksum = ((intermediate_sum >> 8) & 0xFF) | ((intermediate_sum & 0xFF) << 8)
+29 ['intermediate_sum', 'final_checksum'] ['316', '15361']

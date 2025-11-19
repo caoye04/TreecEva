@@ -1,0 +1,146 @@
+Target: Find the value of variable security_clearance_level after [line 62] executes
+
+[line 19]  head = None
+Assign: head = None
+[line 20]  for seq, payload in reversed(packets):
+(Missing param: 'iter_var')
+[line 21]  head = PacketNode(seq, payload, head)
+Call function PacketNode(seq=1005 (an unknown source), payload='AUTH:user|CMD:execute' (an unknown source), head=None (defined at [line 19]))
+[line 4]  def __init__(self, seq_num, payload, next_node=None):
+Enter function __init__: self=PacketNode(...), seq_num=1005, payload='AUTH:user|CMD:execute' (head defined at [line 21]), next_node=None
+  [line 5]  self.seq_num = seq_num
+  (Missing param: 'result')
+  [line 6]  self.payload = payload
+  (Missing param: 'result')
+  [line 7]  self.next = next_node
+  (Missing param: 'result')
+Function __init__ returns None
+[line 20]  for seq, payload in reversed(packets):
+(Missing param: 'iter_var')
+[line 21]  head = PacketNode(seq, payload, head)
+Call function PacketNode(seq=1004 (an unknown source), payload='AUTH:admin|CMD:delete' (an unknown source), head=PacketNode(seq_num=1005, payload='AUTH:user|CMD:execute', next=None) (defined at [line 21]))
+... [Line 20] repeats 2 more times ...
+... [Line 20] repeats 2 more times ...
+[line 20]  for seq, payload in reversed(packets):
+(Missing param: 'iter_var')
+[line 21]  head = PacketNode(seq, payload, head)
+Call function PacketNode(seq=1001 (an unknown source), payload='AUTH:admin|CMD:read' (an unknown source), head=PacketNode(seq_num=1002, payload='AUTH:user|CMD:write', next=PacketNode(seq_num=1003, payload='AUTH:guest|CMD:read', next=PacketNode(...))) (defined at [line 21]))
+[line 20]  for seq, payload in reversed(packets):
+Loop End: Iteration finished
+[line 22]  return head
+Return: head=PacketNode(...) (defined at [line 21])
+[line 25]  clearance = 0
+Assign: clearance = 0
+[line 26]  current = head
+Compute: head, where head=PacketNode(...) (defined at [line 21]) = PacketNode(seq_num=1001, payload='AUTH:admin|CMD:read', next=PacketNode(seq_num=1002, payload='AUTH:user|CMD:write', next=PacketNode(...)))
+[line 28]  while current:
+while Loop Start: Condition is true
+[line 30]  cmd_match = re.search(r'CMD:(\w+)', current.payload)
+(Missing param: 'func_name')
+[line 31]  auth_match = re.search(r'AUTH:(\w+)', current.payload)
+(Missing param: 'func_name')
+[line 33]  if cmd_match and auth_match:
+Condition: True, entering 'if' block
+[line 34]  command = cmd_match.group(1)
+(Missing param: 'func_name')
+[line 35]  auth_level = auth_match.group(1)
+(Missing param: 'func_name')
+[line 38]  auth_weight = {'admin': 3, 'user': 2, 'guest': 1}[auth_level]
+Compute: {'admin': 3, 'user': 2, 'guest': 1}[auth_level], where auth_level='admin' (an unknown source) = 3
+[line 41]  cmd_weight = {'read': 1, 'write': 2, 'execute': 3, 'delete': 4}[command]
+Compute: {'read': 1, 'write': 2, 'execute': 3, 'delete': 4}[command], where command='read' (an unknown source) = 1
+[line 44]  validity = (current.seq_num % 7) * auth_weight + cmd_weight
+Compute: (current.seq_num % 7) * auth_weight + cmd_weight, where current=PacketNode(seq_num=1001) (defined at [line 26]), auth_weight=3 (defined at [line 38]), cmd_weight=1 (defined at [line 41]) = 1
+[line 47]  if validity & 1:  # If odd
+Condition: True, entering 'if' block
+[line 52]  current = current.next
+Compute: current.next, where current=PacketNode(...) (defined at [line 26]) = PacketNode(next=PacketNode(seq_num=1003, payload='AUTH:guest|CMD:read', next=PacketNode(...)))
+[line 28]  while current:
+while Loop Iteration: Condition is still true
+[line 30]  cmd_match = re.search(r'CMD:(\w+)', current.payload)
+(Missing param: 'func_name')
+[line 31]  auth_match = re.search(r'AUTH:(\w+)', current.payload)
+(Missing param: 'func_name')
+[line 33]  if cmd_match and auth_match:
+Condition: True, entering 'if' block
+[line 34]  command = cmd_match.group(1)
+(Missing param: 'func_name')
+[line 35]  auth_level = auth_match.group(1)
+(Missing param: 'func_name')
+[line 38]  auth_weight = {'admin': 3, 'user': 2, 'guest': 1}[auth_level]
+Compute: {'admin': 3, 'user': 2, 'guest': 1}[auth_level], where auth_level='user' (an unknown source) = 2
+[line 41]  cmd_weight = {'read': 1, 'write': 2, 'execute': 3, 'delete': 4}[command]
+Compute: {'read': 1, 'write': 2, 'execute': 3, 'delete': 4}[command], where command='write' (an unknown source) = 2
+[line 44]  validity = (current.seq_num % 7) * auth_weight + cmd_weight
+Compute: (current.seq_num % 7) * auth_weight + cmd_weight, where current=PacketNode(seq_num=1002) (defined at [line 52]), auth_weight=2 (defined at [line 38]), cmd_weight=2 (defined at [line 41]) = 4
+[line 47]  if validity & 1:  # If odd
+Condition: True, entering 'if' block
+[line 52]  current = current.next
+Compute: current.next, where current=PacketNode(...) (defined at [line 52]) = PacketNode(next=PacketNode(seq_num=1004, payload='AUTH:admin|CMD:delete', next=PacketNode(...)))
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+[line 28]  while current:
+while Loop Iteration: Condition is still true
+[line 30]  cmd_match = re.search(r'CMD:(\w+)', current.payload)
+(Missing param: 'func_name')
+[line 31]  auth_match = re.search(r'AUTH:(\w+)', current.payload)
+(Missing param: 'func_name')
+[line 33]  if cmd_match and auth_match:
+Condition: True, entering 'if' block
+[line 34]  command = cmd_match.group(1)
+(Missing param: 'func_name')
+[line 35]  auth_level = auth_match.group(1)
+(Missing param: 'func_name')
+[line 38]  auth_weight = {'admin': 3, 'user': 2, 'guest': 1}[auth_level]
+Compute: {'admin': 3, 'user': 2, 'guest': 1}[auth_level], where auth_level='user' (an unknown source) = 2
+[line 41]  cmd_weight = {'read': 1, 'write': 2, 'execute': 3, 'delete': 4}[command]
+Compute: {'read': 1, 'write': 2, 'execute': 3, 'delete': 4}[command], where command='execute' (an unknown source) = 3
+[line 44]  validity = (current.seq_num % 7) * auth_weight + cmd_weight
+Compute: (current.seq_num % 7) * auth_weight + cmd_weight, where current=PacketNode(seq_num=1005) (defined at [line 52]), auth_weight=2 (defined at [line 38]), cmd_weight=3 (defined at [line 41]) = 11
+[line 47]  if validity & 1:  # If odd
+Condition: True, entering 'if' block
+[line 52]  current = current.next
+Compute: current.next, where current=PacketNode(...) (defined at [line 52]) = None
+[line 28]  while current:
+while Loop Iteration: Condition is still true
+[line 55]  packet_count = 0
+Assign: packet_count = 0
+[line 56]  temp = head
+Compute: head, where head=PacketNode(...) (defined at [line 21]) = PacketNode(seq_num=1001, payload='AUTH:admin|CMD:read', next=PacketNode(seq_num=1002, payload='AUTH:user|CMD:write', next=PacketNode(...)))
+[line 57]  while temp:
+while Loop Start: Condition is true
+[line 58]  packet_count += 1
+Update: packet_count changed from 0 (defined at defined at [line 55]) to 0+1 = 1
+[line 59]  temp = temp.next
+Compute: temp.next, where temp=PacketNode(...) (defined at [line 56]) = PacketNode(next=PacketNode(seq_num=1003, payload='AUTH:guest|CMD:read', next=PacketNode(...)))
+[line 57]  while temp:
+while Loop Iteration: Condition is still true
+[line 58]  packet_count += 1
+Update: packet_count changed from 1 (defined at defined at [line 58]) to 1+1 = 2
+[line 59]  temp = temp.next
+Compute: temp.next, where temp=PacketNode(...) (defined at [line 59]) = PacketNode(next=PacketNode(seq_num=1004, payload='AUTH:admin|CMD:delete', next=PacketNode(...)))
+... [Line 57] repeats 2 more times ...
+... [Line 57] repeats 2 more times ...
+... [Line 57] repeats 2 more times ...
+[line 57]  while temp:
+while Loop Iteration: Condition is still true
+[line 58]  packet_count += 1
+Update: packet_count changed from 4 (defined at defined at [line 58]) to 4+1 = 5
+[line 59]  temp = temp.next
+Compute: temp.next, where temp=PacketNode(...) (defined at [line 59]) = None
+[line 57]  while temp:
+while Loop Iteration: Condition is still true
+[line 62]  security_clearance_level = (clearance * packet_count) % 128
+Compute: (clearance * packet_count) % 128, where clearance=6 (defined at [line 25]), packet_count=5 (defined at [line 58]) = 30
+
+Answer: security_clearance_level = 30 (last updated on defined at [line 62])

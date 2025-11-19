@@ -1,0 +1,64 @@
+Target: Find the value of variable final_output after [line 36] executes
+
+[line 18]  leaf1 = SignalNode(value=3)
+Call function SignalNode(value=3)
+[line 19]  leaf2 = SignalNode(value=5)
+Call function SignalNode(value=5)
+[line 20]  xor1 = SignalNode(left=leaf1, right=leaf2, operation='XOR')
+Call function SignalNode(left=leaf1, right=leaf2, operation='XOR')
+[line 21]  leaf4 = SignalNode(value=7)
+Call function SignalNode(value=7)
+[line 22]  root = SignalNode(left=xor1, right=leaf4, operation='XOR')
+Call function SignalNode(left=xor1, right=leaf4, operation='XOR')
+[line 36]  final_output = propagate_signal(root)
+Call function propagate_signal(root=SignalNode(...) (defined at [line 22]))
+[line 25]  if node.value is not None:  # Leaf node
+Condition: True, entering 'if' block
+[line 28]  left_val = propagate_signal(node.left)
+Call function propagate_signal(node.left)
+[line 24]  def propagate_signal(node):
+Enter function propagate_signal: node=SignalNode(value=None, left=SignalNode(value=3, left=None, right=None, operation=None), right=SignalNode(value=5, left=None, right=None, operation=None), operation='XOR')
+  [line 25]  if node.value is not None:  # Leaf node
+  Condition: True, entering 'if' block
+  [line 28]  left_val = propagate_signal(node.left)
+  Call function propagate_signal(node.left)
+  [line 24]  def propagate_signal(node):
+  Enter function propagate_signal: node=SignalNode(value=3, left=None, right=None, operation=None)
+    [line 25]  if node.value is not None:  # Leaf node
+    Condition: True, entering 'if' block
+    [line 26]  return node.value
+    Return: node.value
+  Function propagate_signal returns 3
+  [line 29]  right_val = propagate_signal(node.right)
+  Call function propagate_signal(node.right)
+  [line 24]  def propagate_signal(node):
+  Enter function propagate_signal: node=SignalNode(value=5, left=None, right=None, operation=None)
+    [line 25]  if node.value is not None:  # Leaf node
+    Condition: True, entering 'if' block
+    [line 26]  return node.value
+    Return: node.value
+  Function propagate_signal returns 5
+  [line 30]  if node.operation == 'XOR':
+  Condition: True, entering 'if' block
+  [line 31]  node.value = left_val ^ right_val
+  (Missing param: 'result')
+  [line 32]  return node.value
+  Return: node.value
+Function propagate_signal returns 6
+[line 29]  right_val = propagate_signal(node.right)
+Call function propagate_signal(node.right)
+[line 24]  def propagate_signal(node):
+Enter function propagate_signal: node=SignalNode(value=7, left=None, right=None, operation=None)
+  [line 25]  if node.value is not None:  # Leaf node
+  Condition: True, entering 'if' block
+  [line 26]  return node.value
+  Return: node.value
+Function propagate_signal returns 7
+[line 30]  if node.operation == 'XOR':
+Condition: True, entering 'if' block
+[line 31]  node.value = left_val ^ right_val
+(Missing param: 'result')
+[line 32]  return node.value
+Return: node.value
+
+Answer: final_output = ? (last updated on defined at [line 36])

@@ -1,0 +1,53 @@
+Target: Find the value of variable processed_checksum after [line 26] executes
+
+[line 25]  signal_data = [12, 7, 23, 9, 15, 4, 18, 11, 6, 25, 3, 20, 8, 14, 19, 5, 22, 10, 17, 1]
+Compute: [12, 7, 23, 9, 15, 4, 18, 11, 6, 25, 3, 20, 8, 14, 19, 5, 22, 10, 17, 1] = [12, 7, 23, 9, 15, ...]
+[line 26]  processed_checksum = compute_signal_checksum(signal_data)
+Call function compute_signal_checksum(signal_data=[12, 7, 23, 9, 15, ...] (defined at [line 25]))
+[line 3]  def compute_signal_checksum(signal_samples):
+Enter function compute_signal_checksum: signal_samples=[12, 7, 23, 9, 15, ...] (signal_data defined at [line 25])
+  [line 4]  window = deque(maxlen=5)
+  Call function deque(maxlen=5)
+  [line 5]  checksum = 0
+  Assign: checksum = 0
+  [line 7]  for idx, sample in enumerate(signal_samples):
+  (Missing param: 'iter_var')
+  [line 11]  if len(window) == 5:
+  Condition: True, entering 'if' block
+  [line 7]  for idx, sample in enumerate(signal_samples):
+  (Missing param: 'iter_var')
+  [line 11]  if len(window) == 5:
+  Condition: True, entering 'if' block
+... [Line 7] repeats 17 more times ...
+... [Line 7] repeats 17 more times ...
+  [line 7]  for idx, sample in enumerate(signal_samples):
+  (Missing param: 'iter_var')
+  [line 11]  if len(window) == 5:
+  Condition: True, entering 'if' block
+  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+  Call function sum((i + 1) * val for i, val in enumerate(window))
+  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+  Call function sum((i + 1) * val for i, val in enumerate(window))
+  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+  Call function sum((i + 1) * val for i, val in enumerate(window))
+  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+  Call function sum((i + 1) * val for i, val in enumerate(window))
+  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+  Call function sum((i + 1) * val for i, val in enumerate(window))
+  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+  Call function sum((i + 1) * val for i, val in enumerate(window))
+  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+  Call function sum((i + 1) * val for i, val in enumerate(window))
+  [line 15]  mod_result = (weighted_sum % 17) + (idx * 0.5)
+  Compute: (weighted_sum % 17) + (idx * 0.5), where weighted_sum=152 (defined at [line 13]), idx=19 (an unknown source) = 25.5
+  [line 17]  if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+  Condition: True, entering 'if' block
+  [line 18]  checksum = (checksum + int(mod_result)) % 100
+  Compute: (checksum + int(mod_result)) % 100, where checksum=1 (defined at [line 5]), mod_result=25.5 (defined at [line 15]) = 26
+  [line 7]  for idx, sample in enumerate(signal_samples):
+  Loop End: Iteration finished
+  [line 22]  return checksum
+  Return: checksum=26 (defined at [line 18])
+Function compute_signal_checksum returns 26
+
+Answer: processed_checksum = ? (last updated on defined at [line 26])

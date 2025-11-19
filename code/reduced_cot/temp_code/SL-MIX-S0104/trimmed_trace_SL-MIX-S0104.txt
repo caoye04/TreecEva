@@ -1,0 +1,27 @@
+34
+processed_amplitude
+---
+10 data = SignalConfig(440, 44100, 16)
+10 ['data'] ['SignalConfig(base_freq=440, sampling_rate=44100, bit_depth=16)']
+11 original_amplitude = 0x1FAB
+11 ['data', 'original_amplitude'] ['SignalConfig(base_freq=440, sampling_rate=44100, bit_depth=16)', '8107']
+12 processed_amplitude = original_amplitude
+12 ['data', 'original_amplitude', 'processed_amplitude'] ['SignalConfig(base_freq=440, sampling_rate=44100, bit_depth=16)', '8107', '8107']
+15 if data.base_freq % 100 == 40 and data.sampling_rate > 40000:
+15 ['data', 'processed_amplitude'] ['SignalConfig(base_freq=440, sampling_rate=44100, bit_depth=16)', '8107']
+16 processed_amplitude ^= 0xFF00
+16 ['processed_amplitude'] ['57515']
+17 if data.bit_depth >= 16:
+17 ['processed_amplitude'] ['57515']
+18 processed_amplitude |= 0x00F0
+18 ['processed_amplitude'] ['57595']
+23 if processed_amplitude & 0x8000:
+23 ['processed_amplitude'] ['57595']
+24 processed_amplitude = (processed_amplitude + 0x1000) % 0xFFFF
+24 ['processed_amplitude'] ['61691']
+29 if not (processed_amplitude & 0xF000):
+29 ['processed_amplitude'] ['61691']
+31 elif processed_amplitude & 0xC000 == 0x8000:
+31 ['processed_amplitude'] ['61691']
+34 processed_amplitude = processed_amplitude & 0x7FFF
+34 ['processed_amplitude'] ['28923']

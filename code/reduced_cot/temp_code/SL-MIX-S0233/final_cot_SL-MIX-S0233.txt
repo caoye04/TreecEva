@@ -1,0 +1,87 @@
+Target: Find the value of variable circuit_output after [line 55] executes
+
+[line 8]  return wrapper
+Return: wrapper
+[line 42]  signals = [3, -1, 5, 0, 2, -3]
+Compute: [3, -1, 5, 0, 2, -3] = [3, -1, 5, 0, 2, ...]
+[line 43]  circuit_output = 0
+Assign: circuit_output = 0
+[line 46]  for i, sig in enumerate(signals):
+(Missing param: 'iter_var')
+[line 47]  intermediate = machine.process(sig)
+(Missing param: 'func_name')
+[line 6]  result = func(*args, **kwargs)
+Call function func(*args, **kwargs)
+[line 16]  if self.state == 'IDLE' and input_signal > 0:
+Condition: True, entering 'if' block
+[line 18]  return 1
+Return: 1
+[line 7]  return result
+Return: result=1 (defined at [line 6])
+[line 48]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 49]  circuit_output = circuit_output | intermediate
+Compute: circuit_output | intermediate, where circuit_output=0 (defined at [line 43]), intermediate=1 (an unknown source) = 1
+[line 54]  if circuit_output > 10 or (circuit_output < 0 and machine.state != 'ERROR'):
+Condition: True, entering 'if' block
+[line 46]  for i, sig in enumerate(signals):
+(Missing param: 'iter_var')
+[line 47]  intermediate = machine.process(sig)
+(Missing param: 'func_name')
+[line 6]  result = func(*args, **kwargs)
+Call function func(*args, **kwargs)
+[line 16]  if self.state == 'IDLE' and input_signal > 0:
+Condition: True, entering 'if' block
+[line 19]  elif self.state == 'ACTIVE':
+'elif' Condition: True, entering block
+[line 20]  if input_signal == 0:
+Condition: True, entering 'if' block
+[line 24]  return (input_signal ** 2) % 7
+Return: (input_signal ** 2) % 7
+[line 7]  return result
+Return: result=1 (defined at [line 6])
+[line 48]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 51]  circuit_output = circuit_output & (intermediate ^ ((sig * 3) % 5))
+Compute: circuit_output & (intermediate ^ ((sig * 3) % 5)), where circuit_output=1 (defined at [line 49]), intermediate=1 (an unknown source), sig=-1 (an unknown source) = 1
+[line 54]  if circuit_output > 10 or (circuit_output < 0 and machine.state != 'ERROR'):
+Condition: True, entering 'if' block
+... [Line 46] repeats 3 more times ...
+... [Line 46] repeats 3 more times ...
+... [Line 46] repeats 3 more times ...
+... [Line 46] repeats 3 more times ...
+... [Line 46] repeats 3 more times ...
+... [Line 46] repeats 3 more times ...
+... [Line 46] repeats 3 more times ...
+... [Line 46] repeats 3 more times ...
+... [Line 46] repeats 3 more times ...
+... [Line 46] repeats 3 more times ...
+... [Line 46] repeats 3 more times ...
+[line 46]  for i, sig in enumerate(signals):
+(Missing param: 'iter_var')
+[line 47]  intermediate = machine.process(sig)
+(Missing param: 'func_name')
+[line 6]  result = func(*args, **kwargs)
+Call function func(*args, **kwargs)
+[line 16]  if self.state == 'IDLE' and input_signal > 0:
+Condition: True, entering 'if' block
+[line 19]  elif self.state == 'ACTIVE':
+'elif' Condition: True, entering block
+[line 25]  elif self.state == 'LATCHED':
+'elif' Condition: True, entering block
+[line 26]  if input_signal < 0:
+Condition: True, entering 'if' block
+[line 28]  return -1
+Return: -1
+[line 7]  return result
+Return: result=-1 (defined at [line 6])
+[line 48]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 51]  circuit_output = circuit_output & (intermediate ^ ((sig * 3) % 5))
+Compute: circuit_output & (intermediate ^ ((sig * 3) % 5)), where circuit_output=1 (defined at [line 51]), intermediate=-1 (an unknown source), sig=-3 (an unknown source) = 0
+[line 54]  if circuit_output > 10 or (circuit_output < 0 and machine.state != 'ERROR'):
+Condition: True, entering 'if' block
+[line 46]  for i, sig in enumerate(signals):
+Loop End: Iteration finished
+
+Answer: circuit_output = 0 (last updated on defined at [line 51])

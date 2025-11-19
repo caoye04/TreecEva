@@ -1,0 +1,111 @@
+Target: Find the value of variable remaining_capacity after [line 38] executes
+
+[line 17]  inventory_levels = defaultdict(int)
+Call function defaultdict(int)
+[line 18]  max_product_capacity = {'SODA': 20, 'CHIPS': 15, 'CANDY': 25}
+Compute: {'SODA': 20, 'CHIPS': 15, 'CANDY': 25} = {SODA: 20, CHIPS: 15, CANDY: 25}
+[line 19]  state_machine = 'IDLE'
+Assign: state_machine = 'IDLE'
+[line 31]  remaining_capacity = 0
+Assign: remaining_capacity = 0
+[line 32]  for event in restocking_queue:
+Loop Start: event takes its first value ('SODA', 8)
+[line 33]  state_machine = update_state_machine(state_machine, 'RESTOCK')
+Call function update_state_machine(state_machine='IDLE' (defined at [line 19]), 'RESTOCK')
+[line 9]  def update_state_machine(state, event_type):
+Enter function update_state_machine: state='IDLE' (state_machine defined at [line 33]), event_type='RESTOCK'
+  [line 14]  return transitions.get(state, {}).get(event_type, state)
+  Return: transitions.get(state, {}).get(event_type, state)
+Function update_state_machine returns 'PROCESSING'
+[line 34]  remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
+Update: remaining_capacity changed from ? (defined at defined at [line 31]) to ?+process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0 = 0
+[line 4]  product, amount = restock_event
+(Missing param: 'result')
+[line 5]  current = inventory[product]
+Compute: inventory[product], where inventory={SODA: 0} (an unknown source), product='SODA' (an unknown source) = 0
+[line 6]  inventory[product] = min(current + amount, max_capacity[product])
+(Missing param: 'func_name')
+[line 7]  return max_capacity[product] - inventory[product]
+Return: max_capacity[product] - inventory[product]
+[line 35]  state_machine = update_state_machine(state_machine, 'COMPLETE')
+Call function update_state_machine(state_machine='PROCESSING' (defined at [line 33]), 'COMPLETE')
+[line 9]  def update_state_machine(state, event_type):
+Enter function update_state_machine: state='PROCESSING' (state_machine defined at [line 35]), event_type='COMPLETE'
+  [line 14]  return transitions.get(state, {}).get(event_type, state)
+  Return: transitions.get(state, {}).get(event_type, state)
+Function update_state_machine returns 'IDLE'
+[line 32]  for event in restocking_queue:
+Loop Iteration: event is now ('CHIPS', 10) (iteration 2)
+[line 33]  state_machine = update_state_machine(state_machine, 'RESTOCK')
+Call function update_state_machine(state_machine='IDLE' (defined at [line 35]), 'RESTOCK')
+[line 9]  def update_state_machine(state, event_type):
+Enter function update_state_machine: state='IDLE' (state_machine defined at [line 33]), event_type='RESTOCK'
+  [line 14]  return transitions.get(state, {}).get(event_type, state)
+  Return: transitions.get(state, {}).get(event_type, state)
+Function update_state_machine returns 'PROCESSING'
+[line 34]  remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
+Update: remaining_capacity changed from ? (defined at defined at [line 34]) to ?+process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0 = 12
+[line 4]  product, amount = restock_event
+(Missing param: 'result')
+[line 5]  current = inventory[product]
+Compute: inventory[product], where inventory={SODA: 8, CHIPS: 0} (an unknown source), product='CHIPS' (an unknown source) = 0
+[line 6]  inventory[product] = min(current + amount, max_capacity[product])
+(Missing param: 'func_name')
+[line 7]  return max_capacity[product] - inventory[product]
+Return: max_capacity[product] - inventory[product]
+[line 35]  state_machine = update_state_machine(state_machine, 'COMPLETE')
+Call function update_state_machine(state_machine='PROCESSING' (defined at [line 33]), 'COMPLETE')
+[line 9]  def update_state_machine(state, event_type):
+Enter function update_state_machine: state='PROCESSING' (state_machine defined at [line 35]), event_type='COMPLETE'
+  [line 14]  return transitions.get(state, {}).get(event_type, state)
+  Return: transitions.get(state, {}).get(event_type, state)
+Function update_state_machine returns 'IDLE'
+... [Line 32] repeats 2 more times ...
+... [Line 32] repeats 2 more times ...
+[line 9]  def update_state_machine(state, event_type):
+Enter function update_state_machine: state='IDLE' (state_machine defined at [line 35]), event_type='RESTOCK'
+... [Line 32] repeats 2 more times ...
+Function update_state_machine returns 'PROCESSING'
+... [Line 32] repeats 2 more times ...
+... [Line 32] repeats 2 more times ...
+... [Line 32] repeats 2 more times ...
+... [Line 32] repeats 2 more times ...
+... [Line 32] repeats 2 more times ...
+... [Line 32] repeats 2 more times ...
+[line 9]  def update_state_machine(state, event_type):
+Enter function update_state_machine: state='PROCESSING' (state_machine defined at [line 35]), event_type='COMPLETE'
+... [Line 32] repeats 2 more times ...
+Function update_state_machine returns 'IDLE'
+[line 9]  def update_state_machine(state, event_type):
+Enter function update_state_machine: state='IDLE' (state_machine defined at [line 35]), event_type='RESTOCK'
+Function update_state_machine returns 'PROCESSING'
+[line 9]  def update_state_machine(state, event_type):
+Enter function update_state_machine: state='PROCESSING' (state_machine defined at [line 35]), event_type='COMPLETE'
+Function update_state_machine returns 'IDLE'
+[line 32]  for event in restocking_queue:
+Loop Iteration: event is now ('CHIPS', 8) (iteration 5)
+[line 33]  state_machine = update_state_machine(state_machine, 'RESTOCK')
+Call function update_state_machine(state_machine='IDLE' (defined at [line 35]), 'RESTOCK')
+[line 9]  def update_state_machine(state, event_type):
+Enter function update_state_machine: state='IDLE' (state_machine defined at [line 33]), event_type='RESTOCK'
+  [line 14]  return transitions.get(state, {}).get(event_type, state)
+  Return: transitions.get(state, {}).get(event_type, state)
+Function update_state_machine returns 'PROCESSING'
+[line 34]  remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
+Update: remaining_capacity changed from ? (defined at defined at [line 34]) to ?+process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0 = 42
+[line 4]  product, amount = restock_event
+(Missing param: 'result')
+[line 5]  current = inventory[product]
+Compute: inventory[product], where inventory={SODA: 15, CHIPS: 10, CANDY: 5} (an unknown source), product='CHIPS' (an unknown source) = 10
+[line 6]  inventory[product] = min(current + amount, max_capacity[product])
+(Missing param: 'func_name')
+[line 7]  return max_capacity[product] - inventory[product]
+Return: max_capacity[product] - inventory[product]
+[line 14]  return transitions.get(state, {}).get(event_type, state)
+Return: transitions.get(state, {}).get(event_type, state)
+[line 32]  for event in restocking_queue:
+Loop End: Iteration finished
+[line 38]  remaining_capacity = remaining_capacity if remaining_capacity > 0 else sum(max_product_capacity.values()) - sum(inventory_levels.values())
+Compute: remaining_capacity if remaining_capacity > 0 else sum(max_product_capacity.values()) - sum(inventory_levels.values()), where remaining_capacity=42 (defined at [line 34]), max_product_capacity={SODA: 20, CHIPS: 15, CANDY: 25} (defined at [line 18]), inventory_levels={SODA: 15, CHIPS: 15, CANDY: 5} (defined at [line 17]) = 42
+
+Answer: remaining_capacity = 42 (last updated on defined at [line 38])

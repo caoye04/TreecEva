@@ -1,0 +1,111 @@
+45
+access_level
+---
+7 sanitized = sanitize_metadata(doc_meta)
+7 ['doc_meta'] ["'PUBLIC DOCUMENT'"]
+PARAM_MAPPING {'doc_meta': {'actual_var': 'doc_meta', 'value': 'PUBLIC DOCUMENT'}}
+FUNCTION_ENTER 3 sanitize_metadata def sanitize_metadata(doc_meta):
+3 ['doc_meta'] [{'_type': 'str', '_value': 'PUBLIC DOCUMENT'}]
+4 return re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+4 ['doc_meta'] ["'PUBLIC DOCUMENT'"]
+FUNCTION_RETURN 4 sanitize_metadata {'_type': 'str', '_value': 'PUBLIC DOCUMENT'}
+8 is_internal = 'INTERNAL' in sanitized
+8 ['doc_meta', 'sanitized', 'is_internal'] ["'PUBLIC DOCUMENT'", "'PUBLIC DOCUMENT'", 'False']
+9 is_confidential = 'CONFIDENTIAL' in sanitized
+9 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential'] ["'PUBLIC DOCUMENT'", "'PUBLIC DOCUMENT'", 'False', 'False']
+10 is_public = 'PUBLIC' in sanitized
+10 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'PUBLIC DOCUMENT'", "'PUBLIC DOCUMENT'", 'False', 'False', 'True']
+13 if is_public and not (is_internal or is_confidential):
+13 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'PUBLIC DOCUMENT'", "'PUBLIC DOCUMENT'", 'False', 'False', 'True']
+14 return 1
+14 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'PUBLIC DOCUMENT'", "'PUBLIC DOCUMENT'", 'False', 'False', 'True']
+7 sanitized = sanitize_metadata(doc_meta)
+7 ['doc_meta'] ["'INTERNAL USE ONLY - CONFIDENTIAL'"]
+PARAM_MAPPING {'doc_meta': {'actual_var': 'doc_meta', 'value': 'INTERNAL USE ONLY - CONFIDENTIAL'}}
+FUNCTION_ENTER 3 sanitize_metadata def sanitize_metadata(doc_meta):
+3 ['doc_meta'] [{'_type': 'str', '_value': 'INTERNAL USE ONLY - CONFIDENTIAL'}]
+4 return re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+4 ['doc_meta'] ["'INTERNAL USE ONLY - CONFIDENTIAL'"]
+FUNCTION_RETURN 4 sanitize_metadata {'_type': 'str', '_value': 'INTERNAL USE ONLY - CONFIDENTIAL'}
+8 is_internal = 'INTERNAL' in sanitized
+8 ['doc_meta', 'sanitized', 'is_internal'] ["'INTERNAL USE ONLY - CONFIDENTIAL'", "'INTERNAL USE ONLY - CONFIDENTIAL'", 'True']
+9 is_confidential = 'CONFIDENTIAL' in sanitized
+9 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential'] ["'INTERNAL USE ONLY - CONFIDENTIAL'", "'INTERNAL USE ONLY - CONFIDENTIAL'", 'True', 'True']
+10 is_public = 'PUBLIC' in sanitized
+10 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'INTERNAL USE ONLY - CONFIDENTIAL'", "'INTERNAL USE ONLY - CONFIDENTIAL'", 'True', 'True', 'False']
+13 if is_public and not (is_internal or is_confidential):
+13 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'INTERNAL USE ONLY - CONFIDENTIAL'", "'INTERNAL USE ONLY - CONFIDENTIAL'", 'True', 'True', 'False']
+15 elif is_internal and not is_confidential:
+15 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'INTERNAL USE ONLY - CONFIDENTIAL'", "'INTERNAL USE ONLY - CONFIDENTIAL'", 'True', 'True', 'False']
+17 elif is_confidential or (is_internal and 'RESTRICTED' in sanitized):
+17 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'INTERNAL USE ONLY - CONFIDENTIAL'", "'INTERNAL USE ONLY - CONFIDENTIAL'", 'True', 'True', 'False']
+18 return 3
+18 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'INTERNAL USE ONLY - CONFIDENTIAL'", "'INTERNAL USE ONLY - CONFIDENTIAL'", 'True', 'True', 'False']
+7 sanitized = sanitize_metadata(doc_meta)
+7 ['doc_meta'] ["'CONFIDENTIAL - RESTRICTED ACCESS'"]
+PARAM_MAPPING {'doc_meta': {'actual_var': 'doc_meta', 'value': 'CONFIDENTIAL - RESTRICTED ACCESS'}}
+FUNCTION_ENTER 3 sanitize_metadata def sanitize_metadata(doc_meta):
+3 ['doc_meta'] [{'_type': 'str', '_value': 'CONFIDENTIAL - RESTRICTED ACCESS'}]
+4 return re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+4 ['doc_meta'] ["'CONFIDENTIAL - RESTRICTED ACCESS'"]
+FUNCTION_RETURN 4 sanitize_metadata {'_type': 'str', '_value': 'CONFIDENTIAL - RESTRICTED ACCESS'}
+8 is_internal = 'INTERNAL' in sanitized
+8 ['doc_meta', 'sanitized', 'is_internal'] ["'CONFIDENTIAL - RESTRICTED ACCESS'", "'CONFIDENTIAL - RESTRICTED ACCESS'", 'False']
+9 is_confidential = 'CONFIDENTIAL' in sanitized
+9 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential'] ["'CONFIDENTIAL - RESTRICTED ACCESS'", "'CONFIDENTIAL - RESTRICTED ACCESS'", 'False', 'True']
+10 is_public = 'PUBLIC' in sanitized
+10 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'CONFIDENTIAL - RESTRICTED ACCESS'", "'CONFIDENTIAL - RESTRICTED ACCESS'", 'False', 'True', 'False']
+13 if is_public and not (is_internal or is_confidential):
+13 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'CONFIDENTIAL - RESTRICTED ACCESS'", "'CONFIDENTIAL - RESTRICTED ACCESS'", 'False', 'True', 'False']
+15 elif is_internal and not is_confidential:
+15 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'CONFIDENTIAL - RESTRICTED ACCESS'", "'CONFIDENTIAL - RESTRICTED ACCESS'", 'False', 'True', 'False']
+17 elif is_confidential or (is_internal and 'RESTRICTED' in sanitized):
+17 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'CONFIDENTIAL - RESTRICTED ACCESS'", "'CONFIDENTIAL - RESTRICTED ACCESS'", 'False', 'True', 'False']
+18 return 3
+18 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'CONFIDENTIAL - RESTRICTED ACCESS'", "'CONFIDENTIAL - RESTRICTED ACCESS'", 'False', 'True', 'False']
+7 sanitized = sanitize_metadata(doc_meta)
+7 ['doc_meta'] ["'PUBLIC RELEASE - INTERNAL REVIEW'"]
+PARAM_MAPPING {'doc_meta': {'actual_var': 'doc_meta', 'value': 'PUBLIC RELEASE - INTERNAL REVIEW'}}
+FUNCTION_ENTER 3 sanitize_metadata def sanitize_metadata(doc_meta):
+3 ['doc_meta'] [{'_type': 'str', '_value': 'PUBLIC RELEASE - INTERNAL REVIEW'}]
+4 return re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+4 ['doc_meta'] ["'PUBLIC RELEASE - INTERNAL REVIEW'"]
+FUNCTION_RETURN 4 sanitize_metadata {'_type': 'str', '_value': 'PUBLIC RELEASE - INTERNAL REVIEW'}
+8 is_internal = 'INTERNAL' in sanitized
+8 ['doc_meta', 'sanitized', 'is_internal'] ["'PUBLIC RELEASE - INTERNAL REVIEW'", "'PUBLIC RELEASE - INTERNAL REVIEW'", 'True']
+9 is_confidential = 'CONFIDENTIAL' in sanitized
+9 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential'] ["'PUBLIC RELEASE - INTERNAL REVIEW'", "'PUBLIC RELEASE - INTERNAL REVIEW'", 'True', 'False']
+10 is_public = 'PUBLIC' in sanitized
+10 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'PUBLIC RELEASE - INTERNAL REVIEW'", "'PUBLIC RELEASE - INTERNAL REVIEW'", 'True', 'False', 'True']
+13 if is_public and not (is_internal or is_confidential):
+13 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'PUBLIC RELEASE - INTERNAL REVIEW'", "'PUBLIC RELEASE - INTERNAL REVIEW'", 'True', 'False', 'True']
+15 elif is_internal and not is_confidential:
+15 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'PUBLIC RELEASE - INTERNAL REVIEW'", "'PUBLIC RELEASE - INTERNAL REVIEW'", 'True', 'False', 'True']
+16 return 2
+16 ['doc_meta', 'sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'PUBLIC RELEASE - INTERNAL REVIEW'", "'PUBLIC RELEASE - INTERNAL REVIEW'", 'True', 'False', 'True']
+7 sanitized = sanitize_metadata(doc_meta)
+7 ['doc_meta'] ["'RESTRICTED CONFIDENTIAL DOCUMENT'"]
+PARAM_MAPPING {'doc_meta': {'actual_var': 'doc_meta', 'value': 'RESTRICTED CONFIDENTIAL DOCUMENT'}}
+FUNCTION_ENTER 3 sanitize_metadata def sanitize_metadata(doc_meta):
+3 ['doc_meta'] [{'_type': 'str', '_value': 'RESTRICTED CONFIDENTIAL DOCUMENT'}]
+4 return re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+4 ['doc_meta'] ["'RESTRICTED CONFIDENTIAL DOCUMENT'"]
+FUNCTION_RETURN 4 sanitize_metadata {'_type': 'str', '_value': 'RESTRICTED CONFIDENTIAL DOCUMENT'}
+8 is_internal = 'INTERNAL' in sanitized
+8 ['sanitized', 'is_internal'] ["'RESTRICTED CONFIDENTIAL DOCUMENT'", 'False']
+9 is_confidential = 'CONFIDENTIAL' in sanitized
+9 ['sanitized', 'is_internal', 'is_confidential'] ["'RESTRICTED CONFIDENTIAL DOCUMENT'", 'False', 'True']
+10 is_public = 'PUBLIC' in sanitized
+10 ['sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'RESTRICTED CONFIDENTIAL DOCUMENT'", 'False', 'True', 'False']
+13 if is_public and not (is_internal or is_confidential):
+13 ['sanitized', 'is_internal', 'is_confidential', 'is_public'] ["'RESTRICTED CONFIDENTIAL DOCUMENT'", 'False', 'True', 'False']
+15 elif is_internal and not is_confidential:
+15 ['sanitized', 'is_internal', 'is_confidential'] ["'RESTRICTED CONFIDENTIAL DOCUMENT'", 'False', 'True']
+17 elif is_confidential or (is_internal and 'RESTRICTED' in sanitized):
+17 ['sanitized', 'is_internal', 'is_confidential'] ["'RESTRICTED CONFIDENTIAL DOCUMENT'", 'False', 'True']
+18 return 3
+18 [] []
+34 access_level = 0
+34 ['access_level'] ['0']
+37 access_level = 5
+37 ['access_level'] ['5']

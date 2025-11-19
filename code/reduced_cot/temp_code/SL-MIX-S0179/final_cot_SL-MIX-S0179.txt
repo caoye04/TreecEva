@@ -1,0 +1,81 @@
+Target: Find the value of variable final_portfolio_value after [line 54] executes
+
+[line 50]  initial_investment = 1000.0
+Assign: initial_investment = 1000.0
+[line 51]  market_fluctuations = [0.02, -0.03, 0.06, -0.08, 0.04, -0.02, 0.01]
+Compute: [0.02, -0.03, 0.06, -0.08, 0.04, -0.02, 0.01] = [0.02, -0.03, 0.06, -0.08, 0.04, ...]
+[line 54]  final_portfolio_value = exchange_rate_processor(initial_investment, market_fluctuations)
+Call function exchange_rate_processor(initial_investment=1000.0 (defined at [line 50]), market_fluctuations=[0.02, -0.03, 0.06, -0.08, 0.04, ...] (defined at [line 51]))
+[line 4]  def exchange_rate_processor(initial_capital, rate_fluctuations):
+Enter function exchange_rate_processor: initial_capital=1000.0 (initial_investment defined at [line 50]), rate_fluctuations=[0.02, -0.03, 0.06, -0.08, 0.04, ...] (market_fluctuations defined at [line 51])
+  [line 7]  STATE_VOLATILE = 1
+  Assign: STATE_VOLATILE = 1
+  [line 8]  STATE_CRITICAL = 2
+  Assign: STATE_CRITICAL = 2
+  [line 11]  portfolio_value = initial_capital
+  Compute: initial_capital, where initial_capital=1000.0 (parameter initial_capital defined at [line 50]) = 1000.0
+  [line 12]  min_heap = []
+  Compute: [] = []
+  [line 13]  fluctuation_queue = deque(rate_fluctuations)
+  Call function deque(rate_fluctuations=[0.02, -0.03, 0.06, -0.08, 0.04, ...] (parameter rate_fluctuations defined at [line 51]))
+  [line 15]  while fluctuation_queue:
+  while Loop Start: Condition is true
+  [line 16]  rate_change = fluctuation_queue.popleft()
+  (Missing param: 'func_name')
+  [line 19]  if abs(rate_change) > 0.05:
+  Condition: True, entering 'if' block
+  [line 21]  elif abs(rate_change) > 0.10:
+  'elif' Condition: True, entering block
+  [line 27]  if current_state == STATE_CRITICAL and portfolio_value < 900:
+  Condition: True, entering 'if' block
+  [line 31]  portfolio_value *= (1 + rate_change)
+  Update: portfolio_value changed from 1000.0 (defined at defined at [line 11]) to 1000.0*(1 + rate_change) = 1020.0
+  [line 37]  if current_state == STATE_VOLATILE:
+  Condition: True, entering 'if' block
+  [line 15]  while fluctuation_queue:
+  while Loop Iteration: Condition is still true
+  [line 16]  rate_change = fluctuation_queue.popleft()
+  (Missing param: 'func_name')
+  [line 19]  if abs(rate_change) > 0.05:
+  Condition: True, entering 'if' block
+  [line 21]  elif abs(rate_change) > 0.10:
+  'elif' Condition: True, entering block
+  [line 27]  if current_state == STATE_CRITICAL and portfolio_value < 900:
+  Condition: True, entering 'if' block
+  [line 31]  portfolio_value *= (1 + rate_change)
+  Update: portfolio_value changed from 1020.0 (defined at defined at [line 31]) to 1020.0*(1 + rate_change) = 989.4
+  [line 37]  if current_state == STATE_VOLATILE:
+  Condition: True, entering 'if' block
+... [Line 15] repeats 4 more times ...
+... [Line 15] repeats 4 more times ...
+... [Line 15] repeats 4 more times ...
+... [Line 15] repeats 4 more times ...
+... [Line 15] repeats 4 more times ...
+... [Line 15] repeats 4 more times ...
+... [Line 15] repeats 4 more times ...
+... [Line 15] repeats 4 more times ...
+  [line 15]  while fluctuation_queue:
+  while Loop Iteration: Condition is still true
+  [line 16]  rate_change = fluctuation_queue.popleft()
+  (Missing param: 'func_name')
+  [line 19]  if abs(rate_change) > 0.05:
+  Condition: True, entering 'if' block
+  [line 21]  elif abs(rate_change) > 0.10:
+  'elif' Condition: True, entering block
+  [line 27]  if current_state == STATE_CRITICAL and portfolio_value < 900:
+  Condition: True, entering 'if' block
+  [line 31]  portfolio_value *= (1 + rate_change)
+  Update: portfolio_value changed from 981.374268165538 (defined at defined at [line 31]) to 981.374268165538*(1 + rate_change) = 991.1880108471934
+  [line 37]  if current_state == STATE_VOLATILE:
+  Condition: True, entering 'if' block
+  [line 15]  while fluctuation_queue:
+  while Loop Iteration: Condition is still true
+  [line 43]  lowest_valuation = heapq.heappop(min_heap)
+  (Missing param: 'func_name')
+  [line 44]  if lowest_valuation < initial_capital * 0.9:
+  Condition: True, entering 'if' block
+  [line 47]  return portfolio_value
+  Return: portfolio_value=991.1880108471934 (defined at [line 31])
+Function exchange_rate_processor returns 991.1880108471934
+
+Answer: final_portfolio_value = ? (last updated on defined at [line 54])

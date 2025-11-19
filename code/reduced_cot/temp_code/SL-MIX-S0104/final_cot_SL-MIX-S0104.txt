@@ -1,0 +1,24 @@
+Target: Find the value of variable processed_amplitude after [line 34] executes
+
+[line 10]  data = SignalConfig(440, 44100, 16)
+Call function SignalConfig(440, 44100, 16)
+[line 11]  original_amplitude = 0x1FAB
+Assign: original_amplitude = 8107
+[line 12]  processed_amplitude = original_amplitude
+Compute: original_amplitude, where original_amplitude=8107 (defined at [line 11]) = 8107
+[line 15]  if data.base_freq % 100 == 40 and data.sampling_rate > 40000:
+Condition: True, entering 'if' block
+[line 17]  if data.bit_depth >= 16:
+Condition: True, entering 'if' block
+[line 23]  if processed_amplitude & 0x8000:
+Condition: True, entering 'if' block
+[line 24]  processed_amplitude = (processed_amplitude + 0x1000) % 0xFFFF
+Compute: (processed_amplitude + 0x1000) % 0xFFFF, where processed_amplitude=57595 (defined at [line 12]) = 61691
+[line 29]  if not (processed_amplitude & 0xF000):
+Condition: True, entering 'if' block
+[line 31]  elif processed_amplitude & 0xC000 == 0x8000:
+'elif' Condition: True, entering block
+[line 34]  processed_amplitude = processed_amplitude & 0x7FFF
+Compute: processed_amplitude & 0x7FFF, where processed_amplitude=61691 (defined at [line 24]) = 28923
+
+Answer: processed_amplitude = 28923 (last updated on defined at [line 34])

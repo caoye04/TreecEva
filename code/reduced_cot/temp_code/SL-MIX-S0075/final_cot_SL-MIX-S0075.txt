@@ -1,0 +1,78 @@
+Target: Find the value of variable final_security_rating after [line 55] executes
+
+[line 15]  lowercase_chars = frozenset('abcdefghijklmnopqrstuvwxyz')
+Call function frozenset('abcdefghijklmnopqrstuvwxyz')
+[line 16]  uppercase_chars = frozenset('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+Call function frozenset('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+[line 17]  digit_chars = frozenset('0123456789')
+Call function frozenset('0123456789')
+[line 18]  special_chars = frozenset('!@#$%^&*()_+-=[]{}|;:,.<>?')
+Call function frozenset('!@#$%^&*()_+-=[]{}|;:, .<>?')
+[line 21]  composite_entropy_measure = 0
+Assign: composite_entropy_measure = 0
+[line 24]  for key in encryption_keys:
+Loop Start: key takes its first value CryptoKey(identifier='AES-256', content='xK9#mNp$2vLq@4zR', base_rating=8.2)
+[line 26]  key_chars = frozenset(key.content)
+Call function frozenset(key.content)
+[line 35]  char_space_size = len(lowercase_chars | uppercase_chars | digit_chars | special_chars)
+Call function len(lowercase_chars | uppercase_chars | digit_chars | special_chars)
+[line 36]  theoretical_max_entropy = len(key.content) * math.log2(char_space_size)
+Compute: len(key.content) * math.log2(char_space_size), where key=CryptoKey(identifier='AES-256', content='xK9#mNp$2vLq@4zR', base_rating=8.2) (defined at [line 24]), char_space_size=88 (defined at [line 35]) = 103.35090589819676
+[line 37]  actual_entropy = len(key.content) * math.log2(len(key_chars)) if len(key_chars) > 0 else 0
+Compute: len(key.content) * math.log2(len(key_chars)) if len(key_chars) > 0 else 0, where key=CryptoKey(identifier='AES-256', content='xK9#mNp$2vLq@4zR', base_rating=8.2) (defined at [line 24]), key_chars=frozenset({'9', 'N', '@', '4', 'R', 'q', 'z', 'v', 'K', '$', '2', 'L', 'x', 'p', '#', 'm'}) (defined at [line 26]) = 64.0
+[line 38]  entropy_efficiency = actual_entropy / theoretical_max_entropy if theoretical_max_entropy > 0 else 0
+Compute: actual_entropy / theoretical_max_entropy if theoretical_max_entropy > 0 else 0, where actual_entropy=64.0 (defined at [line 37]), theoretical_max_entropy=103.35090589819676 (defined at [line 36]) = 0.6192495309430728
+[line 41]  weighted_diversity = math.pow(diversity_score, 1.5)
+(Missing param: 'func_name')
+[line 44]  strength_modifier = key.base_rating * entropy_efficiency * weighted_diversity
+Compute: key.base_rating * entropy_efficiency * weighted_diversity, where key=CryptoKey(identifier='AES-256', content='xK9#mNp$2vLq@4zR', base_rating=8.2) (defined at [line 24]), entropy_efficiency=0.6192495309430728 (defined at [line 38]), weighted_diversity=8.0 (an unknown source) = 40.62276922986557
+[line 47]  if diversity_score >= 3 and entropy_efficiency > 0.75:
+Condition: True, entering 'if' block
+[line 51]  composite_entropy_measure += strength_modifier
+Update: composite_entropy_measure changed from 0 (defined at defined at [line 21]) to 0+strength_modifier = 40.62276922986557
+[line 24]  for key in encryption_keys:
+Loop Iteration: key is now CryptoKey(identifier='RSA-4096', content='Ht7&bVf*9wSd%1jK', base_rating=9.1) (iteration 2)
+[line 26]  key_chars = frozenset(key.content)
+Call function frozenset(key.content)
+[line 35]  char_space_size = len(lowercase_chars | uppercase_chars | digit_chars | special_chars)
+Call function len(lowercase_chars | uppercase_chars | digit_chars | special_chars)
+[line 36]  theoretical_max_entropy = len(key.content) * math.log2(char_space_size)
+Compute: len(key.content) * math.log2(char_space_size), where key=CryptoKey(identifier='RSA-4096', content='Ht7&bVf*9wSd%1jK', base_rating=9.1) (defined at [line 24]), char_space_size=88 (defined at [line 35]) = 103.35090589819676
+[line 37]  actual_entropy = len(key.content) * math.log2(len(key_chars)) if len(key_chars) > 0 else 0
+Compute: len(key.content) * math.log2(len(key_chars)) if len(key_chars) > 0 else 0, where key=CryptoKey(identifier='RSA-4096', content='Ht7&bVf*9wSd%1jK', base_rating=9.1) (defined at [line 24]), key_chars=frozenset({'f', 't', 'w', 'K', 'H', 'V', 'd', '%', '1', 'S', '&', '*', 'b', '7', 'j', '9'}) (defined at [line 26]) = 64.0
+[line 38]  entropy_efficiency = actual_entropy / theoretical_max_entropy if theoretical_max_entropy > 0 else 0
+Compute: actual_entropy / theoretical_max_entropy if theoretical_max_entropy > 0 else 0, where actual_entropy=64.0 (defined at [line 37]), theoretical_max_entropy=103.35090589819676 (defined at [line 36]) = 0.6192495309430728
+[line 41]  weighted_diversity = math.pow(diversity_score, 1.5)
+(Missing param: 'func_name')
+[line 44]  strength_modifier = key.base_rating * entropy_efficiency * weighted_diversity
+Compute: key.base_rating * entropy_efficiency * weighted_diversity, where key=CryptoKey(identifier='RSA-4096', content='Ht7&bVf*9wSd%1jK', base_rating=9.1) (defined at [line 24]), entropy_efficiency=0.6192495309430728 (defined at [line 38]), weighted_diversity=8.0 (an unknown source) = 45.08136585265569
+[line 47]  if diversity_score >= 3 and entropy_efficiency > 0.75:
+Condition: True, entering 'if' block
+[line 51]  composite_entropy_measure += strength_modifier
+Update: composite_entropy_measure changed from 40.62276922986557 (defined at defined at [line 51]) to 40.62276922986557+strength_modifier = 85.70413508252126
+[line 24]  for key in encryption_keys:
+Loop Iteration: key is now CryptoKey(identifier='ECC-P256', content='aB3$dEf^7gHi&9jL', base_rating=7.6) (iteration 3)
+[line 26]  key_chars = frozenset(key.content)
+Call function frozenset(key.content)
+[line 35]  char_space_size = len(lowercase_chars | uppercase_chars | digit_chars | special_chars)
+Call function len(lowercase_chars | uppercase_chars | digit_chars | special_chars)
+[line 36]  theoretical_max_entropy = len(key.content) * math.log2(char_space_size)
+Compute: len(key.content) * math.log2(char_space_size), where key=CryptoKey(identifier='ECC-P256', content='aB3$dEf^7gHi&9jL', base_rating=7.6) (defined at [line 24]), char_space_size=88 (defined at [line 35]) = 103.35090589819676
+[line 37]  actual_entropy = len(key.content) * math.log2(len(key_chars)) if len(key_chars) > 0 else 0
+Compute: len(key.content) * math.log2(len(key_chars)) if len(key_chars) > 0 else 0, where key=CryptoKey(identifier='ECC-P256', content='aB3$dEf^7gHi&9jL', base_rating=7.6) (defined at [line 24]), key_chars=frozenset({'f', '3', '$', 'g', 'H', 'd', 'B', 'i', '7', '&', 'j', 'L', 'E', 'a', '^', '9'}) (defined at [line 26]) = 64.0
+[line 38]  entropy_efficiency = actual_entropy / theoretical_max_entropy if theoretical_max_entropy > 0 else 0
+Compute: actual_entropy / theoretical_max_entropy if theoretical_max_entropy > 0 else 0, where actual_entropy=64.0 (defined at [line 37]), theoretical_max_entropy=103.35090589819676 (defined at [line 36]) = 0.6192495309430728
+[line 41]  weighted_diversity = math.pow(diversity_score, 1.5)
+(Missing param: 'func_name')
+[line 44]  strength_modifier = key.base_rating * entropy_efficiency * weighted_diversity
+Compute: key.base_rating * entropy_efficiency * weighted_diversity, where key=CryptoKey(identifier='ECC-P256', content='aB3$dEf^7gHi&9jL', base_rating=7.6) (defined at [line 24]), entropy_efficiency=0.6192495309430728 (defined at [line 38]), weighted_diversity=8.0 (an unknown source) = 37.65037148133882
+[line 47]  if diversity_score >= 3 and entropy_efficiency > 0.75:
+Condition: True, entering 'if' block
+[line 51]  composite_entropy_measure += strength_modifier
+Update: composite_entropy_measure changed from 85.70413508252126 (defined at defined at [line 51]) to 85.70413508252126+strength_modifier = 123.35450656386008
+[line 24]  for key in encryption_keys:
+Loop End: Iteration finished
+[line 54]  if advanced_factor_count >= 2 and composite_entropy_measure > 20:
+Condition: True, entering 'if' block
+
+Answer: final_security_rating = ? (last updated on an unknown source)

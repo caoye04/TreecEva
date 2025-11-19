@@ -1,0 +1,56 @@
+Target: Find the value of variable final_score after [line 47] executes
+
+[line 47]  final_score = validate_packet(packet_data)
+Call function validate_packet(packet_data=Packet(...) (an unknown source))
+[line 12]  seq_match = re.search(r'SEQ:(\d+)', pkt.header)
+(Missing param: 'func_name')
+[line 13]  if not seq_match:
+Condition: True, entering 'if' block
+[line 15]  seq_num = int(seq_match.group(1))
+Call function int(seq_match.group(1))
+[line 25]  stack = deque()
+Call function deque()
+[line 26]  for i in range(4):
+Loop Start: i takes its first value 0
+[line 26]  for i in range(4):
+Loop End: Iteration finished
+[line 26]  for i in range(4):
+Loop End: Iteration finished
+[line 26]  for i in range(4):
+Loop End: Iteration finished
+[line 26]  for i in range(4):
+Loop End: Iteration finished
+[line 30]  aggregate = 0
+Assign: aggregate = 0
+[line 31]  sign = 1
+Assign: sign = 1
+[line 32]  while stack:
+while Loop Start: Condition is true
+[line 33]  aggregate += sign * stack.pop()
+Update: aggregate changed from 0 (defined at defined at [line 30]) to 0+sign * stack.pop() = 3
+[line 34]  sign *= -1
+Update: sign changed from 1 (defined at defined at [line 31]) to 1*-1 = -1
+[line 32]  while stack:
+while Loop Iteration: Condition is still true
+[line 33]  aggregate += sign * stack.pop()
+Update: aggregate changed from 3 (defined at defined at [line 33]) to 3+sign * stack.pop() = 1
+[line 34]  sign *= -1
+Update: sign changed from -1 (defined at defined at [line 34]) to -1*-1 = 1
+[line 32]  while stack:
+while Loop Iteration: Condition is still true
+[line 33]  aggregate += sign * stack.pop()
+Update: aggregate changed from 1 (defined at defined at [line 33]) to 1+sign * stack.pop() = 2
+[line 34]  sign *= -1
+Update: sign changed from 1 (defined at defined at [line 34]) to 1*-1 = -1
+[line 32]  while stack:
+while Loop Iteration: Condition is still true
+[line 33]  aggregate += sign * stack.pop()
+Update: aggregate changed from 2 (defined at defined at [line 33]) to 2+sign * stack.pop() = 2
+[line 32]  while stack:
+while Loop Iteration: Condition is still true
+[line 37]  final_score = (aggregate * 3 + seq_num) % 97
+Compute: (aggregate * 3 + seq_num) % 97, where aggregate=2 (defined at [line 33]), seq_num=42 (defined at [line 15]) = 48
+[line 39]  return final_score
+Return: final_score=48 (defined at [line 37])
+
+Answer: final_score = 48 (last updated on defined at [line 37])

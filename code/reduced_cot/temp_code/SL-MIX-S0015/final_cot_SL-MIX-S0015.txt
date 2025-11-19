@@ -1,0 +1,21 @@
+Target: Find the value of variable final_checksum after [line 13] executes
+
+[line 12]  packet_seed = 0b11001010
+Assign: packet_seed = 202
+[line 13]  final_checksum = transform_packet(packet_seed)
+Call function transform_packet(packet_seed=202 (defined at [line 12]))
+[line 1]  def transform_packet(seed):
+Enter function transform_packet: seed=202 (packet_seed defined at [line 12])
+  [line 3]  stage1 = (seed << 3) & 0xFF
+  Compute: (seed << 3) & 0xFF, where seed=202 (parameter seed defined at [line 12]) = 80
+  [line 5]  stage2 = stage1 ^ 0xAA
+  Compute: stage1 ^ 0xAA, where stage1=80 (defined at [line 3]) = 250
+  [line 7]  stage3 = (stage2 >> 2) & 0xFF
+  Compute: (stage2 >> 2) & 0xFF, where stage2=250 (defined at [line 5]) = 62
+  [line 9]  final_checksum = stage3 ^ seed
+  Compute: stage3 ^ seed, where stage3=62 (defined at [line 7]), seed=202 (parameter seed defined at [line 12]) = 244
+  [line 10]  return final_checksum
+  Return: final_checksum=244 (defined at [line 9])
+Function transform_packet returns 244
+
+Answer: final_checksum = 244 (last updated on defined at [line 9])

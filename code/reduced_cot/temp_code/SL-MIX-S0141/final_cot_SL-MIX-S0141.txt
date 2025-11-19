@@ -1,0 +1,45 @@
+Target: Find the value of variable coherence_score after [line 29] executes
+
+[line 3]  def process_signals(frequencies):
+Enter function process_signals: frequencies=[2, 3, 5, 8, 12]
+  [line 5]  transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  Call function list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  [line 5]  transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  Call function list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  [line 5]  transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  Call function list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  [line 5]  transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  Call function list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  [line 5]  transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  Call function list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  [line 5]  transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  Call function list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+  [line 8]  low_freq = {x for x in transformed if x < 100}
+  Compute: {x for x in transformed if x < 100}, where x=4 (an unknown source), transformed=[4, 27, 125, 64, 144] (defined at [line 5]) = ?
+  [line 9]  high_freq = {x for x in transformed if x >= 100}
+  Compute: {x for x in transformed if x >= 100}, where x=4 (an unknown source), transformed=[4, 27, 125, 64, 144] (defined at [line 5]) = ?
+  [line 12]  common_freq = low_freq & high_freq
+  Compute: low_freq & high_freq, where low_freq={64, 27, 4} (defined at [line 8]), high_freq={144, 125} (defined at [line 9]) = set()
+  [line 13]  all_freq = low_freq | high_freq
+  Compute: low_freq | high_freq, where low_freq={64, 27, 4} (defined at [line 8]), high_freq={144, 125} (defined at [line 9]) = {64, 144, 4, 27, 125}
+  [line 16]  base_score = len(common_freq) * 10 if len(common_freq) > 0 else len(all_freq) * 5
+  Compute: len(common_freq) * 10 if len(common_freq) > 0 else len(all_freq) * 5, where common_freq=set() (defined at [line 12]), all_freq={64, 144, 4, 27, 125} (defined at [line 13]) = 25
+  [line 19]  max_element = max(all_freq) if all_freq else 0
+  Compute: max(all_freq) if all_freq else 0, where all_freq={64, 144, 4, 27, 125} (defined at [line 13]) = 144
+  [line 20]  encoded_max = ''.join(filter(str.isdigit, str(max_element)))
+  (Missing param: 'func_name')
+  [line 21]  adjusted_score = base_score + int(encoded_max) if encoded_max else base_score
+  Compute: base_score + int(encoded_max) if encoded_max else base_score, where base_score=25 (defined at [line 16]), encoded_max='144' (an unknown source) = 169
+  [line 24]  sorted_values = sorted(all_freq)
+  Call function sorted(all_freq={64, 144, 4, 27, 125} (defined at [line 13]))
+  [line 25]  differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+  Compute: [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)], where b=27 (an unknown source), a=4 (an unknown source), sorted_values=[4, 27, 64, 125, 144] (defined at [line 24]) = ?
+  [line 26]  diff_sum = sum(differences)
+  Call function sum(differences=[23, 60, 121, 140, 37, ...] (defined at [line 25]))
+  [line 29]  coherence_score = adjusted_score + (diff_sum // 100)
+  Compute: adjusted_score + (diff_sum // 100), where adjusted_score=169 (defined at [line 21]), diff_sum=756 (defined at [line 26]) = 176
+  [line 30]  return coherence_score
+  Return: coherence_score=176 (defined at [line 29])
+Function process_signals returns 176
+
+Answer: coherence_score = 176 (last updated on defined at [line 29])

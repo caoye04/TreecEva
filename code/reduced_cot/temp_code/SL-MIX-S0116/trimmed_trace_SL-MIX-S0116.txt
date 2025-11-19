@@ -1,0 +1,435 @@
+26
+processed_checksum
+---
+25 signal_data = [12, 7, 23, 9, 15, 4, 18, 11, 6, 25, 3, 20, 8, 14, 19, 5, 22, 10, 17, 1]
+25 ['signal_data'] ['[12, 7, 23, 9, 15, ...]']
+26 processed_checksum = compute_signal_checksum(signal_data)
+26 ['signal_data'] ['[12, 7, 23, 9, 15, ...]']
+PARAM_MAPPING {'signal_samples': {'actual_var': 'signal_data', 'value': [12, 7, 23, 9, 15, 4, 18, 11, 6, 25, 3, 20, 8, 14, 19, 5, 22, 10, 17, 1]}}
+FUNCTION_ENTER 3 compute_signal_checksum def compute_signal_checksum(signal_samples):
+3 ['signal_samples'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 18}, {'_type': 'int', '_value': 11}, {'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 25}], '_len': 20}]
+4 window = deque(maxlen=5)
+4 ['signal_samples', 'window'] ['[12, 7, 23, 9, 15, ...]', 'deque([], maxlen=5)']
+5 checksum = 0
+5 ['signal_samples', 'window', 'checksum'] ['[12, 7, 23, 9, 15, ...]', 'deque([], maxlen=5)', '0']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample'] ['[12, 7, 23, 9, 15, ...]', 'deque([], maxlen=5)', '0', '0', '12']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample'] ['[12, 7, 23, 9, 15, ...]', 'deque([12], maxlen=5)', '0', '0', '12']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample'] ['[12, 7, 23, 9, 15, ...]', 'deque([12], maxlen=5)', '0', '1', '7']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7], maxlen=5)', '0', '1', '7']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7], maxlen=5)', '0', '2', '23']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7, 23], maxlen=5)', '0', '2', '23']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7, 23], maxlen=5)', '0', '3', '9']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7, 23, 9], maxlen=5)', '0', '3', '9']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7, 23, 9], maxlen=5)', '0', '4', '15']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7, 23, 9, 15], maxlen=5)', '0', '4', '15']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '12']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '7']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '23']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '9']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '15']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '15']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7, 23, 9, 15], maxlen=5)', '0', '4', '15', '206', '4.0']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7, 23, 9, 15], maxlen=5)', '0', '4', '15', '206', '4.0']
+19 elif mod_result <= 10.0 or (idx > 10 and idx < 20):
+19 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7, 23, 9, 15], maxlen=5)', '0', '4', '15', '206', '4.0']
+20 checksum = (checksum ^ int(mod_result)) % 100
+20 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7, 23, 9, 15], maxlen=5)', '4', '4', '15', '206', '4.0']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([12, 7, 23, 9, 15], maxlen=5)', '4', '5', '4', '206', '4.0']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([7, 23, 9, 15, 4], maxlen=5)', '4', '5', '4', '206', '4.0']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '7']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '23']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '9']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '15']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '4']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '4']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([7, 23, 9, 15, 4], maxlen=5)', '4', '5', '4', '160', '9.5']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([7, 23, 9, 15, 4], maxlen=5)', '4', '5', '4', '160', '9.5']
+19 elif mod_result <= 10.0 or (idx > 10 and idx < 20):
+19 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([7, 23, 9, 15, 4], maxlen=5)', '4', '5', '4', '160', '9.5']
+20 checksum = (checksum ^ int(mod_result)) % 100
+20 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([7, 23, 9, 15, 4], maxlen=5)', '13', '5', '4', '160', '9.5']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([7, 23, 9, 15, 4], maxlen=5)', '13', '6', '18', '160', '9.5']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([23, 9, 15, 4, 18], maxlen=5)', '13', '6', '18', '160', '9.5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '23']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '9']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '15']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '4']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '18']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '18']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([23, 9, 15, 4, 18], maxlen=5)', '13', '6', '18', '192', '8.0']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([23, 9, 15, 4, 18], maxlen=5)', '13', '6', '18', '192', '8.0']
+19 elif mod_result <= 10.0 or (idx > 10 and idx < 20):
+19 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([23, 9, 15, 4, 18], maxlen=5)', '13', '6', '18', '192', '8.0']
+20 checksum = (checksum ^ int(mod_result)) % 100
+20 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([23, 9, 15, 4, 18], maxlen=5)', '5', '6', '18', '192', '8.0']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([23, 9, 15, 4, 18], maxlen=5)', '5', '7', '11', '192', '8.0']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([9, 15, 4, 18, 11], maxlen=5)', '5', '7', '11', '192', '8.0']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '9']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '15']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '4']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '18']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '11']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '11']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([9, 15, 4, 18, 11], maxlen=5)', '5', '7', '11', '178', '11.5']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([9, 15, 4, 18, 11], maxlen=5)', '5', '7', '11', '178', '11.5']
+18 checksum = (checksum + int(mod_result)) % 100
+18 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([9, 15, 4, 18, 11], maxlen=5)', '16', '7', '11', '178', '11.5']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([9, 15, 4, 18, 11], maxlen=5)', '16', '8', '6', '178', '11.5']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([15, 4, 18, 11, 6], maxlen=5)', '16', '8', '6', '178', '11.5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '15']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '4']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '18']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '11']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '6']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '6']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([15, 4, 18, 11, 6], maxlen=5)', '16', '8', '6', '151', '19.0']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([15, 4, 18, 11, 6], maxlen=5)', '16', '8', '6', '151', '19.0']
+18 checksum = (checksum + int(mod_result)) % 100
+18 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([15, 4, 18, 11, 6], maxlen=5)', '35', '8', '6', '151', '19.0']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([15, 4, 18, 11, 6], maxlen=5)', '35', '9', '25', '151', '19.0']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([4, 18, 11, 6, 25], maxlen=5)', '35', '9', '25', '151', '19.0']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '4']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '18']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '11']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '6']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '25']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '25']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([4, 18, 11, 6, 25], maxlen=5)', '35', '9', '25', '222', '5.5']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([4, 18, 11, 6, 25], maxlen=5)', '35', '9', '25', '222', '5.5']
+19 elif mod_result <= 10.0 or (idx > 10 and idx < 20):
+19 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([4, 18, 11, 6, 25], maxlen=5)', '35', '9', '25', '222', '5.5']
+20 checksum = (checksum ^ int(mod_result)) % 100
+20 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([4, 18, 11, 6, 25], maxlen=5)', '38', '9', '25', '222', '5.5']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([4, 18, 11, 6, 25], maxlen=5)', '38', '10', '3', '222', '5.5']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([18, 11, 6, 25, 3], maxlen=5)', '38', '10', '3', '222', '5.5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '18']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '11']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '6']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '25']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '3']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '3']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([18, 11, 6, 25, 3], maxlen=5)', '38', '10', '3', '173', '8.0']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([18, 11, 6, 25, 3], maxlen=5)', '38', '10', '3', '173', '8.0']
+19 elif mod_result <= 10.0 or (idx > 10 and idx < 20):
+19 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([18, 11, 6, 25, 3], maxlen=5)', '38', '10', '3', '173', '8.0']
+20 checksum = (checksum ^ int(mod_result)) % 100
+20 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([18, 11, 6, 25, 3], maxlen=5)', '46', '10', '3', '173', '8.0']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([18, 11, 6, 25, 3], maxlen=5)', '46', '11', '20', '173', '8.0']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([11, 6, 25, 3, 20], maxlen=5)', '46', '11', '20', '173', '8.0']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '11']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '6']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '25']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '3']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '20']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '20']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([11, 6, 25, 3, 20], maxlen=5)', '46', '11', '20', '210', '11.5']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([11, 6, 25, 3, 20], maxlen=5)', '46', '11', '20', '210', '11.5']
+18 checksum = (checksum + int(mod_result)) % 100
+18 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([11, 6, 25, 3, 20], maxlen=5)', '57', '11', '20', '210', '11.5']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([11, 6, 25, 3, 20], maxlen=5)', '57', '12', '8', '210', '11.5']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([6, 25, 3, 20, 8], maxlen=5)', '57', '12', '8', '210', '11.5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '6']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '25']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '3']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '20']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '8']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '8']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([6, 25, 3, 20, 8], maxlen=5)', '57', '12', '8', '185', '21.0']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([6, 25, 3, 20, 8], maxlen=5)', '57', '12', '8', '185', '21.0']
+18 checksum = (checksum + int(mod_result)) % 100
+18 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([6, 25, 3, 20, 8], maxlen=5)', '78', '12', '8', '185', '21.0']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([6, 25, 3, 20, 8], maxlen=5)', '78', '13', '14', '185', '21.0']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([25, 3, 20, 8, 14], maxlen=5)', '78', '13', '14', '185', '21.0']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '25']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '3']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '20']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '8']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '14']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '14']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([25, 3, 20, 8, 14], maxlen=5)', '78', '13', '14', '193', '12.5']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([25, 3, 20, 8, 14], maxlen=5)', '78', '13', '14', '193', '12.5']
+18 checksum = (checksum + int(mod_result)) % 100
+18 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([25, 3, 20, 8, 14], maxlen=5)', '90', '13', '14', '193', '12.5']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([25, 3, 20, 8, 14], maxlen=5)', '90', '14', '19', '193', '12.5']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([3, 20, 8, 14, 19], maxlen=5)', '90', '14', '19', '193', '12.5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '3']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '20']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '8']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '14']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '19']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '19']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([3, 20, 8, 14, 19], maxlen=5)', '90', '14', '19', '218', '21.0']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([3, 20, 8, 14, 19], maxlen=5)', '90', '14', '19', '218', '21.0']
+18 checksum = (checksum + int(mod_result)) % 100
+18 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([3, 20, 8, 14, 19], maxlen=5)', '11', '14', '19', '218', '21.0']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([3, 20, 8, 14, 19], maxlen=5)', '11', '15', '5', '218', '21.0']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([20, 8, 14, 19, 5], maxlen=5)', '11', '15', '5', '218', '21.0']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '20']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '8']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '14']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '19']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '5']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([20, 8, 14, 19, 5], maxlen=5)', '11', '15', '5', '179', '16.5']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([20, 8, 14, 19, 5], maxlen=5)', '11', '15', '5', '179', '16.5']
+18 checksum = (checksum + int(mod_result)) % 100
+18 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([20, 8, 14, 19, 5], maxlen=5)', '27', '15', '5', '179', '16.5']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([20, 8, 14, 19, 5], maxlen=5)', '27', '16', '22', '179', '16.5']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([8, 14, 19, 5, 22], maxlen=5)', '27', '16', '22', '179', '16.5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '8']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '14']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '19']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '22']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '22']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([8, 14, 19, 5, 22], maxlen=5)', '27', '16', '22', '223', '10.0']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([8, 14, 19, 5, 22], maxlen=5)', '27', '16', '22', '223', '10.0']
+19 elif mod_result <= 10.0 or (idx > 10 and idx < 20):
+19 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([8, 14, 19, 5, 22], maxlen=5)', '27', '16', '22', '223', '10.0']
+20 checksum = (checksum ^ int(mod_result)) % 100
+20 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([8, 14, 19, 5, 22], maxlen=5)', '17', '16', '22', '223', '10.0']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([8, 14, 19, 5, 22], maxlen=5)', '17', '17', '10', '223', '10.0']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([14, 19, 5, 22, 10], maxlen=5)', '17', '17', '10', '223', '10.0']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '14']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '19']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '22']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '10']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '10']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([14, 19, 5, 22, 10], maxlen=5)', '17', '17', '10', '205', '9.5']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([14, 19, 5, 22, 10], maxlen=5)', '17', '17', '10', '205', '9.5']
+19 elif mod_result <= 10.0 or (idx > 10 and idx < 20):
+19 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([14, 19, 5, 22, 10], maxlen=5)', '17', '17', '10', '205', '9.5']
+20 checksum = (checksum ^ int(mod_result)) % 100
+20 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([14, 19, 5, 22, 10], maxlen=5)', '24', '17', '10', '205', '9.5']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([14, 19, 5, 22, 10], maxlen=5)', '24', '18', '17', '205', '9.5']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([19, 5, 22, 10, 17], maxlen=5)', '24', '18', '17', '205', '9.5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '19']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '22']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '10']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '17']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '17']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([19, 5, 22, 10, 17], maxlen=5)', '24', '18', '17', '220', '25.0']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([19, 5, 22, 10, 17], maxlen=5)', '24', '18', '17', '220', '25.0']
+19 elif mod_result <= 10.0 or (idx > 10 and idx < 20):
+19 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([19, 5, 22, 10, 17], maxlen=5)', '24', '18', '17', '220', '25.0']
+20 checksum = (checksum ^ int(mod_result)) % 100
+20 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([19, 5, 22, 10, 17], maxlen=5)', '1', '18', '17', '220', '25.0']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([19, 5, 22, 10, 17], maxlen=5)', '1', '19', '1', '220', '25.0']
+11 if len(window) == 5:
+11 ['signal_samples', 'window', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', 'deque([5, 22, 10, 17, 1], maxlen=5)', '1', '19', '1', '220', '25.0']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 [] []
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['0', '5']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['1', '22']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['2', '10']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['3', '17']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '1']
+13 weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
+13 ['i', 'val'] ['4', '1']
+15 mod_result = (weighted_sum % 17) + (idx * 0.5)
+15 ['signal_samples', 'checksum', 'idx', 'sample', 'weighted_sum', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', '1', '19', '1', '152', '25.5']
+17 if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
+17 ['signal_samples', 'checksum', 'idx', 'sample', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', '1', '19', '1', '25.5']
+18 checksum = (checksum + int(mod_result)) % 100
+18 ['signal_samples', 'checksum', 'idx', 'sample', 'mod_result'] ['[12, 7, 23, 9, 15, ...]', '26', '19', '1', '25.5']
+7 for idx, sample in enumerate(signal_samples):
+7 ['signal_samples', 'checksum', 'idx', 'sample'] ['[12, 7, 23, 9, 15, ...]', '26', '19', '1']
+22 return checksum
+22 ['checksum'] ['26']
+FUNCTION_RETURN 22 compute_signal_checksum {'_type': 'int', '_value': 26}

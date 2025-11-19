@@ -1,0 +1,69 @@
+Target: Find the value of variable final_energy_balance after [line 43] executes
+
+[line 10]  if not root_node:
+Condition: True, entering 'if' block
+[line 14]  node_stack = [(root_node, 0)]  # (node, accumulated_cost)
+Compute: [(root_node, 0)]  # (node, accumulated_cost), where root_node=WarehouseNode(...) (an unknown source) = [(WarehouseNode(...), 0)]
+[line 15]  max_threshold = 100
+Assign: max_threshold = 100
+[line 16]  energy_readings = []
+Compute: [] = []
+[line 18]  while node_stack:
+while Loop Start: Condition is true
+[line 19]  current_node, path_cost = node_stack.pop()
+(Missing param: 'func_name')
+[line 20]  new_cost = path_cost + current_node.energy_cost
+Compute: path_cost + current_node.energy_cost, where path_cost=0 (an unknown source), current_node=WarehouseNode(energy_cost=10) (an unknown source) = 10
+[line 23]  if new_cost > max_threshold:
+Condition: True, entering 'if' block
+[line 28]  if not current_node.left and not current_node.right:
+Condition: True, entering 'if' block
+[line 32]  if current_node.right:
+Condition: True, entering 'if' block
+[line 34]  if current_node.left:
+Condition: True, entering 'if' block
+[line 18]  while node_stack:
+while Loop Iteration: Condition is still true
+[line 19]  current_node, path_cost = node_stack.pop()
+(Missing param: 'func_name')
+[line 20]  new_cost = path_cost + current_node.energy_cost
+Compute: path_cost + current_node.energy_cost, where path_cost=10 (an unknown source), current_node=WarehouseNode(energy_cost=20) (an unknown source) = 30
+[line 23]  if new_cost > max_threshold:
+Condition: True, entering 'if' block
+[line 28]  if not current_node.left and not current_node.right:
+Condition: True, entering 'if' block
+[line 32]  if current_node.right:
+Condition: True, entering 'if' block
+[line 34]  if current_node.left:
+Condition: True, entering 'if' block
+... [Line 18] repeats 6 more times ...
+... [Line 18] repeats 6 more times ...
+... [Line 18] repeats 6 more times ...
+... [Line 18] repeats 6 more times ...
+... [Line 18] repeats 6 more times ...
+... [Line 18] repeats 6 more times ...
+... [Line 18] repeats 6 more times ...
+[line 18]  while node_stack:
+while Loop Iteration: Condition is still true
+[line 19]  current_node, path_cost = node_stack.pop()
+(Missing param: 'func_name')
+[line 20]  new_cost = path_cost + current_node.energy_cost
+Compute: path_cost + current_node.energy_cost, where path_cost=25 (an unknown source), current_node=WarehouseNode(energy_cost=5) (an unknown source) = 30
+[line 23]  if new_cost > max_threshold:
+Condition: True, entering 'if' block
+[line 28]  if not current_node.left and not current_node.right:
+Condition: True, entering 'if' block
+[line 18]  while node_stack:
+while Loop Iteration: Condition is still true
+[line 38]  valid_readings = [x for x in energy_readings if x <= max_threshold]
+Compute: [x for x in energy_readings if x <= max_threshold], where x=95 (an unknown source), energy_readings=[95, 100, 60, 60, 30] (defined at [line 16]), max_threshold=100 (defined at [line 15]) = ?
+[line 39]  adjustment_factor = (lambda vals: sum(vals) % 7 if vals else 0)(valid_readings)
+(Missing param: 'func_name')
+[line 39]  adjustment_factor = (lambda vals: sum(vals) % 7 if vals else 0)(valid_readings)
+(Missing param: 'func_name')
+[line 42]  unique_costs = frozenset(energy_readings)
+Call function frozenset(energy_readings=[95, 100, 60, 60, 30] (defined at [line 16]))
+[line 43]  final_energy_balance = len(unique_costs) * 3 - adjustment_factor
+Compute: len(unique_costs) * 3 - adjustment_factor, where unique_costs=frozenset({100, 30, 60, 95}) (defined at [line 42]), adjustment_factor=2 (an unknown source) = 10
+
+Answer: final_energy_balance = 10 (last updated on defined at [line 43])

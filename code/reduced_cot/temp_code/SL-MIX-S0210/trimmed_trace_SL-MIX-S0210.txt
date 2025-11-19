@@ -1,0 +1,471 @@
+64
+matched_routes
+---
+63 config_string = 'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'
+63 ['config_string'] ["'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'"]
+64 matched_routes = process_network_config(config_string)
+64 ['config_string'] ["'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'"]
+PARAM_MAPPING {'config': {'actual_var': 'config_string', 'value': 'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'}}
+FUNCTION_ENTER 41 process_network_config def process_network_config(config: str) -> int:
+41 ['config'] [{'_type': 'str', '_value': 'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'}]
+42 tokens = tokenize_config(config)
+42 ['config'] ["'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'"]
+7 return re.findall(r'\b\w+|[/.=]', config_str)
+7 ['config_str'] ["'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'"]
+43 decision_tree = build_decision_tree(tokens)
+43 ['tokens'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]"]
+PARAM_MAPPING {'tokens': {'actual_var': 'tokens', 'value': ['ALLOW', 'TCP', 'FROM', '192', '.', '168', '.', '1', '.', '0', '/', '24', 'TO', '10', '.', '0', '.', '0', '.', '0', '/', '8', 'IF', 'PORT', '=', '=', '80', 'OR', 'PORT', '=', '=', '443']}}
+FUNCTION_ENTER 15 build_decision_tree def build_decision_tree(tokens: List[str]) -> TreeNode:
+15 ['tokens'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'ALLOW'}, {'_type': 'str', '_value': 'TCP'}, {'_type': 'str', '_value': 'FROM'}, {'_type': 'str', '_value': '192'}, {'_type': 'str', '_value': '.'}, {'_type': 'str', '_value': '168'}, {'_type': 'str', '_value': '.'}, {'_type': 'str', '_value': '1'}, {'_type': 'str', '_value': '.'}, {'_type': 'str', '_value': '0'}], '_len': 32}]
+16 stack = []
+16 ['tokens', 'stack'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]']
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'ALLOW'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'ALLOW'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'ALLOW'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'TCP'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'TCP'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'TCP'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'FROM'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'FROM'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'FROM'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'192'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'192'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'192'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", '[]', "'192'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=None)]", "'.'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=None)]", "'.'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=None)]", "'.'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=None)]", "'.'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...))]", "'168'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...))]", "'168'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...))]", "'168'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...))]", "'168'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=None)]", "'.'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=None)]", "'.'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=None)]", "'.'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=None)]", "'.'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...))]", "'1'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...))]", "'1'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...))]", "'1'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...))]", "'1'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=None)]", "'.'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=None)]", "'.'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=None)]", "'.'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=None)]", "'.'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...))]", "'0'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...))]", "'0'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...))]", "'0'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...))]", "'0'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=None)]", "'/'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=None)]", "'/'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=None)]", "'/'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=None)]", "'/'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...))]", "'24'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...))]", "'24'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...))]", "'24'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...))]", "'24'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=None)]", "'TO'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=None)]", "'TO'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=None)]", "'TO'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=None)]", "'10'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=None)]", "'10'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=None)]", "'10'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=None)]", "'10'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...))]", "'.'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...))]", "'.'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...))]", "'.'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...))]", "'.'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'.'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'.'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'.'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'.'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'.'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'.'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'.'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'.'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'0'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'/'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'/'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'/'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'/'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'8'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'8'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'8'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'8'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'IF'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'IF'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'IF'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'PORT'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'PORT'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'PORT'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'PORT'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'80'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'80'"]
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'80'"]
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'80'"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'OR'"]
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'OR'"]
+19 node = TreeNode(token)
+19 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'OR'", "TreeNode(value='OR', left=None, right=None)"]
+20 if stack:
+20 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'OR'", 'TreeNode(...)']
+21 node.left = stack.pop()
+21 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'OR'", "TreeNode(left=TreeNode(value='=', left=None, right=TreeNode(...)))"]
+17 for token in tokens:
+17 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'PORT'", 'TreeNode(...)']
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'PORT'", 'TreeNode(...)']
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'PORT'", 'TreeNode(...)']
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'PORT'", 'TreeNode(...)']
+17 for token in tokens:
+17 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='", 'TreeNode(...)']
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='", 'TreeNode(...)']
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='", 'TreeNode(...)']
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='", 'TreeNode(...)']
+17 for token in tokens:
+17 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='", 'TreeNode(...)']
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='", 'TreeNode(...)']
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='", 'TreeNode(...)']
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'='", 'TreeNode(...)']
+17 for token in tokens:
+17 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'443'", 'TreeNode(...)']
+18 if token in ('AND', 'OR'):
+18 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'443'", 'TreeNode(...)']
+23 elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+23 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'443'", 'TreeNode(...)']
+24 if stack and stack[-1].right is None:
+24 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'443'", 'TreeNode(...)']
+17 for token in tokens:
+17 ['tokens', 'stack', 'token', 'node'] ["['ALLOW', 'TCP', 'FROM', '192', '.', ...]", "[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", "'443'", 'TreeNode(...)']
+28 return stack[0] if stack else None
+28 ['stack', 'node'] ["[TreeNode(value='192', left=None, right=TreeNode(...)), TreeNode(value='168', left=None, right=TreeNode(...)), TreeNode(value='1', left=None, right=TreeNode(...)), TreeNode(value='0', left=None, right=TreeNode(...)), TreeNode(value='24', left=None, right=TreeNode(...)), ...]", 'TreeNode(...)']
+FUNCTION_RETURN 28 build_decision_tree {'_type': 'object', '_class': 'TreeNode', '_attrs': {'value': {'_type': 'str', '_value': '192'}, 'left': {'_type': 'None'}, 'right': {'_type': 'object', '_class': 'TreeNode', '_attrs': {'value': {'_type': 'str', '_value': '.'}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}
+44 route_queue = deque(["192.168.1.1:80", "192.168.1.2:22", "10.0.0.5:443", "172.16.0.1:8080"])
+44 ['decision_tree', 'route_queue'] ['TreeNode(...)', "deque(['192.168.1.1:80', '192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])"]
+45 matched_routes = 0
+45 ['decision_tree', 'route_queue', 'matched_routes'] ['TreeNode(...)', "deque(['192.168.1.1:80', '192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '0']
+47 while route_queue:
+47 ['decision_tree', 'route_queue', 'matched_routes'] ['TreeNode(...)', "deque(['192.168.1.1:80', '192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '0']
+48 route = route_queue.popleft()
+48 ['decision_tree', 'route_queue', 'matched_routes', 'route'] ['TreeNode(...)', "deque(['192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '0', "'192.168.1.1:80'"]
+49 port = route.split(':')[1]
+49 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port'] ['TreeNode(...)', "deque(['192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '0', "'192.168.1.1:80'", "'80'"]
+50 temp_tree = TreeNode(port)
+50 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree'] ['TreeNode(...)', "deque(['192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '0', "'192.168.1.1:80'", "'80'", "TreeNode(value='80', left=None, right=None)"]
+51 if decision_tree:
+51 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree'] ['TreeNode(...)', "deque(['192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '0', "'192.168.1.1:80'", "'80'", 'TreeNode(...)']
+53 condition_tree = TreeNode('OR')
+53 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '0', "'192.168.1.1:80'", "'80'", 'TreeNode(...)', "TreeNode(value='OR', left=None, right=None)"]
+54 condition_tree.left = decision_tree
+54 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '0', "'192.168.1.1:80'", "'80'", 'TreeNode(...)', "TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)))"]
+55 condition_tree.right = temp_tree
+55 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '0', "'192.168.1.1:80'", "'80'", 'TreeNode(...)', "TreeNode(right=TreeNode(value='80', left=None, right=None))"]
+56 if evaluate_tree(condition_tree):
+56 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '0', "'192.168.1.1:80'", "'80'", 'TreeNode(...)', 'TreeNode(...)']
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+35 if node.value == 'OR':
+35 ['node'] ['TreeNode(...)']
+36 return evaluate_tree(node.left) or evaluate_tree(node.right)
+36 ['node'] ["TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)), right=TreeNode(value='80', left=None, right=None))"]
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+35 if node.value == 'OR':
+35 ['node'] ['TreeNode(...)']
+37 if node.value == 'AND':
+37 ['node'] ['TreeNode(...)']
+39 return False
+39 ['node'] ['TreeNode(...)']
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+34 return True
+34 ['node'] ['TreeNode(...)']
+36 return evaluate_tree(node.left) or evaluate_tree(node.right)
+36 ['node'] ["TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)), right=TreeNode(value='80', left=None, right=None))"]
+57 matched_routes += 1
+57 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '1', "'192.168.1.1:80'", "'80'", 'TreeNode(...)', 'TreeNode(...)']
+47 while route_queue:
+47 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['192.168.1.2:22', '10.0.0.5:443', '172.16.0.1:8080'])", '1', "'192.168.1.1:80'", "'80'", 'TreeNode(...)', 'TreeNode(...)']
+48 route = route_queue.popleft()
+48 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['10.0.0.5:443', '172.16.0.1:8080'])", '1', "'192.168.1.2:22'", "'80'", 'TreeNode(...)', 'TreeNode(...)']
+49 port = route.split(':')[1]
+49 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['10.0.0.5:443', '172.16.0.1:8080'])", '1', "'192.168.1.2:22'", "'22'", 'TreeNode(...)', 'TreeNode(...)']
+50 temp_tree = TreeNode(port)
+50 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['10.0.0.5:443', '172.16.0.1:8080'])", '1', "'192.168.1.2:22'", "'22'", "TreeNode(value='22', left=None, right=None)", 'TreeNode(...)']
+51 if decision_tree:
+51 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['10.0.0.5:443', '172.16.0.1:8080'])", '1', "'192.168.1.2:22'", "'22'", 'TreeNode(...)', 'TreeNode(...)']
+53 condition_tree = TreeNode('OR')
+53 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['10.0.0.5:443', '172.16.0.1:8080'])", '1', "'192.168.1.2:22'", "'22'", 'TreeNode(...)', "TreeNode(value='OR', left=None, right=None)"]
+54 condition_tree.left = decision_tree
+54 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['10.0.0.5:443', '172.16.0.1:8080'])", '1', "'192.168.1.2:22'", "'22'", 'TreeNode(...)', "TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)))"]
+55 condition_tree.right = temp_tree
+55 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['10.0.0.5:443', '172.16.0.1:8080'])", '1', "'192.168.1.2:22'", "'22'", 'TreeNode(...)', "TreeNode(right=TreeNode(value='22', left=None, right=None))"]
+56 if evaluate_tree(condition_tree):
+56 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['10.0.0.5:443', '172.16.0.1:8080'])", '1', "'192.168.1.2:22'", "'22'", 'TreeNode(...)', 'TreeNode(...)']
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+35 if node.value == 'OR':
+35 ['node'] ['TreeNode(...)']
+36 return evaluate_tree(node.left) or evaluate_tree(node.right)
+36 ['node'] ["TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)), right=TreeNode(value='22', left=None, right=None))"]
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+35 if node.value == 'OR':
+35 ['node'] ['TreeNode(...)']
+37 if node.value == 'AND':
+37 ['node'] ['TreeNode(...)']
+39 return False
+39 ['node'] ['TreeNode(...)']
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+35 if node.value == 'OR':
+35 ['node'] ['TreeNode(...)']
+37 if node.value == 'AND':
+37 ['node'] ['TreeNode(...)']
+39 return False
+39 ['node'] ['TreeNode(...)']
+36 return evaluate_tree(node.left) or evaluate_tree(node.right)
+36 ['node'] ["TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)), right=TreeNode(value='22', left=None, right=None))"]
+47 while route_queue:
+47 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['10.0.0.5:443', '172.16.0.1:8080'])", '1', "'192.168.1.2:22'", "'22'", 'TreeNode(...)', 'TreeNode(...)']
+48 route = route_queue.popleft()
+48 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['172.16.0.1:8080'])", '1', "'10.0.0.5:443'", "'22'", 'TreeNode(...)', 'TreeNode(...)']
+49 port = route.split(':')[1]
+49 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['172.16.0.1:8080'])", '1', "'10.0.0.5:443'", "'443'", 'TreeNode(...)', 'TreeNode(...)']
+50 temp_tree = TreeNode(port)
+50 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['172.16.0.1:8080'])", '1', "'10.0.0.5:443'", "'443'", "TreeNode(value='443', left=None, right=None)", 'TreeNode(...)']
+51 if decision_tree:
+51 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['172.16.0.1:8080'])", '1', "'10.0.0.5:443'", "'443'", 'TreeNode(...)', 'TreeNode(...)']
+53 condition_tree = TreeNode('OR')
+53 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['172.16.0.1:8080'])", '1', "'10.0.0.5:443'", "'443'", 'TreeNode(...)', "TreeNode(value='OR', left=None, right=None)"]
+54 condition_tree.left = decision_tree
+54 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['172.16.0.1:8080'])", '1', "'10.0.0.5:443'", "'443'", 'TreeNode(...)', "TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)))"]
+55 condition_tree.right = temp_tree
+55 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['172.16.0.1:8080'])", '1', "'10.0.0.5:443'", "'443'", 'TreeNode(...)', "TreeNode(right=TreeNode(value='443', left=None, right=None))"]
+56 if evaluate_tree(condition_tree):
+56 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['172.16.0.1:8080'])", '1', "'10.0.0.5:443'", "'443'", 'TreeNode(...)', 'TreeNode(...)']
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+35 if node.value == 'OR':
+35 ['node'] ['TreeNode(...)']
+36 return evaluate_tree(node.left) or evaluate_tree(node.right)
+36 ['node'] ["TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)), right=TreeNode(value='443', left=None, right=None))"]
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+35 if node.value == 'OR':
+35 ['node'] ['TreeNode(...)']
+37 if node.value == 'AND':
+37 ['node'] ['TreeNode(...)']
+39 return False
+39 ['node'] ['TreeNode(...)']
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+34 return True
+34 ['node'] ['TreeNode(...)']
+36 return evaluate_tree(node.left) or evaluate_tree(node.right)
+36 ['node'] ["TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)), right=TreeNode(value='443', left=None, right=None))"]
+57 matched_routes += 1
+57 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['172.16.0.1:8080'])", '2', "'10.0.0.5:443'", "'443'", 'TreeNode(...)', 'TreeNode(...)']
+47 while route_queue:
+47 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', "deque(['172.16.0.1:8080'])", '2', "'10.0.0.5:443'", "'443'", 'TreeNode(...)', 'TreeNode(...)']
+48 route = route_queue.popleft()
+48 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', 'deque([])', '2', "'172.16.0.1:8080'", "'443'", 'TreeNode(...)', 'TreeNode(...)']
+49 port = route.split(':')[1]
+49 ['decision_tree', 'route_queue', 'matched_routes', 'route', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', 'deque([])', '2', "'172.16.0.1:8080'", "'8080'", 'TreeNode(...)', 'TreeNode(...)']
+50 temp_tree = TreeNode(port)
+50 ['decision_tree', 'route_queue', 'matched_routes', 'port', 'temp_tree', 'condition_tree'] ['TreeNode(...)', 'deque([])', '2', "'8080'", "TreeNode(value='8080', left=None, right=None)", 'TreeNode(...)']
+51 if decision_tree:
+51 ['decision_tree', 'route_queue', 'matched_routes', 'temp_tree', 'condition_tree'] ['TreeNode(...)', 'deque([])', '2', 'TreeNode(...)', 'TreeNode(...)']
+53 condition_tree = TreeNode('OR')
+53 ['decision_tree', 'route_queue', 'matched_routes', 'temp_tree', 'condition_tree'] ['TreeNode(...)', 'deque([])', '2', 'TreeNode(...)', "TreeNode(value='OR', left=None, right=None)"]
+54 condition_tree.left = decision_tree
+54 ['decision_tree', 'route_queue', 'matched_routes', 'temp_tree', 'condition_tree'] ['TreeNode(...)', 'deque([])', '2', 'TreeNode(...)', "TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)))"]
+55 condition_tree.right = temp_tree
+55 ['route_queue', 'matched_routes', 'temp_tree', 'condition_tree'] ['deque([])', '2', 'TreeNode(...)', "TreeNode(right=TreeNode(value='8080', left=None, right=None))"]
+56 if evaluate_tree(condition_tree):
+56 ['route_queue', 'matched_routes', 'condition_tree'] ['deque([])', '2', 'TreeNode(...)']
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+35 if node.value == 'OR':
+35 ['node'] ['TreeNode(...)']
+36 return evaluate_tree(node.left) or evaluate_tree(node.right)
+36 ['node'] ["TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)), right=TreeNode(value='8080', left=None, right=None))"]
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+35 if node.value == 'OR':
+35 ['node'] ['TreeNode(...)']
+37 if node.value == 'AND':
+37 ['node'] ['TreeNode(...)']
+39 return False
+39 ['node'] ['TreeNode(...)']
+31 if not node:
+31 ['node'] ['TreeNode(...)']
+33 if node.value in ('80', '443'):
+33 ['node'] ['TreeNode(...)']
+35 if node.value == 'OR':
+35 ['node'] ['TreeNode(...)']
+37 if node.value == 'AND':
+37 ['node'] ['TreeNode(...)']
+39 return False
+39 ['node'] ['TreeNode(...)']
+36 return evaluate_tree(node.left) or evaluate_tree(node.right)
+36 ['node'] ["TreeNode(left=TreeNode(value='192', left=None, right=TreeNode(...)), right=TreeNode(value='8080', left=None, right=None))"]
+47 while route_queue:
+47 ['route_queue', 'matched_routes'] ['deque([])', '2']
+61 return matched_routes
+61 ['matched_routes'] ['2']
+FUNCTION_RETURN 61 process_network_config {'_type': 'int', '_value': 2}

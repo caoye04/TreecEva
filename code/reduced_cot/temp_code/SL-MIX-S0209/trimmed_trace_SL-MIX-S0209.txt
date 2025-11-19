@@ -1,0 +1,39 @@
+26
+final_metric
+---
+11 data_stream = [3, 7, 2, 9, 1, 8, 4, 6, 5]
+11 ['data_stream'] ['[3, 7, 2, 9, 1, ...]']
+12 threshold_filter = lambda x: x > 4
+12 ['data_stream'] ['[3, 7, 2, 9, 1, ...]']
+13 transformer = lambda x: x * 2 if x % 2 == 0 else x + 1
+13 ['data_stream'] ['[3, 7, 2, 9, 1, ...]']
+8 wrapper.calls = 0
+8 [] []
+9 return wrapper
+9 [] []
+22 processed_data = process_chunk(data_stream)
+22 ['data_stream'] ['[3, 7, 2, 9, 1, ...]']
+7 return func(*args, **kwargs)
+7 ['args', 'kwargs'] ['([3, 7, 2, 9, 1, ...])', '{}']
+17 squared_values = map(lambda val: val**2, chunk)
+17 ['chunk', 'squared_values'] ['[3, 7, 2, 9, 1, ...]', '<map object at 0x000001D3DC6474F0>']
+18 filtered_mask = map(threshold_filter, squared_values)
+18 ['squared_values', 'filtered_mask'] ['<map object at 0x000001D3DC6474F0>', '<map object at 0x000001D3DC647430>']
+19 selected_items = list(compress(squared_values, filtered_mask))
+19 ['squared_values', 'filtered_mask'] ['<map object at 0x000001D3DC6474F0>', '<map object at 0x000001D3DC647430>']
+20 return selected_items
+20 ['selected_items'] ['[9, 4, 1, 16]']
+23 transformed_values = list(map(transformer, processed_data))
+23 ['processed_data'] ['[9, 4, 1, 16]']
+24 sorted_values = sorted(transformed_values, reverse=True)
+24 ['transformed_values', 'sorted_values'] ['[10, 8, 2, 32]', '[32, 10, 8, 2]']
+26 final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+26 ['sorted_values'] ['[32, 10, 8, 2]']
+26 final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+26 ['acc', 'val'] ['0', '32']
+26 final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+26 ['acc', 'val'] ['32', '10']
+26 final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+26 ['acc', 'val'] ['32', '8']
+26 final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+26 ['acc', 'val'] ['32', '2']

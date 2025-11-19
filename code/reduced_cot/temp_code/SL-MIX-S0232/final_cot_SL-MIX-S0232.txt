@@ -1,0 +1,74 @@
+Target: Find the value of variable scope_depth after [line 42] executes
+
+[line 25]  token_stream = "begin alpha beta gamma end begin delta epsilon end"
+Assign: token_stream = 'begin alpha beta gamma end begin delta epsilon end'
+[line 26]  tokens = tokenize(token_stream)
+Call function tokenize(token_stream='begin alpha beta gamma end begin delta epsilon end' (defined at [line 25]))
+[line 19]  return input_str.split()
+Return: input_str.split()
+[line 27]  scopes = ScopeStack()
+Call function ScopeStack()
+[line 5]  self.stack = []
+(Missing param: 'result')
+[line 28]  active_transforms = set()
+Call function set()
+[line 30]  for token in tokens:
+Loop Start: token takes its first value 'begin'
+[line 31]  hashed = hash(transform_token(token)) % 100
+Compute: hash(transform_token(token)) % 100, where token='begin' (defined at [line 30]) = ?
+[line 22]  mapper = lambda x: ''.join(sorted(set(x)))
+Compute: lambda x: ''.join(sorted(set(x))) = ?
+[line 23]  return mapper(t)
+Return: mapper(t)
+[line 22]  mapper = lambda x: ''.join(sorted(set(x)))
+Compute: lambda x: ''.join(sorted(set(x))), where x='begin' (an unknown source) = ?
+[line 32]  if token == 'begin':
+Condition: True, entering 'if' block
+[line 30]  for token in tokens:
+Loop Iteration: token is now 'alpha' (iteration 2)
+[line 31]  hashed = hash(transform_token(token)) % 100
+Compute: hash(transform_token(token)) % 100, where token='alpha' (defined at [line 30]) = 97
+[line 22]  mapper = lambda x: ''.join(sorted(set(x)))
+Compute: lambda x: ''.join(sorted(set(x))) = ?
+[line 23]  return mapper(t)
+Return: mapper(t)
+[line 22]  mapper = lambda x: ''.join(sorted(set(x)))
+Compute: lambda x: ''.join(sorted(set(x))), where x='alpha' (an unknown source) = ?
+[line 32]  if token == 'begin':
+Condition: True, entering 'if' block
+[line 35]  elif token == 'end' and scopes.depth() > 0:
+'elif' Condition: True, entering block
+[line 39]  if hashed in active_transforms:
+Condition: True, entering 'if' block
+... [Line 30] repeats 6 more times ...
+... [Line 30] repeats 6 more times ...
+... [Line 30] repeats 6 more times ...
+... [Line 30] repeats 6 more times ...
+... [Line 30] repeats 6 more times ...
+... [Line 30] repeats 6 more times ...
+... [Line 30] repeats 6 more times ...
+... [Line 30] repeats 6 more times ...
+[line 30]  for token in tokens:
+Loop End: Iteration finished
+[line 22]  mapper = lambda x: ''.join(sorted(set(x)))
+Compute: lambda x: ''.join(sorted(set(x))) = ?
+[line 23]  return mapper(t)
+Return: mapper(t)
+[line 32]  if token == 'begin':
+Condition: True, entering 'if' block
+[line 35]  elif token == 'end' and scopes.depth() > 0:
+'elif' Condition: True, entering block
+[line 16]  return len(self.stack)
+Return: len(self.stack)
+[line 11]  if self.stack:
+Condition: True, entering 'if' block
+[line 12]  return self.stack.pop()
+Return: self.stack.pop()
+[line 30]  for token in tokens:
+Loop End: Iteration finished
+[line 42]  scope_depth = scopes.depth()
+(Missing param: 'func_name')
+[line 16]  return len(self.stack)
+Return: len(self.stack)
+
+Answer: scope_depth = ? (last updated on an unknown source)

@@ -1,0 +1,308 @@
+1 import re
+1 [] []
+2 from functools import reduce
+2 [] []
+3 from collections import namedtuple
+3 [] []
+FUNCTION_ENTER 13 EncodingProcessor class EncodingProcessor:
+FUNCTION_RETURN 21 EncodingProcessor {'_type': 'None'}
+33 TokenSequence = namedtuple('TokenSequence', ['primary', 'secondary'])
+33 [] []
+34 token_data = TokenSequence(['ABCD', 'EFGH'], ['XYZ', 'ABC123'])
+34 ['token_data'] [{'_type': 'namedtuple', '_class': 'TokenSequence', '_attrs': {'primary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, 'secondary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}}}]
+36 processor = EncodingProcessor()
+36 ['token_data'] [{'_type': 'namedtuple', '_class': 'TokenSequence', '_attrs': {'primary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, 'secondary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}}}]
+FUNCTION_ENTER 14 __init__     def __init__(self):
+14 ['self'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {}}]
+DEPTH_2 16             lambda x: x >> 1,
+16 ['self'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {}}]
+DEPTH_2 17             lambda x: x ^ 0xFF,
+17 ['self'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {}}]
+DEPTH_2 18             lambda x: (x * 3) & 0xFF
+18 ['self'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {}}]
+DEPTH_2 15         self.transform_rules = [
+15 ['self'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}]
+FUNCTION_RETURN 15 __init__ {'_type': 'None'}
+37 primary_results = processor.process_sequence(token_data.primary)
+37 ['token_data', 'processor'] [{'_type': 'namedtuple', '_class': 'TokenSequence', '_attrs': {'primary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, 'secondary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}}}, {'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}]
+FUNCTION_ENTER 21 process_sequence     def process_sequence(self, tokens):
+21 ['self', 'tokens'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}]
+DEPTH_2 22         processed = []
+22 ['self', 'tokens', 'processed'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}]
+DEPTH_2 23         for token in tokens:
+23 ['self', 'tokens', 'processed', 'token'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'ABCD'}]
+DEPTH_2 24             if re.match(r'^[A-Z]{2,}$', token):
+24 ['self', 'tokens', 'processed', 'token'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'ABCD'}]
+DEPTH_2 25                 value = decode_token_segment(token)
+25 ['self', 'tokens', 'processed', 'token'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'ABCD'}]
+PARAM_MAPPING decode_token_segment {'segment': {'actual_var': 'token', 'value': 'ABCD'}}
+FUNCTION_ENTER 5 decode_token_segment def decode_token_segment(segment):
+5 ['segment'] [{'_type': 'str', '_value': 'ABCD'}]
+DEPTH_3 6     if len(segment) <= 2:
+6 ['segment'] [{'_type': 'str', '_value': 'ABCD'}]
+DEPTH_3 8     mid = len(segment) // 2
+8 ['segment', 'mid'] [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 2}]
+DEPTH_3 9     left_result = decode_token_segment(segment[:mid])
+9 ['segment', 'mid'] [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 2}]
+PARAM_MAPPING decode_token_segment {'segment': {'actual_var': 'segment[:mid]', 'value': 'segment[:mid]'}}
+FUNCTION_ENTER 5 decode_token_segment def decode_token_segment(segment):
+5 ['segment'] [{'_type': 'str', '_value': 'AB'}]
+DEPTH_4 6     if len(segment) <= 2:
+6 ['segment'] [{'_type': 'str', '_value': 'AB'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}, {'_type': 'str', '_value': 'A'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}, {'_type': 'str', '_value': 'B'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}, {'_type': 'str', '_value': 'B'}]
+FUNCTION_RETURN 7 decode_token_segment {'_type': 'int', '_value': 131}
+DEPTH_3 10     right_result = decode_token_segment(segment[mid:])
+10 ['segment', 'mid', 'left_result'] [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 131}]
+PARAM_MAPPING decode_token_segment {'segment': {'actual_var': 'segment[mid:]', 'value': 'segment[mid:]'}}
+FUNCTION_ENTER 5 decode_token_segment def decode_token_segment(segment):
+5 ['segment'] [{'_type': 'str', '_value': 'CD'}]
+DEPTH_4 6     if len(segment) <= 2:
+6 ['segment'] [{'_type': 'str', '_value': 'CD'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}, {'_type': 'str', '_value': 'C'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}, {'_type': 'str', '_value': 'D'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}, {'_type': 'str', '_value': 'D'}]
+FUNCTION_RETURN 7 decode_token_segment {'_type': 'int', '_value': 135}
+DEPTH_3 11     return left_result ^ right_result
+11 ['segment', 'mid', 'left_result', 'right_result'] [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 131}, {'_type': 'int', '_value': 135}]
+FUNCTION_RETURN 11 decode_token_segment {'_type': 'int', '_value': 4}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 4}]
+DEPTH_2 27                     value = rule(value)
+27 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 16 <lambda>             lambda x: x >> 1,
+16 ['x'] [{'_type': 'int', '_value': 4}]
+DEPTH_3 16             lambda x: x >> 1,
+16 ['x'] [{'_type': 'int', '_value': 4}]
+FUNCTION_RETURN 16 <lambda> {'_type': 'int', '_value': 2}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 2}]
+DEPTH_2 27                     value = rule(value)
+27 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 17 <lambda>             lambda x: x ^ 0xFF,
+17 ['x'] [{'_type': 'int', '_value': 2}]
+DEPTH_3 17             lambda x: x ^ 0xFF,
+17 ['x'] [{'_type': 'int', '_value': 2}]
+FUNCTION_RETURN 17 <lambda> {'_type': 'int', '_value': 253}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 253}]
+DEPTH_2 27                     value = rule(value)
+27 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 253}]
+FUNCTION_ENTER 18 <lambda>             lambda x: (x * 3) & 0xFF
+18 ['x'] [{'_type': 'int', '_value': 253}]
+DEPTH_3 18             lambda x: (x * 3) & 0xFF
+18 ['x'] [{'_type': 'int', '_value': 253}]
+FUNCTION_RETURN 18 <lambda> {'_type': 'int', '_value': 247}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 247}]
+DEPTH_2 28                 processed.append(value)
+28 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}], '_len': 1}, {'_type': 'str', '_value': 'ABCD'}, {'_type': 'int', '_value': 247}]
+DEPTH_2 23         for token in tokens:
+23 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}], '_len': 1}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 247}]
+DEPTH_2 24             if re.match(r'^[A-Z]{2,}$', token):
+24 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}], '_len': 1}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 247}]
+DEPTH_2 25                 value = decode_token_segment(token)
+25 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}], '_len': 1}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 247}]
+PARAM_MAPPING decode_token_segment {'segment': {'actual_var': 'token', 'value': 'EFGH'}}
+FUNCTION_ENTER 5 decode_token_segment def decode_token_segment(segment):
+5 ['segment'] [{'_type': 'str', '_value': 'EFGH'}]
+DEPTH_3 6     if len(segment) <= 2:
+6 ['segment'] [{'_type': 'str', '_value': 'EFGH'}]
+DEPTH_3 8     mid = len(segment) // 2
+8 ['segment', 'mid'] [{'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 2}]
+DEPTH_3 9     left_result = decode_token_segment(segment[:mid])
+9 ['segment', 'mid'] [{'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 2}]
+PARAM_MAPPING decode_token_segment {'segment': {'actual_var': 'segment[:mid]', 'value': 'segment[:mid]'}}
+FUNCTION_ENTER 5 decode_token_segment def decode_token_segment(segment):
+5 ['segment'] [{'_type': 'str', '_value': 'EF'}]
+DEPTH_4 6     if len(segment) <= 2:
+6 ['segment'] [{'_type': 'str', '_value': 'EF'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA37FD0>'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA37FD0>'}, {'_type': 'str', '_value': 'E'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA37FD0>'}, {'_type': 'str', '_value': 'F'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA37FD0>'}, {'_type': 'str', '_value': 'F'}]
+FUNCTION_RETURN 7 decode_token_segment {'_type': 'int', '_value': 139}
+DEPTH_3 10     right_result = decode_token_segment(segment[mid:])
+10 ['segment', 'mid', 'left_result'] [{'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 139}]
+PARAM_MAPPING decode_token_segment {'segment': {'actual_var': 'segment[mid:]', 'value': 'segment[mid:]'}}
+FUNCTION_ENTER 5 decode_token_segment def decode_token_segment(segment):
+5 ['segment'] [{'_type': 'str', '_value': 'GH'}]
+DEPTH_4 6     if len(segment) <= 2:
+6 ['segment'] [{'_type': 'str', '_value': 'GH'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA37FD0>'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA37FD0>'}, {'_type': 'str', '_value': 'G'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA37FD0>'}, {'_type': 'str', '_value': 'H'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA37FD0>'}, {'_type': 'str', '_value': 'H'}]
+FUNCTION_RETURN 7 decode_token_segment {'_type': 'int', '_value': 143}
+DEPTH_3 11     return left_result ^ right_result
+11 ['segment', 'mid', 'left_result', 'right_result'] [{'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 139}, {'_type': 'int', '_value': 143}]
+FUNCTION_RETURN 11 decode_token_segment {'_type': 'int', '_value': 4}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}], '_len': 1}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 4}]
+DEPTH_2 27                     value = rule(value)
+27 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}], '_len': 1}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 16 <lambda>             lambda x: x >> 1,
+16 ['x'] [{'_type': 'int', '_value': 4}]
+DEPTH_3 16             lambda x: x >> 1,
+16 ['x'] [{'_type': 'int', '_value': 4}]
+FUNCTION_RETURN 16 <lambda> {'_type': 'int', '_value': 2}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}], '_len': 1}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 2}]
+DEPTH_2 27                     value = rule(value)
+27 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}], '_len': 1}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 17 <lambda>             lambda x: x ^ 0xFF,
+17 ['x'] [{'_type': 'int', '_value': 2}]
+DEPTH_3 17             lambda x: x ^ 0xFF,
+17 ['x'] [{'_type': 'int', '_value': 2}]
+FUNCTION_RETURN 17 <lambda> {'_type': 'int', '_value': 253}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}], '_len': 1}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 253}]
+DEPTH_2 27                     value = rule(value)
+27 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}], '_len': 1}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 253}]
+FUNCTION_ENTER 18 <lambda>             lambda x: (x * 3) & 0xFF
+18 ['x'] [{'_type': 'int', '_value': 253}]
+DEPTH_3 18             lambda x: (x * 3) & 0xFF
+18 ['x'] [{'_type': 'int', '_value': 253}]
+FUNCTION_RETURN 18 <lambda> {'_type': 'int', '_value': 247}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}], '_len': 1}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 247}]
+DEPTH_2 28                 processed.append(value)
+28 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 247}], '_len': 2}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 247}]
+DEPTH_2 23         for token in tokens:
+23 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 247}], '_len': 2}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 247}]
+DEPTH_2 31         return processed
+31 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 247}], '_len': 2}, {'_type': 'str', '_value': 'EFGH'}, {'_type': 'int', '_value': 247}]
+FUNCTION_RETURN 31 process_sequence {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 247}], '_len': 2}
+38 secondary_results = processor.process_sequence(token_data.secondary)
+38 ['token_data', 'processor', 'primary_results'] [{'_type': 'namedtuple', '_class': 'TokenSequence', '_attrs': {'primary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, 'secondary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}}}, {'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 247}], '_len': 2}]
+FUNCTION_ENTER 21 process_sequence     def process_sequence(self, tokens):
+21 ['self', 'tokens'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}]
+DEPTH_2 22         processed = []
+22 ['self', 'tokens', 'processed'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}]
+DEPTH_2 23         for token in tokens:
+23 ['self', 'tokens', 'processed', 'token'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'XYZ'}]
+DEPTH_2 24             if re.match(r'^[A-Z]{2,}$', token):
+24 ['self', 'tokens', 'processed', 'token'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'XYZ'}]
+DEPTH_2 25                 value = decode_token_segment(token)
+25 ['self', 'tokens', 'processed', 'token'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'XYZ'}]
+PARAM_MAPPING decode_token_segment {'segment': {'actual_var': 'token', 'value': 'XYZ'}}
+FUNCTION_ENTER 5 decode_token_segment def decode_token_segment(segment):
+5 ['segment'] [{'_type': 'str', '_value': 'XYZ'}]
+DEPTH_3 6     if len(segment) <= 2:
+6 ['segment'] [{'_type': 'str', '_value': 'XYZ'}]
+DEPTH_3 8     mid = len(segment) // 2
+8 ['segment', 'mid'] [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 1}]
+DEPTH_3 9     left_result = decode_token_segment(segment[:mid])
+9 ['segment', 'mid'] [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 1}]
+PARAM_MAPPING decode_token_segment {'segment': {'actual_var': 'segment[:mid]', 'value': 'segment[:mid]'}}
+FUNCTION_ENTER 5 decode_token_segment def decode_token_segment(segment):
+5 ['segment'] [{'_type': 'str', '_value': 'X'}]
+DEPTH_4 6     if len(segment) <= 2:
+6 ['segment'] [{'_type': 'str', '_value': 'X'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA37FD0>'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA37FD0>'}, {'_type': 'str', '_value': 'X'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA37FD0>'}, {'_type': 'str', '_value': 'X'}]
+FUNCTION_RETURN 7 decode_token_segment {'_type': 'int', '_value': 88}
+DEPTH_3 10     right_result = decode_token_segment(segment[mid:])
+10 ['segment', 'mid', 'left_result'] [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 88}]
+PARAM_MAPPING decode_token_segment {'segment': {'actual_var': 'segment[mid:]', 'value': 'segment[mid:]'}}
+FUNCTION_ENTER 5 decode_token_segment def decode_token_segment(segment):
+5 ['segment'] [{'_type': 'str', '_value': 'YZ'}]
+DEPTH_4 6     if len(segment) <= 2:
+6 ['segment'] [{'_type': 'str', '_value': 'YZ'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}, {'_type': 'str', '_value': 'Y'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}, {'_type': 'str', '_value': 'Z'}]
+DEPTH_4 7         return sum(ord(c) for c in segment)
+7 ['.0', 'c'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD4AA36980>'}, {'_type': 'str', '_value': 'Z'}]
+FUNCTION_RETURN 7 decode_token_segment {'_type': 'int', '_value': 179}
+DEPTH_3 11     return left_result ^ right_result
+11 ['segment', 'mid', 'left_result', 'right_result'] [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 179}]
+FUNCTION_RETURN 11 decode_token_segment {'_type': 'int', '_value': 235}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 235}]
+DEPTH_2 27                     value = rule(value)
+27 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 235}]
+FUNCTION_ENTER 16 <lambda>             lambda x: x >> 1,
+16 ['x'] [{'_type': 'int', '_value': 235}]
+DEPTH_3 16             lambda x: x >> 1,
+16 ['x'] [{'_type': 'int', '_value': 235}]
+FUNCTION_RETURN 16 <lambda> {'_type': 'int', '_value': 117}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 117}]
+DEPTH_2 27                     value = rule(value)
+27 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 117}]
+FUNCTION_ENTER 17 <lambda>             lambda x: x ^ 0xFF,
+17 ['x'] [{'_type': 'int', '_value': 117}]
+DEPTH_3 17             lambda x: x ^ 0xFF,
+17 ['x'] [{'_type': 'int', '_value': 117}]
+FUNCTION_RETURN 17 <lambda> {'_type': 'int', '_value': 138}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 138}]
+DEPTH_2 27                     value = rule(value)
+27 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 138}]
+FUNCTION_ENTER 18 <lambda>             lambda x: (x * 3) & 0xFF
+18 ['x'] [{'_type': 'int', '_value': 138}]
+DEPTH_3 18             lambda x: (x * 3) & 0xFF
+18 ['x'] [{'_type': 'int', '_value': 138}]
+FUNCTION_RETURN 18 <lambda> {'_type': 'int', '_value': 158}
+DEPTH_2 26                 for rule in self.transform_rules:
+26 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 158}]
+DEPTH_2 28                 processed.append(value)
+28 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}], '_len': 1}, {'_type': 'str', '_value': 'XYZ'}, {'_type': 'int', '_value': 158}]
+DEPTH_2 23         for token in tokens:
+23 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}], '_len': 1}, {'_type': 'str', '_value': 'ABC123'}, {'_type': 'int', '_value': 158}]
+DEPTH_2 24             if re.match(r'^[A-Z]{2,}$', token):
+24 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}], '_len': 1}, {'_type': 'str', '_value': 'ABC123'}, {'_type': 'int', '_value': 158}]
+DEPTH_2 30                 processed.append(0)
+30 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'str', '_value': 'ABC123'}, {'_type': 'int', '_value': 158}]
+DEPTH_2 23         for token in tokens:
+23 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'str', '_value': 'ABC123'}, {'_type': 'int', '_value': 158}]
+DEPTH_2 31         return processed
+31 ['self', 'tokens', 'processed', 'token', 'value'] [{'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'str', '_value': 'ABC123'}, {'_type': 'int', '_value': 158}]
+FUNCTION_RETURN 31 process_sequence {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 0}], '_len': 2}
+40 combined_results = [a | b for a, b in zip(primary_results, secondary_results)]
+40 ['token_data', 'processor', 'primary_results', 'secondary_results', 'a', 'b'] [{'_type': 'namedtuple', '_class': 'TokenSequence', '_attrs': {'primary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, 'secondary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}}}, {'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 247}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 158}]
+40 combined_results = [a | b for a, b in zip(primary_results, secondary_results)]
+40 ['token_data', 'processor', 'primary_results', 'secondary_results', 'a', 'b'] [{'_type': 'namedtuple', '_class': 'TokenSequence', '_attrs': {'primary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, 'secondary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}}}, {'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 247}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 0}]
+40 combined_results = [a | b for a, b in zip(primary_results, secondary_results)]
+40 ['token_data', 'processor', 'primary_results', 'secondary_results', 'combined_results'] [{'_type': 'namedtuple', '_class': 'TokenSequence', '_attrs': {'primary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, 'secondary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}}}, {'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 247}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 255}, {'_type': 'int', '_value': 247}], '_len': 2}]
+41 decoded_value = reduce(lambda x, y: (x + y) & 0xFF, combined_results, 0)
+41 ['token_data', 'processor', 'primary_results', 'secondary_results', 'combined_results'] [{'_type': 'namedtuple', '_class': 'TokenSequence', '_attrs': {'primary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, 'secondary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}}}, {'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 247}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 255}, {'_type': 'int', '_value': 247}], '_len': 2}]
+FUNCTION_ENTER 41 <lambda> decoded_value = reduce(lambda x, y: (x + y) & 0xFF, combined_results, 0)
+41 ['x', 'y'] [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 255}]
+DEPTH_2 41 decoded_value = reduce(lambda x, y: (x + y) & 0xFF, combined_results, 0)
+41 ['x', 'y'] [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 255}]
+FUNCTION_RETURN 41 <lambda> {'_type': 'int', '_value': 255}
+FUNCTION_ENTER 41 <lambda> decoded_value = reduce(lambda x, y: (x + y) & 0xFF, combined_results, 0)
+41 ['x', 'y'] [{'_type': 'int', '_value': 255}, {'_type': 'int', '_value': 247}]
+DEPTH_2 41 decoded_value = reduce(lambda x, y: (x + y) & 0xFF, combined_results, 0)
+41 ['x', 'y'] [{'_type': 'int', '_value': 255}, {'_type': 'int', '_value': 247}]
+FUNCTION_RETURN 41 <lambda> {'_type': 'int', '_value': 246}
+43 print(f"Result: {decoded_value}")
+43 ['token_data', 'processor', 'primary_results', 'secondary_results', 'combined_results', 'decoded_value'] [{'_type': 'namedtuple', '_class': 'TokenSequence', '_attrs': {'primary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ABCD'}, {'_type': 'str', '_value': 'EFGH'}], '_len': 2}, 'secondary': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XYZ'}, {'_type': 'str', '_value': 'ABC123'}], '_len': 2}}}, {'_type': 'object', '_class': 'EncodingProcessor', '_attrs': {'transform_rules': {'_type': 'list', '_items': [{'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}, {'_type': 'object', '_class': 'function', '_attrs': {}}], '_len': 3}}}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 247}, {'_type': 'int', '_value': 247}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 0}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 255}, {'_type': 'int', '_value': 247}], '_len': 2}, {'_type': 'int', '_value': 246}]

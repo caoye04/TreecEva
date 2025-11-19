@@ -1,0 +1,73 @@
+34
+final_score
+---
+20 origins = frozenset(origin for origin, _ in shipments)
+20 [] []
+20 origins = frozenset(origin for origin, _ in shipments)
+20 ['origin', '_'] ["'NYC'", '10']
+20 origins = frozenset(origin for origin, _ in shipments)
+20 ['origin', '_'] ["'LA'", '15']
+20 origins = frozenset(origin for origin, _ in shipments)
+20 ['origin', '_'] ["'CHI'", '7']
+20 origins = frozenset(origin for origin, _ in shipments)
+20 ['origin', '_'] ["'SEA'", '20']
+20 origins = frozenset(origin for origin, _ in shipments)
+20 ['origin', '_'] ["'BOS'", '5']
+20 origins = frozenset(origin for origin, _ in shipments)
+20 ['origin', '_'] ["'BOS'", '5']
+23 urgency_heap = [u for _, u in shipments]
+23 ['shipments', 'origins', '_', 'u'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", "'NYC'", '10']
+23 urgency_heap = [u for _, u in shipments]
+23 ['shipments', 'origins', '_', 'u'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", "'LA'", '15']
+23 urgency_heap = [u for _, u in shipments]
+23 ['shipments', 'origins', '_', 'u'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", "'CHI'", '7']
+23 urgency_heap = [u for _, u in shipments]
+23 ['shipments', 'origins', '_', 'u'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", "'SEA'", '20']
+23 urgency_heap = [u for _, u in shipments]
+23 ['shipments', 'origins', '_', 'u'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", "'BOS'", '5']
+23 urgency_heap = [u for _, u in shipments]
+23 ['shipments', 'origins', 'urgency_heap'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[10, 15, 7, 20, 5]']
+26 processed_urgencies = []
+26 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[5, 10, 7, 20, 15]', '[]']
+27 while urgency_heap:
+27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[5, 10, 7, 20, 15]', '[]']
+27 while urgency_heap:
+27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[7, 10, 15, 20]', '[5]']
+27 while urgency_heap:
+27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[10, 20, 15]', '[5, 7]']
+27 while urgency_heap:
+27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[15, 20]', '[5, 7, 10]']
+27 while urgency_heap:
+27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[20]', '[5, 7, 10, 15]']
+27 while urgency_heap:
+27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[]', '[5, 7, 10, 15, 20]']
+31 route_efficiency = calculate_route_efficiency(processed_urgencies)
+31 ['origins', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[5, 7, 10, 15, 20]']
+5 dp = [0] * (len(urgencies) + 1)
+5 ['urgencies', 'dp'] ['[5, 7, 10, 15, 20]', '[0, 0, 0, 0, 0, ...]']
+6 for i in range(1, len(urgencies) + 1):
+6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 0, 0, 0, 0, ...]', '1']
+7 dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
+7 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 0, 0, 0, ...]', '1']
+6 for i in range(1, len(urgencies) + 1):
+6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 0, 0, 0, ...]', '2']
+7 dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
+7 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 0, 0, ...]', '2']
+6 for i in range(1, len(urgencies) + 1):
+6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 0, 0, ...]', '3']
+7 dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
+7 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 0, ...]', '3']
+6 for i in range(1, len(urgencies) + 1):
+6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 0, ...]', '4']
+7 dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
+7 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 22, ...]', '4']
+6 for i in range(1, len(urgencies) + 1):
+6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 22, ...]', '5']
+7 dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
+7 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 22, ...]', '5']
+6 for i in range(1, len(urgencies) + 1):
+6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 22, ...]', '5']
+8 return dp[len(urgencies)]
+8 ['urgencies', 'dp'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 22, ...]']
+34 final_score = route_efficiency + len(origins)
+34 ['origins', 'route_efficiency', 'final_score'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '35', '40']

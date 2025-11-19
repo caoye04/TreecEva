@@ -1,0 +1,43 @@
+20
+security_checksum
+---
+19 network_packets = [0x1F, 0x2C, 0x3A, 0x45]
+19 ['network_packets'] ['[31, 44, 58, 69]']
+20 security_checksum = compute_custom_checksum(network_packets)
+20 ['network_packets'] ['[31, 44, 58, 69]']
+PARAM_MAPPING {'packet_ids': {'actual_var': 'network_packets', 'value': [31, 44, 58, 69]}}
+FUNCTION_ENTER 4 compute_custom_checksum def compute_custom_checksum(packet_ids):
+4 ['packet_ids'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 31}, {'_type': 'int', '_value': 44}, {'_type': 'int', '_value': 58}, {'_type': 'int', '_value': 69}], '_len': 4}]
+5 if len(packet_ids) < 2:
+5 ['packet_ids'] ['[31, 44, 58, 69]']
+9 pairs = list(itertools.combinations(packet_ids, 2))
+9 ['packet_ids', 'pairs'] ['[31, 44, 58, 69]', '[(31, 44), (31, 58), (31, 69), (44, 58), (44, 69), ...]']
+12 xor_results = [a ^ b for a, b in pairs]
+12 ['pairs', 'a', 'b'] ['[(31, 44), (31, 58), (31, 69), (44, 58), (44, 69), ...]', '31', '44']
+12 xor_results = [a ^ b for a, b in pairs]
+12 ['pairs', 'a', 'b'] ['[(31, 44), (31, 58), (31, 69), (44, 58), (44, 69), ...]', '31', '58']
+12 xor_results = [a ^ b for a, b in pairs]
+12 ['pairs', 'a', 'b'] ['[(31, 44), (31, 58), (31, 69), (44, 58), (44, 69), ...]', '31', '69']
+12 xor_results = [a ^ b for a, b in pairs]
+12 ['pairs', 'a', 'b'] ['[(31, 44), (31, 58), (31, 69), (44, 58), (44, 69), ...]', '44', '58']
+12 xor_results = [a ^ b for a, b in pairs]
+12 ['pairs', 'a', 'b'] ['[(31, 44), (31, 58), (31, 69), (44, 58), (44, 69), ...]', '44', '69']
+12 xor_results = [a ^ b for a, b in pairs]
+12 ['pairs', 'a', 'b'] ['[(31, 44), (31, 58), (31, 69), (44, 58), (44, 69), ...]', '58', '69']
+12 xor_results = [a ^ b for a, b in pairs]
+12 ['pairs', 'xor_results'] ['[(31, 44), (31, 58), (31, 69), (44, 58), (44, 69), ...]', '[51, 37, 90, 22, 105, ...]']
+15 checksum = reduce(lambda x, y: x & y, xor_results)
+15 ['xor_results'] ['[51, 37, 90, 22, 105, ...]']
+15 checksum = reduce(lambda x, y: x & y, xor_results)
+15 ['x', 'y'] ['51', '37']
+15 checksum = reduce(lambda x, y: x & y, xor_results)
+15 ['x', 'y'] ['33', '90']
+15 checksum = reduce(lambda x, y: x & y, xor_results)
+15 ['x', 'y'] ['0', '22']
+15 checksum = reduce(lambda x, y: x & y, xor_results)
+15 ['x', 'y'] ['0', '105']
+15 checksum = reduce(lambda x, y: x & y, xor_results)
+15 ['x', 'y'] ['0', '127']
+16 return checksum
+16 ['checksum'] ['0']
+FUNCTION_RETURN 16 compute_custom_checksum {'_type': 'int', '_value': 0}

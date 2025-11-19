@@ -1,0 +1,27 @@
+12
+final_revenue
+---
+3 daily_sales = Counter({'bread': 45, 'croissant': 30, 'muffin': 25, 'cookie': 15})
+3 ['daily_sales'] ['{bread: 45, croissant: 30, muffin: 25, ...}']
+4 prices = {'bread': 2.50, 'croissant': 3.00, 'muffin': 2.00, 'cookie': 1.50}
+4 ['daily_sales', 'prices'] ['{bread: 45, croissant: 30, muffin: 25, ...}', '{bread: 2.5, croissant: 3.0, muffin: 2.0, ...}']
+6 total_items = sum(daily_sales.values())
+6 ['daily_sales', 'prices', 'total_items'] ['{bread: 45, croissant: 30, muffin: 25, ...}', '{bread: 2.5, croissant: 3.0, muffin: 2.0, ...}', '115']
+7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
+7 [] []
+7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
+7 ['item'] ["'bread'"]
+7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
+7 ['item'] ["'croissant'"]
+7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
+7 ['item'] ["'muffin'"]
+7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
+7 ['item'] ["'cookie'"]
+7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
+7 ['item'] ["'cookie'"]
+9 if total_items > 100:
+9 ['total_items', 'total_revenue'] ['115', '275.0']
+10 total_revenue *= 0.9
+10 ['total_revenue'] ['247.5']
+12 final_revenue = int(total_revenue * 100)  # Convert to cents for precise integer handling
+12 ['total_revenue', 'final_revenue'] ['247.5', '24750']

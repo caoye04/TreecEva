@@ -1,0 +1,167 @@
+29
+peak_count
+---
+27 sensor_readings = [12, 45, 23, 67, 34, 89, 56, 78, 91, 25, 64, 87, 42, 58, 73]
+27 ['sensor_readings'] ['[12, 45, 23, 67, 34, ...]']
+29 peak_count = process_sensor_data(sensor_readings)
+29 ['sensor_readings'] ['[12, 45, 23, 67, 34, ...]']
+PARAM_MAPPING {'readings': {'actual_var': 'sensor_readings', 'value': [12, 45, 23, 67, 34, 89, 56, 78, 91, 25, 64, 87, 42, 58, 73]}}
+FUNCTION_ENTER 3 process_sensor_data def process_sensor_data(readings):
+3 ['readings'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 34}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 56}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 91}, {'_type': 'int', '_value': 25}], '_len': 15}]
+4 window = deque(maxlen=5)
+4 ['readings', 'window'] ['[12, 45, 23, 67, 34, ...]', 'deque([], maxlen=5)']
+6 peak_count = 0
+6 ['readings', 'window', 'peak_count'] ['[12, 45, 23, 67, 34, ...]', 'deque([], maxlen=5)', '0']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading'] ['[12, 45, 23, 67, 34, ...]', 'deque([], maxlen=5)', '0', '12']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading'] ['[12, 45, 23, 67, 34, ...]', 'deque([12], maxlen=5)', '0', '12']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading'] ['[12, 45, 23, 67, 34, ...]', 'deque([12], maxlen=5)', '0', '45']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45], maxlen=5)', '0', '45']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45], maxlen=5)', '0', '23']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45, 23], maxlen=5)', '0', '23']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45, 23], maxlen=5)', '0', '67']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45, 23, 67], maxlen=5)', '0', '67']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45, 23, 67], maxlen=5)', '0', '34']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45, 23, 67, 34], maxlen=5)', '0', '34']
+12 window_avg = sum(window) / len(window)
+12 ['readings', 'window', 'peak_count', 'reading', 'window_avg'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45, 23, 67, 34], maxlen=5)', '0', '34', '36.2']
+15 is_peak = reading > 2 * window_avg and reading == max(window)
+15 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45, 23, 67, 34], maxlen=5)', '0', '34', '36.2', 'False']
+18 not_noise = reading % 3 != 0 or (reading & 7) == 0
+18 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45, 23, 67, 34], maxlen=5)', '0', '34', '36.2', 'False', 'True']
+20 if is_peak and not_noise:
+20 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45, 23, 67, 34], maxlen=5)', '0', '34', '36.2', 'False', 'True']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([12, 45, 23, 67, 34], maxlen=5)', '0', '89', '36.2', 'False', 'True']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([45, 23, 67, 34, 89], maxlen=5)', '0', '89', '36.2', 'False', 'True']
+12 window_avg = sum(window) / len(window)
+12 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([45, 23, 67, 34, 89], maxlen=5)', '0', '89', '51.6', 'False', 'True']
+15 is_peak = reading > 2 * window_avg and reading == max(window)
+15 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([45, 23, 67, 34, 89], maxlen=5)', '0', '89', '51.6', 'False', 'True']
+18 not_noise = reading % 3 != 0 or (reading & 7) == 0
+18 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([45, 23, 67, 34, 89], maxlen=5)', '0', '89', '51.6', 'False', 'True']
+20 if is_peak and not_noise:
+20 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([45, 23, 67, 34, 89], maxlen=5)', '0', '89', '51.6', 'False', 'True']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([45, 23, 67, 34, 89], maxlen=5)', '0', '56', '51.6', 'False', 'True']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([23, 67, 34, 89, 56], maxlen=5)', '0', '56', '51.6', 'False', 'True']
+12 window_avg = sum(window) / len(window)
+12 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([23, 67, 34, 89, 56], maxlen=5)', '0', '56', '53.8', 'False', 'True']
+15 is_peak = reading > 2 * window_avg and reading == max(window)
+15 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([23, 67, 34, 89, 56], maxlen=5)', '0', '56', '53.8', 'False', 'True']
+18 not_noise = reading % 3 != 0 or (reading & 7) == 0
+18 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([23, 67, 34, 89, 56], maxlen=5)', '0', '56', '53.8', 'False', 'True']
+20 if is_peak and not_noise:
+20 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([23, 67, 34, 89, 56], maxlen=5)', '0', '56', '53.8', 'False', 'True']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([23, 67, 34, 89, 56], maxlen=5)', '0', '78', '53.8', 'False', 'True']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([67, 34, 89, 56, 78], maxlen=5)', '0', '78', '53.8', 'False', 'True']
+12 window_avg = sum(window) / len(window)
+12 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([67, 34, 89, 56, 78], maxlen=5)', '0', '78', '64.8', 'False', 'True']
+15 is_peak = reading > 2 * window_avg and reading == max(window)
+15 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([67, 34, 89, 56, 78], maxlen=5)', '0', '78', '64.8', 'False', 'True']
+18 not_noise = reading % 3 != 0 or (reading & 7) == 0
+18 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([67, 34, 89, 56, 78], maxlen=5)', '0', '78', '64.8', 'False', 'False']
+20 if is_peak and not_noise:
+20 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([67, 34, 89, 56, 78], maxlen=5)', '0', '78', '64.8', 'False', 'False']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([67, 34, 89, 56, 78], maxlen=5)', '0', '91', '64.8', 'False', 'False']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([34, 89, 56, 78, 91], maxlen=5)', '0', '91', '64.8', 'False', 'False']
+12 window_avg = sum(window) / len(window)
+12 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([34, 89, 56, 78, 91], maxlen=5)', '0', '91', '69.6', 'False', 'False']
+15 is_peak = reading > 2 * window_avg and reading == max(window)
+15 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([34, 89, 56, 78, 91], maxlen=5)', '0', '91', '69.6', 'False', 'False']
+18 not_noise = reading % 3 != 0 or (reading & 7) == 0
+18 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([34, 89, 56, 78, 91], maxlen=5)', '0', '91', '69.6', 'False', 'True']
+20 if is_peak and not_noise:
+20 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([34, 89, 56, 78, 91], maxlen=5)', '0', '91', '69.6', 'False', 'True']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([34, 89, 56, 78, 91], maxlen=5)', '0', '25', '69.6', 'False', 'True']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([89, 56, 78, 91, 25], maxlen=5)', '0', '25', '69.6', 'False', 'True']
+12 window_avg = sum(window) / len(window)
+12 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([89, 56, 78, 91, 25], maxlen=5)', '0', '25', '67.8', 'False', 'True']
+15 is_peak = reading > 2 * window_avg and reading == max(window)
+15 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([89, 56, 78, 91, 25], maxlen=5)', '0', '25', '67.8', 'False', 'True']
+18 not_noise = reading % 3 != 0 or (reading & 7) == 0
+18 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([89, 56, 78, 91, 25], maxlen=5)', '0', '25', '67.8', 'False', 'True']
+20 if is_peak and not_noise:
+20 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([89, 56, 78, 91, 25], maxlen=5)', '0', '25', '67.8', 'False', 'True']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([89, 56, 78, 91, 25], maxlen=5)', '0', '64', '67.8', 'False', 'True']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([56, 78, 91, 25, 64], maxlen=5)', '0', '64', '67.8', 'False', 'True']
+12 window_avg = sum(window) / len(window)
+12 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([56, 78, 91, 25, 64], maxlen=5)', '0', '64', '62.8', 'False', 'True']
+15 is_peak = reading > 2 * window_avg and reading == max(window)
+15 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([56, 78, 91, 25, 64], maxlen=5)', '0', '64', '62.8', 'False', 'True']
+18 not_noise = reading % 3 != 0 or (reading & 7) == 0
+18 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([56, 78, 91, 25, 64], maxlen=5)', '0', '64', '62.8', 'False', 'True']
+20 if is_peak and not_noise:
+20 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([56, 78, 91, 25, 64], maxlen=5)', '0', '64', '62.8', 'False', 'True']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([56, 78, 91, 25, 64], maxlen=5)', '0', '87', '62.8', 'False', 'True']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([78, 91, 25, 64, 87], maxlen=5)', '0', '87', '62.8', 'False', 'True']
+12 window_avg = sum(window) / len(window)
+12 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([78, 91, 25, 64, 87], maxlen=5)', '0', '87', '69.0', 'False', 'True']
+15 is_peak = reading > 2 * window_avg and reading == max(window)
+15 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([78, 91, 25, 64, 87], maxlen=5)', '0', '87', '69.0', 'False', 'True']
+18 not_noise = reading % 3 != 0 or (reading & 7) == 0
+18 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([78, 91, 25, 64, 87], maxlen=5)', '0', '87', '69.0', 'False', 'False']
+20 if is_peak and not_noise:
+20 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([78, 91, 25, 64, 87], maxlen=5)', '0', '87', '69.0', 'False', 'False']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([78, 91, 25, 64, 87], maxlen=5)', '0', '42', '69.0', 'False', 'False']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([91, 25, 64, 87, 42], maxlen=5)', '0', '42', '69.0', 'False', 'False']
+12 window_avg = sum(window) / len(window)
+12 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([91, 25, 64, 87, 42], maxlen=5)', '0', '42', '61.8', 'False', 'False']
+15 is_peak = reading > 2 * window_avg and reading == max(window)
+15 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([91, 25, 64, 87, 42], maxlen=5)', '0', '42', '61.8', 'False', 'False']
+18 not_noise = reading % 3 != 0 or (reading & 7) == 0
+18 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([91, 25, 64, 87, 42], maxlen=5)', '0', '42', '61.8', 'False', 'False']
+20 if is_peak and not_noise:
+20 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([91, 25, 64, 87, 42], maxlen=5)', '0', '42', '61.8', 'False', 'False']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([91, 25, 64, 87, 42], maxlen=5)', '0', '58', '61.8', 'False', 'False']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([25, 64, 87, 42, 58], maxlen=5)', '0', '58', '61.8', 'False', 'False']
+12 window_avg = sum(window) / len(window)
+12 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([25, 64, 87, 42, 58], maxlen=5)', '0', '58', '55.2', 'False', 'False']
+15 is_peak = reading > 2 * window_avg and reading == max(window)
+15 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([25, 64, 87, 42, 58], maxlen=5)', '0', '58', '55.2', 'False', 'False']
+18 not_noise = reading % 3 != 0 or (reading & 7) == 0
+18 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([25, 64, 87, 42, 58], maxlen=5)', '0', '58', '55.2', 'False', 'True']
+20 if is_peak and not_noise:
+20 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([25, 64, 87, 42, 58], maxlen=5)', '0', '58', '55.2', 'False', 'True']
+8 for reading in readings:
+8 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([25, 64, 87, 42, 58], maxlen=5)', '0', '73', '55.2', 'False', 'True']
+11 if len(window) == 5:
+11 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([64, 87, 42, 58, 73], maxlen=5)', '0', '73', '55.2', 'False', 'True']
+12 window_avg = sum(window) / len(window)
+12 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([64, 87, 42, 58, 73], maxlen=5)', '0', '73', '64.8', 'False', 'True']
+15 is_peak = reading > 2 * window_avg and reading == max(window)
+15 ['readings', 'window', 'peak_count', 'reading', 'window_avg', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', 'deque([64, 87, 42, 58, 73], maxlen=5)', '0', '73', '64.8', 'False', 'True']
+18 not_noise = reading % 3 != 0 or (reading & 7) == 0
+18 ['readings', 'peak_count', 'reading', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', '0', '73', 'False', 'True']
+20 if is_peak and not_noise:
+20 ['readings', 'peak_count', 'reading', 'is_peak', 'not_noise'] ['[12, 45, 23, 67, 34, ...]', '0', '73', 'False', 'True']
+8 for reading in readings:
+8 ['readings', 'peak_count', 'reading'] ['[12, 45, 23, 67, 34, ...]', '0', '73']
+24 return peak_count
+24 ['peak_count'] ['0']
+FUNCTION_RETURN 24 process_sensor_data {'_type': 'int', '_value': 0}

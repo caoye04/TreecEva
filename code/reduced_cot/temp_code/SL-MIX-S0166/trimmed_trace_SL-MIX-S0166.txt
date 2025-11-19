@@ -1,0 +1,127 @@
+55
+aggregated_threat_score
+---
+13 threat_score = 0
+13 ['packet_headers', 'threat_score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0']
+14 protocol_weights = {'TCP': 3, 'UDP': 1, 'ICMP': 2}
+14 ['packet_headers', 'threat_score', 'protocol_weights'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0', '{TCP: 3, UDP: 1, ICMP: 2}']
+15 flag_danger_bits = 0b00010010  # SYN and URG flags
+15 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0', '{TCP: 3, UDP: 1, ICMP: 2}', '18']
+16 size_threshold = 1000
+16 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000']
+19 for packet in packet_headers:
+19 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 18, size: 1420, ...}"]
+20 score = 0
+20 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 18, size: 1420, ...}", '0']
+22 score += protocol_weights.get(packet['proto'], 0)
+22 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 18, size: 1420, ...}", '3']
+25 if packet['flags'] & flag_danger_bits:
+25 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 18, size: 1420, ...}", '3']
+26 score += 5
+26 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 18, size: 1420, ...}", '8']
+29 if packet['size'] > size_threshold:
+29 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 18, size: 1420, ...}", '8']
+30 score += 2
+30 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 18, size: 1420, ...}", '10']
+33 if packet['ttl'] == 2**5 - 1 or packet['ttl'] == 2**7 - 1 or packet['ttl'] == 2**8 - 1:
+33 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '0', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 18, size: 1420, ...}", '10']
+36 threat_score += score
+36 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '10', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 18, size: 1420, ...}", '10']
+19 for packet in packet_headers:
+19 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '10', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'UDP', flags: 0, size: 512, ...}", '10']
+20 score = 0
+20 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '10', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'UDP', flags: 0, size: 512, ...}", '0']
+22 score += protocol_weights.get(packet['proto'], 0)
+22 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '10', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'UDP', flags: 0, size: 512, ...}", '1']
+25 if packet['flags'] & flag_danger_bits:
+25 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '10', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'UDP', flags: 0, size: 512, ...}", '1']
+29 if packet['size'] > size_threshold:
+29 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '10', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'UDP', flags: 0, size: 512, ...}", '1']
+33 if packet['ttl'] == 2**5 - 1 or packet['ttl'] == 2**7 - 1 or packet['ttl'] == 2**8 - 1:
+33 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '10', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'UDP', flags: 0, size: 512, ...}", '1']
+36 threat_score += score
+36 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '11', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'UDP', flags: 0, size: 512, ...}", '1']
+19 for packet in packet_headers:
+19 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '11', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 17, size: 890, ...}", '1']
+20 score = 0
+20 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '11', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 17, size: 890, ...}", '0']
+22 score += protocol_weights.get(packet['proto'], 0)
+22 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '11', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 17, size: 890, ...}", '3']
+25 if packet['flags'] & flag_danger_bits:
+25 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '11', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 17, size: 890, ...}", '3']
+26 score += 5
+26 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '11', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 17, size: 890, ...}", '8']
+29 if packet['size'] > size_threshold:
+29 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '11', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 17, size: 890, ...}", '8']
+33 if packet['ttl'] == 2**5 - 1 or packet['ttl'] == 2**7 - 1 or packet['ttl'] == 2**8 - 1:
+33 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '11', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 17, size: 890, ...}", '8']
+36 threat_score += score
+36 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '19', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'TCP', flags: 17, size: 890, ...}", '8']
+19 for packet in packet_headers:
+19 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '19', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'ICMP', flags: 0, size: 76, ...}", '8']
+20 score = 0
+20 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '19', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'ICMP', flags: 0, size: 76, ...}", '0']
+22 score += protocol_weights.get(packet['proto'], 0)
+22 ['packet_headers', 'threat_score', 'protocol_weights', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '19', '{TCP: 3, UDP: 1, ICMP: 2}', '18', '1000', "{proto: 'ICMP', flags: 0, size: 76, ...}", '2']
+25 if packet['flags'] & flag_danger_bits:
+25 ['packet_headers', 'threat_score', 'flag_danger_bits', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '19', '18', '1000', "{proto: 'ICMP', flags: 0, size: 76, ...}", '2']
+29 if packet['size'] > size_threshold:
+29 ['packet_headers', 'threat_score', 'size_threshold', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '19', '1000', "{proto: 'ICMP', flags: 0, size: 76, ...}", '2']
+33 if packet['ttl'] == 2**5 - 1 or packet['ttl'] == 2**7 - 1 or packet['ttl'] == 2**8 - 1:
+33 ['packet_headers', 'threat_score', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '19', "{proto: 'ICMP', flags: 0, size: 76, ...}", '2']
+34 score += 3
+34 ['packet_headers', 'threat_score', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '19', "{proto: 'ICMP', flags: 0, size: 76, ...}", '5']
+36 threat_score += score
+36 ['packet_headers', 'threat_score', 'packet', 'score'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "{proto: 'ICMP', flags: 0, size: 76, ...}", '5']
+19 for packet in packet_headers:
+19 ['packet_headers', 'threat_score', 'packet'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "{proto: 'ICMP', flags: 0, size: 76, ...}"]
+40 suspicious_combinations = [('TCP', 'ICMP')]
+40 ['packet_headers', 'threat_score', 'suspicious_combinations'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]"]
+41 correlation_penalty = 0
+41 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0']
+43 for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
+43 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 18, size: 1420, ...}", "{proto: 'UDP', flags: 0, size: 512, ...}"]
+44 combo = tuple(sorted([pkt1['proto'], pkt2['proto']]))
+44 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 18, size: 1420, ...}", "{proto: 'UDP', flags: 0, size: 512, ...}", "('TCP', 'UDP')"]
+45 if combo in suspicious_combinations:
+45 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 18, size: 1420, ...}", "{proto: 'UDP', flags: 0, size: 512, ...}", "('TCP', 'UDP')"]
+43 for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
+43 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 18, size: 1420, ...}", "{proto: 'TCP', flags: 17, size: 890, ...}", "('TCP', 'UDP')"]
+44 combo = tuple(sorted([pkt1['proto'], pkt2['proto']]))
+44 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 18, size: 1420, ...}", "{proto: 'TCP', flags: 17, size: 890, ...}", "('TCP', 'TCP')"]
+45 if combo in suspicious_combinations:
+45 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 18, size: 1420, ...}", "{proto: 'TCP', flags: 17, size: 890, ...}", "('TCP', 'TCP')"]
+43 for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
+43 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 18, size: 1420, ...}", "{proto: 'ICMP', flags: 0, size: 76, ...}", "('TCP', 'TCP')"]
+44 combo = tuple(sorted([pkt1['proto'], pkt2['proto']]))
+44 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 18, size: 1420, ...}", "{proto: 'ICMP', flags: 0, size: 76, ...}", "('ICMP', 'TCP')"]
+45 if combo in suspicious_combinations:
+45 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 18, size: 1420, ...}", "{proto: 'ICMP', flags: 0, size: 76, ...}", "('ICMP', 'TCP')"]
+43 for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
+43 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'UDP', flags: 0, size: 512, ...}", "{proto: 'TCP', flags: 17, size: 890, ...}", "('ICMP', 'TCP')"]
+44 combo = tuple(sorted([pkt1['proto'], pkt2['proto']]))
+44 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'UDP', flags: 0, size: 512, ...}", "{proto: 'TCP', flags: 17, size: 890, ...}", "('TCP', 'UDP')"]
+45 if combo in suspicious_combinations:
+45 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'UDP', flags: 0, size: 512, ...}", "{proto: 'TCP', flags: 17, size: 890, ...}", "('TCP', 'UDP')"]
+43 for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
+43 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'UDP', flags: 0, size: 512, ...}", "{proto: 'ICMP', flags: 0, size: 76, ...}", "('TCP', 'UDP')"]
+44 combo = tuple(sorted([pkt1['proto'], pkt2['proto']]))
+44 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'UDP', flags: 0, size: 512, ...}", "{proto: 'ICMP', flags: 0, size: 76, ...}", "('ICMP', 'UDP')"]
+45 if combo in suspicious_combinations:
+45 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'UDP', flags: 0, size: 512, ...}", "{proto: 'ICMP', flags: 0, size: 76, ...}", "('ICMP', 'UDP')"]
+43 for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
+43 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 17, size: 890, ...}", "{proto: 'ICMP', flags: 0, size: 76, ...}", "('ICMP', 'UDP')"]
+44 combo = tuple(sorted([pkt1['proto'], pkt2['proto']]))
+44 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 17, size: 890, ...}", "{proto: 'ICMP', flags: 0, size: 76, ...}", "('ICMP', 'TCP')"]
+45 if combo in suspicious_combinations:
+45 ['packet_headers', 'threat_score', 'suspicious_combinations', 'correlation_penalty', 'pkt1', 'pkt2', 'combo'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', "[('TCP', 'ICMP')]", '0', "{proto: 'TCP', flags: 17, size: 890, ...}", "{proto: 'ICMP', flags: 0, size: 76, ...}", "('ICMP', 'TCP')"]
+43 for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
+43 ['packet_headers', 'threat_score', 'correlation_penalty', 'pkt1', 'pkt2'] ["[{proto: 'TCP', flags: 18, size: 1420, ...}, {proto: 'UDP', flags: 0, size: 512, ...}, {proto: 'TCP', flags: 17, size: 890, ...}, {proto: 'ICMP', flags: 0, size: 76, ...}]", '24', '0', "{proto: 'TCP', flags: 17, size: 890, ...}", "{proto: 'ICMP', flags: 0, size: 76, ...}"]
+49 aggregated_threat_score = 0
+49 ['threat_score', 'correlation_penalty', 'aggregated_threat_score'] ['24', '0', '0']
+50 if threat_score > 10 and correlation_penalty > 0:
+50 ['threat_score', 'correlation_penalty'] ['24', '0']
+52 elif threat_score <= 10:
+52 ['threat_score'] ['24']
+55 aggregated_threat_score = threat_score
+55 ['threat_score', 'aggregated_threat_score'] ['24', '24']

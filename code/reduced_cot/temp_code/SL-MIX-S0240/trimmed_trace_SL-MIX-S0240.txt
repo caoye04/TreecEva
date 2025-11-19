@@ -1,0 +1,165 @@
+51
+cumulative_efficiency
+---
+51 cumulative_efficiency = calculate_efficiency(plant_growth_tree)
+51 ['plant_growth_tree'] ['PlantNode(...)']
+28 if not node:
+28 ['node'] ['PlantNode(...)']
+32 if not node.left and not node.right:
+32 ['node'] ['PlantNode(...)']
+36 left_efficiency = calculate_efficiency(node.left)
+36 ['node'] ['PlantNode(left=PlantNode(biomass=5, left=PlantNode(...), right=PlantNode(...)))']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
+27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 5}, 'left': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 3}, 'left': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}}}]
+28 if not node:
+28 ['node'] ['PlantNode(...)']
+32 if not node.left and not node.right:
+32 ['node'] ['PlantNode(...)']
+36 left_efficiency = calculate_efficiency(node.left)
+36 ['node'] ['PlantNode(left=PlantNode(biomass=2, left=None, right=None))']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
+27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
+28 if not node:
+28 ['node'] ['PlantNode(...)']
+32 if not node.left and not node.right:
+32 ['node'] ['PlantNode(...)']
+33 return node.biomass * 2
+33 ['node'] ['PlantNode(biomass=2)']
+FUNCTION_RETURN 33 calculate_efficiency {'_type': 'int', '_value': 4}
+37 right_efficiency = calculate_efficiency(node.right)
+37 ['node', 'left_efficiency'] ['PlantNode(right=PlantNode(biomass=3, left=PlantNode(...), right=PlantNode(...)))', '4']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
+27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 3}, 'left': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}]
+28 if not node:
+28 ['node'] ['PlantNode(...)']
+32 if not node.left and not node.right:
+32 ['node'] ['PlantNode(...)']
+36 left_efficiency = calculate_efficiency(node.left)
+36 ['node'] ['PlantNode(left=PlantNode(biomass=1, left=None, right=None))']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
+27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
+28 if not node:
+28 ['node'] ['PlantNode(...)']
+32 if not node.left and not node.right:
+32 ['node'] ['PlantNode(...)']
+33 return node.biomass * 2
+33 ['node'] ['PlantNode(biomass=1)']
+FUNCTION_RETURN 33 calculate_efficiency {'_type': 'int', '_value': 2}
+37 right_efficiency = calculate_efficiency(node.right)
+37 ['node', 'left_efficiency'] ['PlantNode(right=PlantNode(biomass=1, left=None, right=None))', '2']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
+27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
+28 if not node:
+28 ['node'] ['PlantNode(...)']
+32 if not node.left and not node.right:
+32 ['node'] ['PlantNode(...)']
+33 return node.biomass * 2
+33 ['node'] ['PlantNode(biomass=1)']
+FUNCTION_RETURN 33 calculate_efficiency {'_type': 'int', '_value': 2}
+40 subtree_sum = left_efficiency + right_efficiency
+40 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum'] ['PlantNode(...)', '2', '2', '4']
+41 is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
+41 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(left=PlantNode(biomass=1, left=None, right=None), right=PlantNode(biomass=1, left=None, right=None))', '2', '2', '4', 'True']
+44 if is_balanced and subtree_sum > 10:
+44 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '2', '2', '4', 'True']
+46 elif not is_balanced or subtree_sum <= 5:
+46 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '2', '2', '4', 'True']
+47 return subtree_sum + (node.biomass // 2)
+47 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(biomass=3)', '2', '2', '4', 'True']
+FUNCTION_RETURN 47 calculate_efficiency {'_type': 'int', '_value': 5}
+40 subtree_sum = left_efficiency + right_efficiency
+40 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum'] ['PlantNode(...)', '4', '5', '9']
+41 is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
+41 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(left=PlantNode(biomass=2, left=None, right=None), right=PlantNode(biomass=3, left=PlantNode(...), right=PlantNode(...)))', '4', '5', '9', 'True']
+44 if is_balanced and subtree_sum > 10:
+44 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '4', '5', '9', 'True']
+46 elif not is_balanced or subtree_sum <= 5:
+46 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '4', '5', '9', 'True']
+49 return subtree_sum
+49 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '4', '5', '9', 'True']
+FUNCTION_RETURN 49 calculate_efficiency {'_type': 'int', '_value': 9}
+37 right_efficiency = calculate_efficiency(node.right)
+37 ['node', 'left_efficiency'] ['PlantNode(right=PlantNode(biomass=7, left=PlantNode(...), right=PlantNode(...)))', '9']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
+27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 7}, 'left': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 4}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 6}, 'left': {'_type': 'None'}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}}}]
+28 if not node:
+28 ['node'] ['PlantNode(...)']
+32 if not node.left and not node.right:
+32 ['node'] ['PlantNode(...)']
+36 left_efficiency = calculate_efficiency(node.left)
+36 ['node'] ['PlantNode(left=PlantNode(biomass=4, left=None, right=None))']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
+27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 4}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
+28 if not node:
+28 ['node'] ['PlantNode(...)']
+32 if not node.left and not node.right:
+32 ['node'] ['PlantNode(...)']
+33 return node.biomass * 2
+33 ['node'] ['PlantNode(biomass=4)']
+FUNCTION_RETURN 33 calculate_efficiency {'_type': 'int', '_value': 8}
+37 right_efficiency = calculate_efficiency(node.right)
+37 ['node', 'left_efficiency'] ['PlantNode(right=PlantNode(biomass=6, left=None, right=PlantNode(...)))', '8']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
+27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 6}, 'left': {'_type': 'None'}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}]
+28 if not node:
+28 ['node'] ['PlantNode(...)']
+32 if not node.left and not node.right:
+32 ['node'] ['PlantNode(...)']
+36 left_efficiency = calculate_efficiency(node.left)
+36 ['node'] ['PlantNode(left=None)']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
+27 ['node'] [{'_type': 'None'}]
+28 if not node:
+28 ['node'] ['None']
+29 return 0
+29 ['node'] ['None']
+FUNCTION_RETURN 29 calculate_efficiency {'_type': 'int', '_value': 0}
+37 right_efficiency = calculate_efficiency(node.right)
+37 ['node', 'left_efficiency'] ['PlantNode(right=PlantNode(biomass=2, left=None, right=None))', '0']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
+27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
+28 if not node:
+28 ['node'] ['PlantNode(...)']
+32 if not node.left and not node.right:
+32 ['node'] ['PlantNode(...)']
+33 return node.biomass * 2
+33 ['node'] ['PlantNode(biomass=2)']
+FUNCTION_RETURN 33 calculate_efficiency {'_type': 'int', '_value': 4}
+40 subtree_sum = left_efficiency + right_efficiency
+40 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum'] ['PlantNode(...)', '0', '4', '4']
+41 is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
+41 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(left=None, right=PlantNode(biomass=2, left=None, right=None))', '0', '4', '4', 'True']
+44 if is_balanced and subtree_sum > 10:
+44 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '0', '4', '4', 'True']
+46 elif not is_balanced or subtree_sum <= 5:
+46 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '0', '4', '4', 'True']
+47 return subtree_sum + (node.biomass // 2)
+47 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(biomass=6)', '0', '4', '4', 'True']
+FUNCTION_RETURN 47 calculate_efficiency {'_type': 'int', '_value': 7}
+40 subtree_sum = left_efficiency + right_efficiency
+40 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum'] ['PlantNode(...)', '8', '7', '15']
+41 is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
+41 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(left=PlantNode(biomass=4, left=None, right=None), right=PlantNode(biomass=6, left=None, right=PlantNode(...)))', '8', '7', '15', 'True']
+44 if is_balanced and subtree_sum > 10:
+44 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '8', '7', '15', 'True']
+45 return (subtree_sum // 2) + node.biomass
+45 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(biomass=7)', '8', '7', '15', 'True']
+FUNCTION_RETURN 45 calculate_efficiency {'_type': 'int', '_value': 14}
+40 subtree_sum = left_efficiency + right_efficiency
+40 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum'] ['PlantNode(...)', '9', '14', '23']
+41 is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
+41 ['node', 'subtree_sum', 'is_balanced'] ['PlantNode(left=PlantNode(biomass=5, left=PlantNode(...), right=PlantNode(...)), right=PlantNode(biomass=7, left=PlantNode(...), right=PlantNode(...)))', '23', 'True']
+44 if is_balanced and subtree_sum > 10:
+44 ['node', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '23', 'True']
+45 return (subtree_sum // 2) + node.biomass
+45 ['node', 'subtree_sum'] ['PlantNode(biomass=10)', '23']

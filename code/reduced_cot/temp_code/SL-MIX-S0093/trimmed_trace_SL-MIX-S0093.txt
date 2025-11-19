@@ -1,0 +1,179 @@
+19
+aggregate_degradation_score
+---
+15 time_points = range(1, 6)
+15 ['time_points'] ['range(1, 6)']
+PARAM_MAPPING {'modulation_factors': {'actual_var': 'mod_factors', 'value': [0.1, 0.2, 0.3]}, 'time_points': {'actual_var': 'time_points', 'value': range(1, 6)}}
+FUNCTION_ENTER 4 calculate_signal_degradation def calculate_signal_degradation(modulation_factors, time_points):
+4 ['modulation_factors', 'time_points'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 0.1}, {'_type': 'float', '_value': 0.2}, {'_type': 'float', '_value': 0.3}], '_len': 3}, {'_type': 'unknown', '_repr': 'range(1, 6)'}]
+5 degradation_map = defaultdict(float)
+5 ['modulation_factors', 'time_points', 'degradation_map'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{}']
+6 for factor in modulation_factors:
+6 ['modulation_factors', 'time_points', 'degradation_map', 'factor'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{}', '0.1']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{}', '0.1', '1']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{}', '0.1', '1', '0.6931471805599453']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{}', '0.1', '1', '0.6931471805599453', '0.9048374180359595']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{}', '0.1', '1', '0.6931471805599453', '0.9048374180359595', '0.627185505176766']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 0.627185505176766}', '0.1', '1', '0.6931471805599453', '0.9048374180359595', '0.627185505176766']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 0.627185505176766}', '0.1', '2', '0.6931471805599453', '0.9048374180359595', '0.627185505176766']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 0.627185505176766}', '0.1', '2', '1.0986122886681098', '0.9048374180359595', '0.627185505176766']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 0.627185505176766}', '0.1', '2', '1.0986122886681098', '0.8187307530779818', '0.627185505176766']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 0.627185505176766}', '0.1', '2', '1.0986122886681098', '0.8187307530779818', '0.8994676664419666']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 1.5266531716187326}', '0.1', '2', '1.0986122886681098', '0.8187307530779818', '0.8994676664419666']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 1.5266531716187326}', '0.1', '3', '1.0986122886681098', '0.8187307530779818', '0.8994676664419666']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 1.5266531716187326}', '0.1', '3', '1.3862943611198906', '0.8187307530779818', '0.8994676664419666']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 1.5266531716187326}', '0.1', '3', '1.3862943611198906', '0.7408182206817179', '0.8994676664419666']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 1.5266531716187326}', '0.1', '3', '1.3862943611198906', '0.7408182206817179', '1.0269921219459361']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 2.553645293564669}', '0.1', '3', '1.3862943611198906', '0.7408182206817179', '1.0269921219459361']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 2.553645293564669}', '0.1', '4', '1.3862943611198906', '0.7408182206817179', '1.0269921219459361']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 2.553645293564669}', '0.1', '4', '1.6094379124341003', '0.7408182206817179', '1.0269921219459361']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 2.553645293564669}', '0.1', '4', '1.6094379124341003', '0.6703200460356393', '1.0269921219459361']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 2.553645293564669}', '0.1', '4', '1.6094379124341003', '0.6703200460356393', '1.0788384955543293']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 3.6324837891189983}', '0.1', '4', '1.6094379124341003', '0.6703200460356393', '1.0788384955543293']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 3.6324837891189983}', '0.1', '5', '1.6094379124341003', '0.6703200460356393', '1.0788384955543293']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 3.6324837891189983}', '0.1', '5', '1.791759469228055', '0.6703200460356393', '1.0788384955543293']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 3.6324837891189983}', '0.1', '5', '1.791759469228055', '0.6065306597126334', '1.0788384955543293']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 3.6324837891189983}', '0.1', '5', '1.791759469228055', '0.6065306597126334', '1.08675705291725']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248}', '0.1', '5', '1.791759469228055', '0.6065306597126334', '1.08675705291725']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248}', '0.1', '5', '1.791759469228055', '0.6065306597126334', '1.08675705291725']
+6 for factor in modulation_factors:
+6 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248}', '0.2', '5', '1.791759469228055', '0.6065306597126334', '1.08675705291725']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248}', '0.2', '1', '1.791759469228055', '0.6065306597126334', '1.08675705291725']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248}', '0.2', '1', '0.6931471805599453', '0.6065306597126334', '1.08675705291725']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248}', '0.2', '1', '0.6931471805599453', '0.8187307530779818', '1.08675705291725']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248}', '0.2', '1', '0.6931471805599453', '0.8187307530779818', '0.5675009131337239']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 0.5675009131337239}', '0.2', '1', '0.6931471805599453', '0.8187307530779818', '0.5675009131337239']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 0.5675009131337239}', '0.2', '2', '0.6931471805599453', '0.8187307530779818', '0.5675009131337239']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 0.5675009131337239}', '0.2', '2', '1.0986122886681098', '0.8187307530779818', '0.5675009131337239']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 0.5675009131337239}', '0.2', '2', '1.0986122886681098', '0.6703200460356393', '0.5675009131337239']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 0.5675009131337239}', '0.2', '2', '1.0986122886681098', '0.6703200460356393', '0.7364218399153264']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 1.3039227530490503}', '0.2', '2', '1.0986122886681098', '0.6703200460356393', '0.7364218399153264']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 1.3039227530490503}', '0.2', '3', '1.0986122886681098', '0.6703200460356393', '0.7364218399153264']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 1.3039227530490503}', '0.2', '3', '1.3862943611198906', '0.6703200460356393', '0.7364218399153264']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 1.3039227530490503}', '0.2', '3', '1.3862943611198906', '0.5488116360940264', '0.7364218399153264']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 1.3039227530490503}', '0.2', '3', '1.3862943611198906', '0.5488116360940264', '0.7608144764341301']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 2.0647372294831805}', '0.2', '3', '1.3862943611198906', '0.5488116360940264', '0.7608144764341301']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 2.0647372294831805}', '0.2', '4', '1.3862943611198906', '0.5488116360940264', '0.7608144764341301']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 2.0647372294831805}', '0.2', '4', '1.6094379124341003', '0.5488116360940264', '0.7608144764341301']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 2.0647372294831805}', '0.2', '4', '1.6094379124341003', '0.44932896411722156', '0.7608144764341301']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 2.0647372294831805}', '0.2', '4', '1.6094379124341003', '0.44932896411722156', '0.7231670700049978']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 2.7879042994881784}', '0.2', '4', '1.6094379124341003', '0.44932896411722156', '0.7231670700049978']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 2.7879042994881784}', '0.2', '5', '1.6094379124341003', '0.44932896411722156', '0.7231670700049978']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 2.7879042994881784}', '0.2', '5', '1.791759469228055', '0.44932896411722156', '0.7231670700049978']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 2.7879042994881784}', '0.2', '5', '1.791759469228055', '0.36787944117144233', '0.7231670700049978']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 2.7879042994881784}', '0.2', '5', '1.791759469228055', '0.36787944117144233', '0.659151472253257']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354}', '0.2', '5', '1.791759469228055', '0.36787944117144233', '0.659151472253257']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354}', '0.2', '5', '1.791759469228055', '0.36787944117144233', '0.659151472253257']
+6 for factor in modulation_factors:
+6 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354}', '0.3', '5', '1.791759469228055', '0.36787944117144233', '0.659151472253257']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354}', '0.3', '1', '1.791759469228055', '0.36787944117144233', '0.659151472253257']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354}', '0.3', '1', '0.6931471805599453', '0.36787944117144233', '0.659151472253257']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354}', '0.3', '1', '0.6931471805599453', '0.7408182206817179', '0.659151472253257']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354}', '0.3', '1', '0.6931471805599453', '0.7408182206817179', '0.5134960609729681']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 0.5134960609729681}', '0.3', '1', '0.6931471805599453', '0.7408182206817179', '0.5134960609729681']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 0.5134960609729681}', '0.3', '2', '0.6931471805599453', '0.7408182206817179', '0.5134960609729681']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 0.5134960609729681}', '0.3', '2', '1.0986122886681098', '0.7408182206817179', '0.5134960609729681']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 0.5134960609729681}', '0.3', '2', '1.0986122886681098', '0.5488116360940265', '0.5134960609729681']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 0.5134960609729681}', '0.3', '2', '1.0986122886681098', '0.5488116360940265', '0.6029312075769483']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 1.1164272685499164}', '0.3', '2', '1.0986122886681098', '0.5488116360940265', '0.6029312075769483']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 1.1164272685499164}', '0.3', '3', '1.0986122886681098', '0.5488116360940265', '0.6029312075769483']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 1.1164272685499164}', '0.3', '3', '1.3862943611198906', '0.5488116360940265', '0.6029312075769483']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 1.1164272685499164}', '0.3', '3', '1.3862943611198906', '0.40656965974059917', '0.6029312075769483']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 1.1164272685499164}', '0.3', '3', '1.3862943611198906', '0.40656965974059917', '0.5636252267008253']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 1.6800524952507416}', '0.3', '3', '1.3862943611198906', '0.40656965974059917', '0.5636252267008253']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 1.6800524952507416}', '0.3', '4', '1.3862943611198906', '0.40656965974059917', '0.5636252267008253']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 1.6800524952507416}', '0.3', '4', '1.6094379124341003', '0.40656965974059917', '0.5636252267008253']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 1.6800524952507416}', '0.3', '4', '1.6094379124341003', '0.30119421191220214', '0.5636252267008253']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 1.6800524952507416}', '0.3', '4', '1.6094379124341003', '0.30119421191220214', '0.4847533836572086']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 2.1648058789079503}', '0.3', '4', '1.6094379124341003', '0.30119421191220214', '0.4847533836572086']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 2.1648058789079503}', '0.3', '5', '1.6094379124341003', '0.30119421191220214', '0.4847533836572086']
+8 log_gain = math.log(t + 1) if t > 0 else 0
+8 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 2.1648058789079503}', '0.3', '5', '1.791759469228055', '0.30119421191220214', '0.4847533836572086']
+9 exp_decay = math.exp(-factor * t)
+9 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 2.1648058789079503}', '0.3', '5', '1.791759469228055', '0.22313016014842982', '0.4847533836572086']
+10 degradation_value = exp_decay * log_gain
+10 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'log_gain', 'exp_decay', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 2.1648058789079503}', '0.3', '5', '1.791759469228055', '0.22313016014842982', '0.39979557731632154']
+11 degradation_map[factor] += degradation_value
+11 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't', 'degradation_value'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 2.564601456224272}', '0.3', '5', '0.39979557731632154']
+7 for t in time_points:
+7 ['modulation_factors', 'time_points', 'degradation_map', 'factor', 't'] ['[0.1, 0.2, 0.3]', 'range(1, 6)', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 2.564601456224272}', '0.3', '5']
+6 for factor in modulation_factors:
+6 ['modulation_factors', 'degradation_map', 'factor'] ['[0.1, 0.2, 0.3]', '{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 2.564601456224272}', '0.3']
+12 return degradation_map
+12 ['degradation_map'] ['{0.1: 4.719240842036248, 0.2: 3.4470557717414354, 0.3: 2.564601456224272}']
+FUNCTION_RETURN 12 calculate_signal_degradation {'_type': 'dict', '_items': {'0.1': {'_type': 'float', '_value': 4.719240842036248}, '0.2': {'_type': 'float', '_value': 3.4470557717414354}, '0.3': {'_type': 'float', '_value': 2.564601456224272}}, '_len': 3}
+19 aggregate_degradation_score = 0.0
+19 ['aggregate_degradation_score'] ['0.0']

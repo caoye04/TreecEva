@@ -1,0 +1,85 @@
+29
+coherence_score
+---
+PARAM_MAPPING {'frequencies': {'actual_var': 'frequencies', 'value': [2, 3, 5, 8, 12]}}
+FUNCTION_ENTER 3 process_signals def process_signals(frequencies):
+3 ['frequencies'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 12}], '_len': 5}]
+5 transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+5 ['frequencies'] ['[2, 3, 5, 8, 12]']
+5 transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+5 ['x'] ['2']
+5 transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+5 ['x'] ['3']
+5 transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+5 ['x'] ['5']
+5 transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+5 ['x'] ['8']
+5 transformed = list(map(lambda x: x**2 if x % 2 == 0 else x**3, frequencies))
+5 ['x'] ['12']
+8 low_freq = {x for x in transformed if x < 100}
+8 ['transformed', 'x'] ['[4, 27, 125, 64, 144]', '4']
+8 low_freq = {x for x in transformed if x < 100}
+8 ['transformed', 'x'] ['[4, 27, 125, 64, 144]', '27']
+8 low_freq = {x for x in transformed if x < 100}
+8 ['transformed', 'x'] ['[4, 27, 125, 64, 144]', '125']
+8 low_freq = {x for x in transformed if x < 100}
+8 ['transformed', 'x'] ['[4, 27, 125, 64, 144]', '64']
+8 low_freq = {x for x in transformed if x < 100}
+8 ['transformed', 'x'] ['[4, 27, 125, 64, 144]', '144']
+8 low_freq = {x for x in transformed if x < 100}
+8 ['transformed', 'low_freq'] ['[4, 27, 125, 64, 144]', '{64, 27, 4}']
+9 high_freq = {x for x in transformed if x >= 100}
+9 ['transformed', 'low_freq', 'x'] ['[4, 27, 125, 64, 144]', '{64, 27, 4}', '4']
+9 high_freq = {x for x in transformed if x >= 100}
+9 ['transformed', 'low_freq', 'x'] ['[4, 27, 125, 64, 144]', '{64, 27, 4}', '27']
+9 high_freq = {x for x in transformed if x >= 100}
+9 ['transformed', 'low_freq', 'x'] ['[4, 27, 125, 64, 144]', '{64, 27, 4}', '125']
+9 high_freq = {x for x in transformed if x >= 100}
+9 ['transformed', 'low_freq', 'x'] ['[4, 27, 125, 64, 144]', '{64, 27, 4}', '64']
+9 high_freq = {x for x in transformed if x >= 100}
+9 ['transformed', 'low_freq', 'x'] ['[4, 27, 125, 64, 144]', '{64, 27, 4}', '144']
+9 high_freq = {x for x in transformed if x >= 100}
+9 ['transformed', 'low_freq', 'high_freq'] ['[4, 27, 125, 64, 144]', '{64, 27, 4}', '{144, 125}']
+12 common_freq = low_freq & high_freq
+12 ['low_freq', 'high_freq', 'common_freq'] ['{64, 27, 4}', '{144, 125}', 'set()']
+13 all_freq = low_freq | high_freq
+13 ['low_freq', 'high_freq', 'common_freq', 'all_freq'] ['{64, 27, 4}', '{144, 125}', 'set()', '{64, 144, 4, 27, 125}']
+16 base_score = len(common_freq) * 10 if len(common_freq) > 0 else len(all_freq) * 5
+16 ['common_freq', 'all_freq', 'base_score'] ['set()', '{64, 144, 4, 27, 125}', '25']
+19 max_element = max(all_freq) if all_freq else 0
+19 ['all_freq', 'base_score', 'max_element'] ['{64, 144, 4, 27, 125}', '25', '144']
+20 encoded_max = ''.join(filter(str.isdigit, str(max_element)))
+20 ['all_freq', 'base_score', 'max_element', 'encoded_max'] ['{64, 144, 4, 27, 125}', '25', '144', "'144'"]
+21 adjusted_score = base_score + int(encoded_max) if encoded_max else base_score
+21 ['all_freq', 'base_score', 'encoded_max', 'adjusted_score'] ['{64, 144, 4, 27, 125}', '25', "'144'", '169']
+24 sorted_values = sorted(all_freq)
+24 ['all_freq', 'adjusted_score', 'sorted_values'] ['{64, 144, 4, 27, 125}', '169', '[4, 27, 64, 125, 144]']
+25 differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+25 ['adjusted_score', 'sorted_values', 'a', 'b'] ['169', '[4, 27, 64, 125, 144]', '4', '27']
+25 differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+25 ['adjusted_score', 'sorted_values', 'a', 'b'] ['169', '[4, 27, 64, 125, 144]', '4', '64']
+25 differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+25 ['adjusted_score', 'sorted_values', 'a', 'b'] ['169', '[4, 27, 64, 125, 144]', '4', '125']
+25 differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+25 ['adjusted_score', 'sorted_values', 'a', 'b'] ['169', '[4, 27, 64, 125, 144]', '4', '144']
+25 differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+25 ['adjusted_score', 'sorted_values', 'a', 'b'] ['169', '[4, 27, 64, 125, 144]', '27', '64']
+25 differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+25 ['adjusted_score', 'sorted_values', 'a', 'b'] ['169', '[4, 27, 64, 125, 144]', '27', '125']
+25 differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+25 ['adjusted_score', 'sorted_values', 'a', 'b'] ['169', '[4, 27, 64, 125, 144]', '27', '144']
+25 differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+25 ['adjusted_score', 'sorted_values', 'a', 'b'] ['169', '[4, 27, 64, 125, 144]', '64', '125']
+25 differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+25 ['adjusted_score', 'sorted_values', 'a', 'b'] ['169', '[4, 27, 64, 125, 144]', '64', '144']
+25 differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+25 ['adjusted_score', 'sorted_values', 'a', 'b'] ['169', '[4, 27, 64, 125, 144]', '125', '144']
+25 differences = [abs(b - a) for a, b in itertools.combinations(sorted_values, 2)]
+25 ['adjusted_score', 'sorted_values', 'differences'] ['169', '[4, 27, 64, 125, 144]', '[23, 60, 121, 140, 37, ...]']
+26 diff_sum = sum(differences)
+26 ['adjusted_score', 'differences', 'diff_sum'] ['169', '[23, 60, 121, 140, 37, ...]', '756']
+29 coherence_score = adjusted_score + (diff_sum // 100)
+29 ['adjusted_score', 'diff_sum', 'coherence_score'] ['169', '756', '176']
+30 return coherence_score
+30 ['coherence_score'] ['176']
+FUNCTION_RETURN 30 process_signals {'_type': 'int', '_value': 176}

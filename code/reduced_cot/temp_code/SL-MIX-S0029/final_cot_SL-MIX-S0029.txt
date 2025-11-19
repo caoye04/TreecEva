@@ -1,0 +1,62 @@
+Target: Find the value of variable stellar_checksum after [line 38] executes
+
+[line 33]  encoded_data = "MTIwMA==|MTMwMA==|MTE1MA==|MTQwMA==|MTI1MA=="
+Assign: encoded_data = 'MTIwMA==|MTMwMA==|MTE1MA==|MTQwMA==|MTI1MA=='
+[line 8]  self.raw_data = data
+(Missing param: 'result')
+[line 9]  self.processed_signals = []
+(Missing param: 'result')
+[line 12]  encoded_segments = self.raw_data.split('|')
+(Missing param: 'func_name')
+[line 13]  for segment in encoded_segments:
+Loop Start: segment takes its first value 'MTIwMA=='
+[line 4]  return round((freq - 1000) / 100, 2)
+Return: round((freq - 1000) / 100, 2)
+[line 13]  for segment in encoded_segments:
+Loop Iteration: segment is now 'MTMwMA==' (iteration 2)
+[line 4]  return round((freq - 1000) / 100, 2)
+Return: round((freq - 1000) / 100, 2)
+... [Line 13] repeats 2 more times ...
+... [Line 13] repeats 2 more times ...
+... [Line 13] repeats 2 more times ...
+[line 13]  for segment in encoded_segments:
+Loop Iteration: segment is now 'MTI1MA==' (iteration 5)
+[line 4]  return round((freq - 1000) / 100, 2)
+Return: round((freq - 1000) / 100, 2)
+[line 13]  for segment in encoded_segments:
+Loop End: Iteration finished
+[line 22]  return self
+Return: self=SignalProcessor(...) (an unknown source)
+[line 35]  sorted_signals = sorted(processor.processed_signals, reverse=True)
+Call function sorted(processor.processed_signals, reverse=True)
+[line 36]  window_avg = sum(sorted_signals[:3]) / 3
+Compute: sum(sorted_signals[:3]) / 3, where sorted_signals=[4.0, 3.0, 2.5, 2.0, 1.5] (defined at [line 35]) = 3.1666666666666665
+[line 37]  adjusted_signals = [s + window_avg for s in sorted_signals]
+Compute: [s + window_avg for s in sorted_signals], where s=4.0 (an unknown source), window_avg=3.1666666666666665 (defined at [line 36]), sorted_signals=[4.0, 3.0, 2.5, 2.0, 1.5] (defined at [line 35]) = ?
+[line 38]  stellar_checksum = compute_stellar_hash(adjusted_signals)
+Call function compute_stellar_hash(adjusted_signals=[7.166666666666666, 6.166666666666666, 5.666666666666666, 5.166666666666666, 4.666666666666666] (defined at [line 37]))
+[line 27]  def compute_stellar_hash(signals):
+Enter function compute_stellar_hash: signals=[7.166666666666666, 6.166666666666666, 5.666666666666666, 5.166666666666666, 4.666666666666666] (adjusted_signals defined at [line 37])
+  [line 28]  product = 1
+  Assign: product = 1
+  [line 29]  for s in signals:
+  Loop Start: s takes its first value 7.166666666666666
+  [line 30]  product *= (int(s * 100) + 1)
+  Update: product changed from 1 (defined at defined at [line 28]) to 1*(int(s * 100) + 1) = 717
+  [line 29]  for s in signals:
+  Loop Iteration: s is now 6.166666666666666 (iteration 2)
+  [line 30]  product *= (int(s * 100) + 1)
+  Update: product changed from 717 (defined at defined at [line 30]) to 717*(int(s * 100) + 1) = 442389
+... [Line 29] repeats 2 more times ...
+... [Line 29] repeats 2 more times ...
+  [line 29]  for s in signals:
+  Loop Iteration: s is now 4.666666666666666 (iteration 5)
+  [line 30]  product *= (int(s * 100) + 1)
+  Update: product changed from 129681469071 (defined at defined at [line 30]) to 129681469071*(int(s * 100) + 1) = 60561246056157
+  [line 29]  for s in signals:
+  Loop End: Iteration finished
+  [line 31]  return product % 997
+  Return: product % 997
+Function compute_stellar_hash returns 612
+
+Answer: stellar_checksum = 612 (last updated on defined at [line 38])

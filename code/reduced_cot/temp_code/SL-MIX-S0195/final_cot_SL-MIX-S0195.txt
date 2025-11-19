@@ -1,0 +1,76 @@
+Target: Find the value of variable final_packet_signature after [line 48] executes
+
+[line 39]  packet_tracker = defaultdict(list)
+Call function defaultdict(list)
+[line 42]  for i, config in enumerate(layer_configs):
+(Missing param: 'iter_var')
+[line 3]  def apply_security_layer(packet_sig, layer_config):
+Enter function apply_security_layer: packet_sig=95, layer_config={op: 'XOR', mask: 60}
+  [line 5]  mask = layer_config['mask']
+  Compute: layer_config['mask'], where layer_config={op: 'XOR', mask: 60} (parameter layer_config) = 60
+  [line 6]  condition = layer_config.get('condition', None)
+  (Missing param: 'func_name')
+  [line 8]  if condition and not condition(packet_sig):
+  Condition: True, entering 'if' block
+  [line 11]  if operation == 'AND':
+  Condition: True, entering 'if' block
+  [line 13]  elif operation == 'OR':
+  'elif' Condition: True, entering block
+  [line 15]  elif operation == 'XOR':
+  'elif' Condition: True, entering block
+  [line 16]  return packet_sig ^ mask
+  Return: packet_sig ^ mask
+Function apply_security_layer returns 99
+[line 42]  for i, config in enumerate(layer_configs):
+Loop End: Iteration finished
+[line 5]  mask = layer_config['mask']
+Compute: layer_config['mask'], where layer_config={op: 'AND', mask: 240, condition: function(...)} (an unknown source) = 240
+[line 6]  condition = layer_config.get('condition', None)
+(Missing param: 'func_name')
+[line 8]  if condition and not condition(packet_sig):
+Condition: True, entering 'if' block
+[line 24]  return sig > 0x80
+Return: sig > 0x80
+[line 9]  return packet_sig
+Return: packet_sig=99 (an unknown source)
+[line 42]  for i, config in enumerate(layer_configs):
+Loop End: Iteration finished
+[line 3]  def apply_security_layer(packet_sig, layer_config):
+Enter function apply_security_layer: packet_sig=99, layer_config={op: 'LSHIFT', mask: 2}
+  [line 5]  mask = layer_config['mask']
+  Compute: layer_config['mask'], where layer_config={op: 'LSHIFT', mask: 2} (parameter layer_config) = 2
+  [line 6]  condition = layer_config.get('condition', None)
+  (Missing param: 'func_name')
+  [line 8]  if condition and not condition(packet_sig):
+  Condition: True, entering 'if' block
+  [line 11]  if operation == 'AND':
+  Condition: True, entering 'if' block
+  [line 13]  elif operation == 'OR':
+  'elif' Condition: True, entering block
+  [line 15]  elif operation == 'XOR':
+  'elif' Condition: True, entering block
+  [line 17]  elif operation == 'LSHIFT':
+  'elif' Condition: True, entering block
+  [line 18]  return (packet_sig << mask) & 0xFF
+  Return: (packet_sig << mask) & 0xFF
+Function apply_security_layer returns 140
+[line 42]  for i, config in enumerate(layer_configs):
+Loop End: Iteration finished
+[line 5]  mask = layer_config['mask']
+Compute: layer_config['mask'], where layer_config={op: 'OR', mask: 15, condition: function(...)} (an unknown source) = 15
+[line 6]  condition = layer_config.get('condition', None)
+(Missing param: 'func_name')
+[line 8]  if condition and not condition(packet_sig):
+Condition: True, entering 'if' block
+[line 11]  if operation == 'AND':
+Condition: True, entering 'if' block
+[line 13]  elif operation == 'OR':
+'elif' Condition: True, entering block
+[line 14]  return packet_sig | mask
+Return: packet_sig | mask
+[line 42]  for i, config in enumerate(layer_configs):
+Loop End: Iteration finished
+[line 48]  final_packet_signature = packet_tracker['signatures'][-1] if len(packet_tracker['signatures']) > 0 else 0
+Compute: packet_tracker['signatures'][-1] if len(packet_tracker['signatures']) > 0 else 0, where packet_tracker={signatures: [95, 99, 99, 140, 143], layers: ['Layer_1', 'Layer_2', 'Layer_3', 'Layer_4']} (defined at [line 39]) = 143
+
+Answer: final_packet_signature = 143 (last updated on defined at [line 48])

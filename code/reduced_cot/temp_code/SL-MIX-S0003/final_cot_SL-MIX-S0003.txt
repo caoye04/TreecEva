@@ -1,0 +1,107 @@
+Target: Find the value of variable access_level after [line 45] executes
+
+[line 7]  sanitized = sanitize_metadata(doc_meta)
+Call function sanitize_metadata(doc_meta='PUBLIC DOCUMENT' (an unknown source))
+[line 3]  def sanitize_metadata(doc_meta):
+Enter function sanitize_metadata: doc_meta='PUBLIC DOCUMENT'
+  [line 4]  return re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+  Return: re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+Function sanitize_metadata returns 'PUBLIC DOCUMENT'
+[line 8]  is_internal = 'INTERNAL' in sanitized
+Compute: 'INTERNAL' in sanitized, where sanitized='PUBLIC DOCUMENT' (defined at [line 7]) = False
+[line 9]  is_confidential = 'CONFIDENTIAL' in sanitized
+Compute: 'CONFIDENTIAL' in sanitized, where sanitized='PUBLIC DOCUMENT' (defined at [line 7]) = False
+[line 10]  is_public = 'PUBLIC' in sanitized
+Compute: 'PUBLIC' in sanitized, where sanitized='PUBLIC DOCUMENT' (defined at [line 7]) = True
+[line 13]  if is_public and not (is_internal or is_confidential):
+Condition: True, entering 'if' block
+[line 14]  return 1
+Return: 1
+[line 7]  sanitized = sanitize_metadata(doc_meta)
+Call function sanitize_metadata(doc_meta='INTERNAL USE ONLY - CONFIDENTIAL' (an unknown source))
+[line 3]  def sanitize_metadata(doc_meta):
+Enter function sanitize_metadata: doc_meta='INTERNAL USE ONLY - CONFIDENTIAL'
+  [line 4]  return re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+  Return: re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+Function sanitize_metadata returns 'INTERNAL USE ONLY - CONFIDENTIAL'
+[line 8]  is_internal = 'INTERNAL' in sanitized
+Compute: 'INTERNAL' in sanitized, where sanitized='INTERNAL USE ONLY - CONFIDENTIAL' (defined at [line 7]) = True
+[line 9]  is_confidential = 'CONFIDENTIAL' in sanitized
+Compute: 'CONFIDENTIAL' in sanitized, where sanitized='INTERNAL USE ONLY - CONFIDENTIAL' (defined at [line 7]) = True
+[line 10]  is_public = 'PUBLIC' in sanitized
+Compute: 'PUBLIC' in sanitized, where sanitized='INTERNAL USE ONLY - CONFIDENTIAL' (defined at [line 7]) = False
+[line 13]  if is_public and not (is_internal or is_confidential):
+Condition: True, entering 'if' block
+[line 15]  elif is_internal and not is_confidential:
+'elif' Condition: True, entering block
+[line 17]  elif is_confidential or (is_internal and 'RESTRICTED' in sanitized):
+'elif' Condition: True, entering block
+[line 18]  return 3
+Return: 3
+[line 7]  sanitized = sanitize_metadata(doc_meta)
+Call function sanitize_metadata(doc_meta='CONFIDENTIAL - RESTRICTED ACCESS' (an unknown source))
+[line 3]  def sanitize_metadata(doc_meta):
+Enter function sanitize_metadata: doc_meta='CONFIDENTIAL - RESTRICTED ACCESS'
+  [line 4]  return re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+  Return: re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+Function sanitize_metadata returns 'CONFIDENTIAL - RESTRICTED ACCESS'
+[line 8]  is_internal = 'INTERNAL' in sanitized
+Compute: 'INTERNAL' in sanitized, where sanitized='CONFIDENTIAL - RESTRICTED ACCESS' (defined at [line 7]) = False
+[line 9]  is_confidential = 'CONFIDENTIAL' in sanitized
+Compute: 'CONFIDENTIAL' in sanitized, where sanitized='CONFIDENTIAL - RESTRICTED ACCESS' (defined at [line 7]) = True
+[line 10]  is_public = 'PUBLIC' in sanitized
+Compute: 'PUBLIC' in sanitized, where sanitized='CONFIDENTIAL - RESTRICTED ACCESS' (defined at [line 7]) = False
+[line 13]  if is_public and not (is_internal or is_confidential):
+Condition: True, entering 'if' block
+[line 15]  elif is_internal and not is_confidential:
+'elif' Condition: True, entering block
+[line 17]  elif is_confidential or (is_internal and 'RESTRICTED' in sanitized):
+'elif' Condition: True, entering block
+[line 18]  return 3
+Return: 3
+[line 7]  sanitized = sanitize_metadata(doc_meta)
+Call function sanitize_metadata(doc_meta='PUBLIC RELEASE - INTERNAL REVIEW' (an unknown source))
+[line 3]  def sanitize_metadata(doc_meta):
+Enter function sanitize_metadata: doc_meta='PUBLIC RELEASE - INTERNAL REVIEW'
+  [line 4]  return re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+  Return: re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+Function sanitize_metadata returns 'PUBLIC RELEASE - INTERNAL REVIEW'
+[line 8]  is_internal = 'INTERNAL' in sanitized
+Compute: 'INTERNAL' in sanitized, where sanitized='PUBLIC RELEASE - INTERNAL REVIEW' (defined at [line 7]) = True
+[line 9]  is_confidential = 'CONFIDENTIAL' in sanitized
+Compute: 'CONFIDENTIAL' in sanitized, where sanitized='PUBLIC RELEASE - INTERNAL REVIEW' (defined at [line 7]) = False
+[line 10]  is_public = 'PUBLIC' in sanitized
+Compute: 'PUBLIC' in sanitized, where sanitized='PUBLIC RELEASE - INTERNAL REVIEW' (defined at [line 7]) = True
+[line 13]  if is_public and not (is_internal or is_confidential):
+Condition: True, entering 'if' block
+[line 15]  elif is_internal and not is_confidential:
+'elif' Condition: True, entering block
+[line 16]  return 2
+Return: 2
+[line 7]  sanitized = sanitize_metadata(doc_meta)
+Call function sanitize_metadata(doc_meta='RESTRICTED CONFIDENTIAL DOCUMENT' (an unknown source))
+[line 3]  def sanitize_metadata(doc_meta):
+Enter function sanitize_metadata: doc_meta='RESTRICTED CONFIDENTIAL DOCUMENT'
+  [line 4]  return re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+  Return: re.sub(r'[^a-zA-Z0-9_\- ]', '', doc_meta).strip()
+Function sanitize_metadata returns 'RESTRICTED CONFIDENTIAL DOCUMENT'
+[line 8]  is_internal = 'INTERNAL' in sanitized
+Compute: 'INTERNAL' in sanitized, where sanitized='RESTRICTED CONFIDENTIAL DOCUMENT' (defined at [line 7]) = False
+[line 9]  is_confidential = 'CONFIDENTIAL' in sanitized
+Compute: 'CONFIDENTIAL' in sanitized, where sanitized='RESTRICTED CONFIDENTIAL DOCUMENT' (defined at [line 7]) = True
+[line 10]  is_public = 'PUBLIC' in sanitized
+Compute: 'PUBLIC' in sanitized, where sanitized='RESTRICTED CONFIDENTIAL DOCUMENT' (defined at [line 7]) = False
+[line 13]  if is_public and not (is_internal or is_confidential):
+Condition: True, entering 'if' block
+[line 15]  elif is_internal and not is_confidential:
+'elif' Condition: True, entering block
+[line 17]  elif is_confidential or (is_internal and 'RESTRICTED' in sanitized):
+'elif' Condition: True, entering block
+[line 18]  return 3
+Return: 3
+[line 34]  access_level = 0
+Assign: access_level = 0
+[line 37]  access_level = 5
+Assign: access_level = 5
+
+Answer: access_level = 5 (last updated on defined at [line 37])

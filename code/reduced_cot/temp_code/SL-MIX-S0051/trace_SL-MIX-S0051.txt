@@ -1,0 +1,31 @@
+24 input_signal = 0b11010110
+24 ['input_signal'] [{'_type': 'int', '_value': 214}]
+25 final_signal = simulate_circuit(input_signal)
+25 ['input_signal'] [{'_type': 'int', '_value': 214}]
+PARAM_MAPPING simulate_circuit {'input_signal': {'actual_var': 'input_signal', 'value': 214}}
+FUNCTION_ENTER 1 simulate_circuit def simulate_circuit(input_signal):
+1 ['input_signal'] [{'_type': 'int', '_value': 214}]
+DEPTH_2 3     stage1 = (input_signal << 2) & 0xFF  # Shift left by 2, mask to 8 bits
+3 ['input_signal', 'stage1'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}]
+DEPTH_2 6     if (stage1 > 100) and not (stage1 & 0x0F == 0):  # Check if greater than 100 and lower nibble is non-zero
+6 ['input_signal', 'stage1'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}]
+DEPTH_2 9         stage2 = stage1 | 0xAA  # OR with 0xAA
+9 ['input_signal', 'stage1', 'stage2'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}]
+DEPTH_2 12     if (bin(stage2).count('1') % 2) == 0:  # Check if even parity
+12 ['input_signal', 'stage1', 'stage2'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}]
+DEPTH_2 13         stage3 = stage2 & 0xF0  # Mask upper nibble
+13 ['input_signal', 'stage1', 'stage2', 'stage3'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 240}]
+DEPTH_2 18     adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
+18 ['input_signal', 'stage1', 'stage2', 'stage3'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 240}]
+DEPTH_2 19     final_signal = adjust(stage3)
+19 ['input_signal', 'stage1', 'stage2', 'stage3'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 240}]
+FUNCTION_ENTER 18 <lambda>     adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
+18 ['x'] [{'_type': 'int', '_value': 240}]
+DEPTH_3 18     adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
+18 ['x'] [{'_type': 'int', '_value': 240}]
+FUNCTION_RETURN 18 <lambda> {'_type': 'int', '_value': 120}
+DEPTH_2 21     return final_signal
+21 ['input_signal', 'stage1', 'stage2', 'stage3', 'final_signal'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 120}]
+FUNCTION_RETURN 21 simulate_circuit {'_type': 'int', '_value': 120}
+26 print(f'Result: {final_signal}')
+26 ['input_signal', 'final_signal'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 120}]

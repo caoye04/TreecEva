@@ -1,0 +1,41 @@
+Target: Find the value of variable peak_count after [line 29] executes
+
+[line 27]  sensor_readings = [12, 45, 23, 67, 34, 89, 56, 78, 91, 25, 64, 87, 42, 58, 73]
+Compute: [12, 45, 23, 67, 34, 89, 56, 78, 91, 25, 64, 87, 42, 58, 73] = [12, 45, 23, 67, 34, ...]
+[line 29]  peak_count = process_sensor_data(sensor_readings)
+Call function process_sensor_data(sensor_readings=[12, 45, 23, 67, 34, ...] (defined at [line 27]))
+[line 3]  def process_sensor_data(readings):
+Enter function process_sensor_data: readings=[12, 45, 23, 67, 34, ...] (sensor_readings defined at [line 27])
+  [line 4]  window = deque(maxlen=5)
+  Call function deque(maxlen=5)
+  [line 6]  peak_count = 0
+  Assign: peak_count = 0
+  [line 8]  for reading in readings:
+  Loop Start: reading takes its first value 12
+  [line 11]  if len(window) == 5:
+  Condition: True, entering 'if' block
+  [line 8]  for reading in readings:
+  Loop Iteration: reading is now 45 (iteration 2)
+  [line 11]  if len(window) == 5:
+  Condition: True, entering 'if' block
+... [Line 8] repeats 12 more times ...
+... [Line 8] repeats 12 more times ...
+  [line 8]  for reading in readings:
+  Loop Iteration: reading is now 73 (iteration 15)
+  [line 11]  if len(window) == 5:
+  Condition: True, entering 'if' block
+  [line 12]  window_avg = sum(window) / len(window)
+  Compute: sum(window) / len(window), where window=deque([64, 87, 42, 58, 73], maxlen=5) (defined at [line 4]) = 64.8
+  [line 15]  is_peak = reading > 2 * window_avg and reading == max(window)
+  Compute: reading > 2 * window_avg and reading == max(window), where reading=73 (defined at [line 8]), window_avg=64.8 (defined at [line 12]), window=deque([64, 87, 42, 58, 73], maxlen=5) (defined at [line 4]) = False
+  [line 18]  not_noise = reading % 3 != 0 or (reading & 7) == 0
+  Compute: reading % 3 != 0 or (reading & 7) == 0, where reading=73 (defined at [line 8]) = True
+  [line 20]  if is_peak and not_noise:
+  Condition: True, entering 'if' block
+  [line 8]  for reading in readings:
+  Loop End: Iteration finished
+  [line 24]  return peak_count
+  Return: peak_count=0 (defined at [line 6])
+Function process_sensor_data returns 0
+
+Answer: peak_count = 0 (last updated on defined at [line 6])

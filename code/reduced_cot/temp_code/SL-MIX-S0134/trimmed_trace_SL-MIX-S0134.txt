@@ -1,0 +1,199 @@
+47
+final_output
+---
+43 tree = build_frequency_tree()
+43 [] []
+11 root = FrequencyNode(1000, 2.5)
+11 [] []
+12 root.left = FrequencyNode(500, 1.8)
+12 ['root'] ['FrequencyNode(left=None)']
+13 root.right = FrequencyNode(2000, 3.2)
+13 ['root'] ['FrequencyNode(right=None)']
+14 root.left.left = FrequencyNode(250, 1.2)
+14 ['root'] ['FrequencyNode(left=FrequencyNode(frequency=500, gain=1.8, left=None, right=None))']
+15 root.left.right = FrequencyNode(750, 2.1)
+15 ['root'] ['FrequencyNode(left=FrequencyNode(frequency=500, gain=1.8, left=FrequencyNode(...), right=None))']
+16 root.right.left = FrequencyNode(1500, 2.8)
+16 ['root'] ['FrequencyNode(right=FrequencyNode(frequency=2000, gain=3.2, left=None, right=None))']
+17 root.right.right = FrequencyNode(4000, 4.0)
+17 ['root'] ['FrequencyNode(right=FrequencyNode(frequency=2000, gain=3.2, left=FrequencyNode(...), right=None))']
+18 return root
+18 ['root'] ['FrequencyNode(...)']
+44 raw_output = process_band_gain(tree)
+44 ['tree'] ['FrequencyNode(...)']
+21 if not node:
+21 ['node'] ['FrequencyNode(...)']
+25 left_result = process_band_gain(node.left)
+25 ['node'] ['FrequencyNode(left=FrequencyNode(frequency=500, gain=1.8, left=FrequencyNode(...), right=FrequencyNode(...)))']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 500}, 'gain': {'_type': 'float', '_value': 1.8}, 'left': {'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 250}, 'gain': {'_type': 'float', '_value': 1.2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 750}, 'gain': {'_type': 'float', '_value': 2.1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}]
+21 if not node:
+21 ['node'] ['FrequencyNode(...)']
+25 left_result = process_band_gain(node.left)
+25 ['node'] ['FrequencyNode(left=FrequencyNode(frequency=250, gain=1.2, left=None, right=None))']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 250}, 'gain': {'_type': 'float', '_value': 1.2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
+21 if not node:
+21 ['node'] ['FrequencyNode(...)']
+25 left_result = process_band_gain(node.left)
+25 ['node'] ['FrequencyNode(left=None)']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'None'}]
+21 if not node:
+21 ['node'] ['None']
+22 return 0
+22 ['node'] ['None']
+FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
+28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
+28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=1.2)', '0', '6']
+31 if node.frequency == 750:
+31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0', '6']
+35 right_result = process_band_gain(node.right)
+35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=None)', '0', '6']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'None'}]
+21 if not node:
+21 ['node'] ['None']
+22 return 0
+22 ['node'] ['None']
+FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
+38 combined = (left_result + right_result + processed_gain) * 0.5
+38 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '0', '6', '0', '3.0']
+40 return combined
+40 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '0', '6', '0', '3.0']
+FUNCTION_RETURN 40 process_band_gain {'_type': 'float', '_value': 3.0}
+28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
+28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=1.8)', '3.0', '5']
+31 if node.frequency == 750:
+31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '3.0', '5']
+35 right_result = process_band_gain(node.right)
+35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=FrequencyNode(frequency=750, gain=2.1, left=None, right=None))', '3.0', '5']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 750}, 'gain': {'_type': 'float', '_value': 2.1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
+21 if not node:
+21 ['node'] ['FrequencyNode(...)']
+25 left_result = process_band_gain(node.left)
+25 ['node'] ['FrequencyNode(left=None)']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'None'}]
+21 if not node:
+21 ['node'] ['None']
+22 return 0
+22 ['node'] ['None']
+FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
+28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
+28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=2.1)', '0', '1']
+31 if node.frequency == 750:
+31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0', '1']
+32 return processed_gain * 3
+32 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0', '1']
+FUNCTION_RETURN 32 process_band_gain {'_type': 'int', '_value': 3}
+38 combined = (left_result + right_result + processed_gain) * 0.5
+38 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '3.0', '5', '3', '5.5']
+40 return combined
+40 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '3.0', '5', '3', '5.5']
+FUNCTION_RETURN 40 process_band_gain {'_type': 'float', '_value': 5.5}
+28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
+28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=2.5)', '5.5', '5']
+31 if node.frequency == 750:
+31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '5.5', '5']
+35 right_result = process_band_gain(node.right)
+35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=FrequencyNode(frequency=2000, gain=3.2, left=FrequencyNode(...), right=FrequencyNode(...)))', '5.5', '5']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 2000}, 'gain': {'_type': 'float', '_value': 3.2}, 'left': {'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 1500}, 'gain': {'_type': 'float', '_value': 2.8}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 4000}, 'gain': {'_type': 'float', '_value': 4.0}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}]
+21 if not node:
+21 ['node'] ['FrequencyNode(...)']
+25 left_result = process_band_gain(node.left)
+25 ['node'] ['FrequencyNode(left=FrequencyNode(frequency=1500, gain=2.8, left=None, right=None))']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 1500}, 'gain': {'_type': 'float', '_value': 2.8}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
+21 if not node:
+21 ['node'] ['FrequencyNode(...)']
+25 left_result = process_band_gain(node.left)
+25 ['node'] ['FrequencyNode(left=None)']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'None'}]
+21 if not node:
+21 ['node'] ['None']
+22 return 0
+22 ['node'] ['None']
+FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
+28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
+28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=2.8)', '0', '1']
+31 if node.frequency == 750:
+31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0', '1']
+35 right_result = process_band_gain(node.right)
+35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=None)', '0', '1']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'None'}]
+21 if not node:
+21 ['node'] ['None']
+22 return 0
+22 ['node'] ['None']
+FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
+38 combined = (left_result + right_result + processed_gain) * 0.5
+38 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '0', '1', '0', '0.5']
+40 return combined
+40 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '0', '1', '0', '0.5']
+FUNCTION_RETURN 40 process_band_gain {'_type': 'float', '_value': 0.5}
+28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
+28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=3.2)', '0.5', '5']
+31 if node.frequency == 750:
+31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0.5', '5']
+35 right_result = process_band_gain(node.right)
+35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=FrequencyNode(frequency=4000, gain=4.0, left=None, right=None))', '0.5', '5']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 4000}, 'gain': {'_type': 'float', '_value': 4.0}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
+21 if not node:
+21 ['node'] ['FrequencyNode(...)']
+25 left_result = process_band_gain(node.left)
+25 ['node'] ['FrequencyNode(left=None)']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'None'}]
+21 if not node:
+21 ['node'] ['None']
+22 return 0
+22 ['node'] ['None']
+FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
+28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
+28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=4.0)', '0', '6']
+31 if node.frequency == 750:
+31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0', '6']
+35 right_result = process_band_gain(node.right)
+35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=None)', '0', '6']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
+20 ['node'] [{'_type': 'None'}]
+21 if not node:
+21 ['node'] ['None']
+22 return 0
+22 [] []
+FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
+38 combined = (left_result + right_result + processed_gain) * 0.5
+38 ['left_result', 'processed_gain', 'right_result', 'combined'] ['0', '6', '0', '3.0']
+40 return combined
+40 ['left_result', 'processed_gain', 'right_result', 'combined'] ['0', '6', '0', '3.0']
+FUNCTION_RETURN 40 process_band_gain {'_type': 'float', '_value': 3.0}
+38 combined = (left_result + right_result + processed_gain) * 0.5
+38 ['left_result', 'processed_gain', 'right_result', 'combined'] ['0.5', '5', '3.0', '4.25']
+40 return combined
+40 ['left_result', 'processed_gain', 'right_result', 'combined'] ['0.5', '5', '3.0', '4.25']
+FUNCTION_RETURN 40 process_band_gain {'_type': 'float', '_value': 4.25}
+38 combined = (left_result + right_result + processed_gain) * 0.5
+38 ['left_result', 'processed_gain', 'right_result', 'combined'] ['5.5', '5', '4.25', '7.375']
+40 return combined
+40 ['combined'] ['7.375']
+47 final_output = math.ceil(raw_output * 100) / 100
+47 ['raw_output', 'final_output'] ['7.375', '7.38']

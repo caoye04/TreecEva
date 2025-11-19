@@ -1,0 +1,65 @@
+26
+final_efficiency
+---
+25 network_nodes = 12
+25 ['network_nodes'] ['12']
+26 final_efficiency = transmission_efficiency(network_nodes)
+26 ['network_nodes'] ['12']
+PARAM_MAPPING {'nodes': {'actual_var': 'network_nodes', 'value': 12}}
+FUNCTION_ENTER 3 transmission_efficiency def transmission_efficiency(nodes, depth=0):
+3 ['nodes', 'depth'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 0}]
+4 if depth > 3:
+4 ['nodes', 'depth'] ['12', '0']
+6 if nodes <= 1:
+6 ['nodes', 'depth'] ['12', '0']
+10 base = (nodes & (nodes - 1)) ^ (nodes >> 1)
+10 ['nodes', 'depth', 'base'] ['12', '0', '14']
+13 recursive_part = transmission_efficiency(nodes // 2, depth + 1)
+13 ['nodes', 'depth', 'base'] ['12', '0', '14']
+4 if depth > 3:
+4 ['nodes', 'depth'] ['6', '1']
+6 if nodes <= 1:
+6 ['nodes', 'depth'] ['6', '1']
+10 base = (nodes & (nodes - 1)) ^ (nodes >> 1)
+10 ['nodes', 'depth', 'base'] ['6', '1', '7']
+13 recursive_part = transmission_efficiency(nodes // 2, depth + 1)
+13 ['nodes', 'depth', 'base'] ['6', '1', '7']
+4 if depth > 3:
+4 ['nodes', 'depth'] ['3', '2']
+6 if nodes <= 1:
+6 ['nodes', 'depth'] ['3', '2']
+10 base = (nodes & (nodes - 1)) ^ (nodes >> 1)
+10 ['nodes', 'depth', 'base'] ['3', '2', '3']
+13 recursive_part = transmission_efficiency(nodes // 2, depth + 1)
+13 ['nodes', 'depth', 'base'] ['3', '2', '3']
+4 if depth > 3:
+4 ['nodes', 'depth'] ['1', '3']
+6 if nodes <= 1:
+6 ['nodes'] ['1']
+7 return nodes
+7 ['nodes'] ['1']
+16 combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
+16 ['nodes', 'base', 'recursive_part', 'combinations'] ['3', '3', '1', '[(0, 1), (0, 2), (1, 2)]']
+17 combo_count = len(combinations)
+17 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count'] ['3', '3', '1', '[(0, 1), (0, 2), (1, 2)]', '3']
+20 adjusted = base + combo_count if base < combo_count else base - combo_count
+20 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count', 'adjusted'] ['3', '3', '1', '[(0, 1), (0, 2), (1, 2)]', '3', '0']
+22 return adjusted + recursive_part
+22 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count', 'adjusted'] ['3', '3', '1', '[(0, 1), (0, 2), (1, 2)]', '3', '0']
+16 combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
+16 ['nodes', 'base', 'recursive_part', 'combinations'] ['6', '7', '1', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]']
+17 combo_count = len(combinations)
+17 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count'] ['6', '7', '1', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]', '6']
+20 adjusted = base + combo_count if base < combo_count else base - combo_count
+20 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count', 'adjusted'] ['6', '7', '1', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]', '6', '1']
+22 return adjusted + recursive_part
+22 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count', 'adjusted'] ['6', '7', '1', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]', '6', '1']
+16 combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
+16 ['nodes', 'base', 'recursive_part', 'combinations'] ['12', '14', '2', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]']
+17 combo_count = len(combinations)
+17 ['base', 'recursive_part', 'combinations', 'combo_count'] ['14', '2', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]', '6']
+20 adjusted = base + combo_count if base < combo_count else base - combo_count
+20 ['base', 'recursive_part', 'combo_count', 'adjusted'] ['14', '2', '6', '8']
+22 return adjusted + recursive_part
+22 ['recursive_part', 'adjusted'] ['2', '8']
+FUNCTION_RETURN 22 transmission_efficiency {'_type': 'int', '_value': 10}

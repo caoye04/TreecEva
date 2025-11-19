@@ -1,0 +1,67 @@
+36
+final_output
+---
+18 leaf1 = SignalNode(value=3)
+18 [] []
+19 leaf2 = SignalNode(value=5)
+19 ['leaf1'] ['SignalNode(...)']
+20 xor1 = SignalNode(left=leaf1, right=leaf2, operation='XOR')
+20 ['leaf1', 'leaf2'] ['SignalNode(...)', 'SignalNode(...)']
+21 leaf4 = SignalNode(value=7)
+21 ['xor1'] ['SignalNode(...)']
+22 root = SignalNode(left=xor1, right=leaf4, operation='XOR')
+22 ['xor1', 'leaf4'] ['SignalNode(...)', 'SignalNode(...)']
+36 final_output = propagate_signal(root)
+36 ['root'] ['SignalNode(...)']
+25 if node.value is not None:  # Leaf node
+25 ['node'] ['SignalNode(...)']
+28 left_val = propagate_signal(node.left)
+28 ['node'] ["SignalNode(left=SignalNode(value=None, left=SignalNode(...), right=SignalNode(...), operation='XOR'))"]
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 24 propagate_signal def propagate_signal(node):
+24 ['node'] [{'_type': 'object', '_class': 'SignalNode', '_attrs': {'value': {'_type': 'None'}, 'left': {'_type': 'object', '_class': 'SignalNode', '_attrs': {'value': {'_type': 'int', '_value': 3}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}, 'operation': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'SignalNode', '_attrs': {'value': {'_type': 'int', '_value': 5}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}, 'operation': {'_type': 'None'}}}, 'operation': {'_type': 'str', '_value': 'XOR'}}}]
+25 if node.value is not None:  # Leaf node
+25 ['node'] ['SignalNode(...)']
+28 left_val = propagate_signal(node.left)
+28 ['node'] ['SignalNode(left=SignalNode(value=3, left=None, right=None, operation=None))']
+PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
+FUNCTION_ENTER 24 propagate_signal def propagate_signal(node):
+24 ['node'] [{'_type': 'object', '_class': 'SignalNode', '_attrs': {'value': {'_type': 'int', '_value': 3}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}, 'operation': {'_type': 'None'}}}]
+25 if node.value is not None:  # Leaf node
+25 ['node'] ['SignalNode(...)']
+26 return node.value
+26 ['node'] ['SignalNode(value=3)']
+FUNCTION_RETURN 26 propagate_signal {'_type': 'int', '_value': 3}
+29 right_val = propagate_signal(node.right)
+29 ['node', 'left_val'] ['SignalNode(right=SignalNode(value=5, left=None, right=None, operation=None))', '3']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 24 propagate_signal def propagate_signal(node):
+24 ['node'] [{'_type': 'object', '_class': 'SignalNode', '_attrs': {'value': {'_type': 'int', '_value': 5}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}, 'operation': {'_type': 'None'}}}]
+25 if node.value is not None:  # Leaf node
+25 ['node'] ['SignalNode(...)']
+26 return node.value
+26 ['node'] ['SignalNode(value=5)']
+FUNCTION_RETURN 26 propagate_signal {'_type': 'int', '_value': 5}
+30 if node.operation == 'XOR':
+30 ['node', 'left_val', 'right_val'] ['SignalNode(...)', '3', '5']
+31 node.value = left_val ^ right_val
+31 ['node', 'left_val', 'right_val'] ['SignalNode(value=6)', '3', '5']
+32 return node.value
+32 ['node', 'left_val', 'right_val'] ['SignalNode(value=6)', '3', '5']
+FUNCTION_RETURN 32 propagate_signal {'_type': 'int', '_value': 6}
+29 right_val = propagate_signal(node.right)
+29 ['node', 'left_val'] ['SignalNode(right=SignalNode(value=7, left=None, right=None, operation=None))', '6']
+PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
+FUNCTION_ENTER 24 propagate_signal def propagate_signal(node):
+24 ['node'] [{'_type': 'object', '_class': 'SignalNode', '_attrs': {'value': {'_type': 'int', '_value': 7}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}, 'operation': {'_type': 'None'}}}]
+25 if node.value is not None:  # Leaf node
+25 ['node'] ['SignalNode(...)']
+26 return node.value
+26 ['node'] ['SignalNode(value=7)']
+FUNCTION_RETURN 26 propagate_signal {'_type': 'int', '_value': 7}
+30 if node.operation == 'XOR':
+30 ['node', 'left_val', 'right_val'] ['SignalNode(...)', '6', '7']
+31 node.value = left_val ^ right_val
+31 ['node', 'left_val', 'right_val'] ['SignalNode(value=1)', '6', '7']
+32 return node.value
+32 ['node'] ['SignalNode(value=1)']

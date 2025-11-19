@@ -1,0 +1,121 @@
+37
+final_checksum
+---
+36 network_packets = [12, 7, 23, 8, 15, 4]
+36 ['network_packets'] ['[12, 7, 23, 8, 15, ...]']
+37 final_checksum = process_packets(network_packets)
+37 ['network_packets'] ['[12, 7, 23, 8, 15, ...]']
+PARAM_MAPPING {'packet_ids': {'actual_var': 'network_packets', 'value': [12, 7, 23, 8, 15, 4]}}
+FUNCTION_ENTER 4 process_packets def process_packets(packet_ids):
+4 ['packet_ids'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 4}], '_len': 6}]
+6 layer1 = [pid ^ (pid << 2) for pid in packet_ids]
+6 ['packet_ids', 'pid'] ['[12, 7, 23, 8, 15, ...]', '12']
+6 layer1 = [pid ^ (pid << 2) for pid in packet_ids]
+6 ['packet_ids', 'pid'] ['[12, 7, 23, 8, 15, ...]', '7']
+6 layer1 = [pid ^ (pid << 2) for pid in packet_ids]
+6 ['packet_ids', 'pid'] ['[12, 7, 23, 8, 15, ...]', '23']
+6 layer1 = [pid ^ (pid << 2) for pid in packet_ids]
+6 ['packet_ids', 'pid'] ['[12, 7, 23, 8, 15, ...]', '8']
+6 layer1 = [pid ^ (pid << 2) for pid in packet_ids]
+6 ['packet_ids', 'pid'] ['[12, 7, 23, 8, 15, ...]', '15']
+6 layer1 = [pid ^ (pid << 2) for pid in packet_ids]
+6 ['packet_ids', 'pid'] ['[12, 7, 23, 8, 15, ...]', '4']
+6 layer1 = [pid ^ (pid << 2) for pid in packet_ids]
+6 ['packet_ids', 'layer1'] ['[12, 7, 23, 8, 15, ...]', '[60, 27, 75, 40, 51, ...]']
+9 layer2 = [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1]
+9 ['layer1', 'pid'] ['[60, 27, 75, 40, 51, ...]', '60']
+9 layer2 = [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1]
+9 ['layer1', 'pid'] ['[60, 27, 75, 40, 51, ...]', '27']
+9 layer2 = [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1]
+9 ['layer1', 'pid'] ['[60, 27, 75, 40, 51, ...]', '75']
+9 layer2 = [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1]
+9 ['layer1', 'pid'] ['[60, 27, 75, 40, 51, ...]', '40']
+9 layer2 = [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1]
+9 ['layer1', 'pid'] ['[60, 27, 75, 40, 51, ...]', '51']
+9 layer2 = [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1]
+9 ['layer1', 'pid'] ['[60, 27, 75, 40, 51, ...]', '20']
+9 layer2 = [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1]
+9 ['layer1', 'layer2'] ['[60, 27, 75, 40, 51, ...]', '[4, 3, 4, 3, 3, ...]']
+12 sorted_packets = sorted(layer2)
+12 ['layer2', 'sorted_packets'] ['[4, 3, 4, 3, 3, ...]', '[3, 3, 3, 3, 4, ...]']
+13 packet_queue = deque(sorted_packets)
+13 ['sorted_packets', 'packet_queue'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3, 3, 3, 4, 4])']
+16 stack_reduction = 0
+16 ['sorted_packets', 'packet_queue', 'stack_reduction'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3, 3, 3, 4, 4])', '0']
+17 while packet_queue:
+17 ['sorted_packets', 'packet_queue', 'stack_reduction'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3, 3, 3, 4, 4])', '0']
+18 left = packet_queue.popleft()
+18 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3, 3, 4, 4])', '0', '3']
+19 if packet_queue:
+19 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3, 3, 4, 4])', '0', '3']
+20 right = packet_queue.pop()
+20 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3, 3, 4])', '0', '3', '4']
+21 stack_reduction ^= (left & right)
+21 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3, 3, 4])', '0', '3', '4']
+17 while packet_queue:
+17 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3, 3, 4])', '0', '3', '4']
+18 left = packet_queue.popleft()
+18 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3, 4])', '0', '3', '4']
+19 if packet_queue:
+19 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3, 4])', '0', '3', '4']
+20 right = packet_queue.pop()
+20 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3])', '0', '3', '4']
+21 stack_reduction ^= (left & right)
+21 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3])', '0', '3', '4']
+17 while packet_queue:
+17 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([3, 3])', '0', '3', '4']
+18 left = packet_queue.popleft()
+18 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([3])', '0', '3', '4']
+19 if packet_queue:
+19 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([3])', '0', '3', '4']
+20 right = packet_queue.pop()
+20 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([])', '0', '3', '3']
+21 stack_reduction ^= (left & right)
+21 ['sorted_packets', 'packet_queue', 'stack_reduction', 'left', 'right'] ['[3, 3, 3, 3, 4, ...]', 'deque([])', '3', '3', '3']
+17 while packet_queue:
+17 ['sorted_packets', 'packet_queue', 'stack_reduction'] ['[3, 3, 3, 3, 4, ...]', 'deque([])', '3']
+26 accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
+26 ['sorted_packets', 'stack_reduction'] ['[3, 3, 3, 3, 4, ...]', '3']
+27 final_checksum = 0
+27 ['sorted_packets', 'stack_reduction', 'final_checksum'] ['[3, 3, 3, 3, 4, ...]', '3', '0']
+28 for val in sorted_packets:
+28 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '0', '3']
+29 final_checksum = accumulator(final_checksum, val)
+29 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '0', '3']
+26 accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
+26 ['a', 'b'] ['0', '3']
+28 for val in sorted_packets:
+28 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '-1', '3']
+29 final_checksum = accumulator(final_checksum, val)
+29 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '-1', '3']
+26 accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
+26 ['a', 'b'] ['-1', '3']
+28 for val in sorted_packets:
+28 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '-2', '3']
+29 final_checksum = accumulator(final_checksum, val)
+29 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '-2', '3']
+26 accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
+26 ['a', 'b'] ['-2', '3']
+28 for val in sorted_packets:
+28 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '-3', '3']
+29 final_checksum = accumulator(final_checksum, val)
+29 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '-3', '3']
+26 accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
+26 ['a', 'b'] ['-3', '3']
+28 for val in sorted_packets:
+28 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '-4', '4']
+29 final_checksum = accumulator(final_checksum, val)
+29 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '-4', '4']
+26 accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
+26 ['a', 'b'] ['-4', '4']
+28 for val in sorted_packets:
+28 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '4', '4']
+29 final_checksum = accumulator(final_checksum, val)
+29 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '4', '4']
+28 for val in sorted_packets:
+28 ['sorted_packets', 'stack_reduction', 'final_checksum', 'val'] ['[3, 3, 3, 3, 4, ...]', '3', '12', '4']
+32 final_checksum ^= stack_reduction
+32 ['stack_reduction', 'final_checksum'] ['3', '15']
+33 return final_checksum
+33 ['final_checksum'] ['15']
+FUNCTION_RETURN 33 process_packets {'_type': 'int', '_value': 15}

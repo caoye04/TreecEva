@@ -1,0 +1,76 @@
+Target: Find the value of variable final_checksum after [line 29] executes
+
+[line 3]  raw_packets = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
+Compute: [0x1A, 0x2B, 0x3C, 0x4D, 0x5E] = [26, 43, 60, 77, 94]
+[line 7]  chained_values = []
+Compute: [] = []
+[line 8]  for i, packet in enumerate(raw_packets):
+(Missing param: 'iter_var')
+[line 8]  for i, packet in enumerate(raw_packets):
+Loop End: Iteration finished
+[line 8]  for i, packet in enumerate(raw_packets):
+Loop End: Iteration finished
+[line 8]  for i, packet in enumerate(raw_packets):
+Loop End: Iteration finished
+[line 8]  for i, packet in enumerate(raw_packets):
+Loop End: Iteration finished
+[line 8]  for i, packet in enumerate(raw_packets):
+Loop End: Iteration finished
+[line 14]  unique_packets = list(set(chained_values))
+Call function list(set(chained_values))
+[line 17]  transform = lambda x: (x * 3 + 7) % 256
+Compute: lambda x: (x * 3 + 7) % 256 = ?
+[line 18]  transformed_packets = [transform(p) for p in unique_packets]
+Compute: [transform(p) for p in unique_packets], where p=193 (an unknown source), unique_packets=[193, 101, 169, 213, 182] (defined at [line 14]) = ?
+[line 17]  transform = lambda x: (x * 3 + 7) % 256
+Compute: lambda x: (x * 3 + 7) % 256, where x=193 (an unknown source) = ?
+[line 17]  transform = lambda x: (x * 3 + 7) % 256
+Compute: lambda x: (x * 3 + 7) % 256, where x=101 (an unknown source) = ?
+[line 17]  transform = lambda x: (x * 3 + 7) % 256
+Compute: lambda x: (x * 3 + 7) % 256, where x=169 (an unknown source) = ?
+[line 17]  transform = lambda x: (x * 3 + 7) % 256
+Compute: lambda x: (x * 3 + 7) % 256, where x=213 (an unknown source) = ?
+[line 17]  transform = lambda x: (x * 3 + 7) % 256
+Compute: lambda x: (x * 3 + 7) % 256, where x=182 (an unknown source) = ?
+[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+(Missing param: 'func_name')
+[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+(Missing param: 'func_name')
+[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+(Missing param: 'func_name')
+[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+(Missing param: 'func_name')
+[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+(Missing param: 'func_name')
+[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
+(Missing param: 'func_name')
+[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
+Compute: sum(ord(c) for c in packet_string) & 0xFF, where packet_string='4a3628629' (an unknown source) = ?
+[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
+Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='4' (an unknown source) = ?
+[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
+Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='a' (an unknown source) = ?
+[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
+Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='3' (an unknown source) = ?
+[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
+Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='6' (an unknown source) = ?
+[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
+Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='2' (an unknown source) = ?
+[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
+Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='8' (an unknown source) = ?
+[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
+Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='6' (an unknown source) = ?
+[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
+Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='2' (an unknown source) = ?
+[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
+Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='9' (an unknown source) = ?
+[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
+Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='9' (an unknown source) = ?
+[line 25]  checksum_components = [p ^ hash_id for p in transformed_packets]
+Compute: [p ^ hash_id for p in transformed_packets], where p=74 (an unknown source), hash_id=9 (defined at [line 22]), transformed_packets=[74, 54, 2, 134, 41] (defined at [line 18]) = ?
+[line 26]  intermediate_sum = sum(checksum_components) & 0xFFFF
+Compute: sum(checksum_components) & 0xFFFF, where checksum_components=[67, 63, 11, 143, 32] (defined at [line 25]) = 316
+[line 29]  final_checksum = ((intermediate_sum >> 8) & 0xFF) | ((intermediate_sum & 0xFF) << 8)
+Compute: ((intermediate_sum >> 8) & 0xFF) | ((intermediate_sum & 0xFF) << 8), where intermediate_sum=316 (defined at [line 26]) = 15361
+
+Answer: final_checksum = 15361 (last updated on defined at [line 29])

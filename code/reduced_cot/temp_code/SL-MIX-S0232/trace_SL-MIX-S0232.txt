@@ -1,0 +1,279 @@
+1 from collections import deque
+1 [] []
+FUNCTION_ENTER 3 ScopeStack class ScopeStack:
+FUNCTION_RETURN 15 ScopeStack {'_type': 'None'}
+25 token_stream = "begin alpha beta gamma end begin delta epsilon end"
+25 ['token_stream'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}]
+26 tokens = tokenize(token_stream)
+26 ['token_stream'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}]
+PARAM_MAPPING tokenize {'input_str': {'actual_var': 'token_stream', 'value': 'begin alpha beta gamma end begin delta epsilon end'}}
+FUNCTION_ENTER 18 tokenize def tokenize(input_str):
+18 ['input_str'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}]
+DEPTH_2 19     return input_str.split()
+19 ['input_str'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}]
+FUNCTION_RETURN 19 tokenize {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}
+27 scopes = ScopeStack()
+27 ['token_stream', 'tokens'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}]
+FUNCTION_ENTER 4 __init__     def __init__(self):
+4 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {}}]
+DEPTH_2 5         self.stack = []
+5 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}]
+FUNCTION_RETURN 5 __init__ {'_type': 'None'}
+28 active_transforms = set()
+28 ['token_stream', 'tokens', 'scopes', 'active_transforms'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [], '_len': 0}]
+30 for token in tokens:
+30 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'begin'}]
+31     hashed = hash(transform_token(token)) % 100
+31 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'begin'}]
+PARAM_MAPPING transform_token {'t': {'actual_var': 'transform_token(token)', 'value': 'transform_token(token)'}}
+FUNCTION_ENTER 21 transform_token def transform_token(t):
+21 ['t'] [{'_type': 'str', '_value': 'begin'}]
+DEPTH_2 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['t'] [{'_type': 'str', '_value': 'begin'}]
+DEPTH_2 23     return mapper(t)
+23 ['t'] [{'_type': 'str', '_value': 'begin'}]
+FUNCTION_ENTER 22 <lambda>     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'begin'}]
+DEPTH_3 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'begin'}]
+FUNCTION_RETURN 22 <lambda> {'_type': 'str', '_value': 'begin'}
+FUNCTION_RETURN 23 transform_token {'_type': 'str', '_value': 'begin'}
+32     if token == 'begin':
+32 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'begin'}, {'_type': 'int', '_value': 97}]
+33         scopes.enter()
+33 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'str', '_value': 'begin'}, {'_type': 'int', '_value': 97}]
+FUNCTION_ENTER 7 enter     def enter(self):
+7 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}]
+DEPTH_2 8         self.stack.append(len(self.stack)+1)
+8 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}]
+FUNCTION_RETURN 8 enter {'_type': 'None'}
+34         active_transforms.add(hashed)
+34 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'begin'}, {'_type': 'int', '_value': 97}]
+30 for token in tokens:
+30 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'int', '_value': 97}]
+31     hashed = hash(transform_token(token)) % 100
+31 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'int', '_value': 97}]
+PARAM_MAPPING transform_token {'t': {'actual_var': 'transform_token(token)', 'value': 'transform_token(token)'}}
+FUNCTION_ENTER 21 transform_token def transform_token(t):
+21 ['t'] [{'_type': 'str', '_value': 'alpha'}]
+DEPTH_2 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['t'] [{'_type': 'str', '_value': 'alpha'}]
+DEPTH_2 23     return mapper(t)
+23 ['t'] [{'_type': 'str', '_value': 'alpha'}]
+FUNCTION_ENTER 22 <lambda>     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'alpha'}]
+DEPTH_3 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'alpha'}]
+FUNCTION_RETURN 22 <lambda> {'_type': 'str', '_value': 'ahlp'}
+FUNCTION_RETURN 23 transform_token {'_type': 'str', '_value': 'ahlp'}
+32     if token == 'begin':
+32 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'int', '_value': 9}]
+35     elif token == 'end' and scopes.depth() > 0:
+35 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'int', '_value': 9}]
+39         if hashed in active_transforms:
+39 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'int', '_value': 9}]
+30 for token in tokens:
+30 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'beta'}, {'_type': 'int', '_value': 9}]
+31     hashed = hash(transform_token(token)) % 100
+31 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'beta'}, {'_type': 'int', '_value': 9}]
+PARAM_MAPPING transform_token {'t': {'actual_var': 'transform_token(token)', 'value': 'transform_token(token)'}}
+FUNCTION_ENTER 21 transform_token def transform_token(t):
+21 ['t'] [{'_type': 'str', '_value': 'beta'}]
+DEPTH_2 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['t'] [{'_type': 'str', '_value': 'beta'}]
+DEPTH_2 23     return mapper(t)
+23 ['t'] [{'_type': 'str', '_value': 'beta'}]
+FUNCTION_ENTER 22 <lambda>     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'beta'}]
+DEPTH_3 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'beta'}]
+FUNCTION_RETURN 22 <lambda> {'_type': 'str', '_value': 'abet'}
+FUNCTION_RETURN 23 transform_token {'_type': 'str', '_value': 'abet'}
+32     if token == 'begin':
+32 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'beta'}, {'_type': 'int', '_value': 26}]
+35     elif token == 'end' and scopes.depth() > 0:
+35 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'beta'}, {'_type': 'int', '_value': 26}]
+39         if hashed in active_transforms:
+39 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'beta'}, {'_type': 'int', '_value': 26}]
+30 for token in tokens:
+30 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'int', '_value': 26}]
+31     hashed = hash(transform_token(token)) % 100
+31 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'int', '_value': 26}]
+PARAM_MAPPING transform_token {'t': {'actual_var': 'transform_token(token)', 'value': 'transform_token(token)'}}
+FUNCTION_ENTER 21 transform_token def transform_token(t):
+21 ['t'] [{'_type': 'str', '_value': 'gamma'}]
+DEPTH_2 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['t'] [{'_type': 'str', '_value': 'gamma'}]
+DEPTH_2 23     return mapper(t)
+23 ['t'] [{'_type': 'str', '_value': 'gamma'}]
+FUNCTION_ENTER 22 <lambda>     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'gamma'}]
+DEPTH_3 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'gamma'}]
+FUNCTION_RETURN 22 <lambda> {'_type': 'str', '_value': 'agm'}
+FUNCTION_RETURN 23 transform_token {'_type': 'str', '_value': 'agm'}
+32     if token == 'begin':
+32 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'int', '_value': 71}]
+35     elif token == 'end' and scopes.depth() > 0:
+35 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'int', '_value': 71}]
+39         if hashed in active_transforms:
+39 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'int', '_value': 71}]
+30 for token in tokens:
+30 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 71}]
+31     hashed = hash(transform_token(token)) % 100
+31 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 71}]
+PARAM_MAPPING transform_token {'t': {'actual_var': 'transform_token(token)', 'value': 'transform_token(token)'}}
+FUNCTION_ENTER 21 transform_token def transform_token(t):
+21 ['t'] [{'_type': 'str', '_value': 'end'}]
+DEPTH_2 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['t'] [{'_type': 'str', '_value': 'end'}]
+DEPTH_2 23     return mapper(t)
+23 ['t'] [{'_type': 'str', '_value': 'end'}]
+FUNCTION_ENTER 22 <lambda>     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'end'}]
+DEPTH_3 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'end'}]
+FUNCTION_RETURN 22 <lambda> {'_type': 'str', '_value': 'den'}
+FUNCTION_RETURN 23 transform_token {'_type': 'str', '_value': 'den'}
+32     if token == 'begin':
+32 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 86}]
+35     elif token == 'end' and scopes.depth() > 0:
+35 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 86}]
+FUNCTION_ENTER 15 depth     def depth(self):
+15 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}]
+DEPTH_2 16         return len(self.stack)
+16 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}]
+FUNCTION_RETURN 16 depth {'_type': 'int', '_value': 1}
+36         scopes.exit()
+36 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 86}]
+FUNCTION_ENTER 10 exit     def exit(self):
+10 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}]
+DEPTH_2 11         if self.stack:
+11 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}]
+DEPTH_2 12             return self.stack.pop()
+12 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}]
+FUNCTION_RETURN 12 exit {'_type': 'int', '_value': 1}
+37         active_transforms.discard(hashed)
+37 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 86}]
+30 for token in tokens:
+30 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'begin'}, {'_type': 'int', '_value': 86}]
+31     hashed = hash(transform_token(token)) % 100
+31 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'begin'}, {'_type': 'int', '_value': 86}]
+PARAM_MAPPING transform_token {'t': {'actual_var': 'transform_token(token)', 'value': 'transform_token(token)'}}
+FUNCTION_ENTER 21 transform_token def transform_token(t):
+21 ['t'] [{'_type': 'str', '_value': 'begin'}]
+DEPTH_2 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['t'] [{'_type': 'str', '_value': 'begin'}]
+DEPTH_2 23     return mapper(t)
+23 ['t'] [{'_type': 'str', '_value': 'begin'}]
+FUNCTION_ENTER 22 <lambda>     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'begin'}]
+DEPTH_3 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'begin'}]
+FUNCTION_RETURN 22 <lambda> {'_type': 'str', '_value': 'begin'}
+FUNCTION_RETURN 23 transform_token {'_type': 'str', '_value': 'begin'}
+32     if token == 'begin':
+32 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'begin'}, {'_type': 'int', '_value': 97}]
+33         scopes.enter()
+33 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'begin'}, {'_type': 'int', '_value': 97}]
+FUNCTION_ENTER 7 enter     def enter(self):
+7 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}]
+DEPTH_2 8         self.stack.append(len(self.stack)+1)
+8 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}]
+FUNCTION_RETURN 8 enter {'_type': 'None'}
+34         active_transforms.add(hashed)
+34 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'begin'}, {'_type': 'int', '_value': 97}]
+30 for token in tokens:
+30 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'delta'}, {'_type': 'int', '_value': 97}]
+31     hashed = hash(transform_token(token)) % 100
+31 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'delta'}, {'_type': 'int', '_value': 97}]
+PARAM_MAPPING transform_token {'t': {'actual_var': 'transform_token(token)', 'value': 'transform_token(token)'}}
+FUNCTION_ENTER 21 transform_token def transform_token(t):
+21 ['t'] [{'_type': 'str', '_value': 'delta'}]
+DEPTH_2 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['t'] [{'_type': 'str', '_value': 'delta'}]
+DEPTH_2 23     return mapper(t)
+23 ['t'] [{'_type': 'str', '_value': 'delta'}]
+FUNCTION_ENTER 22 <lambda>     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'delta'}]
+DEPTH_3 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'delta'}]
+FUNCTION_RETURN 22 <lambda> {'_type': 'str', '_value': 'adelt'}
+FUNCTION_RETURN 23 transform_token {'_type': 'str', '_value': 'adelt'}
+32     if token == 'begin':
+32 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'delta'}, {'_type': 'int', '_value': 22}]
+35     elif token == 'end' and scopes.depth() > 0:
+35 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'delta'}, {'_type': 'int', '_value': 22}]
+39         if hashed in active_transforms:
+39 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'delta'}, {'_type': 'int', '_value': 22}]
+30 for token in tokens:
+30 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'int', '_value': 22}]
+31     hashed = hash(transform_token(token)) % 100
+31 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'int', '_value': 22}]
+PARAM_MAPPING transform_token {'t': {'actual_var': 'transform_token(token)', 'value': 'transform_token(token)'}}
+FUNCTION_ENTER 21 transform_token def transform_token(t):
+21 ['t'] [{'_type': 'str', '_value': 'epsilon'}]
+DEPTH_2 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['t'] [{'_type': 'str', '_value': 'epsilon'}]
+DEPTH_2 23     return mapper(t)
+23 ['t'] [{'_type': 'str', '_value': 'epsilon'}]
+FUNCTION_ENTER 22 <lambda>     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'epsilon'}]
+DEPTH_3 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'epsilon'}]
+FUNCTION_RETURN 22 <lambda> {'_type': 'str', '_value': 'eilnops'}
+FUNCTION_RETURN 23 transform_token {'_type': 'str', '_value': 'eilnops'}
+32     if token == 'begin':
+32 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'int', '_value': 10}]
+35     elif token == 'end' and scopes.depth() > 0:
+35 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'int', '_value': 10}]
+39         if hashed in active_transforms:
+39 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'int', '_value': 10}]
+30 for token in tokens:
+30 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 10}]
+31     hashed = hash(transform_token(token)) % 100
+31 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 10}]
+PARAM_MAPPING transform_token {'t': {'actual_var': 'transform_token(token)', 'value': 'transform_token(token)'}}
+FUNCTION_ENTER 21 transform_token def transform_token(t):
+21 ['t'] [{'_type': 'str', '_value': 'end'}]
+DEPTH_2 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['t'] [{'_type': 'str', '_value': 'end'}]
+DEPTH_2 23     return mapper(t)
+23 ['t'] [{'_type': 'str', '_value': 'end'}]
+FUNCTION_ENTER 22 <lambda>     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'end'}]
+DEPTH_3 22     mapper = lambda x: ''.join(sorted(set(x)))
+22 ['x'] [{'_type': 'str', '_value': 'end'}]
+FUNCTION_RETURN 22 <lambda> {'_type': 'str', '_value': 'den'}
+FUNCTION_RETURN 23 transform_token {'_type': 'str', '_value': 'den'}
+32     if token == 'begin':
+32 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 86}]
+35     elif token == 'end' and scopes.depth() > 0:
+35 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 86}]
+FUNCTION_ENTER 15 depth     def depth(self):
+15 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}]
+DEPTH_2 16         return len(self.stack)
+16 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}]
+FUNCTION_RETURN 16 depth {'_type': 'int', '_value': 1}
+36         scopes.exit()
+36 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 86}]
+FUNCTION_ENTER 10 exit     def exit(self):
+10 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}]
+DEPTH_2 11         if self.stack:
+11 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}}}]
+DEPTH_2 12             return self.stack.pop()
+12 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}]
+FUNCTION_RETURN 12 exit {'_type': 'int', '_value': 1}
+37         active_transforms.discard(hashed)
+37 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 86}]
+30 for token in tokens:
+30 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 86}]
+42 scope_depth = scopes.depth()
+42 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 86}]
+FUNCTION_ENTER 15 depth     def depth(self):
+15 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}]
+DEPTH_2 16         return len(self.stack)
+16 ['self'] [{'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}]
+FUNCTION_RETURN 16 depth {'_type': 'int', '_value': 0}
+43 print(f"Result: {scope_depth}")
+43 ['token_stream', 'tokens', 'scopes', 'active_transforms', 'token', 'hashed', 'scope_depth'] [{'_type': 'str', '_value': 'begin alpha beta gamma end begin delta epsilon end'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'end'}, {'_type': 'str', '_value': 'begin'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'end'}], '_len': 9}, {'_type': 'object', '_class': 'ScopeStack', '_attrs': {'stack': {'_type': 'list', '_items': [], '_len': 0}}}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 97}], '_len': 1}, {'_type': 'str', '_value': 'end'}, {'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 0}]

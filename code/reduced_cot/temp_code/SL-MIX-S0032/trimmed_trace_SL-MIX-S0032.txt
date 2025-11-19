@@ -1,0 +1,155 @@
+43
+final_checksum
+---
+41 EncryptionSession = namedtuple('EncryptionSession', ['session_id', 'base_key'])
+41 [] []
+42 session = EncryptionSession(session_id=12345, base_key=0x123456)
+42 ['session'] ['EncryptionSession(session_id=12345, base_key=1193046)']
+43 final_checksum = process_encryption_key(session.base_key)
+43 ['session'] ['EncryptionSession(session_id=12345, base_key=1193046)']
+PARAM_MAPPING {'base_key': {'actual_var': 'session.base_key', 'value': 'session.base_key'}}
+FUNCTION_ENTER 15 process_encryption_key def process_encryption_key(base_key):
+15 ['base_key'] [{'_type': 'int', '_value': 1193046}]
+16 segments = [base_key >> i & 0xFF for i in range(0, 24, 8)]
+16 ['base_key', 'i'] ['1193046', '0']
+16 segments = [base_key >> i & 0xFF for i in range(0, 24, 8)]
+16 ['base_key', 'i'] ['1193046', '8']
+16 segments = [base_key >> i & 0xFF for i in range(0, 24, 8)]
+16 ['base_key', 'i'] ['1193046', '16']
+16 segments = [base_key >> i & 0xFF for i in range(0, 24, 8)]
+16 ['base_key', 'segments'] ['1193046', '[86, 52, 18]']
+17 transformed = list(map(transform_key_stage, segments))
+17 ['segments'] ['[86, 52, 18]']
+6 return (key_segment << 2) ^ 0xF0
+6 ['key_segment'] ['86']
+6 return (key_segment << 2) ^ 0xF0
+6 ['key_segment'] ['52']
+6 return (key_segment << 2) ^ 0xF0
+6 ['key_segment'] ['18']
+18 aggregated = reduce(lambda x, y: x | y, transformed)
+18 ['transformed'] ['[424, 32, 184]']
+18 aggregated = reduce(lambda x, y: x | y, transformed)
+18 ['x', 'y'] ['424', '32']
+18 aggregated = reduce(lambda x, y: x | y, transformed)
+18 ['x', 'y'] ['424', '184']
+21 checksum_component = 0
+21 ['aggregated', 'checksum_component'] ['440', '0']
+25 checksum_component = int(exp(log2(aggregated)))
+25 ['aggregated', 'checksum_component'] ['440', '6511']
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'1'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'1'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'0'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'0'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'1'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'0'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'1'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'1'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'0'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'1'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'1'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'1'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'b'] ['6511', "'1'"]
+33 sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['checksum_component', 'sorted_bits'] ['6511', '[0, 0, 0, 0, 1, ...]']
+34 bit_sum = sum(sorted_bits)
+34 ['checksum_component', 'sorted_bits', 'bit_sum'] ['6511', '[0, 0, 0, 0, 1, ...]', '9']
+36 if validate_checksum(checksum_component, bit_sum):
+36 ['checksum_component', 'bit_sum'] ['6511', '9']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['6511', '9']
+11 if target < 0:
+11 ['fragment', 'target'] ['6511', '9']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['6511', '9']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['3255', '8']
+11 if target < 0:
+11 ['fragment', 'target'] ['3255', '8']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['3255', '8']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['1627', '7']
+11 if target < 0:
+11 ['fragment', 'target'] ['1627', '7']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['1627', '7']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['813', '6']
+11 if target < 0:
+11 ['fragment', 'target'] ['813', '6']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['813', '6']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['406', '5']
+11 if target < 0:
+11 ['fragment', 'target'] ['406', '5']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['406', '5']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['203', '5']
+11 if target < 0:
+11 ['fragment', 'target'] ['203', '5']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['203', '5']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['101', '4']
+11 if target < 0:
+11 ['fragment', 'target'] ['101', '4']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['101', '4']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['50', '3']
+11 if target < 0:
+11 ['fragment', 'target'] ['50', '3']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['50', '3']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['25', '3']
+11 if target < 0:
+11 ['fragment', 'target'] ['25', '3']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['25', '3']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['12', '2']
+11 if target < 0:
+11 ['fragment', 'target'] ['12', '2']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['12', '2']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['6', '2']
+11 if target < 0:
+11 ['fragment', 'target'] ['6', '2']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['6', '2']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['3', '2']
+11 if target < 0:
+11 ['fragment', 'target'] ['3', '2']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['3', '2']
+9 if fragment == 0:
+9 ['fragment', 'target'] ['1', '1']
+11 if target < 0:
+11 ['fragment', 'target'] ['1', '1']
+13 return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] ['1', '1']
+9 if fragment == 0:
+9 ['target'] ['0']
+10 return target == 0
+10 ['target'] ['0']
+37 return checksum_component
+37 ['checksum_component'] ['6511']
+FUNCTION_RETURN 37 process_encryption_key {'_type': 'int', '_value': 6511}

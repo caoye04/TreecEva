@@ -1,0 +1,224 @@
+1 from math import log2, exp
+1 [] []
+2 from functools import reduce
+2 [] []
+3 from collections import namedtuple
+3 [] []
+41 EncryptionSession = namedtuple('EncryptionSession', ['session_id', 'base_key'])
+41 [] []
+42 session = EncryptionSession(session_id=12345, base_key=0x123456)
+42 ['session'] [{'_type': 'namedtuple', '_class': 'EncryptionSession', '_attrs': {'session_id': {'_type': 'int', '_value': 12345}, 'base_key': {'_type': 'int', '_value': 1193046}}}]
+43 final_checksum = process_encryption_key(session.base_key)
+43 ['session'] [{'_type': 'namedtuple', '_class': 'EncryptionSession', '_attrs': {'session_id': {'_type': 'int', '_value': 12345}, 'base_key': {'_type': 'int', '_value': 1193046}}}]
+PARAM_MAPPING process_encryption_key {'base_key': {'actual_var': 'session.base_key', 'value': 'session.base_key'}}
+FUNCTION_ENTER 15 process_encryption_key def process_encryption_key(base_key):
+15 ['base_key'] [{'_type': 'int', '_value': 1193046}]
+DEPTH_2 16     segments = [base_key >> i & 0xFF for i in range(0, 24, 8)]
+16 ['base_key', 'i'] [{'_type': 'int', '_value': 1193046}, {'_type': 'int', '_value': 0}]
+DEPTH_2 16     segments = [base_key >> i & 0xFF for i in range(0, 24, 8)]
+16 ['base_key', 'i'] [{'_type': 'int', '_value': 1193046}, {'_type': 'int', '_value': 8}]
+DEPTH_2 16     segments = [base_key >> i & 0xFF for i in range(0, 24, 8)]
+16 ['base_key', 'i'] [{'_type': 'int', '_value': 1193046}, {'_type': 'int', '_value': 16}]
+DEPTH_2 16     segments = [base_key >> i & 0xFF for i in range(0, 24, 8)]
+16 ['base_key', 'segments'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}]
+DEPTH_2 17     transformed = list(map(transform_key_stage, segments))
+17 ['base_key', 'segments'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}]
+PARAM_MAPPING transform_key_stage {'key_segment': {'actual_var': 'map(transform_key_stage', 'value': 'map(transform_key_stage'}}
+FUNCTION_ENTER 5 transform_key_stage def transform_key_stage(key_segment):
+5 ['key_segment'] [{'_type': 'int', '_value': 86}]
+DEPTH_3 6     return (key_segment << 2) ^ 0xF0
+6 ['key_segment'] [{'_type': 'int', '_value': 86}]
+FUNCTION_RETURN 6 transform_key_stage {'_type': 'int', '_value': 424}
+FUNCTION_ENTER 5 transform_key_stage def transform_key_stage(key_segment):
+5 ['key_segment'] [{'_type': 'int', '_value': 52}]
+DEPTH_3 6     return (key_segment << 2) ^ 0xF0
+6 ['key_segment'] [{'_type': 'int', '_value': 52}]
+FUNCTION_RETURN 6 transform_key_stage {'_type': 'int', '_value': 32}
+FUNCTION_ENTER 5 transform_key_stage def transform_key_stage(key_segment):
+5 ['key_segment'] [{'_type': 'int', '_value': 18}]
+DEPTH_3 6     return (key_segment << 2) ^ 0xF0
+6 ['key_segment'] [{'_type': 'int', '_value': 18}]
+FUNCTION_RETURN 6 transform_key_stage {'_type': 'int', '_value': 184}
+DEPTH_2 18     aggregated = reduce(lambda x, y: x | y, transformed)
+18 ['base_key', 'segments', 'transformed'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}]
+FUNCTION_ENTER 18 <lambda>     aggregated = reduce(lambda x, y: x | y, transformed)
+18 ['x', 'y'] [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}]
+DEPTH_3 18     aggregated = reduce(lambda x, y: x | y, transformed)
+18 ['x', 'y'] [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}]
+FUNCTION_RETURN 18 <lambda> {'_type': 'int', '_value': 424}
+FUNCTION_ENTER 18 <lambda>     aggregated = reduce(lambda x, y: x | y, transformed)
+18 ['x', 'y'] [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 184}]
+DEPTH_3 18     aggregated = reduce(lambda x, y: x | y, transformed)
+18 ['x', 'y'] [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 184}]
+FUNCTION_RETURN 18 <lambda> {'_type': 'int', '_value': 440}
+DEPTH_2 20     operation_code = aggregated % 4
+20 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}]
+DEPTH_2 21     checksum_component = 0
+21 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+DEPTH_2 23     match operation_code:
+23 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+DEPTH_2 24         case 0:
+24 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+DEPTH_2 25             checksum_component = int(exp(log2(aggregated)))
+25 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'b'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 33     sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
+33 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'sorted_bits'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}], '_len': 13}]
+DEPTH_2 34     bit_sum = sum(sorted_bits)
+34 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'sorted_bits', 'bit_sum'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}], '_len': 13}, {'_type': 'int', '_value': 9}]
+DEPTH_2 36     if validate_checksum(checksum_component, bit_sum):
+36 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'sorted_bits', 'bit_sum'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}], '_len': 13}, {'_type': 'int', '_value': 9}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 6511}, {'_type': 'int', '_value': 9}]
+DEPTH_3 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 6511}, {'_type': 'int', '_value': 9}]
+DEPTH_3 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 6511}, {'_type': 'int', '_value': 9}]
+DEPTH_3 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 6511}, {'_type': 'int', '_value': 9}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 3255}, {'_type': 'int', '_value': 8}]
+DEPTH_4 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 3255}, {'_type': 'int', '_value': 8}]
+DEPTH_4 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 3255}, {'_type': 'int', '_value': 8}]
+DEPTH_4 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 3255}, {'_type': 'int', '_value': 8}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 1627}, {'_type': 'int', '_value': 7}]
+DEPTH_5 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 1627}, {'_type': 'int', '_value': 7}]
+DEPTH_5 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 1627}, {'_type': 'int', '_value': 7}]
+DEPTH_5 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 1627}, {'_type': 'int', '_value': 7}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 813}, {'_type': 'int', '_value': 6}]
+DEPTH_6 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 813}, {'_type': 'int', '_value': 6}]
+DEPTH_6 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 813}, {'_type': 'int', '_value': 6}]
+DEPTH_6 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 813}, {'_type': 'int', '_value': 6}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 406}, {'_type': 'int', '_value': 5}]
+DEPTH_7 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 406}, {'_type': 'int', '_value': 5}]
+DEPTH_7 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 406}, {'_type': 'int', '_value': 5}]
+DEPTH_7 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 406}, {'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 203}, {'_type': 'int', '_value': 5}]
+DEPTH_8 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 203}, {'_type': 'int', '_value': 5}]
+DEPTH_8 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 203}, {'_type': 'int', '_value': 5}]
+DEPTH_8 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 203}, {'_type': 'int', '_value': 5}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 101}, {'_type': 'int', '_value': 4}]
+DEPTH_9 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 101}, {'_type': 'int', '_value': 4}]
+DEPTH_9 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 101}, {'_type': 'int', '_value': 4}]
+DEPTH_9 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 101}, {'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 50}, {'_type': 'int', '_value': 3}]
+DEPTH_10 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 50}, {'_type': 'int', '_value': 3}]
+DEPTH_10 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 50}, {'_type': 'int', '_value': 3}]
+DEPTH_10 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 50}, {'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 3}]
+DEPTH_11 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 3}]
+DEPTH_11 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 3}]
+DEPTH_11 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 3}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}]
+DEPTH_12 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}]
+DEPTH_12 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}]
+DEPTH_12 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 2}]
+DEPTH_13 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 2}]
+DEPTH_13 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 2}]
+DEPTH_13 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 2}]
+DEPTH_14 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 2}]
+DEPTH_14 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 2}]
+DEPTH_14 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 2}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}]
+DEPTH_15 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}]
+DEPTH_15 11     if target < 0:
+11 ['fragment', 'target'] [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}]
+DEPTH_15 13     return validate_checksum(fragment >> 1, target - (fragment & 1))
+13 ['fragment', 'target'] [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}]
+FUNCTION_ENTER 8 validate_checksum def validate_checksum(fragment, target):
+8 ['fragment', 'target'] [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+DEPTH_16 9     if fragment == 0:
+9 ['fragment', 'target'] [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+DEPTH_16 10         return target == 0
+10 ['fragment', 'target'] [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 10 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+FUNCTION_RETURN 13 validate_checksum {'_type': 'bool', '_value': True}
+DEPTH_2 37         return checksum_component
+37 ['base_key', 'segments', 'transformed', 'aggregated', 'operation_code', 'checksum_component', 'sorted_bits', 'bit_sum'] [{'_type': 'int', '_value': 1193046}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 86}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 424}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 184}], '_len': 3}, {'_type': 'int', '_value': 440}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 6511}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}], '_len': 13}, {'_type': 'int', '_value': 9}]
+FUNCTION_RETURN 37 process_encryption_key {'_type': 'int', '_value': 6511}
+44 print(f"Result: {final_checksum}")
+44 ['session', 'final_checksum'] [{'_type': 'namedtuple', '_class': 'EncryptionSession', '_attrs': {'session_id': {'_type': 'int', '_value': 12345}, 'base_key': {'_type': 'int', '_value': 1193046}}}, {'_type': 'int', '_value': 6511}]

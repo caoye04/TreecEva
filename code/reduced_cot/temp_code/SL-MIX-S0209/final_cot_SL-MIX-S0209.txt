@@ -1,0 +1,40 @@
+Target: Find the value of variable final_metric after [line 26] executes
+
+[line 11]  data_stream = [3, 7, 2, 9, 1, 8, 4, 6, 5]
+Compute: [3, 7, 2, 9, 1, 8, 4, 6, 5] = [3, 7, 2, 9, 1, ...]
+[line 12]  threshold_filter = lambda x: x > 4
+Compute: lambda x: x > 4 = ?
+[line 13]  transformer = lambda x: x * 2 if x % 2 == 0 else x + 1
+Compute: lambda x: x * 2 if x % 2 == 0 else x + 1 = ?
+[line 8]  wrapper.calls = 0
+(Missing param: 'var')
+[line 9]  return wrapper
+Return: wrapper
+[line 22]  processed_data = process_chunk(data_stream)
+Call function process_chunk(data_stream=[3, 7, 2, 9, 1, ...] (defined at [line 11]))
+[line 7]  return func(*args, **kwargs)
+Return: func(*args, **kwargs)
+[line 17]  squared_values = map(lambda val: val**2, chunk)
+Call function map(lambda val: val**2, chunk=[3, 7, 2, 9, 1, ...] (an unknown source))
+[line 18]  filtered_mask = map(threshold_filter, squared_values)
+Call function map(threshold_filter, squared_values=<map object at 0x000001D3DC6474F0> (defined at [line 17]))
+[line 19]  selected_items = list(compress(squared_values, filtered_mask))
+Call function list(compress(squared_values, filtered_mask))
+[line 20]  return selected_items
+Return: selected_items=[9, 4, 1, 16] (defined at [line 19])
+[line 23]  transformed_values = list(map(transformer, processed_data))
+Call function list(map(transformer, processed_data))
+[line 24]  sorted_values = sorted(transformed_values, reverse=True)
+Call function sorted(transformed_values, reverse=True)
+[line 26]  final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+Call function reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values=[32, 10, 8, 2] (defined at [line 24]), 0)
+[line 26]  final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+Call function reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values=[32, 10, 8, 2] (defined at [line 24]), 0)
+[line 26]  final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+Call function reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+[line 26]  final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+Call function reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+[line 26]  final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+Call function reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+
+Answer: final_metric = ? (last updated on defined at [line 26])

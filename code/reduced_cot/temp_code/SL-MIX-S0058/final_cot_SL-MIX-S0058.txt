@@ -1,0 +1,37 @@
+Target: Find the value of variable smoothed_average_temperature after [line 13] executes
+
+[line 3]  temperature_deviations = [1.2, -0.5, 0.8, -1.0, 2.3, -0.2, 1.7]
+Compute: [1.2, -0.5, 0.8, -1.0, 2.3, -0.2, 1.7] = [1.2, -0.5, 0.8, -1.0, 2.3, ...]
+[line 4]  window_size = 3
+Assign: window_size = 3
+[line 5]  weighted_readings = deque(maxlen=window_size)
+Call function deque(maxlen=window_size)
+[line 6]  total_weighted_sum = 0.0
+Assign: total_weighted_sum = 0.0
+[line 8]  for idx, deviation in enumerate(temperature_deviations):
+(Missing param: 'iter_var')
+[line 9]  weighted_value = deviation * (idx + 1)
+Compute: deviation * (idx + 1), where deviation=1.2 (an unknown source), idx=0 (an unknown source) = 1.2
+[line 11]  total_weighted_sum += weighted_value
+Update: total_weighted_sum changed from 0.0 (defined at defined at [line 6]) to 0.0+weighted_value = 1.2
+[line 8]  for idx, deviation in enumerate(temperature_deviations):
+(Missing param: 'iter_var')
+[line 9]  weighted_value = deviation * (idx + 1)
+Compute: deviation * (idx + 1), where deviation=-0.5 (an unknown source), idx=1 (an unknown source) = -1.0
+[line 11]  total_weighted_sum += weighted_value
+Update: total_weighted_sum changed from 1.2 (defined at defined at [line 11]) to 1.2+weighted_value = 0.19999999999999996
+... [Line 8] repeats 4 more times ...
+... [Line 8] repeats 4 more times ...
+... [Line 8] repeats 4 more times ...
+[line 8]  for idx, deviation in enumerate(temperature_deviations):
+(Missing param: 'iter_var')
+[line 9]  weighted_value = deviation * (idx + 1)
+Compute: deviation * (idx + 1), where deviation=1.7 (an unknown source), idx=6 (an unknown source) = 11.9
+[line 11]  total_weighted_sum += weighted_value
+Update: total_weighted_sum changed from 8.900000000000002 (defined at defined at [line 11]) to 8.900000000000002+weighted_value = 20.800000000000004
+[line 8]  for idx, deviation in enumerate(temperature_deviations):
+Loop End: Iteration finished
+[line 13]  smoothed_average_temperature = total_weighted_sum / len(weighted_readings)
+Compute: total_weighted_sum / len(weighted_readings), where total_weighted_sum=20.800000000000004 (defined at [line 11]), weighted_readings=deque([11.5, -1.2000000000000002, 11.9], maxlen=3) (defined at [line 5]) = 6.9333333333333345
+
+Answer: smoothed_average_temperature = 6.9333333333333345 (last updated on defined at [line 13])

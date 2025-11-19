@@ -1,0 +1,233 @@
+Target: Find the value of variable processed_signal_strength after [line 61] executes
+
+[line 11]  root = SignalNode(15)
+Call function SignalNode(15)
+[line 12]  root.left = SignalNode(7)
+(Missing param: 'func_name')
+[line 13]  root.right = SignalNode(22)
+(Missing param: 'func_name')
+[line 14]  root.left.left = SignalNode(3)
+(Missing param: 'func_name')
+[line 15]  root.left.right = SignalNode(11)
+(Missing param: 'func_name')
+[line 16]  root.right.left = SignalNode(19)
+(Missing param: 'func_name')
+[line 17]  root.right.right = SignalNode(25)
+(Missing param: 'func_name')
+[line 37]  signal_amplitudes = [2, 4, 8, 16, 32]
+Compute: [2, 4, 8, 16, 32] = [2, 4, 8, 16, 32]
+[line 38]  attenuation_factors = [0.5, 0.25, 0.75, 0.125, 1.0]
+Compute: [0.5, 0.25, 0.75, 0.125, 1.0] = [0.5, 0.25, 0.75, 0.125, 1.0]
+[line 41]  attenuated_signals = [amp * att for amp, att in zip(signal_amplitudes, attenuation_factors)]
+Compute: [amp * att for amp, att in zip(signal_amplitudes, attenuation_factors)], where amp=2 (an unknown source), att=0.5 (an unknown source), signal_amplitudes=[2, 4, 8, 16, 32] (defined at [line 37]), attenuation_factors=[0.5, 0.25, 0.75, 0.125, 1.0] (defined at [line 38]) = ?
+[line 44]  signal_lookup = defaultdict(lambda: 0)
+Call function defaultdict(lambda: 0)
+[line 45]  for i, signal in enumerate(attenuated_signals):
+(Missing param: 'iter_var')
+[line 46]  signal_lookup[i] = int(signal) if signal.is_integer() else round(signal, 2)
+(Missing param: 'result')
+[line 45]  for i, signal in enumerate(attenuated_signals):
+(Missing param: 'iter_var')
+[line 46]  signal_lookup[i] = int(signal) if signal.is_integer() else round(signal, 2)
+(Missing param: 'result')
+... [Line 45] repeats 2 more times ...
+... [Line 45] repeats 2 more times ...
+[line 45]  for i, signal in enumerate(attenuated_signals):
+(Missing param: 'iter_var')
+[line 46]  signal_lookup[i] = int(signal) if signal.is_integer() else round(signal, 2)
+(Missing param: 'result')
+[line 45]  for i, signal in enumerate(attenuated_signals):
+Loop End: Iteration finished
+[line 49]  tree_result = process_signal(root)
+Call function process_signal(root=SignalNode(...) (defined at [line 11]))
+[line 21]  if not node:
+Condition: True, entering 'if' block
+[line 25]  transformed_value = math.log(node.value) if node.value > 10 else node.value
+Compute: math.log(node.value) if node.value > 10 else node.value, where node=SignalNode(value=15) (an unknown source) = 2.70805020110221
+[line 28]  left_result = process_signal(node.left)
+Call function process_signal(node.left)
+[line 20]  def process_signal(node):
+Enter function process_signal: node=SignalNode(value=7, left=SignalNode(value=3, left=None, right=None), right=SignalNode(value=11, left=None, right=None))
+  [line 21]  if not node:
+  Condition: True, entering 'if' block
+  [line 25]  transformed_value = math.log(node.value) if node.value > 10 else node.value
+  Compute: math.log(node.value) if node.value > 10 else node.value, where node=SignalNode(value=7) (parameter node) = 7
+  [line 28]  left_result = process_signal(node.left)
+  Call function process_signal(node.left)
+  [line 20]  def process_signal(node):
+  Enter function process_signal: node=SignalNode(value=3, left=None, right=None)
+    [line 21]  if not node:
+    Condition: True, entering 'if' block
+    [line 25]  transformed_value = math.log(node.value) if node.value > 10 else node.value
+    Compute: math.log(node.value) if node.value > 10 else node.value, where node=SignalNode(value=3) (parameter node) = 3
+    [line 28]  left_result = process_signal(node.left)
+    Call function process_signal(node.left)
+    [line 20]  def process_signal(node):
+    Enter function process_signal: node=None
+      [line 21]  if not node:
+      Condition: True, entering 'if' block
+      [line 22]  return 0
+      Return: 0
+    Function process_signal returns 0
+    [line 29]  right_result = process_signal(node.right)
+    Call function process_signal(node.right)
+    [line 20]  def process_signal(node):
+    Enter function process_signal: node=None
+      [line 21]  if not node:
+      Condition: True, entering 'if' block
+      [line 22]  return 0
+      Return: 0
+    Function process_signal returns 0
+    [line 32]  combined = (int(transformed_value) ^ int(left_result)) | int(right_result)
+    Compute: (int(transformed_value) ^ int(left_result)) | int(right_result), where transformed_value=3 (defined at [line 25]), left_result=0 (defined at [line 28]), right_result=0 (defined at [line 29]) = 3
+    [line 34]  return combined
+    Return: combined=3 (defined at [line 32])
+  Function process_signal returns 3
+  [line 29]  right_result = process_signal(node.right)
+  Call function process_signal(node.right)
+  [line 20]  def process_signal(node):
+  Enter function process_signal: node=SignalNode(value=11, left=None, right=None)
+    [line 21]  if not node:
+    Condition: True, entering 'if' block
+    [line 25]  transformed_value = math.log(node.value) if node.value > 10 else node.value
+    Compute: math.log(node.value) if node.value > 10 else node.value, where node=SignalNode(value=11) (parameter node) = 2.3978952727983707
+    [line 28]  left_result = process_signal(node.left)
+    Call function process_signal(node.left)
+    [line 20]  def process_signal(node):
+    Enter function process_signal: node=None
+      [line 21]  if not node:
+      Condition: True, entering 'if' block
+      [line 22]  return 0
+      Return: 0
+    Function process_signal returns 0
+    [line 29]  right_result = process_signal(node.right)
+    Call function process_signal(node.right)
+    [line 20]  def process_signal(node):
+    Enter function process_signal: node=None
+      [line 21]  if not node:
+      Condition: True, entering 'if' block
+      [line 22]  return 0
+      Return: 0
+    Function process_signal returns 0
+    [line 32]  combined = (int(transformed_value) ^ int(left_result)) | int(right_result)
+    Compute: (int(transformed_value) ^ int(left_result)) | int(right_result), where transformed_value=2.3978952727983707 (defined at [line 25]), left_result=0 (defined at [line 28]), right_result=0 (defined at [line 29]) = 2
+    [line 34]  return combined
+    Return: combined=2 (defined at [line 32])
+  Function process_signal returns 2
+  [line 32]  combined = (int(transformed_value) ^ int(left_result)) | int(right_result)
+  Compute: (int(transformed_value) ^ int(left_result)) | int(right_result), where transformed_value=7 (defined at [line 25]), left_result=3 (defined at [line 28]), right_result=2 (defined at [line 29]) = 6
+  [line 34]  return combined
+  Return: combined=6 (defined at [line 32])
+Function process_signal returns 6
+[line 29]  right_result = process_signal(node.right)
+Call function process_signal(node.right)
+[line 20]  def process_signal(node):
+Enter function process_signal: node=SignalNode(value=22, left=SignalNode(value=19, left=None, right=None), right=SignalNode(value=25, left=None, right=None))
+  [line 21]  if not node:
+  Condition: True, entering 'if' block
+  [line 25]  transformed_value = math.log(node.value) if node.value > 10 else node.value
+  Compute: math.log(node.value) if node.value > 10 else node.value, where node=SignalNode(value=22) (parameter node) = 3.091042453358316
+  [line 28]  left_result = process_signal(node.left)
+  Call function process_signal(node.left)
+  [line 20]  def process_signal(node):
+  Enter function process_signal: node=SignalNode(value=19, left=None, right=None)
+    [line 21]  if not node:
+    Condition: True, entering 'if' block
+    [line 25]  transformed_value = math.log(node.value) if node.value > 10 else node.value
+    Compute: math.log(node.value) if node.value > 10 else node.value, where node=SignalNode(value=19) (parameter node) = 2.9444389791664403
+    [line 28]  left_result = process_signal(node.left)
+    Call function process_signal(node.left)
+    [line 20]  def process_signal(node):
+    Enter function process_signal: node=None
+      [line 21]  if not node:
+      Condition: True, entering 'if' block
+      [line 22]  return 0
+      Return: 0
+    Function process_signal returns 0
+    [line 29]  right_result = process_signal(node.right)
+    Call function process_signal(node.right)
+    [line 20]  def process_signal(node):
+    Enter function process_signal: node=None
+      [line 21]  if not node:
+      Condition: True, entering 'if' block
+      [line 22]  return 0
+      Return: 0
+    Function process_signal returns 0
+    [line 32]  combined = (int(transformed_value) ^ int(left_result)) | int(right_result)
+    Compute: (int(transformed_value) ^ int(left_result)) | int(right_result), where transformed_value=2.9444389791664403 (defined at [line 25]), left_result=0 (defined at [line 28]), right_result=0 (defined at [line 29]) = 2
+    [line 34]  return combined
+    Return: combined=2 (defined at [line 32])
+  Function process_signal returns 2
+  [line 29]  right_result = process_signal(node.right)
+  Call function process_signal(node.right)
+  [line 20]  def process_signal(node):
+  Enter function process_signal: node=SignalNode(value=25, left=None, right=None)
+    [line 21]  if not node:
+    Condition: True, entering 'if' block
+    [line 25]  transformed_value = math.log(node.value) if node.value > 10 else node.value
+    Compute: math.log(node.value) if node.value > 10 else node.value, where node=SignalNode(value=25) (parameter node) = 3.2188758248682006
+    [line 28]  left_result = process_signal(node.left)
+    Call function process_signal(node.left)
+    [line 20]  def process_signal(node):
+    Enter function process_signal: node=None
+      [line 21]  if not node:
+      Condition: True, entering 'if' block
+      [line 22]  return 0
+      Return: 0
+    Function process_signal returns 0
+    [line 29]  right_result = process_signal(node.right)
+    Call function process_signal(node.right)
+    [line 20]  def process_signal(node):
+    Enter function process_signal: node=None
+      [line 21]  if not node:
+      Condition: True, entering 'if' block
+      [line 22]  return 0
+      Return: 0
+    Function process_signal returns 0
+    [line 32]  combined = (int(transformed_value) ^ int(left_result)) | int(right_result)
+    Compute: (int(transformed_value) ^ int(left_result)) | int(right_result), where transformed_value=3.2188758248682006 (defined at [line 25]), left_result=0 (defined at [line 28]), right_result=0 (defined at [line 29]) = 3
+    [line 34]  return combined
+    Return: combined=3 (defined at [line 32])
+  Function process_signal returns 3
+  [line 32]  combined = (int(transformed_value) ^ int(left_result)) | int(right_result)
+  Compute: (int(transformed_value) ^ int(left_result)) | int(right_result), where transformed_value=3.091042453358316 (defined at [line 25]), left_result=2 (defined at [line 28]), right_result=3 (defined at [line 29]) = 3
+  [line 34]  return combined
+  Return: combined=3 (defined at [line 32])
+Function process_signal returns 3
+[line 32]  combined = (int(transformed_value) ^ int(left_result)) | int(right_result)
+Compute: (int(transformed_value) ^ int(left_result)) | int(right_result), where transformed_value=2.70805020110221 (defined at [line 25]), left_result=6 (defined at [line 28]), right_result=3 (defined at [line 29]) = 7
+[line 34]  return combined
+Return: combined=7 (defined at [line 32])
+[line 52]  processed_signal_strength = tree_result
+Compute: tree_result, where tree_result=7 (defined at [line 49]) = 7
+[line 53]  for key in sorted(signal_lookup.keys(), reverse=True):
+Loop Start: key takes its first value 4
+[line 54]  if key % 2 == 0 and signal_lookup[key] > 5:
+Condition: True, entering 'if' block
+[line 55]  processed_signal_strength = processed_signal_strength & int(signal_lookup[key])
+Compute: processed_signal_strength & int(signal_lookup[key]), where processed_signal_strength=7 (defined at [line 52]), signal_lookup={0: 1, 1: 1, 2: 6, ...} (defined at [line 44]), key=4 (defined at [line 53]) = 0
+[line 53]  for key in sorted(signal_lookup.keys(), reverse=True):
+Loop Iteration: key is now 3 (iteration 2)
+[line 54]  if key % 2 == 0 and signal_lookup[key] > 5:
+Condition: True, entering 'if' block
+[line 56]  elif key % 2 != 0 or signal_lookup[key] <= 5:
+'elif' Condition: True, entering block
+[line 57]  processed_signal_strength = processed_signal_strength | int(signal_lookup[key])
+Compute: processed_signal_strength | int(signal_lookup[key]), where processed_signal_strength=0 (defined at [line 55]), signal_lookup={0: 1, 1: 1, 2: 6, ...} (defined at [line 44]), key=3 (defined at [line 53]) = 2
+... [Line 53] repeats 2 more times ...
+... [Line 53] repeats 2 more times ...
+... [Line 53] repeats 2 more times ...
+[line 53]  for key in sorted(signal_lookup.keys(), reverse=True):
+Loop Iteration: key is now 0 (iteration 5)
+[line 54]  if key % 2 == 0 and signal_lookup[key] > 5:
+Condition: True, entering 'if' block
+[line 56]  elif key % 2 != 0 or signal_lookup[key] <= 5:
+'elif' Condition: True, entering block
+[line 57]  processed_signal_strength = processed_signal_strength | int(signal_lookup[key])
+Compute: processed_signal_strength | int(signal_lookup[key]), where processed_signal_strength=3 (defined at [line 57]), signal_lookup={0: 1, 1: 1, 2: 6, ...} (defined at [line 44]), key=0 (defined at [line 53]) = 3
+[line 53]  for key in sorted(signal_lookup.keys(), reverse=True):
+Loop End: Iteration finished
+[line 60]  if processed_signal_strength > 20:
+Condition: True, entering 'if' block
+
+Answer: processed_signal_strength = 3 (last updated on defined at [line 57])

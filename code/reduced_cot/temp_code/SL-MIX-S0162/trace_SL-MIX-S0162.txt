@@ -1,0 +1,712 @@
+1 import heapq
+1 [] []
+2 from collections import defaultdict
+2 [] []
+13 logs = [
+13 ['logs'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}]
+21 priority_heap = []
+21 ['logs', 'priority_heap'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [], '_len': 0}]
+22 transformed_logs = {}
+22 ['logs', 'priority_heap', 'transformed_logs'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'dict', '_items': {}, '_len': 0}]
+24 for priority, timestamp in logs:
+24 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'dict', '_items': {}, '_len': 0}, {'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}]
+25     new_timestamp = cipher_transform(timestamp)
+25 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'dict', '_items': {}, '_len': 0}, {'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}]
+PARAM_MAPPING cipher_transform {'timestamp_str': {'actual_var': 'timestamp', 'value': '2023-10-01T12:34:56'}}
+FUNCTION_ENTER 4 cipher_transform def cipher_transform(timestamp_str):
+4 ['timestamp_str'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}]
+DEPTH_2 5     transformed = ''
+5 ['timestamp_str', 'transformed'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': ''}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': ''}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': ''}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:6'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:6'}, {'_type': 'str', '_value': '4'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:6'}, {'_type': 'str', '_value': '4'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67'}, {'_type': 'str', '_value': '4'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67:'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67:'}, {'_type': 'str', '_value': '5'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67:'}, {'_type': 'str', '_value': '5'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67:8'}, {'_type': 'str', '_value': '5'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67:8'}, {'_type': 'str', '_value': '6'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67:8'}, {'_type': 'str', '_value': '6'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'str', '_value': '6'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'str', '_value': '6'}]
+DEPTH_2 11     return transformed
+11 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'str', '_value': '6'}]
+FUNCTION_RETURN 11 cipher_transform {'_type': 'str', '_value': '5356-43-34T45:67:89'}
+26     transformed_logs[new_timestamp] = priority
+26 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}}, '_len': 1}, {'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}]
+27     heapq.heappush(priority_heap, (priority, new_timestamp))
+27 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 1}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}}, '_len': 1}, {'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}]
+24 for priority, timestamp in logs:
+24 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 1}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}}, '_len': 1}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}]
+25     new_timestamp = cipher_transform(timestamp)
+25 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 1}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}}, '_len': 1}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}]
+PARAM_MAPPING cipher_transform {'timestamp_str': {'actual_var': 'timestamp', 'value': '2023-10-01T11:22:33'}}
+FUNCTION_ENTER 4 cipher_transform def cipher_transform(timestamp_str):
+4 ['timestamp_str'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}]
+DEPTH_2 5     transformed = ''
+5 ['timestamp_str', 'transformed'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': ''}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': ''}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': ''}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:5'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:5'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:5'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55:'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55:'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55:'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55:6'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55:6'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55:6'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 11     return transformed
+11 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}, {'_type': 'str', '_value': '3'}]
+FUNCTION_RETURN 11 cipher_transform {'_type': 'str', '_value': '5356-43-34T44:55:66'}
+26     transformed_logs[new_timestamp] = priority
+26 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 1}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}}, '_len': 2}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}]
+27     heapq.heappush(priority_heap, (priority, new_timestamp))
+27 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}}, '_len': 2}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}]
+24 for priority, timestamp in logs:
+24 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}}, '_len': 2}, {'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}]
+25     new_timestamp = cipher_transform(timestamp)
+25 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}}, '_len': 2}, {'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}]
+PARAM_MAPPING cipher_transform {'timestamp_str': {'actual_var': 'timestamp', 'value': '2023-10-01T10:10:10'}}
+FUNCTION_ENTER 4 cipher_transform def cipher_transform(timestamp_str):
+4 ['timestamp_str'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}]
+DEPTH_2 5     transformed = ''
+5 ['timestamp_str', 'transformed'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': ''}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': ''}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': ''}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43:'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43:'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43:'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43:4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43:4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43:4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 11     return transformed
+11 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}, {'_type': 'str', '_value': '0'}]
+FUNCTION_RETURN 11 cipher_transform {'_type': 'str', '_value': '5356-43-34T43:43:43'}
+26     transformed_logs[new_timestamp] = priority
+26 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}}, '_len': 3}, {'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}]
+27     heapq.heappush(priority_heap, (priority, new_timestamp))
+27 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 3}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}}, '_len': 3}, {'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}]
+24 for priority, timestamp in logs:
+24 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 3}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}}, '_len': 3}, {'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}]
+25     new_timestamp = cipher_transform(timestamp)
+25 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 3}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}}, '_len': 3}, {'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}]
+PARAM_MAPPING cipher_transform {'timestamp_str': {'actual_var': 'timestamp', 'value': '2023-10-01T09:08:07'}}
+FUNCTION_ENTER 4 cipher_transform def cipher_transform(timestamp_str):
+4 ['timestamp_str'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}]
+DEPTH_2 5     transformed = ''
+5 ['timestamp_str', 'transformed'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': ''}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': ''}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': ''}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T3'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T3'}, {'_type': 'str', '_value': '9'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T3'}, {'_type': 'str', '_value': '9'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32'}, {'_type': 'str', '_value': '9'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:3'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:3'}, {'_type': 'str', '_value': '8'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:3'}, {'_type': 'str', '_value': '8'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31'}, {'_type': 'str', '_value': '8'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31:'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31:'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31:'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31:3'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31:3'}, {'_type': 'str', '_value': '7'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31:3'}, {'_type': 'str', '_value': '7'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}, {'_type': 'str', '_value': '7'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}, {'_type': 'str', '_value': '7'}]
+DEPTH_2 11     return transformed
+11 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}, {'_type': 'str', '_value': '7'}]
+FUNCTION_RETURN 11 cipher_transform {'_type': 'str', '_value': '5356-43-34T32:31:30'}
+26     transformed_logs[new_timestamp] = priority
+26 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 3}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}}, '_len': 4}, {'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}]
+27     heapq.heappush(priority_heap, (priority, new_timestamp))
+27 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 4}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}}, '_len': 4}, {'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}]
+24 for priority, timestamp in logs:
+24 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 4}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}}, '_len': 4}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}]
+25     new_timestamp = cipher_transform(timestamp)
+25 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 4}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}}, '_len': 4}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}]
+PARAM_MAPPING cipher_transform {'timestamp_str': {'actual_var': 'timestamp', 'value': '2023-10-01T13:14:15'}}
+FUNCTION_ENTER 4 cipher_transform def cipher_transform(timestamp_str):
+4 ['timestamp_str'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}]
+DEPTH_2 5     transformed = ''
+5 ['timestamp_str', 'transformed'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': ''}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': ''}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': ''}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '53'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '2'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '535'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-4'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '-'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '0'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-3'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T4'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46'}, {'_type': 'str', '_value': '3'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:4'}, {'_type': 'str', '_value': '4'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:4'}, {'_type': 'str', '_value': '4'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47'}, {'_type': 'str', '_value': '4'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 10             transformed += char
+10 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:'}, {'_type': 'str', '_value': ':'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:4'}, {'_type': 'str', '_value': '1'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:4'}, {'_type': 'str', '_value': '5'}]
+DEPTH_2 7         if char.isdigit():
+7 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:4'}, {'_type': 'str', '_value': '5'}]
+DEPTH_2 8             transformed += str((int(char) + 3) % 10)
+8 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'str', '_value': '5'}]
+DEPTH_2 6     for char in timestamp_str:
+6 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'str', '_value': '5'}]
+DEPTH_2 11     return transformed
+11 ['timestamp_str', 'transformed', 'char'] [{'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'str', '_value': '5'}]
+FUNCTION_RETURN 11 cipher_transform {'_type': 'str', '_value': '5356-43-34T46:47:48'}
+26     transformed_logs[new_timestamp] = priority
+26 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}], '_len': 4}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}]
+27     heapq.heappush(priority_heap, (priority, new_timestamp))
+27 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}], '_len': 5}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}]
+24 for priority, timestamp in logs:
+24 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}], '_len': 5}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}]
+30 alert_scores = []
+30 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}], '_len': 5}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [], '_len': 0}]
+31 for _ in range(min(3, len(priority_heap))):
+31 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}], '_len': 5}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}]
+32     score, _ = heapq.heappop(priority_heap)
+32 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}], '_len': 4}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}, {'_type': 'int', '_value': 1}]
+33     alert_scores.append(score)
+33 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}], '_len': 4}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}, {'_type': 'str', '_value': '5356-43-34T32:31:30'}, {'_type': 'int', '_value': 1}]
+31 for _ in range(min(3, len(priority_heap))):
+31 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}], '_len': 4}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}]
+32     score, _ = heapq.heappop(priority_heap)
+32 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 3}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}], '_len': 1}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}, {'_type': 'int', '_value': 2}]
+33     alert_scores.append(score)
+33 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 3}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}], '_len': 2}, {'_type': 'str', '_value': '5356-43-34T44:55:66'}, {'_type': 'int', '_value': 2}]
+31 for _ in range(min(3, len(priority_heap))):
+31 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 3}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}], '_len': 2}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 2}]
+32     score, _ = heapq.heappop(priority_heap)
+32 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}], '_len': 2}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 5}]
+33     alert_scores.append(score)
+33 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 5}]
+31 for _ in range(min(3, len(priority_heap))):
+31 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 5}]
+36 security_index = 1
+36 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score', 'security_index'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 1}]
+37 for score in alert_scores:
+37 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score', 'security_index'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}]
+38     security_index *= score
+38 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score', 'security_index'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}]
+37 for score in alert_scores:
+37 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score', 'security_index'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 1}]
+38     security_index *= score
+38 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score', 'security_index'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 2}]
+37 for score in alert_scores:
+37 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score', 'security_index'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 2}]
+38     security_index *= score
+38 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score', 'security_index'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 10}]
+37 for score in alert_scores:
+37 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score', 'security_index'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 10}]
+40 print(f"Result: {security_index}")
+40 ['logs', 'priority_heap', 'transformed_logs', 'priority', 'timestamp', 'new_timestamp', 'alert_scores', '_', 'score', 'security_index'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 5}, {'_type': 'str', '_value': '2023-10-01T12:34:56'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'str', '_value': '2023-10-01T11:22:33'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '2023-10-01T10:10:10'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': '2023-10-01T09:08:07'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}], '_len': 2}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'str', '_value': '5356-43-34T43:43:43'}], '_len': 2}], '_len': 2}, {'_type': 'dict', '_items': {'5356-43-34T45:67:89': {'_type': 'int', '_value': 5}, '5356-43-34T44:55:66': {'_type': 'int', '_value': 2}, '5356-43-34T43:43:43': {'_type': 'int', '_value': 8}, '5356-43-34T32:31:30': {'_type': 'int', '_value': 1}, '5356-43-34T46:47:48': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': '2023-10-01T13:14:15'}, {'_type': 'str', '_value': '5356-43-34T46:47:48'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'str', '_value': '5356-43-34T45:67:89'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 10}]

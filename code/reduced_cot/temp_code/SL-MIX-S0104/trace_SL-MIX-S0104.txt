@@ -1,0 +1,40 @@
+1 from dataclasses import dataclass
+1 [] []
+2 from typing import NamedTuple
+2 [] []
+3 import math
+3 [] []
+FUNCTION_ENTER 5 SignalConfig class SignalConfig(NamedTuple):
+DEPTH_2 6     base_freq: int
+6 [] []
+DEPTH_2 7     sampling_rate: int
+7 [] []
+DEPTH_2 8     bit_depth: int
+8 [] []
+FUNCTION_RETURN 8 SignalConfig {'_type': 'None'}
+10 data = SignalConfig(440, 44100, 16)
+10 ['data'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}]
+11 original_amplitude = 0x1FAB
+11 ['data', 'original_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}]
+12 processed_amplitude = original_amplitude
+12 ['data', 'original_amplitude', 'processed_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}, {'_type': 'int', '_value': 8107}]
+15 if data.base_freq % 100 == 40 and data.sampling_rate > 40000:
+15 ['data', 'original_amplitude', 'processed_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}, {'_type': 'int', '_value': 8107}]
+16     processed_amplitude ^= 0xFF00
+16 ['data', 'original_amplitude', 'processed_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}, {'_type': 'int', '_value': 57515}]
+17     if data.bit_depth >= 16:
+17 ['data', 'original_amplitude', 'processed_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}, {'_type': 'int', '_value': 57515}]
+18         processed_amplitude |= 0x00F0
+18 ['data', 'original_amplitude', 'processed_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}, {'_type': 'int', '_value': 57595}]
+23 if processed_amplitude & 0x8000:
+23 ['data', 'original_amplitude', 'processed_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}, {'_type': 'int', '_value': 57595}]
+24     processed_amplitude = (processed_amplitude + 0x1000) % 0xFFFF
+24 ['data', 'original_amplitude', 'processed_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}, {'_type': 'int', '_value': 61691}]
+29 if not (processed_amplitude & 0xF000):
+29 ['data', 'original_amplitude', 'processed_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}, {'_type': 'int', '_value': 61691}]
+31 elif processed_amplitude & 0xC000 == 0x8000:
+31 ['data', 'original_amplitude', 'processed_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}, {'_type': 'int', '_value': 61691}]
+34     processed_amplitude = processed_amplitude & 0x7FFF
+34 ['data', 'original_amplitude', 'processed_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}, {'_type': 'int', '_value': 28923}]
+36 print(f"Result: {processed_amplitude}")
+36 ['data', 'original_amplitude', 'processed_amplitude'] [{'_type': 'namedtuple', '_class': 'SignalConfig', '_attrs': {'base_freq': {'_type': 'int', '_value': 440}, 'sampling_rate': {'_type': 'int', '_value': 44100}, 'bit_depth': {'_type': 'int', '_value': 16}}}, {'_type': 'int', '_value': 8107}, {'_type': 'int', '_value': 28923}]

@@ -1,0 +1,83 @@
+Target: Find the value of variable discrepancy after [line 54] executes
+
+[line 7]  shipments_stack = []
+Compute: [] = []
+[line 8]  orders_queue = deque()
+Call function deque()
+[line 26]  for shipment_items in shipments_data:
+Loop Start: shipment_items takes its first value [3, -2, 5]
+[line 3]  def calculate_priority(items):
+Enter function calculate_priority: items=[3, -2, 5] (shipment_items defined at [line 26])
+  [line 4]  return sum(item ** 2 if item > 0 else -item for item in items)
+  Return: sum(item ** 2 if item > 0 else -item for item in items)
+Function calculate_priority returns 36
+[line 26]  for shipment_items in shipments_data:
+Loop End: Iteration finished
+[line 3]  def calculate_priority(items):
+Enter function calculate_priority: items=[-1, 4, -3] (shipment_items defined at [line 26])
+Function calculate_priority returns 20
+[line 26]  for shipment_items in shipments_data:
+Loop End: Iteration finished
+[line 3]  def calculate_priority(items):
+Enter function calculate_priority: items=[2, 2, 2, 2] (shipment_items defined at [line 26])
+Function calculate_priority returns 16
+[line 26]  for shipment_items in shipments_data:
+Loop End: Iteration finished
+[line 3]  def calculate_priority(items):
+Enter function calculate_priority: items=[-5, -5] (shipment_items defined at [line 26])
+Function calculate_priority returns 10
+[line 26]  for shipment_items in shipments_data:
+Loop End: Iteration finished
+[line 31]  for order_items in orders_data:
+Loop Start: order_items takes its first value [1, -1, 2]
+[line 3]  def calculate_priority(items):
+Enter function calculate_priority: items=[1, -1, 2] (order_items defined at [line 31])
+Function calculate_priority returns 6
+[line 31]  for order_items in orders_data:
+Loop End: Iteration finished
+[line 3]  def calculate_priority(items):
+Enter function calculate_priority: items=[-2, 3] (order_items defined at [line 31])
+Function calculate_priority returns 11
+[line 31]  for order_items in orders_data:
+Loop End: Iteration finished
+[line 3]  def calculate_priority(items):
+Enter function calculate_priority: items=[4, 4, -3, -3] (order_items defined at [line 31])
+Function calculate_priority returns 38
+[line 31]  for order_items in orders_data:
+Loop End: Iteration finished
+[line 36]  while shipments_stack and orders_queue:
+while Loop Start: Condition is true
+[line 38]  front_order = orders_queue[0]
+Compute: orders_queue[0], where orders_queue=deque([6, 11, 38]) (defined at [line 8]) = 6
+[line 40]  if top_shipment >= front_order:
+Condition: True, entering 'if' block
+[line 36]  while shipments_stack and orders_queue:
+while Loop Iteration: Condition is still true
+[line 38]  front_order = orders_queue[0]
+Compute: orders_queue[0], where orders_queue=deque([11, 38]) (defined at [line 8]) = 11
+[line 40]  if top_shipment >= front_order:
+Condition: True, entering 'if' block
+[line 36]  while shipments_stack and orders_queue:
+while Loop Iteration: Condition is still true
+[line 38]  front_order = orders_queue[0]
+Compute: orders_queue[0], where orders_queue=deque([38]) (defined at [line 8]) = 38
+[line 40]  if top_shipment >= front_order:
+Condition: True, entering 'if' block
+[line 46]  if len(shipments_stack) > 1:
+Condition: True, entering 'if' block
+[line 36]  while shipments_stack and orders_queue:
+while Loop Iteration: Condition is still true
+[line 38]  front_order = orders_queue[0]
+Compute: orders_queue[0], where orders_queue=deque([38]) (defined at [line 8]) = 38
+[line 40]  if top_shipment >= front_order:
+Condition: True, entering 'if' block
+[line 46]  if len(shipments_stack) > 1:
+Condition: True, entering 'if' block
+[line 52]  highest_remaining_shipment = max(shipments_stack) if shipments_stack else 0
+Compute: max(shipments_stack) if shipments_stack else 0, where shipments_stack=[36] (defined at [line 7]) = 36
+[line 53]  earliest_pending_order = orders_queue[0] if orders_queue else 0
+Compute: orders_queue[0] if orders_queue else 0, where orders_queue=deque([38]) (defined at [line 8]) = 38
+[line 54]  discrepancy = highest_remaining_shipment - earliest_pending_order
+Compute: highest_remaining_shipment - earliest_pending_order, where highest_remaining_shipment=36 (defined at [line 52]), earliest_pending_order=38 (defined at [line 53]) = -2
+
+Answer: discrepancy = -2 (last updated on defined at [line 54])

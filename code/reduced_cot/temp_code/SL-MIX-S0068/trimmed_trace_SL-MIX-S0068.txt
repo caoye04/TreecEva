@@ -1,0 +1,105 @@
+34
+optimal_adjustment
+---
+10 portfolio_transactions = [1000, -500, 2000, -1500, 3000]
+10 ['portfolio_transactions'] ['[1000, -500, 2000, -1500, 3000]']
+11 expected_gains = [1.05, 0.98, 1.12, 0.95, 1.08]
+11 ['portfolio_transactions', 'expected_gains'] ['[1000, -500, 2000, -1500, 3000]', '[1.05, 0.98, 1.12, 0.95, 1.08]']
+14 fee_impacts = list(map(calculate_transaction_impact, [[t] for t in portfolio_transactions]))
+14 ['portfolio_transactions', 'expected_gains', 't'] ['[1000, -500, 2000, -1500, 3000]', '[1.05, 0.98, 1.12, 0.95, 1.08]', '1000']
+14 fee_impacts = list(map(calculate_transaction_impact, [[t] for t in portfolio_transactions]))
+14 ['portfolio_transactions', 'expected_gains', 't'] ['[1000, -500, 2000, -1500, 3000]', '[1.05, 0.98, 1.12, 0.95, 1.08]', '-500']
+14 fee_impacts = list(map(calculate_transaction_impact, [[t] for t in portfolio_transactions]))
+14 ['portfolio_transactions', 'expected_gains', 't'] ['[1000, -500, 2000, -1500, 3000]', '[1.05, 0.98, 1.12, 0.95, 1.08]', '2000']
+14 fee_impacts = list(map(calculate_transaction_impact, [[t] for t in portfolio_transactions]))
+14 ['portfolio_transactions', 'expected_gains', 't'] ['[1000, -500, 2000, -1500, 3000]', '[1.05, 0.98, 1.12, 0.95, 1.08]', '-1500']
+14 fee_impacts = list(map(calculate_transaction_impact, [[t] for t in portfolio_transactions]))
+14 ['portfolio_transactions', 'expected_gains', 't'] ['[1000, -500, 2000, -1500, 3000]', '[1.05, 0.98, 1.12, 0.95, 1.08]', '3000']
+14 fee_impacts = list(map(calculate_transaction_impact, [[t] for t in portfolio_transactions]))
+14 ['portfolio_transactions', 'expected_gains'] ['[1000, -500, 2000, -1500, 3000]', '[1.05, 0.98, 1.12, 0.95, 1.08]']
+5 return sum(map(lambda t: abs(t) * 0.01, transactions))
+5 ['transactions'] ['[1000]']
+5 return sum(map(lambda t: abs(t) * 0.01, transactions))
+5 ['t'] ['1000']
+5 return sum(map(lambda t: abs(t) * 0.01, transactions))
+5 ['transactions'] ['[-500]']
+5 return sum(map(lambda t: abs(t) * 0.01, transactions))
+5 ['t'] ['-500']
+5 return sum(map(lambda t: abs(t) * 0.01, transactions))
+5 ['transactions'] ['[2000]']
+5 return sum(map(lambda t: abs(t) * 0.01, transactions))
+5 ['t'] ['2000']
+5 return sum(map(lambda t: abs(t) * 0.01, transactions))
+5 ['transactions'] ['[-1500]']
+5 return sum(map(lambda t: abs(t) * 0.01, transactions))
+5 ['t'] ['-1500']
+5 return sum(map(lambda t: abs(t) * 0.01, transactions))
+5 ['transactions'] ['[3000]']
+5 return sum(map(lambda t: abs(t) * 0.01, transactions))
+5 ['t'] ['3000']
+17 adj_gains = adjusted_returns(expected_gains, fee_impacts)
+17 ['expected_gains', 'fee_impacts'] ['[1.05, 0.98, 1.12, 0.95, 1.08]', '[10.0, 5.0, 20.0, 15.0, 30.0]']
+8 return list(map(lambda r, f: r - f, returns, fees))
+8 ['returns', 'fees'] ['[1.05, 0.98, 1.12, 0.95, 1.08]', '[10.0, 5.0, 20.0, 15.0, 30.0]']
+8 return list(map(lambda r, f: r - f, returns, fees))
+8 ['r', 'f'] ['1.05', '10.0']
+8 return list(map(lambda r, f: r - f, returns, fees))
+8 ['r', 'f'] ['0.98', '5.0']
+8 return list(map(lambda r, f: r - f, returns, fees))
+8 ['r', 'f'] ['1.12', '20.0']
+8 return list(map(lambda r, f: r - f, returns, fees))
+8 ['r', 'f'] ['0.95', '15.0']
+8 return list(map(lambda r, f: r - f, returns, fees))
+8 ['r', 'f'] ['1.08', '30.0']
+20 performance_ranking = {i: adj_gains[i] for i in range(len(adj_gains))}
+20 ['adj_gains', 'i'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '0']
+20 performance_ranking = {i: adj_gains[i] for i in range(len(adj_gains))}
+20 ['adj_gains', 'i'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '1']
+20 performance_ranking = {i: adj_gains[i] for i in range(len(adj_gains))}
+20 ['adj_gains', 'i'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '2']
+20 performance_ranking = {i: adj_gains[i] for i in range(len(adj_gains))}
+20 ['adj_gains', 'i'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '3']
+20 performance_ranking = {i: adj_gains[i] for i in range(len(adj_gains))}
+20 ['adj_gains', 'i'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '4']
+20 performance_ranking = {i: adj_gains[i] for i in range(len(adj_gains))}
+20 ['adj_gains', 'performance_ranking'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '{0: -8.95, 1: -4.02, 2: -18.88, ...}']
+21 sorted_assets = sorted(performance_ranking.items(), key=lambda x: x[1], reverse=True)
+21 ['adj_gains', 'performance_ranking'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '{0: -8.95, 1: -4.02, 2: -18.88, ...}']
+21 sorted_assets = sorted(performance_ranking.items(), key=lambda x: x[1], reverse=True)
+21 ['x'] ['(0, -8.95)']
+21 sorted_assets = sorted(performance_ranking.items(), key=lambda x: x[1], reverse=True)
+21 ['x'] ['(1, -4.02)']
+21 sorted_assets = sorted(performance_ranking.items(), key=lambda x: x[1], reverse=True)
+21 ['x'] ['(2, -18.88)']
+21 sorted_assets = sorted(performance_ranking.items(), key=lambda x: x[1], reverse=True)
+21 ['x'] ['(3, -14.05)']
+21 sorted_assets = sorted(performance_ranking.items(), key=lambda x: x[1], reverse=True)
+21 ['x'] ['(4, -28.92)']
+24 selected_indices = [idx for idx, _ in sorted_assets[:3]]
+24 ['adj_gains', 'sorted_assets', 'idx', '_'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '[(1, -4.02), (0, -8.95), (3, -14.05), (2, -18.88), (4, -28.92)]', '1', '-4.02']
+24 selected_indices = [idx for idx, _ in sorted_assets[:3]]
+24 ['adj_gains', 'sorted_assets', 'idx', '_'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '[(1, -4.02), (0, -8.95), (3, -14.05), (2, -18.88), (4, -28.92)]', '0', '-8.95']
+24 selected_indices = [idx for idx, _ in sorted_assets[:3]]
+24 ['adj_gains', 'sorted_assets', 'idx', '_'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '[(1, -4.02), (0, -8.95), (3, -14.05), (2, -18.88), (4, -28.92)]', '3', '-14.05']
+24 selected_indices = [idx for idx, _ in sorted_assets[:3]]
+24 ['adj_gains', 'sorted_assets', 'selected_indices'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '[(1, -4.02), (0, -8.95), (3, -14.05), (2, -18.88), (4, -28.92)]', '[1, 0, 3]']
+25 selected_returns = [adj_gains[i] for i in selected_indices]
+25 ['adj_gains', 'selected_indices', 'i'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '[1, 0, 3]', '1']
+25 selected_returns = [adj_gains[i] for i in selected_indices]
+25 ['adj_gains', 'selected_indices', 'i'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '[1, 0, 3]', '0']
+25 selected_returns = [adj_gains[i] for i in selected_indices]
+25 ['adj_gains', 'selected_indices', 'i'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '[1, 0, 3]', '3']
+25 selected_returns = [adj_gains[i] for i in selected_indices]
+25 ['adj_gains', 'selected_indices', 'selected_returns'] ['[-8.95, -4.02, -18.88, -14.05, -28.92]', '[1, 0, 3]', '[-4.02, -8.95, -14.05]']
+28 mean_return = statistics.mean(selected_returns)
+28 ['selected_returns', 'mean_return'] ['[-4.02, -8.95, -14.05]', '-9.006666666666666']
+29 variance_return = statistics.variance(selected_returns)
+29 ['selected_returns', 'mean_return', 'variance_return'] ['[-4.02, -8.95, -14.05]', '-9.006666666666666', '25.152633333333338']
+32 adjustment_factor = 0.75
+32 ['mean_return', 'variance_return', 'adjustment_factor'] ['-9.006666666666666', '25.152633333333338', '0.75']
+33 calculate_optimal = lambda m, v: (m * 1000) / (1 + v) * adjustment_factor
+33 ['mean_return', 'variance_return', 'adjustment_factor'] ['-9.006666666666666', '25.152633333333338', '0.75']
+34 optimal_adjustment = calculate_optimal(mean_return, variance_return)
+34 ['mean_return', 'variance_return', 'adjustment_factor'] ['-9.006666666666666', '25.152633333333338', '0.75']
+33 calculate_optimal = lambda m, v: (m * 1000) / (1 + v) * adjustment_factor
+33 ['m', 'v'] ['-9.006666666666666', '25.152633333333338']

@@ -1,0 +1,153 @@
+44
+stability_index
+---
+11 stability_index = 0
+11 ['sensor_readings', 'stability_index'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0']
+14 for readings in sensor_readings:
+14 ['sensor_readings', 'stability_index', 'readings'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[12, -5, 8, -3, 17]']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['sensor_readings', 'stability_index', 'readings'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[12, -5, 8, -3, 17]']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['12']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['-5']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['8']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['-3']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['17']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['sensor_readings', 'stability_index', 'readings', 'mod_readings'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[12, -5, 8, -3, 17]', '[2, 5, 8, 7, 7]']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['2']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['5']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['8']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['7']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['7']
+22 if not filtered_readings:
+22 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[12, -5, 8, -3, 17]', '[2, 5, 8, 7, 7]', '[2, 5, 8, 7, 7]']
+26 unique_readings = set(filtered_readings)
+26 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[12, -5, 8, -3, 17]', '[2, 5, 8, 7, 7]', '[2, 5, 8, 7, 7]', '{8, 2, 5, 7}']
+27 frozen_readings = frozenset(filtered_readings)
+27 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[12, -5, 8, -3, 17]', '[2, 5, 8, 7, 7]', '[2, 5, 8, 7, 7]', '{8, 2, 5, 7}', 'frozenset({8, 2, 5, 7})']
+30 if len(unique_readings) == len(frozen_readings):
+30 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[12, -5, 8, -3, 17]', '[2, 5, 8, 7, 7]', '[2, 5, 8, 7, 7]', '{8, 2, 5, 7}', 'frozenset({8, 2, 5, 7})']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[12, -5, 8, -3, 17]', '[2, 5, 8, 7, 7]', '[2, 5, 8, 7, 7]', '{8, 2, 5, 7}', 'frozenset({8, 2, 5, 7})']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['1', '8']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['8', '2']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['16', '5']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['80', '7']
+35 mod_product = product % 7
+35 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[12, -5, 8, -3, 17]', '[2, 5, 8, 7, 7]', '[2, 5, 8, 7, 7]', '{8, 2, 5, 7}', 'frozenset({8, 2, 5, 7})', '560', '0']
+38 stability_index += mod_product
+38 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[12, -5, 8, -3, 17]', '[2, 5, 8, 7, 7]', '[2, 5, 8, 7, 7]', '{8, 2, 5, 7}', 'frozenset({8, 2, 5, 7})', '560', '0']
+14 for readings in sensor_readings:
+14 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[4, 9, -2, 15, -7]', '[2, 5, 8, 7, 7]', '[2, 5, 8, 7, 7]', '{8, 2, 5, 7}', 'frozenset({8, 2, 5, 7})', '560', '0']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[4, 9, -2, 15, -7]', '[2, 5, 8, 7, 7]', '[2, 5, 8, 7, 7]', '{8, 2, 5, 7}', 'frozenset({8, 2, 5, 7})', '560', '0']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['4']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['9']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['-2']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['15']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['-7']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[4, 9, -2, 15, -7]', '[4, 9, 8, 5, 3]', '[2, 5, 8, 7, 7]', '{8, 2, 5, 7}', 'frozenset({8, 2, 5, 7})', '560', '0']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['4']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['9']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['8']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['5']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['3']
+22 if not filtered_readings:
+22 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[4, 9, -2, 15, -7]', '[4, 9, 8, 5, 3]', '[4, 9, 8, 5, 3]', '{8, 2, 5, 7}', 'frozenset({8, 2, 5, 7})', '560', '0']
+26 unique_readings = set(filtered_readings)
+26 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[4, 9, -2, 15, -7]', '[4, 9, 8, 5, 3]', '[4, 9, 8, 5, 3]', '{3, 4, 5, 8, 9}', 'frozenset({8, 2, 5, 7})', '560', '0']
+27 frozen_readings = frozenset(filtered_readings)
+27 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[4, 9, -2, 15, -7]', '[4, 9, 8, 5, 3]', '[4, 9, 8, 5, 3]', '{3, 4, 5, 8, 9}', 'frozenset({3, 4, 5, 8, 9})', '560', '0']
+30 if len(unique_readings) == len(frozen_readings):
+30 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[4, 9, -2, 15, -7]', '[4, 9, 8, 5, 3]', '[4, 9, 8, 5, 3]', '{3, 4, 5, 8, 9}', 'frozenset({3, 4, 5, 8, 9})', '560', '0']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[4, 9, -2, 15, -7]', '[4, 9, 8, 5, 3]', '[4, 9, 8, 5, 3]', '{3, 4, 5, 8, 9}', 'frozenset({3, 4, 5, 8, 9})', '560', '0']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['1', '3']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['3', '4']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['12', '5']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['60', '8']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['480', '9']
+35 mod_product = product % 7
+35 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '0', '[4, 9, -2, 15, -7]', '[4, 9, 8, 5, 3]', '[4, 9, 8, 5, 3]', '{3, 4, 5, 8, 9}', 'frozenset({3, 4, 5, 8, 9})', '4320', '1']
+38 stability_index += mod_product
+38 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '1', '[4, 9, -2, 15, -7]', '[4, 9, 8, 5, 3]', '[4, 9, 8, 5, 3]', '{3, 4, 5, 8, 9}', 'frozenset({3, 4, 5, 8, 9})', '4320', '1']
+14 for readings in sensor_readings:
+14 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '1', '[-6, 11, 3, -9, 13]', '[4, 9, 8, 5, 3]', '[4, 9, 8, 5, 3]', '{3, 4, 5, 8, 9}', 'frozenset({3, 4, 5, 8, 9})', '4320', '1']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '1', '[-6, 11, 3, -9, 13]', '[4, 9, 8, 5, 3]', '[4, 9, 8, 5, 3]', '{3, 4, 5, 8, 9}', 'frozenset({3, 4, 5, 8, 9})', '4320', '1']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['-6']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['11']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['3']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['-9']
+16 mod_readings = list(map(lambda x: x % 10, readings))
+16 ['x'] ['13']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['sensor_readings', 'stability_index', 'readings', 'mod_readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '1', '[-6, 11, 3, -9, 13]', '[4, 1, 3, 1, 3]', '[4, 9, 8, 5, 3]', '{3, 4, 5, 8, 9}', 'frozenset({3, 4, 5, 8, 9})', '4320', '1']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['4']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['1']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['3']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['1']
+19 filtered_readings = list(filter(lambda x: x != 0, mod_readings))
+19 ['x'] ['3']
+22 if not filtered_readings:
+22 ['sensor_readings', 'stability_index', 'readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '1', '[-6, 11, 3, -9, 13]', '[4, 1, 3, 1, 3]', '{3, 4, 5, 8, 9}', 'frozenset({3, 4, 5, 8, 9})', '4320', '1']
+26 unique_readings = set(filtered_readings)
+26 ['sensor_readings', 'stability_index', 'readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '1', '[-6, 11, 3, -9, 13]', '[4, 1, 3, 1, 3]', '{1, 3, 4}', 'frozenset({3, 4, 5, 8, 9})', '4320', '1']
+27 frozen_readings = frozenset(filtered_readings)
+27 ['sensor_readings', 'stability_index', 'readings', 'filtered_readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '1', '[-6, 11, 3, -9, 13]', '[4, 1, 3, 1, 3]', '{1, 3, 4}', 'frozenset({1, 3, 4})', '4320', '1']
+30 if len(unique_readings) == len(frozen_readings):
+30 ['sensor_readings', 'stability_index', 'readings', 'unique_readings', 'frozen_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '1', '[-6, 11, 3, -9, 13]', '{1, 3, 4}', 'frozenset({1, 3, 4})', '4320', '1']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['sensor_readings', 'stability_index', 'readings', 'unique_readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '1', '[-6, 11, 3, -9, 13]', '{1, 3, 4}', '4320', '1']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['1', '1']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['1', '3']
+32 product = reduce(lambda a, b: a * b, unique_readings, 1)
+32 ['a', 'b'] ['3', '4']
+35 mod_product = product % 7
+35 ['sensor_readings', 'stability_index', 'readings', 'product', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '1', '[-6, 11, 3, -9, 13]', '12', '5']
+38 stability_index += mod_product
+38 ['sensor_readings', 'stability_index', 'readings', 'mod_product'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '6', '[-6, 11, 3, -9, 13]', '5']
+14 for readings in sensor_readings:
+14 ['sensor_readings', 'stability_index', 'readings'] ['[[12, -5, 8, -3, 17], [4, 9, -2, 15, -7], [-6, 11, 3, -9, 13]]', '6', '[-6, 11, 3, -9, 13]']
+44 stability_index = (stability_index * 3) - 2
+44 ['stability_index'] ['16']

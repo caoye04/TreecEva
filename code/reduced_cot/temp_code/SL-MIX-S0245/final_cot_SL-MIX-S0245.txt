@@ -1,0 +1,211 @@
+Target: Find the value of variable final_checksum after [line 46] executes
+
+[line 43]  sensor_readings = [0x3C, 0x7A, 0x5F, 0x1D, 0x9B]
+Compute: [0x3C, 0x7A, 0x5F, 0x1D, 0x9B] = [60, 122, 95, 29, 155]
+[line 44]  sensor_head = build_sensor_list(sensor_readings)
+Call function build_sensor_list(sensor_readings=[60, 122, 95, 29, 155] (defined at [line 43]))
+[line 8]  head = None
+Assign: head = None
+[line 9]  current = None
+Assign: current = None
+[line 10]  for i, val in enumerate(readings):
+(Missing param: 'iter_var')
+[line 11]  node = SensorNode(val, i+1)
+Call function SensorNode(val=60 (an unknown source), i+1)
+[line 2]  def __init__(self, value, position):
+Enter function __init__: self=SensorNode(...), value=60, position=1
+  [line 3]  self.value = value
+  (Missing param: 'result')
+  [line 4]  self.position = position
+  (Missing param: 'result')
+  [line 5]  self.next = None
+  (Missing param: 'var')
+Function __init__ returns None
+[line 12]  if head is None:
+Condition: True, entering 'if' block
+[line 13]  head = node
+Compute: node, where node=SensorNode(...) (defined at [line 11]) = SensorNode(value=60, position=1, next=None)
+[line 14]  current = node
+Compute: node, where node=SensorNode(...) (defined at [line 11]) = SensorNode(value=60, position=1, next=None)
+[line 10]  for i, val in enumerate(readings):
+(Missing param: 'iter_var')
+[line 11]  node = SensorNode(val, i+1)
+Call function SensorNode(val=122 (an unknown source), i+1)
+[line 2]  def __init__(self, value, position):
+Enter function __init__: self=SensorNode(...), value=122, position=2
+  [line 3]  self.value = value
+  (Missing param: 'result')
+  [line 4]  self.position = position
+  (Missing param: 'result')
+  [line 5]  self.next = None
+  (Missing param: 'var')
+Function __init__ returns None
+[line 12]  if head is None:
+Condition: True, entering 'if' block
+[line 16]  current.next = node
+(Missing param: 'result')
+[line 17]  current = node
+Compute: node, where node=SensorNode(...) (defined at [line 11]) = SensorNode(value=122, position=2, next=None)
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+[line 2]  def __init__(self, value, position):
+Enter function __init__: self=SensorNode(...), value=95, position=3
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+Function __init__ returns None
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+[line 2]  def __init__(self, value, position):
+Enter function __init__: self=SensorNode(...), value=29, position=4
+Function __init__ returns None
+[line 10]  for i, val in enumerate(readings):
+(Missing param: 'iter_var')
+[line 11]  node = SensorNode(val, i+1)
+Call function SensorNode(val=155 (an unknown source), i+1)
+[line 2]  def __init__(self, value, position):
+Enter function __init__: self=SensorNode(...), value=155, position=5
+  [line 3]  self.value = value
+  (Missing param: 'result')
+  [line 4]  self.position = position
+  (Missing param: 'result')
+  [line 5]  self.next = None
+  (Missing param: 'var')
+Function __init__ returns None
+[line 12]  if head is None:
+Condition: True, entering 'if' block
+[line 16]  current.next = node
+(Missing param: 'result')
+[line 17]  current = node
+Compute: node, where node=SensorNode(...) (defined at [line 11]) = SensorNode(value=155, position=5, next=None)
+[line 10]  for i, val in enumerate(readings):
+Loop End: Iteration finished
+[line 18]  return head
+Return: head=SensorNode(...) (defined at [line 13])
+[line 45]  node_collection = collect_nodes(sensor_head)
+Call function collect_nodes(sensor_head=SensorNode(...) (defined at [line 44]))
+[line 35]  nodes = []
+Compute: [] = []
+[line 36]  current = head
+Compute: head, where head=SensorNode(...) (defined at [line 13]) = SensorNode(value=60, position=1, next=SensorNode(value=122, position=2, next=SensorNode(...)))
+[line 37]  while current:
+while Loop Start: Condition is true
+[line 39]  current = current.next
+Compute: current.next, where current=SensorNode(...) (defined at [line 36]) = SensorNode(next=SensorNode(value=95, position=3, next=SensorNode(...)))
+[line 37]  while current:
+while Loop Iteration: Condition is still true
+[line 39]  current = current.next
+Compute: current.next, where current=SensorNode(...) (defined at [line 39]) = SensorNode(next=SensorNode(value=29, position=4, next=SensorNode(...)))
+... [Line 37] repeats 2 more times ...
+... [Line 37] repeats 2 more times ...
+[line 37]  while current:
+while Loop Iteration: Condition is still true
+[line 39]  current = current.next
+Compute: current.next, where current=SensorNode(...) (defined at [line 39]) = None
+[line 37]  while current:
+while Loop Iteration: Condition is still true
+[line 40]  return nodes
+Return: nodes=[SensorNode(value=60, position=1, next=SensorNode(...)), SensorNode(value=122, position=2, next=SensorNode(...)), SensorNode(value=95, position=3, next=SensorNode(...)), SensorNode(value=29, position=4, next=SensorNode(...)), SensorNode(value=155, position=5, next=None)] (defined at [line 35])
+[line 46]  final_checksum = compute_checksum_divide_conquer(node_collection)
+Call function compute_checksum_divide_conquer(node_collection=[SensorNode(value=60, position=1, next=SensorNode(...)), SensorNode(value=122, position=2, next=SensorNode(...)), SensorNode(value=95, position=3, next=SensorNode(...)), SensorNode(value=29, position=4, next=SensorNode(...)), SensorNode(value=155, position=5, next=None)] (defined at [line 45]))
+[line 25]  if not nodes_list:
+Condition: True, entering 'if' block
+[line 27]  if len(nodes_list) == 1:
+Condition: True, entering 'if' block
+[line 29]  mid = len(nodes_list) // 2
+Compute: len(nodes_list) // 2, where nodes_list=[SensorNode(value=60, position=1, next=SensorNode(...)), SensorNode(value=122, position=2, next=SensorNode(...)), SensorNode(value=95, position=3, next=SensorNode(...)), SensorNode(value=29, position=4, next=SensorNode(...)), SensorNode(value=155, position=5, next=None)] (an unknown source) = 2
+[line 30]  left_checksum = compute_checksum_divide_conquer(nodes_list[:mid])
+Call function compute_checksum_divide_conquer(nodes_list[:mid])
+[line 25]  if not nodes_list:
+Condition: True, entering 'if' block
+[line 27]  if len(nodes_list) == 1:
+Condition: True, entering 'if' block
+[line 29]  mid = len(nodes_list) // 2
+Compute: len(nodes_list) // 2, where nodes_list=[SensorNode(value=60, position=1, next=SensorNode(...)), SensorNode(value=122, position=2, next=SensorNode(...))] (an unknown source) = 1
+[line 30]  left_checksum = compute_checksum_divide_conquer(nodes_list[:mid])
+Call function compute_checksum_divide_conquer(nodes_list[:mid])
+[line 25]  if not nodes_list:
+Condition: True, entering 'if' block
+[line 27]  if len(nodes_list) == 1:
+Condition: True, entering 'if' block
+[line 28]  return decode_value(nodes_list[0])
+Return: decode_value(nodes_list[0])
+[line 21]  key = (node.position << 2) & 0xFF
+Compute: (node.position << 2) & 0xFF, where node=SensorNode(position=1) (defined at [line 11]) = 4
+[line 22]  return node.value ^ key
+Return: node.value ^ key
+[line 31]  right_checksum = compute_checksum_divide_conquer(nodes_list[mid:])
+Call function compute_checksum_divide_conquer(nodes_list[mid:])
+[line 25]  if not nodes_list:
+Condition: True, entering 'if' block
+[line 27]  if len(nodes_list) == 1:
+Condition: True, entering 'if' block
+[line 28]  return decode_value(nodes_list[0])
+Return: decode_value(nodes_list[0])
+[line 21]  key = (node.position << 2) & 0xFF
+Compute: (node.position << 2) & 0xFF, where node=SensorNode(position=2) (defined at [line 11]) = 8
+[line 22]  return node.value ^ key
+Return: node.value ^ key
+[line 32]  return (left_checksum + right_checksum) & 0xFF
+Return: (left_checksum + right_checksum) & 0xFF
+[line 31]  right_checksum = compute_checksum_divide_conquer(nodes_list[mid:])
+Call function compute_checksum_divide_conquer(nodes_list[mid:])
+[line 25]  if not nodes_list:
+Condition: True, entering 'if' block
+[line 27]  if len(nodes_list) == 1:
+Condition: True, entering 'if' block
+[line 29]  mid = len(nodes_list) // 2
+Compute: len(nodes_list) // 2, where nodes_list=[SensorNode(value=95, position=3, next=SensorNode(...)), SensorNode(value=29, position=4, next=SensorNode(...)), SensorNode(value=155, position=5, next=None)] (an unknown source) = 1
+[line 30]  left_checksum = compute_checksum_divide_conquer(nodes_list[:mid])
+Call function compute_checksum_divide_conquer(nodes_list[:mid])
+[line 25]  if not nodes_list:
+Condition: True, entering 'if' block
+[line 27]  if len(nodes_list) == 1:
+Condition: True, entering 'if' block
+[line 28]  return decode_value(nodes_list[0])
+Return: decode_value(nodes_list[0])
+[line 21]  key = (node.position << 2) & 0xFF
+Compute: (node.position << 2) & 0xFF, where node=SensorNode(position=3) (defined at [line 11]) = 12
+[line 22]  return node.value ^ key
+Return: node.value ^ key
+[line 31]  right_checksum = compute_checksum_divide_conquer(nodes_list[mid:])
+Call function compute_checksum_divide_conquer(nodes_list[mid:])
+[line 25]  if not nodes_list:
+Condition: True, entering 'if' block
+[line 27]  if len(nodes_list) == 1:
+Condition: True, entering 'if' block
+[line 29]  mid = len(nodes_list) // 2
+Compute: len(nodes_list) // 2, where nodes_list=[SensorNode(value=29, position=4, next=SensorNode(...)), SensorNode(value=155, position=5, next=None)] (an unknown source) = 1
+[line 30]  left_checksum = compute_checksum_divide_conquer(nodes_list[:mid])
+Call function compute_checksum_divide_conquer(nodes_list[:mid])
+[line 25]  if not nodes_list:
+Condition: True, entering 'if' block
+[line 27]  if len(nodes_list) == 1:
+Condition: True, entering 'if' block
+[line 28]  return decode_value(nodes_list[0])
+Return: decode_value(nodes_list[0])
+[line 21]  key = (node.position << 2) & 0xFF
+Compute: (node.position << 2) & 0xFF, where node=SensorNode(position=4) (defined at [line 11]) = 16
+[line 22]  return node.value ^ key
+Return: node.value ^ key
+[line 31]  right_checksum = compute_checksum_divide_conquer(nodes_list[mid:])
+Call function compute_checksum_divide_conquer(nodes_list[mid:])
+[line 25]  if not nodes_list:
+Condition: True, entering 'if' block
+[line 27]  if len(nodes_list) == 1:
+Condition: True, entering 'if' block
+[line 28]  return decode_value(nodes_list[0])
+Return: decode_value(nodes_list[0])
+[line 21]  key = (node.position << 2) & 0xFF
+Compute: (node.position << 2) & 0xFF, where node=SensorNode(position=5) (defined at [line 11]) = 20
+[line 22]  return node.value ^ key
+Return: node.value ^ key
+[line 32]  return (left_checksum + right_checksum) & 0xFF
+Return: (left_checksum + right_checksum) & 0xFF
+[line 32]  return (left_checksum + right_checksum) & 0xFF
+Return: (left_checksum + right_checksum) & 0xFF
+[line 32]  return (left_checksum + right_checksum) & 0xFF
+Return: (left_checksum + right_checksum) & 0xFF
+
+Answer: final_checksum = ? (last updated on defined at [line 46])

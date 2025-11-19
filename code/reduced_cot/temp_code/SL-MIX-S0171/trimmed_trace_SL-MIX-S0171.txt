@@ -1,0 +1,155 @@
+48
+final_checksum
+---
+16 head = Node(encode_token("alpha"))
+16 [] []
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 [] []
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'a'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'l'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'p'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'h'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'a'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'a'"]
+17 head.next = Node(encode_token("beta"))
+17 ['head'] ['Node(next=None)']
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 [] []
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'b'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'e'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'t'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'a'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'a'"]
+18 head.next.next = Node(encode_token("gamma"))
+18 ['head'] ["Node(next=Node(data='cfub', next=None))"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 [] []
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'g'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'a'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'m'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'m'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'a'"]
+5 return ''.join(chr(ord(c) + 1) for c in s)
+5 ['c'] ["'a'"]
+21 valid_prefixes = frozenset(['b', 'g'])
+21 ['head', 'valid_prefixes'] ['Node(...)', "frozenset({'g', 'b'})"]
+22 blacklisted_suffixes = {'eta', 'lta'}
+22 ['head', 'valid_prefixes', 'blacklisted_suffixes'] ['Node(...)', "frozenset({'g', 'b'})", "{'lta', 'eta'}"]
+32 checksum_components = []
+32 ['head', 'valid_prefixes', 'blacklisted_suffixes', 'checksum_components'] ['Node(...)', "frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]']
+33 current = head
+33 ['head', 'valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current'] ['Node(...)', "frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', "Node(data='bmqib', next=Node(data='cfub', next=Node(...)))"]
+34 while current:
+34 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)']
+35 decoded = decode_token(current.data)
+35 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', "Node(data='bmqib')"]
+PARAM_MAPPING {'s': {'actual_var': 'current.data', 'value': 'current.data'}}
+FUNCTION_ENTER 7 decode_token def decode_token(s):
+7 ['s'] [{'_type': 'str', '_value': 'bmqib'}]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 [] []
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'b'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'m'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'q'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'i'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'b'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'b'"]
+FUNCTION_RETURN 8 decode_token {'_type': 'str', '_value': 'alpha'}
+36 prefix_valid = decoded[0] in valid_prefixes
+36 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)', "'alpha'", 'False']
+37 suffix_blacklisted = decoded[-3:] in blacklisted_suffixes
+37 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)', "'alpha'", 'False', 'False']
+38 hash_valid = hashlib.md5(decoded.encode()).hexdigest()[-1] in '0123456'
+38 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)', "'alpha'", 'False', 'False', 'False']
+40 if prefix_valid and not suffix_blacklisted and hash_valid:
+40 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)', "'alpha'", 'False', 'False', 'False']
+45 current = current.next
+45 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', "Node(next=Node(data='hbnnb', next=None))", "'alpha'", 'False', 'False', 'False']
+34 while current:
+34 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)', "'alpha'", 'False', 'False', 'False']
+35 decoded = decode_token(current.data)
+35 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', "Node(data='cfub')", "'alpha'", 'False', 'False', 'False']
+PARAM_MAPPING {'s': {'actual_var': 'current.data', 'value': 'current.data'}}
+FUNCTION_ENTER 7 decode_token def decode_token(s):
+7 ['s'] [{'_type': 'str', '_value': 'cfub'}]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 [] []
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'c'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'f'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'u'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'b'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'b'"]
+FUNCTION_RETURN 8 decode_token {'_type': 'str', '_value': 'beta'}
+36 prefix_valid = decoded[0] in valid_prefixes
+36 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)', "'beta'", 'True', 'False', 'False']
+37 suffix_blacklisted = decoded[-3:] in blacklisted_suffixes
+37 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)', "'beta'", 'True', 'True', 'False']
+38 hash_valid = hashlib.md5(decoded.encode()).hexdigest()[-1] in '0123456'
+38 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)', "'beta'", 'True', 'True', 'True']
+40 if prefix_valid and not suffix_blacklisted and hash_valid:
+40 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)', "'beta'", 'True', 'True', 'True']
+45 current = current.next
+45 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(next=None)', "'beta'", 'True', 'True', 'True']
+34 while current:
+34 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)', "'beta'", 'True', 'True', 'True']
+35 decoded = decode_token(current.data)
+35 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', "Node(data='hbnnb')", "'beta'", 'True', 'True', 'True']
+PARAM_MAPPING {'s': {'actual_var': 'current.data', 'value': 'current.data'}}
+FUNCTION_ENTER 7 decode_token def decode_token(s):
+7 ['s'] [{'_type': 'str', '_value': 'hbnnb'}]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 [] []
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'h'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'b'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'n'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'n'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'b'"]
+8 return ''.join(chr(ord(c) - 1) for c in s)
+8 ['c'] ["'b'"]
+FUNCTION_RETURN 8 decode_token {'_type': 'str', '_value': 'gamma'}
+36 prefix_valid = decoded[0] in valid_prefixes
+36 ['valid_prefixes', 'blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["frozenset({'g', 'b'})", "{'lta', 'eta'}", '[]', 'Node(...)', "'gamma'", 'True', 'True', 'True']
+37 suffix_blacklisted = decoded[-3:] in blacklisted_suffixes
+37 ['blacklisted_suffixes', 'checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ["{'lta', 'eta'}", '[]', 'Node(...)', "'gamma'", 'True', 'False', 'True']
+38 hash_valid = hashlib.md5(decoded.encode()).hexdigest()[-1] in '0123456'
+38 ['checksum_components', 'current', 'decoded', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ['[]', 'Node(...)', "'gamma'", 'True', 'False', 'False']
+40 if prefix_valid and not suffix_blacklisted and hash_valid:
+40 ['checksum_components', 'current', 'prefix_valid', 'suffix_blacklisted', 'hash_valid'] ['[]', 'Node(...)', 'True', 'False', 'False']
+45 current = current.next
+45 ['checksum_components', 'current'] ['[]', 'None']
+34 while current:
+34 ['checksum_components', 'current'] ['[]', 'None']
+48 final_checksum = sum(checksum_components) if checksum_components else -1
+48 ['checksum_components', 'final_checksum'] ['[]', '-1']

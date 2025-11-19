@@ -1,0 +1,89 @@
+55
+anomaly_score
+---
+55 anomaly_score = process_packets()
+55 [] []
+6 state = 0
+6 ['state'] ['0']
+7 signature_stack = [0x1A, 0x2B, 0x3C]
+7 ['state', 'signature_stack'] ['0', '[26, 43, 60]']
+8 byte_queue = deque([0x4D, 0x5E, 0x6F, 0x70])
+8 ['state', 'signature_stack', 'byte_queue'] ['0', '[26, 43, 60]', 'deque([77, 94, 111, 112])']
+9 anomaly_score = 0
+9 ['state', 'signature_stack', 'byte_queue', 'anomaly_score'] ['0', '[26, 43, 60]', 'deque([77, 94, 111, 112])', '0']
+12 while byte_queue and state < 3:
+12 ['state', 'signature_stack', 'byte_queue', 'anomaly_score'] ['0', '[26, 43, 60]', 'deque([77, 94, 111, 112])', '0']
+13 current_byte = byte_queue.popleft()
+13 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['0', '[26, 43, 60]', 'deque([94, 111, 112])', '0', '77']
+15 if state == 0:
+15 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['0', '[26, 43, 60]', 'deque([94, 111, 112])', '0', '77']
+17 transformed = (current_byte ^ signature_stack[-1]) << 1
+17 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte', 'transformed'] ['0', '[26, 43, 60]', 'deque([94, 111, 112])', '0', '77', '226']
+18 if transformed > 0xFF:
+18 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte', 'transformed'] ['0', '[26, 43, 60]', 'deque([94, 111, 112])', '0', '77', '226']
+42 state += 1
+42 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['1', '[26, 43, 60, 226]', 'deque([94, 111, 112])', '0', '77']
+12 while byte_queue and state < 3:
+12 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['1', '[26, 43, 60, 226]', 'deque([94, 111, 112])', '0', '77']
+13 current_byte = byte_queue.popleft()
+13 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['1', '[26, 43, 60, 226]', 'deque([111, 112])', '0', '94']
+15 if state == 0:
+15 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['1', '[26, 43, 60, 226]', 'deque([111, 112])', '0', '94']
+23 elif state == 1:
+23 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['1', '[26, 43, 60, 226]', 'deque([111, 112])', '0', '94']
+25 if current_byte == 0:
+25 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['1', '[26, 43, 60, 226]', 'deque([111, 112])', '0', '94']
+27 exp_val = pow(current_byte, 2)  # Exponentiation
+27 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte', 'exp_val'] ['1', '[26, 43, 60, 226]', 'deque([111, 112])', '0', '94', '8836']
+28 log_val = int(math.log2(exp_val)) if exp_val > 0 else 0  # Logarithm
+28 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte', 'exp_val', 'log_val'] ['1', '[26, 43, 60, 226]', 'deque([111, 112])', '0', '94', '8836', '13']
+30 if log_val > 10:
+30 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte', 'log_val'] ['1', '[26, 43, 60, 226, 13]', 'deque([111, 112])', '0', '94', '13']
+31 state = 2
+31 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['2', '[26, 43, 60, 226, 13]', 'deque([111, 112])', '0', '94']
+32 continue
+32 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['2', '[26, 43, 60, 226, 13]', 'deque([111, 112])', '0', '94']
+12 while byte_queue and state < 3:
+12 ['state', 'signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['2', '[26, 43, 60, 226, 13]', 'deque([111, 112])', '0', '94']
+13 current_byte = byte_queue.popleft()
+13 ['signature_stack', 'byte_queue', 'anomaly_score', 'current_byte'] ['[26, 43, 60, 226, 13]', 'deque([112])', '0', '111']
+15 if state == 0:
+15 ['signature_stack', 'anomaly_score', 'current_byte'] ['[26, 43, 60, 226, 13]', '0', '111']
+23 elif state == 1:
+23 ['signature_stack', 'anomaly_score', 'current_byte'] ['[26, 43, 60, 226, 13]', '0', '111']
+34 elif state == 2:
+34 ['signature_stack', 'anomaly_score', 'current_byte'] ['[26, 43, 60, 226, 13]', '0', '111']
+36 prev_signature = signature_stack.pop()
+36 ['signature_stack', 'anomaly_score', 'current_byte', 'prev_signature'] ['[26, 43, 60, 226]', '0', '111', '13']
+37 and_result = prev_signature & 0x0F
+37 ['signature_stack', 'anomaly_score', 'current_byte', 'prev_signature', 'and_result'] ['[26, 43, 60, 226]', '0', '111', '13', '13']
+38 or_result = (current_byte | 0x30) & 0x7F
+38 ['signature_stack', 'anomaly_score', 'current_byte', 'and_result', 'or_result'] ['[26, 43, 60, 226]', '0', '111', '13', '127']
+39 anomaly_score = and_result ^ or_result
+39 ['signature_stack', 'anomaly_score', 'and_result', 'or_result'] ['[26, 43, 60, 226]', '114', '13', '127']
+40 break
+40 ['signature_stack', 'anomaly_score'] ['[26, 43, 60, 226]', '114']
+45 scaled_scores = (score * 2 for score in signature_stack if score > 0x20)
+45 ['signature_stack', 'anomaly_score', 'scaled_scores'] ['[26, 43, 60, 226]', '114', '<generator object process_packets.<locals>.<genexpr> at 0x000001D3D97FA330>']
+46 filtered_sum = sum(filter(lambda x: x < 0xE0, scaled_scores))
+46 [] []
+45 scaled_scores = (score * 2 for score in signature_stack if score > 0x20)
+45 ['score'] ['26']
+45 scaled_scores = (score * 2 for score in signature_stack if score > 0x20)
+45 ['score'] ['43']
+46 filtered_sum = sum(filter(lambda x: x < 0xE0, scaled_scores))
+46 ['x'] ['86']
+45 scaled_scores = (score * 2 for score in signature_stack if score > 0x20)
+45 ['score'] ['60']
+46 filtered_sum = sum(filter(lambda x: x < 0xE0, scaled_scores))
+46 ['x'] ['120']
+45 scaled_scores = (score * 2 for score in signature_stack if score > 0x20)
+45 ['score'] ['226']
+46 filtered_sum = sum(filter(lambda x: x < 0xE0, scaled_scores))
+46 ['x'] ['452']
+49 if filtered_sum > 0:
+49 ['anomaly_score', 'filtered_sum'] ['114', '206']
+50 anomaly_score ^= (filtered_sum & 0xFF)
+50 ['anomaly_score', 'filtered_sum'] ['188', '206']
+52 return anomaly_score
+52 ['anomaly_score'] ['188']

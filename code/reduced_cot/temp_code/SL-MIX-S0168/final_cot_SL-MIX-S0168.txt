@@ -1,0 +1,84 @@
+Target: Find the value of variable anomaly_score after [line 55] executes
+
+[line 55]  anomaly_score = process_packets()
+Call function process_packets()
+[line 6]  state = 0
+Assign: state = 0
+[line 7]  signature_stack = [0x1A, 0x2B, 0x3C]
+Compute: [0x1A, 0x2B, 0x3C] = [26, 43, 60]
+[line 8]  byte_queue = deque([0x4D, 0x5E, 0x6F, 0x70])
+Call function deque([0x4D, 0x5E, 0x6F, 0x70])
+[line 9]  anomaly_score = 0
+Assign: anomaly_score = 0
+[line 12]  while byte_queue and state < 3:
+while Loop Start: Condition is true
+[line 13]  current_byte = byte_queue.popleft()
+(Missing param: 'func_name')
+[line 15]  if state == 0:
+Condition: True, entering 'if' block
+[line 17]  transformed = (current_byte ^ signature_stack[-1]) << 1
+Compute: (current_byte ^ signature_stack[-1]) << 1, where current_byte=77 (an unknown source), signature_stack=[26, 43, 60] (defined at [line 7]) = 226
+[line 18]  if transformed > 0xFF:
+Condition: True, entering 'if' block
+[line 42]  state += 1
+Update: state changed from 0 (defined at defined at [line 6]) to 0+1 = 1
+[line 12]  while byte_queue and state < 3:
+while Loop Iteration: Condition is still true
+[line 13]  current_byte = byte_queue.popleft()
+(Missing param: 'func_name')
+[line 15]  if state == 0:
+Condition: True, entering 'if' block
+[line 23]  elif state == 1:
+'elif' Condition: True, entering block
+[line 25]  if current_byte == 0:
+Condition: True, entering 'if' block
+[line 27]  exp_val = pow(current_byte, 2)  # Exponentiation
+Call function pow(current_byte=94 (an unknown source), 2)
+[line 28]  log_val = int(math.log2(exp_val)) if exp_val > 0 else 0  # Logarithm
+Compute: int(math.log2(exp_val)) if exp_val > 0 else 0  # Logarithm, where exp_val=8836 (defined at [line 27]) = 13
+[line 30]  if log_val > 10:
+Condition: True, entering 'if' block
+[line 31]  state = 2
+Assign: state = 2
+[line 12]  while byte_queue and state < 3:
+while Loop Iteration: Condition is still true
+[line 13]  current_byte = byte_queue.popleft()
+(Missing param: 'func_name')
+[line 15]  if state == 0:
+Condition: True, entering 'if' block
+[line 23]  elif state == 1:
+'elif' Condition: True, entering block
+[line 34]  elif state == 2:
+'elif' Condition: True, entering block
+[line 36]  prev_signature = signature_stack.pop()
+(Missing param: 'func_name')
+[line 37]  and_result = prev_signature & 0x0F
+Compute: prev_signature & 0x0F, where prev_signature=13 (an unknown source) = 13
+[line 38]  or_result = (current_byte | 0x30) & 0x7F
+Compute: (current_byte | 0x30) & 0x7F, where current_byte=111 (an unknown source) = 127
+[line 39]  anomaly_score = and_result ^ or_result
+Compute: and_result ^ or_result, where and_result=13 (defined at [line 37]), or_result=127 (defined at [line 38]) = 114
+[line 45]  scaled_scores = (score * 2 for score in signature_stack if score > 0x20)
+Compute: (score * 2 for score in signature_stack if score > 0x20), where signature_stack=[26, 43, 60, 226] (defined at [line 7]) = <generator object process_packets.<locals>.<genexpr> at 0x000001D3D97FA330>
+[line 46]  filtered_sum = sum(filter(lambda x: x < 0xE0, scaled_scores))
+Call function sum(filter(lambda x: x < 0xE0, scaled_scores))
+[line 45]  scaled_scores = (score * 2 for score in signature_stack if score > 0x20)
+Compute: (score * 2 for score in signature_stack if score > 0x20), where score=26 (an unknown source) = ?
+[line 45]  scaled_scores = (score * 2 for score in signature_stack if score > 0x20)
+Compute: (score * 2 for score in signature_stack if score > 0x20), where score=43 (an unknown source) = ?
+[line 46]  filtered_sum = sum(filter(lambda x: x < 0xE0, scaled_scores))
+Call function sum(filter(lambda x: x < 0xE0, scaled_scores))
+[line 45]  scaled_scores = (score * 2 for score in signature_stack if score > 0x20)
+Compute: (score * 2 for score in signature_stack if score > 0x20), where score=60 (an unknown source) = ?
+[line 46]  filtered_sum = sum(filter(lambda x: x < 0xE0, scaled_scores))
+Call function sum(filter(lambda x: x < 0xE0, scaled_scores))
+[line 45]  scaled_scores = (score * 2 for score in signature_stack if score > 0x20)
+Compute: (score * 2 for score in signature_stack if score > 0x20), where score=226 (an unknown source) = ?
+[line 46]  filtered_sum = sum(filter(lambda x: x < 0xE0, scaled_scores))
+Call function sum(filter(lambda x: x < 0xE0, scaled_scores))
+[line 49]  if filtered_sum > 0:
+Condition: True, entering 'if' block
+[line 52]  return anomaly_score
+Return: anomaly_score=188 (defined at [line 39])
+
+Answer: anomaly_score = 188 (last updated on defined at [line 39])

@@ -1,0 +1,919 @@
+39
+semantic_signatures
+---
+39 semantic_signatures = process_corpus(corpus)
+39 ['corpus'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']"]
+PARAM_MAPPING {'documents': {'actual_var': 'corpus', 'value': ['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']}}
+FUNCTION_ENTER 1 process_corpus def process_corpus(documents):
+1 ['documents'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'The quick brown fox jumps over the lazy dog'}, {'_type': 'str', '_value': 'A fast auburn fox leaps above the sleepy canine'}, {'_type': 'str', '_value': 'Pack my box with five dozen liquor jugs'}, {'_type': 'str', '_value': 'A quick movement of the enemy will jeopardize six gunboats'}], '_len': 4}]
+16 segment_registry = set()
+16 ['documents', 'segment_registry'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", 'set()']
+17 semantic_signatures = frozenset()
+17 ['documents', 'segment_registry', 'semantic_signatures'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", 'set()', 'frozenset()']
+19 for document in documents:
+19 ['documents', 'segment_registry', 'semantic_signatures', 'document'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", 'set()', 'frozenset()', "'The quick brown fox jumps over the lazy dog'"]
+20 segments = divide_text(document)
+20 ['documents', 'segment_registry', 'semantic_signatures', 'document'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", 'set()', 'frozenset()', "'The quick brown fox jumps over the lazy dog'"]
+PARAM_MAPPING {'text': {'actual_var': 'document', 'value': 'The quick brown fox jumps over the lazy dog'}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'The quick brown fox jumps over the lazy dog'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'The quick brown fox jumps over the lazy dog'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'The quick brown fox jumps over the lazy dog'", '10', '21']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'The quick brown fox jumps over the lazy dog'", '10', '21']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'The quick brown fox j'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'The quick brown fox j'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'The quick brown fox j'", '10', '10']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'The quick brown fox j'", '10', '10']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'The quick '}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'The quick '", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'The quick '", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'The quick '}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'The quick brown fox j'", '10', '10', "['The quick ']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'brown fox j'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'brown fox j'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'brown fox j'", '10', '5']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'brown fox j'", '10', '5']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'brown'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'brown'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'brown'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'brown'}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'brown fox j'", '10', '5', "['brown']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': ' fox j'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["' fox j'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["' fox j'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': ' fox j'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'brown fox j'", '10', '5', "['brown']", "[' fox j']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'brown'}, {'_type': 'str', '_value': ' fox j'}], '_len': 2}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'The quick brown fox j'", '10', '10', "['The quick ']", "['brown', ' fox j']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'The quick '}, {'_type': 'str', '_value': 'brown'}, {'_type': 'str', '_value': ' fox j'}], '_len': 3}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'The quick brown fox jumps over the lazy dog'", '10', '21', "['The quick ', 'brown', ' fox j']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'umps over the lazy dog'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'umps over the lazy dog'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'umps over the lazy dog'", '10', '11']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'umps over the lazy dog'", '10', '11']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'umps over t'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'umps over t'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'umps over t'", '10', '5']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'umps over t'", '10', '5']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'umps '}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'umps '", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'umps '", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'umps '}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'umps over t'", '10', '5', "['umps ']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'over t'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'over t'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'over t'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'over t'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'umps over t'", '10', '5', "['umps ']", "['over t']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'umps '}, {'_type': 'str', '_value': 'over t'}], '_len': 2}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'umps over the lazy dog'", '10', '11', "['umps ', 'over t']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'he lazy dog'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'he lazy dog'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'he lazy dog'", '10', '5']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'he lazy dog'", '10', '5']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'he la'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'he la'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'he la'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'he la'}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'he lazy dog'", '10', '5', "['he la']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'zy dog'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'zy dog'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'zy dog'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'zy dog'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'he lazy dog'", '10', '5', "['he la']", "['zy dog']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'he la'}, {'_type': 'str', '_value': 'zy dog'}], '_len': 2}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'umps over the lazy dog'", '10', '11', "['umps ', 'over t']", "['he la', 'zy dog']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'umps '}, {'_type': 'str', '_value': 'over t'}, {'_type': 'str', '_value': 'he la'}, {'_type': 'str', '_value': 'zy dog'}], '_len': 4}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'The quick brown fox jumps over the lazy dog'", '10', '21', "['The quick ', 'brown', ' fox j']", "['umps ', 'over t', 'he la', 'zy dog']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'The quick '}, {'_type': 'str', '_value': 'brown'}, {'_type': 'str', '_value': ' fox j'}, {'_type': 'str', '_value': 'umps '}, {'_type': 'str', '_value': 'over t'}, {'_type': 'str', '_value': 'he la'}, {'_type': 'str', '_value': 'zy dog'}], '_len': 7}
+21 normalized_segments = map(normalize_segment, segments)
+21 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", 'set()', 'frozenset()', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>']
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", 'set()', 'frozenset()', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>']
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", 'set()', 'frozenset()', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>']
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'The quick '"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'cehikqtu'", 'set()']
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'cehikqtu'}", 'frozenset()', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'cehikqtu'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'cehikqtu'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'cehikqtu'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'cehikqtu'}", 'frozenset({7887716893127613781})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'cehikqtu'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'brown'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'bnorw'", "{'cehikqtu'}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'bnorw', 'cehikqtu'}", 'frozenset({7887716893127613781})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'bnorw'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'bnorw'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'bnorw'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'bnorw', 'cehikqtu'}", 'frozenset({7887716893127613781, 9221694443138798685})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'bnorw'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["' fox j'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'fjox'", "{'bnorw', 'cehikqtu'}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'fjox', 'bnorw', 'cehikqtu'}", 'frozenset({7887716893127613781, 9221694443138798685})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'fjox'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'fjox'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'fjox'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'fjox', 'bnorw', 'cehikqtu'}", 'frozenset({7887716893127613781, 9221694443138798685, 3553218050053687347})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'fjox'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'umps '"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'mpsu'", "{'fjox', 'bnorw', 'cehikqtu'}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'mpsu', 'fjox', 'bnorw', 'cehikqtu'}", 'frozenset({7887716893127613781, 9221694443138798685, 3553218050053687347})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'mpsu'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'mpsu'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'mpsu'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'mpsu', 'fjox', 'bnorw', 'cehikqtu'}", 'frozenset({7887716893127613781, 9221694443138798685, 3553218050053687347, -5134094967252136215})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'mpsu'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'over t'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'eortv'", "{'mpsu', 'fjox', 'bnorw', 'cehikqtu'}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'eortv', 'mpsu', 'fjox', 'cehikqtu', 'bnorw'}", 'frozenset({7887716893127613781, 9221694443138798685, 3553218050053687347, -5134094967252136215})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'eortv'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'eortv'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'eortv'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'eortv', 'mpsu', 'fjox', 'cehikqtu', 'bnorw'}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -5134094967252136215, 7887716893127613781})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'eortv'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'he la'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'aehl'", "{'eortv', 'mpsu', 'fjox', 'cehikqtu', 'bnorw'}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'eortv', 'mpsu', 'aehl', 'fjox', 'cehikqtu', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -5134094967252136215, 7887716893127613781})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'aehl'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'aehl'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'aehl'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'eortv', 'mpsu', 'aehl', 'fjox', 'cehikqtu', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -5134094967252136215, 7887716893127613781, -6977091359338580118})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'aehl'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'zy dog'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'dgoyz'", "{'eortv', 'mpsu', 'aehl', 'fjox', 'cehikqtu', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'mpsu', 'aehl', 'fjox', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -5134094967252136215, 7887716893127613781, -6977091359338580118})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'dgoyz'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'dgoyz'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'dgoyz'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'mpsu', 'aehl', 'fjox', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -2268788236580931740, -5134094967252136215, 7887716893127613781, -6977091359338580118})', "'The quick brown fox jumps over the lazy dog'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'dgoyz'"]
+19 for document in documents:
+19 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'mpsu', 'aehl', 'fjox', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -2268788236580931740, -5134094967252136215, 7887716893127613781, -6977091359338580118})', "'A fast auburn fox leaps above the sleepy canine'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'dgoyz'"]
+20 segments = divide_text(document)
+20 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'mpsu', 'aehl', 'fjox', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -2268788236580931740, -5134094967252136215, 7887716893127613781, -6977091359338580118})', "'A fast auburn fox leaps above the sleepy canine'", "['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]", '<map object at 0x000001FD4AA34550>', '<filter object at 0x000001FD4AA35300>', "'dgoyz'"]
+PARAM_MAPPING {'text': {'actual_var': 'document', 'value': 'A fast auburn fox leaps above the sleepy canine'}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'A fast auburn fox leaps above the sleepy canine'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'A fast auburn fox leaps above the sleepy canine'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'A fast auburn fox leaps above the sleepy canine'", '10', '23']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'A fast auburn fox leaps above the sleepy canine'", '10', '23']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'A fast auburn fox leaps'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'A fast auburn fox leaps'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'A fast auburn fox leaps'", '10', '11']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'A fast auburn fox leaps'", '10', '11']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'A fast aubu'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'A fast aubu'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'A fast aubu'", '10', '5']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'A fast aubu'", '10', '5']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'A fas'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'A fas'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'A fas'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'A fas'}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'A fast aubu'", '10', '5', "['A fas']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 't aubu'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'t aubu'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'t aubu'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 't aubu'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'A fast aubu'", '10', '5', "['A fas']", "['t aubu']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'A fas'}, {'_type': 'str', '_value': 't aubu'}], '_len': 2}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'A fast auburn fox leaps'", '10', '11', "['A fas', 't aubu']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'rn fox leaps'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'rn fox leaps'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'rn fox leaps'", '10', '6']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'rn fox leaps'", '10', '6']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'rn fox'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'rn fox'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'rn fox'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'rn fox'}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'rn fox leaps'", '10', '6', "['rn fox']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': ' leaps'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["' leaps'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["' leaps'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': ' leaps'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'rn fox leaps'", '10', '6', "['rn fox']", "[' leaps']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'rn fox'}, {'_type': 'str', '_value': ' leaps'}], '_len': 2}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'A fast auburn fox leaps'", '10', '11', "['A fas', 't aubu']", "['rn fox', ' leaps']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'A fas'}, {'_type': 'str', '_value': 't aubu'}, {'_type': 'str', '_value': 'rn fox'}, {'_type': 'str', '_value': ' leaps'}], '_len': 4}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'A fast auburn fox leaps above the sleepy canine'", '10', '23', "['A fas', 't aubu', 'rn fox', ' leaps']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': ' above the sleepy canine'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["' above the sleepy canine'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["' above the sleepy canine'", '10', '12']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["' above the sleepy canine'", '10', '12']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': ' above the s'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["' above the s'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["' above the s'", '10', '6']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["' above the s'", '10', '6']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': ' above'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["' above'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["' above'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': ' above'}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["' above the s'", '10', '6', "[' above']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': ' the s'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["' the s'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["' the s'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': ' the s'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["' above the s'", '10', '6', "[' above']", "[' the s']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': ' above'}, {'_type': 'str', '_value': ' the s'}], '_len': 2}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["' above the sleepy canine'", '10', '12', "[' above', ' the s']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'leepy canine'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'leepy canine'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'leepy canine'", '10', '6']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'leepy canine'", '10', '6']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'leepy '}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'leepy '", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'leepy '", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'leepy '}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'leepy canine'", '10', '6', "['leepy ']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'canine'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'canine'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'canine'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'canine'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'leepy canine'", '10', '6', "['leepy ']", "['canine']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'leepy '}, {'_type': 'str', '_value': 'canine'}], '_len': 2}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["' above the sleepy canine'", '10', '12', "[' above', ' the s']", "['leepy ', 'canine']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': ' above'}, {'_type': 'str', '_value': ' the s'}, {'_type': 'str', '_value': 'leepy '}, {'_type': 'str', '_value': 'canine'}], '_len': 4}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'A fast auburn fox leaps above the sleepy canine'", '10', '23', "['A fas', 't aubu', 'rn fox', ' leaps']", "[' above', ' the s', 'leepy ', 'canine']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'A fas'}, {'_type': 'str', '_value': 't aubu'}, {'_type': 'str', '_value': 'rn fox'}, {'_type': 'str', '_value': ' leaps'}, {'_type': 'str', '_value': ' above'}, {'_type': 'str', '_value': ' the s'}, {'_type': 'str', '_value': 'leepy '}, {'_type': 'str', '_value': 'canine'}], '_len': 8}
+21 normalized_segments = map(normalize_segment, segments)
+21 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'mpsu', 'aehl', 'fjox', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -2268788236580931740, -5134094967252136215, 7887716893127613781, -6977091359338580118})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA35300>', "'dgoyz'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'mpsu', 'aehl', 'fjox', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -2268788236580931740, -5134094967252136215, 7887716893127613781, -6977091359338580118})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'dgoyz'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'mpsu', 'aehl', 'fjox', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -2268788236580931740, -5134094967252136215, 7887716893127613781, -6977091359338580118})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'dgoyz'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'A fas'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'aafs'", "{'dgoyz', 'eortv', 'mpsu', 'aehl', 'fjox', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'aafs', 'mpsu', 'aehl', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -2268788236580931740, -5134094967252136215, 7887716893127613781, -6977091359338580118})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'aafs'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'aafs'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'aafs'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'aafs', 'mpsu', 'aehl', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -2268788236580931740, -5134094967252136215, 7887716893127613781, -6495432277348500856, -6977091359338580118})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'aafs'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'t aubu'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'abtuu'", "{'dgoyz', 'eortv', 'aafs', 'mpsu', 'aehl', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'aafs', 'mpsu', 'aehl', ...}", 'frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -2268788236580931740, -5134094967252136215, 7887716893127613781, -6495432277348500856, -6977091359338580118})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'abtuu'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'abtuu'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'abtuu'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'aafs', 'mpsu', 'aehl', ...}", 'frozenset({9221694443138798685, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'abtuu'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'rn fox'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'fnorx'", "{'dgoyz', 'eortv', 'aafs', 'mpsu', 'aehl', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'aafs', 'mpsu', 'aehl', ...}", 'frozenset({9221694443138798685, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'fnorx'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'fnorx'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'fnorx'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'dgoyz', 'eortv', 'aafs', 'mpsu', 'aehl', ...}", 'frozenset({9221694443138798685, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, -4238269605678182581, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'fnorx'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["' leaps'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'aelps'", "{'dgoyz', 'eortv', 'aafs', 'mpsu', 'aehl', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'dgoyz', 'eortv', 'aafs', 'mpsu', ...}", 'frozenset({9221694443138798685, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, -4238269605678182581, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'aelps'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'aelps'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'aelps'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'dgoyz', 'eortv', 'aafs', 'mpsu', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, -4238269605678182581, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'aelps'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["' above'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'abeov'", "{'aelps', 'dgoyz', 'eortv', 'aafs', 'mpsu', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'eortv', 'aafs', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, -4238269605678182581, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'abeov'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'abeov'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'abeov'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'eortv', 'aafs', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'abeov'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["' the s'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'ehst'", "{'aelps', 'abeov', 'dgoyz', 'eortv', 'aafs', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'ehst'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'ehst'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'ehst'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'ehst'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'leepy '"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'eelpy'", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'eelpy'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'eelpy'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'eelpy'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'eelpy'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'canine'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'aceinn'", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'aceinn'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'aceinn'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'aceinn'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, -8401663439227333161, 7887716893127613781, 986181700085551931})', "'A fast auburn fox leaps above the sleepy canine'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'aceinn'"]
+19 for document in documents:
+19 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, -8401663439227333161, 7887716893127613781, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'aceinn'"]
+20 segments = divide_text(document)
+20 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, -8401663439227333161, 7887716893127613781, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]", '<map object at 0x000001FD4AA36470>', '<filter object at 0x000001FD4AA351B0>', "'aceinn'"]
+PARAM_MAPPING {'text': {'actual_var': 'document', 'value': 'Pack my box with five dozen liquor jugs'}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'Pack my box with five dozen liquor jugs'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'Pack my box with five dozen liquor jugs'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'Pack my box with five dozen liquor jugs'", '10', '19']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'Pack my box with five dozen liquor jugs'", '10', '19']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'Pack my box with fi'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'Pack my box with fi'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'Pack my box with fi'", '10', '9']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'Pack my box with fi'", '10', '9']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'Pack my b'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'Pack my b'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'Pack my b'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'Pack my b'}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'Pack my box with fi'", '10', '9', "['Pack my b']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'ox with fi'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'ox with fi'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'ox with fi'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ox with fi'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'Pack my box with fi'", '10', '9', "['Pack my b']", "['ox with fi']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'Pack my b'}, {'_type': 'str', '_value': 'ox with fi'}], '_len': 2}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'Pack my box with five dozen liquor jugs'", '10', '19', "['Pack my b', 'ox with fi']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 've dozen liquor jugs'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'ve dozen liquor jugs'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'ve dozen liquor jugs'", '10', '10']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'ve dozen liquor jugs'", '10', '10']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 've dozen l'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'ve dozen l'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'ve dozen l'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 've dozen l'}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'ve dozen liquor jugs'", '10', '10', "['ve dozen l']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'iquor jugs'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'iquor jugs'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'iquor jugs'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'iquor jugs'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'ve dozen liquor jugs'", '10', '10', "['ve dozen l']", "['iquor jugs']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 've dozen l'}, {'_type': 'str', '_value': 'iquor jugs'}], '_len': 2}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'Pack my box with five dozen liquor jugs'", '10', '19', "['Pack my b', 'ox with fi']", "['ve dozen l', 'iquor jugs']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'Pack my b'}, {'_type': 'str', '_value': 'ox with fi'}, {'_type': 'str', '_value': 've dozen l'}, {'_type': 'str', '_value': 'iquor jugs'}], '_len': 4}
+21 normalized_segments = map(normalize_segment, segments)
+21 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, -8401663439227333161, 7887716893127613781, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA351B0>', "'aceinn'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, -8401663439227333161, 7887716893127613781, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'aceinn'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, -8401663439227333161, 7887716893127613781, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'aceinn'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'Pack my b'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'abckmpy'", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, -8401663439227333161, 7887716893127613781, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'abckmpy'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'abckmpy'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'abckmpy'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, -8401663439227333161, 8076362163381823572, 7887716893127613781, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'abckmpy'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'ox with fi'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'fhiiotwx'", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, -8401663439227333161, 8076362163381823572, 7887716893127613781, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'fhiiotwx'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'fhiiotwx'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'fhiiotwx'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -4238269605678182581, 8153743537051065927, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'fhiiotwx'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'ve dozen l'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'deelnovz'", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -4238269605678182581, 8153743537051065927, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'deelnovz'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'deelnovz'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'deelnovz'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'deelnovz'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'iquor jugs'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'gijoqrsuu'", "{'aelps', 'abeov', 'dgoyz', 'ehst', 'eortv', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fjox', 'abtuu', 'ehst', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'gijoqrsuu'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'gijoqrsuu'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'gijoqrsuu'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fjox', 'abtuu', 'ehst', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'Pack my box with five dozen liquor jugs'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'gijoqrsuu'"]
+19 for document in documents:
+19 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fjox', 'abtuu', 'ehst', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'gijoqrsuu'"]
+20 segments = divide_text(document)
+20 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fjox', 'abtuu', 'ehst', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", "['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']", '<map object at 0x000001FD4AA368F0>', '<filter object at 0x000001FD4AA37BB0>', "'gijoqrsuu'"]
+PARAM_MAPPING {'text': {'actual_var': 'document', 'value': 'A quick movement of the enemy will jeopardize six gunboats'}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'A quick movement of the enemy will jeopardize six gunboats'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'A quick movement of the enemy will jeopardize six gunboats'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'A quick movement of the enemy will jeopardize six gunboats'", '10', '29']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'A quick movement of the enemy will jeopardize six gunboats'", '10', '29']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'A quick movement of the enemy'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'A quick movement of the enemy'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'A quick movement of the enemy'", '10', '14']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'A quick movement of the enemy'", '10', '14']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'A quick moveme'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'A quick moveme'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'A quick moveme'", '10', '7']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'A quick moveme'", '10', '7']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'A quick'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'A quick'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'A quick'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'A quick'}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'A quick moveme'", '10', '7', "['A quick']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': ' moveme'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["' moveme'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["' moveme'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': ' moveme'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'A quick moveme'", '10', '7', "['A quick']", "[' moveme']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'A quick'}, {'_type': 'str', '_value': ' moveme'}], '_len': 2}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'A quick movement of the enemy'", '10', '14', "['A quick', ' moveme']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'nt of the enemy'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'nt of the enemy'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'nt of the enemy'", '10', '7']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'nt of the enemy'", '10', '7']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'nt of t'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'nt of t'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'nt of t'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'nt of t'}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'nt of the enemy'", '10', '7', "['nt of t']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'he enemy'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'he enemy'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'he enemy'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'he enemy'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'nt of the enemy'", '10', '7', "['nt of t']", "['he enemy']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'nt of t'}, {'_type': 'str', '_value': 'he enemy'}], '_len': 2}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["'A quick movement of the enemy'", '10', '14', "['A quick', ' moveme']", "['nt of t', 'he enemy']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'A quick'}, {'_type': 'str', '_value': ' moveme'}, {'_type': 'str', '_value': 'nt of t'}, {'_type': 'str', '_value': 'he enemy'}], '_len': 4}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'A quick movement of the enemy will jeopardize six gunboats'", '10', '29', "['A quick', ' moveme', 'nt of t', 'he enemy']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': ' will jeopardize six gunboats'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["' will jeopardize six gunboats'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["' will jeopardize six gunboats'", '10', '14']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["' will jeopardize six gunboats'", '10', '14']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': ' will jeopardi'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["' will jeopardi'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["' will jeopardi'", '10', '7']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["' will jeopardi'", '10', '7']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': ' will j'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["' will j'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["' will j'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': ' will j'}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["' will jeopardi'", '10', '7', "[' will j']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'eopardi'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'eopardi'", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'eopardi'", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'eopardi'}], '_len': 1}
+14 return left + right
+14 ['text', 'threshold', 'mid', 'left', 'right'] ["' will jeopardi'", '10', '7', "[' will j']", "['eopardi']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': ' will j'}, {'_type': 'str', '_value': 'eopardi'}], '_len': 2}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["' will jeopardize six gunboats'", '10', '14', "[' will j', 'eopardi']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'ze six gunboats'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'ze six gunboats'", '10']
+11 mid = len(text) // 2
+11 ['text', 'threshold', 'mid'] ["'ze six gunboats'", '10', '7']
+12 left = divide_text(text[:mid], threshold)
+12 ['text', 'threshold', 'mid'] ["'ze six gunboats'", '10', '7']
+PARAM_MAPPING {'text': {'actual_var': 'text[:mid]', 'value': 'text[:mid]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'ze six '}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'ze six '", '10']
+10 return [text]
+10 ['text', 'threshold'] ["'ze six '", '10']
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ze six '}], '_len': 1}
+13 right = divide_text(text[mid:], threshold)
+13 ['text', 'threshold', 'mid', 'left'] ["'ze six gunboats'", '10', '7', "['ze six ']"]
+PARAM_MAPPING {'text': {'actual_var': 'text[mid:]', 'value': 'text[mid:]'}, 'threshold': {'actual_var': 'threshold', 'value': 10}}
+FUNCTION_ENTER 8 divide_text def divide_text(text, threshold=10):
+8 ['text', 'threshold'] [{'_type': 'str', '_value': 'gunboats'}, {'_type': 'int', '_value': 10}]
+9 if len(text) <= threshold:
+9 ['text', 'threshold'] ["'gunboats'", '10']
+10 return [text]
+10 ['text'] ["'gunboats'"]
+FUNCTION_RETURN 10 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'gunboats'}], '_len': 1}
+14 return left + right
+14 ['left', 'right'] ["['ze six ']", "['gunboats']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'ze six '}, {'_type': 'str', '_value': 'gunboats'}], '_len': 2}
+14 return left + right
+14 ['left', 'right'] ["[' will j', 'eopardi']", "['ze six ', 'gunboats']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': ' will j'}, {'_type': 'str', '_value': 'eopardi'}, {'_type': 'str', '_value': 'ze six '}, {'_type': 'str', '_value': 'gunboats'}], '_len': 4}
+14 return left + right
+14 ['left', 'right'] ["['A quick', ' moveme', 'nt of t', 'he enemy']", "[' will j', 'eopardi', 'ze six ', 'gunboats']"]
+FUNCTION_RETURN 14 divide_text {'_type': 'list', '_items': [{'_type': 'str', '_value': 'A quick'}, {'_type': 'str', '_value': ' moveme'}, {'_type': 'str', '_value': 'nt of t'}, {'_type': 'str', '_value': 'he enemy'}, {'_type': 'str', '_value': ' will j'}, {'_type': 'str', '_value': 'eopardi'}, {'_type': 'str', '_value': 'ze six '}, {'_type': 'str', '_value': 'gunboats'}], '_len': 8}
+21 normalized_segments = map(normalize_segment, segments)
+21 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'segments', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fjox', 'abtuu', 'ehst', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", "['A quick', ' moveme', 'nt of t', 'he enemy', ' will j', ...]", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD4AA37BB0>', "'gijoqrsuu'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fjox', 'abtuu', 'ehst', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'gijoqrsuu'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fjox', 'abtuu', 'ehst', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'gijoqrsuu'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'A quick'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'acikqu'", "{'aafs', 'abeov', 'fjox', 'abtuu', 'ehst', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fjox', 'abtuu', 'ehst', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'acikqu'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'acikqu'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'acikqu'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fjox', 'abtuu', 'ehst', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'acikqu'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["' moveme'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'eemmov'", "{'aafs', 'abeov', 'fjox', 'abtuu', 'ehst', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'eemmov', 'fjox', 'abtuu', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'eemmov'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'eemmov'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'eemmov'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'eemmov', 'fjox', 'abtuu', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'eemmov'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'nt of t'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'fnott'", "{'aafs', 'abeov', 'eemmov', 'fjox', 'abtuu', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fnott', 'eemmov', 'fjox', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'fnott'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'fnott'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'fnott'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fnott', 'eemmov', 'fjox', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'fnott'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'he enemy'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'eeehmny'", "{'aafs', 'abeov', 'fnott', 'eemmov', 'fjox', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fnott', 'eemmov', 'fjox', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'eeehmny'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'eeehmny'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'eeehmny'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'abeov', 'fnott', 'eemmov', 'fjox', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931, 5495517590349094907})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'eeehmny'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["' will j'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'ijllw'", "{'aafs', 'abeov', 'fnott', 'eemmov', 'fjox', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'ijllw', 'abeov', 'fnott', 'eemmov', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931, 5495517590349094907})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'ijllw'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'ijllw'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'ijllw'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'ijllw', 'abeov', 'fnott', 'eemmov', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931, 5495517590349094907})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'ijllw'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'eopardi'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'adeiopr'", "{'aafs', 'ijllw', 'abeov', 'fnott', 'eemmov', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'ijllw', 'abeov', 'fnott', 'eemmov', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931, 5495517590349094907})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'adeiopr'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'adeiopr'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'adeiopr'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'ijllw', 'abeov', 'fnott', 'eemmov', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, -2635427525928928837, 986181700085551931, 5495517590349094907})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'adeiopr'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'ze six '"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'eisxz'", "{'aafs', 'ijllw', 'abeov', 'fnott', 'eemmov', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'ijllw', 'abeov', 'fnott', 'eemmov', ...}", 'frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, -2635427525928928837, 986181700085551931, 5495517590349094907})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'eisxz'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'eisxz'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'eisxz'"]
+24 for segment in unique_segments:
+24 ['documents', 'segment_registry', 'semantic_signatures', 'document', 'normalized_segments', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", "{'aafs', 'ijllw', 'abeov', 'fnott', 'eemmov', ...}", 'frozenset({4114288232308591297, -8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, -2635427525928928837, 986181700085551931, 5495517590349094907})', "'A quick movement of the enemy will jeopardize six gunboats'", '<map object at 0x000001FD499DF6A0>', '<filter object at 0x000001FD499DF310>', "'eisxz'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'gunboats'"]
+22 unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
+22 ['s', 'segment_registry'] ["'abgnostu'", "{'aafs', 'ijllw', 'abeov', 'fnott', 'eemmov', ...}"]
+26 semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
+26 ['documents', 'semantic_signatures', 'document', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", 'frozenset({4114288232308591297, -8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, -2635427525928928837, 986181700085551931, 5495517590349094907})', "'A quick movement of the enemy will jeopardize six gunboats'", '<filter object at 0x000001FD499DF310>', "'abgnostu'"]
+6 return hash(normalize_segment(segment))
+6 ['segment'] ["'abgnostu'"]
+3 return ''.join(sorted(segment.lower())).strip()
+3 ['segment'] ["'abgnostu'"]
+24 for segment in unique_segments:
+24 ['documents', 'semantic_signatures', 'document', 'unique_segments', 'segment'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", 'frozenset({4114288232308591297, -8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, -6044735047494080614, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, -2635427525928928837, 986181700085551931, 5495517590349094907})', "'A quick movement of the enemy will jeopardize six gunboats'", '<filter object at 0x000001FD499DF310>', "'abgnostu'"]
+19 for document in documents:
+19 ['documents', 'semantic_signatures', 'document'] ["['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']", 'frozenset({4114288232308591297, -8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, -6044735047494080614, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, -2635427525928928837, 986181700085551931, 5495517590349094907})', "'A quick movement of the enemy will jeopardize six gunboats'"]
+28 return len(semantic_signatures)
+28 ['semantic_signatures'] ['frozenset({4114288232308591297, -8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, -6044735047494080614, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, -2635427525928928837, 986181700085551931, 5495517590349094907})']
+FUNCTION_RETURN 28 process_corpus {'_type': 'int', '_value': 27}

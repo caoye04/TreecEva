@@ -1,0 +1,53 @@
+Target: Find the value of variable delimiter_count after [line 25] executes
+
+[line 24]  token_stream = [':', 'data', ';', '\x02', '\x1f', '\x02', '\x03', '\x1e', '\x02', '\x1f', ',', ':', ';']
+Compute: [':', 'data', ';', '\x02', '\x1f', '\x02', '\x03', '\x1e', '\x02', '\x1f', ',', ':', ';'] = [':', 'data', ';', '', '', ...]
+[line 25]  delimiter_count, control_char_freq = analyze_protocol_stream(token_stream)
+(Missing param: 'func_name')
+[line 5]  delimiter_count = 0
+Assign: delimiter_count = 0
+[line 6]  control_char_freq = {'\x02': 0, '\x03': 0, '\x1e': 0}
+Compute: {'\x02': 0, '\x03': 0, '\x1e': 0} = {: 0, : 0, : 0}
+[line 7]  header_delimiters = {':', ';', ','}
+Compute: {':', ';', ','} = {',', ':', ';'}
+[line 9]  for token in token_stream:
+Loop Start: token takes its first value ':'
+[line 10]  if state == 'header' and token == '\x1f':
+Condition: True, entering 'if' block
+[line 13]  elif state == 'body' and token == '\x1f':
+'elif' Condition: True, entering block
+[line 17]  if state == 'header' and token in header_delimiters:
+Condition: True, entering 'if' block
+[line 18]  delimiter_count += 1
+Update: delimiter_count changed from 0 (defined at defined at [line 5]) to 0+1 = 1
+[line 9]  for token in token_stream:
+Loop Iteration: token is now 'data' (iteration 2)
+[line 10]  if state == 'header' and token == '\x1f':
+Condition: True, entering 'if' block
+[line 13]  elif state == 'body' and token == '\x1f':
+'elif' Condition: True, entering block
+[line 17]  if state == 'header' and token in header_delimiters:
+Condition: True, entering 'if' block
+[line 19]  elif state == 'body' and token in control_char_freq:
+'elif' Condition: True, entering block
+... [Line 9] repeats 10 more times ...
+... [Line 9] repeats 10 more times ...
+... [Line 9] repeats 10 more times ...
+... [Line 9] repeats 10 more times ...
+... [Line 9] repeats 10 more times ...
+[line 9]  for token in token_stream:
+Loop Iteration: token is now ';' (iteration 13)
+[line 10]  if state == 'header' and token == '\x1f':
+Condition: True, entering 'if' block
+[line 13]  elif state == 'body' and token == '\x1f':
+'elif' Condition: True, entering block
+[line 17]  if state == 'header' and token in header_delimiters:
+Condition: True, entering 'if' block
+[line 18]  delimiter_count += 1
+Update: delimiter_count changed from 4 (defined at defined at [line 18]) to 4+1 = 5
+[line 9]  for token in token_stream:
+Loop End: Iteration finished
+[line 22]  return delimiter_count, control_char_freq
+Return: delimiter_count, control_char_freq
+
+Answer: delimiter_count = 5 (last updated on defined at [line 18])

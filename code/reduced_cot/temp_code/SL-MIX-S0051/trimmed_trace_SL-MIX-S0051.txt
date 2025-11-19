@@ -1,0 +1,25 @@
+19
+final_signal
+---
+PARAM_MAPPING {'input_signal': {'actual_var': 'input_signal', 'value': 214}}
+FUNCTION_ENTER 1 simulate_circuit def simulate_circuit(input_signal):
+1 ['input_signal'] [{'_type': 'int', '_value': 214}]
+3 stage1 = (input_signal << 2) & 0xFF  # Shift left by 2, mask to 8 bits
+3 ['input_signal', 'stage1'] ['214', '88']
+6 if (stage1 > 100) and not (stage1 & 0x0F == 0):  # Check if greater than 100 and lower nibble is non-zero
+6 ['stage1'] ['88']
+9 stage2 = stage1 | 0xAA  # OR with 0xAA
+9 ['stage1', 'stage2'] ['88', '250']
+12 if (bin(stage2).count('1') % 2) == 0:  # Check if even parity
+12 ['stage2'] ['250']
+13 stage3 = stage2 & 0xF0  # Mask upper nibble
+13 ['stage2', 'stage3'] ['250', '240']
+18 adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
+18 ['stage3'] ['240']
+19 final_signal = adjust(stage3)
+19 ['stage3'] ['240']
+18 adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
+18 ['x'] ['240']
+21 return final_signal
+21 ['final_signal'] ['120']
+FUNCTION_RETURN 21 simulate_circuit {'_type': 'int', '_value': 120}

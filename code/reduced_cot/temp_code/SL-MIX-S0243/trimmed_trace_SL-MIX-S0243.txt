@@ -1,0 +1,69 @@
+42
+final_priority_score
+---
+16 packet_queue = []
+16 ['encoded_packets', 'packet_queue'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", '[]']
+17 priority_heap = []
+17 ['encoded_packets', 'packet_queue', 'priority_heap'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", '[]', '[]']
+18 processed_scores = set()
+18 ['encoded_packets', 'packet_queue', 'priority_heap', 'processed_scores'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", '[]', '[]', 'set()']
+21 for enc_data, base_priority in encoded_packets:
+21 ['encoded_packets', 'packet_queue', 'priority_heap', 'processed_scores', 'enc_data', 'base_priority'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", '[]', '[]', 'set()', "'SGVsbG8='", '5']
+5 return hash(s) % 1000
+5 ['s'] ["'Hello'"]
+21 for enc_data, base_priority in encoded_packets:
+21 ['encoded_packets', 'packet_queue', 'priority_heap', 'processed_scores', 'enc_data', 'base_priority'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", "[(64, 'Hello')]", '[]', 'set()', "'V29ybGQ='", '3']
+5 return hash(s) % 1000
+5 ['s'] ["'World'"]
+21 for enc_data, base_priority in encoded_packets:
+21 ['encoded_packets', 'packet_queue', 'priority_heap', 'processed_scores', 'enc_data', 'base_priority'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", "[(64, 'Hello'), (34, 'World')]", '[]', 'set()', "'UGl6emE='", '7']
+5 return hash(s) % 1000
+5 ['s'] ["'Pizza'"]
+21 for enc_data, base_priority in encoded_packets:
+21 ['encoded_packets', 'packet_queue', 'priority_heap', 'processed_scores', 'enc_data', 'base_priority'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", "[(64, 'Hello'), (34, 'World'), (76, 'Pizza')]", '[]', 'set()', "'UGl6emE='", '7']
+28 for priority, data in packet_queue:
+28 ['packet_queue', 'priority_heap', 'processed_scores', 'priority', 'data'] ["[(64, 'Hello'), (34, 'World'), (76, 'Pizza')]", '[]', 'set()', '64', "'Hello'"]
+28 for priority, data in packet_queue:
+28 ['packet_queue', 'priority_heap', 'processed_scores', 'priority', 'data'] ["[(64, 'Hello'), (34, 'World'), (76, 'Pizza')]", "[(64, 'Hello')]", 'set()', '34', "'World'"]
+28 for priority, data in packet_queue:
+28 ['packet_queue', 'priority_heap', 'processed_scores', 'priority', 'data'] ["[(64, 'Hello'), (34, 'World'), (76, 'Pizza')]", "[(34, 'World'), (64, 'Hello')]", 'set()', '76', "'Pizza'"]
+28 for priority, data in packet_queue:
+28 ['packet_queue', 'priority_heap', 'processed_scores', 'priority', 'data'] ["[(64, 'Hello'), (34, 'World'), (76, 'Pizza')]", "[(34, 'World'), (64, 'Hello'), (76, 'Pizza')]", 'set()', '76', "'Pizza'"]
+32 total_score = 0
+32 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score'] ["[(34, 'World'), (64, 'Hello'), (76, 'Pizza')]", 'set()', '76', "'Pizza'", '0']
+33 while priority_heap:
+33 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score'] ["[(34, 'World'), (64, 'Hello'), (76, 'Pizza')]", 'set()', '76', "'Pizza'", '0']
+34 priority, data = heapq.heappop(priority_heap)
+34 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score'] ["[(64, 'Hello'), (76, 'Pizza')]", 'set()', '34', "'World'", '0']
+35 if len(data) > 4 and priority not in processed_scores:
+35 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score'] ["[(64, 'Hello'), (76, 'Pizza')]", 'set()', '34', "'World'", '0']
+36 score = priority ^ len(data)
+36 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(64, 'Hello'), (76, 'Pizza')]", 'set()', '34', "'World'", '0', '39']
+37 if score > 10 and (score % 2 == 0 or score < 50):
+37 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(64, 'Hello'), (76, 'Pizza')]", 'set()', '34', "'World'", '0', '39']
+38 total_score += score
+38 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(64, 'Hello'), (76, 'Pizza')]", 'set()', '34', "'World'", '39', '39']
+33 while priority_heap:
+33 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(64, 'Hello'), (76, 'Pizza')]", '{34}', '34', "'World'", '39', '39']
+34 priority, data = heapq.heappop(priority_heap)
+34 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(76, 'Pizza')]", '{34}', '64', "'Hello'", '39', '39']
+35 if len(data) > 4 and priority not in processed_scores:
+35 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(76, 'Pizza')]", '{34}', '64', "'Hello'", '39', '39']
+36 score = priority ^ len(data)
+36 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(76, 'Pizza')]", '{34}', '64', "'Hello'", '39', '69']
+37 if score > 10 and (score % 2 == 0 or score < 50):
+37 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(76, 'Pizza')]", '{34}', '64', "'Hello'", '39', '69']
+33 while priority_heap:
+33 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(76, 'Pizza')]", '{34}', '64', "'Hello'", '39', '69']
+34 priority, data = heapq.heappop(priority_heap)
+34 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ['[]', '{34}', '76', "'Pizza'", '39', '69']
+35 if len(data) > 4 and priority not in processed_scores:
+35 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ['[]', '{34}', '76', "'Pizza'", '39', '69']
+36 score = priority ^ len(data)
+36 ['priority_heap', 'priority', 'data', 'total_score', 'score'] ['[]', '76', "'Pizza'", '39', '73']
+37 if score > 10 and (score % 2 == 0 or score < 50):
+37 ['priority_heap', 'total_score', 'score'] ['[]', '39', '73']
+33 while priority_heap:
+33 ['priority_heap', 'total_score'] ['[]', '39']
+42 final_priority_score = total_score & 0xFF
+42 ['total_score', 'final_priority_score'] ['39', '39']

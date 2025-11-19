@@ -1,0 +1,10 @@
+Target: Find the value of variable unique_device_count after [line 22] executes
+
+[line 18]  subnet_pattern = r'^192\.168\.\d{1,3}\.\d{1,3}$'
+Assign: subnet_pattern = '^192\.168\.\d{1,3}\.\d{1,3}$'
+[line 19]  suspicious_ips = {entry.ip_address for entry in log_entries if re.match(subnet_pattern, entry.ip_address)}
+Compute: {entry.ip_address for entry in log_entries if re.match(subnet_pattern, entry.ip_address)}, where entry=LogEntry(timestamp='2023-05-15 10:23:01', ip_address='192.168.1.10', user_agent='Mozilla/5.0') (an unknown source), log_entries=[LogEntry(timestamp='2023-05-15 10:23:01', ip_address='192.168.1.10', user_agent='Mozilla/5.0'), LogEntry(timestamp='2023-05-15 10:25:12', ip_address='192.168.1.12', user_agent='Chrome/90.0'), LogEntry(timestamp='2023-05-15 10:27:45', ip_address='10.0.0.5', user_agent='Safari/14.0'), LogEntry(timestamp='2023-05-15 10:30:01', ip_address='192.168.1.10', user_agent='Mozilla/5.0'), LogEntry(timestamp='2023-05-15 10:32:17', ip_address='192.168.2.15', user_agent='Firefox/88.0'), ...] (an unknown source), subnet_pattern='^192\.168\.\d{1,3}\.\d{1,3}$' (defined at [line 18]) = ?
+[line 22]  unique_device_count = len(suspicious_ips)
+Call function len(suspicious_ips={'192.168.1.10', '192.168.1.12', '192.168.2.15'} (defined at [line 19]))
+
+Answer: unique_device_count = 3 (last updated on defined at [line 22])

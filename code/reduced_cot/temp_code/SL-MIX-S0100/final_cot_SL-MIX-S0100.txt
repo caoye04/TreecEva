@@ -1,0 +1,71 @@
+Target: Find the value of variable congestion_window_size after [line 40] executes
+
+[line 6]  packet_window = deque(maxlen=5)
+Call function deque(maxlen=5)
+[line 8]  congestion_window_size = 10
+Assign: congestion_window_size = 10
+[line 18]  for seq_num, payload in packet_stream:
+(Missing param: 'iter_var')
+[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
+Compute: seq_num in [p[0] for p in packet_window], where seq_num=1001 (an unknown source), packet_window=deque([], maxlen=5) (defined at [line 6]) = False
+[line 23]  if is_duplicate:
+Condition: True, entering 'if' block
+[line 30]  if payload > 1000:
+Condition: True, entering 'if' block
+[line 32]  elif is_duplicate:
+'elif' Condition: True, entering block
+[line 36]  seq_str = str(seq_num)
+Call function str(seq_num=1001 (an unknown source))
+[line 37]  if re.match(r'.*[02468]$', seq_str):  # Even ending digit
+Condition: True, entering 'if' block
+[line 40]  congestion_window_size = congestion_window_size - 1
+Update: congestion_window_size changed from 10 (defined at defined at [line 8]) to 10-1 = 9
+[line 18]  for seq_num, payload in packet_stream:
+(Missing param: 'iter_var')
+[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
+Compute: seq_num in [p[0] for p in packet_window], where seq_num=1002 (an unknown source), p=(1001, 512) (an unknown source), packet_window=deque([(1001, 512)], maxlen=5) (defined at [line 6]) = False
+[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
+Compute: seq_num in [p[0] for p in packet_window], where seq_num=1002 (an unknown source), p=(1001, 512) (an unknown source), packet_window=deque([(1001, 512)], maxlen=5) (defined at [line 6]) = False
+[line 23]  if is_duplicate:
+Condition: True, entering 'if' block
+[line 30]  if payload > 1000:
+Condition: True, entering 'if' block
+[line 32]  elif is_duplicate:
+'elif' Condition: True, entering block
+[line 36]  seq_str = str(seq_num)
+Call function str(seq_num=1002 (an unknown source))
+[line 37]  if re.match(r'.*[02468]$', seq_str):  # Even ending digit
+Condition: True, entering 'if' block
+[line 38]  congestion_window_size = congestion_window_size + 1
+Update: congestion_window_size changed from 9 (defined at defined at [line 40]) to 9+1 = 10
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+[line 18]  for seq_num, payload in packet_stream:
+(Missing param: 'iter_var')
+[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
+Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1006, 2048) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = False
+[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
+Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1007, 32) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = False
+[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
+Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1008, 4096) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = False
+[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
+Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1009, 16) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = False
+[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
+Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1010, 8192) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = False
+[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
+Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1010, 8192) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = True
+[line 23]  if is_duplicate:
+Condition: True, entering 'if' block
+[line 30]  if payload > 1000:
+Condition: True, entering 'if' block
+[line 31]  congestion_window_size = congestion_window_size - 1 if congestion_window_size > 1 else 1
+Compute: congestion_window_size - 1 if congestion_window_size > 1 else 1, where congestion_window_size=5 (defined at [line 38]) = 4
+[line 18]  for seq_num, payload in packet_stream:
+Loop End: Iteration finished
+
+Answer: congestion_window_size = 4 (last updated on defined at [line 31])

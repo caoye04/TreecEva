@@ -1,0 +1,28 @@
+Target: Find the value of variable unique_word_count after [line 22] executes
+
+[line 4]  document = "The quick brown fox jumps over the lazy dog. The dog was really lazy."
+Assign: document = 'The quick brown fox jumps over the lazy dog. The dog was really lazy.'
+[line 5]  stop_words = {'the', 'over', 'was', 'really'}
+Compute: {'the', 'over', 'was', 'really'} = {'was', 'really', 'the', 'over'}
+[line 8]  tokens = re.findall(r'\b\w+\b', document.lower())
+(Missing param: 'func_name')
+[line 11]  filtered_tokens = [word for word in tokens if word not in stop_words]
+Compute: [word for word in tokens if word not in stop_words], where word='the' (an unknown source), tokens=['the', 'quick', 'brown', 'fox', 'jumps', ...] (an unknown source), stop_words={'was', 'really', 'the', 'over'} (defined at [line 5]) = ?
+[line 14]  freq_map = defaultdict(int)
+Call function defaultdict(int)
+[line 15]  for word in filtered_tokens:
+Loop Start: word takes its first value 'quick'
+[line 15]  for word in filtered_tokens:
+Loop Iteration: word is now 'brown' (iteration 2)
+... [Line 15] repeats 5 more times ...
+... [Line 15] repeats 5 more times ...
+[line 15]  for word in filtered_tokens:
+Loop Iteration: word is now 'lazy' (iteration 8)
+[line 15]  for word in filtered_tokens:
+Loop End: Iteration finished
+[line 19]  single_occurrence = {word: count for word, count in freq_map.items() if count == 1}
+Compute: {word: count for word, count in freq_map.items() if count == 1}, where word='quick' (defined at [line 15]), count=1 (an unknown source), freq_map={quick: 1, brown: 1, fox: 1, ...} (defined at [line 14]) = ?
+[line 22]  unique_word_count = len(single_occurrence)
+Call function len(single_occurrence={quick: 1, brown: 1, fox: 1, ...} (defined at [line 19]))
+
+Answer: unique_word_count = 4 (last updated on defined at [line 22])

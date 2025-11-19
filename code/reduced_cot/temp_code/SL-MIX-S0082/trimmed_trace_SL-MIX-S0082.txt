@@ -1,0 +1,39 @@
+17
+max_efficiency
+---
+9 channel_efficiencies = {ch['id']: ch['bandwidth'] / ch['latency'] for ch in channels}
+9 ['channels', 'ch'] ["[{id: 'CH_A', bandwidth: 120, latency: 15}, {id: 'CH_B', bandwidth: 90, latency: 10}, {id: 'CH_C', bandwidth: 200, latency: 25}, {id: 'CH_D', bandwidth: 150, latency: 20}]", "{id: 'CH_A', bandwidth: 120, latency: 15}"]
+9 channel_efficiencies = {ch['id']: ch['bandwidth'] / ch['latency'] for ch in channels}
+9 ['channels', 'ch'] ["[{id: 'CH_A', bandwidth: 120, latency: 15}, {id: 'CH_B', bandwidth: 90, latency: 10}, {id: 'CH_C', bandwidth: 200, latency: 25}, {id: 'CH_D', bandwidth: 150, latency: 20}]", "{id: 'CH_B', bandwidth: 90, latency: 10}"]
+9 channel_efficiencies = {ch['id']: ch['bandwidth'] / ch['latency'] for ch in channels}
+9 ['channels', 'ch'] ["[{id: 'CH_A', bandwidth: 120, latency: 15}, {id: 'CH_B', bandwidth: 90, latency: 10}, {id: 'CH_C', bandwidth: 200, latency: 25}, {id: 'CH_D', bandwidth: 150, latency: 20}]", "{id: 'CH_C', bandwidth: 200, latency: 25}"]
+9 channel_efficiencies = {ch['id']: ch['bandwidth'] / ch['latency'] for ch in channels}
+9 ['channels', 'ch'] ["[{id: 'CH_A', bandwidth: 120, latency: 15}, {id: 'CH_B', bandwidth: 90, latency: 10}, {id: 'CH_C', bandwidth: 200, latency: 25}, {id: 'CH_D', bandwidth: 150, latency: 20}]", "{id: 'CH_D', bandwidth: 150, latency: 20}"]
+9 channel_efficiencies = {ch['id']: ch['bandwidth'] / ch['latency'] for ch in channels}
+9 ['channels', 'channel_efficiencies'] ["[{id: 'CH_A', bandwidth: 120, latency: 15}, {id: 'CH_B', bandwidth: 90, latency: 10}, {id: 'CH_C', bandwidth: 200, latency: 25}, {id: 'CH_D', bandwidth: 150, latency: 20}]", '{CH_A: 8.0, CH_B: 9.0, CH_C: 8.0, ...}']
+11 visited_channels = frozenset(['CH_B', 'CH_D'])
+11 ['channel_efficiencies', 'visited_channels'] ['{CH_A: 8.0, CH_B: 9.0, CH_C: 8.0, ...}', "frozenset({'CH_B', 'CH_D'})"]
+12 valid_channels = {k: v for k, v in channel_efficiencies.items() if k not in visited_channels}
+12 ['channel_efficiencies', 'visited_channels', 'k', 'v'] ['{CH_A: 8.0, CH_B: 9.0, CH_C: 8.0, ...}', "frozenset({'CH_B', 'CH_D'})", "'CH_A'", '8.0']
+12 valid_channels = {k: v for k, v in channel_efficiencies.items() if k not in visited_channels}
+12 ['channel_efficiencies', 'visited_channels', 'k', 'v'] ['{CH_A: 8.0, CH_B: 9.0, CH_C: 8.0, ...}', "frozenset({'CH_B', 'CH_D'})", "'CH_B'", '9.0']
+12 valid_channels = {k: v for k, v in channel_efficiencies.items() if k not in visited_channels}
+12 ['channel_efficiencies', 'visited_channels', 'k', 'v'] ['{CH_A: 8.0, CH_B: 9.0, CH_C: 8.0, ...}', "frozenset({'CH_B', 'CH_D'})", "'CH_C'", '8.0']
+12 valid_channels = {k: v for k, v in channel_efficiencies.items() if k not in visited_channels}
+12 ['channel_efficiencies', 'visited_channels', 'k', 'v'] ['{CH_A: 8.0, CH_B: 9.0, CH_C: 8.0, ...}', "frozenset({'CH_B', 'CH_D'})", "'CH_D'", '7.5']
+12 valid_channels = {k: v for k, v in channel_efficiencies.items() if k not in visited_channels}
+12 ['channel_efficiencies', 'visited_channels', 'valid_channels'] ['{CH_A: 8.0, CH_B: 9.0, CH_C: 8.0, ...}', "frozenset({'CH_B', 'CH_D'})", '{CH_A: 8.0, CH_C: 8.0}']
+14 max_efficiency = 0
+14 ['valid_channels', 'max_efficiency'] ['{CH_A: 8.0, CH_C: 8.0}', '0']
+15 for cid, eff in valid_channels.items():
+15 ['valid_channels', 'max_efficiency', 'cid', 'eff'] ['{CH_A: 8.0, CH_C: 8.0}', '0', "'CH_A'", '8.0']
+16 if eff > max_efficiency:
+16 ['valid_channels', 'max_efficiency', 'cid', 'eff'] ['{CH_A: 8.0, CH_C: 8.0}', '0', "'CH_A'", '8.0']
+17 max_efficiency = eff
+17 ['valid_channels', 'max_efficiency', 'cid', 'eff'] ['{CH_A: 8.0, CH_C: 8.0}', '8.0', "'CH_A'", '8.0']
+15 for cid, eff in valid_channels.items():
+15 ['valid_channels', 'max_efficiency', 'cid', 'eff'] ['{CH_A: 8.0, CH_C: 8.0}', '8.0', "'CH_C'", '8.0']
+16 if eff > max_efficiency:
+16 ['valid_channels', 'max_efficiency', 'cid', 'eff'] ['{CH_A: 8.0, CH_C: 8.0}', '8.0', "'CH_C'", '8.0']
+15 for cid, eff in valid_channels.items():
+15 ['valid_channels', 'cid', 'eff'] ['{CH_A: 8.0, CH_C: 8.0}', "'CH_C'", '8.0']

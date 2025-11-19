@@ -1,0 +1,198 @@
+1 from collections import Counter
+1 [] []
+2 from functools import reduce
+2 [] []
+42 sample_dna = "ATCGATCGATCGATCGATCG"
+42 ['sample_dna'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}]
+43 checksum_result = calculate_mutation_checksum(sample_dna)
+43 ['sample_dna'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}]
+PARAM_MAPPING calculate_mutation_checksum {'dna_sequence': {'actual_var': 'sample_dna', 'value': 'ATCGATCGATCGATCGATCG'}}
+FUNCTION_ENTER 12 calculate_mutation_checksum def calculate_mutation_checksum(dna_sequence):
+12 ['dna_sequence'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}]
+DEPTH_2 14     nucleotide_counter = Counter(dna_sequence)
+14 ['dna_sequence', 'nucleotide_counter'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}]
+DEPTH_2 17     seq_len = len(dna_sequence)
+17 ['dna_sequence', 'nucleotide_counter', 'seq_len'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}]
+DEPTH_2 18     position_weight = compute_positional_weight(nucleotide_counter, seq_len)
+18 ['dna_sequence', 'nucleotide_counter', 'seq_len'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}]
+PARAM_MAPPING compute_positional_weight {'char_freq_map': {'actual_var': 'nucleotide_counter', 'value': Counter({'A': 5, 'T': 5, 'C': 5, 'G': 5})}, 'sequence_length': {'actual_var': 'seq_len', 'value': 20}}
+FUNCTION_ENTER 4 compute_positional_weight def compute_positional_weight(char_freq_map, sequence_length):
+4 ['char_freq_map', 'sequence_length'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}]
+DEPTH_3 5     weighted_sum = 0
+5 ['char_freq_map', 'sequence_length', 'weighted_sum'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 0}]
+DEPTH_3 6     for char, freq in char_freq_map.items():
+6 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 0}, {'_type': 'str', '_value': 'A'}, {'_type': 'int', '_value': 5}]
+DEPTH_3 7         char_code = ord(char)
+7 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 0}, {'_type': 'str', '_value': 'A'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 65}]
+DEPTH_3 8         position_factor = (char_code * freq) % 7
+8 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 0}, {'_type': 'str', '_value': 'A'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 65}, {'_type': 'int', '_value': 3}]
+DEPTH_3 9         weighted_sum += position_factor * (sequence_length // (freq + 1))
+9 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'A'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 65}, {'_type': 'int', '_value': 3}]
+DEPTH_3 6     for char, freq in char_freq_map.items():
+6 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'T'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 65}, {'_type': 'int', '_value': 3}]
+DEPTH_3 7         char_code = ord(char)
+7 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'T'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 3}]
+DEPTH_3 8         position_factor = (char_code * freq) % 7
+8 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'T'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 0}]
+DEPTH_3 9         weighted_sum += position_factor * (sequence_length // (freq + 1))
+9 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'T'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 0}]
+DEPTH_3 6     for char, freq in char_freq_map.items():
+6 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'C'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 0}]
+DEPTH_3 7         char_code = ord(char)
+7 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'C'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 0}]
+DEPTH_3 8         position_factor = (char_code * freq) % 7
+8 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'C'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 6}]
+DEPTH_3 9         weighted_sum += position_factor * (sequence_length // (freq + 1))
+9 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 27}, {'_type': 'str', '_value': 'C'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 6}]
+DEPTH_3 6     for char, freq in char_freq_map.items():
+6 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 27}, {'_type': 'str', '_value': 'G'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 6}]
+DEPTH_3 7         char_code = ord(char)
+7 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 27}, {'_type': 'str', '_value': 'G'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 71}, {'_type': 'int', '_value': 6}]
+DEPTH_3 8         position_factor = (char_code * freq) % 7
+8 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 27}, {'_type': 'str', '_value': 'G'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 71}, {'_type': 'int', '_value': 5}]
+DEPTH_3 9         weighted_sum += position_factor * (sequence_length // (freq + 1))
+9 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 42}, {'_type': 'str', '_value': 'G'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 71}, {'_type': 'int', '_value': 5}]
+DEPTH_3 6     for char, freq in char_freq_map.items():
+6 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 42}, {'_type': 'str', '_value': 'G'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 71}, {'_type': 'int', '_value': 5}]
+DEPTH_3 10     return weighted_sum
+10 ['char_freq_map', 'sequence_length', 'weighted_sum', 'char', 'freq', 'char_code', 'position_factor'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 42}, {'_type': 'str', '_value': 'G'}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 71}, {'_type': 'int', '_value': 5}]
+FUNCTION_RETURN 10 compute_positional_weight {'_type': 'int', '_value': 42}
+DEPTH_2 21     complement_map = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
+21 ['dna_sequence', 'nucleotide_counter', 'seq_len', 'position_weight', 'complement_map'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 42}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'G'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'C'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'A'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'G'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'C'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'A'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'G'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'C'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'A'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'G'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'C'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'A'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'G'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'C'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'A'}]
+DEPTH_2 22     transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+22 ['.0', 'complement_map', 'nuc'] [{'_type': 'unknown', '_repr': '<str_ascii_iterator object at 0x000001FD49206470>'}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'A'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 0}, {'_type': 'str', '_value': 'C'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 1}, {'_type': 'str', '_value': 'G'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'A'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 3}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 4}, {'_type': 'str', '_value': 'C'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 5}, {'_type': 'str', '_value': 'G'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 6}, {'_type': 'str', '_value': 'A'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 8}, {'_type': 'str', '_value': 'C'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'G'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 10}, {'_type': 'str', '_value': 'A'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 12}, {'_type': 'str', '_value': 'C'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 13}, {'_type': 'str', '_value': 'G'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 14}, {'_type': 'str', '_value': 'A'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 15}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 16}, {'_type': 'str', '_value': 'C'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 17}, {'_type': 'str', '_value': 'G'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 18}, {'_type': 'str', '_value': 'A'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 19}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 25     transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+25 ['.0', 'i', 'c'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 19}, {'_type': 'str', '_value': 'T'}]
+DEPTH_2 28     frequency_product = reduce(lambda x, y: (x * y) % 97, nucleotide_counter.values(), 1)
+28 ['dna_sequence', 'nucleotide_counter', 'seq_len', 'position_weight', 'complement_map', 'transformed_seq', 'transform_hash'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 42}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'CGATCGATCGATCGATCGAT'}, {'_type': 'int', '_value': 180}]
+FUNCTION_ENTER 28 <lambda>     frequency_product = reduce(lambda x, y: (x * y) % 97, nucleotide_counter.values(), 1)
+28 ['x', 'y'] [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 5}]
+DEPTH_3 28     frequency_product = reduce(lambda x, y: (x * y) % 97, nucleotide_counter.values(), 1)
+28 ['x', 'y'] [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 5}]
+FUNCTION_RETURN 28 <lambda> {'_type': 'int', '_value': 5}
+FUNCTION_ENTER 28 <lambda>     frequency_product = reduce(lambda x, y: (x * y) % 97, nucleotide_counter.values(), 1)
+28 ['x', 'y'] [{'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 5}]
+DEPTH_3 28     frequency_product = reduce(lambda x, y: (x * y) % 97, nucleotide_counter.values(), 1)
+28 ['x', 'y'] [{'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 5}]
+FUNCTION_RETURN 28 <lambda> {'_type': 'int', '_value': 25}
+FUNCTION_ENTER 28 <lambda>     frequency_product = reduce(lambda x, y: (x * y) % 97, nucleotide_counter.values(), 1)
+28 ['x', 'y'] [{'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 5}]
+DEPTH_3 28     frequency_product = reduce(lambda x, y: (x * y) % 97, nucleotide_counter.values(), 1)
+28 ['x', 'y'] [{'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 5}]
+FUNCTION_RETURN 28 <lambda> {'_type': 'int', '_value': 28}
+FUNCTION_ENTER 28 <lambda>     frequency_product = reduce(lambda x, y: (x * y) % 97, nucleotide_counter.values(), 1)
+28 ['x', 'y'] [{'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 5}]
+DEPTH_3 28     frequency_product = reduce(lambda x, y: (x * y) % 97, nucleotide_counter.values(), 1)
+28 ['x', 'y'] [{'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 5}]
+FUNCTION_RETURN 28 <lambda> {'_type': 'int', '_value': 43}
+DEPTH_2 32         position_weight % 13,
+32 ['dna_sequence', 'nucleotide_counter', 'seq_len', 'position_weight', 'complement_map', 'transformed_seq', 'transform_hash', 'frequency_product'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 42}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'CGATCGATCGATCGATCGAT'}, {'_type': 'int', '_value': 180}, {'_type': 'int', '_value': 43}]
+DEPTH_2 33         transform_hash % 17,
+33 ['dna_sequence', 'nucleotide_counter', 'seq_len', 'position_weight', 'complement_map', 'transformed_seq', 'transform_hash', 'frequency_product'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 42}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'CGATCGATCGATCGATCGAT'}, {'_type': 'int', '_value': 180}, {'_type': 'int', '_value': 43}]
+DEPTH_2 34         frequency_product % 19,
+34 ['dna_sequence', 'nucleotide_counter', 'seq_len', 'position_weight', 'complement_map', 'transformed_seq', 'transform_hash', 'frequency_product'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 42}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'CGATCGATCGATCGATCGAT'}, {'_type': 'int', '_value': 180}, {'_type': 'int', '_value': 43}]
+DEPTH_2 35         seq_len % 23
+35 ['dna_sequence', 'nucleotide_counter', 'seq_len', 'position_weight', 'complement_map', 'transformed_seq', 'transform_hash', 'frequency_product'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 42}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'CGATCGATCGATCGATCGAT'}, {'_type': 'int', '_value': 180}, {'_type': 'int', '_value': 43}]
+DEPTH_2 31     checksum_components = [
+31 ['dna_sequence', 'nucleotide_counter', 'seq_len', 'position_weight', 'complement_map', 'transformed_seq', 'transform_hash', 'frequency_product', 'checksum_components'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 42}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'CGATCGATCGATCGATCGAT'}, {'_type': 'int', '_value': 180}, {'_type': 'int', '_value': 43}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 20}], '_len': 4}]
+DEPTH_2 38     checksum_result = sum(component * (i + 11) for i, component in enumerate(checksum_components)) % 100
+38 ['.0'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}]
+DEPTH_2 38     checksum_result = sum(component * (i + 11) for i, component in enumerate(checksum_components)) % 100
+38 ['.0', 'i', 'component'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 3}]
+DEPTH_2 38     checksum_result = sum(component * (i + 11) for i, component in enumerate(checksum_components)) % 100
+38 ['.0', 'i', 'component'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 10}]
+DEPTH_2 38     checksum_result = sum(component * (i + 11) for i, component in enumerate(checksum_components)) % 100
+38 ['.0', 'i', 'component'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}]
+DEPTH_2 38     checksum_result = sum(component * (i + 11) for i, component in enumerate(checksum_components)) % 100
+38 ['.0', 'i', 'component'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 20}]
+DEPTH_2 38     checksum_result = sum(component * (i + 11) for i, component in enumerate(checksum_components)) % 100
+38 ['.0', 'i', 'component'] [{'_type': 'unknown', '_repr': '<enumerate object at 0x000001FD4AF4B2E0>'}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 20}]
+DEPTH_2 39     return checksum_result
+39 ['dna_sequence', 'nucleotide_counter', 'seq_len', 'position_weight', 'complement_map', 'transformed_seq', 'transform_hash', 'frequency_product', 'checksum_components', 'checksum_result'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 5}, 'T': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 5}, 'G': {'_type': 'int', '_value': 5}}, '_len': 4}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 42}, {'_type': 'dict', '_items': {'A': {'_type': 'str', '_value': 'T'}, 'T': {'_type': 'str', '_value': 'A'}, 'C': {'_type': 'str', '_value': 'G'}, 'G': {'_type': 'str', '_value': 'C'}}, '_len': 4}, {'_type': 'str', '_value': 'CGATCGATCGATCGATCGAT'}, {'_type': 'int', '_value': 180}, {'_type': 'int', '_value': 43}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 20}], '_len': 4}, {'_type': 'int', '_value': 98}]
+FUNCTION_RETURN 39 calculate_mutation_checksum {'_type': 'int', '_value': 98}
+44 print(f"Result: {checksum_result}")
+44 ['sample_dna', 'checksum_result'] [{'_type': 'str', '_value': 'ATCGATCGATCGATCGATCG'}, {'_type': 'int', '_value': 98}]

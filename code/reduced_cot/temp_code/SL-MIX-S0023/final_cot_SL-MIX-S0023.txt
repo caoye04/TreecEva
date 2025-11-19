@@ -1,0 +1,65 @@
+Target: Find the value of variable final_efficiency after [line 26] executes
+
+[line 25]  network_nodes = 12
+Assign: network_nodes = 12
+[line 26]  final_efficiency = transmission_efficiency(network_nodes)
+Call function transmission_efficiency(network_nodes=12 (defined at [line 25]))
+[line 3]  def transmission_efficiency(nodes, depth=0):
+Enter function transmission_efficiency: nodes=12 (network_nodes defined at [line 25]), depth=0
+  [line 4]  if depth > 3:
+  Condition: True, entering 'if' block
+  [line 6]  if nodes <= 1:
+  Condition: True, entering 'if' block
+  [line 10]  base = (nodes & (nodes - 1)) ^ (nodes >> 1)
+  Compute: (nodes & (nodes - 1)) ^ (nodes >> 1), where nodes=12 (parameter nodes defined at [line 25]) = 14
+  [line 13]  recursive_part = transmission_efficiency(nodes // 2, depth + 1)
+  Call function transmission_efficiency(nodes // 2, depth + 1)
+  [line 4]  if depth > 3:
+  Condition: True, entering 'if' block
+  [line 6]  if nodes <= 1:
+  Condition: True, entering 'if' block
+  [line 10]  base = (nodes & (nodes - 1)) ^ (nodes >> 1)
+  Compute: (nodes & (nodes - 1)) ^ (nodes >> 1), where nodes=6 (parameter nodes defined at [line 25]) = 7
+  [line 13]  recursive_part = transmission_efficiency(nodes // 2, depth + 1)
+  Call function transmission_efficiency(nodes // 2, depth + 1)
+  [line 4]  if depth > 3:
+  Condition: True, entering 'if' block
+  [line 6]  if nodes <= 1:
+  Condition: True, entering 'if' block
+  [line 10]  base = (nodes & (nodes - 1)) ^ (nodes >> 1)
+  Compute: (nodes & (nodes - 1)) ^ (nodes >> 1), where nodes=3 (parameter nodes defined at [line 25]) = 3
+  [line 13]  recursive_part = transmission_efficiency(nodes // 2, depth + 1)
+  Call function transmission_efficiency(nodes // 2, depth + 1)
+  [line 4]  if depth > 3:
+  Condition: True, entering 'if' block
+  [line 6]  if nodes <= 1:
+  Condition: True, entering 'if' block
+  [line 7]  return nodes
+  Return: nodes=1 (parameter nodes defined at [line 25])
+  [line 16]  combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
+  Call function list(itertools.combinations(range(min(nodes, 4)), 2))
+  [line 17]  combo_count = len(combinations)
+  Call function len(combinations=[(0, 1), (0, 2), (1, 2)] (defined at [line 16]))
+  [line 20]  adjusted = base + combo_count if base < combo_count else base - combo_count
+  Compute: base + combo_count if base < combo_count else base - combo_count, where base=3 (defined at [line 10]), combo_count=3 (defined at [line 17]) = 0
+  [line 22]  return adjusted + recursive_part
+  Return: adjusted + recursive_part
+  [line 16]  combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
+  Call function list(itertools.combinations(range(min(nodes, 4)), 2))
+  [line 17]  combo_count = len(combinations)
+  Call function len(combinations=[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...] (defined at [line 16]))
+  [line 20]  adjusted = base + combo_count if base < combo_count else base - combo_count
+  Compute: base + combo_count if base < combo_count else base - combo_count, where base=7 (defined at [line 10]), combo_count=6 (defined at [line 17]) = 1
+  [line 22]  return adjusted + recursive_part
+  Return: adjusted + recursive_part
+  [line 16]  combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
+  Call function list(itertools.combinations(range(min(nodes, 4)), 2))
+  [line 17]  combo_count = len(combinations)
+  Call function len(combinations=[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...] (defined at [line 16]))
+  [line 20]  adjusted = base + combo_count if base < combo_count else base - combo_count
+  Compute: base + combo_count if base < combo_count else base - combo_count, where base=14 (defined at [line 10]), combo_count=6 (defined at [line 17]) = 8
+  [line 22]  return adjusted + recursive_part
+  Return: adjusted + recursive_part
+Function transmission_efficiency returns 10
+
+Answer: final_efficiency = ? (last updated on defined at [line 26])

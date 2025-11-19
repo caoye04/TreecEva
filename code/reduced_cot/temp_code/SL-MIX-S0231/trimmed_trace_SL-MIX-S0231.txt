@@ -1,0 +1,295 @@
+88
+final_security_score
+---
+75 analyzer = PacketAnalyzer()
+75 ['states', 'packets'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', '[(8080, [...1 items]), (1025, [...2 items]), (80, [...1 items]), (17, [...1 items]), (51, [...1 items]), ...]']
+25 self.state = states['INIT']
+25 ['self'] ['PacketAnalyzer(state=0)']
+26 self.prime_ports = set()
+26 ['self'] ['PacketAnalyzer(prime_ports=set())']
+27 self.all_ports = []
+27 ['self'] ['PacketAnalyzer(all_ports=[])']
+28 self.gcd_value = 0
+28 ['self'] ['PacketAnalyzer(gcd_value=0)']
+29 self.security_score = 0
+29 ['self'] ['PacketAnalyzer(security_score=0)']
+76 for port, flags in packets:
+76 ['states', 'packets', 'analyzer', 'port', 'flags'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', '[(8080, [...1 items]), (1025, [...2 items]), (80, [...1 items]), (17, [...1 items]), (51, [...1 items]), ...]', 'PacketAnalyzer(...)', '8080', "['SYN']"]
+33 if self.state == states['INIT']:
+33 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '8080', "['SYN']"]
+34 if port > 1024:
+34 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '8080', "['SYN']"]
+35 self.state = states['MONITORING']
+35 ['self', 'port', 'flags'] ['PacketAnalyzer(state=1)', '8080', "['SYN']"]
+45 if is_prime(port):
+45 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '8080', "['SYN']"]
+8 if n < 2:
+8 ['n'] ['8080']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['8080', '2']
+11 if n % i == 0:
+11 ['n', 'i'] ['8080', '2']
+12 return False
+12 ['n', 'i'] ['8080', '2']
+49 self.gcd_value = compute_gcd_of_list(self.all_ports)
+49 ['self', 'port', 'flags'] ['PacketAnalyzer(all_ports=[8080], gcd_value=0)', '8080', "['SYN']"]
+5 return reduce(gcd, numbers) if numbers else 0
+5 ['numbers'] ['[8080]']
+52 base_score = len(self.prime_ports) * 10
+52 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(prime_ports=set())', '8080', "['SYN']", '0']
+53 if self.state == states['BLOCKED']:
+53 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '8080', "['SYN']", '0']
+55 elif self.state == states['ALERT']:
+55 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '8080', "['SYN']", '0']
+59 if self.gcd_value > 1:
+59 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '8080', "['SYN']", '0']
+60 base_score *= self.gcd_value
+60 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(gcd_value=8080)', '8080', "['SYN']", '0']
+62 self.security_score = base_score
+62 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(security_score=0)', '8080', "['SYN']", '0']
+76 for port, flags in packets:
+76 ['states', 'packets', 'analyzer', 'port', 'flags'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', '[(8080, [...1 items]), (1025, [...2 items]), (80, [...1 items]), (17, [...1 items]), (51, [...1 items]), ...]', 'PacketAnalyzer(...)', '1025', "['SYN', 'ACK']"]
+33 if self.state == states['INIT']:
+33 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '1025', "['SYN', 'ACK']"]
+36 elif self.state == states['MONITORING']:
+36 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '1025', "['SYN', 'ACK']"]
+37 if 'SYN' in flags and 'ACK' not in flags:
+37 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '1025', "['SYN', 'ACK']"]
+45 if is_prime(port):
+45 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '1025', "['SYN', 'ACK']"]
+8 if n < 2:
+8 ['n'] ['1025']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['1025', '2']
+11 if n % i == 0:
+11 ['n', 'i'] ['1025', '2']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['1025', '3']
+11 if n % i == 0:
+11 ['n', 'i'] ['1025', '3']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['1025', '4']
+11 if n % i == 0:
+11 ['n', 'i'] ['1025', '4']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['1025', '5']
+11 if n % i == 0:
+11 ['n', 'i'] ['1025', '5']
+12 return False
+12 ['n', 'i'] ['1025', '5']
+49 self.gcd_value = compute_gcd_of_list(self.all_ports)
+49 ['self', 'port', 'flags'] ['PacketAnalyzer(all_ports=[8080, 1025], gcd_value=8080)', '1025', "['SYN', 'ACK']"]
+5 return reduce(gcd, numbers) if numbers else 0
+5 ['numbers'] ['[8080, 1025]']
+52 base_score = len(self.prime_ports) * 10
+52 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(prime_ports=set())', '1025', "['SYN', 'ACK']", '0']
+53 if self.state == states['BLOCKED']:
+53 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '1025', "['SYN', 'ACK']", '0']
+55 elif self.state == states['ALERT']:
+55 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '1025', "['SYN', 'ACK']", '0']
+59 if self.gcd_value > 1:
+59 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '1025', "['SYN', 'ACK']", '0']
+60 base_score *= self.gcd_value
+60 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(gcd_value=5)', '1025', "['SYN', 'ACK']", '0']
+62 self.security_score = base_score
+62 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(security_score=0)', '1025', "['SYN', 'ACK']", '0']
+76 for port, flags in packets:
+76 ['states', 'packets', 'analyzer', 'port', 'flags'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', '[(8080, [...1 items]), (1025, [...2 items]), (80, [...1 items]), (17, [...1 items]), (51, [...1 items]), ...]', 'PacketAnalyzer(...)', '80', "['SYN']"]
+33 if self.state == states['INIT']:
+33 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '80', "['SYN']"]
+36 elif self.state == states['MONITORING']:
+36 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '80', "['SYN']"]
+37 if 'SYN' in flags and 'ACK' not in flags:
+37 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '80', "['SYN']"]
+38 self.state = states['ALERT']
+38 ['self', 'port', 'flags'] ['PacketAnalyzer(state=2)', '80', "['SYN']"]
+45 if is_prime(port):
+45 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '80', "['SYN']"]
+8 if n < 2:
+8 ['n'] ['80']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['80', '2']
+11 if n % i == 0:
+11 ['n', 'i'] ['80', '2']
+12 return False
+12 ['n', 'i'] ['80', '2']
+49 self.gcd_value = compute_gcd_of_list(self.all_ports)
+49 ['self', 'port', 'flags'] ['PacketAnalyzer(all_ports=[8080, 1025, 80], gcd_value=5)', '80', "['SYN']"]
+5 return reduce(gcd, numbers) if numbers else 0
+5 ['numbers'] ['[8080, 1025, 80]']
+52 base_score = len(self.prime_ports) * 10
+52 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(prime_ports=set())', '80', "['SYN']", '0']
+53 if self.state == states['BLOCKED']:
+53 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '80', "['SYN']", '0']
+55 elif self.state == states['ALERT']:
+55 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '80', "['SYN']", '0']
+56 base_score += 20
+56 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '80', "['SYN']", '20']
+59 if self.gcd_value > 1:
+59 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '80', "['SYN']", '20']
+60 base_score *= self.gcd_value
+60 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(gcd_value=5)', '80', "['SYN']", '100']
+62 self.security_score = base_score
+62 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(security_score=100)', '80', "['SYN']", '100']
+76 for port, flags in packets:
+76 ['states', 'packets', 'analyzer', 'port', 'flags'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', '[(8080, [...1 items]), (1025, [...2 items]), (80, [...1 items]), (17, [...1 items]), (51, [...1 items]), ...]', 'PacketAnalyzer(...)', '17', "['FIN']"]
+33 if self.state == states['INIT']:
+33 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '17', "['FIN']"]
+36 elif self.state == states['MONITORING']:
+36 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '17', "['FIN']"]
+39 elif self.state == states['ALERT']:
+39 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '17', "['FIN']"]
+40 if port in [22, 443, 80]:
+40 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '17', "['FIN']"]
+45 if is_prime(port):
+45 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '17', "['FIN']"]
+8 if n < 2:
+8 ['n'] ['17']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['17', '2']
+11 if n % i == 0:
+11 ['n', 'i'] ['17', '2']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['17', '3']
+11 if n % i == 0:
+11 ['n', 'i'] ['17', '3']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['17', '4']
+11 if n % i == 0:
+11 ['n', 'i'] ['17', '4']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['17', '4']
+13 return True
+13 ['n', 'i'] ['17', '4']
+49 self.gcd_value = compute_gcd_of_list(self.all_ports)
+49 ['self', 'port', 'flags'] ['PacketAnalyzer(all_ports=[8080, 1025, 80, 17], gcd_value=5)', '17', "['FIN']"]
+5 return reduce(gcd, numbers) if numbers else 0
+5 ['numbers'] ['[8080, 1025, 80, 17]']
+52 base_score = len(self.prime_ports) * 10
+52 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(prime_ports={17})', '17', "['FIN']", '10']
+53 if self.state == states['BLOCKED']:
+53 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '17', "['FIN']", '10']
+55 elif self.state == states['ALERT']:
+55 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '17', "['FIN']", '10']
+56 base_score += 20
+56 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '17', "['FIN']", '30']
+59 if self.gcd_value > 1:
+59 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '17', "['FIN']", '30']
+62 self.security_score = base_score
+62 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(security_score=30)', '17', "['FIN']", '30']
+76 for port, flags in packets:
+76 ['states', 'packets', 'analyzer', 'port', 'flags'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', '[(8080, [...1 items]), (1025, [...2 items]), (80, [...1 items]), (17, [...1 items]), (51, [...1 items]), ...]', 'PacketAnalyzer(...)', '51', "['SYN']"]
+33 if self.state == states['INIT']:
+33 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '51', "['SYN']"]
+36 elif self.state == states['MONITORING']:
+36 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '51', "['SYN']"]
+39 elif self.state == states['ALERT']:
+39 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '51', "['SYN']"]
+40 if port in [22, 443, 80]:
+40 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '51', "['SYN']"]
+45 if is_prime(port):
+45 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '51', "['SYN']"]
+8 if n < 2:
+8 ['n'] ['51']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['51', '2']
+11 if n % i == 0:
+11 ['n', 'i'] ['51', '2']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['51', '3']
+11 if n % i == 0:
+11 ['n', 'i'] ['51', '3']
+12 return False
+12 ['n', 'i'] ['51', '3']
+49 self.gcd_value = compute_gcd_of_list(self.all_ports)
+49 ['self', 'port', 'flags'] ['PacketAnalyzer(all_ports=[8080, 1025, 80, 17, 51], gcd_value=1)', '51', "['SYN']"]
+5 return reduce(gcd, numbers) if numbers else 0
+5 ['numbers'] ['[8080, 1025, 80, 17, 51]']
+52 base_score = len(self.prime_ports) * 10
+52 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(prime_ports={17})', '51', "['SYN']", '10']
+53 if self.state == states['BLOCKED']:
+53 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '51', "['SYN']", '10']
+55 elif self.state == states['ALERT']:
+55 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '51', "['SYN']", '10']
+56 base_score += 20
+56 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '51', "['SYN']", '30']
+59 if self.gcd_value > 1:
+59 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '51', "['SYN']", '30']
+62 self.security_score = base_score
+62 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(security_score=30)', '51', "['SYN']", '30']
+76 for port, flags in packets:
+76 ['states', 'packets', 'analyzer', 'port', 'flags'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', '[(8080, [...1 items]), (1025, [...2 items]), (80, [...1 items]), (17, [...1 items]), (51, [...1 items]), ...]', 'PacketAnalyzer(...)', '22', "['SYN']"]
+33 if self.state == states['INIT']:
+33 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '22', "['SYN']"]
+36 elif self.state == states['MONITORING']:
+36 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '22', "['SYN']"]
+39 elif self.state == states['ALERT']:
+39 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '22', "['SYN']"]
+40 if port in [22, 443, 80]:
+40 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '22', "['SYN']"]
+41 self.state = states['BLOCKED']
+41 ['self', 'port', 'flags'] ['PacketAnalyzer(state=3)', '22', "['SYN']"]
+45 if is_prime(port):
+45 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '22', "['SYN']"]
+8 if n < 2:
+8 ['n'] ['22']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['22', '2']
+11 if n % i == 0:
+11 ['n', 'i'] ['22', '2']
+12 return False
+12 ['n', 'i'] ['22', '2']
+49 self.gcd_value = compute_gcd_of_list(self.all_ports)
+49 ['self', 'port', 'flags'] ['PacketAnalyzer(all_ports=[8080, 1025, 80, 17, 51, ...], gcd_value=1)', '22', "['SYN']"]
+5 return reduce(gcd, numbers) if numbers else 0
+5 ['numbers'] ['[8080, 1025, 80, 17, 51, ...]']
+52 base_score = len(self.prime_ports) * 10
+52 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(prime_ports={17})', '22', "['SYN']", '10']
+53 if self.state == states['BLOCKED']:
+53 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '22', "['SYN']", '10']
+54 base_score -= 50
+54 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '22', "['SYN']", '-40']
+59 if self.gcd_value > 1:
+59 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(...)', '22', "['SYN']", '-40']
+62 self.security_score = base_score
+62 ['self', 'port', 'flags', 'base_score'] ['PacketAnalyzer(security_score=-40)', '22', "['SYN']", '-40']
+76 for port, flags in packets:
+76 ['states', 'packets', 'analyzer', 'port', 'flags'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', '[(8080, [...1 items]), (1025, [...2 items]), (80, [...1 items]), (17, [...1 items]), (51, [...1 items]), ...]', 'PacketAnalyzer(...)', '102', "['RST']"]
+33 if self.state == states['INIT']:
+33 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '102', "['RST']"]
+36 elif self.state == states['MONITORING']:
+36 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '102', "['RST']"]
+39 elif self.state == states['ALERT']:
+39 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '102', "['RST']"]
+45 if is_prime(port):
+45 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '102', "['RST']"]
+8 if n < 2:
+8 ['n'] ['102']
+10 for i in range(2, int(n**0.5)+1):
+10 ['n', 'i'] ['102', '2']
+11 if n % i == 0:
+11 [] []
+12 return False
+12 [] []
+49 self.gcd_value = compute_gcd_of_list(self.all_ports)
+49 ['self', 'port', 'flags'] ['PacketAnalyzer(all_ports=[8080, 1025, 80, 17, 51, ...], gcd_value=1)', '102', "['RST']"]
+5 return reduce(gcd, numbers) if numbers else 0
+5 ['numbers'] ['[8080, 1025, 80, 17, 51, ...]']
+53 if self.state == states['BLOCKED']:
+53 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '102', "['RST']"]
+59 if self.gcd_value > 1:
+59 ['self', 'port', 'flags'] ['PacketAnalyzer(...)', '102', "['RST']"]
+76 for port, flags in packets:
+76 ['states', 'packets', 'analyzer', 'port', 'flags'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', '[(8080, [...1 items]), (1025, [...2 items]), (80, [...1 items]), (17, [...1 items]), (51, [...1 items]), ...]', 'PacketAnalyzer(...)', '102', "['RST']"]
+80 prime_port_count = len(analyzer.prime_ports)
+80 ['states', 'analyzer', 'prime_port_count'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', 'PacketAnalyzer(prime_ports={17})', '1']
+81 final_gcd = analyzer.gcd_value
+81 ['states', 'analyzer', 'prime_port_count', 'final_gcd'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', 'PacketAnalyzer(gcd_value=1)', '1', '1']
+82 state_factor = 1
+82 ['states', 'analyzer', 'prime_port_count', 'final_gcd', 'state_factor'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', 'PacketAnalyzer(...)', '1', '1', '1']
+83 if analyzer.state == states['BLOCKED']:
+83 ['states', 'analyzer', 'prime_port_count', 'final_gcd', 'state_factor'] ['{INIT: 0, MONITORING: 1, ALERT: 2, ...}', 'PacketAnalyzer(...)', '1', '1', '1']
+84 state_factor = -1
+84 ['analyzer', 'prime_port_count', 'final_gcd', 'state_factor'] ['PacketAnalyzer(...)', '1', '1', '-1']
+88 final_security_score = analyzer.security_score + (prime_port_count * final_gcd * state_factor)
+88 ['analyzer', 'prime_port_count', 'final_gcd', 'state_factor', 'final_security_score'] ['PacketAnalyzer(security_score=-40)', '1', '1', '-1', '-41']

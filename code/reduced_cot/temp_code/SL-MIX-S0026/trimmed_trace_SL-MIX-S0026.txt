@@ -1,0 +1,149 @@
+76
+senior_curator_clearance
+---
+46 permission_tree = build_permission_tree()
+46 ['staff_roles', 'special_projects', 'seniority_bonus'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', "{'renaissance_paintings', 'egyptian_collection', 'modern_sculptures'}", '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}']
+10 root = PermissionNode(1)
+10 [] []
+11 root.left = PermissionNode(2)
+11 ['root'] ['PermissionNode(left=None)']
+12 root.right = PermissionNode(3)
+12 ['root'] ['PermissionNode(right=None)']
+13 root.left.left = PermissionNode(4)
+13 ['root'] ['PermissionNode(left=PermissionNode(level=2, left=None, right=None))']
+14 root.left.right = PermissionNode(5)
+14 ['root'] ['PermissionNode(left=PermissionNode(level=2, left=PermissionNode(...), right=None))']
+15 return root
+15 ['root'] ['PermissionNode(...)']
+47 tree_clearance_value = calculate_clearance(permission_tree)
+47 ['staff_roles', 'special_projects', 'seniority_bonus', 'permission_tree'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', "{'renaissance_paintings', 'egyptian_collection', 'modern_sculptures'}", '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', 'PermissionNode(...)']
+18 if not node:
+18 ['node'] ['PermissionNode(...)']
+20 return node.level + max(calculate_clearance(node.left), calculate_clearance(node.right))
+20 ['node'] ['PermissionNode(left=PermissionNode(level=2, left=PermissionNode(...), right=PermissionNode(...)), level=1, right=PermissionNode(level=3, left=None, right=None))']
+18 if not node:
+18 ['node'] ['PermissionNode(...)']
+20 return node.level + max(calculate_clearance(node.left), calculate_clearance(node.right))
+20 ['node'] ['PermissionNode(left=PermissionNode(level=4, left=None, right=None), level=2, right=PermissionNode(level=5, left=None, right=None))']
+18 if not node:
+18 ['node'] ['PermissionNode(...)']
+20 return node.level + max(calculate_clearance(node.left), calculate_clearance(node.right))
+20 ['node'] ['PermissionNode(left=None, level=4, right=None)']
+18 if not node:
+18 ['node'] ['None']
+19 return 0
+19 ['node'] ['None']
+18 if not node:
+18 ['node'] ['None']
+19 return 0
+19 ['node'] ['None']
+18 if not node:
+18 ['node'] ['PermissionNode(...)']
+20 return node.level + max(calculate_clearance(node.left), calculate_clearance(node.right))
+20 ['node'] ['PermissionNode(left=None, level=5, right=None)']
+18 if not node:
+18 ['node'] ['None']
+19 return 0
+19 ['node'] ['None']
+18 if not node:
+18 ['node'] ['None']
+19 return 0
+19 ['node'] ['None']
+18 if not node:
+18 ['node'] ['PermissionNode(...)']
+20 return node.level + max(calculate_clearance(node.left), calculate_clearance(node.right))
+20 ['node'] ['PermissionNode(left=None, level=3, right=None)']
+18 if not node:
+18 ['node'] ['None']
+19 return 0
+19 ['node'] ['None']
+18 if not node:
+18 ['node'] ['None']
+19 return 0
+19 [] []
+50 project_access = {}
+50 ['staff_roles', 'special_projects', 'seniority_bonus', 'tree_clearance_value', 'project_access'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', "{'renaissance_paintings', 'egyptian_collection', 'modern_sculptures'}", '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', '{}']
+51 roles_list = sorted(staff_roles.keys(), key=lambda x: staff_roles[x], reverse=True)
+51 ['staff_roles', 'special_projects', 'seniority_bonus', 'tree_clearance_value', 'project_access'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', "{'renaissance_paintings', 'egyptian_collection', 'modern_sculptures'}", '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', '{}']
+51 roles_list = sorted(staff_roles.keys(), key=lambda x: staff_roles[x], reverse=True)
+51 ['x'] ["'junior_researcher'"]
+51 roles_list = sorted(staff_roles.keys(), key=lambda x: staff_roles[x], reverse=True)
+51 ['x'] ["'senior_researcher'"]
+51 roles_list = sorted(staff_roles.keys(), key=lambda x: staff_roles[x], reverse=True)
+51 ['x'] ["'curator'"]
+51 roles_list = sorted(staff_roles.keys(), key=lambda x: staff_roles[x], reverse=True)
+51 ['x'] ["'senior_curator'"]
+52 projects_list = list(special_projects)
+52 ['staff_roles', 'special_projects', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', "{'renaissance_paintings', 'egyptian_collection', 'modern_sculptures'}", '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', '{}', "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']"]
+54 for i, role in enumerate(roles_list):
+54 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', '{}', "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']", '0', "'senior_curator'"]
+55 if i < len(projects_list):
+55 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', '{}', "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']", '0', "'senior_curator'"]
+56 project_access[role] = {projects_list[i]}
+56 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}}", "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']", '0', "'senior_curator'"]
+54 for i, role in enumerate(roles_list):
+54 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}}", "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']", '1', "'curator'"]
+55 if i < len(projects_list):
+55 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}}", "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']", '1', "'curator'"]
+56 project_access[role] = {projects_list[i]}
+56 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}}", "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']", '1', "'curator'"]
+54 for i, role in enumerate(roles_list):
+54 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}}", "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']", '2', "'senior_researcher'"]
+55 if i < len(projects_list):
+55 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}}", "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']", '2', "'senior_researcher'"]
+56 project_access[role] = {projects_list[i]}
+56 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}, senior_researcher: {'modern_sculptures'}}", "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']", '2', "'senior_researcher'"]
+54 for i, role in enumerate(roles_list):
+54 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}, senior_researcher: {'modern_sculptures'}}", "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']", '3', "'junior_researcher'"]
+55 if i < len(projects_list):
+55 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'projects_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}, senior_researcher: {'modern_sculptures'}}", "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", "['renaissance_paintings', 'egyptian_collection', 'modern_sculptures']", '3', "'junior_researcher'"]
+58 project_access[role] = set()
+58 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}, senior_researcher: {'modern_sculptures'}, ...}", "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", '3', "'junior_researcher'"]
+54 for i, role in enumerate(roles_list):
+54 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'roles_list', 'i', 'role'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}, senior_researcher: {'modern_sculptures'}, ...}", "['senior_curator', 'curator', 'senior_researcher', 'junior_researcher']", '3', "'junior_researcher'"]
+61 base_clearance = staff_roles['senior_curator']
+61 ['staff_roles', 'seniority_bonus', 'tree_clearance_value', 'project_access', 'base_clearance'] ['{junior_researcher: 10, senior_researcher: 20, curator: 30, ...}', '{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}, senior_researcher: {'modern_sculptures'}, ...}", '40']
+62 tree_bonus = tree_clearance_value
+62 ['seniority_bonus', 'tree_clearance_value', 'project_access', 'base_clearance', 'tree_bonus'] ['{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', '8', "{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}, senior_researcher: {'modern_sculptures'}, ...}", '40', '8']
+63 seniority_points = seniority_bonus['senior_curator']
+63 ['seniority_bonus', 'project_access', 'base_clearance', 'tree_bonus', 'seniority_points'] ['{junior_researcher: 2, senior_researcher: 5, curator: 8, ...}', "{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}, senior_researcher: {'modern_sculptures'}, ...}", '40', '8', '12']
+64 project_bonus = len(project_access['senior_curator']) * 3
+64 ['project_access', 'base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus'] ["{senior_curator: {'renaissance_paintings'}, curator: {'egyptian_collection'}, senior_researcher: {'modern_sculptures'}, ...}", '40', '8', '12', '3']
+68 used_points = set()
+68 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points'] ['40', '8', '12', '3', 'set()']
+69 total_bonus = 0
+69 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus'] ['40', '8', '12', '3', 'set()', '0']
+71 for point in sorted(available_clearance_points, reverse=True):
+71 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', 'set()', '0', '16']
+72 if point <= (tree_bonus + seniority_points + project_bonus) and point not in used_points:
+72 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', 'set()', '0', '16']
+73 total_bonus += point
+73 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', 'set()', '16', '16']
+71 for point in sorted(available_clearance_points, reverse=True):
+71 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', '{16}', '16', '8']
+72 if point <= (tree_bonus + seniority_points + project_bonus) and point not in used_points:
+72 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', '{16}', '16', '8']
+73 total_bonus += point
+73 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', '{16}', '24', '8']
+71 for point in sorted(available_clearance_points, reverse=True):
+71 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', '{16, 8}', '24', '4']
+72 if point <= (tree_bonus + seniority_points + project_bonus) and point not in used_points:
+72 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', '{16, 8}', '24', '4']
+73 total_bonus += point
+73 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', '{16, 8}', '28', '4']
+71 for point in sorted(available_clearance_points, reverse=True):
+71 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', '{16, 8, 4}', '28', '2']
+72 if point <= (tree_bonus + seniority_points + project_bonus) and point not in used_points:
+72 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', '{16, 8, 4}', '28', '2']
+73 total_bonus += point
+73 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', '{16, 8, 4}', '30', '2']
+71 for point in sorted(available_clearance_points, reverse=True):
+71 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', '{16, 8, 2, 4}', '30', '1']
+72 if point <= (tree_bonus + seniority_points + project_bonus) and point not in used_points:
+72 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'used_points', 'total_bonus', 'point'] ['40', '8', '12', '3', '{16, 8, 2, 4}', '30', '1']
+73 total_bonus += point
+73 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'total_bonus', 'point'] ['40', '8', '12', '3', '31', '1']
+71 for point in sorted(available_clearance_points, reverse=True):
+71 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'total_bonus'] ['40', '8', '12', '3', '31']
+76 senior_curator_clearance = base_clearance + tree_bonus + seniority_points + project_bonus + total_bonus
+76 ['base_clearance', 'tree_bonus', 'seniority_points', 'project_bonus', 'total_bonus', 'senior_curator_clearance'] ['40', '8', '12', '3', '31', '94']

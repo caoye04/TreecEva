@@ -1,0 +1,173 @@
+22
+auth_signature
+---
+17 token_sequence = tokenize("SECURE")
+17 [] []
+4 return [ord(c) for c in message]
+4 ['message', 'c'] ["'SECURE'", "'S'"]
+4 return [ord(c) for c in message]
+4 ['message', 'c'] ["'SECURE'", "'E'"]
+4 return [ord(c) for c in message]
+4 ['message', 'c'] ["'SECURE'", "'C'"]
+4 return [ord(c) for c in message]
+4 ['message', 'c'] ["'SECURE'", "'U'"]
+4 return [ord(c) for c in message]
+4 ['message', 'c'] ["'SECURE'", "'R'"]
+4 return [ord(c) for c in message]
+4 ['message', 'c'] ["'SECURE'", "'E'"]
+4 return [ord(c) for c in message]
+4 ['message'] ["'SECURE'"]
+18 layer1_result = process_layer(token_sequence, 1)
+18 ['token_sequence'] ['[83, 69, 67, 85, 82, ...]']
+PARAM_MAPPING {'tokens': {'actual_var': 'token_sequence', 'value': [83, 69, 67, 85, 82, 69]}, 'shift_val': {'actual_var': '1', 'value': '1'}}
+FUNCTION_ENTER 9 process_layer def process_layer(tokens, shift_val):
+9 ['tokens', 'shift_val'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 83}, {'_type': 'int', '_value': 69}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 82}, {'_type': 'int', '_value': 69}], '_len': 6}, {'_type': 'int', '_value': 1}]
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '83']
+7 return (token * 31) % 256
+7 ['token'] ['83']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '69']
+7 return (token * 31) % 256
+7 ['token'] ['69']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '67']
+7 return (token * 31) % 256
+7 ['token'] ['67']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '85']
+7 return (token * 31) % 256
+7 ['token'] ['85']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '82']
+7 return (token * 31) % 256
+7 ['token'] ['82']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '69']
+7 return (token * 31) % 256
+7 ['token'] ['69']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 'hashed'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '0', '13']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '1', '91']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '2', '29']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '3', '75']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '4', '238']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '5', '91']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['tokens', 'shift_val', 'hashed', 'shifted'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]']
+12 xor_result = 0
+12 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '0']
+13 for s in shifted:
+13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '0', '13']
+14 xor_result ^= s
+14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '13', '13']
+13 for s in shifted:
+13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '13', '182']
+14 xor_result ^= s
+14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '187', '182']
+13 for s in shifted:
+13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '187', '116']
+14 xor_result ^= s
+14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '207', '116']
+13 for s in shifted:
+13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '207', '75']
+14 xor_result ^= s
+14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '132', '75']
+13 for s in shifted:
+13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '132', '220']
+14 xor_result ^= s
+14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '88', '220']
+13 for s in shifted:
+13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '88', '108']
+14 xor_result ^= s
+14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '52', '108']
+13 for s in shifted:
+13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '52', '108']
+15 return xor_result >> shift_val
+15 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '52', '108']
+FUNCTION_RETURN 15 process_layer {'_type': 'int', '_value': 26}
+19 layer2_result = process_layer(token_sequence[::-1], 2)
+19 ['token_sequence', 'layer1_result'] ['[83, 69, 67, 85, 82, ...]', '26']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '69']
+7 return (token * 31) % 256
+7 ['token'] ['69']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '82']
+7 return (token * 31) % 256
+7 ['token'] ['82']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '85']
+7 return (token * 31) % 256
+7 ['token'] ['85']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '67']
+7 return (token * 31) % 256
+7 ['token'] ['67']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '69']
+7 return (token * 31) % 256
+7 ['token'] ['69']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '83']
+7 return (token * 31) % 256
+7 ['token'] ['83']
+10 hashed = [hash_token(t) for t in tokens]
+10 ['tokens', 'shift_val', 'hashed'] ['[69, 82, 85, 67, 69, ...]', '2', '[91, 238, 75, 29, 91, ...]']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '0', '91']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '1', '238']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '2', '75']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '3', '29']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '4', '91']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '5', '13']
+11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
+11 ['shift_val', 'hashed', 'shifted'] ['2', '[91, 238, 75, 29, 91, ...]', '[91, 220, 44, 29, 182, ...]']
+12 xor_result = 0
+12 ['shift_val', 'shifted', 'xor_result'] ['2', '[91, 220, 44, 29, 182, ...]', '0']
+13 for s in shifted:
+13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '0', '91']
+14 xor_result ^= s
+14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '91', '91']
+13 for s in shifted:
+13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '91', '220']
+14 xor_result ^= s
+14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '135', '220']
+13 for s in shifted:
+13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '135', '44']
+14 xor_result ^= s
+14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '171', '44']
+13 for s in shifted:
+13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '171', '29']
+14 xor_result ^= s
+14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '182', '29']
+13 for s in shifted:
+13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '182', '182']
+14 xor_result ^= s
+14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '0', '182']
+13 for s in shifted:
+13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '0', '52']
+14 xor_result ^= s
+14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '52', '52']
+13 for s in shifted:
+13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '52', '52']
+15 return xor_result >> shift_val
+15 ['shift_val', 'xor_result'] ['2', '52']
+20 auth_signature = (layer1_result ^ layer2_result) & 0xFF
+20 ['layer1_result', 'layer2_result', 'auth_signature'] ['26', '13', '23']
+21 exp_component = int(math.log2(layer1_result + 1)) if layer1_result > 0 else 0
+21 ['layer1_result', 'auth_signature', 'exp_component'] ['26', '23', '4']
+22 auth_signature = (auth_signature << 2) | exp_component
+22 ['auth_signature', 'exp_component'] ['92', '4']

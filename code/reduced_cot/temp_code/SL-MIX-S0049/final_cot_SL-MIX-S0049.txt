@@ -1,0 +1,74 @@
+Target: Find the value of variable final_checksum after [line 37] executes
+
+[line 36]  network_packets = [12, 7, 23, 8, 15, 4]
+Compute: [12, 7, 23, 8, 15, 4] = [12, 7, 23, 8, 15, ...]
+[line 37]  final_checksum = process_packets(network_packets)
+Call function process_packets(network_packets=[12, 7, 23, 8, 15, ...] (defined at [line 36]))
+[line 4]  def process_packets(packet_ids):
+Enter function process_packets: packet_ids=[12, 7, 23, 8, 15, ...] (network_packets defined at [line 36])
+  [line 6]  layer1 = [pid ^ (pid << 2) for pid in packet_ids]
+  Compute: [pid ^ (pid << 2) for pid in packet_ids], where pid=12 (an unknown source), packet_ids=[12, 7, 23, 8, 15, ...] (parameter packet_ids defined at [line 36]) = ?
+  [line 9]  layer2 = [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1]
+  Compute: [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1], where pid=60 (an unknown source), layer1=[60, 27, 75, 40, 51, ...] (defined at [line 6]) = ?
+  [line 12]  sorted_packets = sorted(layer2)
+  Call function sorted(layer2=[4, 3, 4, 3, 3, ...] (defined at [line 9]))
+  [line 13]  packet_queue = deque(sorted_packets)
+  Call function deque(sorted_packets=[3, 3, 3, 3, 4, ...] (defined at [line 12]))
+  [line 16]  stack_reduction = 0
+  Assign: stack_reduction = 0
+  [line 17]  while packet_queue:
+  while Loop Start: Condition is true
+  [line 18]  left = packet_queue.popleft()
+  (Missing param: 'func_name')
+  [line 19]  if packet_queue:
+  Condition: True, entering 'if' block
+  [line 20]  right = packet_queue.pop()
+  (Missing param: 'func_name')
+  [line 17]  while packet_queue:
+  while Loop Iteration: Condition is still true
+  [line 18]  left = packet_queue.popleft()
+  (Missing param: 'func_name')
+  [line 19]  if packet_queue:
+  Condition: True, entering 'if' block
+  [line 20]  right = packet_queue.pop()
+  (Missing param: 'func_name')
+  [line 17]  while packet_queue:
+  while Loop Iteration: Condition is still true
+  [line 18]  left = packet_queue.popleft()
+  (Missing param: 'func_name')
+  [line 19]  if packet_queue:
+  Condition: True, entering 'if' block
+  [line 20]  right = packet_queue.pop()
+  (Missing param: 'func_name')
+  [line 17]  while packet_queue:
+  while Loop Iteration: Condition is still true
+  [line 26]  accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
+  Compute: lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1) = ?
+  [line 27]  final_checksum = 0
+  Assign: final_checksum = 0
+  [line 28]  for val in sorted_packets:
+  Loop Start: val takes its first value 3
+  [line 29]  final_checksum = accumulator(final_checksum, val)
+  Call function accumulator(final_checksum=0 (defined at [line 27]), val=3 (defined at [line 28]))
+  [line 26]  accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
+  Compute: lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1), where a=0 (an unknown source), b=3 (an unknown source) = ?
+  [line 28]  for val in sorted_packets:
+  Loop Iteration: val is now 3 (iteration 2)
+  [line 29]  final_checksum = accumulator(final_checksum, val)
+  Call function accumulator(final_checksum=-1 (defined at [line 29]), val=3 (defined at [line 28]))
+  [line 26]  accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
+  Compute: lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1), where a=-1 (an unknown source), b=3 (an unknown source) = ?
+... [Line 28] repeats 3 more times ...
+... [Line 28] repeats 3 more times ...
+... [Line 28] repeats 3 more times ...
+  [line 28]  for val in sorted_packets:
+  Loop Iteration: val is now 4 (iteration 6)
+  [line 29]  final_checksum = accumulator(final_checksum, val)
+  Call function accumulator(final_checksum=4 (defined at [line 29]), val=4 (defined at [line 28]))
+  [line 28]  for val in sorted_packets:
+  Loop End: Iteration finished
+  [line 33]  return final_checksum
+  Return: final_checksum=15 (defined at [line 29])
+Function process_packets returns 15
+
+Answer: final_checksum = 15 (last updated on defined at [line 29])

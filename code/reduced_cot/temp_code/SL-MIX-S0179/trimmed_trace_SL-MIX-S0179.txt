@@ -1,0 +1,133 @@
+54
+final_portfolio_value
+---
+50 initial_investment = 1000.0
+50 ['initial_investment'] ['1000.0']
+51 market_fluctuations = [0.02, -0.03, 0.06, -0.08, 0.04, -0.02, 0.01]
+51 ['initial_investment', 'market_fluctuations'] ['1000.0', '[0.02, -0.03, 0.06, -0.08, 0.04, ...]']
+54 final_portfolio_value = exchange_rate_processor(initial_investment, market_fluctuations)
+54 ['initial_investment', 'market_fluctuations'] ['1000.0', '[0.02, -0.03, 0.06, -0.08, 0.04, ...]']
+PARAM_MAPPING {'initial_capital': {'actual_var': 'initial_investment', 'value': 1000.0}, 'rate_fluctuations': {'actual_var': 'market_fluctuations', 'value': [0.02, -0.03, 0.06, -0.08, 0.04, -0.02, 0.01]}}
+FUNCTION_ENTER 4 exchange_rate_processor def exchange_rate_processor(initial_capital, rate_fluctuations):
+4 ['initial_capital', 'rate_fluctuations'] [{'_type': 'float', '_value': 1000.0}, {'_type': 'list', '_items': [{'_type': 'float', '_value': 0.02}, {'_type': 'float', '_value': -0.03}, {'_type': 'float', '_value': 0.06}, {'_type': 'float', '_value': -0.08}, {'_type': 'float', '_value': 0.04}, {'_type': 'float', '_value': -0.02}, {'_type': 'float', '_value': 0.01}], '_len': 7}]
+7 STATE_VOLATILE = 1
+7 ['initial_capital', 'rate_fluctuations', 'STATE_VOLATILE'] ['1000.0', '[0.02, -0.03, 0.06, -0.08, 0.04, ...]', '1']
+8 STATE_CRITICAL = 2
+8 ['initial_capital', 'rate_fluctuations', 'STATE_VOLATILE', 'STATE_CRITICAL'] ['1000.0', '[0.02, -0.03, 0.06, -0.08, 0.04, ...]', '1', '2']
+11 portfolio_value = initial_capital
+11 ['initial_capital', 'rate_fluctuations', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value'] ['1000.0', '[0.02, -0.03, 0.06, -0.08, 0.04, ...]', '1', '2', '1000.0']
+12 min_heap = []
+12 ['initial_capital', 'rate_fluctuations', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap'] ['1000.0', '[0.02, -0.03, 0.06, -0.08, 0.04, ...]', '1', '2', '1000.0', '[]']
+13 fluctuation_queue = deque(rate_fluctuations)
+13 ['initial_capital', 'rate_fluctuations', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue'] ['1000.0', '[0.02, -0.03, 0.06, -0.08, 0.04, ...]', '1', '2', '1000.0', '[]', 'deque([0.02, -0.03, 0.06, -0.08, 0.04, -0.02, 0.01])']
+15 while fluctuation_queue:
+15 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue'] ['1000.0', '1', '2', '1000.0', '[]', 'deque([0.02, -0.03, 0.06, -0.08, 0.04, -0.02, 0.01])']
+16 rate_change = fluctuation_queue.popleft()
+16 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1000.0', '[]', 'deque([-0.03, 0.06, -0.08, 0.04, -0.02, 0.01])', '0.02']
+19 if abs(rate_change) > 0.05:
+19 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1000.0', '[]', 'deque([-0.03, 0.06, -0.08, 0.04, -0.02, 0.01])', '0.02']
+21 elif abs(rate_change) > 0.10:
+21 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1000.0', '[]', 'deque([-0.03, 0.06, -0.08, 0.04, -0.02, 0.01])', '0.02']
+27 if current_state == STATE_CRITICAL and portfolio_value < 900:
+27 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1000.0', '[]', 'deque([-0.03, 0.06, -0.08, 0.04, -0.02, 0.01])', '0.02']
+31 portfolio_value *= (1 + rate_change)
+31 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1020.0', '[]', 'deque([-0.03, 0.06, -0.08, 0.04, -0.02, 0.01])', '0.02']
+37 if current_state == STATE_VOLATILE:
+37 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1020.0', '[1020.0]', 'deque([-0.03, 0.06, -0.08, 0.04, -0.02, 0.01])', '0.02']
+15 while fluctuation_queue:
+15 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1020.0', '[1020.0]', 'deque([-0.03, 0.06, -0.08, 0.04, -0.02, 0.01])', '0.02']
+16 rate_change = fluctuation_queue.popleft()
+16 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1020.0', '[1020.0]', 'deque([0.06, -0.08, 0.04, -0.02, 0.01])', '-0.03']
+19 if abs(rate_change) > 0.05:
+19 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1020.0', '[1020.0]', 'deque([0.06, -0.08, 0.04, -0.02, 0.01])', '-0.03']
+21 elif abs(rate_change) > 0.10:
+21 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1020.0', '[1020.0]', 'deque([0.06, -0.08, 0.04, -0.02, 0.01])', '-0.03']
+27 if current_state == STATE_CRITICAL and portfolio_value < 900:
+27 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1020.0', '[1020.0]', 'deque([0.06, -0.08, 0.04, -0.02, 0.01])', '-0.03']
+31 portfolio_value *= (1 + rate_change)
+31 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '989.4', '[1020.0]', 'deque([0.06, -0.08, 0.04, -0.02, 0.01])', '-0.03']
+37 if current_state == STATE_VOLATILE:
+37 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '989.4', '[989.4, 1020.0]', 'deque([0.06, -0.08, 0.04, -0.02, 0.01])', '-0.03']
+15 while fluctuation_queue:
+15 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '989.4', '[989.4, 1020.0]', 'deque([0.06, -0.08, 0.04, -0.02, 0.01])', '-0.03']
+16 rate_change = fluctuation_queue.popleft()
+16 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '989.4', '[989.4, 1020.0]', 'deque([-0.08, 0.04, -0.02, 0.01])', '0.06']
+19 if abs(rate_change) > 0.05:
+19 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '989.4', '[989.4, 1020.0]', 'deque([-0.08, 0.04, -0.02, 0.01])', '0.06']
+27 if current_state == STATE_CRITICAL and portfolio_value < 900:
+27 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '989.4', '[989.4, 1020.0]', 'deque([-0.08, 0.04, -0.02, 0.01])', '0.06']
+31 portfolio_value *= (1 + rate_change)
+31 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1048.7640000000001', '[989.4, 1020.0]', 'deque([-0.08, 0.04, -0.02, 0.01])', '0.06']
+37 if current_state == STATE_VOLATILE:
+37 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1048.7640000000001', '[989.4, 1020.0, 1048.7640000000001]', 'deque([-0.08, 0.04, -0.02, 0.01])', '0.06']
+38 adjustment = 1.0 + (rate_change * 0.1)
+38 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change', 'adjustment'] ['1000.0', '1', '2', '1048.7640000000001', '[989.4, 1020.0, 1048.7640000000001]', 'deque([-0.08, 0.04, -0.02, 0.01])', '0.06', '1.006']
+39 portfolio_value *= adjustment
+39 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change', 'adjustment'] ['1000.0', '1', '2', '1055.0565840000002', '[989.4, 1020.0, 1048.7640000000001]', 'deque([-0.08, 0.04, -0.02, 0.01])', '0.06', '1.006']
+15 while fluctuation_queue:
+15 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change', 'adjustment'] ['1000.0', '1', '2', '1055.0565840000002', '[989.4, 1020.0, 1048.7640000000001, 1055.0565840000002]', 'deque([-0.08, 0.04, -0.02, 0.01])', '0.06', '1.006']
+16 rate_change = fluctuation_queue.popleft()
+16 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change', 'adjustment'] ['1000.0', '1', '2', '1055.0565840000002', '[989.4, 1020.0, 1048.7640000000001, 1055.0565840000002]', 'deque([0.04, -0.02, 0.01])', '-0.08', '1.006']
+19 if abs(rate_change) > 0.05:
+19 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change', 'adjustment'] ['1000.0', '1', '2', '1055.0565840000002', '[989.4, 1020.0, 1048.7640000000001, 1055.0565840000002]', 'deque([0.04, -0.02, 0.01])', '-0.08', '1.006']
+27 if current_state == STATE_CRITICAL and portfolio_value < 900:
+27 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change', 'adjustment'] ['1000.0', '1', '2', '1055.0565840000002', '[989.4, 1020.0, 1048.7640000000001, 1055.0565840000002]', 'deque([0.04, -0.02, 0.01])', '-0.08', '1.006']
+31 portfolio_value *= (1 + rate_change)
+31 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change', 'adjustment'] ['1000.0', '1', '2', '970.6520572800002', '[989.4, 1020.0, 1048.7640000000001, 1055.0565840000002]', 'deque([0.04, -0.02, 0.01])', '-0.08', '1.006']
+37 if current_state == STATE_VOLATILE:
+37 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change', 'adjustment'] ['1000.0', '1', '2', '970.6520572800002', '[970.6520572800002, 989.4, 1048.7640000000001, 1055.0565840000002, 1020.0]', 'deque([0.04, -0.02, 0.01])', '-0.08', '1.006']
+38 adjustment = 1.0 + (rate_change * 0.1)
+38 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change', 'adjustment'] ['1000.0', '1', '2', '970.6520572800002', '[970.6520572800002, 989.4, 1048.7640000000001, 1055.0565840000002, 1020.0]', 'deque([0.04, -0.02, 0.01])', '-0.08', '0.992']
+39 portfolio_value *= adjustment
+39 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change', 'adjustment'] ['1000.0', '1', '2', '962.8868408217602', '[970.6520572800002, 989.4, 1048.7640000000001, 1055.0565840000002, 1020.0]', 'deque([0.04, -0.02, 0.01])', '-0.08', '0.992']
+15 while fluctuation_queue:
+15 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '962.8868408217602', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([0.04, -0.02, 0.01])', '-0.08']
+16 rate_change = fluctuation_queue.popleft()
+16 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '962.8868408217602', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([-0.02, 0.01])', '0.04']
+19 if abs(rate_change) > 0.05:
+19 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '962.8868408217602', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([-0.02, 0.01])', '0.04']
+21 elif abs(rate_change) > 0.10:
+21 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '962.8868408217602', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([-0.02, 0.01])', '0.04']
+27 if current_state == STATE_CRITICAL and portfolio_value < 900:
+27 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '962.8868408217602', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([-0.02, 0.01])', '0.04']
+31 portfolio_value *= (1 + rate_change)
+31 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1001.4023144546306', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([-0.02, 0.01])', '0.04']
+37 if current_state == STATE_VOLATILE:
+37 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1001.4023144546306', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([-0.02, 0.01])', '0.04']
+15 while fluctuation_queue:
+15 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1001.4023144546306', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([-0.02, 0.01])', '0.04']
+16 rate_change = fluctuation_queue.popleft()
+16 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1001.4023144546306', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([0.01])', '-0.02']
+19 if abs(rate_change) > 0.05:
+19 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1001.4023144546306', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([0.01])', '-0.02']
+21 elif abs(rate_change) > 0.10:
+21 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1001.4023144546306', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([0.01])', '-0.02']
+27 if current_state == STATE_CRITICAL and portfolio_value < 900:
+27 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '1001.4023144546306', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([0.01])', '-0.02']
+31 portfolio_value *= (1 + rate_change)
+31 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '981.374268165538', '[962.8868408217602, 989.4, 970.6520572800002, 1055.0565840000002, 1020.0, ...]', 'deque([0.01])', '-0.02']
+37 if current_state == STATE_VOLATILE:
+37 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '981.374268165538', '[962.8868408217602, 981.374268165538, 970.6520572800002, 989.4, 1020.0, ...]', 'deque([0.01])', '-0.02']
+15 while fluctuation_queue:
+15 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '981.374268165538', '[962.8868408217602, 981.374268165538, 970.6520572800002, 989.4, 1020.0, ...]', 'deque([0.01])', '-0.02']
+16 rate_change = fluctuation_queue.popleft()
+16 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '981.374268165538', '[962.8868408217602, 981.374268165538, 970.6520572800002, 989.4, 1020.0, ...]', 'deque([])', '0.01']
+19 if abs(rate_change) > 0.05:
+19 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '981.374268165538', '[962.8868408217602, 981.374268165538, 970.6520572800002, 989.4, 1020.0, ...]', 'deque([])', '0.01']
+21 elif abs(rate_change) > 0.10:
+21 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '981.374268165538', '[962.8868408217602, 981.374268165538, 970.6520572800002, 989.4, 1020.0, ...]', 'deque([])', '0.01']
+27 if current_state == STATE_CRITICAL and portfolio_value < 900:
+27 ['initial_capital', 'STATE_VOLATILE', 'STATE_CRITICAL', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '2', '981.374268165538', '[962.8868408217602, 981.374268165538, 970.6520572800002, 989.4, 1020.0, ...]', 'deque([])', '0.01']
+31 portfolio_value *= (1 + rate_change)
+31 ['initial_capital', 'STATE_VOLATILE', 'portfolio_value', 'min_heap', 'fluctuation_queue', 'rate_change'] ['1000.0', '1', '991.1880108471934', '[962.8868408217602, 981.374268165538, 970.6520572800002, 989.4, 1020.0, ...]', 'deque([])', '0.01']
+37 if current_state == STATE_VOLATILE:
+37 ['initial_capital', 'STATE_VOLATILE', 'portfolio_value', 'min_heap', 'fluctuation_queue'] ['1000.0', '1', '991.1880108471934', '[962.8868408217602, 981.374268165538, 970.6520572800002, 989.4, 1020.0, ...]', 'deque([])']
+15 while fluctuation_queue:
+15 ['initial_capital', 'portfolio_value', 'min_heap', 'fluctuation_queue'] ['1000.0', '991.1880108471934', '[962.8868408217602, 981.374268165538, 970.6520572800002, 989.4, 1020.0, ...]', 'deque([])']
+43 lowest_valuation = heapq.heappop(min_heap)
+43 ['initial_capital', 'portfolio_value', 'min_heap', 'lowest_valuation'] ['1000.0', '991.1880108471934', '[970.6520572800002, 981.374268165538, 991.1880108471934, 989.4, 1020.0, ...]', '962.8868408217602']
+44 if lowest_valuation < initial_capital * 0.9:
+44 ['initial_capital', 'portfolio_value', 'lowest_valuation'] ['1000.0', '991.1880108471934', '962.8868408217602']
+47 return portfolio_value
+47 ['portfolio_value'] ['991.1880108471934']
+FUNCTION_RETURN 47 exchange_rate_processor {'_type': 'float', '_value': 991.1880108471934}

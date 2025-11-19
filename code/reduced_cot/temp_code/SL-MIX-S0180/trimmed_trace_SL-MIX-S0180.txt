@@ -1,0 +1,91 @@
+38
+final_signal_strength
+---
+5 self.filters = deque()
+5 ['self'] ['SignalProcessor(filters=deque([]))']
+6 self.signal_strength = 100
+6 ['self'] ['SignalProcessor(signal_strength=100)']
+13 dp = [0] * (len(self.filters) + 1)
+13 ['self', 'dp'] ["SignalProcessor(filters=deque([('amplify', 25), ('attenuate', 30), ('modulate', 15), ('amplify', 40)]))", '[0, 0, 0, 0, 0]']
+14 dp[0] = self.signal_strength
+14 ['self', 'dp'] ['SignalProcessor(signal_strength=100)', '[100, 0, 0, 0, 0]']
+16 i = 1
+16 ['self', 'dp', 'i'] ['SignalProcessor(...)', '[100, 0, 0, 0, 0]', '1']
+17 while self.filters:
+17 ['self', 'dp', 'i'] ['SignalProcessor(...)', '[100, 0, 0, 0, 0]', '1']
+18 filter_type, value = self.filters.popleft()
+18 ['self', 'dp', 'i', 'value'] ["SignalProcessor(filters=deque([('attenuate', 30), ('modulate', 15), ('amplify', 40)]))", '[100, 0, 0, 0, 0]', '1', '25']
+19 if filter_type == 'amplify':
+19 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 0, 0, 0, 0]', '1', '25']
+20 dp[i] = dp[i-1] + (value * 2)
+20 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 0, 0, 0]', '1', '25']
+25 i += 1
+25 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 0, 0, 0]', '2', '25']
+17 while self.filters:
+17 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 0, 0, 0]', '2', '25']
+18 filter_type, value = self.filters.popleft()
+18 ['self', 'dp', 'i', 'value'] ["SignalProcessor(filters=deque([('modulate', 15), ('amplify', 40)]))", '[100, 150, 0, 0, 0]', '2', '30']
+19 if filter_type == 'amplify':
+19 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 0, 0, 0]', '2', '30']
+21 elif filter_type == 'attenuate':
+21 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 0, 0, 0]', '2', '30']
+22 dp[i] = dp[i-1] - (value // 3)
+22 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 140, 0, 0]', '2', '30']
+25 i += 1
+25 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 140, 0, 0]', '3', '30']
+17 while self.filters:
+17 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 140, 0, 0]', '3', '30']
+18 filter_type, value = self.filters.popleft()
+18 ['self', 'dp', 'i', 'value'] ["SignalProcessor(filters=deque([('amplify', 40)]))", '[100, 150, 140, 0, 0]', '3', '15']
+19 if filter_type == 'amplify':
+19 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 140, 0, 0]', '3', '15']
+21 elif filter_type == 'attenuate':
+21 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 140, 0, 0]', '3', '15']
+23 elif filter_type == 'modulate':
+23 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 140, 0, 0]', '3', '15']
+24 dp[i] = dp[i-1] ^ value
+24 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 140, 131, 0]', '3', '15']
+25 i += 1
+25 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 140, 131, 0]', '4', '15']
+17 while self.filters:
+17 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 140, 131, 0]', '4', '15']
+18 filter_type, value = self.filters.popleft()
+18 ['self', 'dp', 'i', 'value'] ['SignalProcessor(filters=deque([]))', '[100, 150, 140, 131, 0]', '4', '40']
+19 if filter_type == 'amplify':
+19 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 140, 131, 0]', '4', '40']
+20 dp[i] = dp[i-1] + (value * 2)
+20 ['self', 'dp', 'i', 'value'] ['SignalProcessor(...)', '[100, 150, 140, 131, 211]', '4', '40']
+17 while self.filters:
+17 ['self', 'dp'] ['SignalProcessor(...)', '[100, 150, 140, 131, 211]']
+28 target = 150
+28 ['dp', 'target'] ['[100, 150, 140, 131, 211]', '150']
+29 low, high = 0, len(dp) - 1
+29 ['dp', 'target', 'low', 'high'] ['[100, 150, 140, 131, 211]', '150', '0', '4']
+30 while low <= high:
+30 ['dp', 'target', 'low', 'high'] ['[100, 150, 140, 131, 211]', '150', '0', '4']
+31 mid = (low + high) // 2
+31 ['dp', 'target', 'low', 'high', 'mid'] ['[100, 150, 140, 131, 211]', '150', '0', '4', '2']
+32 if dp[mid] >= target:
+32 ['dp', 'target', 'low', 'high', 'mid'] ['[100, 150, 140, 131, 211]', '150', '0', '4', '2']
+35 low = mid + 1
+35 ['dp', 'target', 'low', 'high', 'mid'] ['[100, 150, 140, 131, 211]', '150', '3', '4', '2']
+30 while low <= high:
+30 ['dp', 'target', 'low', 'high', 'mid'] ['[100, 150, 140, 131, 211]', '150', '3', '4', '2']
+31 mid = (low + high) // 2
+31 ['dp', 'target', 'low', 'high', 'mid'] ['[100, 150, 140, 131, 211]', '150', '3', '4', '3']
+32 if dp[mid] >= target:
+32 ['dp', 'target', 'low', 'high', 'mid'] ['[100, 150, 140, 131, 211]', '150', '3', '4', '3']
+35 low = mid + 1
+35 ['dp', 'target', 'low', 'high', 'mid'] ['[100, 150, 140, 131, 211]', '150', '4', '4', '3']
+30 while low <= high:
+30 ['dp', 'target', 'low', 'high', 'mid'] ['[100, 150, 140, 131, 211]', '150', '4', '4', '3']
+31 mid = (low + high) // 2
+31 ['dp', 'target', 'low', 'high', 'mid'] ['[100, 150, 140, 131, 211]', '150', '4', '4', '4']
+32 if dp[mid] >= target:
+32 ['dp', 'target', 'low', 'high', 'mid'] ['[100, 150, 140, 131, 211]', '150', '4', '4', '4']
+33 high = mid - 1
+33 ['dp', 'low', 'high', 'mid'] ['[100, 150, 140, 131, 211]', '4', '3', '4']
+30 while low <= high:
+30 ['dp', 'low', 'high'] ['[100, 150, 140, 131, 211]', '4', '3']
+38 final_signal_strength = dp[low] if low < len(dp) else dp[-1]
+38 ['dp', 'low', 'final_signal_strength'] ['[100, 150, 140, 131, 211]', '4', '211']

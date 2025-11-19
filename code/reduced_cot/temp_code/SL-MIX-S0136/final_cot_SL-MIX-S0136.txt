@@ -1,0 +1,31 @@
+Target: Find the value of variable security_checksum after [line 20] executes
+
+[line 19]  network_packets = [0x1F, 0x2C, 0x3A, 0x45]
+Compute: [0x1F, 0x2C, 0x3A, 0x45] = [31, 44, 58, 69]
+[line 20]  security_checksum = compute_custom_checksum(network_packets)
+Call function compute_custom_checksum(network_packets=[31, 44, 58, 69] (defined at [line 19]))
+[line 4]  def compute_custom_checksum(packet_ids):
+Enter function compute_custom_checksum: packet_ids=[31, 44, 58, 69] (network_packets defined at [line 19])
+  [line 5]  if len(packet_ids) < 2:
+  Condition: True, entering 'if' block
+  [line 9]  pairs = list(itertools.combinations(packet_ids, 2))
+  Call function list(itertools.combinations(packet_ids, 2))
+  [line 12]  xor_results = [a ^ b for a, b in pairs]
+  Compute: [a ^ b for a, b in pairs], where a=31 (an unknown source), b=44 (an unknown source), pairs=[(31, 44), (31, 58), (31, 69), (44, 58), (44, 69), ...] (defined at [line 9]) = ?
+  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
+  Call function reduce(lambda x, y: x & y, xor_results=[51, 37, 90, 22, 105, ...] (defined at [line 12]))
+  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
+  Call function reduce(lambda x, y: x & y, xor_results=[51, 37, 90, 22, 105, ...] (defined at [line 12]))
+  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
+  Call function reduce(lambda x, y: x & y, xor_results)
+  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
+  Call function reduce(lambda x, y: x & y, xor_results)
+  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
+  Call function reduce(lambda x, y: x & y, xor_results)
+  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
+  Call function reduce(lambda x, y: x & y, xor_results)
+  [line 16]  return checksum
+  Return: checksum=0 (defined at [line 15])
+Function compute_custom_checksum returns 0
+
+Answer: security_checksum = ? (last updated on defined at [line 20])
