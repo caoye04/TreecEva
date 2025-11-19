@@ -1,49 +1,57 @@
-import math
+from collections import defaultdict
+import itertools
 
-def tokenize(transactions_str):
-    return [t.strip() for t in transactions_str.split(',')]
-
-transaction_weights = {
-    'buy': lambda x: x * 1.2,
-    'sell': lambda x: x * 0.9,
-    'hold': lambda x: x * 1.05
-}
-
-class TransactionProcessor:
-    def __init__(self):
-        self.cache = {}
+def process_packets():
+    # Packet header tokens (simulated)
+    packet_headers = [
+        "TCP SRC:192.168.1.1 DST:10.0.0.1 PORT:80",
+        "UDP SRC:192.168.1.2 DST:10.0.0.2 PORT:53",
+        "TCP SRC:10.0.0.1 DST:192.168.1.1 PORT:80",
+        "ICMP SRC:192.168.1.3 DST:10.0.0.3 TYPE:8"
+    ]
     
-    def compute_score(self, action, amount):
-        if (action, amount) in self.cache:
-            return self.cache[(action, amount)]
+    # State machine for connection tracking
+    state_machine = {
+        'INIT': {'TCP': 'TCP_CONN', 'UDP': 'UDP_CONN', 'ICMP': 'ICMP_CONN'},
+        'TCP_CONN': {'ACK': 'ESTABLISHED', 'RST': 'CLOSED'},
+        'UDP_CONN': {'DATA': 'ACTIVE', 'TIMEOUT': 'CLOSED'},
+        'ICMP_CONN': {'REPLY': 'COMPLETED', 'TIMEOUT': 'CLOSED'}
+    }
+    
+    connection_states = defaultdict(str)
+    anomaly_counter = 0
+    security_weights = {'TCP': 3, 'UDP': 2, 'ICMP': 1}
+    
+    for header in packet_headers:
+        tokens = header.split()
+        protocol = tokens[0]
+        src_ip = tokens[1].split(':')[1]
+        dst_ip = tokens[2].split(':')[1]
         
-        base = amount
-        if action == 'buy':
-            score = base + (base * 0.1)  # 10% bonus
-        elif action == 'sell':
-            score = base - (base * 0.05)  # 5% penalty
+        # Encoding source IP to numerical value
+        src_encoded = sum(ord(c) for c in src_ip)
+        
+        # State machine transition
+        current_state = connection_states[(src_ip, dst_ip)]
+        if not current_state:
+            connection_states[(src_ip, dst_ip)] = state_machine['INIT'].get(protocol, 'UNKNOWN')
         else:
-            score = base
+            # Simulate state transition based on protocol
+            if protocol == 'TCP' and 'ACK' in header:
+                connection_states[(src_ip, dst_ip)] = state_machine.get(current_state, {}).get('ACK', current_state)
+            elif protocol == 'ICMP' and 'REPLY' in header:
+                connection_states[(src_ip, dst_ip)] = state_machine.get(current_state, {}).get('REPLY', current_state)
         
-        weighted_score = transaction_weights[action](score)
-        self.cache[(action, amount)] = weighted_score
-        return weighted_score
+        # Detect anomalies (simplified)
+        if src_encoded > 1000:
+            anomaly_counter += 1
+    
+    # Calculate final security score
+    state_scores = {'INIT': 0, 'TCP_CONN': 5, 'UDP_CONN': 3, 'ICMP_CONN': 2, 'ESTABLISHED': 10, 'ACTIVE': 7, 'COMPLETED': 8, 'CLOSED': 1, 'UNKNOWN': 0}
+    total_state_score = sum(state_scores[state] for state in connection_states.values())
+    final_security_score = (total_state_score * anomaly_counter) - sum(security_weights.values())
+    
+    return final_security_score
 
-processor = TransactionProcessor()
-raw_data = "buy 100, sell 50, hold 75, buy 200, sell 30"
-tokens = tokenize(raw_data)
-
-score_map = {}
-for token in tokens:
-    parts = token.split()
-    action, amount_str = parts[0], parts[1]
-    amount = int(amount_str)
-    score = processor.compute_score(action, amount)
-    if action in score_map:
-        score_map[action] += score
-    else:
-        score_map[action] = score
-
-aggregated = {k: round(v) for k, v in score_map.items()}
-final_score = sum(aggregated.values())
-print(f"Result: {final_score}")
+final_security_score = process_packets()
+print(f"Result: {final_security_score}")

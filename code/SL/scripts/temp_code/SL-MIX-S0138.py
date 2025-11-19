@@ -1,33 +1,42 @@
-from collections import defaultdict
+import heapq
+from itertools import combinations
 
-def bit_reverse(num, bits):
-    result = 0
-    for _ in range(bits):
-        result = (result << 1) | (num & 1)
-        num >>= 1
-    return result
+def calculate_entropy(key):
+    return len(set(key))  # Simplified entropy as unique character count
 
-def custom_sort_key(x):
-    return bit_reverse(x, 4)
+def key_score_aggregate(keys):
+    return sum(hash(k) % 100 for k in keys)  # Simplified scoring
 
-# Frequency bins from a signal analysis
-freq_bins = [15, 7, 12, 3, 9, 6, 10, 5]
+# Initial set of encryption keys
+encryption_keys = ['abc123', 'xyz789', 'def456', 'abc123', 'uvw000']
+key_heap = []
 
-# Logical filter: values must be even AND greater than 4
-filtered_bins = list(filter(lambda x: x > 4 and x % 2 == 0, freq_bins))
+# Populate heap with (entropy, key) tuples
+for key in encryption_keys:
+    entropy = calculate_entropy(key)
+    heapq.heappush(key_heap, (entropy, key))
 
-# Sort using custom bit-reversed key
-sorted_bins = sorted(filtered_bins, key=custom_sort_key)
+# Process: Remove keys with entropy < 5 or duplicate keys
+processed_keys = set()
+filtered_heap = []
 
-# Divide and conquer aggregation using defaultdict
-aggregation = defaultdict(int)
-for idx, val in enumerate(sorted_bins):
-    if idx % 2 == 0:
-        aggregation['even'] += val
-    else:
-        aggregation['odd'] += val
+while key_heap:
+    entropy, key = heapq.heappop(key_heap)
+    # Short-circuit evaluation: check entropy first, then duplication
+    if entropy >= 5 and key not in processed_keys:
+        processed_keys.add(key)
+        heapq.heappush(filtered_heap, (entropy, key))
+    
+# Add new keys from combinatorial generation
+base_components = ['a', 'b', 'c', '1', '2', '3']
+generated_keys = [''.join(combo) for combo in combinations(base_components, 4)]
 
-# Final metric calculation
-final_metric = (aggregation['even'] >> 1) ^ (aggregation['odd'] << 1)
+for key in generated_keys[:10]:  # Limit to first 10 combinations
+    entropy = calculate_entropy(key)
+    if entropy >= 3:  # Only add keys with minimum entropy
+        heapq.heappush(filtered_heap, (entropy, key))
 
-print(f"Result: {final_metric}")
+# Final processing: calculate aggregate score of remaining keys
+final_key_score = key_score_aggregate([key for _, key in filtered_heap])
+
+print(f"Result: {final_key_score}")

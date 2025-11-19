@@ -1,19 +1,15 @@
-import itertools
-import statistics
+def temperature_correction(func):
+    def wrapper(temp):
+        corrected = func(temp)
+        return corrected + 2.5
+    return wrapper
 
-cipher_hex = 'a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3'
-pair_generator = (cipher_hex[i:i+2] for i in range(len(cipher_hex)-1))
-pair_frequencies = {}
-for pair in pair_generator:
-    pair_frequencies[pair] = pair_frequencies.get(pair, 0) + 1
+@temperature_correction
+def raw_temperature(temp):
+    return temp
 
-unique_pairs_count = len(pair_frequencies)
-frequency_values = list(pair_frequencies.values())
-mean_frequency = statistics.mean(frequency_values)
-variance = statistics.variance(frequency_values) if len(frequency_values) > 1 else 0
-
-high_freq_pairs = list(filter(lambda item: item[1] > mean_frequency, pair_frequencies.items()))
-high_freq_count = len(high_freq_pairs)
-
-security_index = int(variance * unique_pairs_count + high_freq_count)
-print(f"Result: {security_index}")
+hourly_readings = [20, 22, 19, 25, 24]
+corrected_readings = list(map(raw_temperature, hourly_readings))
+valid_readings = list(filter(lambda x: x > 22, corrected_readings))
+corrected_average = sum(valid_readings) / len(valid_readings) if valid_readings else 0
+print(f"Result: {corrected_average}")

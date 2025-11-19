@@ -1,65 +1,51 @@
-import re
-from collections import deque
-from dataclasses import dataclass
-from typing import List, Optional
+import math
 
-def tokenize_config(config_str: str) -> List[str]:
-    return re.findall(r'\b\w+|[/.=]', config_str)
+def compute_rms(values):
+    if not values:
+        return 0
+    return math.sqrt(sum(x**2 for x in values) / len(values))
 
-@dataclass
-class TreeNode:
-    value: str
-    left: Optional['TreeNode'] = None
-    right: Optional['TreeNode'] = None
-
-def build_decision_tree(tokens: List[str]) -> TreeNode:
-    stack = []
-    for token in tokens:
-        if token in ('AND', 'OR'):
-            node = TreeNode(token)
-            if stack:
-                node.left = stack.pop()
-            stack.append(node)
-        elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
-            if stack and stack[-1].right is None:
-                stack[-1].right = TreeNode(token)
-            else:
-                stack.append(TreeNode(token))
-    return stack[0] if stack else None
-
-def evaluate_tree(node: TreeNode) -> bool:
-    if not node:
-        return False
-    if node.value in ('80', '443'):
-        return True
-    if node.value == 'OR':
-        return evaluate_tree(node.left) or evaluate_tree(node.right)
-    if node.value == 'AND':
-        return evaluate_tree(node.left) and evaluate_tree(node.right)
-    return False
-
-def process_network_config(config: str) -> int:
-    tokens = tokenize_config(config)
-    decision_tree = build_decision_tree(tokens)
-    route_queue = deque(["192.168.1.1:80", "192.168.1.2:22", "10.0.0.5:443", "172.16.0.1:8080"])
-    matched_routes = 0
+def process_waveform(waveform_data, threshold=5.0):
+    # Extract amplitude values from nested structure
+    amplitudes = [amp for component in waveform_data.values() 
+                  for amp in component['amplitude_values']]
     
-    while route_queue:
-        route = route_queue.popleft()
-        port = route.split(':')[1]
-        temp_tree = TreeNode(port)
-        if decision_tree:
-            # Create a new tree with the port condition
-            condition_tree = TreeNode('OR')
-            condition_tree.left = decision_tree
-            condition_tree.right = temp_tree
-            if evaluate_tree(condition_tree):
-                matched_routes += 1
-        elif evaluate_tree(temp_tree):
-            matched_routes += 1
-            
-    return matched_routes
+    # Filter high-amplitude components using list comprehension
+    significant_amps = [a for a in amplitudes if a > threshold]
+    
+    # Short-circuit evaluation for early exit
+    if not significant_amps or len(significant_amps) < 2:
+        return 0
+    
+    # Compute weighted RMS
+    rms = compute_rms(significant_amps)
+    weight = 1.5 if len(significant_amps) > 5 else 1.2
+    return rms * weight
 
-config_string = 'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'
-matched_routes = process_network_config(config_string)
-print(f"Result: {matched_routes}")
+# Audio waveform data representation
+waveforms = {
+    'bass': {
+        'f100': {'amplitude_values': [2.1, 4.3, 6.7, 8.9]},
+        'f200': {'amplitude_values': [1.2, 3.4, 5.6, 7.8, 9.1]}
+    },
+    'treble': {
+        'f1000': {'amplitude_values': [0.5, 2.3, 4.5, 6.7, 8.9, 10.1]},
+        'f2000': {'amplitude_values': [1.1, 2.2, 3.3]}
+    }
+}
+
+# Process each waveform category
+processed_scores = {}
+for category, data in waveforms.items():
+    score = process_waveform(data)
+    processed_scores[category] = score
+
+# Calculate overall quality with conditional branching
+if processed_scores.get('bass', 0) > processed_scores.get('treble', 0):
+    quality_score = processed_scores['bass'] * 1.1
+else:
+    # Dictionary comprehension for bonus calculation
+    bonuses = {k: v * 0.05 for k, v in processed_scores.items() if v > 0}
+    quality_score = sum(processed_scores.values()) + sum(bonuses.values())
+
+print(f"Result: {round(quality_score, 2)}")

@@ -1,51 +1,16 @@
-import heapq
+from functools import reduce
+from bisect import bisect_left
+def binary_search(arr, x):
+    i = bisect_left(arr, x)
+    return i != len(arr) and arr[i] == x
 
-class RootNode:
-    def __init__(self, factor, left=None, right=None):
-        self.factor = factor
-        self.left = left
-        self.right = right
-
-# Build a sample binary root structure
-root = RootNode(5)
-root.left = RootNode(3)
-root.right = RootNode(8)
-root.left.left = RootNode(2)
-root.left.right = RootNode(4)
-root.right.left = RootNode(7)
-root.right.right = RootNode(10)
-
-# Vitality calculation lambda with closure
-vitality_fn = lambda node, acc: acc + (node.factor * 2 if node.factor > 4 else node.factor // 2)
-
-# Heap for tracking top growth factors
-factor_heap = []
-
-# Recursive traversal with vitality accumulation and heap updates
-def process_root(node, accumulated=0):
-    if not node:
-        return accumulated
-    
-    # Update accumulated vitality using ternary logic
-    accumulated = vitality_fn(node, accumulated)
-    
-    # Push factor to heap (negated for max-heap behavior)
-    heapq.heappush(factor_heap, -node.factor)
-    
-    # Traverse children with updated accumulation
-    left_acc = process_root(node.left, accumulated)
-    right_acc = process_root(node.right, accumulated)
-    
-    # Return maximum path vitality
-    return left_acc if left_acc > right_acc else right_acc
-
-# Process the root system
-max_path_vitality = process_root(root)
-
-# Extract top 3 growth factors from heap
-pruned_factors_sum = sum(-heapq.heappop(factor_heap) for _ in range(min(3, len(factor_heap))))
-
-# Calculate final vitality score using ternary operator
-final_vitality_score = pruned_factors_sum + max_path_vitality if pruned_factors_sum > 20 else pruned_factors_sum - max_path_vitality
-
-print(f"Result: {final_vitality_score}")
+tags_collection = frozenset(['alpha', 'beta', 'gamma', 'delta', 'epsilon'])
+transformed_tags = list(map(lambda s: len(s), tags_collection))
+transformed_tags.sort()
+filtered_lengths = list(filter(lambda n: n > 4, transformed_tags))
+checksum = reduce(lambda a, b: a ^ b, filtered_lengths, 0)
+reference_values = [3, 5, 7, 9, 11]
+matches = sum(1 for val in filtered_lengths if binary_search(reference_values, val))
+validation_flags = [len(filtered_lengths) > 2, checksum != 0, matches >= 1]
+final_validation_score = sum(1 << i for i, flag in enumerate(validation_flags) if flag)
+print(f'Result: {final_validation_score}')

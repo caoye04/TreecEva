@@ -1,68 +1,78 @@
-import re
-
-class PacketNode:
-    def __init__(self, seq_num, payload, next_node=None):
-        self.seq_num = seq_num
-        self.payload = payload
+class PackageNode:
+    def __init__(self, weight, value, next_node=None):
+        self.weight = weight
+        self.value = value
         self.next = next_node
 
-def create_packet_chain():
-    # Create a linked list of packets with sequence numbers and payloads
-    packets = [
-        (1001, "AUTH:admin|CMD:read"),
-        (1002, "AUTH:user|CMD:write"),
-        (1003, "AUTH:guest|CMD:read"),
-        (1004, "AUTH:admin|CMD:delete"),
-        (1005, "AUTH:user|CMD:execute")
-    ]
-    
-    head = None
-    for seq, payload in reversed(packets):
-        head = PacketNode(seq, payload, head)
-    return head
+def knapsack_dp(weights, values, capacity):
+    n = len(weights)
+    dp = [0] * (capacity + 1)
+    for i in range(n):
+        for w in range(capacity, weights[i] - 1, -1):
+            dp[w] = max(dp[w], dp[w - weights[i]] + values[i])
+    return dp[capacity]
 
-def validate_packets(head):
-    clearance = 0
-    current = head
+def divide_conquer_knapsack(packages_head, capacity):
+    if not packages_head:
+        return 0
+    if not packages_head.next:
+        return packages_head.value if packages_head.weight <= capacity else 0
     
+    # Split the list into two halves
+    slow = fast = packages_head
+    prev = None
+    while fast and fast.next:
+        prev = slow
+        slow = slow.next
+        fast = fast.next.next
+    
+    # Disconnect first half from second half
+    prev.next = None
+    
+    left_weights, left_values = [], []
+    right_weights, right_values = [], []
+    
+    current = packages_head
     while current:
-        # Extract command using regex
-        cmd_match = re.search(r'CMD:(\w+)', current.payload)
-        auth_match = re.search(r'AUTH:(\w+)', current.payload)
-        
-        if cmd_match and auth_match:
-            command = cmd_match.group(1)
-            auth_level = auth_match.group(1)
-            
-            # Assign weights based on authorization level
-            auth_weight = {'admin': 3, 'user': 2, 'guest': 1}[auth_level]
-            
-            # Assign command weights
-            cmd_weight = {'read': 1, 'write': 2, 'execute': 3, 'delete': 4}[command]
-            
-            # Calculate packet validity score
-            validity = (current.seq_num % 7) * auth_weight + cmd_weight
-            
-            # Apply bitwise operations for security checksum
-            if validity & 1:  # If odd
-                clearance ^= validity
-            else:
-                clearance |= (validity >> 1)
-        
+        left_weights.append(current.weight)
+        left_values.append(current.value)
         current = current.next
     
-    # Final adjustment based on packet count
-    packet_count = 0
-    temp = head
-    while temp:
-        packet_count += 1
-        temp = temp.next
+    current = slow
+    while current:
+        right_weights.append(current.weight)
+        right_values.append(current.value)
+        current = current.next
     
-    # Apply final transformation
-    security_clearance_level = (clearance * packet_count) % 128
-    return security_clearance_level
+    left_capacity_map = {}
+    right_capacity_map = {}
+    
+    for cap in range(capacity + 1):
+        left_capacity_map[cap] = knapsack_dp(left_weights, left_values, cap)
+        right_capacity_map[cap] = knapsack_dp(right_weights, right_values, cap)
+    
+    max_value = 0
+    for cap in range(capacity + 1):
+        remaining_cap = capacity - cap
+        if remaining_cap >= 0:
+            val = left_capacity_map[cap] + right_capacity_map.get(remaining_cap, 0)
+            max_value = max(max_value, val)
+    
+    return max_value
 
-# Main execution
-packet_chain = create_packet_chain()
-security_clearance_level = validate_packets(packet_chain)
-print(f"Result: {security_clearance_level}")
+# Build linked list of packages
+packages_data = [
+    (2, 3),
+    (3, 4),
+    (4, 5),
+    (5, 8),
+    (9, 10)
+]
+
+head = None
+for weight, value in reversed(packages_data):
+    head = PackageNode(weight, value, head)
+
+truck_capacity = 15
+max_total_value = divide_conquer_knapsack(head, truck_capacity)
+print(f"Result: {max_total_value}")

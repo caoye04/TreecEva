@@ -1,30 +1,33 @@
-from collections import deque
+import itertools
 
-def process_sensor_data(readings):
-    window = deque(maxlen=5)
-    peak_stack = []
-    peak_count = 0
-    
-    for reading in readings:
-        window.append(reading)
-        
-        if len(window) == 5:
-            window_avg = sum(window) / len(window)
-            
-            # Check if current reading is a significant peak
-            is_peak = reading > 2 * window_avg and reading == max(window)
-            
-            # Apply logical filtering for noise reduction
-            not_noise = reading % 3 != 0 or (reading & 7) == 0
-            
-            if is_peak and not_noise:
-                peak_stack.append(reading)
-                peak_count += 1
-    
-    return peak_count
+def hash_subseq(subseq):
+    return hash(''.join(subseq)) % 1000
 
-# Sensor readings from an environmental monitoring system
-sensor_readings = [12, 45, 23, 67, 34, 89, 56, 78, 91, 25, 64, 87, 42, 58, 73]
+def is_palindrome(subseq):
+    return subseq == subseq[::-1]
 
-peak_count = process_sensor_data(sensor_readings)
-print(f"Result: {peak_count}")
+dna_sequence = "ATGCCGTAATGC"
+target_length = 4
+unique_hashes = set()
+palindrome_count = 0
+
+for i in range(len(dna_sequence) - target_length + 1):
+    subseq = dna_sequence[i:i+target_length]
+    if is_palindrome(subseq):
+        h = hash_subseq(subseq)
+        if h in unique_hashes:
+            palindrome_count += 1
+            break
+        else:
+            unique_hashes.add(h)
+    if len(unique_hashes) > 5:
+        break
+
+# Additional processing with itertools
+for combo in itertools.combinations(unique_hashes, 2):
+    if sum(combo) % 7 == 0:
+        palindrome_count += 1
+        if palindrome_count > 3:
+            break
+
+print(f"Result: {palindrome_count}")

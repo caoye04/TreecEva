@@ -1,41 +1,33 @@
-from collections import defaultdict
-import hashlib
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5)+1):
+        if n % i == 0:
+            return False
+    return True
 
-def process_genomic_segment(segment_data):
-    decoded_bytes = bytes.fromhex(segment_data)
-    masked_data = bytearray()
-    for byte_val in decoded_bytes:
-        if (byte_val & 0xF0) != 0:
-            masked_data.append(byte_val ^ 0xAA)
-        else:
-            masked_data.append(byte_val)
-    return bytes(masked_data)
+def count_primes_less_than(n):
+    return sum(1 for i in range(2, n) if is_prime(i))
 
-class GenomicValidator:
-    def __init__(self):
-        self.checksum_map = defaultdict(int)
-    
-    def update_validation(self, processed_data):
-        hash_val = hashlib.sha256(processed_data).hexdigest()
-        char_sum = sum(ord(c) for c in hash_val[:8] if c.isdigit() or c.isalpha())
-        return char_sum % 100
+def sum_of_divisors(n):
+    return sum(i for i in range(1, n+1) if n % i == 0)
 
-segment_registry = {
-    'segA': '48656c6c6f20',
-    'segB': '576f726c6421',
-    'segC': '47656e6f6d696373'
+# Compute base scores using dictionary comprehension
+node_base_scores = {
+    n: sum_of_divisors(n) if not is_prime(n) else count_primes_less_than(n)
+    for n in range(2, 11)
 }
 
-validator = GenomicValidator()
-intermediate_mask = 0x0F
-validation_score = 0
+# Adjust scores using ternary-like logic
+adjusted_scores = [
+    score * 2 if score % 3 == 0 else
+    score + 5 if score % 3 == 1 else
+    score
+    for score in node_base_scores.values()
+]
 
-with open('temp_seq.tmp', 'w') as f:
-    f.write(segment_registry['segA'])
+# Apply lambda filter and aggregate
+filter_and_sum = lambda scores: sum(s for s in scores if s > 10)
+aggregated_trust_score = filter_and_sum(adjusted_scores)
 
-for seg_id, hex_data in segment_registry.items():
-    processed = process_genomic_segment(hex_data)
-    score_part = validator.update_validation(processed)
-    validation_score += score_part if (score_part & intermediate_mask) != 0 else -1
-
-print(f"Result: {validation_score}")
+print(f"Result: {aggregated_trust_score}")

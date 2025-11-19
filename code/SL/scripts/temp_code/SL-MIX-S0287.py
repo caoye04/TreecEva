@@ -1,33 +1,27 @@
-from functools import reduce
+pastry_data = {
+    'croissant': (20, 30),
+    'muffin': (15, 20),
+    'danish': (25, 35),
+    'scone': (10, 15),
+    'bagel': (30, 40)
+}
 
-class TreeNode:
-    def __init__(self, value=0, left=None, right=None):
-        self.value = value
-        self.left = left
-        self.right = right
+# Transform pastry data to list of (popularity, cost, name)
+pastry_list = [(pop, cost, name) for name, (pop, cost) in pastry_data.items()]
 
-def traverse(node):
-    if not node:
-        return []
-    return [node.value] + traverse(node.left) + traverse(node.right)
+# Calculate popularity per cost ratio and sort in descending order
+pastry_efficiency = sorted(
+    [(pop / cost, pop, cost, name) for pop, cost, name in pastry_list],
+    key=lambda x: x[0],
+    reverse=True
+)
 
-# Tree structure:
-#       5
-#      / \
-#     3   8
-#    /   / \
-#   2   7   9
-root = TreeNode(5)
-root.left = TreeNode(3)
-root.right = TreeNode(8)
-root.left.left = TreeNode(2)
-root.right.left = TreeNode(7)
-root.right.right = TreeNode(9)
+budget = 100
+max_popularity = 0
 
-# Extract all node values
-node_values = traverse(root)
+for _, pop, cost, name in pastry_efficiency:
+    if cost <= budget:
+        max_popularity += pop
+        budget -= cost
 
-# Compute total growth using lambda and reduce
-total_growth = reduce(lambda x, y: x + y, node_values)
-
-print(f"Result: {total_growth}")
+print(f'Result: {max_popularity}')

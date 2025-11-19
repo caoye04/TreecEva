@@ -1,58 +1,48 @@
-import math
+import re
+from functools import reduce
+from itertools import combinations
 
-class SensorDataManager:
-    def __init__(self, base_coords):
-        self.base_x, self.base_y = base_coords
-        self.readings = []
-    
-    def add_sensor_data(self, offset_x, offset_y, measured_distance):
-        sensor_x = self.base_x + offset_x
-        sensor_y = self.base_y + offset_y
-        # Using Pythagorean theorem to compute depth from horizontal distance and direct measurement
-        horizontal_distance = math.sqrt(offset_x**2 + offset_y**2)
-        if measured_distance > horizontal_distance:
-            depth = math.sqrt(measured_distance**2 - horizontal_distance**2)
-            self.readings.append(depth)
-        else:
-            self.readings.append(0.0)  # Invalid reading
-    
-    def get_average_depth(self):
-        return sum(self.readings) / len(self.readings) if self.readings else 0.0
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
 
-def process_vessel_survey():
-    # Vessel's initial GPS coordinates (arbitrary units)
-    vessel_position = (15.5, 22.8)
-    
-    # Context manager for data processing
-    with SensorDataManager(vessel_position) as dm:
-        pass  # Custom exit handling in __exit__
-    
-    # Manual creation since we need to access the object post-context
-    dm = SensorDataManager(vessel_position)
-    
-    # Sensor deployment data: (offset_x, offset_y, measured_distance_to_seabed_point)
-    sensor_deployments = [
-        (-3.2, 4.7, 25.3),
-        (5.1, -2.9, 30.7),
-        (1.8, 6.4, 18.9),
-        (-4.5, -3.3, 22.1)
-    ]
-    
-    # List comprehension to filter valid deployments where measured distance > 20
-    valid_deployments = [deployment for deployment in sensor_deployments if deployment[2] > 20]
-    
-    # Add valid sensor data
-    for deployment in valid_deployments:
-        dm.add_sensor_data(*deployment)
-    
-    # Generator expression to calculate squares of readings for variance computation (not used here but part of processing)
-    _ = (reading**2 for reading in dm.readings)
-    
-    return dm.get_average_depth()
+def fibonacci_mod(n, mod):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, (a + b) % mod
+    return a
 
-# Enable context manager protocol
-SensorDataManager.__enter__ = lambda self: self
-SensorDataManager.__exit__ = lambda self, *args: None
+def derive_session_key(seed):
+    # Step 1: Encode seed as hexadecimal string
+    hex_seed = hex(seed)[2:]
+    
+    # Step 2: Apply regex pattern matching to extract digits
+    digits = ''.join(re.findall(r'\d', hex_seed))
+    digit_sum = sum(int(d) for d in digits)
+    
+    # Step 3: Bitwise operations
+    xor_result = seed ^ (seed << 3) & 0xFFFF
+    and_result = xor_result & ((1 << 8) - 1)
+    
+    # Step 4: Prime validation and adjustment
+    candidate = and_result + digit_sum
+    while not is_prime(candidate):
+        candidate += 1
+    
+    # Step 5: Fibonacci scrambling
+    fib_index = candidate % 20
+    fib_value = fibonacci_mod(fib_index, 256)
+    
+    # Step 6: Final key combination
+    session_key = (candidate << 8) | fib_value
+    
+    return session_key
 
-computed_average_depth = process_vessel_survey()
-print(f"Result: {computed_average_depth}")
+# Protocol execution
+initial_seed = 0x1A3F
+session_key = derive_session_key(initial_seed)
+print(f"Result: {session_key}")

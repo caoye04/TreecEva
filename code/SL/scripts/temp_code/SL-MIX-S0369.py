@@ -1,26 +1,33 @@
-import math
 from functools import reduce
 
-def gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
+def process_telemetry(readings):
+    processed_values = []
+    
+    # State machine for processing
+    for sensor_id, value in readings:
+        if sensor_id % 2 == 0:  # Even sensor ID
+            processed_values.append(value ** 2)
+        else:  # Odd sensor ID
+            processed_values.append(abs(value))
+    
+    # Sorting in descending order
+    sorted_values = sorted(processed_values, reverse=True)
+    
+    # Compute product of top 3 values
+    top_three = sorted_values[:3]
+    final_product = reduce(lambda x, y: x * y, top_three, 1)
+    
+    return final_product
 
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
+# Telemetry data: list of (sensor_id, value) tuples
+sensor_readings = [
+    (1, -5),
+    (2, 3),
+    (3, -7),
+    (4, 4),
+    (5, -2),
+    (6, -6)
+]
 
-def lcm_of_list(numbers):
-    return reduce(lcm, numbers)
-
-# Generate first 5 prime numbers
-primes = [2, 3, 5, 7, 11]
-
-# Calculate LCM of the first 5 primes
-lcm_primes = lcm_of_list(primes)
-
-# Use LCM as exponent in modular exponentiation
-base = 3
-modulus = 1000
-secure_key = pow(base, lcm_primes, modulus)
-
-print(f"Result: {secure_key}")
+final_product = process_telemetry(sensor_readings)
+print(f"Result: {final_product}")

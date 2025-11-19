@@ -1,36 +1,35 @@
-import math
-import re
+from functools import reduce
 from collections import defaultdict
 
-def process_sensor_data(readings_batch):
-    # Step 1: Apply logarithmic smoothing to all readings
-    smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
-    
-    # Step 2: Identify potential outliers using a ternary condition
-    mean_val = sum(smoothed) / len(smoothed)
-    deviations = [(val - mean_val) ** 2 for val in smoothed]
-    std_dev = math.sqrt(sum(deviations) / len(deviations))
-    
-    # Step 3: Flag values that deviate by more than 1.5 standard deviations
-    outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
-    
-    # Step 4: Pattern matching for specific temperature signatures
-    signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
-    
-    # Step 5: Calculate anomaly score using logical operations and exponentiation
-    base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
-    
-    # Step 6: Apply corrective factor using a ternary operator
-    correction_factor = 1.2 if base_score > 10 else 0.8
-    
-    # Step 7: Final anomaly score calculation
-    anomaly_score = round(base_score * correction_factor, 2) if base_score > 0 else 0
-    
-    return anomaly_score
+# Daily market signals for portfolio adjustments
+daily_signals = [3, -1, 4, -2, 5, -3, 2]
 
-# Sensor readings from a monitoring station
-sensor_readings = [23.45, -15.67, 0, 120.89, -98.77, 24.12, 25.00, -22.33]
+# Initialize adjustment tracking
+adjustment_history = defaultdict(int)
+total_impact = 0
+final_adjustment_score = 0
 
-# Execute processing pipeline
-anomaly_score = process_sensor_data(sensor_readings)
-print(f"Result: {anomaly_score}")
+# Process each signal with dynamic programming approach
+for idx, signal in enumerate(daily_signals):
+    # Greedy adjustment based on previous day's impact
+    if idx > 0 and adjustment_history[idx-1] > 0:
+        adjustment = signal * 2 if signal > 0 else signal
+    else:
+        adjustment = signal
+    
+    # Apply short-circuit logic for risk management
+    is_high_risk_day = signal < 0 and (idx > 0 and daily_signals[idx-1] > 0)
+    adjusted_signal = adjustment if not is_high_risk_day else adjustment // 2
+    
+    # Update history and accumulate impact
+    adjustment_history[idx] = adjusted_signal
+    total_impact += adjusted_signal
+
+# Calculate final adjustment score using functional reduction
+final_adjustment_score = reduce(lambda acc, val: acc + (val if val > 0 else -val * 2), adjustment_history.values(), 0)
+
+# Apply final risk adjustment using logical operations
+if total_impact > 10 and not (len(daily_signals) % 2 == 0 or total_impact < 15):
+    final_adjustment_score *= 2
+
+print(f"Result: {final_adjustment_score}")

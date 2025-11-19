@@ -1,52 +1,65 @@
-from collections import defaultdict
-import math
+import re
+from collections import deque
+from dataclasses import dataclass
+from typing import List, Optional
 
-def encode_triangulation(triangles):
-    encoded = 0
-    for i, triangle in enumerate(triangles):
-        # Simple encoding: sum of vertex indices shifted by position
-        value = sum(triangle) << (i % 8)
-        encoded ^= value
-    return encoded
+def tokenize_config(config_str: str) -> List[str]:
+    return re.findall(r'\b\w+|[/.=]', config_str)
 
-def greedy_triangulation(points):
-    # Sort points by x-coordinate (greedy choice)
-    points.sort(key=lambda p: p[0])
-    triangles = []
+@dataclass
+class TreeNode:
+    value: str
+    left: Optional['TreeNode'] = None
+    right: Optional['TreeNode'] = None
+
+def build_decision_tree(tokens: List[str]) -> TreeNode:
+    stack = []
+    for token in tokens:
+        if token in ('AND', 'OR'):
+            node = TreeNode(token)
+            if stack:
+                node.left = stack.pop()
+            stack.append(node)
+        elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
+            if stack and stack[-1].right is None:
+                stack[-1].right = TreeNode(token)
+            else:
+                stack.append(TreeNode(token))
+    return stack[0] if stack else None
+
+def evaluate_tree(node: TreeNode) -> bool:
+    if not node:
+        return False
+    if node.value in ('80', '443'):
+        return True
+    if node.value == 'OR':
+        return evaluate_tree(node.left) or evaluate_tree(node.right)
+    if node.value == 'AND':
+        return evaluate_tree(node.left) and evaluate_tree(node.right)
+    return False
+
+def process_network_config(config: str) -> int:
+    tokens = tokenize_config(config)
+    decision_tree = build_decision_tree(tokens)
+    route_queue = deque(["192.168.1.1:80", "192.168.1.2:22", "10.0.0.5:443", "172.16.0.1:8080"])
+    matched_routes = 0
     
-    # Create triangles using consecutive triplets after sorting
-    for i in range(len(points) - 2):
-        triangle = (points[i][2], points[i+1][2], points[i+2][2])  # Use point IDs
-        triangles.append(tuple(sorted(triangle)))  # Normalize triangle representation
-    
-    return triangles
+    while route_queue:
+        route = route_queue.popleft()
+        port = route.split(':')[1]
+        temp_tree = TreeNode(port)
+        if decision_tree:
+            # Create a new tree with the port condition
+            condition_tree = TreeNode('OR')
+            condition_tree.left = decision_tree
+            condition_tree.right = temp_tree
+            if evaluate_tree(condition_tree):
+                matched_routes += 1
+        elif evaluate_tree(temp_tree):
+            matched_routes += 1
+            
+    return matched_routes
 
-def calculate_elevation_stats(elevations):
-    total = sum(elevations)
-    count = len(elevations)
-    avg = total // count if count else 0
-    return avg
-
-elevation_data = [
-    (10.5, 20.3, 1),   # (x, y, point_id)
-    (15.2, 25.1, 2),
-    (12.8, 22.7, 3),
-    (18.9, 30.4, 4),
-    (14.6, 24.8, 5),
-    (16.3, 26.9, 6)
-]
-
-# Step 1: Calculate average elevation
-elevations = [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric
-avg_elevation = calculate_elevation_stats(elevations)
-
-# Step 2: Filter points above average (greedy filtering)
-filtered_points = [p for p in elevation_data if int(p[0]*p[1]) > avg_elevation]
-
-# Step 3: Generate triangulation
-triangulation_result = greedy_triangulation(filtered_points)
-
-# Step 4: Encode triangulation
-encoded_result = encode_triangulation(triangulation_result)
-
-print(f"Result: {encoded_result}")
+config_string = 'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'
+matched_routes = process_network_config(config_string)
+print(f"Result: {matched_routes}")

@@ -1,46 +1,56 @@
-from collections import defaultdict
-
-def process_textile_inspections():
-    batch_rolls = ['F201', 'G405', 'H709', 'J113']
-    weight_scores = {'F201': 85, 'G405': 92, 'H709': 78, 'J113': 88}
-    dimension_scores = {'F201': 90, 'G405': 87, 'H709': 95, 'J113': 82}
-    defect_counts = {'F201': 3, 'G405': 1, 'H709': 5, 'J113': 2}
-    
-    # Initialize state machine for tracking inspection phases
-    inspection_phases = defaultdict(str)
-    cumulative_ratings = defaultdict(int)
-    verified_score_count = 0
-    
-    # Phase 1: Weight validation
-    for roll_id in batch_rolls:
-        if weight_scores[roll_id] >= 80:
-            inspection_phases[roll_id] = 'WEIGHT_PASS'
-            cumulative_ratings[roll_id] += weight_scores[roll_id] % 17
-        else:
-            inspection_phases[roll_id] = 'WEIGHT_FAIL'
-    
-    # Phase 2: Dimension assessment
-    for roll_id in batch_rolls:
-        if inspection_phases[roll_id].endswith('PASS'):
-            adjusted_dimension = (dimension_scores[roll_id] * 2) % 19
-            cumulative_ratings[roll_id] += adjusted_dimension
-            inspection_phases[roll_id] += '_DIM_PASS'
-        else:
-            inspection_phases[roll_id] += '_DIM_SKIP'
-    
-    # Phase 3: Defect analysis
-    for roll_id in batch_rolls:
-        if 'DIM_PASS' in inspection_phases[roll_id]:
-            defect_penalty = defect_counts[roll_id] * 3
-            cumulative_ratings[roll_id] = (cumulative_ratings[roll_id] - defect_penalty) % 13
-            inspection_phases[roll_id] += '_DEFECT_ANALYZED'
+class VendingMachine:
+    def __init__(self):
+        self.inventory = {
+            'chips': {'count': 5, 'value': 2},
+            'candy': {'count': 2, 'value': 1},
+            'soda': {'count': 8, 'value': 3},
+            'nuts': {'count': 1, 'value': 4}
+        }
+        self.state = 'NORMAL'
+        self.restock_quota = 15
         
-        # Verification hash check
-        verification_hash = hash(roll_id) % 7
-        if cumulative_ratings[roll_id] > verification_hash:
-            verified_score_count += 1
+    def update_state(self):
+        if any(item['count'] == 0 for item in self.inventory.values()):
+            self.state = 'OUT_OF_ORDER'
+        elif any(item['count'] < 3 for item in self.inventory.values()):
+            self.state = 'LOW_STOCK'
+        else:
+            self.state = 'NORMAL'
+        
+    def process_purchases(self, purchases):
+        for item, quantity in purchases.items():
+            if item in self.inventory and self.inventory[item]['count'] >= quantity:
+                self.inventory[item]['count'] -= quantity
+        self.update_state()
     
-    return verified_score_count
+    def restock_greedy(self):
+        # Greedy algorithm: prioritize items with lowest stock first
+        items_sorted = sorted(self.inventory.items(), key=lambda x: x[1]['count'])
+        restock_priority_score = 0
+        remaining_quota = self.restock_quota
+        
+        for item_name, item_data in items_sorted:
+            if remaining_quota <= 0:
+                break
+            needed = max(0, 10 - item_data['count'])  # Target stock level is 10
+            restock_amount = min(needed, remaining_quota)
+            
+            if restock_amount > 0:
+                self.inventory[item_name]['count'] += restock_amount
+                restock_priority_score += restock_amount * item_data['value']
+                remaining_quota -= restock_amount
+        
+        self.update_state()
+        return restock_priority_score
 
-verified_score_count = process_textile_inspections()
-print(f"Result: {verified_score_count}")
+# Execution sequence
+vm = VendingMachine()
+purchase_list = {'chips': 3, 'candy': 1, 'soda': 6, 'nuts': 1}
+vm.process_purchases(purchase_list)
+
+# Apply greedy restocking algorithm only if machine is not OUT_OF_ORDER
+restock_priority_score = 0
+if vm.state != 'OUT_OF_ORDER':
+    restock_priority_score = vm.restock_greedy()
+
+print(f'Result: {restock_priority_score}')

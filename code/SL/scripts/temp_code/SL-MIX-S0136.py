@@ -1,21 +1,6 @@
-import itertools
-from functools import reduce
-
-def compute_custom_checksum(packet_ids):
-    if len(packet_ids) < 2:
-        return 0
-    
-    # Generate all unique pairs
-    pairs = list(itertools.combinations(packet_ids, 2))
-    
-    # Compute XOR for each pair
-    xor_results = [a ^ b for a, b in pairs]
-    
-    # Reduce using bitwise AND
-    checksum = reduce(lambda x, y: x & y, xor_results)
-    return checksum
-
-# Packet identifiers in hexadecimal
-network_packets = [0x1F, 0x2C, 0x3A, 0x45]
-security_checksum = compute_custom_checksum(network_packets)
-print(f"Result: {security_checksum}")
+import math
+phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
+cumulative_sum = lambda d: {k: sum(list(d.values())[:i+1]) for i, k in enumerate(d.keys())}
+cumulative_phases = cumulative_sum(phase_changes)
+final_phase = cumulative_phases[10] % (2 * math.pi)
+print(f'Result: {final_phase}')

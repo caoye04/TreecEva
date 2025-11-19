@@ -1,48 +1,46 @@
-from collections import defaultdict, Counter
+from functools import reduce
 
-def tokenize_and_score(text_series):
-    token_weights = defaultdict(lambda: 1.0)
-    token_weights.update({'python': 2.5, 'optimization': 3.0, 'algorithm': 2.0, 'complexity': 1.5})
+def process_document_ids():
+    # Historical document identifiers
+    doc_ids = ['DOC-1923-A', 'MAN-1845-B', 'LET-1901-C']
     
-    all_tokens = []
-    cumulative_scores = []
+    # Character to integer mapping for encoding
+    char_map = {chr(i): i - 64 for i in range(65, 91)}  # A=1, B=2, ..., Z=26
+    char_map.update({str(i): i for i in range(10)})      # '0'=0, '1'=1, ..., '9'=9
+    char_map.update({'-': 27})
     
-    for idx, sentence in enumerate(text_series):
-        tokens = sentence.lower().replace(',', '').replace('.', '').split()
-        token_count = Counter(tokens)
-        
-        score = 0.0
-        for token, count in token_count.items():
-            score += token_weights.get(token, 1.0) * count
-        
-        all_tokens.append(set(tokens))
-        cumulative_scores.append(score if not cumulative_scores else cumulative_scores[-1] + score)
+    # Encoding function
+    encode = lambda s: [char_map[c] for c in s if c in char_map]
     
-    # Dynamic programming: find maximum weighted intersection score
-    dp_table = [0.0] * len(all_tokens)
-    if all_tokens:
-        dp_table[0] = sum(token_weights.get(t, 1.0) for t in all_tokens[0])
+    # Process each document ID
+    encoded_sequences = list(map(encode, doc_ids))
     
-    for i in range(1, len(all_tokens)):
-        intersection = all_tokens[i].intersection(all_tokens[i-1])
-        intersection_value = sum(token_weights.get(t, 1.0) for t in intersection)
-        dp_table[i] = max(dp_table[i-1], (dp_table[i-1] if i > 1 else 0) + intersection_value)
+    # Apply modular arithmetic transformation
+    transformed = [
+        [((x * 17) + 13) % 31 for x in seq]
+        for seq in encoded_sequences
+    ]
     
-    # Final optimization using set operations
-    universal_tokens = set().union(*all_tokens)
-    rare_tokens = {t for t, w in token_weights.items() if w > 2.0}
+    # Frequency analysis using dictionary comprehension
+    freq_analysis = {
+        i: len([seq for seq in transformed if i < len(seq) and seq[i] % 3 == 0])
+        for i in range(max(len(seq) for seq in transformed))
+    }
     
-    optimized_score = dp_table[-1] if dp_table else 0.0
-    optimized_score += len(universal_tokens.intersection(rare_tokens)) * 1.5
+    # Merge with base frequencies using dictionary merging
+    base_freq = {i: 1 for i in range(10)}
+    merged_freq = base_freq | {k: v + 1 for k, v in freq_analysis.items()}
     
-    return optimized_score
+    # Calculate checksum using functional programming
+    checksum_components = [
+        reduce(lambda a, b: (a + b) % 29, seq, 0)
+        for seq in transformed
+    ]
+    
+    # Final encoded checksum
+    encoded_checksum = sum(checksum_components) % 100
+    
+    return encoded_checksum
 
-# Process linguistic data
-linguistic_corpus = [
-    "Python optimization algorithms require complexity analysis",
-    "Algorithm complexity in Python demands optimization techniques",
-    "Text processing and pattern recognition in Python"
-]
-
-final_score = tokenize_and_score(linguistic_corpus)
-print(f"Result: {final_score}")
+result = process_document_ids()
+print(f"Result: {result}")

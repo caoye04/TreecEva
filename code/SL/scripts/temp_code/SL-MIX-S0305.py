@@ -1,20 +1,50 @@
-import math
+import re
+from collections import defaultdict
+from itertools import permutations
 
-# Normalized annual returns for two portfolios over 5 years
-portfolio_a = [0.08, 0.12, 0.05, 0.15, 0.09]
-portfolio_b = [0.11, 0.07, 0.13, 0.06, 0.10]
+def geohash_transform(coords):
+    # Phase 1: Normalize coordinates
+    norm_coords = []
+    for coord in coords:
+        normalized = round(coord * 100000) if coord >= 0 else -round(abs(coord) * 100000)
+        norm_coords.append(normalized)
+    
+    # Phase 2: Apply bit manipulation
+    bit_results = []
+    for i in range(len(norm_coords)):
+        x = norm_coords[i]
+        if i % 2 == 0:
+            result = (x >> 2) & 0xFF
+        else:
+            result = (x << 1) & 0xFF
+        bit_results.append(result)
+    
+    # Phase 3: Pattern matching and string conversion
+    patterns = defaultdict(int)
+    for val in bit_results:
+        bin_str = format(val, '08b')
+        matches = re.findall(r'10+', bin_str)
+        for match in matches:
+            patterns[len(match)] += 1
+    
+    # Phase 4: Hash computation
+    hash_value = 0
+    for length, count in patterns.items():
+        hash_value += (length * count * 7) % 256
+    
+    # Phase 5: Permutation entropy
+    perm_entropy = 0
+    for perm in permutations(str(hash_value)[:3]):
+        perm_str = ''.join(perm)
+        perm_entropy += int(perm_str) if perm_str.isdigit() else 0
+    
+    # Final hash computation
+    final_hash = (hash_value + perm_entropy) % 1000
+    return final_hash
 
-# Combine and normalize using logarithmic transformation
-combined_log_returns = list(map(lambda x: math.log(1 + x), portfolio_a + portfolio_b))
+# Initial coordinates
+coordinates = [40.7128, -74.0060, 34.0522, -118.2437]
 
-# Sort to find median performance
-sorted_log_returns = sorted(combined_log_returns)
-
-# Calculate median of log returns
-n = len(sorted_log_returns)
-median_log_return = (sorted_log_returns[n//2] + sorted_log_returns[(n//2)-1]) / 2 if n % 2 == 0 else sorted_log_returns[n//2]
-
-# Convert back to percentage using exponential
-final_cagr_percentage = (math.exp(median_log_return) - 1) * 100
-
-print(f"Result: {final_cagr_percentage}")
+# Execute transformation
+final_hash = geohash_transform(coordinates)
+print(f'Result: {final_hash}')

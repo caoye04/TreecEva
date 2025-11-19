@@ -1,49 +1,52 @@
-import statistics
+import re
+from collections import defaultdict
+from math import gcd
+from itertools import permutations
 
-def compute_variance_window(temps, start, end):
-    window = temps[start:end+1]
-    return statistics.variance(window)
-
-def find_stable_period(temps, threshold):
-    sorted_temps = sorted(enumerate(temps), key=lambda x: x[1])
-    low, high = 0, len(sorted_temps) - 1
-    while low <= high:
-        mid = (low + high) // 2
-        idx, temp = sorted_temps[mid]
-        left_bound = max(0, idx - 2)
-        right_bound = min(len(temps) - 1, idx + 2)
-        var = compute_variance_window(temps, left_bound, right_bound)
-        if var < threshold:
-            return idx, var
-        elif temp < temps[idx]:
-            low = mid + 1
+def prime_factors(n):
+    i = 2
+    factors = []
+    while i * i <= n:
+        if n % i:
+            i += 1
         else:
-            high = mid - 1
-    return -1, float('inf')
+            n //= i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
+    return factors
 
-temperature_readings = [23.5, 24.1, 23.8, 24.0, 23.9, 24.2, 23.7, 24.3, 23.6, 24.4]
-sensor_indices = list(range(len(temperature_readings)))
-stability_threshold = 0.05
+def lcm(a, b):
+    return abs(a*b) // gcd(a, b)
 
-# Compute initial stability metrics
-window_variances = {i: compute_variance_window(temperature_readings, max(0, i-1), min(len(temperature_readings)-1, i+1)) for i in sensor_indices}
+# Encoded message segments
+segments = ['A1B2C3', 'D4E5F6', 'G7H8I9']
+char_map = defaultdict(int)
 
-# Identify stable regions using binary search
-stable_positions = {}
-for idx in sensor_indices:
-    pos, var = find_stable_period(temperature_readings, stability_threshold * (idx + 1))
-    if pos != -1:
-        stable_positions[pos] = var
+# Process each segment
+for segment in segments:
+    # Extract numbers using regex
+    numbers = list(map(int, re.findall(r'\d', segment)))
+    # Extract characters using regex
+    characters = re.findall(r'[A-Z]', segment)
+    
+    # For each character, add the LCM of extracted numbers to its map value
+    for char in characters:
+        char_map[char] += lcm(numbers[0], numbers[-1])
 
-# Calculate overall stability index
-if stable_positions:
-    stability_index = sum(stable_positions.values()) / len(stable_positions)
-else:
-    stability_index = 0.0
+# Generate permutations of the map's values
+values = list(char_map.values())
+perms = list(permutations(values, 3))
 
-# Adjust for sensor distribution skew
-unique_variances = set(window_variances.values())
-if len(unique_variances) > 1:
-    stability_index *= len(unique_variances) / len(window_variances)
+# Calculate checksum from permutations
+checksum = 0
+for perm in perms:
+    # Only consider permutations where the first element is the largest
+    if perm[0] >= perm[1] and perm[0] >= perm[2]:
+        checksum += perm[0] * perm[1] + perm[2]
 
-print(f"Result: {stability_index}")
+# Apply final transformation using prime factors
+final_value = sum(prime_factors(checksum))
+checksum = checksum ^ final_value  # XOR with sum of its prime factors
+
+print(f"Result: {checksum}")

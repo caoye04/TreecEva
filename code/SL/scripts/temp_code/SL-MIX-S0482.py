@@ -1,32 +1,53 @@
-import itertools
-from functools import reduce
+import math
 
-# Sensor readings: each sublist represents one sensor's sequence of readings
-sensor_readings = [
-    [10, 12, 14, 13, 15],
-    [5, 7, 6, 8, 9, 7],
-    [20, 22, 21, 23, 25, 24, 26],
-    [1, 3, 2, 4, 6, 5]
+def compute_entropy_distribution(freq_bands, weights):
+    total_weight = sum(weights)
+    normalized_weights = [w / total_weight for w in weights]
+    entropy_sum = 0
+    for i in range(len(freq_bands)):
+        if freq_bands[i] > 0:
+            entropy_sum += normalized_weights[i] * math.log(freq_bands[i])
+    return -entropy_sum
+
+def process_audio_segments(segment_data):
+    spectral_products = []
+    energy_totals = []
+    for segment in segment_data:
+        band_energies = segment['bands']
+        band_weights = segment['weights']
+        product = 1
+        total_energy = 0
+        for j in range(len(band_energies)):
+            energy = band_energies[j]
+            weight = band_weights[j]
+            product *= energy ** weight
+            total_energy += energy
+        spectral_products.append(product)
+        energy_totals.append(total_energy)
+    return spectral_products, energy_totals
+
+# Audio segment data representing frequency bands and their weights
+audio_segments = [
+    {'bands': [2, 4, 8], 'weights': [0.2, 0.3, 0.5]},
+    {'bands': [3, 9, 27], 'weights': [0.1, 0.4, 0.5]},
+    {'bands': [5, 25, 125], 'weights': [0.3, 0.3, 0.4]}
 ]
 
-def calculate_stability_score(readings):
-    if len(readings) < 2:
-        return 0
-    # Step 1: Calculate pairwise differences
-    differences = [readings[i+1] - readings[i] for i in range(len(readings)-1)]
-    # Step 2: Count differences within threshold
-    count_within_threshold = sum(1 for diff in differences if abs(diff) <= 2)
-    # Step 3: Calculate sum of readings
-    sum_readings = sum(readings)
-    # Stability score is count * sum
-    return count_within_threshold * sum_readings
+# Process segments to get spectral products and energy totals
+products, energies = process_audio_segments(audio_segments)
 
-# Calculate stability scores for all sensors
-stability_scores = list(map(calculate_stability_score, sensor_readings))
+# Compute entropy distribution for each segment's energy profile
+entropies = []
+for k in range(len(energies)):
+    segment_bands = audio_segments[k]['bands']
+    segment_weights = audio_segments[k]['weights']
+    entropy_val = compute_entropy_distribution(segment_bands, segment_weights)
+    entropies.append(entropy_val)
 
-# Find median stability score
-stability_scores.sort()
-n = len(stability_scores)
-median_stability_score = stability_scores[n//2] if n % 2 == 1 else (stability_scores[n//2 - 1] + stability_scores[n//2]) // 2
+# Calculate the spectral flatness index using exponential weighting
+spectral_flatness_index = 0
+for idx in range(len(products)):
+    weighted_entropy = entropies[idx] * math.exp(-idx)
+    spectral_flatness_index += weighted_entropy * math.log(products[idx] + 1)
 
-print(f"Result: {median_stability_score}")
+print(f"Result: {round(spectral_flatness_index, 6)}")

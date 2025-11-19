@@ -1,14 +1,27 @@
-def transform_packet(seed):
-    # Apply left shift by 3 and mask to 8 bits
-    stage1 = (seed << 3) & 0xFF
-    # XOR with 0b10101010
-    stage2 = stage1 ^ 0xAA
-    # Right shift by 2 and mask again
-    stage3 = (stage2 >> 2) & 0xFF
-    # Final XOR with original seed
-    final_checksum = stage3 ^ seed
-    return final_checksum
+from statistics import mean
 
-packet_seed = 0b11001010
-final_checksum = transform_packet(packet_seed)
-print(f'Result: {final_checksum}')
+def track_bakery_sales():
+    prices = {'croissant': 2.50, 'baguette': 3.00, 'muffin': 1.75}
+    inventory = {'croissant': 20, 'baguette': 15, 'muffin': 25}
+    sales_log = [
+        {'croissant': 3, 'baguette': 2, 'muffin': 5},
+        {'croissant': 2, 'baguette': 4, 'muffin': 3},
+        {'croissant': 1, 'baguette': 1, 'muffin': 7},
+        {'croissant': 4, 'baguette': 3, 'muffin': 2}
+    ]
+    
+    total_revenue = 0.0
+    
+    for day_sales in sales_log:
+        for item, quantity in day_sales.items():
+            inventory[item] -= quantity
+            total_revenue += quantity * prices[item]
+        
+        # Greedy check: restock if any item drops below 10
+        if any(count < 10 for count in inventory.values()):
+            break
+    
+    return total_revenue
+
+result = track_bakery_sales()
+print(f"Result: {result}")

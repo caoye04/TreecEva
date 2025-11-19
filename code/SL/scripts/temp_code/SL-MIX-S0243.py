@@ -1,46 +1,29 @@
-import heapq
-import base64
+from collections import deque
+from functools import reduce
 
-def compute_hash(s):
-    return hash(s) % 1000
+def process_id(tid):
+    return ''.join(chr((ord(c) - ord('A') + 3) % 26 + ord('A')) for c in tid)
 
-def process_packets():
-    # Encoded packet data with priorities
-    encoded_packets = [
-        ("SGVsbG8=", 5),
-        ("V29ybGQ=", 3),
-        ("UGl6emE=", 7)
-    ]
-    
-    # Initialize processing structures
-    packet_queue = []
-    priority_heap = []
-    processed_scores = set()
-    
-    # Step 1: Decode and enqueue packets
-    for enc_data, base_priority in encoded_packets:
-        decoded_data = base64.b64decode(enc_data).decode('utf-8')
-        hash_val = compute_hash(decoded_data)
-        adjusted_priority = base_priority * 10 + (hash_val & 0xF)
-        packet_queue.append((adjusted_priority, decoded_data))
-    
-    # Step 2: Push to min-heap
-    for priority, data in packet_queue:
-        heapq.heappush(priority_heap, (priority, data))
-    
-    # Step 3: Process packets from heap
-    total_score = 0
-    while priority_heap:
-        priority, data = heapq.heappop(priority_heap)
-        if len(data) > 4 and priority not in processed_scores:
-            score = priority ^ len(data)
-            if score > 10 and (score % 2 == 0 or score < 50):
-                total_score += score
-                processed_scores.add(priority)
-    
-    # Final calculation
-    final_priority_score = total_score & 0xFF
-    return final_priority_score
+def compute_weight(code):
+    return sum(ord(c) for c in code) % 100
 
-result = process_packets()
-print(f"Result: {result}")
+tracking_ids = ['XYZ987', 'ABC123', 'DEF456']
+processing_queue = deque()
+checksum_stack = []
+
+for tid in tracking_ids:
+    processed = process_id(tid)
+    if len(processed) >= 6 and processed[:3].isalpha():
+        processing_queue.append(processed)
+
+while processing_queue:
+    item = processing_queue.popleft()
+    weight = compute_weight(item)
+    if weight > 50 or (weight % 7 == 0 and weight != 0):
+        checksum_stack.append(weight)
+    else:
+        adjusted = weight + 10 if weight <= 25 else weight - 5
+        checksum_stack.append(adjusted)
+
+final_checksum = reduce(lambda x, y: (x ^ y) & 0xFF, checksum_stack, 0)
+print(f"Result: {final_checksum}")

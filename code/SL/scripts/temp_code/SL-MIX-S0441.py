@@ -1,64 +1,58 @@
-from collections import defaultdict
-import itertools
+import math
 
-class TreeNode:
-    def __init__(self, length):
-        self.length = length
-        self.words = []
-        self.left = None
-        self.right = None
+class SensorDataManager:
+    def __init__(self, base_coords):
+        self.base_x, self.base_y = base_coords
+        self.readings = []
+    
+    def add_sensor_data(self, offset_x, offset_y, measured_distance):
+        sensor_x = self.base_x + offset_x
+        sensor_y = self.base_y + offset_y
+        # Using Pythagorean theorem to compute depth from horizontal distance and direct measurement
+        horizontal_distance = math.sqrt(offset_x**2 + offset_y**2)
+        if measured_distance > horizontal_distance:
+            depth = math.sqrt(measured_distance**2 - horizontal_distance**2)
+            self.readings.append(depth)
+        else:
+            self.readings.append(0.0)  # Invalid reading
+    
+    def get_average_depth(self):
+        return sum(self.readings) / len(self.readings) if self.readings else 0.0
 
-def insert_word(root, word):
-    word_len = len(word)
-    if word_len < root.length:
-        if root.left is None:
-            root.left = TreeNode(word_len)
-        insert_word(root.left, word)
-    elif word_len > root.length:
-        if root.right is None:
-            root.right = TreeNode(word_len)
-        insert_word(root.right, word)
-    else:
-        root.words.append(word)
+def process_vessel_survey():
+    # Vessel's initial GPS coordinates (arbitrary units)
+    vessel_position = (15.5, 22.8)
+    
+    # Context manager for data processing
+    with SensorDataManager(vessel_position) as dm:
+        pass  # Custom exit handling in __exit__
+    
+    # Manual creation since we need to access the object post-context
+    dm = SensorDataManager(vessel_position)
+    
+    # Sensor deployment data: (offset_x, offset_y, measured_distance_to_seabed_point)
+    sensor_deployments = [
+        (-3.2, 4.7, 25.3),
+        (5.1, -2.9, 30.7),
+        (1.8, 6.4, 18.9),
+        (-4.5, -3.3, 22.1)
+    ]
+    
+    # List comprehension to filter valid deployments where measured distance > 20
+    valid_deployments = [deployment for deployment in sensor_deployments if deployment[2] > 20]
+    
+    # Add valid sensor data
+    for deployment in valid_deployments:
+        dm.add_sensor_data(*deployment)
+    
+    # Generator expression to calculate squares of readings for variance computation (not used here but part of processing)
+    _ = (reading**2 for reading in dm.readings)
+    
+    return dm.get_average_depth()
 
-def calculate_score(word_freq, threshold=2):
-    return sum((freq * 3 if freq > threshold else freq) for freq in word_freq.values())
+# Enable context manager protocol
+SensorDataManager.__enter__ = lambda self: self
+SensorDataManager.__exit__ = lambda self, *args: None
 
-manuscript_words = ['ancient', 'text', 'symbol', 'ancient', 'glyph', 'text', 'mark', 'symbol', 'ancient', 'cipher']
-word_frequency = defaultdict(int)
-
-for word in manuscript_words:
-    word_frequency[word] += 1
-
-root = TreeNode(5)
-for word in set(manuscript_words):
-    insert_word(root, word)
-
-# Calculate scores from different tree branches
-left_branch_words = []
-right_branch_words = []
-
-if root.left:
-    left_branch_words = list(itertools.chain.from_iterable(
-        [[word] * word_frequency[word] for word in root.left.words]
-    ))
-if root.right:
-    right_branch_words = list(itertools.chain.from_iterable(
-        [[word] * word_frequency[word] for word in root.right.words]
-    ))
-
-left_freq = defaultdict(int)
-right_freq = defaultdict(int)
-for word in left_branch_words:
-    left_freq[word] += 1
-for word in right_branch_words:
-    right_freq[word] += 1
-
-branch_scores = []
-branch_scores.append(calculate_score(left_freq))
-branch_scores.append(calculate_score(right_freq))
-
-final_score = sum(branch_scores) if branch_scores else 0
-final_score = final_score + (10 if len(manuscript_words) > 5 else 0)
-
-print(f"Result: {final_score}")
+computed_average_depth = process_vessel_survey()
+print(f"Result: {computed_average_depth}")

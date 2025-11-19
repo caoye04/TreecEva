@@ -1,71 +1,44 @@
-from collections import deque
+from collections import defaultdict
 
-class WarehouseNode:
-    def __init__(self, x, y, items=0):
-        self.x = x
-        self.y = y
-        self.items = items
-        self.left = None
-        self.right = None
+def fibonacci(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
 
-def build_warehouse_tree():
-    # Level 0
-    root = WarehouseNode(0, 0, 10)
-    
-    # Level 1
-    root.left = WarehouseNode(1, 1, 15)
-    root.right = WarehouseNode(2, 0, 8)
-    
-    # Level 2
-    root.left.left = WarehouseNode(3, 1, 12)
-    root.left.right = WarehouseNode(4, 2, 20)
-    root.right.left = WarehouseNode(5, 1, 6)
-    root.right.right = WarehouseNode(6, 0, 18)
-    
-    # Level 3
-    root.left.left.left = WarehouseNode(7, 1, 9)
-    root.left.left.right = WarehouseNode(8, 2, 14)
-    root.left.right.left = WarehouseNode(9, 3, 11)
-    root.left.right.right = WarehouseNode(10, 4, 25)
-    root.right.left.left = WarehouseNode(11, 5, 7)
-    root.right.left.right = WarehouseNode(12, 6, 13)
-    root.right.right.left = WarehouseNode(13, 7, 5)
-    root.right.right.right = WarehouseNode(14, 8, 16)
-    
-    return root
+def calculate_weighted_score(defect_sequence):
+    # States: 0=queued, 1=spinning, 2=weaving, 3=dyeing, 4=finished
+    score = 0
+    for i, defects in enumerate(defect_sequence):
+        score += fibonacci(i) * defects
+    return score
 
-def process_warehouse():
-    warehouse = build_warehouse_tree()
-    stack = [warehouse]
-    total_items = 0
-    processed_nodes = 0
-    max_depth = 3
+def process_batches():
+    batch_defects = [
+        [1, 3, 2, 5, 1],  # Batch 1
+        [0, 2, 1, 3, 0],  # Batch 2
+        [2, 1, 4, 2, 1],  # Batch 3
+    ]
     
-    # Track depth using a queue with (node, depth) tuples
-    queue = deque([(warehouse, 0)])
+    total_score = 0
+    state_counter = defaultdict(int)
     
-    while queue and processed_nodes < 15:  # 2^(max_depth+1) - 1 = 15 nodes
-        current_node, depth = queue.popleft()
+    for defects in batch_defects:
+        batch_score = calculate_weighted_score(defects)
+        total_score += batch_score
         
-        if depth > max_depth:
-            break
-            
-        # Process the node
-        if current_node.x % 2 == 0 and current_node.y % 2 == 0:
-            current_node.items *= 2
-        elif current_node.x % 2 != 0 or current_node.y % 2 != 0:
-            current_node.items //= 2
-        
-        total_items += current_node.items
-        processed_nodes += 1
-        
-        # Add children to queue for processing
-        if current_node.left and depth < max_depth:
-            queue.append((current_node.left, depth + 1))
-        if current_node.right and depth < max_depth:
-            queue.append((current_node.right, depth + 1))
+        # Update state machine counters
+        for state_idx, defect_count in enumerate(defects):
+            if defect_count > 0:
+                state_counter[state_idx] += 1
     
-    return total_items
+    # Apply state machine bonus: if all stages have defects in at least 2 batches
+    bonus = 10 if all(count >= 2 for count in state_counter.values()) else 0
+    
+    final_score = total_score + bonus
+    return final_score
 
-final_item_count = process_warehouse()
-print(f"Result: {final_item_count}")
+final_score = process_batches()
+print(f"Result: {final_score}")

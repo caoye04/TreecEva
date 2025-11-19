@@ -1,75 +1,61 @@
-class FabricNode:
-    def __init__(self, color_code):
-        self.color_code = color_code
-        self.prev = None
-        self.next = None
+import heapq
+import base64
+from collections import deque
 
-# Initialize doubly-linked list with fabric color codes
-head = FabricNode(18)
-node2 = FabricNode(7)
-node3 = FabricNode(23)
-node4 = FabricNode(4)
-node5 = FabricNode(15)
+def call_tracker(func):
+    calls = []
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        calls.append(result)
+        return result
+    wrapper.calls = calls
+    return wrapper
 
-head.next = node2
-node2.prev = head
-node2.next = node3
-node3.prev = node2
-node3.next = node4
-node4.prev = node3
-node4.next = node5
-node5.prev = node4
+class ResourcePool:
+    def __init__(self, resources):
+        self.resources = resources
+        self.active = []
+    
+    def __enter__(self):
+        self.active = list(self.resources)
+        return self.active
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.active.clear()
 
-def rotate_bits_left(value, positions):
-    return ((value << positions) | (value >> (8 - positions))) & 0xFF
+@call_tracker
+def encode_message(msg):
+    return base64.b64encode(msg.encode()).decode()
 
-def process_fabric_sequence(start_node):
-    current = start_node
-    color_values = []
-    while current:
-        # Apply bit rotation based on node position
-        position = 1 if current.prev is None else (2 if current.next is None else 3)
-        rotated = rotate_bits_left(current.color_code, position)
-        color_values.append(rotated)
-        current = current.next
-    return color_values
+@call_tracker
+def decode_message(encoded_msg):
+    return base64.b64decode(encoded_msg).decode()
 
-# Stage 1: Process fabric sequence
-processed_colors = process_fabric_sequence(head)
+messages = ['alpha', 'beta', 'gamma', 'delta']
+priorities = [3, 1, 4, 2]
+heap = list(zip(priorities, messages))
+heapq.heapify(heap)
 
-# Stage 2: Apply filtering and transformation
-filtered_colors = list(filter(lambda x: x & 0x0F != 0, processed_colors))
-transformed_colors = list(map(lambda x: (x ^ 0x55) & 0xFF, filtered_colors))
+processing_stack = []
+output_queue = deque()
 
-# Stage 3: Encode into pattern matrix
-pattern_matrix = [[0 for _ in range(4)] for _ in range(4)]
-for i in range(min(len(transformed_colors), 4)):
-    pattern_matrix[i][i] = transformed_colors[i]
+with ResourcePool([1, 2, 3]) as pool:
+    while heap:
+        priority, msg = heapq.heappop(heap)
+        encoded = encode_message(msg)
+        processing_stack.append((priority, encoded))
+    
+    while processing_stack:
+        priority, encoded = processing_stack.pop()
+        decoded = decode_message(encoded)
+        output_queue.appendleft((priority, decoded))
+    
+    checksum_components = []
+    while output_queue:
+        priority, text = output_queue.popleft()
+        text_hash = hash(text) % 1000
+        checksum_components.append(text_hash ^ priority)
+    
+    final_checksum = sum(checksum_components) & 0xFF
 
-# Stage 4: Apply switch-based weaving logic
-def apply_weaving_pattern(matrix):
-    weave_code = 0
-    for i in range(4):
-        for j in range(4):
-            value = matrix[i][j]
-            # Switch/case logic for weaving pattern determination
-            if value == 0:
-                weave_code += 0
-            elif 1 <= value <= 32:
-                weave_type = value % 4
-                if weave_type == 0:
-                    weave_code += value << 1
-                elif weave_type == 1:
-                    weave_code += value << 2
-                elif weave_type == 2:
-                    weave_code += value << 3
-                else:  # weave_type == 3
-                    weave_code += value
-            else:
-                weave_code += value & 0x0F
-    return weave_code
-
-# Stage 5: Final encoding
-final_weave_code = apply_weaving_pattern(pattern_matrix)
-
-print(f"Result: {final_weave_code}")
+print(f"Result: {final_checksum}")

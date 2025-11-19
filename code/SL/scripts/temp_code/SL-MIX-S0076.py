@@ -1,62 +1,40 @@
-import heapq
-from collections import deque
+from collections import defaultdict
 
-def calculate_bundle_profit(bundle):
-    if len(bundle) <= 1:
-        return sum(bundle)
-    mid = len(bundle) // 2
-    left_profit = calculate_bundle_profit(bundle[:mid])
-    right_profit = calculate_bundle_profit(bundle[mid:])
-    return left_profit + right_profit + (bundle[mid-1] * bundle[mid] if mid > 0 and mid < len(bundle) else 0)
+def process_restock(restock_event, inventory, max_capacity):
+    product, amount = restock_event
+    current = inventory[product]
+    inventory[product] = min(current + amount, max_capacity[product])
+    return max_capacity[product] - inventory[product]
 
-class TransactionTracker:
-    def __init__(self):
-        self.transactions = []
-    
-    def __enter__(self):
-        return self
-    
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.transactions.clear()
-    
-    def add_transaction(self, profit):
-        self.transactions.append(profit)
-    
-    def get_max_profit(self):
-        profit_heap = []
-        for profit in self.transactions:
-            heapq.heappush(profit_heap, -profit)  # Max heap
-        
-        total = 0
-        while profit_heap:
-            current = -heapq.heappop(profit_heap)
-            if current > 0:
-                total += current
-            else:
-                break
-        return total
+def update_state_machine(state, event_type):
+    transitions = {
+        'IDLE': {'RESTOCK': 'PROCESSING', 'SERVE': 'IDLE'},
+        'PROCESSING': {'COMPLETE': 'IDLE', 'RESTOCK': 'PROCESSING'}
+    }
+    return transitions.get(state, {}).get(event_type, state)
 
-def process_financial_data():
-    exchange_rates = [1.02, 0.98, 1.05, 0.95, 1.03, 0.97, 1.01]
-    profit_margins = []
-    
-    for i in range(1, len(exchange_rates)):
-        margin = round((exchange_rates[i] - exchange_rates[i-1]) * 100, 2)
-        profit_margins.append(margin)
-    
-    # Divide and conquer optimization on profit bundles
-    optimized_margin = calculate_bundle_profit(profit_margins)
-    
-    # Greedy selection with priority queue
-    with TransactionTracker() as tracker:
-        tracker.add_transaction(optimized_margin)
-        tracker.add_transaction(2.5)
-        tracker.add_transaction(-1.2)
-        tracker.add_transaction(3.7)
-        tracker.add_transaction(-0.5)
-        max_profit = tracker.get_max_profit()
-    
-    return max_profit
+# Initialize inventory system
+inventory_levels = defaultdict(int)
+max_product_capacity = {'SODA': 20, 'CHIPS': 15, 'CANDY': 25}
+state_machine = 'IDLE'
 
-max_profit = process_financial_data()
-print(f"Result: {max_profit}")
+# Restocking events
+restocking_queue = [
+    ('SODA', 8),
+    ('CHIPS', 10),
+    ('CANDY', 5),
+    ('SODA', 7),
+    ('CHIPS', 8)
+]
+
+# Process events with state machine control
+remaining_capacity = 0
+for event in restocking_queue:
+    state_machine = update_state_machine(state_machine, 'RESTOCK')
+    remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
+    state_machine = update_state_machine(state_machine, 'COMPLETE')
+
+# Final adjustment using ternary logic
+remaining_capacity = remaining_capacity if remaining_capacity > 0 else sum(max_product_capacity.values()) - sum(inventory_levels.values())
+
+print(f"Result: {remaining_capacity}")

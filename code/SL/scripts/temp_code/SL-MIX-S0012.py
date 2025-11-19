@@ -1,16 +1,5 @@
-import math
-
-# Define radii for the flower beds
-radius_first_bed = 5
-radius_second_bed = 3
-radius_third_bed = 4
-
-# The second bed is placed at the edge of the first
-# So the distance between their centers is the sum of their radii
-distance_first_to_second = radius_first_bed + radius_second_bed
-
-# To ensure the third bed doesn't overlap with the first,
-# the distance must be at least the sum of their radii
-min_safe_distance = distance_first_to_second + radius_third_bed
-
-print(f"Result: {min_safe_distance}")
+bakery_inventory = [('muffins', 12), ('apple pies', 5), ('croissants', 20), ('orange cakes', 8), ('donuts', 15), ('egg tarts', 10)]
+vowels = {'a', 'e', 'i', 'o', 'u'}
+sorted_inventory = sorted(bakery_inventory)
+vowel_item_total = sum(quantity for item, quantity in sorted_inventory if item[0].lower() in vowels)
+print(f'Result: {vowel_item_total}')

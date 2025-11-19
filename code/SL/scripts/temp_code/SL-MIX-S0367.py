@@ -1,84 +1,80 @@
-import re
-from functools import reduce
+import math
+from collections import defaultdict
 
-def calculate_threat_score(log_entries):
-    threat_indicators = frozenset(['malware', 'phishing', 'ddos', 'ransomware'])
-    high_risk_patterns = ['\.exe$', '\.scr$', 'cmd\.exe']
+class ElevationProfileProcessor:
+    def __init__(self, data_stream):
+        self.data_stream = data_stream
+        self.elevations = []
+        self.metrics = defaultdict(float)
     
-    base_score = 0
-    suspicious_files = []
+    def __enter__(self):
+        # Tokenize and decode elevation data
+        tokens = self.data_stream.split(';')
+        for token in tokens:
+            if token.startswith('E'):
+                # Decode elevation values (E followed by base36 encoded number)
+                elevation_value = int(token[1:], 36)
+                self.elevations.append(elevation_value)
+        return self
     
-    for entry in log_entries:
-        components = entry.split('|')
-        if len(components) < 3:
-            continue
-            
-        source_ip, destination_ip, payload = components[0], components[1], components[2]
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+    
+    def compute_spatial_metrics(self):
+        if not self.elevations:
+            return
         
-        # Check for threat indicators
-        indicator_match = False
-        for indicator in threat_indicators:
-            if indicator in payload.lower():
-                indicator_match = True
-                base_score += 10
-                break
+        # Calculate Fibonacci-weighted elevation changes
+        fib_cache = {}
+        def fib(n):
+            if n in fib_cache:
+                return fib_cache[n]
+            if n <= 1:
+                return n
+            fib_cache[n] = fib(n-1) + fib(n-2)
+            return fib_cache[n]
         
-        # Early return for critical threats
-        if 'ransomware' in payload.lower() and 'kernel' in payload.lower():
-            return 999
+        # Geometry calculations for spatial profiling
+        peak_elevation = max(self.elevations)
+        valley_elevation = min(self.elevations)
+        peak_index = self.elevations.index(peak_elevation)
+        valley_index = self.elevations.index(valley_elevation)
         
-        # Pattern matching for suspicious files
-        for pattern in high_risk_patterns:
-            if re.search(pattern, payload, re.IGNORECASE):
-                suspicious_files.append(payload)
-                base_score += 5
-                break
+        # Spatial distance using Euclidean distance
+        horizontal_distance = abs(peak_index - valley_index)
+        vertical_distance = abs(peak_elevation - valley_elevation)
+        spatial_distance = math.sqrt(horizontal_distance**2 + vertical_distance**2)
         
-        # Check for internal network scanning
-        if source_ip.startswith('192.168.') and destination_ip.startswith('192.168.'):
-            internal_hosts = {'192.168.1.10', '192.168.1.15', '192.168.1.20'}
-            if source_ip in internal_hosts and destination_ip not in internal_hosts:
-                base_score += 3
-    
-    # Additional processing for suspicious files
-    if suspicious_files:
-        unique_suspicious = list(set(suspicious_files))
-        encoded_payloads = list(map(lambda x: sum(ord(c) for c in x), unique_suspicious))
-        max_encoded = max(encoded_payloads) if encoded_payloads else 0
-        if max_encoded > 1000:
-            base_score += 15
-    
-    # Calculate final threat level
-    threat_level = 0
-    
-    match base_score:
-        case score if score >= 50:
-            threat_level = 5
-        case score if score >= 30:
-            threat_level = 4
-        case score if score >= 15:
-            threat_level = 3
-        case score if score >= 5:
-            threat_level = 2
-        case _:
-            threat_level = 1
-    
-    # Adjust for multiple threat indicators
-    if base_score > 20:
-        threat_indicators_found = [ind for ind in threat_indicators if any(ind in entry for entry in log_entries)]
-        if len(threat_indicators_found) >= 2:
-            threat_level = min(threat_level + 1, 5)
-    
-    return threat_level
+        # Calculate Fibonacci-weighted elevation changes
+        elevation_changes = []
+        for i in range(1, len(self.elevations)):
+            change = self.elevations[i] - self.elevations[i-1]
+            weight = fib(i % 10)  # Use Fibonacci weight cycling every 10 points
+            elevation_changes.append(change * weight)
+        
+        # Aggregate metrics using dictionary comprehension
+        self.metrics = {
+            'peak': peak_elevation,
+            'valley': valley_elevation,
+            'spatial_distance': spatial_distance,
+            'weighted_changes_sum': sum(elevation_changes),
+            'average_change': sum(elevation_changes) / len(elevation_changes) if elevation_changes else 0
+        }
+        
+        # Calculate peak elevation delta using trigonometric adjustment
+        angle_factor = math.sin(math.radians(30))  # 30-degree angle factor
+        peak_elevation_delta = int(peak_elevation - (valley_elevation * angle_factor))
+        
+        # Early return condition for special cases
+        if peak_elevation > 1000:
+            peak_elevation_delta = peak_elevation_delta * 2
+            return peak_elevation_delta
+        
+        return peak_elevation_delta
 
-# Network traffic logs
-logs = [
-    "192.168.1.10|10.0.0.5|Downloaded malware.exe file",
-    "192.168.1.15|192.168.1.25|Accessing kernel modules",
-    "203.0.113.5|192.168.1.10|Ransomware detected in system",
-    "192.168.1.20|10.0.0.8|Phishing email with malicious scr attachment",
-    "10.0.0.1|192.168.1.5|Normal system update"
-]
+data_stream = "E1a;E2t;E1k;E3c;E2v;E4f;E1z;E5j;E3h;E6g"
 
-threat_level = calculate_threat_score(logs)
-print(f"Result: {threat_level}")
+with ElevationProfileProcessor(data_stream) as processor:
+    peak_elevation_delta = processor.compute_spatial_metrics()
+    
+print(f"Result: {peak_elevation_delta}")

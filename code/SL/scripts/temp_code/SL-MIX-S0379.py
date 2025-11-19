@@ -1,35 +1,69 @@
-import re
-from functools import reduce
-from collections import Counter
+from collections import defaultdict
+import statistics
 
-def ip_to_int(ip_str):
-    parts = list(map(int, ip_str.split('.')))
-    return reduce(lambda acc, octet: (acc << 8) + octet, parts, 0)
-
-def count_ones(n):
-    return bin(n).count('1')
-
-log_entry = "Security alert from IP 192.168.1.10 at 2023-07-15T14:30:22Z"
-ip_pattern = r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b'
-match = re.search(ip_pattern, log_entry)
-
-if match and all(0 <= int(x) <= 255 for x in match.group().split('.')):
-    ip_address = match.group()
-    ip_integer = ip_to_int(ip_address)
-    masked_ip = ip_integer & 0xFFFF0000
-    bit_count = count_ones(masked_ip)
+def exchange_validator(transactions, index=0, accumulated_error=0.0):
+    if index >= len(transactions):
+        return accumulated_error
     
-    # Short-circuit evaluation in conditional assignment
-    is_even = bit_count % 2 == 0
-    adjusted_count = bit_count // 2 if is_even else (bit_count - 1) // 2
+    current = transactions[index]
+    predicted_rate = current['predicted']
+    actual_rate = current['actual']
+    volume = current['volume']
     
-    # Additional check for private IP ranges
-    first_octet = int(ip_address.split('.')[0])
-    is_private = first_octet == 10 or first_octet == 172 and 16 <= int(ip_address.split('.')[1]) <= 31 or first_octet == 192 and int(ip_address.split('.')[1]) == 168
+    error = abs(predicted_rate - actual_rate) * volume
     
-    # Final score calculation with conditional modifier
-    final_score = adjusted_count + (10 if is_private else 0)
-else:
-    final_score = -1
+    if error > 0.01 * volume:  # Significant discrepancy threshold
+        adjusted_error = error * 1.5
+    else:
+        adjusted_error = error
+    
+    return exchange_validator(transactions, index + 1, accumulated_error + adjusted_error)
 
-print(f"Result: {final_score}")
+class DiscrepancyTracker:
+    def __init__(self):
+        self.discrepancies = defaultdict(list)
+    
+    def record(self, currency_pair, error_value):
+        self.discrepancies[currency_pair].append(error_value)
+    
+    def compute_score(self):
+        scores = []
+        for pair, errors in self.discrepancies.items():
+            if len(errors) > 1:
+                mean_error = statistics.mean(errors)
+                variance_error = statistics.variance(errors)
+                score = mean_error * (1 + variance_error)
+                scores.append(score)
+            else:
+                scores.append(errors[0] * 1.1)
+        
+        if scores:
+            return sum(scores) / len(scores)
+        return 0.0
+
+# Transaction data
+exchange_data = [
+    {'predicted': 1.20, 'actual': 1.22, 'volume': 10000},
+    {'predicted': 1.20, 'actual': 1.19, 'volume': 15000},
+    {'predicted': 0.85, 'actual': 0.87, 'volume': 20000},
+    {'predicted': 0.85, 'actual': 0.84, 'volume': 25000},
+    {'predicted': 1.10, 'actual': 1.12, 'volume': 30000}
+]
+
+# Process transactions
+raw_discrepancy = exchange_validator(exchange_data)
+
+# Track discrepancies by currency pairs (simplified to just major pairs)
+pairs = ['EUR/USD', 'GBP/USD', 'USD/JPY']
+tracker = DiscrepancyTracker()
+
+for i, transaction in enumerate(exchange_data):
+    pair = pairs[i % len(pairs)]
+    error = abs(transaction['predicted'] - transaction['actual']) * transaction['volume']
+    tracker.record(pair, error)
+
+# Compute final score
+tracked_score = tracker.compute_score()
+final_discrepancy_score = raw_discrepancy + tracked_score
+
+print(f"Result: {final_discrepancy_score}")

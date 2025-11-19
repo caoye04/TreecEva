@@ -1,31 +1,45 @@
 from itertools import permutations
-from statistics import variance
-from heapq import heappush, heappop
+from collections import Counter
+from dataclasses import dataclass
 
-def encode_string(s):
-    encoded = 0
-    for char in s:
-        encoded = (encoded * 31 + ord(char)) & 0xFFFFFFFF
-    return encoded
+genomic_sequences = ['atgc', 'tgcA', 'GCAT', 'catg']
+base_weights = {'A': 2, 'T': 3, 'G': 5, 'C': 7}
 
-def decode_string(val, length):
-    chars = []
-    for _ in range(length):
-        chars.append(chr(val % 31))
-        val //= 31
-    return ''.join(reversed(chars))
+# Define a decorator for logging function calls
+def log_calls(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        return result
+    return wrapper
 
-input_string = "abc"
-unique_perms = set([''.join(p) for p in permutations(input_string)])
-encoded_heap = []
+@log_calls
+def compute_weighted_score(freq_dict):
+    score = 0
+    for base, count in freq_dict.items():
+        if base in base_weights:
+            score += count * base_weights[base]
+    return score
 
-for perm in unique_perms:
-    encoded_val = encode_string(perm)
-    heappush(encoded_heap, encoded_val)
+# Process sequences
+processed_sequences = []
+for seq in genomic_sequences:
+    # Convert to uppercase
+    upper_seq = seq.upper()
+    # Replace 'A' with 'X' temporarily for pattern analysis
+    modified_seq = upper_seq.replace('A', 'X')
+    processed_sequences.append(modified_seq)
 
-encoded_values = []
-while encoded_heap:
-    encoded_values.append(heappop(encoded_heap))
+# Count all characters in processed sequences
+all_chars = ''.join(processed_sequences)
+frequency_count = Counter(all_chars)
 
-final_variance = variance(encoded_values)
-print(f"Result: {final_variance}")
+# Apply combinatorics to generate possible base arrangements
+bases = list('XTGC')
+perm_count = len(list(permutations(bases, 2)))
+
+# Calculate final score using lambda closure
+adjustment_factor = perm_count
+scoring_func = lambda freq: compute_weighted_score(freq) * adjustment_factor
+final_score = scoring_func(frequency_count)
+
+print(f'Result: {final_score}')

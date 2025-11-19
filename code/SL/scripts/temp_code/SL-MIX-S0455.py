@@ -1,49 +1,42 @@
-import heapq
-from functools import wraps
-
-def log_balance_changes(func):
-    @wraps(func)
-    def wrapper(balance, adjustment):
-        new_balance = func(balance, adjustment)
-        return new_balance
+def signal_tracker(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        wrapper.calls += 1
+        wrapper.total += result
+        return result
+    wrapper.calls = 0
+    wrapper.total = 0
     return wrapper
 
-@log_balance_changes
-def apply_adjustment(balance, adjustment):
-    return balance + adjustment
-
-# Initialize transaction min-heap with priority values
-transactions = [
-    (3, lambda x: x * 1.02),   # Priority 3: 2% gain
-    (1, lambda x: x - 100),     # Priority 1: $100 fee
-    (2, lambda x: x + 50),      # Priority 2: $50 bonus
-    (5, lambda x: x * 0.95),    # Priority 5: 5% loss
-    (4, lambda x: x + 200)      # Priority 4: $200 deposit
-]
-
-heapq.heapify(transactions)
-initial_balance = 1000
-ledger_balance = initial_balance
-processed_count = 0
-
-while transactions and processed_count < 4:
-    priority, adjustment_func = heapq.heappop(transactions)
+@signal_tracker
+def process_signal_segment(segment_data):
+    # Apply divide and conquer approach to calculate signal metrics
+    if len(segment_data) <= 1:
+        return segment_data[0] if segment_data else 0
     
-    # Skip if adjustment would result in negative balance
-    temp_balance = adjustment_func(ledger_balance)
-    if temp_balance < 0:
-        continue
+    mid = len(segment_data) // 2
+    left_half = process_signal_segment(segment_data[:mid])
+    right_half = process_signal_segment(segment_data[mid:])
     
-    # Apply adjustment with logging decorator
-    ledger_balance = apply_adjustment(ledger_balance, temp_balance - ledger_balance)
-    processed_count += 1
-    
-    # Early return condition for specific priority
-    if priority == 2:
-        break
+    # Combine results with mathematical sequence transformation
+    combined = (left_half * 3 + right_half * 2) % 1000
+    return combined
 
-# Additional adjustment outside loop
-final_adjustment = lambda x: x - (x % 10)
-final_balance = final_adjustment(ledger_balance)
+# String transformation pipeline for signal metadata
+signal_metadata = {chr(ord('A') + i): str(i+1)*3 for i in range(5)}
+signal_metadata = {k: v[::-1] for k, v in signal_metadata.items()}
+transformed_metadata = {k: int(v) * 2 for k, v in signal_metadata.items()}
 
-print(f"Result: {final_balance}")
+# Main signal processing
+sensor_readings = [12, 27, 9, 33, 15, 8, 22]
+intermediate_result = process_signal_segment(sensor_readings)
+
+# Apply metadata corrections
+metadata_sum = sum(transformed_metadata.values())
+final_signal_strength = (intermediate_result + metadata_sum) % 997
+
+# Additional transformation based on call statistics
+if process_signal_segment.calls > 0:
+    final_signal_strength = (final_signal_strength * process_signal_segment.total) % 997
+
+print(f"Result: {final_signal_strength}")

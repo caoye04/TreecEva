@@ -1,36 +1,59 @@
-from collections import Counter
+from contextlib import contextmanager
+from dataclasses import dataclass
+from typing import List
 
-def transform_token(token):
-    return ''.join(sorted(token.lower()))
-
-def aggregate_scores(scores):
-    if not scores:
-        return 0
-    n = len(scores)
-    if n == 1:
-        return scores[0]
-    mid = n // 2
-    left = aggregate_scores(scores[:mid])
-    right = aggregate_scores(scores[mid:])
-    return (left + right) / 2 + abs(left - right) * 0.1
-
-@staticmethod
-def calculate_base(token_count):
-    return sum(count ** 2 for count in token_count.values())
-
-class TextAnalyzer:
-    def __init__(self, text):
-        self.tokens = text.split()
-        self.transformed_tokens = [transform_token(t) for t in self.tokens]
-        self.token_counter = Counter(self.transformed_tokens)
+def fibonacci_sequence(n: int) -> List[int]:
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    elif n == 2:
+        return [0, 1]
     
-    def compute_complexity(self):
-        base_score = calculate_base(self.token_counter)
-        frequency_list = list(self.token_counter.values())
-        aggregated = aggregate_scores(frequency_list)
-        return base_score * aggregated
+    seq = [0, 1]
+    for i in range(2, n):
+        seq.append(seq[i-1] + seq[i-2])
+    return seq
 
-# Execution point Y
-analyzer = TextAnalyzer("Data data DATA dAtA structure Structure algorithm Algorithm")
-final_complexity_score = int(analyzer.compute_complexity())
-print(f"Result: {final_complexity_score}")
+@contextmanager
+def crypto_context(start_value: int):
+    state = {'value': start_value, 'modifications': 0}
+    try:
+        yield state
+    finally:
+        state['value'] = 0
+        state['modifications'] = 0
+
+@dataclass
+class CryptoTracker:
+    prices: List[int]
+    index: int = 0
+    
+    def get_current_price(self) -> int:
+        if self.index < len(self.prices):
+            val = self.prices[self.index]
+            self.index += 1
+            return val
+        return 0
+
+# Initialize components
+prices_fib = fibonacci_sequence(12)[2:]  # Skip first two elements
+tracker = CryptoTracker(prices_fib)
+security_checksum = 0
+
+with crypto_context(100) as ctx:
+    for i in range(5):
+        price = tracker.get_current_price()
+        adjusted_price = price << 1  # Bitwise left shift
+        
+        if i % 2 == 0:
+            ctx['value'] = (ctx['value'] ^ adjusted_price) & 0xFF  # XOR and mask
+        else:
+            ctx['value'] = (ctx['value'] + adjusted_price) & 0xFF  # Add and mask
+        
+        ctx['modifications'] += 1
+    
+    # Final checksum computation
+    security_checksum = ctx['value'] ^ (ctx['modifications'] << 2)
+
+print(f"Result: {security_checksum}")

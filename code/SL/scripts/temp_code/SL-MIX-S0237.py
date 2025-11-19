@@ -1,43 +1,52 @@
-def calculate_error_metric(transmitted, received):
-    if len(transmitted) != len(received):
-        return -1
-    
-    errors = [t ^ r for t, r in zip(transmitted, received)]
-    
-    # Early return if no errors
-    if all(e == 0 for e in errors):
+from collections import defaultdict
+
+class PlantNode:
+    def __init__(self, biomass, left=None, right=None):
+        self.biomass = biomass
+        self.left = left
+        self.right = right
+
+# Predefined plant growth tree structure
+plant_growth_tree = PlantNode(10,
+    PlantNode(5, 
+        PlantNode(2),
+        PlantNode(3, 
+            PlantNode(1),
+            PlantNode(1)
+        )
+    ),
+    PlantNode(7,
+        PlantNode(4),
+        PlantNode(6, 
+            None,
+            PlantNode(2)
+        )
+    )
+)
+
+def calculate_efficiency(node):
+    if not node:
         return 0
     
-    # Calculate error positions using bitwise operations
-    error_positions = []
-    for i, e in enumerate(errors):
-        if e & 0xFF:  # Check if any bit is set in the byte
-            error_positions.append(i)
+    # Base case: leaf nodes have special efficiency calculation
+    if not node.left and not node.right:
+        return node.biomass * 2
     
-    # If more than half the packets have errors, break for recalibration
-    if len(error_positions) > len(transmitted) // 2:
-        return -2
+    # Divide and conquer: calculate efficiency of subtrees
+    left_efficiency = calculate_efficiency(node.left)
+    right_efficiency = calculate_efficiency(node.right)
     
-    # Calculate aggregate metric using statistical measures
-    import statistics
-    mean_error = statistics.mean(errors)
-    if len(errors) > 1:
-        variance_error = statistics.variance(errors)
+    # Combine results with logical conditions
+    subtree_sum = left_efficiency + right_efficiency
+    is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
+    
+    # Apply efficiency formula with logical operations
+    if is_balanced and subtree_sum > 10:
+        return (subtree_sum // 2) + node.biomass
+    elif not is_balanced or subtree_sum <= 5:
+        return subtree_sum + (node.biomass // 2)
     else:
-        variance_error = 0
-    
-    # Apply bit shifts for normalization
-    normalized_mean = int(mean_error) >> 2
-    normalized_variance = int(variance_error) << 1
-    
-    # Final metric combines mean and variance with XOR
-    aggregate_metric = normalized_mean ^ normalized_variance
-    
-    return aggregate_metric
+        return subtree_sum
 
-# Simulate packet transmission
-transmitted_packets = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F, 0x70]
-received_packets = [0x1A, 0x2F, 0x3C, 0x49, 0x5E, 0x6B, 0x70]
-
-aggregate_metric = calculate_error_metric(transmitted_packets, received_packets)
-print(f"Result: {aggregate_metric}")
+cumulative_efficiency = calculate_efficiency(plant_growth_tree)
+print(f"Result: {cumulative_efficiency}")

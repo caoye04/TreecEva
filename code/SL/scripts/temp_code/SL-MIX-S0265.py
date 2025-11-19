@@ -1,32 +1,54 @@
-import heapq
-import statistics
+from collections import defaultdict
+from math import sqrt
 
-temperature_readings = [23.5, 25.1, 22.8, 24.3, 26.7, 21.9, 25.0, 23.8, 24.9, 22.4]
-window_size = 3
-stability_heap = []
-thermal_readings = []
+# Route stop coordinates: (x, y) positions
+route_stops = {
+    'A': [(0, 0), (2, 2), (4, 1)],
+    'B': [(1, 1), (3, 3), (5, 2)],
+    'C': [(0, 2), (2, 4), (4, 3)]
+}
 
-# Process temperature windows and calculate stability metrics
-for i in range(len(temperature_readings) - window_size + 1):
-    window = temperature_readings[i:i+window_size]
-    mean_temp = statistics.mean(window)
-    variance_temp = statistics.variance(window) if len(window) > 1 else 0
-    stability_metric = mean_temp / (1 + variance_temp)
-    heapq.heappush(stability_heap, (-stability_metric, i))  # Max heap using negative values
+# Calculate bounding box area for each route
+route_areas = {}
+for route, stops in route_stops.items():
+    xs, ys = zip(*stops)
+    area = (max(xs) - min(xs)) * (max(ys) - min(ys))
+    route_areas[route] = area if area > 0 else 1  # Avoid zero area
 
-# Calculate thermal index from most stable periods
-thermal_weights = {i: 0.0 for i in range(len(temperature_readings))}
-top_stable_periods = min(3, len(stability_heap))
+# Count how many routes include each unique stop
+stop_frequency = defaultdict(int)
+unique_stops = set()
+for stops in route_stops.values():
+    stops_set = set(stops)
+    unique_stops.update(stops_set)
+    for stop in stops_set:
+        stop_frequency[stop] += 1
 
-for _ in range(top_stable_periods):
-    neg_metric, start_idx = heapq.heappop(stability_heap)
-    stability_value = -neg_metric
-    for j in range(window_size):
-        idx = start_idx + j
-        if idx < len(temperature_readings):
-            thermal_weights[idx] += stability_value * (window_size - j) / window_size
+# Compute spatial density as inverse of mean distance to centroid
+route_density = {}
+for route, stops in route_stops.items():
+    n = len(stops)
+    cx = sum(x for x, y in stops) / n
+    cy = sum(y for x, y in stops) / n
+    mean_dist = sum(sqrt((x - cx)**2 + (y - cy)**2) for x, y in stops) / n
+    route_density[route] = 1 / mean_dist if mean_dist > 0 else 1
 
-thermal_index = sum(weight * temp for weight, temp in zip(thermal_weights.values(), temperature_readings))
-thermal_index = round(thermal_index, 2)
+# Efficiency combines area and density, adjusted by stop uniqueness
+base_efficiency = {
+    route: route_areas[route] * route_density[route]
+    for route in route_stops
+}
 
-print(f"Result: {thermal_index}")
+# Adjustment factor based on stop redundancy
+adjustment_factors = {
+    route: sum(1 / stop_frequency[stop] for stop in set(stops)) / len(set(stops))
+    for route, stops in route_stops.items()
+}
+
+# Final efficiency score with ternary operator for thresholding
+final_efficiency_score = sum(
+    base_efficiency[route] * adjustment_factors[route] * (1.5 if len(stops) > 2 else 1.0)
+    for route, stops in route_stops.items()
+)
+
+print(f"Result: {round(final_efficiency_score, 2)}")

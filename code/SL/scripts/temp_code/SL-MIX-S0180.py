@@ -1,52 +1,39 @@
-from collections import deque
+from functools import reduce
+from collections import defaultdict
 
-class SignalProcessor:
-    def __init__(self):
-        self.filters = deque()
-        self.signal_strength = 100
+def compute_adjusted_performance(transactions):
+    volume_weights = defaultdict(float)
+    daily_returns = []
     
-    def add_filter(self, filter_type, value):
-        self.filters.append((filter_type, value))
+    for day, trades in enumerate(transactions):
+        daily_volume = sum(trade['quantity'] for trade in trades)
+        if daily_volume == 0:
+            continue
+            
+        weighted_return = 0.0
+        for trade in trades:
+            weight = trade['quantity'] / daily_volume
+            volume_weights[trade['symbol']] += weight
+            weighted_return += weight * trade['return_rate']
+            
+        if day > 0 and abs(weighted_return) > 0.05:
+            weighted_return *= 1.1  # Volatility adjustment
+            
+        daily_returns.append(weighted_return)
     
-    def process_signal(self):
-        # Dynamic programming table for filter optimization
-        dp = [0] * (len(self.filters) + 1)
-        dp[0] = self.signal_strength
-        
-        i = 1
-        while self.filters:
-            filter_type, value = self.filters.popleft()
-            if filter_type == 'amplify':
-                dp[i] = dp[i-1] + (value * 2)
-            elif filter_type == 'attenuate':
-                dp[i] = dp[i-1] - (value // 3)
-            elif filter_type == 'modulate':
-                dp[i] = dp[i-1] ^ value
-            i += 1
-        
-        # Binary search for optimal signal strength
-        target = 150
-        low, high = 0, len(dp) - 1
-        while low <= high:
-            mid = (low + high) // 2
-            if dp[mid] >= target:
-                high = mid - 1
-            else:
-                low = mid + 1
-        
-        # Apply final adjustment based on search result
-        final_signal_strength = dp[low] if low < len(dp) else dp[-1]
-        return final_signal_strength
+    avg_daily_return = reduce(lambda x, y: x + y, daily_returns) / len(daily_returns) if daily_returns else 0
+    concentration_factor = reduce(lambda acc, w: acc + w**2, volume_weights.values(), 0)
+    
+    portfolio_index = round((avg_daily_return * 1000) / (1 + concentration_factor), 2)
+    return portfolio_index
 
-# Initialize processor
-processor = SignalProcessor()
+# Transaction log data
+transaction_log = [
+    [{'symbol': 'TECH', 'quantity': 150, 'return_rate': 0.023}, {'symbol': 'ENERGY', 'quantity': 100, 'return_rate': -0.012}],
+    [{'symbol': 'TECH', 'quantity': 200, 'return_rate': 0.031}, {'symbol': 'HEALTH', 'quantity': 120, 'return_rate': 0.018}],
+    [{'symbol': 'FINANCE', 'quantity': 80, 'return_rate': -0.025}, {'symbol': 'ENERGY', 'quantity': 90, 'return_rate': 0.041}],
+    [{'symbol': 'TECH', 'quantity': 110, 'return_rate': 0.067}, {'symbol': 'HEALTH', 'quantity': 70, 'return_rate': -0.009}]
+]
 
-# Add filters in specific order
-processor.add_filter('amplify', 25)
-processor.add_filter('attenuate', 30)
-processor.add_filter('modulate', 15)
-processor.add_filter('amplify', 40)
-
-# Process the signal
-final_signal_strength = processor.process_signal()
-print(f'Result: {final_signal_strength}')
+portfolio_index = compute_adjusted_performance(transaction_log)
+print(f"Result: {portfolio_index}")

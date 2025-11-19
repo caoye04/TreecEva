@@ -1,60 +1,54 @@
-class SignalNode:
-    def __init__(self, value=0, next_node=None):
-        self.value = value
-        self.next = next_node
+import re
+from statistics import mean
 
-def process_signal_chain(chain_head, transform_map):
-    current = chain_head
-    accumulator = 0
-    while current:
-        if current.value in transform_map:
-            transformed = transform_map[current.value]
-            if transformed & 1:
-                accumulator ^= (current.value << 1) % 17
-            else:
-                accumulator = (accumulator + transformed) & 0xFF
-        else:
-            accumulator = (accumulator * 3) % 13
-        current = current.next
-    return accumulator
+def process_telemetry(readings):
+    # State definitions for our finite state machine
+    states = {
+        'stable': {'low_threshold': 10, 'high_threshold': 90},
+        'warning': {'low_threshold': 5, 'high_threshold': 95},
+        'critical': {'low_threshold': 0, 'high_threshold': 100}
+    }
+    
+    current_state = 'stable'
+    stable_values = []
+    
+    # Lambda to determine next state based on value
+    transition = lambda val: 'critical' if val < 5 or val > 95 else ('warning' if val < 10 or val > 90 else 'stable')
+    
+    for entry in readings:
+        # Pattern matching to validate and extract data
+        match = re.match(r'SENSOR_(\w+):(\d+):(\d+\.?\d*)', entry)
+        if not match:
+            continue  # Corrupted data, skip
+        
+        _, timestamp, value_str = match.groups()
+        value = float(value_str)
+        
+        # Update state using our state machine
+        current_state = transition(value)
+        
+        # Store value if in stable state
+        if current_state == 'stable':
+            stable_values.append(value)
+    
+    # Dictionary comprehension to merge with metadata (dummy here)
+    meta = {"processed": len(readings)}
+    stats = {"count": len(stable_values)}
+    merged_info = {**meta, **stats}
+    
+    average_stable_value = mean(stable_values) if stable_values else 0
+    return average_stable_value, merged_info
 
-def build_signal_chain(values):
-    if not values:
-        return None
-    head = SignalNode(values[0])
-    current = head
-    for val in values[1:]:
-        current.next = SignalNode(val)
-        current = current.next
-    return head
+# Sensor readings with mixed valid and invalid formats
+sensor_data = [
+    "SENSOR_TEMP:1001:25.3",
+    "SENSOR_HUM:1002:corrupted",
+    "SENSOR_TEMP:1003:5.1",
+    "SENSOR_PRESS:1004:88.0",
+    "INVALID_FORMAT",
+    "SENSOR_TEMP:1005:91.2",
+    "SENSOR_HUM:1006:45.0"
+]
 
-# Initialize transformation lookup table
-transform_lookup = {
-    5: 12,
-    10: 7,
-    3: 15,
-    8: 2,
-    12: 9
-}
-
-# Create signal chain
-signal_values = [5, 10, 3, 8, 12, 1, 7]
-signal_chain = build_signal_chain(signal_values)
-
-# Process the signal chain
-intermediate_result = process_signal_chain(signal_chain, transform_lookup)
-
-# Apply final transformation
-final_signal_strength = 0
-for i in range(4):
-    mask = (intermediate_result >> (i * 2)) & 0x3
-    if mask == 0:
-        final_signal_strength += 1 << i
-    elif mask & 0x1:
-        final_signal_strength ^= (mask << (i + 1))
-    else:
-        final_signal_strength &= ~(mask >> 1)
-
-# Apply modular correction
-final_signal_strength = (final_signal_strength ^ 0xF) % 11
-print(f"Result: {final_signal_strength}")
+average_stable_value, info = process_telemetry(sensor_data)
+print(f"Result: {average_stable_value}")

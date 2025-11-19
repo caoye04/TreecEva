@@ -1,29 +1,103 @@
+import heapq
 from collections import defaultdict
 
-def hash_color(r, g, b):
-    return (r * 31 + g) * 31 + b
+def tokenize(expr):
+    tokens = []
+    i = 0
+    while i < len(expr):
+        if expr[i].isspace():
+            i += 1
+            continue
+        if expr[i] in '+-*/()':
+            tokens.append(expr[i])
+            i += 1
+        else:
+            num = ''
+            while i < len(expr) and expr[i].isdigit():
+                num += expr[i]
+                i += 1
+            tokens.append(int(num))
+    return tokens
 
-def transform_pixel(canvas, x, y):
-    if x < 0 or y < 0 or x >= len(canvas) or y >= len(canvas[0]):
-        return 0
-    r, g, b = canvas[x][y]
-    # Neighbor influence: average of immediate neighbors' red values
-    neighbors = [(x-1,y), (x+1,y), (x,y-1), (x,y+1)]
-    neighbor_reds = [canvas[nx][ny][0] for nx, ny in neighbors if 0 <= nx < len(canvas) and 0 <= ny < len(canvas[0])]
-    avg_red = sum(neighbor_reds) // len(neighbor_reds) if neighbor_reds else r
-    # Transformation: increase blue by neighbor influence
-    new_b = min(255, b + (avg_red // 10))
-    return hash_color(r, g, new_b)
+def hash_token(token):
+    if isinstance(token, int):
+        return hash(str(token)) % 1000
+    else:
+        return hash(token) % 1000
 
-canvas = [
-    [(100, 150, 200), (120, 160, 180)],
-    [(110, 155, 190), (125, 165, 185)]
-]
+# Priority queue for operators
+operator_queue = []
+# Stack for operands
+operand_stack = []
+# Accumulator for expression value
+expression_value = 0
 
-artistic_score = 0
-for i in range(len(canvas)):
-    for j in range(len(canvas[0])):
-        transformed_hash = transform_pixel(canvas, i, j)
-        artistic_score += transformed_hash
+# Transformation function
+transform = lambda x: x * 2 if isinstance(x, int) else ord(x[0])
 
-print(f"Result: {artistic_score}")
+# Input expression
+input_expression = "3 + 5 * ( 2 + 8 )"
+tokens = tokenize(input_expression)
+
+precedence = {'+': 1, '-': 1, '*': 2, '/': 2}
+
+for token in tokens:
+    token_hash = hash_token(token)
+    transformed_token = transform(token)
+    
+    if isinstance(token, int):
+        operand_stack.append(transformed_token)
+    elif token == '(':
+        heapq.heappush(operator_queue, (0, token))
+    elif token == ')':
+        while operator_queue and operator_queue[0][1] != '(':
+            op = heapq.heappop(operator_queue)[1]
+            if len(operand_stack) >= 2:
+                b = operand_stack.pop()
+                a = operand_stack.pop()
+                if op == '+':
+                    operand_stack.append(a + b)
+                elif op == '-':
+                    operand_stack.append(a - b)
+                elif op == '*':
+                    operand_stack.append(a * b)
+                elif op == '/':
+                    operand_stack.append(a // b)
+        if operator_queue:
+            heapq.heappop(operator_queue)  # Remove the '('
+    elif token in precedence:
+        while (operator_queue and 
+               operator_queue[0][1] != '(' and
+               precedence.get(operator_queue[0][1], 0) >= precedence[token]):
+            op = heapq.heappop(operator_queue)[1]
+            if len(operand_stack) >= 2:
+                b = operand_stack.pop()
+                a = operand_stack.pop()
+                if op == '+':
+                    operand_stack.append(a + b)
+                elif op == '-':
+                    operand_stack.append(a - b)
+                elif op == '*':
+                    operand_stack.append(a * b)
+                elif op == '/':
+                    operand_stack.append(a // b)
+        heapq.heappush(operator_queue, (precedence[token], token))
+
+while operator_queue:
+    op = heapq.heappop(operator_queue)[1]
+    if len(operand_stack) >= 2:
+        b = operand_stack.pop()
+        a = operand_stack.pop()
+        if op == '+':
+            operand_stack.append(a + b)
+        elif op == '-':
+            operand_stack.append(a - b)
+        elif op == '*':
+            operand_stack.append(a * b)
+        elif op == '/':
+            operand_stack.append(a // b)
+
+if operand_stack:
+    expression_value = operand_stack[0]
+
+print(f"Result: {expression_value}")

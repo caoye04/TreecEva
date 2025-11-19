@@ -1,8 +1,9 @@
-def count_thread_occurrences(pattern_index):
-    if pattern_index == 0:
-        return 0
-    return str(pattern_index % 3).count('1') + count_thread_occurrences(pattern_index // 3)
+from functools import reduce
 
-total_patterns = 10
-thread_counter = sum(map(count_thread_occurrences, range(total_patterns + 1)))
-print(f"Result: {thread_counter}")
+document_title = 'The Fundamental Laws of Physics'
+base_hash = hash(document_title)
+title_length = len(document_title)
+scale_factor = reduce(lambda x, y: x + y, map(ord, document_title[:4]))
+scaled_checksum = base_hash % scale_factor
+
+print(f'Result: {scaled_checksum}')

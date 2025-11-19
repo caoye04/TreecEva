@@ -1,54 +1,72 @@
-import math
-from collections import deque
-from dataclasses import dataclass
-from functools import reduce
+import itertools
 
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+def calculate_signal_strength(raw_data, modulation_factors):
+    strength = 0
+    for i, (data_point, factor) in enumerate(zip(raw_data, modulation_factors)):
+        if i % 2 == 0:
+            strength ^= (data_point << 1) & factor
+        else:
+            strength |= (data_point >> 1) | factor
+    return strength
 
-def build_tree():
-    # Build a binary tree with specific values
-    root = TreeNode(12)
-    root.left = TreeNode(7)
-    root.right = TreeNode(15)
-    root.left.left = TreeNode(3)
-    root.left.right = TreeNode(9)
-    root.right.left = TreeNode(13)
-    root.right.right = TreeNode(18)
-    return root
-
-def compute_security_key(root):
-    if not root:
-        return 0
+def optimize_routing_path(sensor_readings):
+    max_efficiency = -1
+    best_path = None
     
-    queue = deque([root])
-    xor_accumulator = 0
-    log_sum = 0.0
-    
-    while queue:
-        node = queue.popleft()
-        # Apply bitwise XOR with shifted value
-        shifted_val = node.val << 2
-        xor_accumulator ^= shifted_val
+    for path in itertools.permutations(sensor_readings.keys(), 3):
+        if path[0] > path[-1]:  # Early termination condition
+            continue
+            
+        path_efficiency = 0
+        valid_path = True
         
-        # Apply logarithmic transformation
-        if node.val > 0:
-            log_sum += math.log2(node.val)
-        
-        # Add children to queue
-        if node.left:
-            queue.append(node.left)
-        if node.right:
-            queue.append(node.right)
+        for i in range(len(path)-1):
+            current_sensor = path[i]
+            next_sensor = path[i+1]
+            
+            # Greedy selection with early return
+            if sensor_readings[current_sensor] < 0 or sensor_readings[next_sensor] < 0:
+                valid_path = False
+                break
+                
+            link_quality = (sensor_readings[current_sensor] & sensor_readings[next_sensor])
+            if link_quality == 0:
+                valid_path = False
+                break
+                
+            path_efficiency += link_quality
+            
+        if not valid_path:
+            continue
+            
+        if path_efficiency > max_efficiency:
+            max_efficiency = path_efficiency
+            best_path = path
     
-    # Final security key computation
-    exponent_part = int(math.pow(2, log_sum % 3))
-    security_key = xor_accumulator & exponent_part
-    return security_key
+    return max_efficiency if max_efficiency != -1 else 0
 
-tree_root = build_tree()
-security_key = compute_security_key(tree_root)
-print(f"Result: {security_key}")
+# Sensor network configuration
+sensor_network = {
+    'alpha': 15,
+    'beta': 7,
+    'gamma': 12,
+    'delta': 9,
+    'epsilon': 6
+}
+
+raw_signal_data = [3, 5, 2, 8, 1]
+modulation_params = [4, 6, 1, 3, 7]
+
+# Calculate base signal strength
+base_strength = calculate_signal_strength(raw_signal_data, modulation_params)
+
+# Optimize routing path
+optimal_efficiency = optimize_routing_path(sensor_network)
+
+# Compute final transmission efficiency score
+if optimal_efficiency > 0 and base_strength > 0:
+    transmission_efficiency_score = (base_strength << 2) ^ optimal_efficiency
+else:
+    transmission_efficiency_score = base_strength | optimal_efficiency
+
+print(f"Result: {transmission_efficiency_score}")

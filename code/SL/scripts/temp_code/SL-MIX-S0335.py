@@ -1,35 +1,36 @@
-import heapq
-from collections import deque
+from itertools import permutations
+from functools import lru_cache
 
-def calculate_arbitrage_potential(rates, principal):
-    # Priority queue for best rates (max heap using negative values)
-    max_heap = []
-    for rate in rates:
-        heapq.heappush(max_heap, -rate)
-    
-    # Stack for transaction history
-    transaction_log = deque()
-    
-    # Greedy selection of top 3 rates
-    selected_rates = []
-    for _ in range(min(3, len(max_heap))):
-        selected_rates.append(-heapq.heappop(max_heap))
-    
-    # Ternary-based validation and profit calculation
-    cumulative_gain = principal
-    for i, rate in enumerate(selected_rates):
-        is_valid = (rate > 1.0) and (i < 2 or (cumulative_gain > 1000))
-        cumulative_gain = cumulative_gain * rate if is_valid else cumulative_gain
-        transaction_log.append((rate, is_valid))
-    
-    # Final adjustment using lambda for fee calculation
-    fee_deduction = (lambda amt: amt * 0.02 if amt > 1100 else amt * 0.01)(cumulative_gain)
-    return cumulative_gain - fee_deduction
+def is_prime(num):
+    if num < 2:
+        return False
+    if num == 2:
+        return True
+    if num % 2 == 0:
+        return False
+    for i in range(3, int(num**0.5)+1, 2):
+        if num % i == 0:
+            return False
+    return True
 
-# Market data
-exchange_rates = [1.02, 1.05, 0.99, 1.08, 1.03]
-initial_capital = 1000
+@lru_cache(maxsize=None)
+def check_consecutive_sum_prime(a, b):
+    return is_prime(a + b)
 
-# Execution
-final_profit = calculate_arbitrage_potential(exchange_rates, initial_capital)
-print(f'Result: {final_profit}')
+def count_resonance_sequences(n):
+    count = 0
+    nums = list(range(1, n+1))
+    for perm in permutations(nums):
+        if perm[0] != 1:
+            continue
+        valid = True
+        for i in range(len(perm)-1):
+            if not check_consecutive_sum_prime(perm[i], perm[i+1]):
+                valid = False
+                break
+        if valid:
+            count += 1
+    return count
+
+signal_count = count_resonance_sequences(6)
+print(f"Result: {signal_count}")

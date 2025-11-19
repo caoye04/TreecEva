@@ -1,31 +1,32 @@
-import math
-from collections import deque
-def calculate_signal_sequence():
-    # Initialize the sequence with given starting values
-    signal_strength = [2, 3]
+def process_genomic_sequence(dna_fragment):
+    # Nucleotide to 2-bit encoding map
+    encoding_map = {'A': 0b00, 'T': 0b01, 'G': 0b10, 'C': 0b11}
     
-    # Generate the sequence up to 8 elements using the defined rule
-    for i in range(2, 8):
-        next_val = (signal_strength[i-1] + signal_strength[i-2]) * (i + 1)
-        signal_strength.append(next_val)
+    # Reverse complement mapping
+    complement_map = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
     
-    # Calculate mean and standard deviation for transformation
-    n = len(signal_strength)
-    mean_val = sum(signal_strength) / n
-    variance = sum((x - mean_val) ** 2 for x in signal_strength) / n
-    std_dev = math.sqrt(variance)
+    # Step 1: Generate reverse complement
+    reverse_complement = ''.join(complement_map[nuc] for nuc in dna_fragment[::-1])
     
-    # Apply transformation based on index parity
-    transformed_signal = []
-    for idx, val in enumerate(signal_strength, start=1):
-        if idx % 2 == 0:  # Even index
-            transformed_val = val - mean_val
-        else:  # Odd index
-            transformed_val = val + std_dev
-        transformed_signal.append(transformed_val)
+    # Step 2: Encode to binary sequence with error correction using dynamic programming
+    dp_table = [0] * (len(reverse_complement) + 1)
     
-    return transformed_signal[7]
+    for i in range(1, len(dp_table)):
+        nucleotide = reverse_complement[i-1]
+        encoded_nucleotide = encoding_map[nucleotide]
+        # Error correction: if previous state was same as current, apply penalty
+        penalty = 1 if i > 1 and encoded_nucleotide == (dp_table[i-1] & 0b11) else 0
+        dp_table[i] = (dp_table[i-1] << 2) | encoded_nucleotide | (penalty << 8)
+    
+    # Step 3: Apply transformation using lambda closure
+    transform = lambda x: (x ^ 0xFF) & 0xFFFF
+    
+    # Final encoded output after transformation
+    encoded_output = transform(dp_table[-1])
+    
+    return encoded_output
 
-# Execute the function and print the result
-final_value = calculate_signal_sequence()
-print(f"Result: {final_value}")
+# Process the DNA fragment
+fragment = "ATGCGTAC"
+encoded_output = process_genomic_sequence(fragment)
+print(f"Result: {encoded_output}")

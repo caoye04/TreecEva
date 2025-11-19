@@ -1,35 +1,47 @@
-import re
-from functools import reduce
 from collections import defaultdict
 
-def haversine_distance(p1, p2):
-    # Simplified distance calculation returning integer meters
-    return int(abs(p1[0] - p2[0]) * 100000 + abs(p1[1] - p2[1]) * 100000)
+def calculate_adjustment(day_index, modifier_list, memo):
+    if day_index < 0:
+        return 1.0
+    if day_index in memo:
+        return memo[day_index]
+    
+    current_modifier = modifier_list[day_index]
+    previous_value = calculate_adjustment(day_index - 1, modifier_list, memo)
+    
+    # Apply different operations based on modifier type
+    match current_modifier:
+        case x if x > 0 and x <= 1.05:
+            result = previous_value * (1 + x)
+        case x if x > 1.05:
+            result = previous_value + (x * 0.5)
+        case x if x < 0:
+            result = previous_value - abs(x)**1.5
+        case _:
+            result = previous_value
+    
+    memo[day_index] = result
+    return result
 
-def extract_coordinates(log_line):
-    match = re.search(r'\(([-+]?\d*\.\d+),\s*([-+]?\d*\.\d+)\)', log_line)
-    if match:
-        return (float(match.group(1)), float(match.group(2)))
-    return None
+def process_portfolio_changes(modifiers):
+    # Sort modifiers by absolute value descending, then by original index ascending
+    indexed_modifiers = sorted(enumerate(modifiers), key=lambda pair: (-abs(pair[1]), pair[0]))
+    sorted_modifiers = [mod for _, mod in indexed_modifiers]
+    
+    memoization_cache = {}
+    
+    for i in range(len(sorted_modifiers)):
+        if sorted_modifiers[i] == 0:
+            break
+        # Early exit condition when cumulative effect drops below threshold
+        temp_result = calculate_adjustment(i, sorted_modifiers, memoization_cache)
+        if temp_result < 0.1:
+            return round(temp_result * 1000)
+    
+    final_value = calculate_adjustment(len(sorted_modifiers)-1, sorted_modifiers, memoization_cache)
+    return round(final_value * 1000)
 
-tracking_logs = [
-    "Device_001: (34.0522, -118.2437)",
-    "Device_001: (34.0530, -118.2440)",
-    "Device_001: (34.0545, -118.2455)",
-    "Device_001: (34.0560, -118.2470)",
-    "Device_001: (34.0575, -118.2485)"
-]
-
-coordinates_list = list(filter(None, map(extract_coordinates, tracking_logs)))
-dp_min_deviation = defaultdict(lambda: float('inf'))
-dp_min_deviation[0] = 0
-
-for i in range(1, len(coordinates_list)):
-    for j in range(i):
-        segment_distance = haversine_distance(coordinates_list[j], coordinates_list[i])
-        dp_min_deviation[i] = min(dp_min_deviation[i], dp_min_deviation[j] + segment_distance)
-
-straight_line_distance = haversine_distance(coordinates_list[0], coordinates_list[-1])
-migration_efficiency_index = dp_min_deviation[len(coordinates_list)-1] - straight_line_distance
-
-print(f"Result: {migration_efficiency_index}")
+# Portfolio modifiers representing daily changes
+stock_performance_modifiers = [0.03, -0.02, 1.1, 0.95, -0.05, 1.2, 0.0, 0.8]
+final_portfolio_value = process_portfolio_changes(stock_performance_modifiers)
+print(f"Result: {final_portfolio_value}")

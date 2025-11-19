@@ -1,47 +1,29 @@
 from collections import defaultdict
-import itertools
+from functools import reduce
 
-def calculate_max_packages(weights, capacity):
-    memo = {}
-    n = len(weights)
-    
-    def backtrack(index, current_weight, package_count, bitmask):
-        if current_weight > capacity:
-            return -1
-        
-        if index == n:
-            return package_count
-        
-        if (index, current_weight) in memo:
-            return memo[(index, current_weight)]
-        
-        # Skip current package (short-circuit if weight exceeds capacity)
-        skip = backtrack(index + 1, current_weight, package_count, bitmask)
-        
-        # Take current package (only if it doesn't exceed capacity)
-        take = -1 if current_weight + weights[index] > capacity else backtrack(index + 1, current_weight + weights[index], package_count + 1, bitmask | (1 << index))
-        
-        result = max(skip, take)
-        memo[(index, current_weight)] = result
-        return result
-    
-    return backtrack(0, 0, 0, 0)
+# Route efficiency metrics: (on_time_rate, avg_delay_minutes, customer_satisfaction)
+route_metrics = [
+    (0.85, 12, 4.2),
+    (0.92, 5, 4.7),
+    (0.78, 20, 3.9),
+    (0.95, 2, 4.9),
+    (0.88, 8, 4.4)
+]
 
-# Package weights in kilograms
-package_weights = [3, 1, 4, 2, 2, 5, 1]
-truck_capacity = 10  # Maximum load capacity in kilograms
+# Step 1: Filter routes with on_time_rate >= 0.85 AND avg_delay_minutes <= 10
+filtered_routes = list(filter(lambda x: x[0] >= 0.85 and x[1] <= 10, route_metrics))
 
-# Calculate optimized loading sequence
-optimized_load_count = calculate_max_packages(package_weights, truck_capacity)
+# Step 2: Compute reliability score for each filtered route: on_time_rate * customer_satisfaction
+reliability_scores = list(map(lambda x: x[0] * x[2], filtered_routes))
 
-# Adjust for special logistics rules
-heavy_items = sum(1 for w in package_weights if w > 3)
-fragile_items = sum(1 for w in package_weights if w < 2)
+# Step 3: Use reduce to compute weighted sum where weights are derived from index positions
+# Weight formula: (index + 1) * score
+weighted_sum = reduce(lambda acc, pair: acc + (pair[0] + 1) * pair[1], enumerate(reliability_scores), 0)
 
-optimized_load_count = optimized_load_count + (1 if heavy_items > fragile_items else 0) - (1 if heavy_items < fragile_items else 0)
+# Step 4: Apply bonus if all filtered routes have customer satisfaction above 4.5
+bonus = 1.1 if all(route[2] > 4.5 for route in filtered_routes) else 1.0
 
-# Apply company policy modifier
-policy_modifier = 1 if (optimized_load_count & 1) == 0 else -1
-optimized_load_count += policy_modifier if optimized_load_count > 0 else 0
+# Step 5: Calculate final reliability score
+final_reliability_score = round(weighted_sum * bonus, 2)
 
-print(f"Result: {optimized_load_count}")
+print(f"Result: {final_reliability_score}")

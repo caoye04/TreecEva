@@ -1,62 +1,38 @@
-import hashlib
-import math
 from collections import defaultdict
+import hashlib
 
-def hash_coordinate(x, y, scale=100):
-    scaled_x, scaled_y = int(x * scale), int(y * scale)
-    coord_str = f"{scaled_x},{scaled_y}"
-    return hashlib.md5(coord_str.encode()).hexdigest()[:8]
+def tokenize_and_classify(text_passage):
+    tokens = text_passage.split()
+    hash_buckets = defaultdict(int)
+    classified_count = 0
+    
+    for token in tokens:
+        # Normalize token: remove punctuation and convert to lowercase
+        clean_token = ''.join(ch for ch in token if ch.isalnum()).lower()
+        if not clean_token:
+            continue
+            
+        # Compute hash and use modular arithmetic for bucket assignment
+        token_hash = int(hashlib.md5(clean_token.encode()).hexdigest(), 16)
+        bucket_id = token_hash % 7  # 7 categories for classification
+        
+        # Apply conditional logic for classification
+        if len(clean_token) > 3 and bucket_id in [1, 3, 5]:
+            hash_buckets[bucket_id] += 1
+            classified_count += (bucket_id * len(clean_token))
+        elif len(clean_token) <= 3 and bucket_id in [0, 2, 4, 6]:
+            hash_buckets[bucket_id] += 2  # Short tokens get double count
+            classified_count -= (bucket_id + len(clean_token))
+    
+    # Post-processing adjustment based on distribution
+    if sum(hash_buckets.values()) > 10:
+        classified_count = (classified_count * 3) % 100
+    else:
+        classified_count = (classified_count + 42) % 100
+        
+    return classified_count
 
-def get_influence_zone(centroid_x, centroid_y, radius, grid_res=0.5):
-    cells = set()
-    steps = int(radius / grid_res)
-    for dx in range(-steps, steps + 1):
-        for dy in range(-steps, steps + 1):
-            grid_x = centroid_x + dx * grid_res
-            grid_y = centroid_y + dy * grid_res
-            dist = math.sqrt((grid_x - centroid_x)**2 + (grid_y - centroid_y)**2)
-            if dist <= radius and (dist > 0 or True):  # Short-circuit pattern
-                cells.add(hash_coordinate(grid_x, grid_y))
-    return cells
-
-# Building data: (x, y, influence_radius)
-buildings = [
-    (1.2, 3.7, 2.0),
-    (5.1, 2.8, 1.5),
-    (3.3, 6.2, 1.0)
-]
-
-# Combinatorics: Generate all unique pairs of buildings
-building_pairs = [
-    (buildings[i], buildings[j])
-    for i in range(len(buildings))
-    for j in range(i+1, len(buildings))
-]
-
-# Initialize coverage tracking
-coverage_map = defaultdict(int)
-
-# Process individual building zones
-for building in buildings:
-    zone_cells = get_influence_zone(building[0], building[1], building[2])
-    for cell in zone_cells:
-        coverage_map[cell] += 1
-
-# Process pairwise intersections with encoding
-encoded_intersections = [
-    get_influence_zone(b1[0], b1[1], b1[2]) & get_influence_zone(b2[0], b2[1], b2[2])
-    for b1, b2 in building_pairs
-]
-
-# Count cells covered by at least two buildings
-multi_coverage_cells = set()
-for intersection in encoded_intersections:
-    multi_coverage_cells.update(intersection)
-
-# Final count with ternary operator logic
-covered_cells_count = len(coverage_map) if len(multi_coverage_cells) > 0 else 0
-
-# Adjust for overlapping regions
-covered_cells_count = covered_cells_count - (len(multi_coverage_cells) // 2)
-
-print(f"Result: {covered_cells_count}")
+# Process the ancient manuscript passage
+manuscript_passage = "O mighty Caesar! Why dost thou conspire With thy own thoughts, that lov'st to palliate So forcibly the trespass of thy heart?"
+classified_count = tokenize_and_classify(manuscript_passage)
+print(f"Result: {classified_count}")

@@ -1,34 +1,42 @@
-import math
+import itertools
+import statistics
+from functools import reduce
 
-def calculate_distance(p1, p2):
-    return math.sqrt(sum((a - b) ** 2 for a, b in zip(p1, p2)))
+def char_frequency_analyzer(text):
+    freq = {}
+    for char in text:
+        freq[char] = freq.get(char, 0) + 1
+    return freq
 
-# Vertex coordinates for a triangular mesh
-vertex_coordinates = [
-    (0, 0, 0),
-    (3, 0, 0),
-    (0, 4, 0),
-    (0, 0, 5)
-]
+def calculate_variance_score(freq_dict):
+    frequencies = list(freq_dict.values())
+    if len(frequencies) < 2:
+        return 0
+    return statistics.variance(frequencies)
 
-# Calculate all pairwise distances between vertices
-pairwise_distances = [
-    calculate_distance(vertex_coordinates[i], vertex_coordinates[j])
-    for i in range(len(vertex_coordinates))
-    for j in range(i + 1, len(vertex_coordinates))
-]
+cipher_segment = "ABBCDEEFFGHHIJJKKLLMMNNOOPPQQRRSSTTUUVVWWXXYYZZ"
+frequency_map = char_frequency_analyzer(cipher_segment)
+variance_score = calculate_variance_score(frequency_map)
 
-# Find the maximum distance
-max_edge_length = max(pairwise_distances)
+# Generate all possible 3-character permutations from unique characters
+unique_chars = list(set(cipher_segment))
+permutations = list(itertools.permutations(unique_chars, 3))
 
-# Compute a stability metric using set operations on distance thresholds
-threshold_set = {d for d in pairwise_distances if d > 2.5}
-stability_base = len(threshold_set) * sum(threshold_set)
+# Apply greedy algorithm to select permutations with highest ASCII sum
+permutation_scores = [(perm, sum(ord(c) for c in perm)) for perm in permutations]
+permutation_scores.sort(key=lambda x: x[1], reverse=True)
+top_permutations = permutation_scores[:10]
 
-# Apply geometric adjustment factor
-geometric_factor = math.ceil(max_edge_length) if max_edge_length > 5 else math.floor(max_edge_length)
+# Calculate combinatorial weight factor
+weight_factor = len(list(itertools.combinations(range(10), 3)))
 
-# Final stability index calculation
-mesh_stability_index = stability_base // geometric_factor if geometric_factor != 0 else 0
+# Encode top permutations into numeric sequence
+encoded_sequence = []
+for perm, score in top_permutations:
+    encoded_value = reduce(lambda acc, char: acc * 256 + ord(char), perm, 0)
+    encoded_sequence.append(encoded_value)
 
-print(f"Result: {mesh_stability_index}")
+# Final cipher score combines variance, weight factor, and encoded sequence properties
+final_cipher_score = int(variance_score * weight_factor + statistics.mean(encoded_sequence) // 1000)
+
+print(f"Result: {final_cipher_score}")

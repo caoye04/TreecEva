@@ -1,36 +1,38 @@
-import statistics
+from collections import deque
+import math
 
-def compute_portfolio_risk():
-    # Portfolio asset data: {asset_id: (value, volatility, correlation_factor)}
-    assets = {
-        'AAPL': (120000, 0.25, 0.8),
-        'GOOGL': (95000, 0.30, 0.7),
-        'TSLA': (75000, 0.45, 0.9),
-        'AMZN': (110000, 0.28, 0.75)
-    }
+def process_packets(packet_ids):
+    # Layer 1: Apply XOR with a shifting key
+    layer1 = [pid ^ (pid << 2) for pid in packet_ids]
     
-    # Lambda for dynamic risk weighting based on asset value
-    risk_weight = lambda value: 1.2 if value > 100000 else 0.9
+    # Layer 2: Exponentiate and normalize
+    layer2 = [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1]
     
-    # Dictionary comprehension to calculate weighted risks
-    weighted_risks = {asset: volatility * risk_weight(value) * correlation
-                      for asset, (value, volatility, correlation) in assets.items()
-                      if value > 50000 and volatility > 0.2}
+    # Layer 3: Sort and apply deque-based transformation
+    sorted_packets = sorted(layer2)
+    packet_queue = deque(sorted_packets)
     
-    # Short-circuit evaluation for conditional risk adjustment
-    high_risk_flag = len([v for v in assets.values() if v[1] > 0.4]) > 0
-    market_condition_factor = 1.1 if high_risk_flag and len(assets) >= 4 else 1.0
+    # Simulate stack-like processing with bitwise AND reduction
+    stack_reduction = 0
+    while packet_queue:
+        left = packet_queue.popleft()
+        if packet_queue:
+            right = packet_queue.pop()
+            stack_reduction ^= (left & right)
+        else:
+            stack_reduction ^= left
     
-    # Calculate portfolio risk score using statistical measures
-    raw_risks = list(weighted_risks.values())
-    avg_risk = statistics.mean(raw_risks)
-    risk_variance = statistics.variance(raw_risks) if len(raw_risks) > 1 else 0
+    # Final checksum: Combine with lambda-based accumulator
+    accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
+    final_checksum = 0
+    for val in sorted_packets:
+        final_checksum = accumulator(final_checksum, val)
     
-    # Final risk score calculation
-    portfolio_risk_score = (avg_risk * market_condition_factor) + (risk_variance * 10)
-    
-    return portfolio_risk_score
+    # Adjust with stack reduction
+    final_checksum ^= stack_reduction
+    return final_checksum
 
-# Execute and print result
-portfolio_risk_score = compute_portfolio_risk()
-print(f"Result: {portfolio_risk_score}")
+# Simulate packet flow
+network_packets = [12, 7, 23, 8, 15, 4]
+final_checksum = process_packets(network_packets)
+print(f"Result: {final_checksum}")

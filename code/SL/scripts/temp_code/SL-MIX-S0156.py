@@ -1,47 +1,35 @@
-from dataclasses import dataclass
-from functools import wraps
+import heapq
+from collections import defaultdict
 
-def modular_transform(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result % 17
-    return wrapper
+def calculate_route_efficiency(urgencies):
+    dp = [0] * (len(urgencies) + 1)
+    for i in range(1, len(urgencies) + 1):
+        dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
+    return dp[len(urgencies)]
 
-@dataclass
-class ParticleState:
-    id: int
-    spin: int
-    entangled: bool = False
-
-@modular_transform
-def calculate_entanglement(particles):
-    total = 0
-    for particle in particles:
-        if particle.entangled:
-            total += particle.spin * 3
-        else:
-            total -= particle.spin * 2
-    return total
-
-particles = [
-    ParticleState(1, 5, True),
-    ParticleState(2, 3, False),
-    ParticleState(3, 7, True),
-    ParticleState(4, 2, True),
-    ParticleState(5, 4, False)
+# Shipment data: (origin, urgency)
+shipments = [
+    ('NYC', 10),
+    ('LA', 15),
+    ('CHI', 7),
+    ('SEA', 20),
+    ('BOS', 5)
 ]
 
-entanglement_index = calculate_entanglement(particles)
+# Track unique origins
+origins = frozenset(origin for origin, _ in shipments)
 
-for i in range(len(particles)):
-    if particles[i].spin > 4:
-        particles[i].entangled = not particles[i].entangled
-        if particles[i].entangled:
-            entanglement_index += particles[i].spin
-            break
-    else:
-        entanglement_index -= particles[i].spin
+# Process urgencies with min-heap
+urgency_heap = [u for _, u in shipments]
+heapq.heapify(urgency_heap)
 
-entanglement_index = (entanglement_index * 3) % 19
-print(f"Result: {entanglement_index}")
+processed_urgencies = []
+while urgency_heap:
+    processed_urgencies.append(heapq.heappop(urgency_heap))
+
+# Calculate efficiency score using dynamic programming
+route_efficiency = calculate_route_efficiency(processed_urgencies)
+
+# Final score combines route efficiency with origin count
+final_score = route_efficiency + len(origins)
+print(f'Result: {final_score}')

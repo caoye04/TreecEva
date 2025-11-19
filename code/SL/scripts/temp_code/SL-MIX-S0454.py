@@ -1,41 +1,39 @@
-from collections import deque
-import heapq
+from collections import defaultdict
+import math
 
-def prepare_ingredients():
-    ingredients = [
-        {'name': 'saffron', 'priority': 3, 'prep_time': 5},
-        {'name': 'truffle', 'priority': 1, 'prep_time': 10},
-        {'name': 'lobster', 'priority': 2, 'prep_time': 7},
-        {'name': 'caviar', 'priority': 4, 'prep_time': 3}
-    ]
-    
-    # Priority queue for ingredients (min-heap based on priority)
-    priority_queue = []
-    for ingredient in ingredients:
-        heapq.heappush(priority_queue, (ingredient['priority'], ingredient['prep_time'], ingredient['name']))
-    
-    # Stack for preparation steps
-    prep_stack = deque()
-    
-    # Process ingredients
-    total_time = 0
-    while priority_queue:
-        priority, prep_time, name = heapq.heappop(priority_queue)
-        total_time += prep_time
-        prep_stack.append((name, total_time))
-    
-    # Calculate final score based on preparation efficiency
-    final_score = 0
-    step_count = 0
-    while prep_stack:
-        name, time = prep_stack.pop()
-        step_count += 1
-        if step_count % 2 == 0:
-            final_score += time * 2
-        else:
-            final_score -= time
-    
-    return final_score
+document = "The quick brown fox jumps over the lazy dog. The dog was really lazy and very sleepy. The fox was quick and brown."
 
-final_score = prepare_ingredients()
-print(f"Result: {final_score}")
+# Tokenize into sentences
+sentences = [s.strip() for s in document.split('.') if s.strip()]
+
+# Initialize data structures
+word_freq = defaultdict(int)
+sentence_scores = []
+
+# Process each sentence
+for sentence in sentences:
+    words = sentence.lower().split()
+    # Update word frequencies
+    for word in words:
+        word_freq[word] += 1
+    
+    # Calculate sentence complexity: average word length * unique words
+    unique_words = len(set(words))
+    avg_length = sum(len(word) for word in words) / len(words) if words else 0
+    sentence_score = avg_length * unique_words
+    sentence_scores.append(sentence_score)
+
+# Compute aggregate score
+frequency_weights = {word: math.log(freq + 1) for word, freq in word_freq.items()}
+weighted_sentence_scores = []
+
+for i, sentence in enumerate(sentences):
+    words = sentence.lower().split()
+    weight_sum = sum(frequency_weights[word] for word in words)
+    weighted_score = sentence_scores[i] * weight_sum
+    weighted_sentence_scores.append(weighted_score)
+
+# Final aggregation using a polynomial combination
+aggregate_score = sum(weighted_sentence_scores) + math.sqrt(sum(sentence_scores))
+
+print(f"Result: {round(aggregate_score, 2)}")

@@ -1,63 +1,23 @@
-import heapq
-import math
-from functools import wraps
+import re
+from collections import namedtuple
 
-class SignalNode:
-    def __init__(self, freq, next_node=None):
-        self.frequency = freq
-        self.next = next_node
+# Define a LogEntry structure
+LogEntry = namedtuple('LogEntry', ['timestamp', 'ip_address', 'user_agent'])
 
-def call_counter(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        wrapper.calls += 1
-        return func(*args, **kwargs)
-    wrapper.calls = 0
-    return wrapper
+# Sample log entries
+log_entries = [
+    LogEntry('2023-05-15 10:23:01', '192.168.1.10', 'Mozilla/5.0'),
+    LogEntry('2023-05-15 10:25:12', '192.168.1.12', 'Chrome/90.0'),
+    LogEntry('2023-05-15 10:27:45', '10.0.0.5', 'Safari/14.0'),
+    LogEntry('2023-05-15 10:30:01', '192.168.1.10', 'Mozilla/5.0'),
+    LogEntry('2023-05-15 10:32:17', '192.168.2.15', 'Firefox/88.0'),
+    LogEntry('2023-05-15 10:35:22', '172.16.0.1', 'Edge/91.0')
+]
 
-def generate_primes(limit):
-    sieve = [True] * (limit + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(math.sqrt(limit)) + 1):
-        if sieve[i]:
-            for j in range(i*i, limit + 1, i):
-                sieve[j] = False
-    return [i for i, prime in enumerate(sieve) if prime]
+# Extract IP addresses matching the pattern 192.168.x.x
+subnet_pattern = r'^192\.168\.\d{1,3}\.\d{1,3}$'
+suspicious_ips = {entry.ip_address for entry in log_entries if re.match(subnet_pattern, entry.ip_address)}
 
-@call_counter
-def compute_gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
-
-# Create a linked list of signal frequencies
-head = SignalNode(42)
-head.next = SignalNode(70)
-head.next.next = SignalNode(98)
-head.next.next.next = SignalNode(126)
-
-# Process frequencies with a min-heap
-frequency_heap = []
-current = head
-while current:
-    heapq.heappush(frequency_heap, current.frequency)
-    current = current.next
-
-# Extract two smallest frequencies and compute GCD
-freq_a = heapq.heappop(frequency_heap)
-freq_b = heapq.heappop(frequency_heap)
-gcd_value = compute_gcd(freq_a, freq_b)
-
-# Calculate statistical measures
-remaining_frequencies = [freq for freq in frequency_heap]
-mean_frequency = sum(remaining_frequencies) / len(remaining_frequencies)
-variance = sum((x - mean_frequency) ** 2 for x in remaining_frequencies) / len(remaining_frequencies)
-
-# Determine if mean is prime using generated primes
-primes_up_to_200 = generate_primes(200)
-is_mean_prime = int(mean_frequency) in primes_up_to_200
-
-# Calculate final metric using ternary operator and multiple operations
-final_metric = (gcd_value * 3 if is_mean_prime else gcd_value * 2) + int(math.sqrt(variance)) + (compute_gcd.calls * 5)
-
-print(f"Result: {final_metric}")
+# Count unique device IPs
+unique_device_count = len(suspicious_ips)
+print(f'Result: {unique_device_count}')

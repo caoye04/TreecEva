@@ -1,14 +1,12 @@
-from itertools import permutations
+segments_active = {1, 2, 4, 7}
+segment_base_map = {1: 3, 2: 5, 4: 7, 7: 11}
+modulus = 13
 
-# Define cookie types
-cookies = ['chocolate_chip', 'oatmeal_raisin', 'sugar']
+# Map segments to base values and apply modular exponentiation with lambda
+mapped_values = [segment_base_map[s] for s in segments_active]
+mod_exp = lambda base, exp, mod: (base ** exp) % mod
+encrypted_parts = [mod_exp(base, 2, modulus) for base in mapped_values]
 
-# Calculate all possible permutations of 2 cookies from the available types
-cookie_permutations = list(permutations(cookies, 2))
-
-# Using list comprehension to count the valid arrangements where no two same cookies are adjacent
-valid_arrangements = [p for p in cookie_permutations if p[0] != p[1]]
-
-total_arrangements = len(valid_arrangements)
-
-print(f"Result: {total_arrangements}")
+# Combine encrypted parts using modular arithmetic
+encrypted_value = sum(encrypted_parts) % modulus
+print(f'Result: {encrypted_value}')

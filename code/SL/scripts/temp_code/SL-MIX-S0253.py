@@ -1,60 +1,60 @@
-from functools import reduce
-from math import gcd
+import itertools
+from collections import deque
 
-def calculate_centroid(vertices):
-    x = sum(v[0] for v in vertices) / len(vertices)
-    y = sum(v[1] for v in vertices) / len(vertices)
-    return (x, y)
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
-def area_of_triangle(v1, v2, v3):
-    return abs((v1[0]*(v2[1]-v3[1]) + v2[0]*(v3[1]-v1[1]) + v3[0]*(v1[1]-v2[1])) / 2.0)
+def next_prime(n):
+    while True:
+        n += 1
+        if is_prime(n):
+            return n
 
-def lcm(a, b):
-    return abs(a*b) // gcd(a, b) if a and b else 0
+# Audio processing parameters
+sample_rate = 44100
+bit_depth = 16
+channel_count = 2
 
-initial_triangle = [(0, 0), (4, 0), (2, 3)]
-triangle_stack = [initial_triangle]
-refinement_count = 0
-max_refinements = 5
+# Calculate base threshold using modular arithmetic
+base_threshold = (sample_rate * bit_depth) % 1000
+scaled_threshold = (base_threshold * channel_count + 7) % 97
 
-while triangle_stack and refinement_count < max_refinements:
-    current_triangle = triangle_stack.pop(0)
-    area = area_of_triangle(*current_triangle)
-    
-    # Number theory condition: area must be divisible by a computed LCM
-    area_lcm = lcm(int(current_triangle[0][0])+1, int(current_triangle[1][1])+1)
-    
-    if area_lcm == 0 or area % area_lcm != 0:
-        continue
-        
-    centroid = calculate_centroid(current_triangle)
-    
-    # Generate three new triangles from the centroid
-    new_triangles = [
-        [current_triangle[0], current_triangle[1], centroid],
-        [current_triangle[1], current_triangle[2], centroid],
-        [current_triangle[2], current_triangle[0], centroid]
-    ]
-    
-    valid_triangles = list(filter(lambda t: area_of_triangle(*t) > 0.5, new_triangles))
-    
-    if len(valid_triangles) >= 2:
-        triangle_stack.extend(valid_triangles[:2])
-        refinement_count += 1
-    
-    # Early termination if we've hit our limit
-    if refinement_count >= max_refinements:
+# Initialize processing queue with Fibonacci sequence
+fib_queue = deque()
+a, b = 1, 1
+for _ in range(10):
+    fib_queue.append(a)
+    a, b = b, (a + b) % 100
+
+# Sliding window analysis
+window_candidates = []
+for i in range(min(len(fib_queue), 8)):
+    candidate = fib_queue.popleft()
+    adjusted_candidate = (candidate * scaled_threshold) % 42
+    if adjusted_candidate > 10:
+        window_candidates.append(adjusted_candidate)
+    if len(window_candidates) >= 3:
         break
 
-# Additional geometric filtering using set operations
-vertex_set = set()
-for triangle in triangle_stack:
-    for vertex in triangle:
-        vertex_set.add(vertex)
-        
-unique_vertex_count = len(vertex_set)
+# Determine final window size
+if not window_candidates:
+    final_window_size = next_prime(20)
+else:
+    max_candidate = max(window_candidates)
+    if max_candidate % 3 == 0:
+        final_window_size = next_prime(max_candidate + 5)
+    else:
+        final_window_size = next_prime(max_candidate)
 
-if unique_vertex_count > 10:
-    refinement_count += 1
-
-print(f"Result: {refinement_count}")
+print(f"Result: {final_window_size}")

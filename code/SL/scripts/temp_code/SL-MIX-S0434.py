@@ -1,44 +1,33 @@
-import re
-from itertools import combinations
+import math
+from collections import defaultdict
 
-def tokenize(expr):
-    return re.findall(r'\w+|[^\w\s]', expr)
+def gaussian_window(N, sigma):
+    return {n: math.exp(-0.5 * ((n - (N-1)/2) / sigma) ** 2) for n in range(N)}
 
-def hash_token(token):
-    val = 0
-    for char in token:
-        val = (val * 31 + ord(char)) & 0xFF
-    return val
+def apply_gain(window_dict, gain_factor):
+    return {k: v * gain_factor for k, v in window_dict.items()}
 
-class TokenProcessor:
-    def __init__(self, modifiers=None):
-        self.modifiers = modifiers or []
+def compute_energy(window_dict):
+    return sum(v**2 for v in window_dict.values())
+
+# Signal processing pipeline
+window_cache = {}
+signal_segments = [128, 256, 512]
+gain_schedule = [0.8, 1.2, 0.9]
+
+processed_energies = []
+for i, (segment_size, gain) in enumerate(zip(signal_segments, gain_schedule)):
+    if segment_size not in window_cache:
+        # Compute and cache window coefficients
+        window_cache[segment_size] = gaussian_window(segment_size, segment_size/8)
     
-    def process(self, tokens):
-        scores = []
-        for t in tokens:
-            base = hash_token(t)
-            if any(c.isdigit() for c in t):
-                base *= 2
-            elif t.isupper():
-                base += 100
-            scores.append(base)
-        
-        # Apply modifier functions if any
-        for mod in self.modifiers:
-            scores = [mod(s) for s in scores]
-        
-        # Compute pairwise XOR of all combinations of 2
-        xor_results = [a ^ b for a, b in combinations(scores, 2)]
-        
-        # Return sum modulo a prime
-        return sum(xor_results) % 1291
+    # Apply dynamic gain adjustment
+    adjusted_window = apply_gain(window_cache[segment_size], gain)
+    
+    # Compute energy of processed segment
+    segment_energy = compute_energy(adjusted_window)
+    processed_energies.append(segment_energy)
 
-def double_if_even(x):
-    return x * 2 if x % 2 == 0 else x
-
-token_processor = TokenProcessor([double_if_even])
-input_sequence = "SECURITY2023 TOKEN_abc DEF456x"
-tokens = tokenize(input_sequence)
-final_score = token_processor.process(tokens)
-print(f"Result: {final_score}")
+# Calculate final energy metric
+final_energy = round(sum(processed_energies) * 1000)
+print(f"Result: {final_energy}")

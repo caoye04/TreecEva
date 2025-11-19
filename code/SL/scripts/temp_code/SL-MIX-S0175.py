@@ -1,61 +1,25 @@
-import heapq
-import base64
-from collections import deque
+import math
 
-def call_tracker(func):
-    calls = []
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        calls.append(result)
-        return result
-    wrapper.calls = calls
-    return wrapper
+# Baker's proprietary bread proofing parameters
+base_proofing_factor = 2.5
+humidity_coefficient = 0.7
 
-class ResourcePool:
-    def __init__(self, resources):
-        self.resources = resources
-        self.active = []
-    
-    def __enter__(self):
-        self.active = list(self.resources)
-        return self.active
-    
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.active.clear()
+# Calculate exponential growth component
+exponential_component = math.exp(base_proofing_factor)
 
-@call_tracker
-def encode_message(msg):
-    return base64.b64encode(msg.encode()).decode()
+# Calculate logarithmic humidity adjustment
+log_humidity_adjustment = math.log(humidity_coefficient * 10)
 
-@call_tracker
-def decode_message(encoded_msg):
-    return base64.b64decode(encoded_msg).decode()
+# Combine components to determine optimal temperature
+optimal_proofing_temperature = exponential_component + log_humidity_adjustment
 
-messages = ['alpha', 'beta', 'gamma', 'delta']
-priorities = [3, 1, 4, 2]
-heap = list(zip(priorities, messages))
-heapq.heapify(heap)
+# Apply final adjustment using set operations on temperature ranges
+standard_ranges = {30, 35, 40, 45}
+premium_ranges = frozenset([32, 37, 42, 47])
+intersection_ranges = standard_ranges & premium_ranges
 
-processing_stack = []
-output_queue = deque()
+# Apply adjustment based on intersecting ranges
+if len(intersection_ranges) > 0:
+    optimal_proofing_temperature += max(intersection_ranges) * 0.1
 
-with ResourcePool([1, 2, 3]) as pool:
-    while heap:
-        priority, msg = heapq.heappop(heap)
-        encoded = encode_message(msg)
-        processing_stack.append((priority, encoded))
-    
-    while processing_stack:
-        priority, encoded = processing_stack.pop()
-        decoded = decode_message(encoded)
-        output_queue.appendleft((priority, decoded))
-    
-    checksum_components = []
-    while output_queue:
-        priority, text = output_queue.popleft()
-        text_hash = hash(text) % 1000
-        checksum_components.append(text_hash ^ priority)
-    
-    final_checksum = sum(checksum_components) & 0xFF
-
-print(f"Result: {final_checksum}")
+print(f"Result: {optimal_proofing_temperature}")

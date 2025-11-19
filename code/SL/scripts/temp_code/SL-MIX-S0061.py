@@ -1,9 +1,12 @@
-from functools import reduce
+from statistics import mean
 
-daily_quantities = [8, 17, 12]
-prices = [2, 3, 4]
-discount_applied = daily_quantities[0] < 10 and daily_quantities[1] > 15
-adjusted_muffin_price = prices[1] - (1 if discount_applied else 0)
-total_revenue = reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0)
+def calculate_conditional_average(sales):
+    bread, cakes, cookies = sales
+    # Short-circuit evaluation: only compute mean if both cakes and cookies > 10
+    final_average = mean(sales) if cakes > 10 and cookies > 10 else 0
+    return final_average
 
-print(f"Result: {total_revenue}")
+# Sales data: [bread, cakes, cookies]
+sales_data = [20, 15, 8]
+final_average = calculate_conditional_average(sales_data)
+print(f'Result: {final_average}')

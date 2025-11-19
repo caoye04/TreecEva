@@ -1,39 +1,52 @@
+from functools import reduce
 import math
-from functools import lru_cache
 
-def calculate_sharpe(returns, volatility):
-    return returns / volatility if volatility != 0 else 0
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
 
-class Portfolio:
-    def __init__(self, assets):
-        self.assets = assets
-        
-    @lru_cache(maxsize=None)
-    def get_optimal_weight(self, index, remaining_budget):
-        if index >= len(self.assets) or remaining_budget <= 0:
-            return 0.0
-        
-        asset_return, asset_risk = self.assets[index]
-        max_sharpe = 0.0
-        
-        for weight in range(0, int(remaining_budget) + 1):
-            allocated = weight * 0.1
-            current_sharpe = calculate_sharpe(asset_return * allocated, asset_risk * allocated)
-            future_sharpe = self.get_optimal_weight(index + 1, remaining_budget - weight)
-            total_sharpe = current_sharpe + future_sharpe * 0.95  # Discount factor
-            max_sharpe = max(max_sharpe, total_sharpe)
-            
-        return max_sharpe
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
 
-# Asset tuples: (expected_return, risk)
-financial_assets = [
-    (0.08, 0.12),
-    (0.15, 0.25),
-    (0.12, 0.18),
-    (0.06, 0.09),
-    (0.20, 0.30)
-]
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)
 
-portfolio_optimizer = Portfolio(financial_assets)
-optimal_sharpe_ratio = portfolio_optimizer.get_optimal_weight(0, 10)
-print(f"Result: {round(optimal_sharpe_ratio, 6)}")
+# Stock performance returns over the last quarter (in percentages)
+stock_returns = [2.5, -1.2, 3.8, 0, -0.5, 4.1, -2.3, 1.9, 3.3, -1.1]
+
+# Step 1: Filter out non-positive returns and sort them
+positive_returns = sorted(filter(lambda x: x > 0, stock_returns))
+
+# Step 2: Apply a greedy selection of top performing stocks up to a limit
+max_stocks = 5
+selected_returns = []
+for r in reversed(positive_returns):  # Greedy: pick from highest
+    if len(selected_returns) < max_stocks and r > 1.0:
+        selected_returns.append(r)
+
+# Step 3: Compute mean and variance of selected returns
+if selected_returns:
+    mean_return = sum(selected_returns) / len(selected_returns)
+    variance = sum((x - mean_return) ** 2 for x in selected_returns) / len(selected_returns)
+else:
+    mean_return, variance = 0, 0
+
+# Step 4: Find prime numbers related to the length of selected returns
+length_related_number = len(selected_returns) * 10
+primes_in_range = [i for i in range(2, length_related_number + 1) if is_prime(i)]
+prime_count = len(primes_in_range)
+
+# Step 5: Calculate adjustment coefficient using number theory and statistics
+if prime_count > 0 and variance > 0:
+    lcm_value = reduce(lcm, primes_in_range[:min(3, len(primes_in_range))], 1)
+    adjustment_coefficient = (mean_return * prime_count) / math.sqrt(variance) + lcm_value
+else:
+    adjustment_coefficient = 0
+
+print(f"Result: {adjustment_coefficient}")

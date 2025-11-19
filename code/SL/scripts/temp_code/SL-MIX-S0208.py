@@ -1,52 +1,60 @@
-import re
-from collections import defaultdict
-from math import gcd
-from itertools import permutations
+import functools
 
-def prime_factors(n):
-    i = 2
-    factors = []
-    while i * i <= n:
-        if n % i:
-            i += 1
-        else:
-            n //= i
-            factors.append(i)
-    if n > 1:
-        factors.append(n)
-    return factors
+def calculate_priority_score(weight, distance):
+    return weight * distance
 
-def lcm(a, b):
-    return abs(a*b) // gcd(a, b)
-
-# Encoded message segments
-segments = ['A1B2C3', 'D4E5F6', 'G7H8I9']
-char_map = defaultdict(int)
-
-# Process each segment
-for segment in segments:
-    # Extract numbers using regex
-    numbers = list(map(int, re.findall(r'\d', segment)))
-    # Extract characters using regex
-    characters = re.findall(r'[A-Z]', segment)
+def load_packages_greedy(truck_capacity, package_list):
+    # Sort packages by priority score descending (greedy)
+    scored_packages = [(pkg[0], pkg[1], calculate_priority_score(pkg[0], pkg[1])) for pkg in package_list]
+    scored_packages.sort(key=lambda x: x[2], reverse=True)
     
-    # For each character, add the LCM of extracted numbers to its map value
-    for char in characters:
-        char_map[char] += lcm(numbers[0], numbers[-1])
+    # Initialize data structures
+    loaded_stack = []
+    pending_queue = scored_packages[:]
+    current_load = 0
+    
+    # Process using greedy + backtracking approach
+    def backtrack_load(remaining_capacity, index):
+        if index >= len(pending_queue):
+            return 0
+        
+        weight, _, _ = pending_queue[index]
+        
+        # Try loading current package (if fits)
+        if weight <= remaining_capacity:
+            loaded_stack.append(weight)
+            taken = 1 + backtrack_load(remaining_capacity - weight, index + 1)
+            loaded_stack.pop()
+        else:
+            taken = 0
+            
+        # Skip current package
+        skipped = backtrack_load(remaining_capacity, index + 1)
+        
+        return max(taken, skipped)
+    
+    # Execute greedy loading first
+    for pkg in scored_packages:
+        if current_load + pkg[0] <= truck_capacity:
+            current_load += pkg[0]
+            loaded_stack.append(pkg[0])
+    
+    # Refine with backtracking
+    final_load_count = backtrack_load(truck_capacity, 0)
+    return final_load_count
 
-# Generate permutations of the map's values
-values = list(char_map.values())
-perms = list(permutations(values, 3))
+# Define truck specs and packages
+max_capacity = 50
+packages = [
+    (10, 5),   # (weight, delivery_distance)
+    (20, 3),
+    (15, 4),
+    (12, 6),
+    (8, 2),
+    (25, 1),
+    (5, 8)
+]
 
-# Calculate checksum from permutations
-checksum = 0
-for perm in perms:
-    # Only consider permutations where the first element is the largest
-    if perm[0] >= perm[1] and perm[0] >= perm[2]:
-        checksum += perm[0] * perm[1] + perm[2]
-
-# Apply final transformation using prime factors
-final_value = sum(prime_factors(checksum))
-checksum = checksum ^ final_value  # XOR with sum of its prime factors
-
-print(f"Result: {checksum}")
+# Compute optimized loading
+final_load_count = load_packages_greedy(max_capacity, packages)
+print(f"Result: {final_load_count}")

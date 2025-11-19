@@ -1,47 +1,37 @@
-import math
-import statistics
-from collections import Counter
+from functools import reduce
 
-def gcd_list(numbers):
-    result = numbers[0]
-    for num in numbers[1:]:
-        result = math.gcd(result, num)
-        if result == 1:
-            break
-    return result
+document = "algorithm optimization requires mathematical analysis and logical reasoning"
 
-def process_keystream(filename):
-    with open(filename, 'r') as f:
-        content = f.read().strip()
-    
-    # Convert to byte values
-    byte_values = [ord(c) for c in content]
-    
-    # Frequency analysis
-    freq_counter = Counter(byte_values)
-    frequencies = list(freq_counter.values())
-    
-    # Statistical measures
-    mean_freq = statistics.mean(frequencies)
-    variance_freq = statistics.variance(frequencies) if len(frequencies) > 1 else 0
-    
-    # Detect cycle candidates from frequent bytes
-    threshold = mean_freq + (variance_freq ** 0.5)
-    cycle_candidates = [byte_val for byte_val, count in freq_counter.items() if count >= threshold]
-    
-    # Apply number theory if we have candidates
-    cycle_length = gcd_list(cycle_candidates) if cycle_candidates else 0
-    
-    # Compute signature using ternary and short-circuit
-    has_high_variance = variance_freq > 10
-    is_homogeneous = len(set(frequencies)) <= 2
-    keystream_signature = (cycle_length * 100 + int(mean_freq)) if has_high_variance and not is_homogeneous else (len(byte_values) if is_homogeneous else -1)
-    
-    return keystream_signature
+# Tokenize and clean
+words = document.split()
+tokens = list(map(lambda w: w.strip('.').lower(), words))
 
-# Simulate file content
-with open('keystream_data.txt', 'w') as f:
-    f.write("ABABABABXYZXYZXYZABABABABXYZXYZXYZ")
+# Unique token set
+unique_tokens = frozenset(tokens)
 
-keystream_signature = process_keystream('keystream_data.txt')
-print(f"Result: {keystream_signature}")
+# Frequency mapping
+token_freq = {token: tokens.count(token) for token in unique_tokens}
+
+# Apply transformation using ternary logic
+adjusted_freq = {k: v*2 if v > 1 else (v+1 if 'a' in k else v) for k, v in token_freq.items()}
+
+# Compute base metric
+frequency_sum = sum(adjusted_freq.values())
+unique_count = len(unique_tokens)
+
+# Decorator for complexity adjustment
+def complexity_adjustment_factor(func):
+    def wrapper(*args, **kwargs):
+        base_value = func(*args, **kwargs)
+        return base_value * 1.5 if base_value % 2 == 0 else base_value * 2.0
+    return wrapper
+
+@complexity_adjustment_factor
+def calculate_base_index(freq_sum, unique_cnt):
+    return freq_sum + unique_cnt
+
+# Calculate final index
+base_index = calculate_base_index(frequency_sum, unique_count)
+final_complexity_index = int(base_index) if base_index > 10 else int(base_index * 3)
+
+print(f'Result: {final_complexity_index}')

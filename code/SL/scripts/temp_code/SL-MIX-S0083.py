@@ -1,84 +1,35 @@
 import math
-from dataclasses import dataclass
+from collections import defaultdict
 
-@dataclass
-class GeoPoint:
-    latitude: float
-    longitude: float
-    
-    def __hash__(self):
-        return hash(f"{self.latitude:.6f},{self.longitude:.6f}")
+def calculate_priority(base_val, position):
+    match position % 4:
+        case 0:
+            return base_val << 2
+        case 1:
+            return base_val >> 1
+        case 2:
+            return base_val ^ 0xF
+        case 3:
+            return ~base_val & 0xFF
 
-def encode_coordinate(coord_value, precision=5):
-    """Encodes a coordinate using a custom base conversion with modular arithmetic"""
-    scaled = int(abs(coord_value) * (10 ** precision))
-    encoded = ""
-    while scaled > 0:
-        encoded = chr((scaled % 36) + 65 if scaled % 36 < 10 else (scaled % 36) + 55) + encoded
-        scaled //= 36
-    return encoded if encoded else "A"
+def adjust_with_trig(score, index):
+    return int(score * math.sin(index) + math.cos(index * 2))
 
-def decode_coordinate(encoded_str, precision=5):
-    """Decodes a coordinate from custom encoding"""
-    value = 0
-    for char in encoded_str:
-        digit = ord(char) - 65 if char.isalpha() else ord(char) - 48
-        value = value * 36 + digit
-    return value / (10 ** precision)
+packages = [12, 25, 8, 33, 19, 42, 7]
+processed_scores = []
+score_map = defaultdict(int)
 
-# Initialize geospatial data
-raw_coordinates = [
-    GeoPoint(40.7128, -74.0060),  # New York
-    GeoPoint(34.0522, -118.2437), # Los Angeles
-    GeoPoint(41.8781, -87.6298)   # Chicago
-]
+for i, pkg in enumerate(packages):
+    priority = calculate_priority(pkg, i)
+    adjusted = adjust_with_trig(priority, i)
+    processed_scores.append(adjusted)
+    score_map[i] = adjusted
 
-# Create metadata mapping with dictionary comprehension
-metadata_map = {hash(point): {
-    'hemisphere': 'N' if point.latitude >= 0 else 'S',
-    'encoded_lat': encode_coordinate(point.latitude),
-    'encoded_lon': encode_coordinate(point.longitude)
-} for point in raw_coordinates}
+# Dynamic programming to find optimal loading sequence
+n = len(processed_scores)
+dp = [0] * (n + 1)
+for i in range(1, n + 1):
+    dp[i] = max(dp[i-1], dp[i-2] + processed_scores[i-1]) if i > 1 else processed_scores[i-1]
 
-# Process coordinate transformation
-selected_point = raw_coordinates[1]  # Los Angeles
-selected_hash = hash(selected_point)
-
-# Apply trigonometric normalization with modular arithmetic
-normalized_lat = math.sin(math.radians(selected_point.latitude))
-wrapped_lon = selected_point.longitude % 360
-
-# Conditional branch for coordinate system adjustment
-if wrapped_lon > 180:
-    adjusted_lon = wrapped_lon - 360
-elif wrapped_lon < -180:
-    adjusted_lon = wrapped_lon + 360
-else:
-    adjusted_lon = wrapped_lon
-
-# Apply projection transformation
-projected_x = normalized_lat * math.cos(math.radians(adjusted_lon))
-projected_y = normalized_lat * math.sin(math.radians(adjusted_lon))
-
-# Update metadata with projection data
-metadata_map[selected_hash].update({
-    'projected_x': round(projected_x, 6),
-    'projected_y': round(projected_y, 6)
-})
-
-# Apply final coordinate encoding
-transformed_longitude = decode_coordinate(metadata_map[selected_hash]['encoded_lon'])
-
-# Apply modular correction based on trigonometric quadrant
-quadrant = int((adjusted_lon + 360) // 90) % 4
-match quadrant:
-    case 0:
-        transformed_longitude = transformed_longitude % 90
-    case 1:
-        transformed_longitude = 90 + (transformed_longitude % 90)
-    case 2:
-        transformed_longitude = 180 + (transformed_longitude % 90)
-    case 3:
-        transformed_longitude = 270 + (transformed_longitude % 90)
-
-print(f"Result: {transformed_longitude}")
+final_loading_score = dp[n] + (sum(packages) & 0x7)
+print(f"Result: {final_loading_score}")

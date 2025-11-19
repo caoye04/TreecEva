@@ -1,46 +1,68 @@
-from functools import reduce
+import re
 
-def process_document_ids():
-    # Historical document identifiers
-    doc_ids = ['DOC-1923-A', 'MAN-1845-B', 'LET-1901-C']
-    
-    # Character to integer mapping for encoding
-    char_map = {chr(i): i - 64 for i in range(65, 91)}  # A=1, B=2, ..., Z=26
-    char_map.update({str(i): i for i in range(10)})      # '0'=0, '1'=1, ..., '9'=9
-    char_map.update({'-': 27})
-    
-    # Encoding function
-    encode = lambda s: [char_map[c] for c in s if c in char_map]
-    
-    # Process each document ID
-    encoded_sequences = list(map(encode, doc_ids))
-    
-    # Apply modular arithmetic transformation
-    transformed = [
-        [((x * 17) + 13) % 31 for x in seq]
-        for seq in encoded_sequences
+class PacketNode:
+    def __init__(self, seq_num, payload, next_node=None):
+        self.seq_num = seq_num
+        self.payload = payload
+        self.next = next_node
+
+def create_packet_chain():
+    # Create a linked list of packets with sequence numbers and payloads
+    packets = [
+        (1001, "AUTH:admin|CMD:read"),
+        (1002, "AUTH:user|CMD:write"),
+        (1003, "AUTH:guest|CMD:read"),
+        (1004, "AUTH:admin|CMD:delete"),
+        (1005, "AUTH:user|CMD:execute")
     ]
     
-    # Frequency analysis using dictionary comprehension
-    freq_analysis = {
-        i: len([seq for seq in transformed if i < len(seq) and seq[i] % 3 == 0])
-        for i in range(max(len(seq) for seq in transformed))
-    }
-    
-    # Merge with base frequencies using dictionary merging
-    base_freq = {i: 1 for i in range(10)}
-    merged_freq = base_freq | {k: v + 1 for k, v in freq_analysis.items()}
-    
-    # Calculate checksum using functional programming
-    checksum_components = [
-        reduce(lambda a, b: (a + b) % 29, seq, 0)
-        for seq in transformed
-    ]
-    
-    # Final encoded checksum
-    encoded_checksum = sum(checksum_components) % 100
-    
-    return encoded_checksum
+    head = None
+    for seq, payload in reversed(packets):
+        head = PacketNode(seq, payload, head)
+    return head
 
-result = process_document_ids()
-print(f"Result: {result}")
+def validate_packets(head):
+    clearance = 0
+    current = head
+    
+    while current:
+        # Extract command using regex
+        cmd_match = re.search(r'CMD:(\w+)', current.payload)
+        auth_match = re.search(r'AUTH:(\w+)', current.payload)
+        
+        if cmd_match and auth_match:
+            command = cmd_match.group(1)
+            auth_level = auth_match.group(1)
+            
+            # Assign weights based on authorization level
+            auth_weight = {'admin': 3, 'user': 2, 'guest': 1}[auth_level]
+            
+            # Assign command weights
+            cmd_weight = {'read': 1, 'write': 2, 'execute': 3, 'delete': 4}[command]
+            
+            # Calculate packet validity score
+            validity = (current.seq_num % 7) * auth_weight + cmd_weight
+            
+            # Apply bitwise operations for security checksum
+            if validity & 1:  # If odd
+                clearance ^= validity
+            else:
+                clearance |= (validity >> 1)
+        
+        current = current.next
+    
+    # Final adjustment based on packet count
+    packet_count = 0
+    temp = head
+    while temp:
+        packet_count += 1
+        temp = temp.next
+    
+    # Apply final transformation
+    security_clearance_level = (clearance * packet_count) % 128
+    return security_clearance_level
+
+# Main execution
+packet_chain = create_packet_chain()
+security_clearance_level = validate_packets(packet_chain)
+print(f"Result: {security_clearance_level}")

@@ -1,27 +1,47 @@
-from collections import deque
+from collections import defaultdict
 
-def compute_signal_checksum(signal_samples):
-    window = deque(maxlen=5)
-    checksum = 0
-    
-    for idx, sample in enumerate(signal_samples):
-        window.append(sample)
-        
-        # Only compute checksum when window is full
-        if len(window) == 5:
-            # Weighted sum with position-based weights
-            weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
-            # Apply modular arithmetic with floating point adjustment
-            mod_result = (weighted_sum % 17) + (idx * 0.5)
-            # Logical condition for checksum update
-            if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
-                checksum = (checksum + int(mod_result)) % 100
-            elif mod_result <= 10.0 or (idx > 10 and idx < 20):
-                checksum = (checksum ^ int(mod_result)) % 100
-    
-    return checksum
+class ExchangeNode:
+    def __init__(self, change, next_node=None):
+        self.change = change
+        self.next = next_node
 
-# Process a sequence of signal samples
-signal_data = [12, 7, 23, 9, 15, 4, 18, 11, 6, 25, 3, 20, 8, 14, 19, 5, 22, 10, 17, 1]
-processed_checksum = compute_signal_checksum(signal_data)
-print(f"Result: {processed_checksum}")
+def compute_weighted_fib(n, weights):
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return weights[0]
+    fib = [0] * (n + 1)
+    fib[1] = weights[0]
+    if n > 1:
+        fib[2] = weights[1]
+        for i in range(3, n + 1):
+            fib[i] = fib[i-1] + fib[i-2] + weights[i-1]
+    return fib[n]
+
+exchange_rates = [
+    ExchangeNode(2),
+    ExchangeNode(-1),
+    ExchangeNode(3),
+    ExchangeNode(-2),
+    ExchangeNode(1)
+]
+
+for i in range(len(exchange_rates) - 1):
+    exchange_rates[i].next = exchange_rates[i + 1]
+
+rate_map = defaultdict(int)
+current = exchange_rates[0]
+cumulative_change = 0
+visited_count = 0
+
+while current:
+    cumulative_change += current.change
+    rate_map[visited_count] = cumulative_change
+    if cumulative_change > 4:
+        break
+    current = current.next
+    visited_count += 1
+
+weight_list = [rate_map[i] for i in sorted(rate_map.keys())]
+final_adjustment = compute_weighted_fib(len(weight_list), weight_list)
+print(f"Result: {final_adjustment}")

@@ -1,33 +1,31 @@
-from collections import Counter
+import math
 from functools import reduce
-import base64
 
-# Encoded payloads from network traffic
-encoded_payloads = ["SGVsbG8=", "V29ybGQ=", "Q2hlY2s=", "Q29kZQ==", "SGFja3M="]
+# Simulated sensor readings (in degrees Celsius)
+sensor_readings = [22.5, 25.0, 27.3, 30.1, 19.8, 21.4, 26.7, 23.9, 28.2, 24.6]
 
-# Decoding and scoring function
-def calculate_anomaly_score(decoded_string):
-    char_freq = Counter(decoded_string)
-    unique_chars = len(char_freq)
-    total_chars = sum(char_freq.values())
-    # Ternary operator to determine base score
-    base_score = 10 if total_chars > 5 else 5
-    # Adjust score based on character diversity
-    diversity_ratio = unique_chars / total_chars if total_chars > 0 else 0
-    adjusted_score = base_score * diversity_ratio
-    return adjusted_score
+# Apply logarithmic scaling to each reading
+scaled_readings = list(map(lambda x: math.log(x) if x > 0 else 0, sensor_readings))
 
-# Process payloads
-anomaly_scores = []
-for payload in encoded_payloads:
-    decoded_payload = base64.b64decode(payload).decode('utf-8')
-    score = calculate_anomaly_score(decoded_payload)
-    anomaly_scores.append(score)
+# Filter out readings below a threshold (log(22.0))
+threshold = math.log(22.0)
+filtered_readings = list(filter(lambda x: x >= threshold, scaled_readings))
 
-# Calculate final threat score using functional programming
-threat_score = reduce(lambda acc, x: acc + (x * 2 if x > 7 else x), anomaly_scores, 0)
+# Apply exponent-based normalization
+normalized_readings = [math.exp(x) for x in filtered_readings]
 
-# Apply final adjustment with ternary operator
-threat_score = threat_score if threat_score < 100 else threat_score * 0.9
+# Compute aggregate using reduce
+aggregate = reduce(lambda a, b: a + b, normalized_readings, 0)
 
-print(f"Target result: {threat_score}")
+# Apply conditional normalization based on aggregate value
+if aggregate > 100:
+    normalized_aggregate = math.log(aggregate) * 10
+elif aggregate > 50:
+    normalized_aggregate = math.sqrt(aggregate) * 5
+else:
+    normalized_aggregate = aggregate * 2
+
+# Apply final string transformation for logging (not affecting numerical result)
+log_entry = f"Processed {len(sensor_readings)} readings. Final aggregate: {normalized_aggregate}"
+
+print(f"Result: {normalized_aggregate}")

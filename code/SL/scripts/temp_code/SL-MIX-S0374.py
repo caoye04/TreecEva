@@ -1,49 +1,78 @@
-from itertools import permutations
+import re
+from itertools import combinations
 
-def transform_mask(mask, shift_ops):
-    for op in shift_ops:
-        if op > 0:
-            mask = mask << op
-        else:
-            mask = mask >> abs(op)
-        mask = mask & 0xFFFF  # 16-bit mask
-    return mask
+def is_palindrome(s):
+    return s == s[::-1]
 
-def generate_verification_sequence(base_masks, operations):
-    checksum = 0
-    perm_count = 0
+def calculate_composition(dna_segment):
+    comp = {'A': 0, 'T': 0, 'G': 0, 'C': 0}
+    for nuc in dna_segment:
+        if nuc in comp:
+            comp[nuc] += 1
+    return comp
+
+def score_segment(segment, pwm):
+    score = 0
+    for i, nucleotide in enumerate(segment):
+        if nucleotide in pwm[i]:
+            score += pwm[i][nucleotide]
+    return score
+
+def find_optimal_palindrome(dna_sequence, length, min_gc_content, pwm):
+    max_score = -float('inf')
+    optimal_segment = None
     
-    # Generate all permutations of base masks taken 3 at a time
-    for perm in permutations(base_masks, 3):
-        combined_mask = perm[0]
+    # Generate all possible substrings of specified length
+    for i in range(len(dna_sequence) - length + 1):
+        substring = dna_sequence[i:i+length]
         
-        # Apply XOR with subsequent masks in permutation
-        for i in range(1, len(perm)):
-            combined_mask ^= perm[i]
-        
-        # Transform the combined mask
-        transformed = transform_mask(combined_mask, operations[perm_count % len(operations)])
-        
-        # Update checksum with dynamic programming approach
-        checksum = (checksum + transformed) ^ (perm_count & 0xFF)
-        perm_count += 1
-        
-        # Early termination condition for efficiency
-        if perm_count >= 12:
-            break
+        # Check if it's a palindrome and meets GC content requirement
+        if is_palindrome(substring) and len(re.findall(r'[GC]', substring))/length >= min_gc_content:
+            composition = calculate_composition(substring)
+            
+            # Apply additional filtering using combinatorial checks
+            valid_combinations = 0
+            for combo in combinations(substring, 3):
+                if combo[0] != combo[1] and combo[1] != combo[2]:
+                    valid_combinations += 1
+            
+            # Only consider segments with sufficient diversity
+            if valid_combinations > 2:
+                segment_score = score_segment(substring, pwm)
+                if segment_score > max_score:
+                    max_score = segment_score
+                    optimal_segment = substring
     
-    return checksum
+    return max_score if optimal_segment else 0
 
-# Base 16-bit bitmask configurations
-initial_masks = [0x1A3F, 0x7B2C, 0x4E5D, 0xF0A1, 0xC3B2]
+def main():
+    # Position Weight Matrix for preferred nucleotides at each position
+    pwm = [
+        {'A': 2, 'T': -1, 'G': 1, 'C': 0},
+        {'A': -2, 'T': -1, 'G': 3, 'C': 2},
+        {'A': 0, 'T': 0, 'G': 2, 'C': 3},
+        {'A': -1, 'T': -1, 'G': 1, 'C': 4},
+        {'A': 3, 'T': -2, 'G': 0, 'C': 1},
+        {'A': 4, 'T': -3, 'G': -1, 'C': 0}
+    ]
+    
+    # DNA sequence under analysis
+    genome_fragment = "ATGCCGTAATGCCGTACGTA"
+    
+    # Analysis parameters
+    target_length = 6
+    minimum_gc = 0.5
+    
+    # Perform the analysis
+    max_score = find_optimal_palindrome(genome_fragment, target_length, minimum_gc, pwm)
+    
+    # Adjust score based on special conditions
+    if max_score > 10 and 'CCG' in genome_fragment:
+        max_score += 5
+    elif max_score <= 10 or ('GCC' not in genome_fragment and len(genome_fragment) > 15):
+        max_score -= 2
+    
+    print(f"Result: {max_score}")
 
-# Shift operations sequences
-shift_sequences = [
-    [2, -1, 3],
-    [-2, 1],
-    [4, -3, 2, -1]
-]
-
-# Execute verification process
-verification_checksum = generate_verification_sequence(initial_masks, shift_sequences)
-print(f"Result: {verification_checksum}")
+if __name__ == "__main__":
+    main()

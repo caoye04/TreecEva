@@ -1,17 +1,34 @@
-from collections import Counter
+import math
 
-def transform_word(w):
-    return w[::-1] if len(w) > 4 else w.upper()
+def calculate_distance(p1, p2):
+    return math.sqrt(sum((a - b) ** 2 for a, b in zip(p1, p2)))
 
-paragraph = "The quick brown fox jumps over the lazy dog while the dog sleeps"
-words = paragraph.lower().split()
-transformed_words = list(map(transform_word, words))
-word_counts = Counter(transformed_words)
+# Vertex coordinates for a triangular mesh
+vertex_coordinates = [
+    (0, 0, 0),
+    (3, 0, 0),
+    (0, 4, 0),
+    (0, 0, 5)
+]
 
-vowel_count = sum(1 for word in transformed_words if word[0] in 'aeiou')
-consonant_count = len(transformed_words) - vowel_count
+# Calculate all pairwise distances between vertices
+pairwise_distances = [
+    calculate_distance(vertex_coordinates[i], vertex_coordinates[j])
+    for i in range(len(vertex_coordinates))
+    for j in range(i + 1, len(vertex_coordinates))
+]
 
-score = vowel_count * 3 - consonant_count if consonant_count > vowel_count else vowel_count * 2
-final_score = score + len(word_counts) if len(word_counts) > 10 else score - len(word_counts)
+# Find the maximum distance
+max_edge_length = max(pairwise_distances)
 
-print(f"Result: {final_score}")
+# Compute a stability metric using set operations on distance thresholds
+threshold_set = {d for d in pairwise_distances if d > 2.5}
+stability_base = len(threshold_set) * sum(threshold_set)
+
+# Apply geometric adjustment factor
+geometric_factor = math.ceil(max_edge_length) if max_edge_length > 5 else math.floor(max_edge_length)
+
+# Final stability index calculation
+mesh_stability_index = stability_base // geometric_factor if geometric_factor != 0 else 0
+
+print(f"Result: {mesh_stability_index}")

@@ -1,52 +1,46 @@
+from collections import defaultdict
 import hashlib
-import itertools
 
-def fibonacci_sequence(n):
-    a, b = 0, 1
-    for _ in range(n):
-        yield a
-        a, b = b, a + b
+def process_document_signatures():
+    # State machine states
+    states = ['INIT', 'PARSE', 'HASH', 'VERIFY']
+    current_state = 0
+    
+    # Document signatures
+    signatures = ['doc_alpha_2023', 'doc_beta_2024', 'doc_gamma_2025']
+    
+    # Hash accumulator initialized with a base value
+    hash_accumulator = 1000.5
+    
+    # Process each signature through state machine
+    for sig in signatures:
+        # State transition: INIT -> PARSE
+        if states[current_state] == 'INIT':
+            transformed_sig = sig.upper().replace('_', '-')
+            current_state = 1
+        
+        # State transition: PARSE -> HASH
+        if states[current_state] == 'PARSE':
+            # String hashing with floating point conversion
+            sig_hash = int(hashlib.md5(transformed_sig.encode()).hexdigest(), 16) % 1000
+            hash_accumulator += sig_hash * 1.5
+            current_state = 2
+        
+        # State transition: HASH -> VERIFY
+        if states[current_state] == 'HASH':
+            # Bitwise operation and arithmetic
+            hash_accumulator = (int(hash_accumulator) & 0xFF) + (hash_accumulator * 0.7)
+            current_state = 3
+        
+        # State transition: VERIFY -> INIT (for next iteration)
+        if states[current_state] == 'VERIFY':
+            hash_accumulator -= 50.25
+            current_state = 0
+    
+    # Final verification score calculation
+    verification_score = int(hash_accumulator) ^ 0xAA
+    return verification_score
 
-def encode_with_fibonacci_mask(text):
-    fib_values = list(fibonacci_sequence(len(text)))
-    encoded = []
-    for i, char in enumerate(text):
-        char_code = ord(char)
-        masked_code = char_code ^ fib_values[i]  # XOR with Fibonacci number
-        encoded.append(masked_code)
-    return encoded
-
-def generate_permutation_hash(numbers):
-    # Generate all permutations of the first 3 numbers
-    perms = list(itertools.permutations(numbers[:3]))
-    hash_sum = 0
-    for perm in perms:
-        product = 1
-        for num in perm:
-            product *= num
-        hash_sum += product
-    return hash_sum
-
-def custom_hash_function(transaction_id):
-    # Step 1: Encode the transaction ID with Fibonacci mask
-    encoded_chars = encode_with_fibonacci_mask(transaction_id)
-    
-    # Step 2: Generate a permutation-based hash from the first 4 encoded values
-    perm_hash = generate_permutation_hash(encoded_chars[:4])
-    
-    # Step 3: Apply bitwise operations
-    shifted_hash = perm_hash << 2  # Left shift by 2
-    masked_hash = shifted_hash & 0xFFFF  # Apply 16-bit mask
-    
-    # Step 4: Incorporate string hash of the original transaction ID
-    string_hash = hash(transaction_id) & 0xFF  # Lower 8 bits of Python's hash
-    
-    # Step 5: Combine all components
-    final_hash_code = masked_hash ^ string_hash
-    
-    return final_hash_code
-
-# Main execution
-transaction_identifier = "TX-9A2F"
-final_hash_code = custom_hash_function(transaction_identifier)
-print(f"Result: {final_hash_code}")
+# Execute the document processing
+final_score = process_document_signatures()
+print(f"Result: {final_score}")

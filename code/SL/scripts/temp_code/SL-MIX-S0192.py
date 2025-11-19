@@ -1,45 +1,39 @@
-from itertools import permutations
-from collections import Counter
-from dataclasses import dataclass
+import math
 
-genomic_sequences = ['atgc', 'tgcA', 'GCAT', 'catg']
-base_weights = {'A': 2, 'T': 3, 'G': 5, 'C': 7}
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
 
-# Define a decorator for logging function calls
-def log_calls(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result
-    return wrapper
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)
 
-@log_calls
-def compute_weighted_score(freq_dict):
-    score = 0
-    for base, count in freq_dict.items():
-        if base in base_weights:
-            score += count * base_weights[base]
-    return score
+def harmonic_sum(values):
+    if len(values) == 0:
+        return 0
+    if len(values) == 1:
+        return 1 / values[0]
+    mid = len(values) // 2
+    left_sum = harmonic_sum(values[:mid])
+    right_sum = harmonic_sum(values[mid:])
+    return left_sum + right_sum
 
-# Process sequences
-processed_sequences = []
-for seq in genomic_sequences:
-    # Convert to uppercase
-    upper_seq = seq.upper()
-    # Replace 'A' with 'X' temporarily for pattern analysis
-    modified_seq = upper_seq.replace('A', 'X')
-    processed_sequences.append(modified_seq)
+# Deep space prime frequency bands
+prime_bands = [2, 3, 5, 7, 11]
 
-# Count all characters in processed sequences
-all_chars = ''.join(processed_sequences)
-frequency_count = Counter(all_chars)
+# Calculate LCM of all prime bands using set operations
+band_set = frozenset(prime_bands)
+lcm_value = 1
+for freq in band_set:
+    lcm_value = lcm(lcm_value, freq)
 
-# Apply combinatorics to generate possible base arrangements
-bases = list('XTGC')
-perm_count = len(list(permutations(bases, 2)))
+# Generate harmonic components using list comprehension
+harmonic_components = [f * 2 for f in prime_bands if f < 10]
 
-# Calculate final score using lambda closure
-adjustment_factor = perm_count
-scoring_func = lambda freq: compute_weighted_score(freq) * adjustment_factor
-final_score = scoring_func(frequency_count)
+# Compute harmonic sum using divide and conquer
+h_sum = harmonic_sum(harmonic_components)
 
-print(f'Result: {final_score}')
+# Calculate final synchronization index
+synchronization_index = int(lcm_value * h_sum)
+
+print(f"Result: {synchronization_index}")

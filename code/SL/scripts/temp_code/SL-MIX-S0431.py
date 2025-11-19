@@ -1,26 +1,64 @@
-import math
-from itertools import combinations
-from statistics import variance
+from collections import defaultdict
+import itertools
 
-# Sampled waveform data
-samples = [12, 7, 23, 8, 15, 3, 19, 5]
+class TreeNode:
+    def __init__(self, length):
+        self.length = length
+        self.words = []
+        self.left = None
+        self.right = None
 
-# Step 1: Apply modular transformation with XOR
-mod_samples = [(x ^ 0b1101) % 16 for x in samples]
+def insert_word(root, word):
+    word_len = len(word)
+    if word_len < root.length:
+        if root.left is None:
+            root.left = TreeNode(word_len)
+        insert_word(root.left, word)
+    elif word_len > root.length:
+        if root.right is None:
+            root.right = TreeNode(word_len)
+        insert_word(root.right, word)
+    else:
+        root.words.append(word)
 
-# Step 2: Generate all 3-element combinations and compute their bitwise AND
-comb_results = [math.prod(c) & 0b1111 for c in combinations(mod_samples, 3)]
+def calculate_score(word_freq, threshold=2):
+    return sum((freq * 3 if freq > threshold else freq) for freq in word_freq.values())
 
-# Step 3: Filter combinations with even parity (even number of 1s in binary representation)
-even_parity = [x for x in comb_results if bin(x).count('1') % 2 == 0]
+manuscript_words = ['ancient', 'text', 'symbol', 'ancient', 'glyph', 'text', 'mark', 'symbol', 'ancient', 'cipher']
+word_frequency = defaultdict(int)
 
-# Step 4: Compute variance of filtered results
-var_value = variance(even_parity) if len(even_parity) > 1 else 0
+for word in manuscript_words:
+    word_frequency[word] += 1
 
-# Step 5: Apply ternary operation based on variance
-processed = var_value > 10 and math.floor(var_value) or math.ceil(var_value)
+root = TreeNode(5)
+for word in set(manuscript_words):
+    insert_word(root, word)
 
-# Step 6: Final signature calculation using modular arithmetic
-wave_signature = (int(processed) * 0b1011 + sum(mod_samples)) % 31
+# Calculate scores from different tree branches
+left_branch_words = []
+right_branch_words = []
 
-print(f"Result: {wave_signature}")
+if root.left:
+    left_branch_words = list(itertools.chain.from_iterable(
+        [[word] * word_frequency[word] for word in root.left.words]
+    ))
+if root.right:
+    right_branch_words = list(itertools.chain.from_iterable(
+        [[word] * word_frequency[word] for word in root.right.words]
+    ))
+
+left_freq = defaultdict(int)
+right_freq = defaultdict(int)
+for word in left_branch_words:
+    left_freq[word] += 1
+for word in right_branch_words:
+    right_freq[word] += 1
+
+branch_scores = []
+branch_scores.append(calculate_score(left_freq))
+branch_scores.append(calculate_score(right_freq))
+
+final_score = sum(branch_scores) if branch_scores else 0
+final_score = final_score + (10 if len(manuscript_words) > 5 else 0)
+
+print(f"Result: {final_score}")

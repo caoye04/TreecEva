@@ -1,70 +1,76 @@
-from functools import reduce
-from collections import namedtuple
+import heapq
+import re
 
-class Node:
-    def __init__(self, species_id, strength):
-        self.species_id = species_id
-        self.strength = strength
-        self.next = None
+def tokenize_config(config_str):
+    tokens = []
+    depth = 0
+    i = 0
+    while i < len(config_str):
+        if config_str[i] == '[':
+            depth += 1
+            tokens.append(('LBRACKET', depth))
+            i += 1
+        elif config_str[i] == ']':
+            if depth > 0:
+                tokens.append(('RBRACKET', depth))
+                depth -= 1
+            else:
+                # Unmatched bracket - trigger backtracking
+                return None, True
+            i += 1
+        elif config_str[i].isspace():
+            i += 1
+        else:
+            match = re.match(r'[a-zA-Z_][a-zA-Z0-9_]*', config_str[i:])
+            if match:
+                word = match.group(0)
+                tokens.append((word, depth))
+                i += len(word)
+            else:
+                i += 1
+    return tokens, False
 
-def build_sonar_chain(detection_data):
-    if not detection_data:
-        return None
-    head = Node(detection_data[0][0], detection_data[0][1])
-    current = head
-    for species_id, strength in detection_data[1:]:
-        current.next = Node(species_id, strength)
-        current = current.next
-    return head
+def process_with_backtracking(config_str):
+    heap = []
+    attempt = 0
+    max_attempts = 3
+    
+    while attempt < max_attempts:
+        tokens, needs_backtrack = tokenize_config(config_str)
+        if not needs_backtrack:
+            # Push tokens to heap with priority based on depth
+            for token_type, depth in tokens:
+                heapq.heappush(heap, (-depth, token_type))  # Max-heap using negative depth
+            break
+        else:
+            # Backtrack: remove last unmatched closing bracket
+            last_bracket_pos = config_str.rfind(']')
+            if last_bracket_pos != -1:
+                config_str = config_str[:last_bracket_pos] + config_str[last_bracket_pos+1:]
+                attempt += 1
+            else:
+                break
+    
+    return heap
 
-def analyze_species_strength(chain_head):
-    # Extract unique species IDs using set operations
-    species_set = set()
-    current = chain_head
-    while current:
-        species_set.add(current.species_id)
-        current = current.next
-    
-    # Calculate average strength per species
-    species_strengths = {species_id: [] for species_id in species_set}
-    current = chain_head
-    while current:
-        species_strengths[current.species_id].append(current.strength)
-        current = current.next
-    
-    # Compute mean strength for each species using functional programming
-    avg_strengths = {
-        species_id: reduce(lambda x, y: x + y, strengths) / len(strengths)
-        for species_id, strengths in species_strengths.items()
-    }
-    
-    # Find maximum average strength
-    max_avg_strength = max(avg_strengths.values())
-    
-    # Count species with strength above 75% of maximum
-    high_activity_count = sum(
-        1 for strength in avg_strengths.values() 
-        if strength > 0.75 * max_avg_strength
-    )
-    
-    # Apply floating point operations for final calculation
-    normalized_factor = float(high_activity_count) / float(len(species_set))
-    final_strength = round(max_avg_strength * normalized_factor, 2)
-    
-    return final_strength
+# Main execution
+config_language = "settingA [subSettingB [item1 item2] settingC] [unmatched]"
 
-# Sonar detection data: (species_id, detection_strength)
-detections = [
-    ('SP-42', 82.3),
-    ('SP-17', 65.7),
-    ('SP-42', 88.1),
-    ('SP-91', 91.2),
-    ('SP-17', 72.4),
-    ('SP-42', 79.8),
-    ('SP-91', 87.6),
-    ('SP-17', 68.9)
-]
+priority_heap = process_with_backtracking(config_language)
 
-sonar_chain = build_sonar_chain(detections)
-final_strength = analyze_species_strength(sonar_chain)
-print(f"Result: {final_strength}")
+# Calculate final token weight
+final_token_weight = 0
+weight_multiplier = 1
+
+while priority_heap:
+    neg_depth, token = heapq.heappop(priority_heap)
+    depth = -neg_depth
+    if token in ['LBRACKET', 'RBRACKET']:
+        final_token_weight += depth * weight_multiplier
+        weight_multiplier += 1
+    else:
+        # For identifiers, add fixed value
+        final_token_weight += 10
+        
+# Execution point Z
+print(f"Result: {final_token_weight}")

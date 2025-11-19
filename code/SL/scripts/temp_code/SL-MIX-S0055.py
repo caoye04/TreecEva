@@ -1,13 +1,16 @@
-from collections import Counter
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
 
-daily_sales = Counter({'bread': 45, 'croissant': 30, 'muffin': 25, 'cookie': 15})
-prices = {'bread': 2.50, 'croissant': 3.00, 'muffin': 2.00, 'cookie': 1.50}
+# Generate first 10 Fibonacci numbers
+fib_sequence = list(fibonacci(10))
 
-total_items = sum(daily_sales.values())
-total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
+# Dictionary comprehension to map Fibonacci numbers to their indices
+fib_dict = {value: index for index, value in enumerate(fib_sequence)}
 
-if total_items > 100:
-    total_revenue *= 0.9
+# Calculate the sum of Fibonacci numbers that are keys in the dictionary
+fibonacci_sum = sum(fib_dict.keys())
 
-final_revenue = int(total_revenue * 100)  # Convert to cents for precise integer handling
-print(f'Result: {final_revenue}')
+print(f'Result: {fibonacci_sum}')

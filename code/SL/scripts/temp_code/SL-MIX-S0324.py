@@ -1,44 +1,28 @@
 from collections import defaultdict
-import math
 
-def is_valid_peak(readings, index, memo):
-    if index in memo:
-        return memo[index]
-    if index <= 0 or index >= len(readings) - 1:
-        memo[index] = False
-        return False
-    left_check = readings[index] > readings[index - 1]
-    right_check = readings[index] > readings[index + 1]
-    threshold_check = readings[index] > sum(readings) / len(readings)
-    # Short-circuit evaluation with logical operations
-    if left_check and right_check and threshold_check:
-        result = True
-    else:
-        result = False
-    memo[index] = result
-    return result
+tokens = ['0x1A3F', '0x4B2C', '0x1A3F', '0xF0F0', '0x4B2C', '0x1A3F', '0xC3A5']
+valid_token_freq = defaultdict(int)
 
-def count_peaks_recursive(readings, index, accumulator, memo):
-    if index >= len(readings):
-        return accumulator
-    if is_valid_peak(readings, index, memo):
-        return count_peaks_recursive(readings, index + 2, accumulator + 1, memo)
-    else:
-        return count_peaks_recursive(readings, index + 1, accumulator, memo)
+for hex_token in tokens:
+    # Remove '0x' prefix and convert to uppercase for uniformity
+    clean_token = hex_token[2:].upper()
+    
+    # Calculate checksum by XOR-ing all nibbles
+    checksum = 0
+    for char in clean_token:
+        # Convert hex character to its decimal value
+        nibble_val = int(char, 16)
+        checksum ^= nibble_val
+    
+    # If checksum is zero, consider it a valid token
+    if checksum == 0:
+        valid_token_freq[clean_token] += 1
 
-def fibonacci(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        a, b = b, a + b
-    return b
+# Compute security score
+security_score = 0
+for token_hex, freq in valid_token_freq.items():
+    # Convert token back to integer base 10
+    token_numeric = int(token_hex, 16)
+    security_score += token_numeric * freq
 
-# Sensor readings derived from fibonacci sequence with some modifications
-sensor_readings = [fibonacci(i) for i in range(1, 11)]
-sensor_readings[5] += 10  # Introduce a potential peak
-
-# Initialize tracking variables
-memoization_cache = {}
-peak_count = count_peaks_recursive(sensor_readings, 0, 0, memoization_cache)
-print(f"Result: {peak_count}")
+print(f"Result: {security_score}")

@@ -1,49 +1,39 @@
-from collections import namedtuple
-import hashlib
-
-def encode_token(s):
-    return ''.join(chr(ord(c) + 1) for c in s)
-
-def decode_token(s):
-    return ''.join(chr(ord(c) - 1) for c in s)
-
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-
-# Initialize linked list with encoded tokens
-head = Node(encode_token("alpha"))
-head.next = Node(encode_token("beta"))
-head.next.next = Node(encode_token("gamma"))
-
-# Token validation sets
-valid_prefixes = frozenset(['b', 'g'])
-blacklisted_suffixes = {'eta', 'lta'}
-
-# Matrix transformation
-matrix = [
-    [2, 3],
-    [1, 4]
-]
-vector = [5, 7]
-
-# Process linked list
-checksum_components = []
-current = head
-while current:
-    decoded = decode_token(current.data)
-    prefix_valid = decoded[0] in valid_prefixes
-    suffix_blacklisted = decoded[-3:] in blacklisted_suffixes
-    hash_valid = hashlib.md5(decoded.encode()).hexdigest()[-1] in '0123456'
+def process_sensor_data():
+    readings = [15, 29, 42, 8, 33, 19, 7]
+    cache = {}
+    transformations = []
     
-    if prefix_valid and not suffix_blacklisted and hash_valid:
-        # Apply matrix transformation
-        transformed = [matrix[0][0]*vector[0] + matrix[0][1]*vector[1], 
-                      matrix[1][0]*vector[0] + matrix[1][1]*vector[1]]
-        checksum_components.append(sum(transformed))
-    current = current.next
+    # Stage 1: Apply dynamic programming to compute optimal XOR combinations
+    for i in range(len(readings)):
+        if i == 0:
+            cache[i] = readings[i]
+        else:
+            cache[i] = cache[i-1] ^ readings[i]
+        
+    # Stage 2: Nested loop for applying bit shifts and generating transformation map
+    for idx, val in enumerate(readings):
+        temp_transforms = []
+        for shift in range(3):
+            if (idx & 1) == 0:  # Even index
+                transformed = (val << shift) & 0xFF
+            else:  # Odd index
+                transformed = (val >> shift) & 0xFF
+            temp_transforms.append(transformed)
+        transformations.append(temp_transforms)
+    
+    # Stage 3: Compute final checksum using switch-like logic and previous results
+    encoded_checksum = 0
+    for i in range(len(transformations)):
+        selector = i % 3
+        if selector == 0:
+            encoded_checksum ^= (cache[i] & 0xFF) | (transformations[i][0] & 0xFF)
+        elif selector == 1:
+            encoded_checksum ^= (cache[i] & 0xFF) & (transformations[i][1] & 0xFF)
+        else:  # selector == 2
+            encoded_checksum ^= (cache[i] & 0xFF) ^ (transformations[i][2] & 0xFF)
+    
+    return encoded_checksum
 
-# Calculate final checksum
-final_checksum = sum(checksum_components) if checksum_components else -1
-print(f"Result: {final_checksum}")
+# Execute the processing pipeline
+encoded_checksum = process_sensor_data()
+print(f"Result: {encoded_checksum}")

@@ -1,31 +1,42 @@
-from itertools import combinations
+import math
 
-def count_nucleotides(subseq):
-    counts = {'A': 0, 'T': 0, 'C': 0, 'G': 0}
-    for nuc in subseq:
-        if nuc in counts:
-            counts[nuc] += 1
-    return counts['A'] == counts['T'] and counts['C'] == counts['G']
+class AuthNode:
+    def __init__(self, session_id, timestamp):
+        self.session_hash = hash(session_id)
+        self.timestamp = timestamp
+        self.next = None
 
-def stability_score_memo(seq, memo):
-    if seq in memo:
-        return memo[seq]
-    if len(seq) < 2:
-        memo[seq] = 0
-        return 0
-    score = 0
-    if count_nucleotides(seq):
-        score = len(seq)
-    else:
-        score = max(
-            stability_score_memo(seq[1:], memo),
-            stability_score_memo(seq[:-1], memo)
-        )
-    memo[seq] = score
-    return score
+def create_auth_chain():
+    # Create a chain of authentication events
+    head = AuthNode("admin_session_001", 1000)
+    head.next = AuthNode("user_session_202", 1030)
+    head.next.next = AuthNode("admin_session_001", 1060)  # Duplicate session
+    head.next.next.next = AuthNode("guest_session_999", 1090)
+    return head
 
-# Main computation
-fragment = "ATCGATCG"
-memoization_table = {}
-stability_metric = stability_score_memo(fragment, memoization_table)
-print(f"Result: {stability_metric}")
+# Process authentication chain
+current = create_auth_chain()
+session_hashes = set()
+timestamp_weights = []
+
+while current:
+    session_hashes.add(current.session_hash)
+    # Apply exponential decay to timestamp weight
+    weight = math.exp(current.timestamp / 10000)
+    timestamp_weights.append(weight)
+    current = current.next
+
+# Calculate unique session factor
+unique_sessions = len(session_hashes)
+log_factor = math.log(unique_sessions + 1, 2)
+
+# Apply set operations with frozen set for security context
+security_context = frozenset([1, 2, 4, 8, 16])
+weight_flags = frozenset([int(w) for w in timestamp_weights])
+intersection_cardinality = len(security_context & weight_flags)
+
+# Compute final security index
+exponent_base = intersection_cardinality + 2
+final_security_index = int(math.pow(exponent_base, log_factor))
+
+print(f"Result: {final_security_index}")

@@ -1,12 +1,29 @@
+import math
 from functools import reduce
 
-# Raw ingredient data with inconsistent formatting
-ingredient_list = ['  salt', 'PEPPER  ', '  oLiVe Oil', 'garlic POWDER ']
+def hamming_window(n, N):
+    return 0.54 - 0.46 * math.cos(2 * math.pi * n / (N - 1))
 
-# Process ingredients: strip whitespace, title case, and join with commas
-processed_ingredients = ', '.join(map(lambda x: x.strip().title(), ingredient_list))
+def process_signal_samples():
+    N = 10
+    samples = [1.0] * N  # Unit amplitude samples
+    
+    # Apply windowing function using map and lambda
+    window_values = list(map(lambda n: hamming_window(n, N), range(N)))
+    windowed_samples = list(map(lambda pair: pair[0] * pair[1], zip(samples, window_values)))
+    
+    # Compute energy contributions using list comprehension
+    energy_contributions = [s**2 for s in windowed_samples]
+    
+    # Find maximum energy contribution
+    max_energy = reduce(lambda a, b: a if a > b else b, energy_contributions)
+    
+    # Count significant contributions using filter and lambda
+    threshold = max_energy / 2.0
+    significant_contributions = len(list(filter(lambda e: e > threshold, energy_contributions)))
+    
+    return significant_contributions
 
-# Calculate final string length
-final_length = len(processed_ingredients)
-
-print(f'Result: {final_length}')
+# Execute the signal processing pipeline
+significant_contributions = process_signal_samples()
+print(f"Result: {significant_contributions}")

@@ -1,14 +1,7 @@
-import hashlib
+library_catalog = {'Python Tricks', 'Effective Java', 'Clean Code', 'Design Patterns', 'Refactoring'}
+borrowed_books = {'Python Tricks', 'Clean Code'}
 
-dna_sequences = ['ATCG', 'GGCT', 'AATT', 'CCGG', 'AAAT']
+available_books = library_catalog - borrowed_books
+book_count = len(available_books) if available_books else 0
 
-# Filter sequences containing at least one 'A'
-valid_sequences = list(filter(lambda seq: 'A' in seq, dna_sequences))
-
-# Compute hash values for valid sequences
-hash_values = list(map(lambda seq: int(hashlib.md5(seq.encode()).hexdigest(), 16) % 10000, valid_sequences))
-
-# Calculate privacy checksum
-privacy_checksum = sum(hash_values)
-
-print(f"Result: {privacy_checksum}")
+print(f'Result: {book_count}')

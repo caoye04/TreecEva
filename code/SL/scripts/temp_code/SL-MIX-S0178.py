@@ -1,37 +1,52 @@
-from functools import reduce
+from collections import deque
 
-document = "algorithm optimization requires mathematical analysis and logical reasoning"
+class SignalProcessor:
+    def __init__(self):
+        self.filters = deque()
+        self.signal_strength = 100
+    
+    def add_filter(self, filter_type, value):
+        self.filters.append((filter_type, value))
+    
+    def process_signal(self):
+        # Dynamic programming table for filter optimization
+        dp = [0] * (len(self.filters) + 1)
+        dp[0] = self.signal_strength
+        
+        i = 1
+        while self.filters:
+            filter_type, value = self.filters.popleft()
+            if filter_type == 'amplify':
+                dp[i] = dp[i-1] + (value * 2)
+            elif filter_type == 'attenuate':
+                dp[i] = dp[i-1] - (value // 3)
+            elif filter_type == 'modulate':
+                dp[i] = dp[i-1] ^ value
+            i += 1
+        
+        # Binary search for optimal signal strength
+        target = 150
+        low, high = 0, len(dp) - 1
+        while low <= high:
+            mid = (low + high) // 2
+            if dp[mid] >= target:
+                high = mid - 1
+            else:
+                low = mid + 1
+        
+        # Apply final adjustment based on search result
+        final_signal_strength = dp[low] if low < len(dp) else dp[-1]
+        return final_signal_strength
 
-# Tokenize and clean
-words = document.split()
-tokens = list(map(lambda w: w.strip('.').lower(), words))
+# Initialize processor
+processor = SignalProcessor()
 
-# Unique token set
-unique_tokens = frozenset(tokens)
+# Add filters in specific order
+processor.add_filter('amplify', 25)
+processor.add_filter('attenuate', 30)
+processor.add_filter('modulate', 15)
+processor.add_filter('amplify', 40)
 
-# Frequency mapping
-token_freq = {token: tokens.count(token) for token in unique_tokens}
-
-# Apply transformation using ternary logic
-adjusted_freq = {k: v*2 if v > 1 else (v+1 if 'a' in k else v) for k, v in token_freq.items()}
-
-# Compute base metric
-frequency_sum = sum(adjusted_freq.values())
-unique_count = len(unique_tokens)
-
-# Decorator for complexity adjustment
-def complexity_adjustment_factor(func):
-    def wrapper(*args, **kwargs):
-        base_value = func(*args, **kwargs)
-        return base_value * 1.5 if base_value % 2 == 0 else base_value * 2.0
-    return wrapper
-
-@complexity_adjustment_factor
-def calculate_base_index(freq_sum, unique_cnt):
-    return freq_sum + unique_cnt
-
-# Calculate final index
-base_index = calculate_base_index(frequency_sum, unique_count)
-final_complexity_index = int(base_index) if base_index > 10 else int(base_index * 3)
-
-print(f'Result: {final_complexity_index}')
+# Process the signal
+final_signal_strength = processor.process_signal()
+print(f'Result: {final_signal_strength}')

@@ -1,35 +1,48 @@
-from collections import deque
-from functools import reduce
+from dataclasses import dataclass
+from typing import List, Set
 
-def compute_threat_sequence(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        a, b = b, a + b
-    return b
+@dataclass
+class HabitatData:
+    species_codes: Set[int]
+    habitat_id: int
 
-packet_timestamps = [3, 5, 7, 11, 13]
-threat_scores = []
-window_size = 3
+# Sensor data from three different habitats
+sensor_readings = [
+    HabitatData({101, 102, 105, 108}, 1),
+    HabitatData({102, 103, 106, 109}, 2),
+    HabitatData({104, 105, 107, 110}, 3)
+]
 
-for i in range(len(packet_timestamps)):
-    score = compute_threat_sequence(packet_timestamps[i] % 10)
-    threat_scores.append(score)
+# Find common species across all habitats
+common_species = sensor_readings[0].species_codes.copy()
+for reading in sensor_readings[1:]:
+    common_species &= reading.species_codes
 
-sliding_window = deque(maxlen=window_size)
-window_scores = []
+# Calculate diversity index using modular arithmetic
+unique_species_count = 0
+for reading in sensor_readings:
+    unique_species_count += len(reading.species_codes - common_species)
 
-for score in threat_scores:
-    sliding_window.append(score)
-    if len(sliding_window) == window_size:
-        window_sum = sum(sliding_window)
-        window_scores.append(window_sum)
+# Normalize using a prime modulus
+prime_mod = 17
+diversity_index = (unique_species_count * 7 + 3) % prime_mod
 
-stack = []
-for score in window_scores:
-    if score > 10:
-        stack.append(score)
+# Apply binary search-like adjustment for normalization
+adjustment_values = [2, 4, 6, 8, 10, 12, 14, 16]
+target = diversity_index
+left, right = 0, len(adjustment_values) - 1
+normalized_index = 0
 
-final_threat_score = reduce(lambda x, y: x + y, stack, 0)
-print(f"Result: {final_threat_score}")
+while left <= right:
+    mid = (left + right) // 2
+    if adjustment_values[mid] <= target:
+        normalized_index = mid + 1
+        left = mid + 1
+    else:
+        right = mid - 1
+
+# Final adjustment using set operations
+if normalized_index in {1, 3, 5}:
+    normalized_index = (normalized_index * 3) % 7
+
+print(f"Result: {normalized_index}")

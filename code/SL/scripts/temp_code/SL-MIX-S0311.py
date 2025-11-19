@@ -1,72 +1,40 @@
-import math
+from functools import reduce
 
-class SecureTransactionContext:
-    def __init__(self, initial_state):
-        self.state = initial_state
-        self.log = []
+def transform_identifier(traffic_id):
+    # Convert hex to integer
+    numeric_id = int(traffic_id, 16)
     
-    def __enter__(self):
-        self.log.append(f"Entering secure context with state: {self.state}")
-        return self
+    # Apply bitwise transformations
+    step1 = numeric_id ^ 0xFFFF  # XOR with mask
+    step2 = (step1 >> 4) & 0x0FFF  # Right shift and mask
     
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.log.append("Exiting secure context")
-        return False
+    # Create mapping dictionaries
+    hex_mapping = {hex(i)[-1]: i for i in range(16)}
+    transformed_mapping = {k: v*3 + 7 for k, v in hex_mapping.items()}
+    merged_dict = {**hex_mapping, **transformed_mapping}
     
-    def update_state(self, new_state):
-        self.state = new_state
-        self.log.append(f"State updated to: {self.state}")
-
-def complex_validation_rule(value):
-    return lambda x: (x & 0xF0) >> 4 == value
-
-def process_transaction_data(raw_data):
-    # Decode base64-like encoding
-    decoded = bytes([b - 1 for b in raw_data]).decode('ascii')
-    return sum(ord(c) for c in decoded)
-
-# Transaction processing
-transactions = [
-    [66, 67, 68, 69, 70],  # ASCII chars: BCDEF
-    [71, 72, 73, 74, 75],  # ASCII chars: GHIJK
-    [76, 77, 78, 79, 80]   # ASCII chars: LMNOP
-]
-
-validation_score = 0.0
-validation_rules = [
-    complex_validation_rule(0xB),
-    lambda x: x > 100,
-    lambda x: not (x % 7 == 0)
-]
-
-with SecureTransactionContext(validation_score) as ctx:
-    for i, tx_data in enumerate(transactions):
-        processed_value = process_transaction_data(tx_data)
-        
-        # Apply bitwise transformation
-        transformed_value = (processed_value ^ 0xAA) & 0xFF
-        
-        # Check validation rules
-        rule_results = [rule(transformed_value) for rule in validation_rules]
-        
-        # Calculate floating-point weight based on position
-        weight = math.sqrt(i + 1) / 2.0
-        
-        # Apply logical operations to determine score contribution
-        if all(rule_results) and not (transformed_value < 0x50):
-            score_delta = transformed_value * weight
-        elif any(rule_results) or (transformed_value & 0x0F) == 0x05:
-            score_delta = transformed_value / (i + 1)
-        else:
-            score_delta = -transformed_value * 0.1
-        
-        validation_score += score_delta
-        ctx.update_state(validation_score)
+    # Apply logical conditions
+    condition_a = (step2 & 0x0F00) != 0
+    condition_b = (step2 & 0x00F0) > 0x10
+    condition_c = not (step2 & 0x000F == 0)
     
-    # Final adjustment
-    if validation_score > 0:
-        validation_score = math.floor(validation_score) & 0x7F
+    # Functional transformation
+    hex_chars = [c for c in hex(step2)[2:].upper()]
+    mapped_values = list(map(lambda x: merged_dict.get(x, 0), hex_chars))
+    filtered_values = list(filter(lambda x: x > 10, mapped_values))
+    
+    # Calculate security score
+    base_score = reduce(lambda x, y: x + y, filtered_values, 0) if filtered_values else 0
+    
+    # Apply final logical combination
+    if condition_a and (condition_b or condition_c):
+        final_security_score = base_score * 2 + 0x100
     else:
-        validation_score = (int(validation_score) | 0x80) & 0xFF
+        final_security_score = base_score // 2 - 0x50
+    
+    return final_security_score
 
-print(f"Result: {validation_score}")
+# Process the network traffic
+network_identifier = '0x3A7F'
+final_security_score = transform_identifier(network_identifier)
+print(f"Result: {final_security_score}")

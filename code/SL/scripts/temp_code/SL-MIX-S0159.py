@@ -1,39 +1,37 @@
-import math
+import re
 
-def modified_fibonacci(n):
-    if n <= 1:
-        return n
-    else:
-        return modified_fibonacci(n-1) + modified_fibonacci(n-2)
+def hex_to_int(hex_str):
+    return int(hex_str, 16)
 
-def apply_bit_mask(value, mask):
-    return value & mask
+def elevation_filter(elevations, threshold=1000):
+    return [e for e in elevations if e > threshold]
 
-class SimulationContext:
-    def __init__(self):
-        self.iterations = 10
-        self.decay_base = 1.2
-        self.mask = 0b11110000
+def calculate_volume(elevation_map, base_level=500):
+    volume = 0
+    for row in elevation_map:
+        for elevation in row:
+            if elevation > base_level:
+                volume += elevation - base_level
+    return volume
+
+def process_terrain_data(terrain_hex_strings):
+    # Convert hex strings to integers
+    elevation_data = [[hex_to_int(cell) for cell in row.split()] for row in terrain_hex_strings]
     
-    def run(self):
-        populations = []
-        for i in range(self.iterations):
-            raw_pop = modified_fibonacci(i)
-            # Apply logarithmic dampening
-            if raw_pop > 0:
-                dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
-            else:
-                dampened_pop = raw_pop
-            # Apply bit mask
-            adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
-            populations.append(adjusted_pop)
-        
-        # Calculate final adjusted population as sum of all adjusted populations raised to the power of 1.1
-        total = sum(populations)
-        final_adjusted_population = int(total ** 1.1)
-        return final_adjusted_population
+    # Filter high elevation points
+    filtered_elevation_data = [elevation_filter(row) for row in elevation_data]
+    
+    # Calculate required volume for site preparation
+    total_volume = calculate_volume(filtered_elevation_data)
+    return total_volume
 
-# Execute simulation
-context = SimulationContext()
-final_adjusted_population = context.run()
-print(f"Result: {final_adjusted_population}")
+# Terrain data in hexadecimal representation
+raw_terrain_data = [
+    "3E8 4B0 5DC 7D0 9C4",
+    "1F4 2BC 3E8 4B0 5DC",
+    "FA 1F4 2BC 3E8 4B0",
+    "7D 1F4 2BC 3E8 5DC"
+]
+
+total_volume = process_terrain_data(raw_terrain_data)
+print(f"Result: {total_volume}")

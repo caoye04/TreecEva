@@ -1,42 +1,55 @@
-def signal_tracker(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        wrapper.calls += 1
-        wrapper.total += result
-        return result
-    wrapper.calls = 0
-    wrapper.total = 0
-    return wrapper
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
-@signal_tracker
-def process_signal_segment(segment_data):
-    # Apply divide and conquer approach to calculate signal metrics
-    if len(segment_data) <= 1:
-        return segment_data[0] if segment_data else 0
+def build_network_topology():
+    # Build a binary tree with 7 nodes
+    root = TreeNode(12)
+    root.left = TreeNode(7)
+    root.right = TreeNode(15)
+    root.left.left = TreeNode(3)
+    root.left.right = TreeNode(9)
+    root.right.left = TreeNode(11)
+    root.right.right = TreeNode(13)
+    return root
+
+def process_packets_through_network(root, packets):
+    routing_accumulator = 0
     
-    mid = len(segment_data) // 2
-    left_half = process_signal_segment(segment_data[:mid])
-    right_half = process_signal_segment(segment_data[mid:])
+    for packet_id in packets:
+        current_node = root
+        path_xor = packet_id
+        
+        # Traverse the tree, applying XOR at each node
+        while current_node:
+            path_xor ^= current_node.val
+            # Greedy choice: go left if path_xor is even, else go right
+            if path_xor & 1 == 0:
+                current_node = current_node.left
+            else:
+                current_node = current_node.right
+        
+        routing_accumulator ^= path_xor
     
-    # Combine results with mathematical sequence transformation
-    combined = (left_half * 3 + right_half * 2) % 1000
-    return combined
+    return routing_accumulator
 
-# String transformation pipeline for signal metadata
-signal_metadata = {chr(ord('A') + i): str(i+1)*3 for i in range(5)}
-signal_metadata = {k: v[::-1] for k, v in signal_metadata.items()}
-transformed_metadata = {k: int(v) * 2 for k, v in signal_metadata.items()}
+def calculate_final_key(base_key, modifier_sequence):
+    result = base_key
+    for mod in modifier_sequence:
+        if mod & 0x80:  # Check sign bit in 8-bit representation
+            result = (result << 1) & 0xFF  # Left shift with masking
+        else:
+            result = (result >> 1)  # Right shift
+        result ^= mod  # Apply modifier
+    return result
 
-# Main signal processing
-sensor_readings = [12, 27, 9, 33, 15, 8, 22]
-intermediate_result = process_signal_segment(sensor_readings)
+# Main execution
+network_root = build_network_topology()
+incoming_packets = [42, 18, 73, 29]
+routing_result = process_packets_through_network(network_root, incoming_packets)
+shift_modifiers = [0xC3, 0x4A, 0xF1, 0x88]
+final_routing_key = calculate_final_key(routing_result, shift_modifiers)
 
-# Apply metadata corrections
-metadata_sum = sum(transformed_metadata.values())
-final_signal_strength = (intermediate_result + metadata_sum) % 997
-
-# Additional transformation based on call statistics
-if process_signal_segment.calls > 0:
-    final_signal_strength = (final_signal_strength * process_signal_segment.total) % 997
-
-print(f"Result: {final_signal_strength}")
+print(f"Result: {final_routing_key}")

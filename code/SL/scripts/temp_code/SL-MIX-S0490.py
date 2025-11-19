@@ -1,33 +1,41 @@
-def is_prime(n):
-    if n <= 1:
-        return False
-    for i in range(2, int(n**0.5)+1):
-        if n % i == 0:
-            return False
-    return True
+from collections import defaultdict
+import itertools
 
-def count_primes_less_than(n):
-    return sum(1 for i in range(2, n) if is_prime(i))
+def calculate_security_metrics(attempts_log):
+    success_flags = 0b10101010
+    failure_flags = 0b01010101
+    base_score = 100
+    
+    user_scores = defaultdict(int)
+    access_patterns = set()
+    
+    for user_id, attempt_flags in attempts_log:
+        if attempt_flags & success_flags:
+            user_scores[user_id] += (attempt_flags & success_flags).bit_count()
+            access_patterns.add(frozenset([user_id, 'success']))
+        elif attempt_flags & failure_flags:
+            user_scores[user_id] -= (attempt_flags & failure_flags).bit_count()
+            if user_scores[user_id] < 0 and len(access_patterns) > 0:
+                user_scores[user_id] = 0
+            access_patterns.add(frozenset([user_id, 'failure']))
+    
+    pattern_combinations = list(itertools.combinations(access_patterns, 2))
+    security_bonus = len(pattern_combinations) if pattern_combinations else 0
+    
+    total_user_score = sum(user_scores.values())
+    final_security_score = base_score + total_user_score + security_bonus
+    
+    return final_security_score
 
-def sum_of_divisors(n):
-    return sum(i for i in range(1, n+1) if n % i == 0)
-
-# Compute base scores using dictionary comprehension
-node_base_scores = {
-    n: sum_of_divisors(n) if not is_prime(n) else count_primes_less_than(n)
-    for n in range(2, 11)
-}
-
-# Adjust scores using ternary-like logic
-adjusted_scores = [
-    score * 2 if score % 3 == 0 else
-    score + 5 if score % 3 == 1 else
-    score
-    for score in node_base_scores.values()
+# Authentication log: (user_id, bit_flags)
+auth_log = [
+    ('admin', 0b11001100),
+    ('user1', 0b10100010),
+    ('guest', 0b00110100),
+    ('admin', 0b01010000),
+    ('user1', 0b11110000),
+    ('guest', 0b00001111)
 ]
 
-# Apply lambda filter and aggregate
-filter_and_sum = lambda scores: sum(s for s in scores if s > 10)
-aggregated_trust_score = filter_and_sum(adjusted_scores)
-
-print(f"Result: {aggregated_trust_score}")
+final_security_score = calculate_security_metrics(auth_log)
+print(f"Result: {final_security_score}")

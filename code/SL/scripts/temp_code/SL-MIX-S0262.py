@@ -1,34 +1,36 @@
 import math
+from collections import defaultdict
 
-def compute_portfolio_score(returns, categories):
-    # Normalize returns using logarithmic scaling
-    scaled_returns = [math.log(r + 1) for r in returns]
-    
-    # Greedy selection: pick top 2 returns
-    scaled_returns.sort(reverse=True)
-    selected = scaled_returns[:2]
-    
-    # Calculate exponential weight sum
-    weighted_sum = sum(math.exp(r) for r in selected)
-    
-    # Set operations on categories
-    unique_categories = frozenset(categories)
-    base_set = {'equity', 'bond', 'commodity'}
-    intersection = unique_categories & base_set
-    
-    # Logical operations to determine bonus
-    has_equity = 'equity' in intersection
-    has_bond = 'bond' in intersection
-    bonus = 1.5 if (has_equity and not has_bond) else 1.0
-    
-    # Final score calculation
-    final_score = weighted_sum * len(intersection) * bonus
-    return final_score
+# Sensor readings mapped by hex identifiers (base 16)
+sensor_grid = {
+    '0xA': 25,
+    '0xB': 16,
+    '0xC': 9,
+    '0xD': 4,
+    '0xE': 1
+}
 
-# Portfolio data
-asset_returns = [0.05, 0.12, 0.08, 0.15, 0.03]
-asset_categories = ['equity', 'real_estate', 'equity', 'commodity', 'bond']
+calibration_mappings = defaultdict(int)
+composite_readings = []
 
-# Compute and print result
-final_score = compute_portfolio_score(asset_returns, asset_categories)
-print(f"Result: {final_score}")
+for hex_id, reading in sensor_grid.items():
+    numeric_id = int(hex_id, 16)
+    if numeric_id % 2 == 0:
+        transformed = math.log(math.sqrt(reading)) if reading > 0 else 0
+        calibration_mappings[numeric_id] += transformed
+    else:
+        power_val = math.pow(reading, 1/3.0)
+        composite_readings.append(power_val)
+        
+intermediate_sum = sum(calibration_mappings.values())
+processed_composite = [math.exp(val) for val in composite_readings if val > 2]
+
+final_aggregate = 0
+for idx, val in enumerate(processed_composite):
+    if idx % 2 == 0 and not (val < 5):  # Logical combination
+        final_aggregate += math.floor(val)
+    elif not (idx % 2 == 0) or val >= 10:
+        final_aggregate += math.ceil(val)
+        
+calibration_factor = round(intermediate_sum + final_aggregate)
+print(f"Result: {calibration_factor}")

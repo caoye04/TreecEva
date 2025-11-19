@@ -1,6 +1,15 @@
-from functools import reduce
+import base64
 
-temperature_anomalies = [1.2, -0.5, 0.3, 2.1, -1.0, 0.8, 1.5, -0.2]
-positive_anomalies = list(filter(lambda x: x > 0, temperature_anomalies))
-total_warming_impact = reduce(lambda acc, val: acc + val, positive_anomalies, 0)
-print(f"Result: {total_warming_impact}")
+encoded_packets = [b'SGVsbG8=', b'V29ybGQ=', b'UHl0aG9u']
+
+def calculate_checksum(text):
+    return sum(ord(char) for char in text)
+
+packet_checksums = []
+for packet in encoded_packets:
+    decoded_text = base64.b64decode(packet).decode('utf-8')
+    checksum = calculate_checksum(decoded_text)
+    packet_checksums.append(checksum)
+
+final_security_checksum = sum(packet_checksums)
+print(f"Result: {final_security_checksum}")

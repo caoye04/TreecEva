@@ -1,48 +1,52 @@
-from dataclasses import dataclass
-from typing import List, Set
+import hashlib
+import itertools
 
-@dataclass
-class HabitatData:
-    species_codes: Set[int]
-    habitat_id: int
+def fibonacci_sequence(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
 
-# Sensor data from three different habitats
-sensor_readings = [
-    HabitatData({101, 102, 105, 108}, 1),
-    HabitatData({102, 103, 106, 109}, 2),
-    HabitatData({104, 105, 107, 110}, 3)
-]
+def encode_with_fibonacci_mask(text):
+    fib_values = list(fibonacci_sequence(len(text)))
+    encoded = []
+    for i, char in enumerate(text):
+        char_code = ord(char)
+        masked_code = char_code ^ fib_values[i]  # XOR with Fibonacci number
+        encoded.append(masked_code)
+    return encoded
 
-# Find common species across all habitats
-common_species = sensor_readings[0].species_codes.copy()
-for reading in sensor_readings[1:]:
-    common_species &= reading.species_codes
+def generate_permutation_hash(numbers):
+    # Generate all permutations of the first 3 numbers
+    perms = list(itertools.permutations(numbers[:3]))
+    hash_sum = 0
+    for perm in perms:
+        product = 1
+        for num in perm:
+            product *= num
+        hash_sum += product
+    return hash_sum
 
-# Calculate diversity index using modular arithmetic
-unique_species_count = 0
-for reading in sensor_readings:
-    unique_species_count += len(reading.species_codes - common_species)
+def custom_hash_function(transaction_id):
+    # Step 1: Encode the transaction ID with Fibonacci mask
+    encoded_chars = encode_with_fibonacci_mask(transaction_id)
+    
+    # Step 2: Generate a permutation-based hash from the first 4 encoded values
+    perm_hash = generate_permutation_hash(encoded_chars[:4])
+    
+    # Step 3: Apply bitwise operations
+    shifted_hash = perm_hash << 2  # Left shift by 2
+    masked_hash = shifted_hash & 0xFFFF  # Apply 16-bit mask
+    
+    # Step 4: Incorporate string hash of the original transaction ID
+    string_hash = hash(transaction_id) & 0xFF  # Lower 8 bits of Python's hash
+    
+    # Step 5: Combine all components
+    final_hash_code = masked_hash ^ string_hash
+    
+    return final_hash_code
 
-# Normalize using a prime modulus
-prime_mod = 17
-diversity_index = (unique_species_count * 7 + 3) % prime_mod
-
-# Apply binary search-like adjustment for normalization
-adjustment_values = [2, 4, 6, 8, 10, 12, 14, 16]
-target = diversity_index
-left, right = 0, len(adjustment_values) - 1
-normalized_index = 0
-
-while left <= right:
-    mid = (left + right) // 2
-    if adjustment_values[mid] <= target:
-        normalized_index = mid + 1
-        left = mid + 1
-    else:
-        right = mid - 1
-
-# Final adjustment using set operations
-if normalized_index in {1, 3, 5}:
-    normalized_index = (normalized_index * 3) % 7
-
-print(f"Result: {normalized_index}")
+# Main execution
+transaction_identifier = "TX-9A2F"
+final_hash_code = custom_hash_function(transaction_identifier)
+print(f"Result: {final_hash_code}")

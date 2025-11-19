@@ -1,28 +1,30 @@
 from collections import defaultdict
 
-daily_sales = [
-    {'croissant': 15, 'muffin': 20, 'scone': 10},
-    {'croissant': 12, 'muffin': 18, 'scone': 15},
-    {'croissant': 10, 'muffin': 15, 'scone': 12},
-    {'croissant': 18, 'muffin': 25, 'scone': 8},
-    {'croissant': 20, 'muffin': 30, 'scone': 10},
-    {'croissant': 8, 'muffin': 12, 'scone': 20},
-    {'croissant': 22, 'muffin': 28, 'scone': 15}
-]
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
 
-prices = {'croissant': 2.50, 'muffin': 1.75, 'scone': 2.00}
+def fibonacci_sequence(length):
+    fib = [0, 1]
+    for _ in range(2, length):
+        fib.append(fib[-1] + fib[-2])
+    return fib[:length]
 
-total_revenue = 0.0
-found_target_week = False
+# Calculate base sequences
+celestial_frequencies = 12
+fib_numbers = fibonacci_sequence(celestial_frequencies)
+prime_flags = [1 if is_prime(i) else 0 for i in range(celestial_frequencies)]
 
-for day in daily_sales:
-    if not found_target_week:
-        croissant_muffin_total = day['croissant'] + day['muffin']
-        if croissant_muffin_total > 100:
-            found_target_week = True
-            
-    if found_target_week:
-        for item, quantity in day.items():
-            total_revenue += quantity * prices[item]
+# Process stellar signatures using XOR and aggregation
+stellarsign = 0
+for idx in range(celestial_frequencies):
+    fib_component = fib_numbers[idx] & 0xFF  # Mask to byte size
+    prime_component = prime_flags[idx] << 3  # Shift prime flag
+    signature = fib_component ^ prime_component
+    stellarsign = (stellarsign + signature) & 0xFFFF  # Add with overflow protection
 
-print(f"Result: {total_revenue}")
+print(f"Result: {stellarsign}")

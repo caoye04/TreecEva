@@ -1,28 +1,26 @@
 from collections import defaultdict
+import math
 
-tokens = ['0x1A3F', '0x4B2C', '0x1A3F', '0xF0F0', '0x4B2C', '0x1A3F', '0xC3A5']
-valid_token_freq = defaultdict(int)
+def process_signal_strength(readings):
+    adjusted_readings = []
+    for db_level in readings:
+        if db_level > 0 and math.log(db_level) >= 1.0:
+            adjusted_readings.append(math.log(db_level) * 10)
+        else:
+            adjusted_readings.append(0.0)
+    return adjusted_readings
 
-for hex_token in tokens:
-    # Remove '0x' prefix and convert to uppercase for uniformity
-    clean_token = hex_token[2:].upper()
-    
-    # Calculate checksum by XOR-ing all nibbles
-    checksum = 0
-    for char in clean_token:
-        # Convert hex character to its decimal value
-        nibble_val = int(char, 16)
-        checksum ^= nibble_val
-    
-    # If checksum is zero, consider it a valid token
-    if checksum == 0:
-        valid_token_freq[clean_token] += 1
+signal_data = [0.5, 2.7, 10.0, 0.0, 15.3, -2.1]
+filtered_signals = process_signal_strength(signal_data)
+species_count = defaultdict(int)
 
-# Compute security score
-security_score = 0
-for token_hex, freq in valid_token_freq.items():
-    # Convert token back to integer base 10
-    token_numeric = int(token_hex, 16)
-    security_score += token_numeric * freq
+bio_activity_score = 0.0
+for idx, sig in enumerate(filtered_signals):
+    species_id = idx % 3
+    if sig > 0.0 and (species_id == 0 or species_count[species_id] <= 2):
+        species_count[species_id] += 1
+        bio_activity_score += sig * (1.5 if species_id == 0 else 1.2)
+    elif sig == 0.0:
+        continue
 
-print(f"Result: {security_score}")
+print(f"Result: {round(bio_activity_score, 2)}")

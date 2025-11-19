@@ -1,52 +1,67 @@
+import math
 from collections import defaultdict
-from itertools import permutations
-from functools import wraps
-import time
 
-def timing_decorator(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        result = func(*args, **kwargs)
-        end = time.time()
-        wrapper.execution_time = end - start
-        return result
-    return wrapper
+class SensorNode:
+    def __init__(self, x, y, next_node=None):
+        self.x = x
+        self.y = y
+        self.next = next_node
 
-class ResourceContext:
-    def __enter__(self):
-        self.resource_data = defaultdict(int)
-        return self.resource_data
-    
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+def compute_spatial_hash(x, y, grid_size=10):
+    """Hash function for spatial coordinates"""
+    return (int(x) // grid_size, int(y) // grid_size)
 
-@timing_decorator
-def compute_similarity(tokens1, tokens2):
-    # Compute similarity as number of common permutations of length 2
-    perms1 = set(permutations(tokens1, 2))
-    perms2 = set(permutations(tokens2, 2))
-    return len(perms1.intersection(perms2))
+def distance(p1, p2):
+    """Calculate Euclidean distance between two points"""
+    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
-documents = [
-    "machine learning algorithms",
-    "deep learning neural networks",
-    "reinforcement learning agents"
-]
+# Sensor data as linked lists
+sensor_a = SensorNode(15.2, 22.7, SensorNode(16.8, 23.1, SensorNode(25.3, 30.5)))
+sensor_b = SensorNode(14.9, 22.3, SensorNode(35.2, 40.1))
+sensor_c = SensorNode(16.1, 23.5, SensorNode(24.8, 31.2, SensorNode(34.7, 39.8)))
 
-tokenized_docs = [doc.split() for doc in documents]
+# Group sensors
+sensors = [sensor_a, sensor_b, sensor_c]
 
-aggregate_score = 0
+# Spatial clustering using hash maps
+cluster_map = defaultdict(list)
+proximity_threshold = 3.0
 
-with ResourceContext() as resources:
-    for i in range(len(tokenized_docs)):
-        for j in range(i+1, len(tokenized_docs)):
-            score = compute_similarity(tokenized_docs[i], tokenized_docs[j])
-            aggregate_score += score * (i+j)
-            resources[f'doc_pair_{i}_{j}'] = score
+for i, sensor_head in enumerate(sensors):
+    current = sensor_head
+    while current:
+        hash_key = compute_spatial_hash(current.x, current.y)
+        point = (current.x, current.y, i)  # Include sensor ID
+        
+        # Check if any existing point in cluster is within proximity
+        merged = False
+        for existing_hash, points in cluster_map.items():
+            for existing_point in points:
+                if (distance((point[0], point[1]), (existing_point[0], existing_point[1])) < proximity_threshold and
+                    existing_hash == hash_key):
+                    cluster_map[existing_hash].append(point)
+                    merged = True
+                    break
+            if merged:
+                break
+        
+        if not merged:
+            cluster_map[hash_key].append(point)
+            
+        current = current.next
 
-# Apply correction factor based on decorator timing
-if hasattr(compute_similarity, 'execution_time'):
-    aggregate_score = int(aggregate_score / (compute_similarity.execution_time * 1000 + 1))
+# Count clusters with points from multiple sensors
+cluster_count = 0
+for points in cluster_map.values():
+    sensor_ids = set(p[2] for p in points)
+    if len(sensor_ids) > 1:
+        cluster_count += 1
+        
+# Apply geometric correction factor
+if cluster_count > 0:
+    correction_factor = math.ceil(math.sqrt(cluster_count))
+    cluster_count = cluster_count * correction_factor
+else:
+    cluster_count = -1
 
-print(f"Result: {aggregate_score}")
+print(f"Result: {cluster_count}")

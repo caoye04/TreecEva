@@ -1,14 +1,48 @@
-from collections import deque
+from collections import defaultdict
+from statistics import mean
+from contextlib import contextmanager
 
-temperature_deviations = [1.2, -0.5, 0.8, -1.0, 2.3, -0.2, 1.7]
-window_size = 3
-weighted_readings = deque(maxlen=window_size)
-total_weighted_sum = 0.0
+@contextmanager
+def risk_calculator():
+    state = {'score': 0}
+    try:
+        yield state
+    finally:
+        state['score'] *= 2
 
-for idx, deviation in enumerate(temperature_deviations):
-    weighted_value = deviation * (idx + 1)
-    weighted_readings.append(weighted_value)
-    total_weighted_sum += weighted_value
+event_log = [
+    ('192.168.1.10', 'failed_login', 3),
+    ('10.0.0.5', 'malicious_payload', 5),
+    ('192.168.1.10', 'port_scan', 2),
+    ('172.16.0.3', 'failed_login', 3),
+    ('10.0.0.5', 'data_exfiltration', 7)
+]
 
-smoothed_average_temperature = total_weighted_sum / len(weighted_readings)
-print(f"Result: {smoothed_average_temperature}")
+ip_profiles = defaultdict(list)
+suspicious_ips = frozenset(['10.0.0.5', '192.168.1.10'])
+weight_map = {
+    'failed_login': 2,
+    'port_scan': 3,
+    'malicious_payload': 5,
+    'data_exfiltration': 8
+}
+
+for ip, event_type, count in event_log:
+    if ip in suspicious_ips:
+        weighted_score = weight_map[event_type] * count
+        ip_profiles[ip].append(weighted_score)
+
+profile_stats = {
+    ip: {'mean': mean(scores), 'total': sum(scores)}
+    for ip, scores in ip_profiles.items()
+}
+
+with risk_calculator() as calc_state:
+    for ip, stats in profile_stats.items():
+        if stats['total'] > 10:
+            calc_state['score'] += stats['mean']
+    intermediate_score = calc_state['score']
+
+penalty_factors = {ip: len(scores) for ip, scores in ip_profiles.items()}
+final_risk_score = intermediate_score - sum(penalty_factors.values())
+print(f'Result: {final_risk_score}')

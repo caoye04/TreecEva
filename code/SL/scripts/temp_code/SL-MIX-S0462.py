@@ -1,29 +1,35 @@
-from math import gcd
-from functools import reduce
 from collections import defaultdict
+import statistics
 
-def compute_sync_score(peaks):
-    if len(peaks) <= 1:
-        return len(peaks)
-    
-    # Calculate all pairwise absolute differences
-    differences = set()
-    for i in range(len(peaks)):
-        for j in range(i+1, len(peaks)):
-            diff = abs(peaks[i] - peaks[j])
-            if diff > 0:
-                differences.add(diff)
-    
-    # If all differences are zero (should not happen if len>1 and distinct), return count
-    if not differences:
-        return len(peaks)
-    
-    # Compute GCD of all differences
-    sync_score = reduce(gcd, differences)
-    return sync_score
+temperature_readings = [
+    {'sensor_id': 'A', 'values': [23.5, 24.0, None, 25.1, 22.8]},
+    {'sensor_id': 'B', 'values': [21.0, 21.5, 22.0, 21.8, None]},
+    {'sensor_id': 'C', 'values': [None, 19.5, 20.0, 19.8, 20.2]}
+]
 
-# Timestamps of detected signal peaks
-signal_peaks = [12, 28, 44, 60, 76]
+sensor_valid_data = defaultdict(list)
+quality_scores = {}
 
-sync_score = compute_sync_score(signal_peaks)
-print(f"Result: {sync_score}")
+for reading in temperature_readings:
+    sensor = reading['sensor_id']
+    values = [v for v in reading['values'] if v is not None]
+    sensor_valid_data[sensor].extend(values)
+    
+    # Short-circuit evaluation in quality check
+    if len(values) > 0 and statistics.mean(values) > 20:
+        base_score = len(values) * 10
+        variance_bonus = 5 if statistics.variance(values) < 1 else 0
+        quality_scores[sensor] = base_score + variance_bonus
+    else:
+        quality_scores[sensor] = 0
+
+# Calculate system-wide metrics
+all_valid_values = [v for values in sensor_valid_data.values() for v in values]
+system_mean = statistics.mean(all_valid_values) if all_valid_values else 0
+
+# Final score computation with lambda function
+weight_function = lambda s: 1.5 if quality_scores[s] > 50 else 1.0
+weighted_scores = [quality_scores[sensor] * weight_function(sensor) for sensor in quality_scores]
+
+final_score = int(sum(weighted_scores) * system_mean / 10)
+print(f"Result: {final_score}")

@@ -1,24 +1,34 @@
-import math
-from collections import defaultdict
+from itertools import permutations
+from dataclasses import dataclass
+from typing import List
 
-def calculate_signal_degradation(modulation_factors, time_points):
-    degradation_map = defaultdict(float)
-    for factor in modulation_factors:
-        for t in time_points:
-            log_gain = math.log(t + 1) if t > 0 else 0
-            exp_decay = math.exp(-factor * t)
-            degradation_value = exp_decay * log_gain
-            degradation_map[factor] += degradation_value
-    return degradation_map
+def hash_token(token: str) -> int:
+    return hash(token) % 10000
 
-mod_factors = [0.1, 0.2, 0.3]
-time_points = range(1, 6)
+def xor_reduce(values: List[int]) -> int:
+    result = 0
+    for v in values:
+        result ^= v
+    return result
 
-signal_degradation = calculate_signal_degradation(mod_factors, time_points)
+@dataclass
+class TokenSet:
+    items: List[str]
+    
+    def get_permutation_hashes(self) -> List[int]:
+        hashes = [hash_token(t) for t in self.items]
+        perm_hashes = []
+        for p in permutations(hashes):
+            perm_value = xor_reduce(list(p)[:3])
+            perm_hashes.append(perm_value)
+        return perm_hashes
 
-aggregate_degradation_score = 0.0
-for factor in mod_factors:
-    weighted_sum = signal_degradation[factor] * (1.5 if factor < 0.25 else 0.75)
-    aggregate_degradation_score += weighted_sum if weighted_sum > 0.1 else 0
+tokens = TokenSet(['alpha', 'beta', 'gamma'])
 
-print(f"Result: {round(aggregate_degradation_score, 4)}")
+with open('temp_log.txt', 'w') as f:
+    f.write("Processing tokens\n")
+    hashes_list = tokens.get_permutation_hashes()
+    secure_key = sum(hashes_list) % 997
+    f.write(f"Secure key: {secure_key}\n")
+
+print(f"Result: {secure_key}")

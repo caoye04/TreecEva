@@ -1,37 +1,48 @@
-import re
+import math
 
-def hex_to_int(hex_str):
-    return int(hex_str, 16)
+class TriangleNode:
+    def __init__(self, area=0, left=None, right=None):
+        self.area = area
+        self.left = left
+        self.right = right
 
-def elevation_filter(elevations, threshold=1000):
-    return [e for e in elevations if e > threshold]
+def calculate_leaf_areas(node):
+    if not node:
+        return []
+    if not node.left and not node.right:
+        return [node.area]
+    return calculate_leaf_areas(node.left) + calculate_leaf_areas(node.right)
 
-def calculate_volume(elevation_map, base_level=500):
-    volume = 0
-    for row in elevation_map:
-        for elevation in row:
-            if elevation > base_level:
-                volume += elevation - base_level
-    return volume
+def combinatorial_aggregation(areas):
+    if len(areas) < 2:
+        return sum(areas)
+    combinations_set = set()
+    for i in range(len(areas)):
+        for j in range(i+1, len(areas)):
+            combinations_set.add(areas[i] + areas[j])
+    return sum(combinations_set)
 
-def process_terrain_data(terrain_hex_strings):
-    # Convert hex strings to integers
-    elevation_data = [[hex_to_int(cell) for cell in row.split()] for row in terrain_hex_strings]
-    
-    # Filter high elevation points
-    filtered_elevation_data = [elevation_filter(row) for row in elevation_data]
-    
-    # Calculate required volume for site preparation
-    total_volume = calculate_volume(filtered_elevation_data)
-    return total_volume
+# Constructing the binary tree
+#       10
+#      /  \
+#     5    15
+#    / \   / \
+#   3   7 12  20
+root = TriangleNode(10)
+root.left = TriangleNode(5)
+root.right = TriangleNode(15)
+root.left.left = TriangleNode(3)
+root.left.right = TriangleNode(7)
+root.right.left = TriangleNode(12)
+root.right.right = TriangleNode(20)
 
-# Terrain data in hexadecimal representation
-raw_terrain_data = [
-    "3E8 4B0 5DC 7D0 9C4",
-    "1F4 2BC 3E8 4B0 5DC",
-    "FA 1F4 2BC 3E8 4B0",
-    "7D 1F4 2BC 3E8 5DC"
-]
+# Extract leaf areas
+leaf_areas = calculate_leaf_areas(root)
 
-total_volume = process_terrain_data(raw_terrain_data)
-print(f"Result: {total_volume}")
+# Apply combinatorial aggregation using a lambda for transformation
+transformed_areas = list(map(lambda x: round(math.sqrt(x), 2), leaf_areas))
+
+# Calculate final aggregated surface area
+aggregated_surface_area = combinatorial_aggregation(transformed_areas)
+
+print(f"Result: {aggregated_surface_area}")

@@ -1,40 +1,26 @@
-from itertools import compress
+def simulate_circuit(input_signal):
+    # Apply initial transformation using bitwise operations
+    stage1 = (input_signal << 2) & 0xFF  # Shift left by 2, mask to 8 bits
+    
+    # Apply logical conditions
+    if (stage1 > 100) and not (stage1 & 0x0F == 0):  # Check if greater than 100 and lower nibble is non-zero
+        stage2 = stage1 ^ 0x55  # XOR with 0x55
+    else:
+        stage2 = stage1 | 0xAA  # OR with 0xAA
+    
+    # Apply another transformation based on parity
+    if (bin(stage2).count('1') % 2) == 0:  # Check if even parity
+        stage3 = stage2 & 0xF0  # Mask upper nibble
+    else:
+        stage3 = stage2 | 0x0F  # Set lower nibble
+    
+    # Final adjustment using a lambda function
+    adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
+    final_signal = adjust(stage3)
+    
+    return final_signal
 
-class NucleotideEncoder:
-    def __init__(self):
-        self.mapping = {'A': 1, 'T': 2, 'G': 3, 'C': 4}
-    
-    def encode(self, sequence):
-        return [self.mapping[nuc] for nuc in sequence]
-
-def analyze_marker(seq_values):
-    # Apply bitwise transformations
-    transformed = []
-    for i, val in enumerate(seq_values):
-        if i % 2 == 0:
-            transformed.append(val << 1)  # Left shift even indices
-        else:
-            transformed.append(val & 3)   # Bitwise AND with 3 for odd indices
-    
-    # Apply logical filtering using short-circuit evaluation
-    valid_positions = [
-        (t > 2) and (t < 10) or (t == 1) 
-        for t in transformed
-    ]
-    
-    # Extract values where valid_positions is True
-    filtered_values = list(compress(transformed, valid_positions))
-    
-    # Calculate marker code using XOR
-    marker_code = 0
-    for val in filtered_values:
-        marker_code ^= val
-    
-    return marker_code
-
-# Main processing
-encoder = NucleotideEncoder()
-sequence = "ATGCAT"
-encoded_sequence = encoder.encode(sequence)
-marker_code = analyze_marker(encoded_sequence)
-print(f"Result: {marker_code}")
+# Simulate with input signal 0b11010110 (214 in decimal)
+input_signal = 0b11010110
+final_signal = simulate_circuit(input_signal)
+print(f'Result: {final_signal}')

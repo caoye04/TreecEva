@@ -1,35 +1,62 @@
 import math
-from collections import defaultdict
+from collections import namedtuple
+from itertools import product
 
-def calculate_priority(base_val, position):
-    match position % 4:
-        case 0:
-            return base_val << 2
-        case 1:
-            return base_val >> 1
-        case 2:
-            return base_val ^ 0xF
-        case 3:
-            return ~base_val & 0xFF
+def calculate_adaptation_factor(stress_level, time_hours):
+    return math.log(max(1, stress_level)) * math.exp(-0.1 * time_hours)
 
-def adjust_with_trig(score, index):
-    return int(score * math.sin(index) + math.cos(index * 2))
+def apply_environmental_factors(base_growth, factors):
+    multiplier = 1.0
+    for factor in factors:
+        if factor == 'heat':
+            multiplier *= 0.8
+        elif factor == 'cold':
+            multiplier *= 0.9
+        elif factor == 'radiation':
+            multiplier *= 0.6
+        else:  # nutrient_rich
+            multiplier *= 1.3
+    return base_growth * multiplier
 
-packages = [12, 25, 8, 33, 19, 42, 7]
-processed_scores = []
-score_map = defaultdict(int)
+GrowthCondition = namedtuple('GrowthCondition', ['temperature', 'radiation', 'nutrients'])
 
-for i, pkg in enumerate(packages):
-    priority = calculate_priority(pkg, i)
-    adjusted = adjust_with_trig(priority, i)
-    processed_scores.append(adjusted)
-    score_map[i] = adjusted
+initial_population = 1000
+simulation_days = 5
+daily_measurements = []
 
-# Dynamic programming to find optimal loading sequence
-n = len(processed_scores)
-dp = [0] * (n + 1)
-for i in range(1, n + 1):
-    dp[i] = max(dp[i-1], dp[i-2] + processed_scores[i-1]) if i > 1 else processed_scores[i-1]
+conditions = [
+    GrowthCondition(37, 0.2, 'normal'),
+    GrowthCondition(42, 0.1, 'rich'),
+    GrowthCondition(30, 0.4, 'normal'),
+    GrowthCondition(39, 0.3, 'rich'),
+    GrowthCondition(35, 0.0, 'normal')
+]
 
-final_loading_score = dp[n] + (sum(packages) & 0x7)
-print(f"Result: {final_loading_score}")
+for day in range(simulation_days):
+    daily_growth_rate = 1.15
+    stress_combination = []
+    
+    if conditions[day].temperature > 40:
+        stress_combination.append('heat')
+    elif conditions[day].temperature < 32:
+        stress_combination.append('cold')
+        
+    if conditions[day].radiation > 0.25:
+        stress_combination.append('radiation')
+        
+    if conditions[day].nutrients == 'rich':
+        stress_combination.append('nutrient_rich')
+    
+    adjusted_growth = apply_environmental_factors(daily_growth_rate, stress_combination)
+    adaptation = calculate_adaptation_factor(sum([0.1 if s=='heat' else 0.15 if s=='cold' else 0.2 if s=='radiation' else -0.1 for s in stress_combination]), day*24)
+    
+    if day == 0:
+        colony_count = initial_population
+    else:
+        colony_count = daily_measurements[-1]
+        
+    new_colonies = int(colony_count * adjusted_growth * (1 + adaptation))
+    daily_measurements.append(new_colonies)
+
+final_colony_count = daily_measurements[-1]
+print(f"Result: {final_colony_count}")

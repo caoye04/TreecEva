@@ -1,19 +1,36 @@
-import itertools
-import statistics
+from collections import defaultdict
 
-cipher_hex = 'a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3'
-pair_generator = (cipher_hex[i:i+2] for i in range(len(cipher_hex)-1))
-pair_frequencies = {}
-for pair in pair_generator:
-    pair_frequencies[pair] = pair_frequencies.get(pair, 0) + 1
+def rotate_bits(n, width=8):
+    # Assumes 8-bit keys for simplicity
+    n = n & ((1 << width) - 1)
+    return (n >> 1) | ((n & 1) << (width - 1))
 
-unique_pairs_count = len(pair_frequencies)
-frequency_values = list(pair_frequencies.values())
-mean_frequency = statistics.mean(frequency_values)
-variance = statistics.variance(frequency_values) if len(frequency_values) > 1 else 0
+def get_canonical_form(key):
+    rotations = [key]
+    current = key
+    for _ in range(7): # For 8-bit keys, there are 8 possible rotations
+        current = rotate_bits(current)
+        rotations.append(current)
+    return min(rotations)
 
-high_freq_pairs = list(filter(lambda item: item[1] > mean_frequency, pair_frequencies.items()))
-high_freq_count = len(high_freq_pairs)
+# Historical cryptographic keys (represented as 8-bit integers)
+historical_keys = [15, 30, 60, 120, 240, 97, 194, 53, 106, 212, 169, 79, 158, 137, 19, 38, 76, 152, 49, 98]
+class_to_keys = defaultdict(set)
 
-security_index = int(variance * unique_pairs_count + high_freq_count)
-print(f"Result: {security_index}")
+for k in historical_keys:
+    canonical = get_canonical_form(k)
+    class_to_keys[canonical].add(k)
+
+# Greedily select the largest set of mutually inequivalent keys
+selected_classes = set()
+unique_key_classes = 0
+
+# Sort classes by the number of keys they contain in descending order
+sorted_classes = sorted(class_to_keys.items(), key=lambda item: len(item[1]), reverse=True)
+
+for canonical_form, keys_in_class in sorted_classes:
+    if not any(canonical_form in selected for selected in selected_classes):
+        selected_classes.add(frozenset([canonical_form]))
+        unique_key_classes += 1
+
+print(f"Result: {unique_key_classes}")

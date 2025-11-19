@@ -1,59 +1,53 @@
-from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import List
 
-def fibonacci_sequence(n: int) -> List[int]:
-    if n <= 0:
-        return []
-    elif n == 1:
-        return [0]
-    elif n == 2:
-        return [0, 1]
-    
-    seq = [0, 1]
-    for i in range(2, n):
-        seq.append(seq[i-1] + seq[i-2])
-    return seq
-
-@contextmanager
-def crypto_context(start_value: int):
-    state = {'value': start_value, 'modifications': 0}
-    try:
-        yield state
-    finally:
-        state['value'] = 0
-        state['modifications'] = 0
+token_weights = {'N': 3, 'S': -3, 'E': 2, 'W': -2, 'NE': 5, 'NW': 1, 'SE': -1, 'SW': -5}
 
 @dataclass
-class CryptoTracker:
-    prices: List[int]
-    index: int = 0
-    
-    def get_current_price(self) -> int:
-        if self.index < len(self.prices):
-            val = self.prices[self.index]
-            self.index += 1
-            return val
-        return 0
+class SensorData:
+    id: str
+    tokens: List[str]
 
-# Initialize components
-prices_fib = fibonacci_sequence(12)[2:]  # Skip first two elements
-tracker = CryptoTracker(prices_fib)
-security_checksum = 0
-
-with crypto_context(100) as ctx:
-    for i in range(5):
-        price = tracker.get_current_price()
-        adjusted_price = price << 1  # Bitwise left shift
-        
-        if i % 2 == 0:
-            ctx['value'] = (ctx['value'] ^ adjusted_price) & 0xFF  # XOR and mask
+def process_sensor_data(sensor: SensorData) -> int:
+    cumulative = 0
+    max_cumulative = float('-inf')
+    for token in sensor.tokens:
+        if token in token_weights:
+            cumulative += token_weights[token]
+            if cumulative > max_cumulative:
+                max_cumulative = cumulative
         else:
-            ctx['value'] = (ctx['value'] + adjusted_price) & 0xFF  # Add and mask
-        
-        ctx['modifications'] += 1
-    
-    # Final checksum computation
-    security_checksum = ctx['value'] ^ (ctx['modifications'] << 2)
+            cumulative = 0
+    return max_cumulative
 
-print(f"Result: {security_checksum}")
+def classify_zone(score: int) -> str:
+    match score:
+        case s if s >= 10:
+            return 'A'
+        case s if s >= 5:
+            return 'B'
+        case s if s >= 0:
+            return 'C'
+        case _:
+            return 'D'
+
+sensor_readings = [
+    SensorData('S1', ['N', 'NE', 'E', 'SE', 'S']),
+    SensorData('S2', ['W', 'NW', 'N', 'NE', 'E']),
+    SensorData('S3', ['SW', 'W', 'NW', 'N', 'NE'])
+]
+
+zone_classifications = []
+for sensor in sensor_readings:
+    score = process_sensor_data(sensor)
+    zone = classify_zone(score)
+    zone_classifications.append(zone)
+
+# Convert to frozenset for immutable set operations
+zones_set = frozenset(zone_classifications)
+target_zones = frozenset(['A', 'B'])
+
+# Greedy selection: count overlapping zones
+optimal_zone_score = len(zones_set.intersection(target_zones)) * 10 + sum(1 for z in zones_set if z in target_zones)
+
+print(f"Result: {optimal_zone_score}")

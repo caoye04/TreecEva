@@ -1,31 +1,33 @@
-text = "abcabdabcabc"
+# Adjacency matrix: graph[i][j] = cost from node i to j (0 means no edge)
+graph = [
+    [0, 10, 15, 0],
+    [0, 0, 0, 12],
+    [0, 8, 0, 14],
+    [0, 0, 0, 0]
+]
 
-# Step 1: Extract all 2-character substrings
-substrings = []
-for i in range(len(text) - 1):
-    substr = text[i:i+2]
-    substrings.append(substr)
+start_node = 0
+target_node = 3
+max_hops = 2
 
-# Step 2: Count frequencies
-freq_map = {}
-for substr in substrings:
-    if substr in freq_map:
-        freq_map[substr] += 1
-    else:
-        freq_map[substr] = 1
+# Find all paths within max_hops
+valid_paths = []
+for intermediate in range(len(graph)):
+    # Direct path (1 hop)
+    if graph[start_node][intermediate] > 0 and graph[intermediate][target_node] > 0:
+        cost = graph[start_node][intermediate] + graph[intermediate][target_node]
+        valid_paths.append(cost)
 
-# Step 3: Find top 2 most frequent patterns
-sorted_patterns = sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
-top_patterns = sorted_patterns[:2]
+# Calculate minimum cost
+if valid_paths:
+    min_cost = min(valid_paths)
+    num_paths = len(valid_paths)
+    
+    # Apply discount based on number of paths
+    discount_rate = num_paths * 2
+    discount = min_cost * discount_rate // 100
+    final_cost = min_cost - discount
+else:
+    final_cost = 0
 
-# Calculate compression savings
-total_occurrences = sum(count for pattern, count in top_patterns)
-original_chars = total_occurrences * 2
-compressed_chars = len(top_patterns) * 2 + total_occurrences
-savings = original_chars - compressed_chars
-
-# Step 4: Apply hash function
-pattern_sum = sum(ord(p[0]) + ord(p[1]) for p, c in top_patterns)
-compression_hash = (savings * 10 + pattern_sum) % 256
-
-print(f"Result: {compression_hash}")
+print(f"Result: {final_cost}")

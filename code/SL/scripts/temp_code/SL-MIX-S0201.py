@@ -1,73 +1,40 @@
-from math import gcd
-from functools import reduce
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b) if a and b else 0
-
-def compute_lcm_of_list(numbers):
-    return reduce(lcm, numbers, 1)
-
-# Batch IDs to process
-batch_ids = [15, 21, 25, 28, 33, 35, 39, 49, 51, 55]
-
-# Create linked list from batch IDs
-head = None
-for id_val in reversed(batch_ids):
-    head = ListNode(id_val, head)
-
-# State machine states
-STATE_START = 0
-STATE_CHECK_COMPOSITE = 1
-STATE_CHECK_GCD = 2
-STATE_VALID = 3
-STATE_INVALID = 4
-
-valid_ids = []
-current = head
-
-while current:
-    batch_id = current.val
-    state = STATE_START
+def process_text(input_string):
+    states = {'NORMAL': 0, 'ESCAPE': 1, 'HEX': 2}
+    current_state = states['NORMAL']
+    processed_length = 0
+    i = 0
     
-    while state != STATE_VALID and state != STATE_INVALID:
-        if state == STATE_START:
-            # Check if composite (non-prime and > 1)
-            if not is_prime(batch_id) and batch_id > 1:
-                state = STATE_CHECK_COMPOSITE
+    while i < len(input_string):
+        char = input_string[i]
+        
+        if current_state == states['NORMAL']:
+            if char == '\\':
+                current_state = states['ESCAPE']
             else:
-                state = STATE_INVALID
-        elif state == STATE_CHECK_COMPOSITE:
-            # Check GCD with secret key 42
-            if gcd(batch_id, 42) > 1:
-                state = STATE_VALID
+                processed_length += 1
+        elif current_state == states['ESCAPE']:
+            if char == 'x':
+                current_state = states['HEX']
+                i += 1  # Skip the 'x'
+                # Read two hex digits
+                hex_digits = input_string[i:i+2]
+                i += 1  # Move past first hex digit
+                # Convert hex to character (we just count it)
+                processed_length += 1
             else:
-                state = STATE_INVALID
+                # Invalid escape, treat as normal characters
+                processed_length += 2  # Backslash and the character
+                current_state = states['NORMAL']
+        elif current_state == states['HEX']:
+            # We've already processed the hex in the ESCAPE state
+            current_state = states['NORMAL']
+            continue  # Skip incrementing i as we've already moved
+        
+        i += 1
     
-    if state == STATE_VALID:
-        valid_ids.append(batch_id)
-    
-    current = current.next
+    return processed_length
 
-# Calculate LCM of valid IDs
-final_lcm = compute_lcm_of_list(valid_ids) if valid_ids else 0
-
-print(f"Result: {final_lcm}")
+# Process the input string
+input_text = 'Hello\\x41\\x42\\x43World'
+processed_length = process_text(input_text)
+print(f"Result: {processed_length}")

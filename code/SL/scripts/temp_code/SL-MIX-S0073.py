@@ -1,60 +1,23 @@
-import itertools
+from functools import reduce
 
-def process_logistics():
-    # Package data: (destination_code, weight, priority_multiplier)
-    packages = [
-        ('ALPHA_123', 15, 2),
-        ('BETA_456', 8, 3),
-        ('GAMMA_789', 22, 1),
-        ('DELTA_000', 5, 4),
-        ('EPSILON_111', 18, 2)
-    ]
-    
-    # Destination mapping using hash table
-    destination_zones = {
-        'ALPHA': 'Zone_A',
-        'BETA': 'Zone_B',
-        'GAMMA': 'Zone_C',
-        'DELTA': 'Zone_D',
-        'EPSILON': 'Zone_E'
-    }
-    
-    # Process packages using stack (LIFO)
-    package_stack = []
-    for pkg in packages:
-        package_stack.append(pkg)
-    
-    accumulated_priority_score = 0
-    zone_loads = {'Zone_A': 0, 'Zone_B': 0, 'Zone_C': 0, 'Zone_D': 0, 'Zone_E': 0}
-    
-    # Greedy processing: prioritize by priority_multiplier * weight
-    while package_stack:
-        # Pop from stack
-        dest_code, weight, priority = package_stack.pop()
-        
-        # Tokenize destination code
-        tokens = dest_code.split('_')
-        base_dest = tokens[0]
-        
-        # Transform to zone
-        zone = destination_zones.get(base_dest, 'Unknown')
-        
-        # Calculate priority score
-        priority_score = priority * weight
-        
-        # Apply zone-based modifier using divide and conquer approach for load balancing
-        current_load = zone_loads[zone]
-        if current_load > 20:
-            priority_score = priority_score // 2  # Reduce priority for overloaded zones
-        
-        # Update accumulated score
-        accumulated_priority_score += priority_score
-        
-        # Update zone load
-        zone_loads[zone] += weight
-    
-    return accumulated_priority_score
+document_content = "The quick brown fox jumps over the lazy dog"
+state_transitions = {0: 'start', 1: 'analyze', 2: 'process', 3: 'finalize'}
+current_state = 0
+max_state = 3
 
-# Execute logistics processing
-final_score = process_logistics()
-print(f"Result: {final_score}")
+# Process each character's hash through our state machine
+char_hashes = [hash(c) for c in document_content]
+
+for h in char_hashes:
+    mod_val = h % 4
+    if mod_val == 0:  # Stay in current state
+        pass
+    elif mod_val == 1:  # Move to next state
+        current_state = min(current_state + 1, max_state)
+    elif mod_val == 2:  # Skip one state
+        current_state = min(current_state + 2, max_state)
+    else:  # Return to start (mod_val == 3)
+        current_state = 0
+
+final_state = current_state
+print(f"Result: {final_state}")

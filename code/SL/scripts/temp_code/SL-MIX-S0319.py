@@ -1,23 +1,44 @@
-import statistics
+from collections import defaultdict
+import math
 
-temperature_readings = [22.5, 23.1, 21.8, 24.0, 22.9, 23.3, 21.7, 24.2, 22.6, 23.0]
-encoding_keys = [0x1F, 0x2A, 0x3B, 0x4C, 0x5D]
+def is_valid_peak(readings, index, memo):
+    if index in memo:
+        return memo[index]
+    if index <= 0 or index >= len(readings) - 1:
+        memo[index] = False
+        return False
+    left_check = readings[index] > readings[index - 1]
+    right_check = readings[index] > readings[index + 1]
+    threshold_check = readings[index] > sum(readings) / len(readings)
+    # Short-circuit evaluation with logical operations
+    if left_check and right_check and threshold_check:
+        result = True
+    else:
+        result = False
+    memo[index] = result
+    return result
 
-# Encode temperature readings
-encoded_readings = []
-for i, temp in enumerate(temperature_readings):
-    key = encoding_keys[i % len(encoding_keys)]
-    encoded_value = int(temp * 10) ^ key
-    encoded_readings.append(encoded_value)
+def count_peaks_recursive(readings, index, accumulator, memo):
+    if index >= len(readings):
+        return accumulator
+    if is_valid_peak(readings, index, memo):
+        return count_peaks_recursive(readings, index + 2, accumulator + 1, memo)
+    else:
+        return count_peaks_recursive(readings, index + 1, accumulator, memo)
 
-# Calculate mean and standard deviation of encoded readings
-mean_encoded = statistics.mean(encoded_readings)
-std_dev_encoded = statistics.stdev(encoded_readings)
+def fibonacci(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
 
-# Detect anomalies (values more than 1.5 standard deviations from the mean)
-anomalies = [x for x in encoded_readings if abs(x - mean_encoded) > 1.5 * std_dev_encoded]
+# Sensor readings derived from fibonacci sequence with some modifications
+sensor_readings = [fibonacci(i) for i in range(1, 11)]
+sensor_readings[5] += 10  # Introduce a potential peak
 
-# Calculate anomaly score as the mean of anomalies if any, otherwise 0
-anomaly_score = statistics.mean(anomalies) if anomalies else 0
-
-print(f"Result: {anomaly_score}")
+# Initialize tracking variables
+memoization_cache = {}
+peak_count = count_peaks_recursive(sensor_readings, 0, 0, memoization_cache)
+print(f"Result: {peak_count}")
