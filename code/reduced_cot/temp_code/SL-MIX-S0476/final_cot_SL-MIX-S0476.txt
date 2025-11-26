@@ -1,0 +1,27 @@
+Target: Find the value of variable final_checksum after [line 28] executes
+
+[line 23]  data_stream = [15, 22, 8, 31, 45, 12, 19]
+Compute: [15, 22, 8, 31, 45, 12, 19] = [15, 22, 8, 31, 45, ...]
+[line 24]  mask_pattern = [8, 12, 19, 27, 33]
+Compute: [8, 12, 19, 27, 33] = [8, 12, 19, 27, 33]
+[line 27]  final_checksum = compute_final_value(data_stream, mask_pattern)
+Call function compute_final_value(data_stream=[15, 22, 8, 31, 45, ...] (defined at [line 23]), mask_pattern=[8, 12, 19, 27, 33] (defined at [line 24]))
+[line 1]  def compute_final_value(data_stream, mask_pattern):
+Enter function compute_final_value: data_stream=[15, 22, 8, 31, 45, ...] (data_stream defined at [line 23]), mask_pattern=[8, 12, 19, 27, 33] (mask_pattern defined at [line 24])
+  [line 2]  temp_buffer = [x * 2 for x in data_stream if x > 0]
+  Compute: [x * 2 for x in data_stream if x > 0], where x=15 (an unknown source), data_stream=[15, 22, 8, 31, 45, ...] (parameter data_stream defined at [line 23]) = ?
+  [line 3]  intermediate_sum = sum(temp_buffer)
+  Call function sum(temp_buffer=[30, 44, 16, 62, 90, ...] (defined at [line 2]))
+  [line 9]  filtered_set = set(data_stream) & set(mask_pattern)
+  Compute: set(data_stream) & set(mask_pattern), where data_stream=[15, 22, 8, 31, 45, ...] (parameter data_stream defined at [line 23]), mask_pattern=[8, 12, 19, 27, 33] (parameter mask_pattern defined at [line 24]) = {8, 19, 12}
+  [line 10]  filtered_sum = sum(filtered_set)
+  Call function sum(filtered_set={8, 19, 12} (defined at [line 9]))
+  [line 16]  result = (intermediate_sum - filtered_sum) % 256
+  Compute: (intermediate_sum - filtered_sum) % 256, where intermediate_sum=304 (defined at [line 3]), filtered_sum=39 (defined at [line 10]) = 9
+  [line 21]  return result
+  Return: result=9 (defined at [line 16])
+Function compute_final_value returns 9
+[line 28]  print(f"Result: {final_checksum}")
+Output: f"Result: {final_checksum}"
+
+Answer: final_checksum = 9 (last updated on defined at [line 27])

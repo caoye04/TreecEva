@@ -1,26 +1,21 @@
-from collections import defaultdict
-import math
+text_data = "PYTHON Programming Challenge: Analyze THIS text carefully"
+word_list = text_data.lower().split()
 
-def process_signal_strength(readings):
-    adjusted_readings = []
-    for db_level in readings:
-        if db_level > 0 and math.log(db_level) >= 1.0:
-            adjusted_readings.append(math.log(db_level) * 10)
-        else:
-            adjusted_readings.append(0.0)
-    return adjusted_readings
+# Main processing
+character_count = sum(len(word) for word in word_list)
+special_words = [word for word in word_list if word.startswith(('p', 'c'))]
 
-signal_data = [0.5, 2.7, 10.0, 0.0, 15.3, -2.1]
-filtered_signals = process_signal_strength(signal_data)
-species_count = defaultdict(int)
+# Intermediate calculations (some not used in final result)
+temp_sum = len(special_words) * 3
+vowel_count = sum(1 for char in text_data.lower() if char in 'aeiou')
 
-bio_activity_score = 0.0
-for idx, sig in enumerate(filtered_signals):
-    species_id = idx % 3
-    if sig > 0.0 and (species_id == 0 or species_count[species_id] <= 2):
-        species_count[species_id] += 1
-        bio_activity_score += sig * (1.5 if species_id == 0 else 1.2)
-    elif sig == 0.0:
-        continue
+# Core logic
+processed_total = character_count - len(word_list)
+adjustment_factor = 1.5 if len(special_words) > 2 else 1.2
 
-print(f"Result: {round(bio_activity_score, 2)}")
+# Distractor calculations
+unused_value = vowel_count * 2 + temp_sum
+
+# Final result
+final_score = processed_total * adjustment_factor
+print(f"Result: {final_score}")

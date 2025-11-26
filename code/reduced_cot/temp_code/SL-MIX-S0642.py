@@ -1,16 +1,20 @@
-from collections import defaultdict
+from collections import Counter
 
-cost_matrix = [[0, 10, 15, 20], [10, 0, 35, 25], [15, 35, 0, 30], [20, 25, 30, 0]]
-dp_table = defaultdict(lambda: defaultdict(int))
-adjusted_cost_sum = 0
+def evaluate_conditions(x_values):
+    results = []
+    for x in x_values:
+        # Main logical evaluation chain
+        condition_a = (x > 5) and (x % 2 == 0)
+        condition_b = (x < 10) or (x == 15)
+        final_condition = condition_a and not condition_b
+        results.append(final_condition)
+    return results
 
-for i in range(4):
-    for j in range(4):
-        base_cost = cost_matrix[i][j]
-        if base_cost > 100:
-            dp_table[i][j] = base_cost * 0.9
-        else:
-            dp_table[i][j] = base_cost
-        adjusted_cost_sum += dp_table[i][j]
+# Input data processing
+input_data = [3, 8, 12, 6, 15, 7, 4]
+processed_results = evaluate_conditions(input_data)
+result_counter = Counter(processed_results)
 
-print(f"Result: {int(adjusted_cost_sum)}")
+# Final computation
+final_count = result_counter[True] - result_counter[False]
+print(f"Result: {final_count}")

@@ -1,29 +1,32 @@
-from functools import reduce
+def process_inventory(items):
+    # Process warehouse inventory data
+    initial_count = len(items)
+    
+    # Filter out items with length less than 5
+    filtered_items = list(filter(lambda x: len(x) >= 5, items))
+    
+    # Calculate some intermediate metrics (distractor)
+    temp_sum = sum(len(item) for item in items)
+    avg_length = temp_sum / initial_count if initial_count > 0 else 0
+    
+    # Process relevant data
+    processed_count = len(filtered_items)
+    
+    # More intermediate calculations (distractor)
+    char_counts = [len(item) * 2 for item in filtered_items]
+    total_chars = sum(char_counts)
+    
+    # Key calculations
+    processed_data = processed_count * 3
+    scaling_factor = 4
+    
+    # Final ratio calculation
+    final_ratio = processed_data / scaling_factor
+    
+    # Print result
+    print(f"Result: {final_ratio}")
+    return final_ratio
 
-def calculate_modular_weights(weights, modulus_base):
-    return list(map(lambda w: w % modulus_base, weights))
-
-def compute_loading_efficiency(processed_weights, capacity):
-    loaded = 0
-    efficiency_scores = []
-    for weight in sorted(processed_weights, reverse=True):
-        if loaded + weight <= capacity:
-            loaded += weight
-            efficiency_scores.append(weight * (loaded % 7))
-    return efficiency_scores
-
-# Package weights for the current delivery run
-shipment_weights = [23, 45, 12, 67, 89, 34, 56, 78]
-truck_capacity = 150
-mod_base = 17
-
-# Process weights using modular arithmetic
-modular_weights = calculate_modular_weights(shipment_weights, mod_base)
-
-# Apply greedy loading algorithm
-efficiency_scores = compute_loading_efficiency(modular_weights, truck_capacity)
-
-# Calculate final efficiency score using functional reduction
-final_efficiency_score = reduce(lambda acc, score: (acc + score) % 13, efficiency_scores, 0)
-
-print(f"Result: {final_efficiency_score}")
+# Test data
+inventory_items = ['apple', 'banana', 'kiwi', 'orange', 'pear', 'grapefruit']
+process_inventory(inventory_items)

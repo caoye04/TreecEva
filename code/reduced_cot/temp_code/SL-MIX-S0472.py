@@ -1,49 +1,59 @@
-from functools import reduce
-from statistics import variance
-
-def custom_hash_transform(block_data):
-    # Step 1: Filter out negative numbers and zero
-    positive_values = list(filter(lambda x: x > 0, block_data))
+def process_funds(accounts, capital, multiplier):
+    # Distractor: unused complex calculation
+    irrelevant_tax = (capital * 1.21) - (multiplier ** 2) / 4.7
     
-    # Step 2: Apply XOR folding to reduce the data
-    folded_value = reduce(lambda acc, x: acc ^ (x << 2), positive_values, 0)
+    # Main processing logic with nested conditionals
+    processed = []
+    for account in accounts:
+        base_amount = account['amount']
+        # Distractor: misleading intermediate variable
+        temp_adjust = base_amount * 0.85 if account['type'] == 'savings' else base_amount * 1.1
+        
+        # Actual logic using conditional expressions
+        adjusted = (base_amount * multiplier) if multiplier > 1.5 else (base_amount / multiplier)
+        
+        # Distractor: dead code path that never executes
+        if capital > 1000000:
+            bonus = adjusted * 0.15
+        else:
+            bonus = 0
+            
+        processed.append(adjusted)
     
-    # Step 3: Compute statistical dispersion measure
-    if len(positive_values) > 1:
-        disp_measure = int(variance(positive_values) * 100) & 0xFF
-    else:
-        disp_measure = 0x7F
+    # Irrelevant side calculation
+    total_bogus = sum(account['amount'] for account in accounts) * 3.14
     
-    # Step 4: Apply bit rotation and modular arithmetic
-    rotated = ((folded_value >> 3) | (folded_value << 29)) & 0xFFFFFFFF
-    mod_result = rotated % 997  # 997 is a prime number
+    # Core calculation with bitwise distraction
+    mask = 0b10101010
+    capital_mask = capital & mask
     
-    # Step 5: Combine with dispersion measure using OR operation
-    combined = mod_result | (disp_measure << 16)
+    # Main result computation
+    total_processed = sum(processed)
+    final_amount = total_processed + capital
     
-    # Step 6: Finalize with bit masking
-    final_hash = combined & 0xFFFFFF
-    return final_hash
+    # Final adjustment using character counting distraction
+    account_str = str(len(accounts))
+    char_sum = sum(ord(c) for c in account_str)
+    
+    # The actual answer-determining logic
+    result = final_amount + (char_sum % 100) - capital_mask
+    return result
 
-# Transaction block data
-transaction_block = [12, -5, 0, 42, 18, 73, -9, 255, 1001, 8]
+# Initialize data
+account_data = [
+    {'type': 'checking', 'amount': 2500},
+    {'type': 'savings', 'amount': 1800},
+    {'type': 'checking', 'amount': 3200}
+]
 
-# Process the block
-global_hash_state = custom_hash_transform(transaction_block)
+initial_capital = 15000
+market_multiplier = 1.75
 
-# Additional transformation using context manager
-from contextlib import contextmanager
+# Distractor: unused alternative calculation
+alternative_result = sum(acc['amount'] for acc in account_data) * market_multiplier + initial_capital
 
-@contextmanager
-def hash_enhancer(initial_hash):
-    enhanced = initial_hash ^ 0xDEADBEEF
-    try:
-        yield enhanced
-    finally:
-        pass
+# Execute main processing
+final_balance = process_funds(account_data, initial_capital, market_multiplier)
 
-with hash_enhancer(global_hash_state) as enhanced_hash:
-    # Final adjustment using bit shifting and addition
-    final_hash = (enhanced_hash >> 4) + (enhanced_hash & 0xF)
-
-print(f"Result: {final_hash}")
+# Print result
+print(f"Result: {final_balance}")

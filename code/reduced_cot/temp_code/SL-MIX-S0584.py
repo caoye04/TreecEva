@@ -1,30 +1,44 @@
-from functools import reduce
+def process_inventory(items):
+    # Initialize tracking variables
+    total_items = len(items)
+    irrelevant_count = total_items * 2  # Distractor computation
+    
+    # Process items with enumeration
+    valid_items = []
+    temp_storage = []
+    
+    for idx, item in enumerate(items):
+        # Some items are processed, some are skipped
+        if idx % 3 == 0:
+            valid_items.append(item)
+        elif idx % 5 == 0:
+            temp_storage.append(item * 2)  # Never used
+        else:
+            # Dead code path - misleading operation
+            misleading_value = item + 100
+    
+    # Set operations to find unique processed items
+    processed_set = set(valid_items)
+    backup_set = set(items)  # Distractor - not used in final calculation
+    
+    # Slicing operations on the processed set
+    slice_start = len(processed_set) // 3
+    slice_end = 2 * len(processed_set) // 3
+    relevant_slice = list(processed_set)[slice_start:slice_end]
+    
+    # Calculate relevant total
+    relevant_total = sum(relevant_slice)
+    
+    # Distractor calculations that look important
+    offset_calc = (total_items - len(processed_set)) * 25
+    adjustment = len(relevant_slice) * 7
+    
+    # Final calculation
+    final_sum = relevant_total + adjustment
+    
+    # Print result
+    print(f"Result: {final_sum}")
 
-def tokenize_and_process(document):
-    tokens = document.split()
-    processed = []
-    for token in tokens:
-        # Remove punctuation and convert to lowercase
-        clean_token = ''.join(filter(str.isalpha, token)).lower()
-        if len(clean_token) > 0:
-            processed.append(clean_token)
-    return processed
-
-def compute_hash_score(word_list):
-    return sum(hash(w) % 100 for w in word_list)
-
-document_content = "Robust systems need stable architectures. Efficient designs prevent failures."
-word_sequence = tokenize_and_process(document_content)
-hash_accumulator = compute_hash_score(word_sequence)
-
-lengths = list(map(len, word_sequence))
-squared_values = list(map(lambda x: x**2 if x % 2 == 0 else x*3, lengths))
-filtered_values = list(filter(lambda x: x > 5, squared_values))
-aggregated_value = reduce(lambda a, b: a ^ b, filtered_values, 0) if filtered_values else 0
-
-is_even_count = len(word_sequence) % 2 == 0
-is_high_hash = hash_accumulator > 500
-stability_flag = is_even_count and is_high_hash
-
-sentiment_stability_index = (aggregated_value + 10) if stability_flag else (aggregated_value - 5)
-print(f"Result: {sentiment_stability_index}")
+# Execute with sample data
+inventory_items = [12, 45, 78, 23, 56, 89, 34, 67, 90, 13, 46, 79]
+process_inventory(inventory_items)

@@ -1,67 +1,50 @@
-import math
-from collections import defaultdict
-
-class SensorNode:
-    def __init__(self, x, y, next_node=None):
-        self.x = x
-        self.y = y
-        self.next = next_node
-
-def compute_spatial_hash(x, y, grid_size=10):
-    """Hash function for spatial coordinates"""
-    return (int(x) // grid_size, int(y) // grid_size)
-
-def distance(p1, p2):
-    """Calculate Euclidean distance between two points"""
-    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
-
-# Sensor data as linked lists
-sensor_a = SensorNode(15.2, 22.7, SensorNode(16.8, 23.1, SensorNode(25.3, 30.5)))
-sensor_b = SensorNode(14.9, 22.3, SensorNode(35.2, 40.1))
-sensor_c = SensorNode(16.1, 23.5, SensorNode(24.8, 31.2, SensorNode(34.7, 39.8)))
-
-# Group sensors
-sensors = [sensor_a, sensor_b, sensor_c]
-
-# Spatial clustering using hash maps
-cluster_map = defaultdict(list)
-proximity_threshold = 3.0
-
-for i, sensor_head in enumerate(sensors):
-    current = sensor_head
-    while current:
-        hash_key = compute_spatial_hash(current.x, current.y)
-        point = (current.x, current.y, i)  # Include sensor ID
+def calculate_performance(employee_data):
+    base_score = 75
+    irrelevant_bonus = 42
+    misleading_multiplier = 1.5
+    
+    # Distractor operations with strings
+    employee_names = ['alice', 'bob', 'charlie', 'diana']
+    name_lengths = [len(name.upper()) for name in employee_names]
+    total_chars = sum(name_lengths)
+    
+    # Relevant logic starts here
+    performance_scores = []
+    for i, employee in enumerate(employee_data):
+        base = employee['hours'] * 2
+        quality_bonus = employee['quality'] * 3
+        score = base + quality_bonus
         
-        # Check if any existing point in cluster is within proximity
-        merged = False
-        for existing_hash, points in cluster_map.items():
-            for existing_point in points:
-                if (distance((point[0], point[1]), (existing_point[0], existing_point[1])) < proximity_threshold and
-                    existing_hash == hash_key):
-                    cluster_map[existing_hash].append(point)
-                    merged = True
-                    break
-            if merged:
-                break
+        # Distractor condition that never executes
+        if score > 1000:
+            score = score * misleading_multiplier
         
-        if not merged:
-            cluster_map[hash_key].append(point)
-            
-        current = current.next
+        performance_scores.append(score)
+    
+    # More distractor operations with sets
+    unique_scores = set(performance_scores)
+    score_difference = max(unique_scores) - min(unique_scores) if unique_scores else 0
+    
+    # Relevant computation
+    final_score = sum(performance_scores)
+    scaling_factor = 1.25
+    
+    # Dead code path - unused variable
+    unused_adjustment = final_score / len(employee_data) if employee_data else 0
+    
+    # Target operation
+    target_result = final_score * scaling_factor
+    
+    # Final distractor that doesn't affect result
+    misleading_total = total_chars * irrelevant_bonus
+    
+    print(f"Target result: {target_result}")
 
-# Count clusters with points from multiple sensors
-cluster_count = 0
-for points in cluster_map.values():
-    sensor_ids = set(p[2] for p in points)
-    if len(sensor_ids) > 1:
-        cluster_count += 1
-        
-# Apply geometric correction factor
-if cluster_count > 0:
-    correction_factor = math.ceil(math.sqrt(cluster_count))
-    cluster_count = cluster_count * correction_factor
-else:
-    cluster_count = -1
+# Test data
+employee_records = [
+    {'hours': 40, 'quality': 8},
+    {'hours': 35, 'quality': 9},
+    {'hours': 45, 'quality': 7}
+]
 
-print(f"Result: {cluster_count}")
+calculate_performance(employee_records)

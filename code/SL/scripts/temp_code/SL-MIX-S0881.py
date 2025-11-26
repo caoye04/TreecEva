@@ -1,38 +1,43 @@
-def verify_processor_opcodes():
-    opcodes = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
-    golden_mask = 0xF0
-    validation_threshold = 73
+def process_data_chain(input_data):
+    # Distractor: Irrelevant data processing
+    temp_analysis = {}
+    temp_analysis['length'] = len(str(input_data))
+    temp_analysis['digits'] = sum(c.isdigit() for c in str(input_data))
     
-    # Phase 1: Apply mask and collect unique results
-    masked_results = set()
-    for opcode in opcodes:
-        masked_value = opcode & golden_mask
-        if masked_value > 0:
-            masked_results.add(masked_value)
+    # Main processing path with misleading intermediate steps
+    processed = input_data * 3
+    processed = processed - 15  # Red herring subtraction
     
-    # Phase 2: Sort and apply greedy selection
-    sorted_masks = sorted(list(masked_results), reverse=True)
-    selected_masks = []
-    cumulative_xor = 0
+    # Conditional branching with dead code path
+    if processed > 50:
+        processed = processed // 2
+        # Unused computation that looks important
+        shadow_value = processed * 7 + 3
+    else:
+        processed = processed * 4
+        # Another misleading computation
+        shadow_value = processed - 25
     
-    for mask in sorted_masks:
-        temp_xor = cumulative_xor ^ mask
-        if temp_xor % 13 < 10:
-            selected_masks.append(mask)
-            cumulative_xor = temp_xor
-        else:
-            break
+    # Dictionary operations with irrelevant entries
+    data_map = {'primary': processed, 'secondary': shadow_value, 'tertiary': input_data * 2}
     
-    # Phase 3: Final validation computation
-    if len(selected_masks) == 0:
-        return -1
+    # More distractor computations
+    verification_sum = sum(data_map.values())  # Never used
     
-    validation_score = 0
-    for i, mask in enumerate(selected_masks):
-        shifted_value = mask >> (i % 3)
-        validation_score = (validation_score ^ shifted_value) % validation_threshold
+    # Actual key computation
+    result = data_map['primary'] + data_map['secondary']
+    result = result - data_map['tertiary']
     
-    return validation_score
+    # Final adjustment with more distractions
+    adjustment_factor = (result % 10) + 1
+    final_result = result // adjustment_factor
+    
+    # Dead code path that looks relevant
+    if final_result < 0:
+        final_result = abs(final_result) * 2
+    
+    return final_result
 
-validation_score = verify_processor_opcodes()
-print(f"Result: {validation_score}")
+original_data = 27
+final_processed = process_data_chain(original_data)
+print(f"Result: {final_processed}")

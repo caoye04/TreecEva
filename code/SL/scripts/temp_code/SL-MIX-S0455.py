@@ -1,42 +1,21 @@
-def signal_tracker(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        wrapper.calls += 1
-        wrapper.total += result
-        return result
-    wrapper.calls = 0
-    wrapper.total = 0
-    return wrapper
+from itertools import combinations
 
-@signal_tracker
-def process_signal_segment(segment_data):
-    # Apply divide and conquer approach to calculate signal metrics
-    if len(segment_data) <= 1:
-        return segment_data[0] if segment_data else 0
-    
-    mid = len(segment_data) // 2
-    left_half = process_signal_segment(segment_data[:mid])
-    right_half = process_signal_segment(segment_data[mid:])
-    
-    # Combine results with mathematical sequence transformation
-    combined = (left_half * 3 + right_half * 2) % 1000
-    return combined
+# Analyze overlapping customer segments
+segment_a = {12, 25, 38, 42, 55}
+segment_b = {25, 42, 67, 89, 91}
+segment_c = {38, 42, 55, 77, 89}
 
-# String transformation pipeline for signal metadata
-signal_metadata = {chr(ord('A') + i): str(i+1)*3 for i in range(5)}
-signal_metadata = {k: v[::-1] for k, v in signal_metadata.items()}
-transformed_metadata = {k: int(v) * 2 for k, v in signal_metadata.items()}
+# Find overlapping customers
+overlap_ab = segment_a & segment_b
+overlap_bc = segment_b & segment_c
+overlap_ac = segment_a & segment_c
 
-# Main signal processing
-sensor_readings = [12, 27, 9, 33, 15, 8, 22]
-intermediate_result = process_signal_segment(sensor_readings)
+# Calculate metrics
+unique_customers = segment_a | segment_b | segment_c
+unique_count = len(unique_customers)
+overlap_sum = len(overlap_ab) + len(overlap_bc) + len(overlap_ac)
+combined_sum = len(segment_a) + len(segment_b) + len(segment_c)
 
-# Apply metadata corrections
-metadata_sum = sum(transformed_metadata.values())
-final_signal_strength = (intermediate_result + metadata_sum) % 997
-
-# Additional transformation based on call statistics
-if process_signal_segment.calls > 0:
-    final_signal_strength = (final_signal_strength * process_signal_segment.total) % 997
-
-print(f"Result: {final_signal_strength}")
+# Final calculation
+final_result = combined_sum - unique_count
+print(f"Result: {final_result}")

@@ -1,37 +1,50 @@
-from itertools import combinations
+def calculate_parity(data_segment):
+    temp_xor = 0
+    for byte_val in data_segment:
+        temp_xor ^= byte_val
+    # Misleading intermediate calculation (distractor)
+    fake_sum = sum(data_segment) * 2
+    return temp_xor
 
-class Palette:
-    def __init__(self, hues):
-        self.hues = hues
-        self.length = len(hues)
+def validate_data_integrity(data_blocks, parity_values):
+    # Irrelevant preprocessing step
+    irrelevant_offset = 17
+    processed_blocks = []
     
-    def compute_harmony(self, subset_indices):
-        if not subset_indices:
-            return 0
-        product = 1
-        for idx in subset_indices:
-            product *= (idx + 1) * self.hues[idx]
-        return product + sum(subset_indices)
+    # Main logic with distractions
+    computed_checksum = 0
+    for block_idx, data_block in enumerate(data_blocks):
+        # Dead code path (never executed due to condition)
+        if block_idx > len(data_blocks) + 5:
+            unused_var = block_idx * 2
+            
+        # Actual relevant computation
+        block_parity = calculate_parity(data_block)
+        expected_parity = parity_values[block_idx]
+        
+        # Misleading intermediate calculation
+        fake_verification = (block_parity + expected_parity) * 3
+        
+        if block_parity == expected_parity:
+            computed_checksum += sum(data_block)
+        else:
+            # Red herring - this path is never taken in this data
+            computed_checksum -= block_idx * 10
+            
+    # Final adjustment with distractor
+    adjustment_factor = (len(data_blocks) % 4) * 7
+    final_result = computed_checksum + adjustment_factor
+    
+    # Completely irrelevant calculation
+    dummy_calc = (adjustment_factor * 3) // 2
+    
+    return final_result
 
-# Initialize palette with specific hue values
-artistic_hues = [2, -1, 3, 0, 4]
-creative_palette = Palette(artistic_hues)
+# Main execution with test data
+data_blocks = [[5, 12, 8, 3], [7, 9, 14, 6], [11, 4, 13, 2]]
+parity_set = [10, 6, 4]  # Calculated XOR values
 
-# Dynamic programming table for storing max harmony up to index i
-harmony_table = [float('-inf')] * creative_palette.length
-harmony_table[0] = creative_palette.compute_harmony([0])
+# Execute the key statement
+final_checksum = validate_data_integrity(data_blocks, parity_set)
 
-# Combinatorial exploration with dynamic programming
-for idx in range(1, creative_palette.length):
-    # Calculate all combinations including current index
-    current_max = float('-inf')
-    for r in range(1, idx+2):  # r is the size of combination
-        for combo in combinations(range(idx+1), r):
-            if idx in combo:  # Only consider combos that include current index
-                score = creative_palette.compute_harmony(list(combo))
-                if score > current_max:
-                    current_max = score
-    harmony_table[idx] = max(harmony_table[idx-1], current_max)
-
-max_harmony_score = harmony_table[-1]
-print(f"Result: {max_harmony_score}")
+print(f"Result: {final_checksum}")

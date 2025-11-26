@@ -1,0 +1,17 @@
+12
+final_count
+---
+1 user_roles = {'admin', 'moderator', 'editor', 'viewer'}
+1 ['user_roles'] ["{'viewer', 'admin', 'editor', 'moderator'}"]
+3 verified_users = {'admin', 'editor'}
+3 ['user_roles', 'verified_users'] ["{'viewer', 'admin', 'editor', 'moderator'}", "{'admin', 'editor'}"]
+5 eligible_roles = user_roles - {'viewer'}
+5 ['user_roles', 'verified_users', 'eligible_roles'] ["{'viewer', 'admin', 'editor', 'moderator'}", "{'admin', 'editor'}", "{'admin', 'editor', 'moderator'}"]
+7 is_verified = len(verified_users & eligible_roles) > 0
+7 ['user_roles', 'verified_users', 'eligible_roles', 'is_verified'] ["{'viewer', 'admin', 'editor', 'moderator'}", "{'admin', 'editor'}", "{'admin', 'editor', 'moderator'}", 'True']
+9 approved_members = len(eligible_roles) * 3
+9 ['user_roles', 'eligible_roles', 'is_verified', 'approved_members'] ["{'viewer', 'admin', 'editor', 'moderator'}", "{'admin', 'editor', 'moderator'}", 'True', '9']
+10 rejected_members = len(user_roles - eligible_roles) * 2
+10 ['user_roles', 'eligible_roles', 'is_verified', 'approved_members', 'rejected_members'] ["{'viewer', 'admin', 'editor', 'moderator'}", "{'admin', 'editor', 'moderator'}", 'True', '9', '2']
+12 final_count = approved_members if is_verified else rejected_members
+12 ['is_verified', 'approved_members', 'rejected_members', 'final_count'] ['True', '9', '2', '9']

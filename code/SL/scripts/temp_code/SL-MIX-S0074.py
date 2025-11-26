@@ -1,61 +1,48 @@
-import math
-from collections import namedtuple
-
-# Define a structure for cryptographic analysis
-CryptoKey = namedtuple('CryptoKey', ['identifier', 'content', 'base_rating'])
-
-# Sample encryption keys with their base security ratings
-encryption_keys = [
-    CryptoKey('AES-256', 'xK9#mNp$2vLq@4zR', 8.2),
-    CryptoKey('RSA-4096', 'Ht7&bVf*9wSd%1jK', 9.1),
-    CryptoKey('ECC-P256', 'aB3$dEf^7gHi&9jL', 7.6)
-]
-
-# Character set categories
-lowercase_chars = frozenset('abcdefghijklmnopqrstuvwxyz')
-uppercase_chars = frozenset('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-digit_chars = frozenset('0123456789')
-special_chars = frozenset('!@#$%^&*()_+-=[]{}|;:,.<>?')
-
-# Initialize accumulators
-composite_entropy_measure = 0
-advanced_factor_count = 0
-
-for key in encryption_keys:
-    # Determine character set diversity
-    key_chars = frozenset(key.content)
-    diversity_score = sum([
-        bool(key_chars & lowercase_chars),
-        bool(key_chars & uppercase_chars),
-        bool(key_chars & digit_chars),
-        bool(key_chars & special_chars)
-    ])
+def analyze_data_sets(data_a, data_b):
+    # Initialize tracking variables (some are irrelevant)
+    temp_sum = sum(data_a) + sum(data_b)
+    max_val = max(data_a + data_b)
+    min_val = min(data_a + data_b)
     
-    # Calculate entropy-based adjustment using logarithms
-    char_space_size = len(lowercase_chars | uppercase_chars | digit_chars | special_chars)
-    theoretical_max_entropy = len(key.content) * math.log2(char_space_size)
-    actual_entropy = len(key.content) * math.log2(len(key_chars)) if len(key_chars) > 0 else 0
-    entropy_efficiency = actual_entropy / theoretical_max_entropy if theoretical_max_entropy > 0 else 0
+    # Irrelevant computations that don't affect final result
+    ratio_check = lambda x, y: x / y if y != 0 else 0
+    irrelevant_ratio = ratio_check(temp_sum, max_val)
     
-    # Apply exponential weighting to diversity
-    weighted_diversity = math.pow(diversity_score, 1.5)
+    # Misleading intermediate calculations
+    avg_diff = (sum(data_a) / len(data_a)) - (sum(data_b) / len(data_b))
+    squared_diff = avg_diff ** 2
     
-    # Compute key strength modifier
-    strength_modifier = key.base_rating * entropy_efficiency * weighted_diversity
+    # Actual relevant computation path
+    filtered_a = {x for x in data_a if x % 2 == 0}
+    filtered_b = {x for x in data_b if x % 3 == 0}
     
-    # Track advanced factors (keys with high diversity and efficiency)
-    if diversity_score >= 3 and entropy_efficiency > 0.75:
-        advanced_factor_count += 1
+    # Dead code path - never executed
+    if len(filtered_a) > 10:
+        dead_result = sum(filtered_a) * 2
     
-    # Accumulate composite measure
-    composite_entropy_measure += strength_modifier
+    # Key logic with set operations
+    common_elements = filtered_a & filtered_b
+    union_elements = filtered_a | filtered_b
+    
+    # Conditional expression determining final value
+    final_metric = (len(common_elements) * 100) if len(common_elements) > 0 else (len(union_elements) * 50)
+    
+    # More irrelevant computations
+    redundant_check = max_val - min_val
+    normalized_val = final_metric / (len(data_a) + len(data_b))
+    
+    return final_metric
 
-# Calculate final security rating with logical conditions
-if advanced_factor_count >= 2 and composite_entropy_measure > 20:
-    final_security_rating = math.ceil(composite_entropy_measure * 1.25)
-elif advanced_factor_count >= 1 or composite_entropy_measure > 15:
-    final_security_rating = math.floor(composite_entropy_measure * 1.1)
-else:
-    final_security_rating = math.floor(composite_entropy_measure)
+# Data preparation with some distractors
+primary_data = [4, 8, 12, 16, 20, 24, 28, 32, 36]
+secondary_data = [6, 12, 18, 24, 30, 36, 42, 48]
 
-print(f"Result: {final_security_rating}")
+# Additional irrelevant data sets
+backup_data = [2, 4, 6, 8, 10]
+validation_data = [3, 6, 9, 12, 15]
+
+# Execute main analysis
+result = analyze_data_sets(primary_data, secondary_data)
+
+# Final output
+print(f"Result: {result}")

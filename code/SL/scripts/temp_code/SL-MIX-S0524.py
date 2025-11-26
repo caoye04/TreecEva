@@ -1,33 +1,37 @@
-from itertools import combinations
-
-def fibonacci(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n+1):
-        a, b = b, a + b
-    return b
-
-# Generate signal patterns
-signal_length = fibonacci(7)  # 13
-signal_patterns = list(combinations(range(signal_length), 3))
-
-# Initialize verification system
-verification_checksum = 0b10101010
-mask_register = 0xFF
-
-# Process signal patterns
-for pattern in signal_patterns[:8]:
-    # Compute pattern signature
-    pattern_signature = 0
-    for idx in pattern:
-        pattern_signature ^= (idx << 1) & mask_register
+def compute_final_score(performance_data, bonus_threshold):
+    # Process performance metrics
+    base_scores = [entry['score'] for entry in performance_data]
+    max_score = max(base_scores)
+    min_score = min(base_scores)
     
-    # Update verification checksum
-    verification_checksum = (verification_checksum ^ pattern_signature) & mask_register
+    # Calculate weighted average with bonus consideration
+    weighted_sum = sum(score * (index + 1) for index, score in enumerate(base_scores))
+    total_weight = sum(range(1, len(base_scores) + 1))
+    weighted_avg = weighted_sum / total_weight
     
-    # Apply secondary transformation every 3rd pattern
-    if pattern[0] % 3 == 0:
-        verification_checksum = (verification_checksum >> 2) | ((verification_checksum & 0x03) << 6)
+    # Apply bonus multiplier (distractor - not used in final result)
+    bonus_multiplier = 1.5 if weighted_avg > bonus_threshold else 1.0
+    
+    # Calculate score range and final adjustment
+    score_range = max_score - min_score
+    range_adjustment = score_range * 0.1  # Distractor calculation
+    
+    # Final result calculation (ignores bonus and range adjustment)
+    performance_ratio = weighted_avg / max_score
+    final_score = int(performance_ratio * 100)
+    
+    return final_score
 
-print(f"Result: {verification_checksum}")
+# Input data
+performance_data = [
+    {'score': 85, 'category': 'technical'},
+    {'score': 92, 'category': 'analytical'},
+    {'score': 78, 'category': 'creative'},
+    {'score': 88, 'category': 'collaborative'}
+]
+
+bonus_threshold = 85
+
+# Main execution
+final_result = compute_final_score(performance_data, bonus_threshold)
+print(f"Result: {final_result}")

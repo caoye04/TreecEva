@@ -1,26 +1,42 @@
-from collections import defaultdict
-import math
+def process_data(raw_inputs):
+    # Filter and transform input data
+    valid_numbers = [x * 2 for x in raw_inputs if x % 3 == 0]
+    
+    # Intermediate calculation that doesn't affect final result
+    temp_sum = sum([n + 5 for n in valid_numbers])
+    temp_product = temp_sum * 2
+    
+    # Actual relevant processing
+    processed_values = [num - 1 for num in valid_numbers]
+    
+    # Another distraction calculation
+    alternative_result = len(processed_values) * 10
+    
+    return processed_values
 
-def process_signal_strength(readings):
-    adjusted_readings = []
-    for db_level in readings:
-        if db_level > 0 and math.log(db_level) >= 1.0:
-            adjusted_readings.append(math.log(db_level) * 10)
-        else:
-            adjusted_readings.append(0.0)
-    return adjusted_readings
+def final_processing(data_list):
+    # Calculate mean with some unnecessary steps
+    count = len(data_list)
+    total_sum = sum(data_list)
+    
+    # Distractor operation that gets discarded
+    squared_sum = sum([x**2 for x in data_list])
+    
+    # Final relevant calculation
+    result = total_sum // count
+    
+    # Final irrelevant adjustment that gets overridden
+    result = result + 3
+    return result
 
-signal_data = [0.5, 2.7, 10.0, 0.0, 15.3, -2.1]
-filtered_signals = process_signal_strength(signal_data)
-species_count = defaultdict(int)
+# Main execution
+input_sequence = [12, 8, 15, 6, 21, 9, 18]
+cleaned_data = process_data(input_sequence)
 
-bio_activity_score = 0.0
-for idx, sig in enumerate(filtered_signals):
-    species_id = idx % 3
-    if sig > 0.0 and (species_id == 0 or species_count[species_id] <= 2):
-        species_count[species_id] += 1
-        bio_activity_score += sig * (1.5 if species_id == 0 else 1.2)
-    elif sig == 0.0:
-        continue
+# Intermediate variable that's not used
+partial_result = sum(cleaned_data) * 2
 
-print(f"Result: {round(bio_activity_score, 2)}")
+# The key statement
+processed_total = final_processing(cleaned_data)
+
+print(f"Result: {processed_total}")

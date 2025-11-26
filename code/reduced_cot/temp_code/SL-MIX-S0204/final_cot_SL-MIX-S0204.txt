@@ -1,56 +1,48 @@
-Target: Find the value of variable processed_length after [line 39] executes
+Target: Find the value of variable final_score after [line 32] executes
 
-[line 38]  input_text = 'Hello\\x41\\x42\\x43World'
-Assign: input_text = 'Hello\x41\x42\x43World'
-[line 39]  processed_length = process_text(input_text)
-Call function process_text(input_text='Hello\x41\x42\x43World' (defined at [line 38]))
-[line 1]  def process_text(input_string):
-Enter function process_text: input_string='Hello\x41\x42\x43World' (input_text defined at [line 38])
-  [line 2]  states = {'NORMAL': 0, 'ESCAPE': 1, 'HEX': 2}
-  Compute: {'NORMAL': 0, 'ESCAPE': 1, 'HEX': 2} = {NORMAL: 0, ESCAPE: 1, HEX: 2}
-  [line 4]  processed_length = 0
-  Assign: processed_length = 0
-  [line 5]  i = 0
-  Assign: i = 0
-  [line 7]  while i < len(input_string):
-  while Loop Start: Condition is true
-  [line 10]  if current_state == states['NORMAL']:
-  Condition: True, entering 'if' block
-  [line 11]  if char == '\\':
-  Condition: True, entering 'if' block
-  [line 14]  processed_length += 1
-  Update: processed_length changed from 0 (defined at defined at [line 4]) to 0+1 = 1
-  [line 33]  i += 1
-  Update: i changed from 0 (defined at defined at [line 5]) to 0+1 = 1
-  [line 7]  while i < len(input_string):
-  while Loop Iteration: Condition is still true
-  [line 10]  if current_state == states['NORMAL']:
-  Condition: True, entering 'if' block
-  [line 11]  if char == '\\':
-  Condition: True, entering 'if' block
-  [line 14]  processed_length += 1
-  Update: processed_length changed from 1 (defined at defined at [line 14]) to 1+1 = 2
-  [line 33]  i += 1
-  Update: i changed from 1 (defined at defined at [line 33]) to 1+1 = 2
-... [Line 7] repeats 16 more times ...
-... [Line 7] repeats 16 more times ...
-... [Line 7] repeats 16 more times ...
-... [Line 7] repeats 16 more times ...
-... [Line 7] repeats 16 more times ...
-  [line 7]  while i < len(input_string):
-  while Loop Iteration: Condition is still true
-  [line 10]  if current_state == states['NORMAL']:
-  Condition: True, entering 'if' block
-  [line 11]  if char == '\\':
-  Condition: True, entering 'if' block
-  [line 14]  processed_length += 1
-  Update: processed_length changed from 12 (defined at defined at [line 14]) to 12+1 = 13
-  [line 33]  i += 1
-  Update: i changed from 21 (defined at defined at [line 33]) to 21+1 = 22
-  [line 7]  while i < len(input_string):
-  while Loop Iteration: Condition is still true
-  [line 35]  return processed_length
-  Return: processed_length=13 (defined at [line 14])
-Function process_text returns 13
+[line 2]  quality_scores = []
+Compute: [] = []
+[line 5]  for data_str in data_strings:
+Loop Start: data_str takes its first value 'Project Alpha'
+[line 7]  base_quality = len(data_str.strip())
+Call function len(data_str.strip())
+[line 8]  vowel_count = sum(1 for char in data_str.lower() if char in 'aeiou')
+Call function sum(1 for char in data_str.lower() if char in 'aeiou')
+[line 9]  quality_score = base_quality * 2 + vowel_count
+Compute: base_quality * 2 + vowel_count, where base_quality=13 (defined at [line 7]), vowel_count=4 (defined at [line 8]) = 30
+[line 5]  for data_str in data_strings:
+Loop Iteration: data_str is now 'Task Beta v2' (iteration 2)
+[line 7]  base_quality = len(data_str.strip())
+Call function len(data_str.strip())
+[line 9]  quality_score = base_quality * 2 + vowel_count
+Compute: base_quality * 2 + vowel_count, where base_quality=12 (defined at [line 7]), vowel_count=3 (defined at [line 8]) = 27
+[line 5]  for data_str in data_strings:
+Loop Iteration: data_str is now 'Operation Gamma 3.0' (iteration 3)
+[line 7]  base_quality = len(data_str.strip())
+Call function len(data_str.strip())
+[line 9]  quality_score = base_quality * 2 + vowel_count
+Compute: base_quality * 2 + vowel_count, where base_quality=19 (defined at [line 7]), vowel_count=7 (defined at [line 8]) = 45
+[line 5]  for data_str in data_strings:
+Loop Iteration: data_str is now 'Analysis Delta' (iteration 4)
+[line 7]  base_quality = len(data_str.strip())
+Call function len(data_str.strip())
+[line 9]  quality_score = base_quality * 2 + vowel_count
+Compute: base_quality * 2 + vowel_count, where base_quality=14 (defined at [line 7]), vowel_count=5 (defined at [line 8]) = 33
+[line 5]  for data_str in data_strings:
+Loop End: Iteration finished
+[line 18]  max_quality = max(quality_scores) if quality_scores else 0
+Compute: max(quality_scores) if quality_scores else 0, where quality_scores=[30, 27, 45, 33] (defined at [line 2]) = 45
+[line 19]  min_quality = min(quality_scores) if quality_scores else 0
+Compute: min(quality_scores) if quality_scores else 0, where quality_scores=[30, 27, 45, 33] (defined at [line 2]) = 27
+[line 20]  quality_range = max_quality - min_quality
+Compute: max_quality - min_quality, where max_quality=45 (defined at [line 18]), min_quality=27 (defined at [line 19]) = 18
+[line 23]  quality_score = sum(quality_scores) // len(quality_scores) if quality_scores else 0
+Compute: sum(quality_scores) // len(quality_scores) if quality_scores else 0, where quality_scores=[30, 27, 45, 33] (defined at [line 2]) = 33
+[line 24]  efficiency_bonus = 5 if quality_range > 10 else 2
+Compute: 5 if quality_range > 10 else 2, where quality_range=18 (defined at [line 20]) = 5
+[line 25]  multiplier = 3 if max_quality > 25 else 1
+Compute: 3 if max_quality > 25 else 1, where max_quality=45 (defined at [line 18]) = 3
+[line 32]  final_score = (quality_score + efficiency_bonus) * multiplier
+Compute: (quality_score + efficiency_bonus) * multiplier, where quality_score=33 (defined at [line 23]), efficiency_bonus=5 (defined at [line 24]), multiplier=3 (defined at [line 25]) = 114
 
-Answer: processed_length = 13 (last updated on defined at [line 14])
+Answer: final_score = 114 (last updated on defined at [line 32])

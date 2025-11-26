@@ -1,21 +1,43 @@
-import numpy as np
+import itertools
 
-# Sensor readings
-sensor_data = np.array([3, 7, 2, 8])
+def validate_sequence(data):
+    # Misleading validation that doesn't affect result
+    temp_sum = sum(data) * 2  # Distractor computation
+    filtered = [x for x in data if x % 3 != 0]  # Unused filtering
+    return len(data)  # Returns length, not used in main logic
 
-# Transformation matrix
-transform_matrix = np.array([[1, 0, 2, 1],
-                            [1, 2, 0, 1],
-                            [0, 1, 1, 2],
-                            [2, 1, 1, 0]])
+def process_validation(seq):
+    # Main logic with distractions
+    pairs = list(itertools.pairwise(seq))
+    
+    # Misleading intermediate calculations
+    xor_result = 0
+    for a, b in pairs:
+        xor_result ^= (a + b)  # Distractor XOR chain
+    
+    # Actual relevant computation
+    sliced = seq[1:-1:2]  # Critical slicing operation
+    product = 1
+    for num in sliced:
+        product *= num
+    
+    # More distractions
+    dummy_list = [x**2 for x in seq if x > 5]  # Unused squared values
+    checksum_offset = len(dummy_list) * 10  # Fake offset
+    
+    # Final answer calculation
+    final_value = product - len(pairs)
+    
+    # Unused dead code path
+    if final_value > 100:
+        final_value += checksum_offset  # Never executed
+    
+    return final_value
 
-# Apply transformation
-transformed_data = np.dot(transform_matrix, sensor_data)
+# Main execution
+sequence = [2, 3, 5, 7, 11, 13]
+validation_result = validate_sequence(sequence)  # Distractor function call
+final_checksum = process_validation(sequence)
 
-# Lambda function for final processing
-process_func = lambda x: sum(x) % 10
-
-# Compute final processed signal
-processed_signal = process_func(transformed_data)
-
-print(f"Result: {processed_signal}")
+# Print the target result
+print(f"Result: {final_checksum}")

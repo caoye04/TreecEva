@@ -1,45 +1,30 @@
-from itertools import permutations
-from collections import Counter
-from dataclasses import dataclass
+import itertools
 
-genomic_sequences = ['atgc', 'tgcA', 'GCAT', 'catg']
-base_weights = {'A': 2, 'T': 3, 'G': 5, 'C': 7}
+# Process scheduling simulation with priority queues
+processes = ["A", "B", "C", "D", "E"]
+base_priorities = [3, 1, 4, 2, 5]
 
-# Define a decorator for logging function calls
-def log_calls(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result
-    return wrapper
+# Create priority queue with process names and priorities
+priority_queue = []
+for idx, (process, priority) in enumerate(zip(processes, base_priorities)):
+    adjusted_priority = priority * 2 + idx % 3
+    priority_queue.append((process, adjusted_priority))
 
-@log_calls
-def compute_weighted_score(freq_dict):
-    score = 0
-    for base, count in freq_dict.items():
-        if base in base_weights:
-            score += count * base_weights[base]
-    return score
+# Some intermediate calculations that don't affect final result
+process_count = len(processes)
+total_priority_sum = sum(p[1] for p in priority_queue)
+avg_priority = total_priority_sum / process_count
 
-# Process sequences
-processed_sequences = []
-for seq in genomic_sequences:
-    # Convert to uppercase
-    upper_seq = seq.upper()
-    # Replace 'A' with 'X' temporarily for pattern analysis
-    modified_seq = upper_seq.replace('A', 'X')
-    processed_sequences.append(modified_seq)
+# Sort by priority (lower number = higher priority)
+priority_queue.sort(key=lambda x: x[1])
 
-# Count all characters in processed sequences
-all_chars = ''.join(processed_sequences)
-frequency_count = Counter(all_chars)
+# Distractor operations - calculate some metrics but don't use them
+max_priority = max(p[1] for p in priority_queue)
+min_priority = min(p[1] for p in priority_queue)
+priority_range = max_priority - min_priority
 
-# Apply combinatorics to generate possible base arrangements
-bases = list('XTGC')
-perm_count = len(list(permutations(bases, 2)))
+# Critical execution point
+final_priority = priority_queue[-1][1]
 
-# Calculate final score using lambda closure
-adjustment_factor = perm_count
-scoring_func = lambda freq: compute_weighted_score(freq) * adjustment_factor
-final_score = scoring_func(frequency_count)
-
-print(f'Result: {final_score}')
+# Print the result
+print(f"Result: {final_priority}")

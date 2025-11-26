@@ -1,71 +1,74 @@
-Target: Find the value of variable congestion_window_size after [line 40] executes
+Target: Find the value of variable final_result after [line 64] executes
 
-[line 6]  packet_window = deque(maxlen=5)
-Call function deque(maxlen=5)
-[line 8]  congestion_window_size = 10
-Assign: congestion_window_size = 10
-[line 18]  for seq_num, payload in packet_stream:
+[line 53]  input_stream = "alpha|beta|gamma|delta|epsilon|zeta"
+Assign: input_stream = 'alpha|beta|gamma|delta|epsilon|zeta'
+[line 56]  frequency_analysis = analyze_frequency(input_stream.split('|'))
+Call function analyze_frequency(input_stream.split('|'))
+[line 7]  def analyze_frequency(items):
+Enter function analyze_frequency: items=['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]
+  [line 9]  freq = Counter(items)
+  Call function Counter(items=['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...] (parameter items))
+  [line 10]  return max(freq.values()) - min(freq.values())
+  Return: max(freq.values()) - min(freq.values())
+Function analyze_frequency returns 0
+[line 5]  return sum(x * 2 for x in data if x > 0)
+Return: sum(x * 2 for x in data if x > 0)
+[line 60]  result = process_data(input_stream)
+Call function process_data(input_stream='alpha|beta|gamma|delta|epsilon|zeta' (defined at [line 53]))
+[line 14]  tokens = stream.split('|')
+(Missing param: 'func_name')
+[line 21]  processed = []
+Compute: [] = []
+[line 22]  for i, token in enumerate(tokens):
 (Missing param: 'iter_var')
-[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
-Compute: seq_num in [p[0] for p in packet_window], where seq_num=1001 (an unknown source), packet_window=deque([], maxlen=5) (defined at [line 6]) = False
-[line 23]  if is_duplicate:
+[line 23]  if i % 2 == 0:
 Condition: True, entering 'if' block
-[line 30]  if payload > 1000:
-Condition: True, entering 'if' block
-[line 32]  elif is_duplicate:
-'elif' Condition: True, entering block
-[line 36]  seq_str = str(seq_num)
-Call function str(seq_num=1001 (an unknown source))
-[line 37]  if re.match(r'.*[02468]$', seq_str):  # Even ending digit
-Condition: True, entering 'if' block
-[line 40]  congestion_window_size = congestion_window_size - 1
-Update: congestion_window_size changed from 10 (defined at defined at [line 8]) to 10-1 = 9
-[line 18]  for seq_num, payload in packet_stream:
+[line 22]  for i, token in enumerate(tokens):
 (Missing param: 'iter_var')
-[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
-Compute: seq_num in [p[0] for p in packet_window], where seq_num=1002 (an unknown source), p=(1001, 512) (an unknown source), packet_window=deque([(1001, 512)], maxlen=5) (defined at [line 6]) = False
-[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
-Compute: seq_num in [p[0] for p in packet_window], where seq_num=1002 (an unknown source), p=(1001, 512) (an unknown source), packet_window=deque([(1001, 512)], maxlen=5) (defined at [line 6]) = False
-[line 23]  if is_duplicate:
+[line 23]  if i % 2 == 0:
 Condition: True, entering 'if' block
-[line 30]  if payload > 1000:
-Condition: True, entering 'if' block
-[line 32]  elif is_duplicate:
-'elif' Condition: True, entering block
-[line 36]  seq_str = str(seq_num)
-Call function str(seq_num=1002 (an unknown source))
-[line 37]  if re.match(r'.*[02468]$', seq_str):  # Even ending digit
-Condition: True, entering 'if' block
-[line 38]  congestion_window_size = congestion_window_size + 1
-Update: congestion_window_size changed from 9 (defined at defined at [line 40]) to 9+1 = 10
-... [Line 18] repeats 9 more times ...
-... [Line 18] repeats 9 more times ...
-... [Line 18] repeats 9 more times ...
-... [Line 18] repeats 9 more times ...
-... [Line 18] repeats 9 more times ...
-... [Line 18] repeats 9 more times ...
-... [Line 18] repeats 9 more times ...
-[line 18]  for seq_num, payload in packet_stream:
+... [Line 22] repeats 3 more times ...
+... [Line 22] repeats 3 more times ...
+[line 22]  for i, token in enumerate(tokens):
 (Missing param: 'iter_var')
-[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
-Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1006, 2048) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = False
-[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
-Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1007, 32) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = False
-[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
-Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1008, 4096) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = False
-[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
-Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1009, 16) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = False
-[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
-Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1010, 8192) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = False
-[line 20]  is_duplicate = seq_num in [p[0] for p in packet_window]
-Compute: seq_num in [p[0] for p in packet_window], where seq_num=1008 (an unknown source), p=(1010, 8192) (an unknown source), packet_window=deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5) (defined at [line 6]) = True
-[line 23]  if is_duplicate:
+[line 23]  if i % 2 == 0:
 Condition: True, entering 'if' block
-[line 30]  if payload > 1000:
-Condition: True, entering 'if' block
-[line 31]  congestion_window_size = congestion_window_size - 1 if congestion_window_size > 1 else 1
-Compute: congestion_window_size - 1 if congestion_window_size > 1 else 1, where congestion_window_size=5 (defined at [line 38]) = 4
-[line 18]  for seq_num, payload in packet_stream:
+[line 22]  for i, token in enumerate(tokens):
 Loop End: Iteration finished
+[line 33]  if len(processed) > 10:
+Condition: True, entering 'if' block
+[line 37]  result = 0
+Assign: result = 0
+[line 38]  for i, num in enumerate(processed):
+(Missing param: 'iter_var')
+[line 39]  if i < len(processed) // 2:
+Condition: True, entering 'if' block
+[line 40]  result += num << 1
+Update: result changed from 0 (defined at defined at [line 37]) to 0+num << 1 = 10
+[line 38]  for i, num in enumerate(processed):
+(Missing param: 'iter_var')
+[line 39]  if i < len(processed) // 2:
+Condition: True, entering 'if' block
+[line 40]  result += num << 1
+Update: result changed from 10 (defined at defined at [line 40]) to 10+num << 1 = 28
+... [Line 38] repeats 3 more times ...
+... [Line 38] repeats 3 more times ...
+... [Line 38] repeats 3 more times ...
+[line 38]  for i, num in enumerate(processed):
+(Missing param: 'iter_var')
+[line 39]  if i < len(processed) // 2:
+Condition: True, entering 'if' block
+[line 38]  for i, num in enumerate(processed):
+Loop End: Iteration finished
+[line 45]  if result > 100:
+Condition: True, entering 'if' block
+[line 48]  result = result * 3 + 7
+Compute: result * 3 + 7, where result=43 (defined at [line 40]) = 136
+[line 50]  return result
+Return: result=136 (defined at [line 48])
+[line 63]  final_adjustment = (frequency_analysis * 2) % 13
+Compute: (frequency_analysis * 2) % 13, where frequency_analysis=0 (defined at [line 56]) = 0
+[line 64]  final_result = result + (final_adjustment // 2)
+Compute: result + (final_adjustment // 2), where result=136 (defined at [line 48]), final_adjustment=0 (defined at [line 63]) = 136
 
-Answer: congestion_window_size = 4 (last updated on defined at [line 31])
+Answer: final_result = 136 (last updated on defined at [line 64])

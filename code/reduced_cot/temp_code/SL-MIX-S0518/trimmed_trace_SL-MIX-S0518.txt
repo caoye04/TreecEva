@@ -1,0 +1,53 @@
+55
+final_output
+---
+48 threshold_value = 15
+48 ['product_catalog', 'threshold_value'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15']
+54 result = analyze_inventory_metrics(product_catalog, threshold_value)
+54 ['product_catalog', 'threshold_value'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15']
+3 total_products = len(product_data)
+3 ['product_data', 'min_threshold', 'total_products'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', '4']
+4 max_capacity = 1000
+4 ['product_data', 'min_threshold', 'total_products', 'max_capacity'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', '4', '1000']
+5 buffer_space = max_capacity - total_products
+5 ['product_data', 'min_threshold', 'total_products', 'max_capacity', 'buffer_space'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', '4', '1000', '996']
+12 if buffer_space < 0:
+12 ['product_data', 'min_threshold', 'buffer_space'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', '996']
+17 critical_items = [p for p in product_data if p['current_stock'] <= min_threshold]
+17 ['product_data', 'min_threshold', 'p'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', "{name: 'widget_a', current_stock: 25, initial_stock: 50}"]
+17 critical_items = [p for p in product_data if p['current_stock'] <= min_threshold]
+17 ['product_data', 'min_threshold', 'p'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', "{name: 'widget_b', current_stock: 12, initial_stock: 30}"]
+17 critical_items = [p for p in product_data if p['current_stock'] <= min_threshold]
+17 ['product_data', 'min_threshold', 'p'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', "{name: 'widget_c', current_stock: 45, initial_stock: 60}"]
+17 critical_items = [p for p in product_data if p['current_stock'] <= min_threshold]
+17 ['product_data', 'min_threshold', 'p'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', "{name: 'widget_d', current_stock: 8, initial_stock: 25}"]
+17 critical_items = [p for p in product_data if p['current_stock'] <= min_threshold]
+17 ['product_data', 'min_threshold', 'critical_items'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', "[{name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]"]
+18 reorder_priority = len(critical_items) * 2 if critical_items else 0
+18 ['product_data', 'min_threshold', 'critical_items', 'reorder_priority'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', "[{name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '4']
+21 status_flags = 0b1101
+21 ['product_data', 'min_threshold', 'reorder_priority', 'status_flags'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', '4', '13']
+22 alert_level = (status_flags & 0b0100) >> 2
+22 ['product_data', 'min_threshold', 'reorder_priority', 'status_flags', 'alert_level'] ["[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}]", '15', '4', '13', '1']
+25 stock_levels = tuple(p['current_stock'] for p in product_data)
+25 [] []
+25 stock_levels = tuple(p['current_stock'] for p in product_data)
+25 ['p'] ["{name: 'widget_a', current_stock: 25, initial_stock: 50}"]
+25 stock_levels = tuple(p['current_stock'] for p in product_data)
+25 ['p'] ["{name: 'widget_b', current_stock: 12, initial_stock: 30}"]
+25 stock_levels = tuple(p['current_stock'] for p in product_data)
+25 ['p'] ["{name: 'widget_c', current_stock: 45, initial_stock: 60}"]
+25 stock_levels = tuple(p['current_stock'] for p in product_data)
+25 ['p'] ["{name: 'widget_d', current_stock: 8, initial_stock: 25}"]
+25 stock_levels = tuple(p['current_stock'] for p in product_data)
+25 ['p'] ["{name: 'widget_d', current_stock: 8, initial_stock: 25}"]
+26 avg_stock = sum(stock_levels) / len(stock_levels)
+26 ['min_threshold', 'reorder_priority', 'alert_level', 'stock_levels', 'avg_stock'] ['15', '4', '1', '(25, 12, 45, 8)', '22.5']
+29 action_score = (avg_stock - min_threshold) * 3 if avg_stock > min_threshold else min_threshold - avg_stock
+29 ['min_threshold', 'reorder_priority', 'alert_level', 'avg_stock', 'action_score'] ['15', '4', '1', '22.5', '22.5']
+36 inventory_health = action_score + reorder_priority - alert_level
+36 ['reorder_priority', 'alert_level', 'action_score', 'inventory_health'] ['4', '1', '22.5', '25.5']
+37 return inventory_health
+37 ['inventory_health'] ['25.5']
+55 final_output = result + 2  # Final adjustment
+55 ['result', 'final_output'] ['25.5', '27.5']

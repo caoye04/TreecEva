@@ -1,0 +1,58 @@
+Target: Find the value of variable final_count after [line 30] executes
+
+[line 7]  filtered_items = [item for item in items if item > threshold]
+Compute: [item for item in items if item > threshold], where item=8 (an unknown source), items=[8, 12, 5, 18, 3, ...] (an unknown source), threshold=10 (an unknown source) = ?
+[line 8]  sorted_filtered = sorted(filtered_items, reverse=True)
+Call function sorted(filtered_items=[12, 18, 22, 14, 20] (defined at [line 7]), reverse=True)
+[line 11]  redundant_calc = sum(items) * 3 - len(items)
+Compute: sum(items) * 3 - len(items), where items=[8, 12, 5, 18, 3, ...] (an unknown source) = 344
+[line 12]  if redundant_calc > 1000:
+Condition: True, entering 'if' block
+[line 16]  valid_items = [item for item in sorted_filtered if (item & 1) == 0]
+Compute: [item for item in sorted_filtered if (item & 1) == 0], where item=22 (an unknown source), sorted_filtered=[22, 20, 18, 14, 12] (defined at [line 8]) = ?
+[line 17]  grouped_data = {}
+Compute: {} = {}
+[line 18]  for item in valid_items:
+Loop Start: item takes its first value 22
+[line 19]  key = item % 5
+Compute: item % 5, where item=22 (defined at [line 18]) = 2
+[line 20]  if key not in grouped_data:
+Condition: True, entering 'if' block
+[line 21]  grouped_data[key] = []
+(Missing param: 'result')
+[line 18]  for item in valid_items:
+Loop Iteration: item is now 20 (iteration 2)
+[line 19]  key = item % 5
+Compute: item % 5, where item=20 (defined at [line 18]) = 0
+[line 20]  if key not in grouped_data:
+Condition: True, entering 'if' block
+[line 21]  grouped_data[key] = []
+(Missing param: 'result')
+... [Line 18] repeats 2 more times ...
+... [Line 18] repeats 2 more times ...
+... [Line 18] repeats 2 more times ...
+... [Line 18] repeats 2 more times ...
+[line 18]  for item in valid_items:
+Loop Iteration: item is now 12 (iteration 5)
+[line 19]  key = item % 5
+Compute: item % 5, where item=12 (defined at [line 18]) = 2
+[line 20]  if key not in grouped_data:
+Condition: True, entering 'if' block
+[line 18]  for item in valid_items:
+Loop End: Iteration finished
+[line 25]  final_count = sum(len(group) for group in grouped_data.values()) * 2
+Compute: sum(len(group) for group in grouped_data.values()) * 2, where grouped_data={2: [22, 12], 0: [20], 3: [18], ...} (defined at [line 17]) = ?
+[line 25]  final_count = sum(len(group) for group in grouped_data.values()) * 2
+Compute: sum(len(group) for group in grouped_data.values()) * 2, where group=[22, 12] (an unknown source) = ?
+[line 25]  final_count = sum(len(group) for group in grouped_data.values()) * 2
+Compute: sum(len(group) for group in grouped_data.values()) * 2, where group=[20] (an unknown source) = ?
+[line 25]  final_count = sum(len(group) for group in grouped_data.values()) * 2
+Compute: sum(len(group) for group in grouped_data.values()) * 2, where group=[18] (an unknown source) = ?
+[line 25]  final_count = sum(len(group) for group in grouped_data.values()) * 2
+Compute: sum(len(group) for group in grouped_data.values()) * 2, where group=[14] (an unknown source) = ?
+[line 25]  final_count = sum(len(group) for group in grouped_data.values()) * 2
+Compute: sum(len(group) for group in grouped_data.values()) * 2, where group=[14] (an unknown source) = ?
+[line 30]  return final_count
+Return: final_count=10 (defined at [line 25])
+
+Answer: final_count = 10 (last updated on defined at [line 25])

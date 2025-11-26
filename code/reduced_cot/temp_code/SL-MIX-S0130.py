@@ -1,24 +1,30 @@
-import re
-from collections import defaultdict
+def process_sensor_data(initial_readings):
+    # Initial sensor processing with irrelevant calculations
+    temperature_variance = sum([r * 2 for r in initial_readings]) - 15  # Distractor
+    pressure_offset = (initial_readings[0] << 2) & 0xFF  # Unused
+    
+    # Core sensor correction calculation
+    valid_readings = [r for i, r in enumerate(initial_readings) if i % 2 == 0]
+    sensor_correction = sum([x * y for x, y in zip(valid_readings, valid_readings[1:] + [valid_readings[0]])])
+    
+    # Bitwise adjustments with misleading intermediate values
+    bitwise_adjustment = (sensor_correction & 0b1010) | (sensor_correction & 0b0101)
+    temp_adjust = bitwise_adjustment ^ 0b1111  # Dead code path
+    
+    # Parity and checksum calculations
+    parity_check = 0
+    for reading in initial_readings:
+        parity_check ^= (reading % 8)
+    
+    checksum_dummy = parity_check << 1  # Irrelevant calculation
+    
+    # Final calibration combining relevant components
+    final_calibration = sensor_correction + (bitwise_adjustment ^ parity_check)
+    
+    # Print result for verification
+    print(f"Result: {final_calibration}")
+    return final_calibration
 
-document = "The quick brown fox jumps over the lazy dog. The dog was really lazy."
-stop_words = {'the', 'over', 'was', 'really'}
-
-# Tokenize and normalize
-tokens = re.findall(r'\b\w+\b', document.lower())
-
-# Filter out stop words
-filtered_tokens = [word for word in tokens if word not in stop_words]
-
-# Count frequencies using defaultdict
-freq_map = defaultdict(int)
-for word in filtered_tokens:
-    freq_map[word] += 1
-
-# Create a dictionary of words with frequency 1 using dictionary comprehension
-single_occurrence = {word: count for word, count in freq_map.items() if count == 1}
-
-# Count unique words that occur exactly once
-unique_word_count = len(single_occurrence)
-
-print(f"Result: {unique_word_count}")
+# Test execution with specific sensor readings
+sensor_data = [12, 8, 5, 17, 9, 3]
+result = process_sensor_data(sensor_data)

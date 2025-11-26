@@ -1,0 +1,32 @@
+Target: Find the value of variable final_solution after [line 17] executes
+
+[line 16]  final_solution = compute_final_result()
+Call function compute_final_result()
+[line 2]  inventory_values = {'item_a': 45, 'item_b': 67, 'item_c': 23, 'item_d': 89}
+Compute: {'item_a': 45, 'item_b': 67, 'item_c': 23, 'item_d': 89} = {item_a: 45, item_b: 67, item_c: 23, ...}
+[line 3]  threshold_check = lambda x: x > 50
+Compute: lambda x: x > 50 = ?
+[line 5]  relevant_items = {k: v for k, v in inventory_values.items() if threshold_check(v)}
+Compute: {k: v for k, v in inventory_values.items() if threshold_check(v)}, where k='item_a' (an unknown source), v=45 (an unknown source), inventory_values={item_a: 45, item_b: 67, item_c: 23, ...} (defined at [line 2]) = ?
+[line 3]  threshold_check = lambda x: x > 50
+Compute: lambda x: x > 50, where x=45 (an unknown source) = ?
+[line 3]  threshold_check = lambda x: x > 50
+Compute: lambda x: x > 50, where x=67 (an unknown source) = ?
+[line 3]  threshold_check = lambda x: x > 50
+Compute: lambda x: x > 50, where x=23 (an unknown source) = ?
+[line 3]  threshold_check = lambda x: x > 50
+Compute: lambda x: x > 50, where x=89 (an unknown source) = ?
+[line 8]  processed_values = [v * 1.1 for v in relevant_items.values()]
+Compute: [v * 1.1 for v in relevant_items.values()], where v=67 (an unknown source), relevant_items={item_b: 67, item_d: 89} (defined at [line 5]) = ?
+[line 9]  adjustment_factor = len(inventory_values) - len(relevant_items)
+Compute: len(inventory_values) - len(relevant_items), where inventory_values={item_a: 45, item_b: 67, item_c: 23, ...} (defined at [line 2]), relevant_items={item_b: 67, item_d: 89} (defined at [line 5]) = 2
+[line 11]  base_result = sum(processed_values)
+Call function sum(processed_values=[73.7, 97.9] (defined at [line 8]))
+[line 12]  final_calculation = base_result - adjustment_factor * 5
+Compute: base_result - adjustment_factor * 5, where base_result=171.60000000000002 (defined at [line 11]), adjustment_factor=2 (defined at [line 9]) = 161.60000000000002
+[line 14]  return round(final_calculation, 2)
+Return: round(final_calculation, 2)
+[line 17]  print(f"Result: {final_solution}")
+Output: f"Result: {final_solution}"
+
+Answer: final_solution = 161.6 (last updated on defined at [line 16])

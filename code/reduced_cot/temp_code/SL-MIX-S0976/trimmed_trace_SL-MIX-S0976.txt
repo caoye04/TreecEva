@@ -1,0 +1,53 @@
+26
+final_balance
+---
+2 initial_balance = 2500
+2 ['initial_balance'] ['2500']
+3 transactions = [150, -80, 200, -120, 75, -45]
+3 ['initial_balance', 'transactions'] ['2500', '[150, -80, 200, -120, 75, ...]']
+4 processing_fee_rate = 0.02
+4 ['initial_balance', 'transactions', 'processing_fee_rate'] ['2500', '[150, -80, 200, -120, 75, ...]', '0.02']
+5 reconciliation_threshold = 100
+5 ['initial_balance', 'transactions', 'processing_fee_rate', 'reconciliation_threshold'] ['2500', '[150, -80, 200, -120, 75, ...]', '0.02', '100']
+8 processed_transactions = [txn * (1 - processing_fee_rate) for txn in transactions if abs(txn) > reconciliation_threshold]
+8 ['initial_balance', 'transactions', 'processing_fee_rate', 'reconciliation_threshold', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '0.02', '100', '150']
+8 processed_transactions = [txn * (1 - processing_fee_rate) for txn in transactions if abs(txn) > reconciliation_threshold]
+8 ['initial_balance', 'transactions', 'processing_fee_rate', 'reconciliation_threshold', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '0.02', '100', '-80']
+8 processed_transactions = [txn * (1 - processing_fee_rate) for txn in transactions if abs(txn) > reconciliation_threshold]
+8 ['initial_balance', 'transactions', 'processing_fee_rate', 'reconciliation_threshold', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '0.02', '100', '200']
+8 processed_transactions = [txn * (1 - processing_fee_rate) for txn in transactions if abs(txn) > reconciliation_threshold]
+8 ['initial_balance', 'transactions', 'processing_fee_rate', 'reconciliation_threshold', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '0.02', '100', '-120']
+8 processed_transactions = [txn * (1 - processing_fee_rate) for txn in transactions if abs(txn) > reconciliation_threshold]
+8 ['initial_balance', 'transactions', 'processing_fee_rate', 'reconciliation_threshold', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '0.02', '100', '75']
+8 processed_transactions = [txn * (1 - processing_fee_rate) for txn in transactions if abs(txn) > reconciliation_threshold]
+8 ['initial_balance', 'transactions', 'processing_fee_rate', 'reconciliation_threshold', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '0.02', '100', '-45']
+8 processed_transactions = [txn * (1 - processing_fee_rate) for txn in transactions if abs(txn) > reconciliation_threshold]
+8 ['initial_balance', 'transactions', 'processing_fee_rate', 'reconciliation_threshold', 'processed_transactions'] ['2500', '[150, -80, 200, -120, 75, ...]', '0.02', '100', '[147.0, 196.0, -117.6]']
+13 for txn in transactions:
+13 ['initial_balance', 'transactions', 'processed_transactions', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '150']
+13 for txn in transactions:
+13 ['initial_balance', 'transactions', 'processed_transactions', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '-80']
+13 for txn in transactions:
+13 ['initial_balance', 'transactions', 'processed_transactions', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '200']
+13 for txn in transactions:
+13 ['initial_balance', 'transactions', 'processed_transactions', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '-120']
+13 for txn in transactions:
+13 ['initial_balance', 'transactions', 'processed_transactions', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '75']
+13 for txn in transactions:
+13 ['initial_balance', 'transactions', 'processed_transactions', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '-45']
+13 for txn in transactions:
+13 ['initial_balance', 'transactions', 'processed_transactions', 'txn'] ['2500', '[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '-45']
+18 processed_operations = [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))]
+18 ['initial_balance', 'transactions', 'processed_transactions', 'i'] ['2500', '[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '0']
+18 processed_operations = [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))]
+18 ['initial_balance', 'transactions', 'processed_transactions', 'i'] ['2500', '[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '1']
+18 processed_operations = [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))]
+18 ['initial_balance', 'transactions', 'processed_transactions', 'i'] ['2500', '[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '2']
+18 processed_operations = [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))]
+18 ['initial_balance', 'transactions', 'processed_transactions', 'processed_operations'] ['2500', '[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '[2647.0, 2843.0, 2725.4]']
+21 total_processed = sum(processed_transactions)
+21 ['transactions', 'processed_transactions', 'processed_operations', 'total_processed'] ['[150, -80, 200, -120, 75, ...]', '[147.0, 196.0, -117.6]', '[2647.0, 2843.0, 2725.4]', '225.4']
+23 adjustment_factor = total_processed - sum(transactions)
+23 ['transactions', 'processed_operations', 'total_processed', 'adjustment_factor'] ['[150, -80, 200, -120, 75, ...]', '[2647.0, 2843.0, 2725.4]', '225.4', '45.400000000000006']
+26 final_balance = processed_operations[-1] + adjustment_factor
+26 ['processed_operations', 'adjustment_factor', 'final_balance'] ['[2647.0, 2843.0, 2725.4]', '45.400000000000006', '2770.8']

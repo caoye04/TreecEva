@@ -1,24 +1,36 @@
-from collections import Counter
-from itertools import permutations
-import math
+import itertools
 
-def fibonacci(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        a, b = b, a + b
-    return b
+def analyze_inventory(supply_data):
+    raw_items = ['widget_a', 'widget_b', 'widget_c', 'widget_a', 'widget_b', 'widget_d']
+    processed_stock = []
+    
+    # Distractor: Process but don't use this list
+    temp_sorted = sorted(raw_items)
+    
+    for item in raw_items:
+        if item.startswith('widget_'):
+            processed_stock.append(item)
+    
+    # Distractor: Calculate but don't use this value
+    total_processed = len(processed_stock)
+    
+    # Key operation: Group by item type and count
+    grouped_items = {}
+    for key, group in itertools.groupby(sorted(processed_stock)):
+        grouped_items[key] = len(list(group))
+    
+    # Distractor: Intermediate calculation
+    max_quantity = max(grouped_items.values()) if grouped_items else 0
+    
+    # Main logic: Count items with quantity > 1
+    final_count = 0
+    for item, quantity in grouped_items.items():
+        if quantity > 1:
+            final_count += 1
+    
+    # Final assignment
+    result = final_count
+    print(f"Target result: {result}")
 
-genetic_markers = ['A', 'B', 'C', 'D']
-score_counter = Counter()
-
-for perm in permutations(genetic_markers, 3):
-    checksum = sum(ord(char) * fibonacci(i+1) for i, char in enumerate(perm))
-    normalized_checksum = checksum % 100
-    score_counter[normalized_checksum] += 1
-
-max_frequency = max(score_counter.values())
-dominant_score_frequency = sum(1 for freq in score_counter.values() if freq == max_frequency)
-
-print(f"Result: {dominant_score_frequency}")
+# Execute the analysis
+analyze_inventory(['dummy_data'])

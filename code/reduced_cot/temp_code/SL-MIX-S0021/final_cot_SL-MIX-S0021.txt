@@ -1,70 +1,18 @@
-Target: Find the value of variable final_output after [line 42] executes
+Target: Find the value of variable final_capacity after [line 13] executes
 
-[line 31]  raw_coefficients = [4, -3, 8, 0, 15, -6, 2]
-Compute: [4, -3, 8, 0, 15, -6, 2] = [4, -3, 8, 0, 15, ...]
-[line 32]  signal_chain = build_signal_chain(raw_coefficients)
-Call function build_signal_chain(raw_coefficients=[4, -3, 8, 0, 15, ...] (defined at [line 31]))
-[line 10]  if not coeff_list:
-Condition: True, entering 'if' block
-[line 12]  head = SignalNode(coeff_list[0])
-Call function SignalNode(coeff_list[0])
-[line 14]  for coeff in coeff_list[1:]:
-Loop Start: coeff takes its first value -3
-[line 14]  for coeff in coeff_list[1:]:
-Loop End: Iteration finished
-[line 14]  for coeff in coeff_list[1:]:
-Loop End: Iteration finished
-[line 14]  for coeff in coeff_list[1:]:
-Loop End: Iteration finished
-[line 14]  for coeff in coeff_list[1:]:
-Loop End: Iteration finished
-[line 14]  for coeff in coeff_list[1:]:
-Loop End: Iteration finished
-[line 14]  for coeff in coeff_list[1:]:
-Loop End: Iteration finished
-[line 17]  return head
-Return: head=SignalNode(...) (defined at [line 12])
-[line 35]  transformed_values = traverse_and_transform(signal_chain, selective_filter)
-Call function traverse_and_transform(signal_chain=SignalNode(...) (defined at [line 32]), selective_filter)
-[line 20]  values = []
-Compute: [] = []
-[line 22]  while current and current.freq_coeff != 0:
-while Loop Start: Condition is true
-[line 28]  return x if x > 0 and x % 2 == 0 else 0
-Return: x if x > 0 and x % 2 == 0 else 0
-[line 22]  while current and current.freq_coeff != 0:
-while Loop Iteration: Condition is still true
-[line 28]  return x if x > 0 and x % 2 == 0 else 0
-Return: x if x > 0 and x % 2 == 0 else 0
-[line 22]  while current and current.freq_coeff != 0:
-while Loop Iteration: Condition is still true
-[line 28]  return x if x > 0 and x % 2 == 0 else 0
-Return: x if x > 0 and x % 2 == 0 else 0
-[line 22]  while current and current.freq_coeff != 0:
-while Loop Iteration: Condition is still true
-[line 25]  return values
-Return: values=[4, 0, 8] (defined at [line 20])
-[line 36]  filtered_map = map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
-Call function map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
-[line 37]  reduction_result = reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map, 0)
-Call function reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map=<map object at 0x000001FD4AC21810> (defined at [line 36]), 0)
-[line 36]  filtered_map = map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
-Call function map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
-[line 37]  reduction_result = reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map, 0)
-Call function reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map, 0)
-[line 36]  filtered_map = map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
-Call function map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
-[line 37]  reduction_result = reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map, 0)
-Call function reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map, 0)
-[line 36]  filtered_map = map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
-Call function map(lambda x: x * 2 if x and x < 10 else x, transformed_values)
-[line 37]  reduction_result = reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map, 0)
-Call function reduce(lambda acc, val: acc + val if val and acc < 20 else acc, filtered_map, 0)
-[line 40]  cache = defaultdict(int)
-Call function defaultdict(int)
-[line 41]  validation_passed = reduction_result > 0 and cache['checksum'] == 0
-Compute: reduction_result > 0 and cache['checksum'] == 0, where reduction_result=24 (defined at [line 37]), cache={checksum: 0} (defined at [line 40]) = True
-[line 42]  final_output = reduction_result * 2 if validation_passed else -1
-Compute: reduction_result * 2 if validation_passed else -1, where reduction_result=24 (defined at [line 37]), validation_passed=True (defined at [line 41]) = 48
+[line 4]  base_capacity = 850
+Assign: base_capacity = 850
+[line 5]  overflow_reserve = 120
+Assign: overflow_reserve = 120
+[line 6]  redundancy_factor = 3
+Assign: redundancy_factor = 3
+[line 7]  temp_buffer = 75
+Assign: temp_buffer = 75
+[line 8]  primary_storage = base_capacity + temp_buffer
+Compute: base_capacity + temp_buffer, where base_capacity=850 (defined at [line 4]), temp_buffer=75 (defined at [line 7]) = 925
+[line 9]  overflow_storage = overflow_reserve * 2
+Compute: overflow_reserve * 2, where overflow_reserve=120 (defined at [line 5]) = 240
+[line 13]  final_capacity = (primary_storage + overflow_storage) // redundancy_factor
+Compute: (primary_storage + overflow_storage) // redundancy_factor, where primary_storage=925 (defined at [line 8]), overflow_storage=240 (defined at [line 9]), redundancy_factor=3 (defined at [line 6]) = 388
 
-Answer: final_output = 48 (last updated on defined at [line 42])
+Answer: final_capacity = 388 (last updated on defined at [line 13])

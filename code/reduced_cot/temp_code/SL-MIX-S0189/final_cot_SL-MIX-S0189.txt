@@ -1,41 +1,38 @@
-Target: Find the value of variable final_result after [line 29] executes
+Target: Find the value of variable final_output after [line 49] executes
 
-[line 7]  wrapper.count = 0
-(Missing param: 'var')
-[line 8]  return wrapper
-Return: wrapper
-[line 14]  token_stream = [3, 5, '+', 2, '*']
-Compute: [3, 5, '+', 2, '*'] = [3, 5, '+', 2, '*']
-[line 15]  processed = process_tokens(token_stream)
-Call function process_tokens(token_stream=[3, 5, '+', 2, '*'] (defined at [line 14]))
-[line 6]  return func(*args, **kwargs)
-Return: func(*args, **kwargs)
-[line 12]  return tokens
-Return: tokens=[3, 5, '+', 2, '*'] (an unknown source)
-[line 18]  stack = []
+[line 32]  data_collection = [4, 7, 2, 9, 5]
+Compute: [4, 7, 2, 9, 5] = [4, 7, 2, 9, 5]
+[line 41]  items_to_process = [x for x in data_collection if x < 8]
+Compute: [x for x in data_collection if x < 8], where x=4 (an unknown source), data_collection=[4, 7, 2, 9, 5] (defined at [line 32]) = ?
+[line 42]  result = process_data(items_to_process)
+Call function process_data(items_to_process=[4, 7, 2, 5] (defined at [line 41]))
+[line 9]  temp_results = []
 Compute: [] = []
-[line 19]  for item in processed:
-Loop Start: item takes its first value 3
-[line 20]  if isinstance(item, int):
+[line 10]  for item in data_list:
+Loop Start: item takes its first value 4
+[line 14]  if item > 0:
 Condition: True, entering 'if' block
-[line 19]  for item in processed:
-Loop Iteration: item is now 5 (iteration 2)
-[line 20]  if isinstance(item, int):
+[line 10]  for item in data_list:
+Loop Iteration: item is now 7 (iteration 2)
+[line 14]  if item > 0:
 Condition: True, entering 'if' block
-... [Line 19] repeats 2 more times ...
-... [Line 19] repeats 2 more times ...
-... [Line 19] repeats 2 more times ...
-[line 19]  for item in processed:
-Loop Iteration: item is now '*' (iteration 5)
-[line 20]  if isinstance(item, int):
+[line 10]  for item in data_list:
+Loop Iteration: item is now 2 (iteration 3)
+[line 14]  if item > 0:
 Condition: True, entering 'if' block
-[line 22]  elif item == '+':
-'elif' Condition: True, entering block
-[line 25]  elif item == '*':
-'elif' Condition: True, entering block
-[line 19]  for item in processed:
+[line 10]  for item in data_list:
+Loop Iteration: item is now 5 (iteration 4)
+[line 14]  if item > 0:
+Condition: True, entering 'if' block
+[line 10]  for item in data_list:
 Loop End: Iteration finished
-[line 29]  final_result = stack[0] if stack else 0
-Compute: stack[0] if stack else 0, where stack=[16] (defined at [line 18]) = 16
+[line 26]  filtered_data = [x for x in temp_results if x > 10]
+Compute: [x for x in temp_results if x > 10], where x=5 (an unknown source), temp_results=[5, 19, -1, 15] (defined at [line 9]) = ?
+[line 27]  result_value = sum(filtered_data) if filtered_data else 0
+Compute: sum(filtered_data) if filtered_data else 0, where filtered_data=[19, 15] (defined at [line 26]) = 34
+[line 29]  return result_value
+Return: result_value=34 (defined at [line 27])
+[line 49]  final_output = result + 3
+Compute: result + 3, where result=34 (defined at [line 42]) = 37
 
-Answer: final_result = 16 (last updated on defined at [line 29])
+Answer: final_output = 37 (last updated on defined at [line 49])

@@ -1,26 +1,30 @@
-def count_unique_categories(func):
-    unique_categories = set()
+def analyze_student_grades(grade_records):
+    # Process student grades with various operations
+    grade_sum = sum(grade_records)
+    grade_count = len(grade_records)
     
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        if isinstance(result, (set, frozenset)):
-            unique_categories.update(result)
-        return len(unique_categories)
-    return wrapper
+    # Distractor calculations that don't affect final result
+    average_temp = (grade_sum * 1.8) / grade_count + 32
+    weighted_sum = grade_sum * 1.1
+    
+    # Key operations using list comprehensions and conditional expressions
+    passing_grades = [grade for grade in grade_records if grade >= 70]
+    bonus_scores = [grade + 5 if grade > 85 else grade for grade in passing_grades]
+    
+    # More distractors
+    max_possible = max(grade_records) * len(grade_records)
+    score_ratio = grade_sum / max_possible if max_possible > 0 else 0
+    
+    # Core logic with nested operations
+    sorted_results = sorted(bonus_scores, reverse=True)
+    top_students = [score for score in sorted_results if score > 90]
+    
+    # Final answer computation
+    final_result = sorted_results[-1]
+    
+    print(f"Target result: {final_result}")
+    return final_result
 
-@count_unique_categories
-def process_recipe_1():
-    return frozenset({'protein', 'vegetable', 'spice'})
-
-@count_unique_categories
-def process_recipe_2():
-    return frozenset({'dairy', 'grain', 'spice'})
-
-@count_unique_categories
-def process_recipe_3():
-    return frozenset({'protein', 'dairy', 'fruit'})
-
-process_recipe_1()
-process_recipe_2()
-total_categories = process_recipe_3()
-print(f'Result: {total_categories}')
+# Main execution
+student_grades = [88, 92, 67, 95, 74, 81, 79, 91]
+analyze_student_grades(student_grades)

@@ -1,24 +1,31 @@
-import math
-from functools import reduce
+def analyze_text_patterns(text_sequence):
+    vowels = 'aeiou'
+    consonants = 'bcdfghjklmnpqrstvwxyz'
+    
+    # Primary analysis - count vowels and consonants
+    vowel_counts = [char.lower().count(vowel) for char in text_sequence for vowel in vowels]
+    consonant_counts = [sum(1 for c in char.lower() if c in consonants) for char in text_sequence]
+    
+    # Distractor calculations that don't affect final result
+    total_chars = sum(len(char) for char in text_sequence)
+    char_ratio = total_chars / len(text_sequence) if text_sequence else 0
+    
+    # Intermediate processing with list comprehension
+    processed = [(x, y) for x, y in zip(vowel_counts, reversed(consonant_counts)) if x > 2]
+    
+    # Semi-relevant tuple operations
+    vowel_tuples = tuple(vowel_counts[:3])
+    consonant_tuples = tuple(consonant_counts[-3:])
+    
+    # Core logic that determines final answer
+    final_count = sum(x * y for x, y in processed) if processed else 0
+    
+    # Additional distractor operations
+    unused_sum = sum(vowel_tuples) + sum(consonant_tuples)
+    
+    print(f"Result: {final_count}")
+    return final_count
 
-device_readings = [1000, 2500, 4000, 8000]
-device_ids = ['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']
-
-# Step 1: Apply logarithmic scaling to readings
-scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
-
-# Step 2: Compute weights from string hashes
-hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
-
-# Step 3: Normalize weights to sum to 1
-weight_sum = sum(hash_weights)
-normalized_weights = [w / weight_sum for w in hash_weights]
-
-# Step 4: Calculate weighted harmonic mean
-harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-weighted_harmonic_mean = 1 / harmonic_sum
-
-# Step 5: Apply exponentiation for final normalization
-normalized_aggregate = math.exp(weighted_harmonic_mean)
-
-print(f"Result: {normalized_aggregate}")
+# Test execution
+text_samples = ['python', 'programming', 'evaluation', 'benchmark', 'reasoning']
+analyze_text_patterns(text_samples)

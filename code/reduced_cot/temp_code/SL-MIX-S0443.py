@@ -1,23 +1,34 @@
-from functools import reduce
-from math import gcd
+def analyze_data(values, threshold):
+    # Calculate statistics
+    total_sum = sum(values)
+    max_val = max(values)
+    min_val = min(values)
+    
+    # Filter values above threshold
+    filtered = [x for x in values if x > threshold]
+    filtered_count = len(filtered)
+    
+    # Calculate weighted score (distractor - not used in final result)
+    weight_factor = max_val - min_val
+    weighted_score = total_sum * weight_factor
+    
+    # Set operations to find unique patterns
+    unique_values = set(values)
+    pattern_count = len(unique_values)
+    
+    # Final calculation (this is the actual logic)
+    if filtered_count > 0:
+        avg_filtered = sum(filtered) / filtered_count
+        final_score = avg_filtered * pattern_count
+    else:
+        final_score = pattern_count * 2.5
+    
+    # Distractor operation that doesn't affect result
+    temp_adjustment = final_score + weight_factor
+    
+    return final_score
 
-def generate_primes(limit):
-    sieve = [True] * (limit + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(limit**0.5) + 1):
-        if sieve[i]:
-            for j in range(i*i, limit + 1, i):
-                sieve[j] = False
-    return [i for i, is_prime in enumerate(sieve) if is_prime]
-
-signal_segments = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
-prime_masks = generate_primes(20)[:len(signal_segments)]
-
-encoded_signals = list(map(lambda x, y: x ^ (y << 1), signal_segments, prime_masks))
-transformed_signals = [s >> (1 if s & 1 == 0 else 0) for s in encoded_signals]
-
-pairwise_gcd = [gcd(transformed_signals[i], transformed_signals[i+1]) for i in range(len(transformed_signals)-1)]
-checksum = reduce(lambda acc, val: acc ^ val, pairwise_gcd, 0) if pairwise_gcd else 0
-checksum = checksum if checksum != 0 else (0x55 if len(signal_segments) > 3 else 0xAA)
-
-print(f"Result: {checksum}")
+data_values = [15, 30, 45, 20, 35, 25, 40]
+result = analyze_data(data_values, threshold=25)
+final_score = result
+print(f"Result: {final_score}")

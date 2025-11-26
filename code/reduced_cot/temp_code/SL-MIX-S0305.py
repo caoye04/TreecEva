@@ -1,20 +1,32 @@
-import math
+def calculate_performance_score(data_points):
+    base_score = sum(data_points) // len(data_points)
+    processed_data = {}
+    
+    # Process valid data points
+    valid_points = [x for x in data_points if x > 0]
+    processed_data["valid_count"] = len(valid_points)
+    
+    # Distractor calculations that don't affect final result
+    temp_sum = sum(valid_points)
+    processed_data["avg_valid"] = temp_sum / processed_data["valid_count"] if valid_points else 0
+    
+    # Adjustment factor based on data characteristics
+    max_point = max(data_points) if data_points else 0
+    min_point = min(data_points) if data_points else 0
+    range_factor = (max_point - min_point) % 5
+    
+    # Red herring - appears relevant but unused in final calculation
+    outlier_count = len([x for x in data_points if x > 50])
+    
+    # Key adjustment logic
+    adjustment_factor = range_factor * 3 if len(data_points) > 3 else 2
+    
+    # Final score calculation
+    final_score = processed_data["valid_count"] + adjustment_factor
+    
+    print(f"Target result: {final_score}")
+    return final_score
 
-# Normalized annual returns for two portfolios over 5 years
-portfolio_a = [0.08, 0.12, 0.05, 0.15, 0.09]
-portfolio_b = [0.11, 0.07, 0.13, 0.06, 0.10]
-
-# Combine and normalize using logarithmic transformation
-combined_log_returns = list(map(lambda x: math.log(1 + x), portfolio_a + portfolio_b))
-
-# Sort to find median performance
-sorted_log_returns = sorted(combined_log_returns)
-
-# Calculate median of log returns
-n = len(sorted_log_returns)
-median_log_return = (sorted_log_returns[n//2] + sorted_log_returns[(n//2)-1]) / 2 if n % 2 == 0 else sorted_log_returns[n//2]
-
-# Convert back to percentage using exponential
-final_cagr_percentage = (math.exp(median_log_return) - 1) * 100
-
-print(f"Result: {final_cagr_percentage}")
+# Test data
+sample_data = [12, 25, 8, 45, 3, 18, 32, 7, 55, 2]
+result = calculate_performance_score(sample_data)

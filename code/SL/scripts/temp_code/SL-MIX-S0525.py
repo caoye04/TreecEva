@@ -1,35 +1,9 @@
-import re
-from itertools import combinations
+def process_data(data_list):
+    filtered = list(filter(lambda x: x % 3 == 0, data_list))
+    processed = [item * 2 + 1 for item in filtered]
+    return sum(processed) // len(processed) if processed else 0
 
-def calculate_sentiment_stability(review_text):
-    # Tokenize and filter
-    tokens = re.findall(r'\b\w+\b', review_text.lower())
-    stop_words = {'the', 'and', 'or', 'but', 'is', 'are', 'was', 'were'}
-    filtered_tokens = [t for t in tokens if t not in stop_words]
-    
-    # Character set operations
-    char_sets = [frozenset(token) for token in filtered_tokens]
-    if len(char_sets) < 2:
-        return 0.0
-    
-    # Compute pairwise intersections
-    intersection_counts = [
-        len(set_a & set_b) for set_a, set_b in combinations(char_sets, 2)
-    ]
-    
-    # Sentiment stability index calculation
-    total_intersections = sum(intersection_counts)
-    max_possible = len(filtered_tokens) * (len(filtered_tokens) - 1) // 2 * min(len(s) for s in char_sets)
-    
-    # Avoid division by zero
-    if max_possible == 0:
-        return 0.0
-    
-    # Final index with floating point adjustment
-    sentiment_stability_index = round((total_intersections / max_possible) * 100, 2)
-    return sentiment_stability_index
-
-# Input processing
-user_review = "The product quality is excellent and performance is outstanding"
-sentiment_stability_index = calculate_sentiment_stability(user_review)
-print(f"Result: {sentiment_stability_index}")
+items = [7, 12, 5, 18, 21, 9, 14, 6]
+secondary_list = [2, 4, 8, 10]
+final_result = process_data(items)
+print(f"Result: {final_result}")

@@ -1,0 +1,48 @@
+Target: Find the value of variable final_efficiency after [line 29] executes
+
+[line 3]  initial_readings = [reading * 2.5 for reading in sensor_readings]
+Compute: [reading * 2.5 for reading in sensor_readings], where reading=12 (an unknown source), sensor_readings=[12, 8, 15, 6, 20] (an unknown source) = ?
+[line 4]  processed_data = [(idx, val * 0.8 + 15) for idx, val in enumerate(initial_readings)]
+Compute: [(idx, val * 0.8 + 15) for idx, val in enumerate(initial_readings)], where idx=0 (an unknown source), val=30.0 (an unknown source), initial_readings=[30.0, 20.0, 37.5, 15.0, 50.0] (defined at [line 3]) = ?
+[line 10]  efficiency_threshold = 25.0
+Assign: efficiency_threshold = 25.0
+[line 11]  valid_efficiencies = [data for data in processed_data if data[1] > efficiency_threshold]
+Compute: [data for data in processed_data if data[1] > efficiency_threshold], where data=(0, 39.0) (an unknown source), processed_data=[(0, 39.0), (1, 31.0), (2, 45.0), (3, 27.0), (4, 55.0)] (defined at [line 4]), efficiency_threshold=25.0 (defined at [line 10]) = ?
+[line 14]  adjustment_factors = [0.85, 1.2, 0.95, 1.1, 1.05]
+Compute: [0.85, 1.2, 0.95, 1.1, 1.05] = [0.85, 1.2, 0.95, 1.1, 1.05]
+[line 15]  efficiency_tuples = []
+Compute: [] = []
+[line 17]  for i, data in enumerate(valid_efficiencies):
+(Missing param: 'iter_var')
+[line 18]  if i < len(adjustment_factors):
+Condition: True, entering 'if' block
+[line 17]  for i, data in enumerate(valid_efficiencies):
+(Missing param: 'iter_var')
+[line 18]  if i < len(adjustment_factors):
+Condition: True, entering 'if' block
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+[line 17]  for i, data in enumerate(valid_efficiencies):
+(Missing param: 'iter_var')
+[line 18]  if i < len(adjustment_factors):
+Condition: True, entering 'if' block
+[line 17]  for i, data in enumerate(valid_efficiencies):
+Loop End: Iteration finished
+[line 26]  filtered_efficiencies = [eff for eff in efficiency_tuples if eff[1] > 28]
+Compute: [eff for eff in efficiency_tuples if eff[1] > 28], where eff=(0, 33.15) (an unknown source), efficiency_tuples=[(0, 33.15), (1, 37.199999999999996), (2, 42.75), (3, 29.700000000000003), (4, 57.75)] (defined at [line 15]) = ?
+[line 27]  final_efficiency = max(filtered_efficiencies, key=lambda x: x[1])[0]
+Compute: max(filtered_efficiencies, key=lambda x: x[1])[0], where filtered_efficiencies=[(0, 33.15), (1, 37.199999999999996), (2, 42.75), (3, 29.700000000000003), (4, 57.75)] (defined at [line 26]) = ?
+[line 27]  final_efficiency = max(filtered_efficiencies, key=lambda x: x[1])[0]
+Compute: max(filtered_efficiencies, key=lambda x: x[1])[0], where filtered_efficiencies=[(0, 33.15), (1, 37.199999999999996), (2, 42.75), (3, 29.700000000000003), (4, 57.75)] (defined at [line 26]), x=(0, 33.15) (an unknown source) = ?
+[line 27]  final_efficiency = max(filtered_efficiencies, key=lambda x: x[1])[0]
+Compute: max(filtered_efficiencies, key=lambda x: x[1])[0], where x=(1, 37.199999999999996) (an unknown source) = ?
+[line 27]  final_efficiency = max(filtered_efficiencies, key=lambda x: x[1])[0]
+Compute: max(filtered_efficiencies, key=lambda x: x[1])[0], where x=(2, 42.75) (an unknown source) = ?
+[line 27]  final_efficiency = max(filtered_efficiencies, key=lambda x: x[1])[0]
+Compute: max(filtered_efficiencies, key=lambda x: x[1])[0], where x=(3, 29.700000000000003) (an unknown source) = ?
+[line 27]  final_efficiency = max(filtered_efficiencies, key=lambda x: x[1])[0]
+Compute: max(filtered_efficiencies, key=lambda x: x[1])[0], where x=(4, 57.75) (an unknown source) = ?
+[line 29]  print(f"Result: {final_efficiency}")
+Output: f"Result: {final_efficiency}"
+
+Answer: final_efficiency = 4 (last updated on defined at [line 27])

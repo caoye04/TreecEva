@@ -1,0 +1,35 @@
+37
+cipher_key
+---
+11 initial_seed = 0xAB
+11 ['initial_seed'] ['171']
+12 key_base = 42
+12 ['initial_seed', 'key_base'] ['171', '42']
+13 padding_mask = 0xF0
+13 ['initial_seed', 'key_base', 'padding_mask'] ['171', '42', '240']
+14 bit_filter = 0x3C
+14 ['initial_seed', 'key_base', 'padding_mask', 'bit_filter'] ['171', '42', '240', '60']
+15 rotation_count = 3
+15 ['initial_seed', 'key_base', 'padding_mask', 'bit_filter', 'rotation_count'] ['171', '42', '240', '60', '3']
+18 redundant_counter = 0
+18 ['initial_seed', 'key_base', 'padding_mask', 'bit_filter', 'rotation_count', 'redundant_counter'] ['171', '42', '240', '60', '3', '0']
+23 rotated_seed = rotate_bits(initial_seed, rotation_count)
+23 ['initial_seed', 'key_base', 'padding_mask', 'bit_filter', 'rotation_count', 'redundant_counter'] ['171', '42', '240', '60', '3', '0']
+PARAM_MAPPING {'value': {'actual_var': 'initial_seed', 'value': 171}, 'shift': {'actual_var': 'rotation_count', 'value': 3}}
+FUNCTION_ENTER 1 rotate_bits def rotate_bits(value, shift):
+1 ['value', 'shift'] [{'_type': 'int', '_value': 171}, {'_type': 'int', '_value': 3}]
+2 return ((value << shift) | (value >> (8 - shift))) & 0xFF
+2 ['value', 'shift'] ['171', '3']
+FUNCTION_RETURN 2 rotate_bits {'_type': 'int', '_value': 93}
+24 intermediate_value = (rotated_seed + key_base) % 128
+24 ['initial_seed', 'key_base', 'padding_mask', 'bit_filter', 'redundant_counter', 'rotated_seed', 'intermediate_value'] ['171', '42', '240', '60', '0', '93', '7']
+25 masked_value = intermediate_value | padding_mask
+25 ['initial_seed', 'key_base', 'padding_mask', 'bit_filter', 'redundant_counter', 'intermediate_value', 'masked_value'] ['171', '42', '240', '60', '0', '7', '247']
+28 if redundant_counter > 10:
+28 ['initial_seed', 'key_base', 'padding_mask', 'bit_filter', 'redundant_counter', 'masked_value'] ['171', '42', '240', '60', '0', '247']
+33 distractor_value = (initial_seed ^ key_base) & 0x55
+33 ['initial_seed', 'key_base', 'padding_mask', 'bit_filter', 'masked_value', 'distractor_value'] ['171', '42', '240', '60', '247', '1']
+36 final_transform = (masked_value ^ padding_mask) & bit_filter
+36 ['padding_mask', 'bit_filter', 'masked_value', 'distractor_value', 'final_transform'] ['240', '60', '247', '1', '4']
+37 cipher_key = final_transform + distractor_value
+37 ['distractor_value', 'final_transform', 'cipher_key'] ['1', '4', '5']

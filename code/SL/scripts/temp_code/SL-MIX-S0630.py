@@ -1,20 +1,49 @@
-from collections import defaultdict
-import math
+from collections import Counter
 
-token_stream = [0x001F00A0, 0x002A0085, 0x001F0090, 0x003C0070, 0x002A0085]
-category_scores = defaultdict(int)
-
-for token in token_stream:
-    category_id = (token >> 16) & 0xFFFF
-    relevance_score = token & 0xFFFF
-    if relevance_score > 100:
-        adjusted_score = relevance_score * 2
+def process_operations(data_sequence):
+    # Primary operation: XOR-based filtering with set operations
+    temp_xor = 0
+    for value in data_sequence:
+        temp_xor ^= value
+    
+    # Distractor: Unused calculation with misleading logic
+    irrelevant_sum = sum([x * 2 for x in data_sequence if x % 3 == 0])
+    dead_code_multiplier = len(data_sequence) * 7
+    
+    # Secondary operation: Bit manipulation with set intersection
+    threshold = temp_xor & 0b1111
+    valid_values = {x for x in data_sequence if (x | threshold) > 12}
+    
+    # More distractions: Counter operations that don't affect final result
+    frequency_counter = Counter(data_sequence)
+    common_items = frequency_counter.most_common(2)
+    fake_result = common_items[0][1] if common_items else 0
+    
+    # Core logic: Filtered XOR calculation with arithmetic
+    filtered_xor = 0
+    for num in valid_values:
+        filtered_xor ^= num
+        
+    # Final computation with arithmetic combination
+    base_value = filtered_xor + (threshold << 2)
+    
+    # Dead code path that looks important but isn't used
+    if base_value > 100:
+        alternative_result = base_value // 3
     else:
-        adjusted_score = relevance_score
-    category_scores[category_id] += adjusted_score
+        alternative_result = base_value * 2
+    
+    return base_value
 
-max_score = max(category_scores.values())
-weighted_sum = sum(score * math.log(cat_id + 1) for cat_id, score in category_scores.items() if score > 150)
-dominance_metric = int(weighted_sum / max_score * 1000) if max_score != 0 else 0
+def main():
+    # Input sequence with deliberate pattern
+    data_sequence = [8, 15, 23, 42, 8, 15, 7, 19, 42]
+    
+    # Execute the core operation
+    final_result = process_operations(data_sequence)
+    
+    # Print the target result
+    print(f"Result: {final_result}")
 
-print(f"Result: {dominance_metric}")
+if __name__ == "__main__":
+    main()

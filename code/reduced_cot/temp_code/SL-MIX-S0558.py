@@ -1,52 +1,28 @@
-from collections import deque
+temperature_data = {'New York': 75, 'Los Angeles': 82, 'Chicago': 68, 'Miami': 88, 'Seattle': 65}
+city_weights = {'New York': 1.1, 'Los Angeles': 0.9, 'Chicago': 1.2, 'Miami': 0.8, 'Seattle': 1.0}
 
-class InventoryItem:
-    def __init__(self, item_id, status='received'):
-        self.item_id = item_id
-        self.status = status
-    
-    def __repr__(self):
-        return f"InventoryItem({self.item_id}, '{self.status}')"
+# Calculate average temperature (distractor)
+avg_temp = sum(temperature_data.values()) / len(temperature_data)
 
-def process_inventory():
-    # Initialize data structures
-    incoming_queue = deque()  # FIFO for incoming items
-    storage_area = []         # Storage as list
-    shipping_stack = []       # LIFO for shipments
-    
-    # State machine definition
-    state_transitions = {
-        'received': 'stored',
-        'stored': 'shipped',
-        'shipped': None
-    }
-    
-    # Simulate 8 inventory events
-    for i in range(1, 9):
-        # Event 1,3,5,7: New items received
-        if i % 2 == 1:
-            new_item = InventoryItem(i*10)
-            incoming_queue.append(new_item)
-        
-        # Event 2,4,6,8: Process items
-        else:
-            # Move from queue to storage if possible
-            if incoming_queue and len(storage_area) < 3:
-                item = incoming_queue.popleft()
-                item.status = state_transitions[item.status]
-                storage_area.append(item)
-            
-            # Move from storage to shipping if storage full or every other cycle
-            if storage_area and (len(storage_area) >= 3 or i % 4 == 0):
-                item = storage_area.pop()
-                item.status = state_transitions[item.status]
-                shipping_stack.append(item)
-    
-    # Count items ready for shipment
-    pending_shipments_count = len(shipping_stack)
-    
-    return pending_shipments_count
+# Find maximum temperature (distractor)
+max_temp_city = max(temperature_data, key=temperature_data.get)
 
-# Execute the inventory processing
-result = process_inventory()
-print(f"Result: {result}")
+# Main logic: adjust city based on conditions
+base_city = 'Chicago'
+season_factor = 1.1
+
+if temperature_data[base_city] > 70:
+    adjusted_city = 'Miami'
+else:
+    if season_factor > 1.0:
+        adjusted_city = 'Los Angeles'
+    else:
+        adjusted_city = 'New York'
+
+# Intermediate calculation that doesn't affect final result (interference)
+weighted_temp = temperature_data[base_city] * city_weights[base_city]
+
+# Final assignment
+final_temperature = temperature_data[adjusted_city]
+
+print(f"Target result: {final_temperature}")

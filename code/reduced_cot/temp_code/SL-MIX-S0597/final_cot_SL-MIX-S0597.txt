@@ -1,0 +1,26 @@
+Target: Find the value of variable final_metric after [line 39] executes
+
+[line 7]  valid_measures = [m for m in measurements if m >= 10]
+Compute: [m for m in measurements if m >= 10], where m=15 (an unknown source), measurements=[15, 32, 8, 45, 12, ...] (an unknown source) = ?
+[line 8]  if not valid_measures:
+Condition: True, entering 'if' block
+[line 17]  quality_threshold = 25
+Assign: quality_threshold = 25
+[line 18]  high_quality = [m for m in valid_measures if m > quality_threshold]
+Compute: [m for m in valid_measures if m > quality_threshold], where m=15 (an unknown source), valid_measures=[15, 32, 45, 12, 28, ...] (defined at [line 7]), quality_threshold=25 (defined at [line 17]) = ?
+[line 21]  quality_score = (lambda x: (len(x) * (sum(x) // len(x))) >> 2)(high_quality)
+(Missing param: 'func_name')
+[line 21]  quality_score = (lambda x: (len(x) * (sum(x) // len(x))) >> 2)(high_quality)
+(Missing param: 'func_name')
+[line 28]  base_score = quality_score
+Compute: quality_score, where quality_score=38 (an unknown source) = 38
+[line 29]  parity_check = base_score & 1
+Compute: base_score & 1, where base_score=38 (defined at [line 28]) = 0
+[line 30]  scaled_result = base_score * (3 if parity_check else 4)
+Compute: base_score * (3 if parity_check else 4), where base_score=38 (defined at [line 28]), parity_check=0 (defined at [line 29]) = 152
+[line 36]  aggregate_result = scaled_result - (len(high_quality) * 2)
+Compute: scaled_result - (len(high_quality) * 2), where scaled_result=152 (defined at [line 30]), high_quality=[32, 45, 28, 50] (defined at [line 18]) = 144
+[line 39]  final_metric = aggregate_result
+Compute: aggregate_result, where aggregate_result=144 (defined at [line 36]) = 144
+
+Answer: final_metric = 144 (last updated on defined at [line 39])

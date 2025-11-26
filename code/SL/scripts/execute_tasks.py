@@ -48,26 +48,24 @@ class TaskExecutor:
                 "error": f"Execution error: {str(e)}"
             }
     
-    # (已删除) execute_cpp_code 方法
-    # (已删除) execute_c_code 方法
-    
     def extract_result_from_output(self, output):
-        """从输出中提取结果"""
+        """从输出中提取结果 - 直接从字符串解析，保持原始精度"""
         patterns = [
-            r'Final result:\s*(\d+(?:\.\d+)?)',
-            r'Target result:\s*(\d+(?:\.\d+)?)', 
-            r'Master result:\s*(\d+(?:\.\d+)?)',
-            r'Final output:\s*(\d+(?:\.\d+)?)',
-            r'Result:\s*(\d+(?:\.\d+)?)',
-            r'Answer:\s*(\d+(?:\.\d+)?)',
+            r'Final result:\s*(-?\d+(?:\.\d+)?)',
+            r'Target result:\s*(-?\d+(?:\.\d+)?)', 
+            r'Master result:\s*(-?\d+(?:\.\d+)?)',
+            r'Final output:\s*(-?\d+(?:\.\d+)?)',
+            r'Result:\s*(-?\d+(?:\.\d+)?)',
+            r'Answer:\s*(-?\d+(?:\.\d+)?)',
         ]
         
         for pattern in patterns:
             match = re.search(pattern, output, re.MULTILINE | re.IGNORECASE)
             if match:
                 value_str = match.group(1)
+                # 直接使用字符串中的值，保持原样
                 if '.' in value_str:
-                    result = int(round(float(value_str)))
+                    result = float(value_str)
                 else:
                     result = int(value_str)
                 
@@ -77,11 +75,12 @@ class TaskExecutor:
                 }
         
         # 提取最后一个数字
-        numbers = re.findall(r'\d+(?:\.\d+)?', output)
+        numbers = re.findall(r'-?\d+(?:\.\d+)?', output)
         if numbers:
             value_str = numbers[-1]
+            # 直接使用字符串中的值，保持原样
             if '.' in value_str:
-                result = int(round(float(value_str)))
+                result = float(value_str)
             else:
                 result = int(value_str)
                 
@@ -106,7 +105,6 @@ class TaskExecutor:
         if language == "python":
             result = self.execute_python_code(code, task_id)
         else:
-            # (已修改) 对于非Python任务，直接跳过并报告
             print(f"  Skipping task {task_id}: Unsupported language ({language})")
             result = {
                 "success": False,
@@ -130,23 +128,51 @@ class TaskExecutor:
                 
                 # 如果执行成功，覆写数据集中的answer字段
                 if result["success"]:
+                    # 直接使用原始结果，不做任何处理
                     dataset[i + 1]["task"]["answer"] = result["result"]
                     print(f"✓ Task {task['id']}: Answer updated to {result['result']}")
+                    
+                    # 调试：打印实际保存到dataset中的值
+                    print(f"  DEBUG: Value in dataset object = {dataset[i + 1]['task']['answer']}")
+                    print(f"  DEBUG: Value in results dict = {result['result']}")
+                    print(f"  DEBUG: Are they equal? {dataset[i + 1]['task']['answer'] == result['result']}")
                 else:
-                    # 只有在任务是Python但执行失败时才打印错误
                     if task.get("metadata", {}).get("language") == "python":
                         print(f"✗ Task {task['id']}: Execution failed - {result.get('error', 'Unknown error')}")
-                    # 非Python任务的跳过信息已在 execute_task 中打印
         
         # 保存执行结果到answer.json
+        print("\nSaving to answer.json...")
         with open(ANSWER_PATH, 'w', encoding='utf-8') as f:
             json.dump(self.results, f, indent=2, ensure_ascii=False)
         
-        # 保存更新后的数据集（覆写answer字段）
+        # 保存更新后的数据集
+        print("Saving to dataset...")
         with open(DATASET_PATH, 'w', encoding='utf-8') as f:
             json.dump(dataset, f, indent=2, ensure_ascii=False)
         
-        print(f"Execution completed. Results saved to {ANSWER_PATH}")
+        # 验证保存结果
+        print("\n=== Verification ===")
+        with open(DATASET_PATH, 'r', encoding='utf-8') as f:
+            saved_dataset = json.load(f)
+        
+        with open(ANSWER_PATH, 'r', encoding='utf-8') as f:
+            saved_results = json.load(f)
+        
+        # 检查前3个任务
+        check_count = min(3, len(tasks))
+        for i in range(check_count):
+            task = tasks[i]
+            task_id = task["id"]
+            if task_id in self.results and self.results[task_id]["success"]:
+                dataset_value = saved_dataset[i + 1]["task"]["answer"]
+                answer_value = saved_results[task_id]["result"]
+                
+                print(f"\nTask {task_id}:")
+                print(f"  In dataset.json: {dataset_value} (type: {type(dataset_value).__name__})")
+                print(f"  In answer.json:  {answer_value} (type: {type(answer_value).__name__})")
+                print(f"  Match: {dataset_value == answer_value}")
+        
+        print(f"\nExecution completed. Results saved to {ANSWER_PATH}")
         print(f"Dataset answers updated at {DATASET_PATH}")
         return self.results
 

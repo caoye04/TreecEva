@@ -1,40 +1,57 @@
-from collections import defaultdict
+def process_text_data(text_samples):
+    # Distractor: irrelevant string operations
+    temp_upper = lambda x: x.upper() if len(x) > 3 else x.lower()
+    temp_lower = lambda x: x.lower() if x.isalpha() else x.upper()
+    
+    # Main logic with misleading intermediate results
+    char_sets = []
+    processed_values = []
+    
+    for text in text_samples:
+        # Distractor: unused operation
+        reversed_text = text[::-1]
+        
+        # Relevant: character set operations
+        char_set = set(text)
+        char_sets.append(char_set)
+        
+        # Misleading calculation
+        temp_sum = sum(ord(c) for c in text) % 100
+        
+        # Actual processing with conditionals
+        if len(text) % 2 == 0:
+            processed = len(char_set) * 10
+        else:
+            processed = len(char_set) * 5
+        
+        # Distractor: dead code path
+        if processed > 100:
+            processed = processed - 50  # Never reached with given data
+        
+        processed_values.append(processed)
+    
+    # More distractors: irrelevant set operations
+    union_set = set()
+    for cs in char_sets:
+        union_set = union_set.union(cs)
+    
+    # Dead variable
+    intersection_size = len(char_sets[0].intersection(char_sets[1])) if len(char_sets) > 1 else 0
+    
+    # Final calculation with string methods
+    base_value = sum(processed_values)
+    unique_chars = len(union_set)
+    
+    # Key statement: the actual answer
+    result = base_value - unique_chars * 2
+    
+    # More irrelevant operations
+    dummy_var = len(''.join(text_samples)) // 10
+    unused_result = dummy_var * 3 + 7
+    
+    return result
 
-def process_restock(restock_event, inventory, max_capacity):
-    product, amount = restock_event
-    current = inventory[product]
-    inventory[product] = min(current + amount, max_capacity[product])
-    return max_capacity[product] - inventory[product]
-
-def update_state_machine(state, event_type):
-    transitions = {
-        'IDLE': {'RESTOCK': 'PROCESSING', 'SERVE': 'IDLE'},
-        'PROCESSING': {'COMPLETE': 'IDLE', 'RESTOCK': 'PROCESSING'}
-    }
-    return transitions.get(state, {}).get(event_type, state)
-
-# Initialize inventory system
-inventory_levels = defaultdict(int)
-max_product_capacity = {'SODA': 20, 'CHIPS': 15, 'CANDY': 25}
-state_machine = 'IDLE'
-
-# Restocking events
-restocking_queue = [
-    ('SODA', 8),
-    ('CHIPS', 10),
-    ('CANDY', 5),
-    ('SODA', 7),
-    ('CHIPS', 8)
-]
-
-# Process events with state machine control
-remaining_capacity = 0
-for event in restocking_queue:
-    state_machine = update_state_machine(state_machine, 'RESTOCK')
-    remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
-    state_machine = update_state_machine(state_machine, 'COMPLETE')
-
-# Final adjustment using ternary logic
-remaining_capacity = remaining_capacity if remaining_capacity > 0 else sum(max_product_capacity.values()) - sum(inventory_levels.values())
-
-print(f"Result: {remaining_capacity}")
+# Main execution with realistic data
+text_samples = ['algorithm', 'processing', 'benchmark', 'reasoning']
+final_output = process_text_data(text_samples)
+print(f"Result: {final_output}")

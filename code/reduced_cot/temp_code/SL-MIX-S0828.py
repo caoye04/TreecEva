@@ -1,34 +1,18 @@
-def prime_factors_count(n):
-    count = 0
-    d = 2
-    while d * d <= n:
-        while (n % d) == 0:
-            count += 1
-            n //= d
-        d += 1
-    if n > 1:
-        count += 1
-    return count
+text_data = "DataAnalysis2024:Processing-Results_Compiled"
+count_digits = 0
+count_letters = 0
+count_other = 0
 
-def compute_gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
+for char in text_data:
+    if char.isdigit():
+        count_digits += 1
+    elif char.isalpha():
+        count_letters += 1
+    else:
+        count_other += 1
 
-network_nodes = [12, 18, 24, 30, 36]
-base_weights = {node: prime_factors_count(node) for node in network_nodes}
-attenuation_factors = {node: node // 2 for node in network_nodes}
+processing_overhead = 5
+data_quality_score = 8
+final_count = count_digits * processing_overhead + count_letters - count_other
 
-with open('temp_log.txt', 'w') as log_file:
-    aggregate_reliability_index = 0
-    for node_id in network_nodes:
-        gcd_value = compute_gcd(node_id, sum(network_nodes))
-        raw_score = base_weights[node_id] * (gcd_value if gcd_value > 1 else 1)
-        dampened_score = raw_score ** (1 if attenuation_factors[node_id] % 2 == 0 else 0.5)
-        final_score = int(dampened_score) if dampened_score >= 1 else 1
-        aggregate_reliability_index += final_score
-        log_file.write(f"Node {node_id}: {final_score}\n")
-
-signal_quality_adjustment = 1 if aggregate_reliability_index % 3 == 0 else (2 if aggregate_reliability_index % 3 == 1 else 0)
-aggregate_reliability_index = aggregate_reliability_index + signal_quality_adjustment
-print(f"Result: {aggregate_reliability_index}")
+print(f"Result: {final_count}")

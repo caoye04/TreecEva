@@ -1,58 +1,41 @@
-from collections import defaultdict
-
-class ScopeStack:
-    def __init__(self):
-        self.stack = []
+def analyze_text_scores(text_samples):
+    # Initialize base metrics
+    base_scores = [len(sample) for sample in text_samples]
+    processed_scores = []
     
-    def __enter__(self):
-        self.stack.append(defaultdict(int))
-        return self.stack[-1]
+    # Process each score with some intermediate calculations
+    for score in base_scores:
+        # Some intermediate calculations that don't affect final result
+        temp_adj = score * 1.5
+        normalized = temp_adj / 2
+        irrelevant_calc = normalized + 100
+        
+        # Actual relevant processing
+        if score > 10:
+            processed = score - 5
+        else:
+            processed = score + 3
+        processed_scores.append(processed)
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        if self.stack:
-            self.stack.pop()
+    # More intermediate operations
+    total_sum = sum(processed_scores)
+    avg_length = total_sum / len(processed_scores)
     
-    def current_scope(self):
-        return self.stack[-1] if self.stack else None
+    # Unused variable that looks relevant
+    weighted_avg = avg_length * 1.2
+    
+    # Final relevant calculation
+    processed_data = {
+        'total': total_sum,
+        'average': avg_length,
+        'max': max(processed_scores)
+    }
+    
+    # Key execution point
+    final_score = processed_data.get('total', 0)
+    print(f"Result: {final_score}")
+    return final_score
 
-scopes = ScopeStack()
-active_scope_count = 0
-token_hashes = {
-    'BEGIN': hash('BEGIN'),
-    'END': hash('END'),
-    'VAR': hash('VAR'),
-    'ASSIGN': hash('ASSIGN')
-}
-
-# Token stream: BEGIN VAR x ASSIGN 5 END BEGIN VAR y ASSIGN 10 END
-stream = [
-    token_hashes['BEGIN'],
-    token_hashes['VAR'], hash('x'),
-    token_hashes['ASSIGN'], hash('5'),
-    token_hashes['END'],
-    token_hashes['BEGIN'],
-    token_hashes['VAR'], hash('y'),
-    token_hashes['ASSIGN'], hash('10'),
-    token_hashes['END']
-]
-
-i = 0
-while i < len(stream):
-    if stream[i] == token_hashes['BEGIN']:
-        with scopes as scope:
-            active_scope_count += 1
-            j = i + 1
-            # Process until END or end of stream
-            while j < len(stream) and stream[j] != token_hashes['END']:
-                if stream[j] == token_hashes['VAR'] and j + 2 < len(stream) and stream[j+2] == token_hashes['ASSIGN']:
-                    var_name_hash = stream[j+1]
-                    value_hash = stream[j+3]
-                    scope[var_name_hash] = value_hash
-                    j += 4
-                else:
-                    j += 1
-            i = j + 1 if j < len(stream) and stream[j] == token_hashes['END'] else j
-    else:
-        i += 1
-
-print(f"Result: {active_scope_count}")
+# Test data
+text_samples = ['hello', 'world', 'python', 'programming', 'language']
+result = analyze_text_scores(text_samples)

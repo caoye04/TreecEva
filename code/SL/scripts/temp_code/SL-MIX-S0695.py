@@ -1,46 +1,34 @@
-import itertools
+def initialize_quantum_system():
+    quantum_register = [0b1010, 0b1100, 0b0110, 0b1001]
+    noise_suppression = 4
+    calibration_offset = 7
+    measurement_error = 2
+    
+    # Main quantum state initialization
+    qubit_a = (quantum_register[0] & quantum_register[1]) | (quantum_register[2] ^ quantum_register[3])
+    qubit_b = ((quantum_register[1] | quantum_register[2]) ^ quantum_register[0]) & 0b1111
+    
+    # Quantum dynamics calculations (relevant)
+    phase_shift = (qubit_a << 2) + (qubit_b >> 1)
+    entanglement_factor = (quantum_register[0] % 3) + 1
+    coherence_level = (qubit_a | qubit_b) + noise_suppression
+    decoherence_threshold = (quantum_register[1] & 0b0111) + measurement_error
+    superposition_factor = (qubit_a ^ qubit_b) - calibration_offset
+    
+    # Distractor calculations (irrelevant)
+    thermal_noise = (quantum_register[2] * 3) // 2
+    gate_fidelity = (quantum_register[3] | 0b0101) ^ measurement_error
+    quantum_fluctuation = thermal_noise + gate_fidelity
+    
+    # Critical quantum state computation
+    final_quantum_state = (qubit_a ^ qubit_b) | (phase_shift // entanglement_factor) if coherence_level > decoherence_threshold else (qubit_a & qubit_b) ^ superposition_factor
+    
+    # More irrelevant operations
+    optimal_coupling = quantum_fluctuation % entanglement_factor
+    resonance_frequency = (gate_fidelity << 1) | (thermal_noise & 0b0011)
+    
+    print(f"Result: {final_quantum_state}")
+    return final_quantum_state
 
-def calculate_base_score(activities):
-    return sum(hash(str(act)) % 100 for act in activities)
-
-def process_security_logs(log_entries):
-    base_scores = []
-    for entry in log_entries:
-        activities = entry['activities']
-        is_suspicious = entry['is_suspicious']
-        base_score = calculate_base_score(activities)
-        adjusted_score = base_score << 1 if is_suspicious else base_score >> 1
-        base_scores.append(adjusted_score)
-    
-    # Combine scores using combinatorial analysis
-    combined_score = 0
-    for combo in itertools.combinations(base_scores, 2):
-        combo_sum = sum(combo)
-        combined_score += combo_sum if combo_sum > 100 else combo_sum * 2
-    
-    return combined_score
-
-def main():
-    # Security log entries
-    logs = [
-        {'activities': ['login', 'file_access'], 'is_suspicious': True},
-        {'activities': ['network_scan'], 'is_suspicious': False},
-        {'activities': ['data_transfer', 'privilege_escalation'], 'is_suspicious': True}
-    ]
-    
-    # Process logs to get intermediate score
-    threat_level = process_security_logs(logs)
-    
-    # Apply final adjustments based on thresholds
-    severity_threshold = 500
-    final_threat_score = threat_level if threat_level > severity_threshold else threat_level + 200
-    
-    # Additional adjustment using set operations
-    high_risk_patterns = {300, 450, 600}
-    is_high_risk = threat_level in high_risk_patterns
-    final_threat_score = final_threat_score * 2 if is_high_risk else final_threat_score
-    
-    print(f"Result: {final_threat_score}")
-
-if __name__ == "__main__":
-    main()
+# Execute the quantum simulation
+quantum_result = initialize_quantum_system()

@@ -1,81 +1,39 @@
-from collections import defaultdict, deque
-from itertools import combinations
+def process_text_data(text_input):
+    temp_buffer = []
+    for char in text_input:
+        if char.isalpha():
+            processed_char = char.lower() if ord(char) % 2 == 0 else char.upper()
+            temp_buffer.append(processed_char)
+    return ''.join(temp_buffer)
 
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-def tokenize(doc):
-    return [word.strip('.,!?;') for word in doc.lower().split()]
-
-def remove_stopwords(tokens, stops):
-    return [t for t in tokens if t not in stops]
-
-def stem_tokens(tokens):
-    # Simple stemming: remove common suffixes
-    stemmed = []
-    for t in tokens:
-        if t.endswith('ing'):
-            stemmed.append(t[:-3])
-        elif t.endswith('ed'):
-            stemmed.append(t[:-2])
-        else:
-            stemmed.append(t)
-    return stemmed
-
-def build_cooccurrence(tokens, window=3):
-    cooccur = defaultdict(int)
-    for i in range(len(tokens)):
-        for j in range(i+1, min(i+window+1, len(tokens))):
-            pair = tuple(sorted([tokens[i], tokens[j]]))
-            cooccur[pair] += 1
-    return cooccur
-
-def cluster_recursive(cooccur_map, min_freq):
-    filtered_pairs = {p for p, f in cooccur_map.items() if f > min_freq}
-    if not filtered_pairs:
-        return []
+def compute_score(text, config):
+    base_score = len(text) * 2
+    multiplier = config.get('factor', 1)
+    bonus = 5 if 'e' in text.lower() else 0
+    offset = config.get('offset', 0)
     
-    # Build adjacency list
-    adj = defaultdict(set)
-    for a, b in filtered_pairs:
-        adj[a].add(b)
-        adj[b].add(a)
+    dummy_calc = base_score * multiplier + offset
+    irrelevant_var = dummy_calc // 3
     
-    visited = set()
-    clusters = []
+    return base_score * multiplier + bonus
+
+def compute_final_score(data, settings):
+    processed_text = process_text_data(data)
+    intermediate_score = compute_score(processed_text, settings)
     
-    def dfs(node, cluster):
-        visited.add(node)
-        cluster.add(node)
-        for neighbor in adj[node]:
-            if neighbor not in visited:
-                dfs(neighbor, cluster)
+    adjustment_map = {'a': 3, 'b': 7, 'c': 2, 'd': 5}
+    adjustment = 0
+    for char in processed_text[:3]:
+        adjustment += adjustment_map.get(char, 0)
     
-    for node in adj:
-        if node not in visited:
-            cluster = set()
-            dfs(node, cluster)
-            clusters.append(cluster)
+    unused_calc = intermediate_score + adjustment * 2
+    temp_result = intermediate_score - adjustment
     
-    return clusters
+    final_result = temp_result + settings.get('base', 10)
+    print(f"Result: {final_result}")
+    return final_result
 
-doc1 = "The runner was running swiftly through the forest."
-doc2 = "He had painted the running track with bright colors."
-doc3 = "The painting depicted a swift river running through the woods."
-
-stop_words = frozenset(['the', 'was', 'with', 'a', 'through'])
-
-tokenized_docs = [tokenize(doc) for doc in [doc1, doc2, doc3]]
-filtered_docs = [remove_stopwords(tokens, stop_words) for tokens in tokenized_docs]
-stemmed_docs = [stem_tokens(tokens) for tokens in filtered_docs]
-
-# Flatten all tokens
-all_tokens = [token for doc in stemmed_docs for token in doc]
-
-cooccur_map = build_cooccurrence(all_tokens)
-clusters = cluster_recursive(cooccur_map, 2)
-total_clusters = len(clusters)
-
-print(f"Result: {total_clusters}")
+text_input = "ProgrammingEvaluation2024"
+config_map = {'factor': 3, 'offset': 2, 'base': 15}
+processed_data = process_text_data(text_input)
+final_result = compute_final_score(processed_data, config_map)

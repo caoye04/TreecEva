@@ -1,39 +1,30 @@
-class DailyLogger:
-    def __enter__(self):
-        self.log = []
-        return self
+def process_string_data(items, min_length):
+    # Calculate preliminary statistics
+    total_chars = sum(len(item) for item in items)
+    avg_length = total_chars / len(items) if items else 0
     
-    def __exit__(self, exc_type, exc_value, traceback):
-        pass
+    # Intermediate filtering (not used in final result)
+    long_items = [item.upper() for item in items if len(item) > avg_length]
     
-    def log_sales(self, day, sales):
-        self.log.append((day, sales))
+    # Core logic: count items meeting length threshold
+    filtered_count = sum(1 for item in items if len(item) >= min_length)
+    
+    # Distractor operations with lambda
+    length_checker = lambda s, threshold: len(s) == threshold
+    exact_matches = sum(1 for item in items if length_checker(item, min_length))
+    
+    # String method operations (semi-relevant)
+    vowel_counts = [sum(1 for char in item.lower() if char in 'aeiou') for item in items]
+    max_vowels = max(vowel_counts) if vowel_counts else 0
+    
+    # Final computation with conditional expression
+    final_count = filtered_count if filtered_count > exact_matches else exact_matches
+    
+    return final_count
 
-fib_prev, fib_curr = 1, 1
-total_pies = 1
-discount_day = -1
+data_items = ['python', 'java', 'golang', 'rust', 'c', 'javascript']
+threshold = 4
 
-with DailyLogger() as logger:
-    logger.log_sales(1, 1)
-    if 1 % 5 == 0 and 1 % 2 == 0:
-        discount_day = 1
-    
-    if discount_day == -1:
-        total_pies += 1
-        logger.log_sales(2, 1)
-        if total_pies % 5 == 0 and 2 % 2 == 0:
-            discount_day = 2
-    
-    day = 3
-    while discount_day == -1:
-        fib_next = fib_prev + fib_curr
-        total_pies += fib_next
-        logger.log_sales(day, fib_next)
-        
-        if total_pies % 5 == 0 and day % 2 == 0:
-            discount_day = day
-        
-        fib_prev, fib_curr = fib_curr, fib_next
-        day += 1
-
-print(f"Result: {discount_day}")
+# Main execution
+result = process_string_data(data_items, threshold)
+print(f"Result: {result}")

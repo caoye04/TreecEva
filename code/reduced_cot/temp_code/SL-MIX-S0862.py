@@ -1,21 +1,22 @@
-from functools import reduce
+data_points = [12, 45, 78, 23, 56, 89, 34, 67, 90, 41]
+data_mapping = {i: (x * 2 - 3) % 17 for i, x in enumerate(data_points)}
 
-# Chef's original list of ingredients
-ingredients = ['salt', 'pepper', 'garlic', 'oregano', 'basil', 'thyme', 'parsley', 'rosemary']
+# Intermediate calculations (distractor)
+sum_check = sum(data_points[:5])
+length_check = len([x for x in data_points if x > 50])
 
-# Tokenize by taking first letter of each ingredient
-tokenized = list(map(lambda x: x[0], ingredients))
+filter_keys = lambda x: x % 3 == 0
+filtered_keys = list(filter(filter_keys, data_mapping.keys()))
 
-# Divide the tokens into two halves using slicing (divide and conquer approach)
-midpoint = len(tokenized) // 2
-first_half_tokens = tokenized[:midpoint]
-second_half_tokens = tokenized[midpoint:]
+# Unused computation (distractor)
+redundant_sum = sum([data_mapping[k] ** 2 for k in filtered_keys])
 
-# Convert to sets for efficient intersection operation
-first_set = set(first_half_tokens)
-second_set = set(second_half_tokens)
+processed_data = data_mapping[filtered_keys[1]]
 
-# Find common elements between the two sets
-common_ingredients_count = len(first_set & second_set)
+# More distractor operations
+bitwise_check = processed_data & 0b1111
+shift_check = processed_data << 2
 
-print(f'Result: {common_ingredients_count}')
+final_output = processed_data + (bitwise_check // 4)
+
+print(f"Target result: {final_output}")

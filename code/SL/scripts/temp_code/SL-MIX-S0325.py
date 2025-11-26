@@ -1,25 +1,40 @@
-def hex_chunk_processor(hex_chunks):
-    processed_values = []
-    for chunk in hex_chunks:
-        # Convert hex to integer and apply modular transformation
-        numeric_val = int(chunk, 16)
-        transformed = (numeric_val * 17 + 23) % 256
-        processed_values.append(transformed)
+def analyze_data_stream(data_chunks):
+    # Initialize tracking variables
+    raw_count = len(data_chunks)
+    processed_count = 0
+    discarded_count = 0
+    quality_modifier = 17
     
-    # Apply secondary transformation using list comprehension
-    secondary_vals = [((x << 2) ^ (x >> 1)) & 0xFF for x in processed_values]
+    # Distractor: irrelevant buffer operations
+    buffer_size = 1024
+    buffer_utilization = buffer_size // 8
+    compression_ratio = 3.2
     
-    # Compute hash-based checksum
-    checksum_components = []
-    for i, val in enumerate(secondary_vals):
-        component = (hash(str(val)) % 1000) * (i + 1)
-        checksum_components.append(component)
+    # Process data chunks with filtering
+    valid_chunks = [chunk for chunk in data_chunks if len(chunk) > 5]
+    processed_count = len(valid_chunks)
     
-    # Final checksum calculation
-    checksum_result = sum(checksum_components) % 997
-    return checksum_result
+    # Misleading intermediate calculation
+    temp_efficiency = (raw_count * buffer_utilization) // compression_ratio
+    
+    # Quality assessment with conditional expressions
+    quality_scores = [8 if 'error' not in chunk else 2 for chunk in valid_chunks]
+    high_quality_count = sum(1 for score in quality_scores if score > 5)
+    discarded_count = processed_count - high_quality_count
+    
+    # Dead code path - never executed
+    if compression_ratio > 10:
+        optimization_factor = 2
+        # This branch is never taken
+        processed_count *= optimization_factor
+    
+    # Final throughput calculation (target statement)
+    final_throughput = (processed_count * 2 - discarded_count) % quality_modifier
+    
+    # Print result
+    print(f"Result: {final_throughput}")
+    return final_throughput
 
-# Data packet chunks in hexadecimal
-packet_chunks = ['A1', '2F', 'B8', '4C', '99']
-checksum_result = hex_chunk_processor(packet_chunks)
-print(f"Result: {checksum_result}")
+# Test data
+test_chunks = ['data_packet_1', 'error_data', 'valid_stream_3', 'corrupt_4', 'good_packet_5', 'data_6']
+result = analyze_data_stream(test_chunks)

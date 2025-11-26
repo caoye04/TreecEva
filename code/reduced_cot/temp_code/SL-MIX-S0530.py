@@ -1,81 +1,46 @@
-from collections import defaultdict
+def analyze_text_patterns(text_samples):
+    pattern_checks = [len(sample) % 7 for sample in text_samples]
+    validation_mask = [check > 2 for check in pattern_checks]
+    return sum(validation_mask)
 
-def process_packet_sequence():
-    # State machine representation
-    states = {
-        'IDLE': 0,
-        'RECEIVING': 1,
-        'PROCESSING': 2,
-        'TRANSMITTING': 3,
-        'ERROR': -1
-    }
-    
-    # Packet flag definitions
-    flags = {
-        'SYN': 1,
-        'ACK': 2,
-        'FIN': 4,
-        'RST': 8
-    }
-    
-    # Initialize state tracking
-    current_state = 'IDLE'
-    state_history = []
-    transition_scores = defaultdict(int)
-    
-    # Process packet sequence
-    packet_headers = [3, 6, 12, 9, 5, 10, 15, 7, 14, 13, 11, 8]
-    
-    for i, header_flags in enumerate(packet_headers):
-        # State transition logic
-        if current_state == 'IDLE':
-            if header_flags & flags['SYN']:
-                current_state = 'RECEIVING'
-                transition_scores[current_state] += 3
-            else:
-                current_state = 'ERROR'
-                transition_scores[current_state] -= 2
-        elif current_state == 'RECEIVING':
-            if header_flags & flags['ACK'] and header_flags & flags['SYN']:
-                current_state = 'PROCESSING'
-                transition_scores[current_state] += 5
-            elif header_flags & flags['RST']:
-                current_state = 'ERROR'
-                transition_scores[current_state] -= 1
-            else:
-                current_state = 'IDLE'
-                transition_scores[current_state] += 1
-        elif current_state == 'PROCESSING':
-            if header_flags & flags['FIN']:
-                current_state = 'TRANSMITTING'
-                transition_scores[current_state] += 4
-            elif header_flags & flags['RST']:
-                current_state = 'ERROR'
-                transition_scores[current_state] -= 3
-            else:
-                current_state = 'RECEIVING'
-                transition_scores[current_state] += 2
-        elif current_state == 'TRANSMITTING':
-            if header_flags & flags['ACK']:
-                current_state = 'IDLE'
-                transition_scores[current_state] += 3
-            else:
-                current_state = 'ERROR'
-                transition_scores[current_state] -= 2
-        else:  # ERROR state
-            if header_flags & flags['SYN'] and header_flags & flags['ACK']:
-                current_state = 'RECEIVING'
-                transition_scores[current_state] += 2
-            else:
-                current_state = 'IDLE'
-                transition_scores[current_state] += 1
-        
-        state_history.append(current_state)
-    
-    # Calculate final checksum
-    final_state_checksum = sum(transition_scores.values()) * len([s for s in state_history if s != 'ERROR'])
-    
-    return final_state_checksum
+def calculate_inventory_shifts(base_items, adjustments):
+    temp_shift = base_items * 3 - adjustments
+    intermediate_result = temp_shift // 2 + 5
+    # Dead code path - misleading calculation
+    unused_computation = (base_items << 2) ^ adjustments
+    return intermediate_result
 
-final_state_checksum = process_packet_sequence()
-print(f"Result: {final_state_checksum}")
+def process_inventory(item_records):
+    # Irrelevant preprocessing
+    item_lengths = [len(record) for record in item_records]
+    max_length = max(item_lengths) if item_lengths else 0
+    
+    # Main computation with distractions
+    base_count = sum(1 for record in item_records if 'active' in record.lower())
+    
+    # Misleading intermediate variable
+    misleading_total = base_count * 2 + len(item_records)
+    
+    # Conditional expression with slicing
+    processed_count = base_count + 3 if len(item_records) > 2 else base_count - 1
+    
+    # Set operations for distraction
+    item_set = set(item_records)
+    unique_processing = len(item_set) % 4
+    
+    # Actual relevant calculation
+    adjusted_count = processed_count - unique_processing
+    
+    # More distractions
+    fake_calculation = calculate_inventory_shifts(base_count, len(item_records))
+    
+    # Final result
+    final_count = adjusted_count + (max_length // 3)
+    
+    # Print the target variable
+    print(f"Target result: {final_count}")
+    return final_count
+
+# Main execution
+item_records = ['Active Widget A', 'Inactive Component', 'ACTIVE Module X', 'Pending Item', 'active unit']
+processed_items = process_inventory(item_records)

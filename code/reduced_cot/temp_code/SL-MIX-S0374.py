@@ -1,49 +1,67 @@
-from itertools import permutations
-
-def transform_mask(mask, shift_ops):
-    for op in shift_ops:
-        if op > 0:
-            mask = mask << op
+def process_data_stream(stream, mask):
+    # Distractor: unused lambda function
+    filter_condition = lambda x: x > 0
+    
+    # Main processing logic
+    processed_values = []
+    temp_sum = 0
+    count_valid = 0
+    
+    # Misleading intermediate variable
+    accumulator = 100
+    
+    for idx, (data, is_valid) in enumerate(zip(stream, mask)):
+        if is_valid:
+            # Relevant computation
+            temp_sum += data * (idx + 1)
+            count_valid += 1
+            processed_values.append(data)
+            
+            # Distractor: dead code path
+            if idx > len(stream) + 5:
+                accumulator -= data
         else:
-            mask = mask >> abs(op)
-        mask = mask & 0xFFFF  # 16-bit mask
-    return mask
-
-def generate_verification_sequence(base_masks, operations):
-    checksum = 0
-    perm_count = 0
+            # Misleading computation
+            temp_sum -= idx * 2
+            
+            # Distractor: unused operation
+            processed_values.append(-1)
     
-    # Generate all permutations of base masks taken 3 at a time
-    for perm in permutations(base_masks, 3):
-        combined_mask = perm[0]
-        
-        # Apply XOR with subsequent masks in permutation
-        for i in range(1, len(perm)):
-            combined_mask ^= perm[i]
-        
-        # Transform the combined mask
-        transformed = transform_mask(combined_mask, operations[perm_count % len(operations)])
-        
-        # Update checksum with dynamic programming approach
-        checksum = (checksum + transformed) ^ (perm_count & 0xFF)
-        perm_count += 1
-        
-        # Early termination condition for efficiency
-        if perm_count >= 12:
-            break
+    # More distractions
+    average_check = sum(processed_values) / len(processed_values) if processed_values else 0
     
-    return checksum
+    # Key computation
+    weighted_average = temp_sum / count_valid if count_valid else 0
+    
+    # Final transformation with modular arithmetic
+    result = int((weighted_average * 7) % 256)
+    
+    # Distractor: unused variable
+    verification_flag = result > 128
+    
+    return result
 
-# Base 16-bit bitmask configurations
-initial_masks = [0x1A3F, 0x7B2C, 0x4E5D, 0xF0A1, 0xC3B2]
+# Main execution
+base_sequence = [15, 22, 8, 34, 12, 19, 27]
+validation_flags = [True, False, True, True, False, True, True]
 
-# Shift operations sequences
-shift_sequences = [
-    [2, -1, 3],
-    [-2, 1],
-    [4, -3, 2, -1]
-]
+# Distractor: misleading intermediate computation
+preliminary_result = sum(base_sequence) // len(base_sequence)
 
-# Execute verification process
-verification_checksum = generate_verification_sequence(initial_masks, shift_sequences)
-print(f"Result: {verification_checksum}")
+# Irrelevant dictionary operations
+coordinate_mapping = dict(enumerate(base_sequence))
+max_coordinate = max(coordinate_mapping.values()) if coordinate_mapping else 0
+
+# Key function call
+result_aggregator = process_data_stream(base_sequence, validation_flags)
+
+# Final computation with bitwise operations
+final_output = (result_aggregator ^ 0b10101010) & 0xFF
+
+# Distractor: dead code
+if final_output > 200:
+    print("High value detected")
+elif final_output < 50:
+    print("Low value range")
+
+print(f"Target result: {final_output}")

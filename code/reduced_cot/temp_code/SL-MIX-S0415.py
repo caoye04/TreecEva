@@ -1,40 +1,24 @@
-import math
-import statistics
-from itertools import combinations
-
-def tokenize(sentence):
-    return [word.strip('.,!?;') for word in sentence.split()]
-
-def word_entropy_frequency(words):
-    unique_words = set(words)
-    freq_dict = {word: words.count(word) for word in unique_words}
-    frequencies = list(freq_dict.values())
-    return statistics.variance(frequencies) if len(frequencies) > 1 else 0
-
-class TextProcessor:
-    def __init__(self, text):
-        self.tokens = tokenize(text)
-        self.entropy = word_entropy_frequency(self.tokens)
+def calculate_warehouse_value():
+    inventory_data = {"widgets": 45, "gadgets": 32, "tools": 67, "parts": 23}
+    pricing_info = {"widgets": 12.5, "gadgets": 8.75, "tools": 15.25, "components": 9.99}
     
-    @property
-    def combinatorial_density(self):
-        if len(self.tokens) < 3:
-            return 0
-        return len(list(combinations(self.tokens, 3)))
+    # Distractor operations
+    temp_calculation = sum(inventory_data.values()) * 2
+    avg_price = sum(pricing_info.values()) / len(pricing_info)
+    
+    # Unused variables that appear relevant
+    category_count = len(set(inventory_data.keys()) | set(pricing_info.keys()))
+    processed_items = [item.upper() for item in inventory_data.keys()]
+    
+    # Key computation with list comprehension
+    available_products = set(inventory_data.keys()) & set(pricing_info.keys())
+    item_data = inventory_data
+    prices = pricing_info
+    
+    # Final calculation
+    total_inventory_value = sum([item_data[product] * prices.get(product, 0) for product in available_products])
+    
+    print(f"Total inventory value: {total_inventory_value}")
+    return total_inventory_value
 
-sample_text = "The quick brown fox jumps over the lazy dog. The dog was really lazy and very sleepy."
-
-processor = TextProcessor(sample_text)
-encoded_values = {word: sum(ord(c) for c in word) for word in processor.tokens}
-filtered_values = {k: v for k, v in encoded_values.items() if v % 2 == 0}
-
-partition_point = len(filtered_values) // 2
-left_partition = dict(list(filtered_values.items())[:partition_point])
-right_partition = dict(list(filtered_values.items())[partition_point:])
-
-merged_dict = {**left_partition, **right_partition}
-if 'lazy' in merged_dict:
-    merged_dict['lazy'] *= 2
-
-linguistic_score = int(sum(merged_dict.values()) * processor.entropy * processor.combinatorial_density)
-print(f"Result: {linguistic_score}")
+result = calculate_warehouse_value()

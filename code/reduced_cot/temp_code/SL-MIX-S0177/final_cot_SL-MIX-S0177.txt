@@ -1,38 +1,14 @@
-Target: Find the value of variable keystream_signature after [line 38] executes
+Target: Find the value of variable final_quality_score after [line 18] executes
 
-[line 15]  content = f.read().strip()
-(Missing param: 'func_name')
-[line 18]  byte_values = [ord(c) for c in content]
-Compute: [ord(c) for c in content], where c='A' (an unknown source), content='ABABABABXYZXYZXYZABABABABXYZXYZXYZ' (an unknown source) = ?
-[line 21]  freq_counter = Counter(byte_values)
-Call function Counter(byte_values=[65, 66, 65, 66, 65, ...] (defined at [line 18]))
-[line 22]  frequencies = list(freq_counter.values())
-Call function list(freq_counter.values())
-[line 25]  mean_freq = statistics.mean(frequencies)
-(Missing param: 'func_name')
-[line 26]  variance_freq = statistics.variance(frequencies) if len(frequencies) > 1 else 0
-Compute: statistics.variance(frequencies) if len(frequencies) > 1 else 0, where frequencies=[8, 8, 6, 6, 6] (defined at [line 22]) = 1.2
-[line 29]  threshold = mean_freq + (variance_freq ** 0.5)
-Compute: mean_freq + (variance_freq ** 0.5), where mean_freq=6.8 (an unknown source), variance_freq=1.2 (defined at [line 26]) = 7.895445115010332
-[line 30]  cycle_candidates = [byte_val for byte_val, count in freq_counter.items() if count >= threshold]
-Compute: [byte_val for byte_val, count in freq_counter.items() if count >= threshold], where byte_val=65 (an unknown source), count=8 (an unknown source), freq_counter={65: 8, 66: 8, 88: 6, ...} (defined at [line 21]), threshold=7.895445115010332 (defined at [line 29]) = ?
-[line 33]  cycle_length = gcd_list(cycle_candidates) if cycle_candidates else 0
-Compute: gcd_list(cycle_candidates) if cycle_candidates else 0, where cycle_candidates=[65, 66] (defined at [line 30]) = ?
-[line 6]  result = numbers[0]
-Compute: numbers[0], where numbers=[65, 66] (an unknown source) = 65
-[line 7]  for num in numbers[1:]:
-Loop Start: num takes its first value 66
-[line 8]  result = math.gcd(result, num)
-(Missing param: 'func_name')
-[line 9]  if result == 1:
-Condition: True, entering 'if' block
-[line 11]  return result
-Return: result=1 (defined at [line 6])
-[line 36]  has_high_variance = variance_freq > 10
-Compute: variance_freq > 10, where variance_freq=1.2 (defined at [line 26]) = False
-[line 37]  is_homogeneous = len(set(frequencies)) <= 2
-Compute: len(set(frequencies)) <= 2, where frequencies=[8, 8, 6, 6, 6] (defined at [line 22]) = True
-[line 38]  keystream_signature = (cycle_length * 100 + int(mean_freq)) if has_high_variance and not is_homogeneous else (len(byte_values) if is_homogeneous else -1)
-Compute: (cycle_length * 100 + int(mean_freq)) if has_high_variance and not is_homogeneous else (len(byte_values) if is_homogeneous else -1), where cycle_length=1 (defined at [line 33]), mean_freq=6.8 (an unknown source), has_high_variance=False (defined at [line 36]), is_homogeneous=True (defined at [line 37]), byte_values=[65, 66, 65, 66, 65, ...] (defined at [line 18]) = 34
+[line 1]  product_scores = [85, 92, 78, 95, 88, 67, 91, 84]
+Compute: [85, 92, 78, 95, 88, 67, 91, 84] = [85, 92, 78, 95, 88, ...]
+[line 2]  quality_threshold = 80
+Assign: quality_threshold = 80
+[line 3]  scaling_factor = 1.25
+Assign: scaling_factor = 1.25
+[line 6]  filtered_products = [score for score in product_scores if score >= quality_threshold]
+Compute: [score for score in product_scores if score >= quality_threshold], where score=85 (an unknown source), product_scores=[85, 92, 78, 95, 88, ...] (defined at [line 1]), quality_threshold=80 (defined at [line 2]) = ?
+[line 18]  final_quality_score = max(filtered_products) * scaling_factor
+Compute: max(filtered_products) * scaling_factor, where filtered_products=[85, 92, 95, 88, 91, ...] (defined at [line 6]), scaling_factor=1.25 (defined at [line 3]) = 118.75
 
-Answer: keystream_signature = 34 (last updated on defined at [line 38])
+Answer: final_quality_score = 118.75 (last updated on defined at [line 18])

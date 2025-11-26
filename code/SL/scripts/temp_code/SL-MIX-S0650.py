@@ -1,30 +1,25 @@
-from collections import defaultdict
+transaction_count = 15
+account_balance = 1000
+threshold = 10
+fee_per_transaction = 5
+penalty_rate = 0.1
+interest_rate = 0.05
+bonus_amount = 50
 
-def calculate_palindrome_score(dna_sequence):
-    palindrome_freq = defaultdict(int)
-    n = len(dna_sequence)
-    
-    # Find all palindromic substrings
-    for i in range(n):
-        for j in range(i+1, n+1):
-            substring = dna_sequence[i:j]
-            if substring == substring[::-1]:
-                palindrome_freq[substring] += 1
-    
-    max_score = 0
-    # Calculate score based on length and frequency
-    for palindrome, freq in palindrome_freq.items():
-        length = len(palindrome)
-        if freq > 1 and length > 1:
-            score = length * freq
-            if score > max_score:
-                max_score = score
-    
-    return max_score
+# Distractor calculations
+total_fees = transaction_count * fee_per_transaction
+potential_penalty = account_balance * penalty_rate
+calculated_interest = account_balance * interest_rate
 
-# Research sequence
-sequence = "ATGCCGTAATGGCAT"
+# Unused intermediate variable
+unused_adjustment = total_fees + potential_penalty - bonus_amount
 
-# Process the sequence
-max_score = calculate_palindrome_score(sequence)
-print(f"Result: {max_score}")
+# Core logic with conditional expression
+penalty = account_balance * penalty_rate if transaction_count > threshold else 0
+bonus = bonus_amount if transaction_count > threshold else 0
+interest = account_balance * interest_rate if transaction_count <= threshold else 0
+
+# Final calculation
+final_balance = account_balance - penalty + bonus if transaction_count > threshold else account_balance + interest
+
+print(f"Result: {final_balance}")

@@ -1,0 +1,43 @@
+24
+final_balance
+---
+3 base_amount = 1000
+3 ['operations', 'base_amount'] ['[500, -200, 300, -150, 100, ...]', '1000']
+7 processed = operations[1:-1]
+7 ['operations', 'base_amount', 'processed'] ['[500, -200, 300, -150, 100, ...]', '1000', '[-200, 300, -150, 100, -50]']
+8 running_total = base_amount
+8 ['base_amount', 'processed', 'running_total'] ['1000', '[-200, 300, -150, 100, -50]', '1000']
+14 for amount in processed:
+14 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '1000', '-200']
+15 if amount > 0:
+15 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '1000', '-200']
+18 running_total -= abs(amount)
+18 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '800', '-200']
+14 for amount in processed:
+14 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '800', '300']
+15 if amount > 0:
+15 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '800', '300']
+16 running_total += amount
+16 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '1100', '300']
+14 for amount in processed:
+14 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '1100', '-150']
+15 if amount > 0:
+15 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '1100', '-150']
+18 running_total -= abs(amount)
+18 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '950', '-150']
+14 for amount in processed:
+14 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '950', '100']
+15 if amount > 0:
+15 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '950', '100']
+16 running_total += amount
+16 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '1050', '100']
+14 for amount in processed:
+14 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '1050', '-50']
+15 if amount > 0:
+15 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '1050', '-50']
+18 running_total -= abs(amount)
+18 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '1000', '-50']
+14 for amount in processed:
+14 ['processed', 'running_total', 'amount'] ['[-200, 300, -150, 100, -50]', '1000', '-50']
+24 final_balance = running_total
+24 ['running_total', 'final_balance'] ['1000', '1000']

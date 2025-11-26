@@ -1,0 +1,34 @@
+Target: Find the value of variable final_component_quality after [line 36] executes
+
+[line 3]  network_latency = sum([x * 2 for x in range(5, 15)]) - 85
+Compute: sum([x * 2 for x in range(5, 15)]) - 85, where x=5 (an unknown source) = ?
+[line 4]  packet_loss = (network_latency // 3) % 7
+Compute: (network_latency // 3) % 7, where network_latency=105 (defined at [line 3]) = 0
+[line 7]  primary_scores = [x**2 % 17 for x in primary_components]
+Compute: [x**2 % 17 for x in primary_components], where x=3 (an unknown source), primary_components=[3, 7, 11, 5] (an unknown source) = ?
+[line 8]  secondary_scores = [(x | 0b101) & 0xF for x in secondary_components]
+Compute: [(x | 0b101) & 0xF for x in secondary_components], where x=8 (an unknown source), secondary_components=[8, 12, 6, 9] (an unknown source) = ?
+[line 11]  temp_aggregate = sum(primary_scores) * len(secondary_scores)
+Compute: sum(primary_scores) * len(secondary_scores), where primary_scores=[9, 15, 2, 8] (defined at [line 7]), secondary_scores=[13, 13, 7, 13] (defined at [line 8]) = 136
+[line 12]  efficiency_ratio = temp_aggregate // (len(primary_scores) + 1)
+Compute: temp_aggregate // (len(primary_scores) + 1), where temp_aggregate=136 (defined at [line 11]), primary_scores=[9, 15, 2, 8] (defined at [line 7]) = 27
+[line 15]  base_circuit_score = max(primary_scores) ^ min(secondary_scores)
+Compute: max(primary_scores) ^ min(secondary_scores), where primary_scores=[9, 15, 2, 8] (defined at [line 7]), secondary_scores=[13, 13, 7, 13] (defined at [line 8]) = 8
+[line 16]  optimized_score = (base_circuit_score << 2) | 0b0011
+Compute: (base_circuit_score << 2) | 0b0011, where base_circuit_score=8 (defined at [line 15]) = 35
+[line 19]  if efficiency_ratio > 100:
+Condition: True, entering 'if' block
+[line 25]  alternate_circuit = (sum(secondary_scores) % 9) * 3
+Compute: (sum(secondary_scores) % 9) * 3, where secondary_scores=[13, 13, 7, 13] (defined at [line 8]) = 3
+[line 26]  validation_threshold = 15
+Assign: validation_threshold = 15
+[line 29]  circuit_validation = optimized_score > validation_threshold
+Compute: optimized_score > validation_threshold, where optimized_score=35 (defined at [line 16]), validation_threshold=15 (defined at [line 26]) = True
+[line 30]  core_circuit_score = optimized_score if circuit_validation else alternate_circuit
+Compute: optimized_score if circuit_validation else alternate_circuit, where optimized_score=35 (defined at [line 16]), circuit_validation=True (defined at [line 29]), alternate_circuit=3 (defined at [line 25]) = 35
+[line 33]  backup_circuit_score = (network_latency % 8) + (packet_loss * 2)
+Compute: (network_latency % 8) + (packet_loss * 2), where network_latency=105 (defined at [line 3]), packet_loss=0 (defined at [line 4]) = 1
+[line 36]  final_component_quality = core_circuit_score if circuit_validation else backup_circuit_score
+Compute: core_circuit_score if circuit_validation else backup_circuit_score, where core_circuit_score=35 (defined at [line 30]), circuit_validation=True (defined at [line 29]), backup_circuit_score=1 (defined at [line 33]) = 35
+
+Answer: final_component_quality = 35 (last updated on defined at [line 36])

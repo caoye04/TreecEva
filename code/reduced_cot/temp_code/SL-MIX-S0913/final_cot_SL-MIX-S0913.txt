@@ -1,0 +1,24 @@
+Target: Find the value of variable final_score after [line 17] executes
+
+[line 2]  scores = [p['performance'] for p in players if p['active']]
+Compute: [p['performance'] for p in players if p['active']], where p={name: 'Alice', performance: 85, active: True} (an unknown source), players=[{name: 'Alice', performance: 85, active: True}, {name: 'Bob', performance: 92, active: True}, {name: 'Charlie', performance: 78, active: True}, {name: 'Diana', performance: 45, active: True}, {name: 'Eve', performance: 88, active: True}] (an unknown source) = ?
+[line 2]  scores = [p['performance'] for p in players if p['active']]
+Compute: [p['performance'] for p in players if p['active']], where p={name: 'Bob', performance: 92, active: True} (an unknown source), players=[{name: 'Alice', performance: 85, active: True}, {name: 'Bob', performance: 92, active: True}, {name: 'Charlie', performance: 78, active: True}, {name: 'Diana', performance: 45, active: True}, {name: 'Eve', performance: 88, active: True}] (an unknown source) = ?
+[line 2]  scores = [p['performance'] for p in players if p['active']]
+Compute: [p['performance'] for p in players if p['active']], where p={name: 'Charlie', performance: 78, active: True} (an unknown source), players=[{name: 'Alice', performance: 85, active: True}, {name: 'Bob', performance: 92, active: True}, {name: 'Charlie', performance: 78, active: True}, {name: 'Diana', performance: 45, active: True}, {name: 'Eve', performance: 88, active: True}] (an unknown source) = ?
+[line 2]  scores = [p['performance'] for p in players if p['active']]
+Compute: [p['performance'] for p in players if p['active']], where p={name: 'Diana', performance: 45, active: True} (an unknown source), players=[{name: 'Alice', performance: 85, active: True}, {name: 'Bob', performance: 92, active: True}, {name: 'Charlie', performance: 78, active: True}, {name: 'Diana', performance: 45, active: True}, {name: 'Eve', performance: 88, active: True}] (an unknown source) = ?
+[line 2]  scores = [p['performance'] for p in players if p['active']]
+Compute: [p['performance'] for p in players if p['active']], where p={name: 'Eve', performance: 88, active: True} (an unknown source), players=[{name: 'Alice', performance: 85, active: True}, {name: 'Bob', performance: 92, active: True}, {name: 'Charlie', performance: 78, active: True}, {name: 'Diana', performance: 45, active: True}, {name: 'Eve', performance: 88, active: True}] (an unknown source) = ?
+[line 2]  scores = [p['performance'] for p in players if p['active']]
+Compute: [p['performance'] for p in players if p['active']], where p={name: 'Eve', performance: 88, active: True} (an unknown source), players=[{name: 'Alice', performance: 85, active: True}, {name: 'Bob', performance: 92, active: True}, {name: 'Charlie', performance: 78, active: True}, {name: 'Diana', performance: 45, active: True}, {name: 'Eve', performance: 88, active: True}] (an unknown source) = [85, 92, 78, 45, 88]
+[line 3]  primary_scores = {s for s in scores if s >= 50}
+Compute: {s for s in scores if s >= 50}, where s=85 (an unknown source), scores=[85, 92, 78, 45, 88] (defined at [line 2]) = ?
+[line 10]  core_set = {score * 2 for score in primary_scores}
+Compute: {score * 2 for score in primary_scores}, where score=88 (an unknown source), primary_scores={88, 92, 85, 78} (defined at [line 3]) = ?
+[line 11]  adjustment = len([s for s in scores if s % 2 == 0])
+Call function len([s for s in scores if s % 2 == 0])
+[line 17]  final_score = max(core_set) - min(core_set) + adjustment
+Compute: max(core_set) - min(core_set) + adjustment, where core_set={176, 170, 156, 184} (defined at [line 10]), adjustment=3 (defined at [line 11]) = 31
+
+Answer: final_score = 31 (last updated on defined at [line 17])

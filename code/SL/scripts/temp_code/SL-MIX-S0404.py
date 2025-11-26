@@ -1,35 +1,36 @@
-import re
-from functools import reduce
+def analyze_sensor_data(sensor_readings):
+    # Process multiple sensor readings using zip and enumerate
+    processed_values = []
+    adjustment_factors = [0.8, 1.2, 0.9, 1.1, 1.0]
+    
+    # Main processing loop with zip
+    for index, (reading, factor) in enumerate(zip(sensor_readings, adjustment_factors)):
+        adjusted_value = reading * factor
+        processed_values.append(adjusted_value)
+    
+    # Calculate statistics (some are distractors)
+    max_reading = max(sensor_readings)
+    min_reading = min(sensor_readings)
+    total_sum = sum(sensor_readings)
+    
+    # Calculate weighted average using processed values
+    weighted_avg = sum(processed_values) / len(processed_values)
+    
+    # Intermediate calculations (distractors)
+    range_difference = max_reading - min_reading
+    normalization_factor = total_sum / 100
+    
+    # Key calculation with processing
+    base_value = weighted_avg * 2.5
+    adjustment_offset = base_value % 10
+    processing_result = int(weighted_avg) + len(processed_values)
+    
+    # Final statement
+    final_calculation = processing_result + adjustment_offset
+    
+    print(f"Target result: {processing_result}")
+    return processing_result
 
-def calculate_risk_factor(amount):
-    return round(amount ** 0.5, 2)
-
-def is_suspicious(patterns, description):
-    return any(re.search(pattern, description, re.IGNORECASE) for pattern in patterns)
-
-# Transaction data
-transaction_amounts = [1200.50, 2500.75, 999.99, 5000.00, 100.25]
-transaction_descriptions = [
-    "Standard wire transfer",
-    "Urgent money transfer to offshore account",
-    "Regular payment for services",
-    "Crypto conversion fee",
-    "Refund for returned item"
-]
-
-# Compliance parameters
-suspicious_patterns = [r'offshore', r'crypto', r'urgent']
-sensitivity_factor = 1.75
-base_compliance_points = 100
-
-# Processing logic
-risk_factors = list(map(calculate_risk_factor, transaction_amounts))
-suspicious_flags = list(map(lambda desc: is_suspicious(suspicious_patterns, desc), transaction_descriptions))
-
-weighted_risks = [rf * sensitivity_factor if flag else rf for rf, flag in zip(risk_factors, suspicious_flags)]
-total_risk = reduce(lambda x, y: x + y, weighted_risks)
-
-# Final compliance score calculation
-compliance_score = int(base_compliance_points - total_risk) if total_risk > 50 else base_compliance_points
-
-print(f"Result: {compliance_score}")
+# Sensor readings from environmental monitoring system
+sensor_data = [45, 38, 52, 41, 49]
+result = analyze_sensor_data(sensor_data)

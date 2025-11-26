@@ -1,45 +1,54 @@
-import re
-from functools import reduce
+def data_processor(packets):
+    # Process network packets and extract data segments
+    processed_segments = []
+    temp_buffer = []
+    
+    for packet in packets:
+        # Distractor: intermediate processing that doesn't affect final result
+        packet_size = len(str(packet))
+        temp_buffer.append(packet_size)
+        
+        # Actual relevant processing
+        if packet % 2 == 0:
+            processed_segments.append(packet ^ 0xFF)
+        else:
+            processed_segments.append(packet & 0x0F)
+    
+    # Distractor: unused computation
+    buffer_sum = sum(temp_buffer)
+    
+    return processed_segments
 
-def calculate_threat_score(log_entries):
-    # Define suspicious patterns
-    patterns = {
-        'sql_injection': r'(UNION|SELECT|INSERT).*',
-        'xss': r'<script.*?>.*?</script>',
-        'file_traversal': r'\.\./',
-        'admin_access': r'/admin/'
+def data_validator(segments):
+    # Validate data segments using lambda functions and set operations
+    unique_validators = {
+        'parity': lambda x: x | 0x01,
+        'checksum': lambda x: (x + 1) ^ 0xAA
     }
     
-    # Initialize scores
-    base_scores = {'sql_injection': 10, 'xss': 15, 'file_traversal': 8, 'admin_access': 5}
+    # Process segments through validation pipeline
+    validated_data = []
+    for segment in segments:
+        # Apply multiple validation steps (only some affect final result)
+        step1 = unique_validators['parity'](segment)
+        step2 = unique_validators['checksum'](step1)
+        
+        # Distractor: additional validation that doesn't change outcome
+        redundant_check = step2 & 0x55
+        
+        validated_data.append(step2)
     
-    # Calculate pattern matches
-    matched_patterns = [
-        pattern for entry in log_entries 
-        for pattern, regex in patterns.items() 
-        if re.search(regex, entry, re.IGNORECASE)
-    ]
+    # Final computation using set operations
+    data_set = set(validated_data)
+    final_result = sum(data_set) % 256
     
-    # Apply scoring logic
-    threat_contributions = {
-        pattern: base_scores[pattern] + (2 if pattern == 'sql_injection' and any('DROP' in e for e in log_entries) else 0)
-        for pattern in matched_patterns
-    }
-    
-    # Compute final score with bonus logic
-    total_score = sum(threat_contributions.values())
-    bonus = 5 if total_score > 20 and 'admin_access' in matched_patterns else 0
-    
-    return total_score + bonus
+    return final_result
 
-# Log entries to analyze
-logs = [
-    "SELECT * FROM users WHERE id = 1",
-    "<script>alert('XSS')</script>",
-    "../../etc/passwd",
-    "/admin/login"
-]
+# Main execution
+raw_packets = [45, 128, 77, 200, 33, 150]
+final_checksum = data_validator(data_processor(raw_packets))
 
-# Calculate the threat score
-final_threat_score = calculate_threat_score(logs)
-print(f"Result: {final_threat_score}")
+# Distractor: unused variable
+intermediate_value = len(raw_packets) * 2
+
+print(f"Result: {final_checksum}")

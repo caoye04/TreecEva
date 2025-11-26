@@ -1,39 +1,13 @@
-import hashlib
-from itertools import permutations
-from functools import reduce
+from collections import Counter
 
-def compute_hash_chain(paper_id, depth):
-    if depth == 0:
-        return hashlib.md5(paper_id.encode()).hexdigest()
-    else:
-        prev_hash = compute_hash_chain(paper_id, depth - 1)
-        return hashlib.md5(prev_hash.encode()).hexdigest()
+inventory_data = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple', 'grape']
+category_mapping = {'apple': 'fruit', 'banana': 'fruit', 'orange': 'fruit', 'grape': 'fruit'}
 
-def validate_submission(title, authors, year):
-    # Generate author permutations
-    author_perms = list(permutations(authors))
-    perm_hashes = []
-    
-    for perm in author_perms[:3]:  # Only first 3 permutations
-        combined = ''.join(perm) + str(year)
-        perm_hashes.append(hashlib.sha256(combined.encode()).hexdigest())
-    
-    # Compute hash chain for title
-    title_hash = compute_hash_chain(title, 2)
-    
-    # Combine using XOR operation
-    combined_result = reduce(lambda x, y: hex(int(x, 16) ^ int(y, 16)), perm_hashes, '0x0')
-    
-    # Final verification score
-    score = (int(combined_result, 16) % 1000) + len(title_hash) 
-    
-    return score
+item_counts = Counter(inventory_data)
+processed_items = 0
+for item, count in item_counts.items():
+    if category_mapping[item] == 'fruit':
+        processed_items += count
 
-# Research paper details
-paper_title = "AdvancedQuantumAlgorithms"
-paper_authors = ["DrSmith", "ProfJohnson", "DrWilliams"]
-paper_year = 2023
-
-# Validate the submission
-verification_score = validate_submission(paper_title, paper_authors, paper_year)
-print(f"Result: {verification_score}")
+final_count = processed_items
+print(f"Result: {final_count}")

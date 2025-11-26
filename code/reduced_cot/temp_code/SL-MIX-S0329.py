@@ -1,28 +1,42 @@
-from collections import defaultdict
-
-tokens = ['0x1A3F', '0x4B2C', '0x1A3F', '0xF0F0', '0x4B2C', '0x1A3F', '0xC3A5']
-valid_token_freq = defaultdict(int)
-
-for hex_token in tokens:
-    # Remove '0x' prefix and convert to uppercase for uniformity
-    clean_token = hex_token[2:].upper()
+def process_data(raw_inputs):
+    # Filter and transform input data
+    valid_numbers = [x * 2 for x in raw_inputs if x % 3 == 0]
     
-    # Calculate checksum by XOR-ing all nibbles
-    checksum = 0
-    for char in clean_token:
-        # Convert hex character to its decimal value
-        nibble_val = int(char, 16)
-        checksum ^= nibble_val
+    # Intermediate calculation that doesn't affect final result
+    temp_sum = sum([n + 5 for n in valid_numbers])
+    temp_product = temp_sum * 2
     
-    # If checksum is zero, consider it a valid token
-    if checksum == 0:
-        valid_token_freq[clean_token] += 1
+    # Actual relevant processing
+    processed_values = [num - 1 for num in valid_numbers]
+    
+    # Another distraction calculation
+    alternative_result = len(processed_values) * 10
+    
+    return processed_values
 
-# Compute security score
-security_score = 0
-for token_hex, freq in valid_token_freq.items():
-    # Convert token back to integer base 10
-    token_numeric = int(token_hex, 16)
-    security_score += token_numeric * freq
+def final_processing(data_list):
+    # Calculate mean with some unnecessary steps
+    count = len(data_list)
+    total_sum = sum(data_list)
+    
+    # Distractor operation that gets discarded
+    squared_sum = sum([x**2 for x in data_list])
+    
+    # Final relevant calculation
+    result = total_sum // count
+    
+    # Final irrelevant adjustment that gets overridden
+    result = result + 3
+    return result
 
-print(f"Result: {security_score}")
+# Main execution
+input_sequence = [12, 8, 15, 6, 21, 9, 18]
+cleaned_data = process_data(input_sequence)
+
+# Intermediate variable that's not used
+partial_result = sum(cleaned_data) * 2
+
+# The key statement
+processed_total = final_processing(cleaned_data)
+
+print(f"Result: {processed_total}")

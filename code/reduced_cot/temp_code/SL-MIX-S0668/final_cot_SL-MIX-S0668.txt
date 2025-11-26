@@ -1,0 +1,66 @@
+Target: Find the value of variable final_result after [line 45] executes
+
+[line 40]  data_points = [8, 12, 25, 7, 18, 31, 9, 22]
+Compute: [8, 12, 25, 7, 18, 31, 9, 22] = [8, 12, 25, 7, 18, ...]
+[line 41]  modifier = 0b10101010
+Assign: modifier = 170
+[line 45]  final_result = compute_checksum(data_points, modifier)
+Call function compute_checksum(data_points=[8, 12, 25, 7, 18, ...] (defined at [line 40]), modifier=170 (defined at [line 41]))
+[line 1]  def compute_checksum(values, adjustment):
+Enter function compute_checksum: values=[8, 12, 25, 7, 18, ...] (data_points defined at [line 40]), adjustment=170 (modifier defined at [line 41])
+  [line 3]  temp_sum = 0
+  Assign: temp_sum = 0
+  [line 4]  running_total = 100
+  Assign: running_total = 100
+  [line 5]  checksum_candidate = -50
+  Compute: -50 = -50
+  [line 9]  for idx, val in enumerate(values):
+  (Missing param: 'iter_var')
+  [line 10]  temp_sum += val * (idx + 1)
+  Update: temp_sum changed from 0 (defined at defined at [line 3]) to 0+val * (idx + 1) = 8
+  [line 14]  if val > 15:
+  Condition: True, entering 'if' block
+  [line 18]  checksum_candidate -= val
+  Update: checksum_candidate changed from -50 (defined at defined at [line 5]) to -50-val = -58
+  [line 19]  running_total += 3
+  Update: running_total changed from 100 (defined at defined at [line 4]) to 100+3 = 103
+  [line 9]  for idx, val in enumerate(values):
+  (Missing param: 'iter_var')
+  [line 10]  temp_sum += val * (idx + 1)
+  Update: temp_sum changed from 8 (defined at defined at [line 10]) to 8+val * (idx + 1) = 32
+  [line 14]  if val > 15:
+  Condition: True, entering 'if' block
+  [line 18]  checksum_candidate -= val
+  Update: checksum_candidate changed from -58 (defined at defined at [line 18]) to -58-val = -70
+  [line 19]  running_total += 3
+  Update: running_total changed from 103 (defined at defined at [line 19]) to 103+3 = 106
+... [Line 9] repeats 5 more times ...
+... [Line 9] repeats 5 more times ...
+... [Line 9] repeats 5 more times ...
+... [Line 9] repeats 5 more times ...
+... [Line 9] repeats 5 more times ...
+  [line 9]  for idx, val in enumerate(values):
+  (Missing param: 'iter_var')
+  [line 10]  temp_sum += val * (idx + 1)
+  Update: temp_sum changed from 474 (defined at defined at [line 10]) to 474+val * (idx + 1) = 650
+  [line 14]  if val > 15:
+  Condition: True, entering 'if' block
+  [line 15]  checksum_candidate += val // 2
+  Update: checksum_candidate changed from -50 (defined at defined at [line 18]) to -50+val // 2 = -39
+  [line 16]  running_total -= 5
+  Update: running_total changed from 97 (defined at defined at [line 19]) to 97-5 = 92
+  [line 9]  for idx, val in enumerate(values):
+  Loop End: Iteration finished
+  [line 26]  base_result = temp_sum & 0xFF
+  Compute: temp_sum & 0xFF, where temp_sum=650 (defined at [line 10]) = 138
+  [line 27]  adjusted_result = base_result | adjustment
+  Compute: base_result | adjustment, where base_result=138 (defined at [line 26]), adjustment=170 (parameter adjustment defined at [line 41]) = 170
+  [line 30]  result_tuple = (adjusted_result, running_total, checksum_candidate)
+  Compute: (adjusted_result, running_total, checksum_candidate), where adjusted_result=170 (defined at [line 27]), running_total=92 (defined at [line 16]), checksum_candidate=-39 (defined at [line 15]) = (170, 92, -39)
+  [line 31]  final_checksum = result_tuple[0] ^ result_tuple[1]
+  Compute: result_tuple[0] ^ result_tuple[1], where result_tuple=(170, 92, -39) (defined at [line 30]) = 246
+  [line 33]  return final_checksum
+  Return: final_checksum=246 (defined at [line 31])
+Function compute_checksum returns 246
+
+Answer: final_result = 246 (last updated on defined at [line 45])

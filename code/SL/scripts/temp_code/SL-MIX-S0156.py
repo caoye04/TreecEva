@@ -1,35 +1,13 @@
-import heapq
-from collections import defaultdict
+data_points = [15, 23, 8, 42, 17, 31, 56]
+scaling_factor = 3
+threshold = 20
 
-def calculate_route_efficiency(urgencies):
-    dp = [0] * (len(urgencies) + 1)
-    for i in range(1, len(urgencies) + 1):
-        dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
-    return dp[len(urgencies)]
+filtered_data = [x for x in data_points if x > threshold]
+processing_buffer = [x + 5 for x in filtered_data]
 
-# Shipment data: (origin, urgency)
-shipments = [
-    ('NYC', 10),
-    ('LA', 15),
-    ('CHI', 7),
-    ('SEA', 20),
-    ('BOS', 5)
-]
+if len(filtered_data) >= 3:
+    target_value = filtered_data[2] * scaling_factor
+else:
+    target_value = -1
 
-# Track unique origins
-origins = frozenset(origin for origin, _ in shipments)
-
-# Process urgencies with min-heap
-urgency_heap = [u for _, u in shipments]
-heapq.heapify(urgency_heap)
-
-processed_urgencies = []
-while urgency_heap:
-    processed_urgencies.append(heapq.heappop(urgency_heap))
-
-# Calculate efficiency score using dynamic programming
-route_efficiency = calculate_route_efficiency(processed_urgencies)
-
-# Final score combines route efficiency with origin count
-final_score = route_efficiency + len(origins)
-print(f'Result: {final_score}')
+print(f"Target result: {target_value}")

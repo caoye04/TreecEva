@@ -1,40 +1,25 @@
-import re
-
-def count_palindromic_subsequences(s):
-    n = len(s)
-    # dp[i][j] will store count of palindromic subsequences in s[i:j+1]
-    dp = [[0] * n for _ in range(n)]
+def analyze_data_subsets(data_points):
+    processed_data = []
+    temp_buffer = []
     
-    # Every single character is a palindrome
-    for i in range(n):
-        dp[i][i] = 1
+    for idx, value in enumerate(data_points):
+        processed_value = value * 2 + idx
+        processed_data.append(processed_value)
+        temp_buffer.append(processed_value // 2)
     
-    # Fill for substrings of length 2
-    for i in range(n-1):
-        if s[i] == s[i+1]:
-            dp[i][i+1] = 3  # s[i], s[i+1], s[i]+s[i+1]
-        else:
-            dp[i][i+1] = 2  # s[i], s[i+1]
+    sorted_results = sorted(processed_data)
+    filtered_values = [x for x in sorted_results if x % 3 == 0]
     
-    # Fill for substrings of length 3 and more
-    for length in range(3, n+1):
-        for i in range(n-length+1):
-            j = i + length - 1
-            if s[i] == s[j]:
-                dp[i][j] = dp[i+1][j] + dp[i][j-1] + 1
-            else:
-                dp[i][j] = dp[i+1][j] + dp[i][j-1] - dp[i+1][j-1]
+    final_values = []
+    for val in filtered_values:
+        adjusted_val = val - (val % 5)
+        final_values.append(adjusted_val)
     
-    return dp[0][n-1]
+    processed_count = len([x for x in final_values if x > 10])
+    aggregate_result = sum(final_values[:3]) // processed_count
+    
+    print(f"Result: {aggregate_result}")
 
-# Ancient manuscript encoding
-manuscript = "aaba"
-
-# Filter for significant linguistic markers using regex
-filtered_chars = re.findall(r'[ab]', manuscript)
-refined_text = ''.join(filtered_chars)
-
-# Apply dynamic programming to count palindromic subsequences
-palindrome_count = count_palindromic_subsequences(refined_text)
-
-print(f"Result: {palindrome_count}")
+# Main execution
+sample_data = [8, 12, 5, 15, 7, 20, 3]
+analyze_data_subsets(sample_data)

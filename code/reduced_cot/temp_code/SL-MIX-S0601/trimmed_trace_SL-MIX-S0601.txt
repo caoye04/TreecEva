@@ -1,0 +1,51 @@
+23
+final_balance
+---
+2 total_deposits = initial_deposit
+2 ['transactions', 'initial_deposit', 'total_deposits'] ['[100, -50, 200, -30, 150, ...]', '500', '500']
+3 withdrawal_sum = 0
+3 ['transactions', 'total_deposits', 'withdrawal_sum'] ['[100, -50, 200, -30, 150, ...]', '500', '0']
+6 for idx, amount in enumerate(transactions):
+6 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '500', '0', '0', '100']
+7 if amount > 0:
+7 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '500', '0', '0', '100']
+8 total_deposits += amount * 1.1  # Red herring calculation
+8 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '610.0', '0', '0', '100']
+6 for idx, amount in enumerate(transactions):
+6 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '610.0', '0', '1', '-50']
+7 if amount > 0:
+7 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '610.0', '0', '1', '-50']
+11 withdrawal_sum += abs(amount)
+11 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '610.0', '50', '1', '-50']
+6 for idx, amount in enumerate(transactions):
+6 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '610.0', '50', '2', '200']
+7 if amount > 0:
+7 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '610.0', '50', '2', '200']
+8 total_deposits += amount * 1.1  # Red herring calculation
+8 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '830.0', '50', '2', '200']
+6 for idx, amount in enumerate(transactions):
+6 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '830.0', '50', '3', '-30']
+7 if amount > 0:
+7 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '830.0', '50', '3', '-30']
+11 withdrawal_sum += abs(amount)
+11 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '830.0', '80', '3', '-30']
+6 for idx, amount in enumerate(transactions):
+6 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '830.0', '80', '4', '150']
+7 if amount > 0:
+7 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '830.0', '80', '4', '150']
+8 total_deposits += amount * 1.1  # Red herring calculation
+8 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '995.0', '80', '4', '150']
+6 for idx, amount in enumerate(transactions):
+6 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '995.0', '80', '5', '-20']
+7 if amount > 0:
+7 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '995.0', '80', '5', '-20']
+11 withdrawal_sum += abs(amount)
+11 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '995.0', '100', '5', '-20']
+6 for idx, amount in enumerate(transactions):
+6 ['transactions', 'total_deposits', 'withdrawal_sum', 'idx', 'amount'] ['[100, -50, 200, -30, 150, ...]', '995.0', '100', '5', '-20']
+16 remaining_balance = total_deposits - withdrawal_sum
+16 ['total_deposits', 'withdrawal_sum', 'remaining_balance'] ['995.0', '100', '895.0']
+17 interest_rate = 1.05  # 5% interest
+17 ['remaining_balance', 'interest_rate'] ['895.0', '1.05']
+23 final_balance = remaining_balance * interest_rate
+23 ['remaining_balance', 'interest_rate', 'final_balance'] ['895.0', '1.05', '939.75']

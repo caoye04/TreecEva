@@ -1,26 +1,20 @@
-from functools import reduce
+from collections import Counter
 
-def mod_exp(base, exp, mod):
-    return pow(base, exp, mod)
+# Analyze character frequency in a technical document
+text_sample = "algorithmic optimization requires careful analysis"
+char_freq = Counter(text_sample.replace(" ", ""))
 
-def generate_keys():
-    key_sequence = [7]
-    for i in range(1, 6):
-        prev_key = key_sequence[i-1]
-        # Bitwise operations
-        shifted = (prev_key << 2) & 0xFF
-        xor_result = shifted ^ 0x5A
-        # Modular exponentiation with dynamic programming approach
-        exp_val = reduce(lambda x, y: x * y, [j for j in range(1, i+1)], 1) if i > 0 else 1
-        new_key = mod_exp(xor_result, exp_val, 251)
-        key_sequence.append(new_key)
-    return key_sequence
+# Calculate weighted sum based on character positions
+weighted_sum = 0
+for char, count in char_freq.items():
+    char_position = ord(char) - ord('a')
+    weighted_sum += char_position * count
 
-# Generate the key sequence
-keys = generate_keys()
+# Apply modular arithmetic with relevant constants
+multiplier = 7
+modulus = 23
+total_count = len(text_sample.replace(" ", ""))
 
-# Apply final transformation using backtracking concept
-final_transform = keys[5] ^ (keys[4] & 0xF0)
-keys.append(final_transform)
-
-print(f"Result: {keys[5]}")
+# Final computation using modular arithmetic
+final_result = (total_count * multiplier) % modulus
+print(f"Result: {final_result}")

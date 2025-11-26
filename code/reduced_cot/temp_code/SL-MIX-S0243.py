@@ -1,46 +1,29 @@
-import heapq
-import base64
+def analyze_data_patterns():
+    raw_data = [45, 78, 23, 91, 56, 34, 82, 67]
+    processed_values = []
+    temp_buffer = 0
+    
+    # Process and filter data points
+    for idx, value in enumerate(raw_data):
+        if value > 50:
+            processed = value ^ 0x3F  # XOR with mask
+            processed_values.append(processed)
+        else:
+            temp_buffer += value  # Distractor - not used in final result
+    
+    # Calculate validation metrics
+    validation_mask = 0
+    for i, val in enumerate(processed_values):
+        if i % 2 == 0:
+            validation_mask |= (val & 0xF)  # Bitwise OR accumulation
+        else:
+            temp_buffer -= val  # Distractor operation
+    
+    processed_data = sum(processed_values) & 0xFF  # Keep lower 8 bits
+    intermediate_check = temp_buffer ^ processed_data  # Red herring
+    
+    # Final computation
+    final_score = processed_data | validation_mask
+    print(f"Target result: {final_score}")
 
-def compute_hash(s):
-    return hash(s) % 1000
-
-def process_packets():
-    # Encoded packet data with priorities
-    encoded_packets = [
-        ("SGVsbG8=", 5),
-        ("V29ybGQ=", 3),
-        ("UGl6emE=", 7)
-    ]
-    
-    # Initialize processing structures
-    packet_queue = []
-    priority_heap = []
-    processed_scores = set()
-    
-    # Step 1: Decode and enqueue packets
-    for enc_data, base_priority in encoded_packets:
-        decoded_data = base64.b64decode(enc_data).decode('utf-8')
-        hash_val = compute_hash(decoded_data)
-        adjusted_priority = base_priority * 10 + (hash_val & 0xF)
-        packet_queue.append((adjusted_priority, decoded_data))
-    
-    # Step 2: Push to min-heap
-    for priority, data in packet_queue:
-        heapq.heappush(priority_heap, (priority, data))
-    
-    # Step 3: Process packets from heap
-    total_score = 0
-    while priority_heap:
-        priority, data = heapq.heappop(priority_heap)
-        if len(data) > 4 and priority not in processed_scores:
-            score = priority ^ len(data)
-            if score > 10 and (score % 2 == 0 or score < 50):
-                total_score += score
-                processed_scores.add(priority)
-    
-    # Final calculation
-    final_priority_score = total_score & 0xFF
-    return final_priority_score
-
-result = process_packets()
-print(f"Result: {result}")
+analyze_data_patterns()

@@ -1,9 +1,6 @@
-from collections import Counter
-
-document = "Hello world hello world hello"
-tokens = document.lower().split()
-word_counts = Counter(tokens)
-unique_words = len(word_counts)
-most_frequent_count = max(word_counts.values())
-metric = unique_words * most_frequent_count
-print(f'Result: {metric}')
+inventory = {'apples': 15, 'oranges': 8, 'bananas': 12, 'grapes': 6, 'pears': 9}
+item_names = list(inventory.keys())
+filtered_items = [item for item in item_names if inventory[item] > 7]
+processed_items = [item.upper() for item in filtered_items]
+final_count = len(processed_items)
+print(f"Result: {final_count}")

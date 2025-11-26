@@ -1,31 +1,39 @@
-import re
-from functools import reduce
-from itertools import compress
+def process_text_data(text_input):
+    temp_buffer = []
+    for char in text_input:
+        if char.isalpha():
+            processed_char = char.lower() if ord(char) % 2 == 0 else char.upper()
+            temp_buffer.append(processed_char)
+    return ''.join(temp_buffer)
 
-def transform_component(comp):
-    return (comp ^ 0b101010) & 0xFF
+def compute_score(text, config):
+    base_score = len(text) * 2
+    multiplier = config.get('factor', 1)
+    bonus = 5 if 'e' in text.lower() else 0
+    offset = config.get('offset', 0)
+    
+    dummy_calc = base_score * multiplier + offset
+    irrelevant_var = dummy_calc // 3
+    
+    return base_score * multiplier + bonus
 
-def validate_segment(segment):
-    return bool(re.match(r'^[A-F0-9]{2}$', segment))
+def compute_final_score(data, settings):
+    processed_text = process_text_data(data)
+    intermediate_score = compute_score(processed_text, settings)
+    
+    adjustment_map = {'a': 3, 'b': 7, 'c': 2, 'd': 5}
+    adjustment = 0
+    for char in processed_text[:3]:
+        adjustment += adjustment_map.get(char, 0)
+    
+    unused_calc = intermediate_score + adjustment * 2
+    temp_result = intermediate_score - adjustment
+    
+    final_result = temp_result + settings.get('base', 10)
+    print(f"Result: {final_result}")
+    return final_result
 
-token_segments = ['A1', 'B2', 'C3', 'D4']
-transformed_values = []
-
-for idx, seg in enumerate(token_segments):
-    if validate_segment(seg):
-        hex_val = int(seg, 16)
-        transformed = transform_component(hex_val)
-        if transformed > 0x50:
-            transformed_values.append(transformed)
-    else:
-        transformed_values.append(0)
-
-mask = [val > 0x60 for val in transformed_values]
-filtered_vals = list(compress(transformed_values, mask))
-
-if filtered_vals:
-    final_token_value = reduce(lambda x, y: x | y, filtered_vals)
-else:
-    final_token_value = 0
-
-print(f"Result: {final_token_value}")
+text_input = "ProgrammingEvaluation2024"
+config_map = {'factor': 3, 'offset': 2, 'base': 15}
+processed_data = process_text_data(text_input)
+final_result = compute_final_score(processed_data, config_map)

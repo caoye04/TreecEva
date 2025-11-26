@@ -1,0 +1,36 @@
+Target: Find the value of variable final_balance after [line 31] executes
+
+[line 3]  base_balance = 1000
+Assign: base_balance = 1000
+[line 8]  for trans in transactions:
+Loop Start: trans takes its first value 200
+[line 9]  if trans > 0:
+Condition: True, entering 'if' block
+[line 8]  for trans in transactions:
+Loop Iteration: trans is now -50 (iteration 2)
+[line 9]  if trans > 0:
+Condition: True, entering 'if' block
+... [Line 8] repeats 4 more times ...
+... [Line 8] repeats 4 more times ...
+[line 8]  for trans in transactions:
+Loop Iteration: trans is now -25 (iteration 7)
+[line 9]  if trans > 0:
+Condition: True, entering 'if' block
+[line 8]  for trans in transactions:
+Loop End: Iteration finished
+[line 19]  total_deposits = sum([t for t in transactions if t > 0])
+Call function sum([t for t in transactions if t > 0])
+[line 20]  total_withdrawals = sum([abs(t) for t in transactions if t < 0])
+Call function sum([abs(t) for t in transactions if t < 0])
+[line 23]  net_flow = total_deposits - total_withdrawals
+Compute: total_deposits - total_withdrawals, where total_deposits=600 (defined at [line 19]), total_withdrawals=300 (defined at [line 20]) = 300
+[line 24]  adjusted_flow = net_flow * 0.95  # 5% adjustment (distractor)
+Compute: net_flow * 0.95  # 5% adjustment (distractor), where net_flow=300 (defined at [line 23]) = 285.0
+[line 27]  remaining_balance = base_balance + total_deposits - total_withdrawals
+Compute: base_balance + total_deposits - total_withdrawals, where base_balance=1000 (defined at [line 3]), total_deposits=600 (defined at [line 19]), total_withdrawals=300 (defined at [line 20]) = 1300
+[line 28]  processed_data = {'remaining': remaining_balance, 'adjusted': adjusted_flow}
+Compute: {'remaining': remaining_balance, 'adjusted': adjusted_flow}, where remaining_balance=1300 (defined at [line 27]), adjusted_flow=285.0 (defined at [line 24]) = {remaining: 1300, adjusted: 285.0}
+[line 31]  final_balance = processed_data['remaining']
+Compute: processed_data['remaining'], where processed_data={remaining: 1300, adjusted: 285.0} (defined at [line 28]) = 1300
+
+Answer: final_balance = 1300 (last updated on defined at [line 31])

@@ -1,51 +1,39 @@
-def crypto_pipeline():
-    message = "SECURE_TRANSMISSION_PROTOCOL"
+def calculate_network_efficiency(base_rate, overhead_factor, buffer_size):
+    # Relevant calculations
+    raw_throughput = base_rate * (1 - overhead_factor)
+    buffer_efficiency = min(buffer_size * 0.1, 1.0)
     
-    # Stage 1: Tokenization using set operations
-    unique_chars = frozenset(message)
-    char_frequency = {char: message.count(char) for char in unique_chars}
+    # Distractor variables and computations
+    temp_calc = (base_rate % 7) ** 2  # Irrelevant modulo operation
+    unused_metric = buffer_size * overhead_factor + temp_calc  # Dead code path
     
-    # Stage 2: Frequency-based encoding
-    encode_map = {char: freq * (ord(char) & 0xF) for char, freq in char_frequency.items()}
+    if buffer_size > 50:
+        # Misleading conditional path
+        adjustment = raw_throughput * 0.15
+        dummy_value = adjustment + temp_calc  # Unused result
+    else:
+        adjustment = raw_throughput * 0.05
     
-    # Stage 3: Bit manipulation transform
-    transform = lambda x: (x << 2) ^ (x >> 1) & 0xFF
-    encoded_values = [transform(val) for val in encode_map.values()]
+    # Core logic
+    optimized_rate = raw_throughput * buffer_efficiency - adjustment
+    efficiency_factor = 1.2 if overhead_factor < 0.3 else 0.8
     
-    # Stage 4: Divide and conquer sorting
-    def merge_sort(arr):
-        if len(arr) <= 1:
-            return arr
-        mid = len(arr) // 2
-        left = merge_sort(arr[:mid])
-        right = merge_sort(arr[mid:])
-        return merge(left, right)
+    # More distractors
+    alternate_calc = optimized_rate + buffer_size // 10  # Unused integer division
+    correction_offset = -5 if base_rate > 200 else 10
     
-    def merge(left, right):
-        result = []
-        i = j = 0
-        while i < len(left) and j < len(right):
-            if left[i] <= right[j]:
-                result.append(left[i])
-                i += 1
-            else:
-                result.append(right[j])
-                j += 1
-        result.extend(left[i:])
-        result.extend(right[j:])
-        return result
+    # Dead code section
+    for i in range(3):
+        temp_val = i * correction_offset  # Unused loop result
     
-    sorted_values = merge_sort(encoded_values)
+    # Final assignment (critical execution point)
+    final_throughput = optimized_rate * efficiency_factor + correction_offset
     
-    # Stage 5: Checksum computation
-    checksum = 0
-    for i, val in enumerate(sorted_values):
-        if i % 2 == 0:
-            checksum ^= val
-        else:
-            checksum ^= (val << 1) & 0xFF
-    
-    return checksum
+    print(f"Result: {final_throughput}")
+    return final_throughput
 
-result = crypto_pipeline()
-print(f"Result: {result}")
+# Execute with test parameters
+base_network_rate = 180
+protocol_overhead = 0.25
+packet_buffer = 40
+result = calculate_network_efficiency(base_network_rate, protocol_overhead, packet_buffer)

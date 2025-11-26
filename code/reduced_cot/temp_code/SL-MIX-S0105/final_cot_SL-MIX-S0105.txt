@@ -1,137 +1,44 @@
-Target: Find the value of variable sync_checksum after [line 37] executes
+Target: Find the value of variable aggregate_result after [line 19] executes
 
-[line 28]  sensor_readings = [7, 2, 9, 4, 11, 6, 13]
-Compute: [7, 2, 9, 4, 11, 6, 13] = [7, 2, 9, 4, 11, ...]
-[line 31]  transformed_readings = transform_readings(sensor_readings)
-Call function transform_readings(sensor_readings=[7, 2, 9, 4, 11, ...] (defined at [line 28]))
-[line 5]  return [pow(r, 3, 17) for r in readings]
-Return: [pow(r, 3, 17) for r in readings]
-[line 34]  adjusted_readings = adjust_values(transformed_readings)
-Call function adjust_values(transformed_readings)
-[line 9]  adjusted = []
+[line 2]  processed_data = []
 Compute: [] = []
-[line 10]  for val in transformed_vals:
-Loop Start: val takes its first value 3
-[line 11]  if val % 2 == 0:
-Condition: True, entering 'if' block
-[line 10]  for val in transformed_vals:
-Loop Iteration: val is now 8 (iteration 2)
-[line 11]  if val % 2 == 0:
-Condition: True, entering 'if' block
-... [Line 10] repeats 4 more times ...
-... [Line 10] repeats 4 more times ...
-[line 10]  for val in transformed_vals:
-Loop Iteration: val is now 4 (iteration 7)
-[line 11]  if val % 2 == 0:
-Condition: True, entering 'if' block
-[line 10]  for val in transformed_vals:
+[line 5]  for idx, value in enumerate(data_points):
+(Missing param: 'iter_var')
+[line 5]  for idx, value in enumerate(data_points):
 Loop End: Iteration finished
-[line 15]  return adjusted
-Return: adjusted=[0, 13, 12, 10, 2, ...] (defined at [line 9])
-[line 37]  sync_checksum = compute_checksum(adjusted_readings)
-Call function compute_checksum(adjusted_readings=[0, 13, 12, 10, 2, ...] (defined at [line 34]))
-[line 17]  def compute_checksum(vals):
-Enter function compute_checksum: vals=[0, 13, 12, 10, 2, ...] (adjusted_readings defined at [line 34])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 21]  mid = len(vals) // 2
-  Compute: len(vals) // 2, where vals=[0, 13, 12, 10, 2, ...] (parameter vals defined at [line 34]) = 3
-  [line 22]  left_checksum = compute_checksum(vals[:mid])
-  Call function compute_checksum(vals[:mid])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 21]  mid = len(vals) // 2
-  Compute: len(vals) // 2, where vals=[0, 13, 12] (parameter vals defined at [line 34]) = 1
-  [line 22]  left_checksum = compute_checksum(vals[:mid])
-  Call function compute_checksum(vals[:mid])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 20]  return vals[0] if vals else 0
-  Return: vals[0] if vals else 0
-  [line 23]  right_checksum = compute_checksum(vals[mid:])
-  Call function compute_checksum(vals[mid:])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 21]  mid = len(vals) // 2
-  Compute: len(vals) // 2, where vals=[13, 12] (parameter vals defined at [line 34]) = 1
-  [line 22]  left_checksum = compute_checksum(vals[:mid])
-  Call function compute_checksum(vals[:mid])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 20]  return vals[0] if vals else 0
-  Return: vals[0] if vals else 0
-  [line 23]  right_checksum = compute_checksum(vals[mid:])
-  Call function compute_checksum(vals[mid:])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 20]  return vals[0] if vals else 0
-  Return: vals[0] if vals else 0
-  [line 24]  combined = (left_checksum * 2 + right_checksum * 3) % 19
-  Compute: (left_checksum * 2 + right_checksum * 3) % 19, where left_checksum=13 (defined at [line 22]), right_checksum=12 (defined at [line 23]) = 5
-  [line 25]  return combined
-  Return: combined=5 (defined at [line 24])
-  [line 24]  combined = (left_checksum * 2 + right_checksum * 3) % 19
-  Compute: (left_checksum * 2 + right_checksum * 3) % 19, where left_checksum=0 (defined at [line 22]), right_checksum=5 (defined at [line 23]) = 15
-  [line 25]  return combined
-  Return: combined=15 (defined at [line 24])
-  [line 23]  right_checksum = compute_checksum(vals[mid:])
-  Call function compute_checksum(vals[mid:])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 21]  mid = len(vals) // 2
-  Compute: len(vals) // 2, where vals=[10, 2, 17, 9] (parameter vals defined at [line 34]) = 2
-  [line 22]  left_checksum = compute_checksum(vals[:mid])
-  Call function compute_checksum(vals[:mid])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 21]  mid = len(vals) // 2
-  Compute: len(vals) // 2, where vals=[10, 2] (parameter vals defined at [line 34]) = 1
-  [line 22]  left_checksum = compute_checksum(vals[:mid])
-  Call function compute_checksum(vals[:mid])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 20]  return vals[0] if vals else 0
-  Return: vals[0] if vals else 0
-  [line 23]  right_checksum = compute_checksum(vals[mid:])
-  Call function compute_checksum(vals[mid:])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 20]  return vals[0] if vals else 0
-  Return: vals[0] if vals else 0
-  [line 24]  combined = (left_checksum * 2 + right_checksum * 3) % 19
-  Compute: (left_checksum * 2 + right_checksum * 3) % 19, where left_checksum=10 (defined at [line 22]), right_checksum=2 (defined at [line 23]) = 7
-  [line 25]  return combined
-  Return: combined=7 (defined at [line 24])
-  [line 23]  right_checksum = compute_checksum(vals[mid:])
-  Call function compute_checksum(vals[mid:])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 21]  mid = len(vals) // 2
-  Compute: len(vals) // 2, where vals=[17, 9] (parameter vals defined at [line 34]) = 1
-  [line 22]  left_checksum = compute_checksum(vals[:mid])
-  Call function compute_checksum(vals[:mid])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 20]  return vals[0] if vals else 0
-  Return: vals[0] if vals else 0
-  [line 23]  right_checksum = compute_checksum(vals[mid:])
-  Call function compute_checksum(vals[mid:])
-  [line 19]  if len(vals) <= 1:
-  Condition: True, entering 'if' block
-  [line 20]  return vals[0] if vals else 0
-  Return: vals[0] if vals else 0
-  [line 24]  combined = (left_checksum * 2 + right_checksum * 3) % 19
-  Compute: (left_checksum * 2 + right_checksum * 3) % 19, where left_checksum=17 (defined at [line 22]), right_checksum=9 (defined at [line 23]) = 4
-  [line 25]  return combined
-  Return: combined=4 (defined at [line 24])
-  [line 24]  combined = (left_checksum * 2 + right_checksum * 3) % 19
-  Compute: (left_checksum * 2 + right_checksum * 3) % 19, where left_checksum=7 (defined at [line 22]), right_checksum=4 (defined at [line 23]) = 7
-  [line 25]  return combined
-  Return: combined=7 (defined at [line 24])
-  [line 24]  combined = (left_checksum * 2 + right_checksum * 3) % 19
-  Compute: (left_checksum * 2 + right_checksum * 3) % 19, where left_checksum=15 (defined at [line 22]), right_checksum=7 (defined at [line 23]) = 13
-  [line 25]  return combined
-  Return: combined=13 (defined at [line 24])
-Function compute_checksum returns 13
+[line 5]  for idx, value in enumerate(data_points):
+Loop End: Iteration finished
+[line 5]  for idx, value in enumerate(data_points):
+Loop End: Iteration finished
+[line 5]  for idx, value in enumerate(data_points):
+Loop End: Iteration finished
+[line 5]  for idx, value in enumerate(data_points):
+Loop End: Iteration finished
+[line 5]  for idx, value in enumerate(data_points):
+Loop End: Iteration finished
+[line 5]  for idx, value in enumerate(data_points):
+Loop End: Iteration finished
+[line 10]  sorted_results = sorted(processed_data)
+Call function sorted(processed_data=[16, 25, 12, 33, 18, ...] (defined at [line 2]))
+[line 11]  filtered_values = [x for x in sorted_results if x % 3 == 0]
+Compute: [x for x in sorted_results if x % 3 == 0], where x=12 (an unknown source), sorted_results=[12, 12, 16, 18, 25, ...] (defined at [line 10]) = ?
+[line 13]  final_values = []
+Compute: [] = []
+[line 14]  for val in filtered_values:
+Loop Start: val takes its first value 12
+[line 14]  for val in filtered_values:
+Loop End: Iteration finished
+[line 14]  for val in filtered_values:
+Loop End: Iteration finished
+[line 14]  for val in filtered_values:
+Loop End: Iteration finished
+[line 14]  for val in filtered_values:
+Loop End: Iteration finished
+[line 14]  for val in filtered_values:
+Loop End: Iteration finished
+[line 18]  processed_count = len([x for x in final_values if x > 10])
+Call function len([x for x in final_values if x > 10])
+[line 19]  aggregate_result = sum(final_values[:3]) // processed_count
+Compute: sum(final_values[:3]) // processed_count, where final_values=[10, 10, 15, 30, 45] (defined at [line 13]), processed_count=3 (defined at [line 18]) = 11
 
-Answer: sync_checksum = ? (last updated on defined at [line 37])
+Answer: aggregate_result = 11 (last updated on defined at [line 19])

@@ -1,0 +1,35 @@
+Target: Find the value of variable final_processed after [line 42] executes
+
+[line 41]  original_data = 27
+Assign: original_data = 27
+[line 42]  final_processed = process_data_chain(original_data)
+Call function process_data_chain(original_data=27 (defined at [line 41]))
+[line 1]  def process_data_chain(input_data):
+Enter function process_data_chain: input_data=27 (original_data defined at [line 41])
+  [line 8]  processed = input_data * 3
+  Compute: input_data * 3, where input_data=27 (parameter input_data defined at [line 41]) = 81
+  [line 9]  processed = processed - 15  # Red herring subtraction
+  Compute: processed - 15  # Red herring subtraction, where processed=81 (defined at [line 8]) = 66
+  [line 12]  if processed > 50:
+  Condition: True, entering 'if' block
+  [line 13]  processed = processed // 2
+  Compute: processed // 2, where processed=66 (defined at [line 9]) = 33
+  [line 15]  shadow_value = processed * 7 + 3
+  Compute: processed * 7 + 3, where processed=33 (defined at [line 13]) = 234
+  [line 22]  data_map = {'primary': processed, 'secondary': shadow_value, 'tertiary': input_data * 2}
+  Compute: {'primary': processed, 'secondary': shadow_value, 'tertiary': input_data * 2}, where processed=33 (defined at [line 13]), shadow_value=234 (defined at [line 15]), input_data=27 (parameter input_data defined at [line 41]) = {primary: 33, secondary: 234, tertiary: 54}
+  [line 28]  result = data_map['primary'] + data_map['secondary']
+  Compute: data_map['primary'] + data_map['secondary'], where data_map={primary: 33, secondary: 234, tertiary: 54} (defined at [line 22]) = 267
+  [line 29]  result = result - data_map['tertiary']
+  Compute: result - data_map['tertiary'], where result=267 (defined at [line 28]), data_map={primary: 33, secondary: 234, tertiary: 54} (defined at [line 22]) = 213
+  [line 32]  adjustment_factor = (result % 10) + 1
+  Compute: (result % 10) + 1, where result=213 (defined at [line 29]) = 4
+  [line 33]  final_result = result // adjustment_factor
+  Compute: result // adjustment_factor, where result=213 (defined at [line 29]), adjustment_factor=4 (defined at [line 32]) = 53
+  [line 36]  if final_result < 0:
+  Condition: True, entering 'if' block
+  [line 39]  return final_result
+  Return: final_result=53 (defined at [line 33])
+Function process_data_chain returns 53
+
+Answer: final_processed = 53 (last updated on defined at [line 42])

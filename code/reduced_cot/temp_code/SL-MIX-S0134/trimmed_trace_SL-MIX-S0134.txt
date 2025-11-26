@@ -1,199 +1,195 @@
-47
-final_output
+34
+final_result
 ---
-43 tree = build_frequency_tree()
-43 [] []
-11 root = FrequencyNode(1000, 2.5)
-11 [] []
-12 root.left = FrequencyNode(500, 1.8)
-12 ['root'] ['FrequencyNode(left=None)']
-13 root.right = FrequencyNode(2000, 3.2)
-13 ['root'] ['FrequencyNode(right=None)']
-14 root.left.left = FrequencyNode(250, 1.2)
-14 ['root'] ['FrequencyNode(left=FrequencyNode(frequency=500, gain=1.8, left=None, right=None))']
-15 root.left.right = FrequencyNode(750, 2.1)
-15 ['root'] ['FrequencyNode(left=FrequencyNode(frequency=500, gain=1.8, left=FrequencyNode(...), right=None))']
-16 root.right.left = FrequencyNode(1500, 2.8)
-16 ['root'] ['FrequencyNode(right=FrequencyNode(frequency=2000, gain=3.2, left=None, right=None))']
-17 root.right.right = FrequencyNode(4000, 4.0)
-17 ['root'] ['FrequencyNode(right=FrequencyNode(frequency=2000, gain=3.2, left=FrequencyNode(...), right=None))']
-18 return root
-18 ['root'] ['FrequencyNode(...)']
-44 raw_output = process_band_gain(tree)
-44 ['tree'] ['FrequencyNode(...)']
-21 if not node:
-21 ['node'] ['FrequencyNode(...)']
-25 left_result = process_band_gain(node.left)
-25 ['node'] ['FrequencyNode(left=FrequencyNode(frequency=500, gain=1.8, left=FrequencyNode(...), right=FrequencyNode(...)))']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 500}, 'gain': {'_type': 'float', '_value': 1.8}, 'left': {'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 250}, 'gain': {'_type': 'float', '_value': 1.2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 750}, 'gain': {'_type': 'float', '_value': 2.1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}]
-21 if not node:
-21 ['node'] ['FrequencyNode(...)']
-25 left_result = process_band_gain(node.left)
-25 ['node'] ['FrequencyNode(left=FrequencyNode(frequency=250, gain=1.2, left=None, right=None))']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 250}, 'gain': {'_type': 'float', '_value': 1.2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
-21 if not node:
-21 ['node'] ['FrequencyNode(...)']
-25 left_result = process_band_gain(node.left)
-25 ['node'] ['FrequencyNode(left=None)']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'None'}]
-21 if not node:
-21 ['node'] ['None']
-22 return 0
-22 ['node'] ['None']
-FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
-28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
-28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=1.2)', '0', '6']
-31 if node.frequency == 750:
-31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0', '6']
-35 right_result = process_band_gain(node.right)
-35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=None)', '0', '6']
-PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'None'}]
-21 if not node:
-21 ['node'] ['None']
-22 return 0
-22 ['node'] ['None']
-FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
-38 combined = (left_result + right_result + processed_gain) * 0.5
-38 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '0', '6', '0', '3.0']
-40 return combined
-40 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '0', '6', '0', '3.0']
-FUNCTION_RETURN 40 process_band_gain {'_type': 'float', '_value': 3.0}
-28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
-28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=1.8)', '3.0', '5']
-31 if node.frequency == 750:
-31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '3.0', '5']
-35 right_result = process_band_gain(node.right)
-35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=FrequencyNode(frequency=750, gain=2.1, left=None, right=None))', '3.0', '5']
-PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 750}, 'gain': {'_type': 'float', '_value': 2.1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
-21 if not node:
-21 ['node'] ['FrequencyNode(...)']
-25 left_result = process_band_gain(node.left)
-25 ['node'] ['FrequencyNode(left=None)']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'None'}]
-21 if not node:
-21 ['node'] ['None']
-22 return 0
-22 ['node'] ['None']
-FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
-28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
-28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=2.1)', '0', '1']
-31 if node.frequency == 750:
-31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0', '1']
-32 return processed_gain * 3
-32 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0', '1']
-FUNCTION_RETURN 32 process_band_gain {'_type': 'int', '_value': 3}
-38 combined = (left_result + right_result + processed_gain) * 0.5
-38 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '3.0', '5', '3', '5.5']
-40 return combined
-40 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '3.0', '5', '3', '5.5']
-FUNCTION_RETURN 40 process_band_gain {'_type': 'float', '_value': 5.5}
-28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
-28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=2.5)', '5.5', '5']
-31 if node.frequency == 750:
-31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '5.5', '5']
-35 right_result = process_band_gain(node.right)
-35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=FrequencyNode(frequency=2000, gain=3.2, left=FrequencyNode(...), right=FrequencyNode(...)))', '5.5', '5']
-PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 2000}, 'gain': {'_type': 'float', '_value': 3.2}, 'left': {'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 1500}, 'gain': {'_type': 'float', '_value': 2.8}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 4000}, 'gain': {'_type': 'float', '_value': 4.0}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}]
-21 if not node:
-21 ['node'] ['FrequencyNode(...)']
-25 left_result = process_band_gain(node.left)
-25 ['node'] ['FrequencyNode(left=FrequencyNode(frequency=1500, gain=2.8, left=None, right=None))']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 1500}, 'gain': {'_type': 'float', '_value': 2.8}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
-21 if not node:
-21 ['node'] ['FrequencyNode(...)']
-25 left_result = process_band_gain(node.left)
-25 ['node'] ['FrequencyNode(left=None)']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'None'}]
-21 if not node:
-21 ['node'] ['None']
-22 return 0
-22 ['node'] ['None']
-FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
-28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
-28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=2.8)', '0', '1']
-31 if node.frequency == 750:
-31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0', '1']
-35 right_result = process_band_gain(node.right)
-35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=None)', '0', '1']
-PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'None'}]
-21 if not node:
-21 ['node'] ['None']
-22 return 0
-22 ['node'] ['None']
-FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
-38 combined = (left_result + right_result + processed_gain) * 0.5
-38 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '0', '1', '0', '0.5']
-40 return combined
-40 ['node', 'left_result', 'processed_gain', 'right_result', 'combined'] ['FrequencyNode(...)', '0', '1', '0', '0.5']
-FUNCTION_RETURN 40 process_band_gain {'_type': 'float', '_value': 0.5}
-28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
-28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=3.2)', '0.5', '5']
-31 if node.frequency == 750:
-31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0.5', '5']
-35 right_result = process_band_gain(node.right)
-35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=FrequencyNode(frequency=4000, gain=4.0, left=None, right=None))', '0.5', '5']
-PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'object', '_class': 'FrequencyNode', '_attrs': {'frequency': {'_type': 'int', '_value': 4000}, 'gain': {'_type': 'float', '_value': 4.0}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
-21 if not node:
-21 ['node'] ['FrequencyNode(...)']
-25 left_result = process_band_gain(node.left)
-25 ['node'] ['FrequencyNode(left=None)']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'None'}]
-21 if not node:
-21 ['node'] ['None']
-22 return 0
-22 ['node'] ['None']
-FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
-28 processed_gain = (math.floor(node.gain * 10) % 7) + 1
-28 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(gain=4.0)', '0', '6']
-31 if node.frequency == 750:
-31 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(...)', '0', '6']
-35 right_result = process_band_gain(node.right)
-35 ['node', 'left_result', 'processed_gain'] ['FrequencyNode(right=None)', '0', '6']
-PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
-FUNCTION_ENTER 20 process_band_gain def process_band_gain(node):
-20 ['node'] [{'_type': 'None'}]
-21 if not node:
-21 ['node'] ['None']
-22 return 0
-22 [] []
-FUNCTION_RETURN 22 process_band_gain {'_type': 'int', '_value': 0}
-38 combined = (left_result + right_result + processed_gain) * 0.5
-38 ['left_result', 'processed_gain', 'right_result', 'combined'] ['0', '6', '0', '3.0']
-40 return combined
-40 ['left_result', 'processed_gain', 'right_result', 'combined'] ['0', '6', '0', '3.0']
-FUNCTION_RETURN 40 process_band_gain {'_type': 'float', '_value': 3.0}
-38 combined = (left_result + right_result + processed_gain) * 0.5
-38 ['left_result', 'processed_gain', 'right_result', 'combined'] ['0.5', '5', '3.0', '4.25']
-40 return combined
-40 ['left_result', 'processed_gain', 'right_result', 'combined'] ['0.5', '5', '3.0', '4.25']
-FUNCTION_RETURN 40 process_band_gain {'_type': 'float', '_value': 4.25}
-38 combined = (left_result + right_result + processed_gain) * 0.5
-38 ['left_result', 'processed_gain', 'right_result', 'combined'] ['5.5', '5', '4.25', '7.375']
-40 return combined
-40 ['combined'] ['7.375']
-47 final_output = math.ceil(raw_output * 100) / 100
-47 ['raw_output', 'final_output'] ['7.375', '7.38']
+3 cleaned_text = text_data.strip().lower()
+3 ['text_data', 'cleaned_text'] ["'Programming Evaluation Benchmark Analysis'", "'programming evaluation benchmark analysis'"]
+4 vowels = {'a', 'e', 'i', 'o', 'u'}
+4 ['cleaned_text', 'vowels'] ["'programming evaluation benchmark analysis'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['cleaned_text', 'vowels'] ["'programming evaluation benchmark analysis'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'p'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'r'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'o'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'g'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'r'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'a'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'m'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'m'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'i'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'n'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'g'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["' '", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'e'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'v'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'a'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'l'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'u'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'a'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'t'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'i'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'o'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'n'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["' '", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'b'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'e'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'n'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'c'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'h'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'m'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'a'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'r'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'k'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["' '", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'a'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'n'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'a'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'l'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'y'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'s'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'i'", "{'a', 'o', 'i', 'u', 'e'}"]
+7 vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+7 ['x', 'vowels'] ["'s'", "{'a', 'o', 'i', 'u', 'e'}"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'p'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'r'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'o'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'g'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'r'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'a'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'m'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'m'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'i'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'n'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'g'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "' '"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'e'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'v'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'a'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'l'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'u'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'a'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'t'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'i'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'o'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'n'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "' '"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'b'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'e'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'n'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'c'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'h'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'m'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'a'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'r'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'k'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "' '"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'a'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'n'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'a'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'l'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'y'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'s'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'i'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'s'"]
+11 for char in cleaned_text:
+11 ['cleaned_text', 'vowel_count', 'char'] ["'programming evaluation benchmark analysis'", '14', "'s'"]
+15 weighted_vowels = vowel_count * 2
+15 ['cleaned_text', 'vowel_count', 'weighted_vowels'] ["'programming evaluation benchmark analysis'", '14', '28']
+18 first_half = cleaned_text[:len(cleaned_text)//2]
+18 ['cleaned_text', 'weighted_vowels', 'first_half'] ["'programming evaluation benchmark analysis'", '28', "'programming evaluati'"]
+19 second_half = cleaned_text[len(cleaned_text)//2:]
+19 ['cleaned_text', 'weighted_vowels', 'first_half', 'second_half'] ["'programming evaluation benchmark analysis'", '28', "'programming evaluati'", "'on benchmark analysis'"]
+22 half_diff = abs(len(first_half) - len(second_half))
+22 ['cleaned_text', 'weighted_vowels', 'first_half', 'second_half', 'half_diff'] ["'programming evaluation benchmark analysis'", '28', "'programming evaluati'", "'on benchmark analysis'", '1']
+25 base_value = weighted_vowels + half_diff
+25 ['cleaned_text', 'weighted_vowels', 'half_diff', 'base_value'] ["'programming evaluation benchmark analysis'", '28', '1', '29']
+26 processed_values = [base_value, base_value * 3, base_value // 2, base_value + 10]
+26 ['cleaned_text', 'base_value', 'processed_values'] ["'programming evaluation benchmark analysis'", '29', '[29, 87, 14, 39]']
+29 unique_chars = set(cleaned_text.replace(' ', ''))
+29 ['cleaned_text', 'processed_values', 'unique_chars'] ["'programming evaluation benchmark analysis'", '[29, 87, 14, 39]', "{'o', 'r', 'a', 'p', 'h', ...}"]
+30 critical_index = len(unique_chars) % len(processed_values)
+30 ['processed_values', 'unique_chars', 'critical_index'] ['[29, 87, 14, 39]', "{'o', 'r', 'a', 'p', 'h', ...}", '3']
+33 scale_factor = 1.5
+33 ['processed_values', 'critical_index', 'scale_factor'] ['[29, 87, 14, 39]', '3', '1.5']
+34 final_result = processed_values[critical_index] * scale_factor
+34 ['processed_values', 'critical_index', 'scale_factor', 'final_result'] ['[29, 87, 14, 39]', '3', '1.5', '58.5']

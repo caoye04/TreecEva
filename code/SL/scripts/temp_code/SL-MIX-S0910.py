@@ -1,44 +1,48 @@
-from math import gcd
-from itertools import combinations
+from collections import Counter
 
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
+def encrypt_data(data_values):
+    # Initial processing phase (irrelevant to final result)
+    temp_buffer = [x * 2 + 1 for x in data_values]
+    hash_cache = {}
+    
+    # Main encryption logic
+    checksum = 0
+    byte_shift = 3
+    mask_pattern = 0b10101010
+    
+    for idx, value in enumerate(data_values):
+        # Distractor: complex but unused calculation
+        hash_cache[idx] = (value << byte_shift) ^ mask_pattern
+        
+        # Actual checksum calculation
+        if idx % 2 == 0:
+            checksum += value & 0xFF
+        else:
+            checksum -= value | 0x7F
+    
+    # Validation phase (dead code path)
+    if checksum > 1000:
+        validation_flag = checksum // 10
+        byte_shift = validation_flag ^ 0x55  # Red herring
+    
+    # Final adjustment
+    checksum = checksum % 256
+    
+    # Misleading intermediate operation
+    dummy_calc = (checksum << 2) + byte_shift
+    
+    return checksum
 
-tokens = [13, 21, 34, 55]
-security_index = 0
+# Test data
+data_sequence = [45, 128, 77, 201, 63, 92, 144, 31]
 
-# Phase 1: Bitwise aggregation
-aggregated_mask = 0
-for i, val in enumerate(tokens):
-    if i % 2 == 0:
-        aggregated_mask |= val << (i // 2)
-    else:
-        aggregated_mask ^= val
+# Irrelevant processing
+data_backup = data_sequence.copy()
+processed_data = [x ^ 0xFF for x in data_backup]
+frequency_map = Counter(processed_data)
 
-# Phase 2: Combinatorial amplification
-combos = list(combinations(tokens, 2))
-amplification_factor = 1
-for x, y in combos:
-    amplification_factor *= lcm(x, y)
+# Main execution
+encryption_checksum = encrypt_data(data_sequence)
 
-# Phase 3: Prime weighting
-prime_weights = []
-def is_prime(n):
-    if n <= 1: return False
-    if n <= 3: return True
-    if n % 2 == 0 or n % 3 == 0: return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-for t in tokens:
-    prime_weights.append(t if is_prime(t) else 1)
-
-weighted_sum = sum(p * t for p, t in zip(prime_weights, tokens))
-
-# Final calculation
-security_index = (aggregated_mask + amplification_factor) % weighted_sum
-print(f"Result: {security_index}")
+# Print result
+print(f"Result: {encryption_checksum}")

@@ -1,49 +1,23 @@
-from collections import defaultdict
-import re
+from collections import Counter
 
-class PhyloNode:
-    def __init__(self, marker, children=None):
-        self.marker = marker
-        self.children = children if children else []
-
-def count_matching_lineages(root, pattern):
-    def dfs(node):
-        if not node:
-            return []
-        paths = [[node.marker]]
-        for child in node.children:
-            child_paths = dfs(child)
-            for path in child_paths:
-                paths.append([node.marker] + path)
-        return paths
+def analyze_performance(metrics):
+    # Performance metrics for quality assessment
+    scores = []
+    for metric in metrics:
+        if metric['type'] == 'accuracy':
+            scores.append(metric['value'])
     
-    all_paths = dfs(root)
-    lineage_count = 0
-    for path in all_paths:
-        path_str = ''.join(path)
-        if re.search(pattern, path_str):
-            lineage_count += 1
-    return lineage_count
+    # Calculate final score as range of accuracy values
+    final_score = max(scores) - min(scores)
+    print(f"Result: {final_score}")
 
-# Constructing phylogenetic tree
-root = PhyloNode('A', [
-    PhyloNode('B', [
-        PhyloNode('C'),
-        PhyloNode('D', [
-            PhyloNode('E')
-        ])
-    ]),
-    PhyloNode('F', [
-        PhyloNode('G'),
-        PhyloNode('H')
-    ]),
-    PhyloNode('I', [
-        PhyloNode('J', [
-            PhyloNode('K')
-        ])
-    ])
-])
+# Sample performance data
+performance_data = [
+    {'type': 'accuracy', 'value': 87},
+    {'type': 'precision', 'value': 92},
+    {'type': 'accuracy', 'value': 91},
+    {'type': 'recall', 'value': 85},
+    {'type': 'accuracy', 'value': 78}
+]
 
-pattern = r'B.*E|F.*[GH]'
-lineage_count = count_matching_lineages(root, pattern)
-print(f'Result: {lineage_count}')
+analyze_performance(performance_data)

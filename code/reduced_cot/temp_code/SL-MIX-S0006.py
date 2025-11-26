@@ -1,37 +1,21 @@
-# Daily closing prices
-prices = [100, 103, 101, 105, 108, 106, 110, 112]
+def calculate_game_score():
+    player_levels = [3, 5, 2, 7, 4]
+    bonus_multipliers = [2, 1, 3, 1, 2]
+    
+    # Calculate base scores with enumerate
+    enumerated_levels = []
+    for idx, level in enumerate(player_levels):
+        enumerated_levels.append(idx * level)
+    
+    # Apply bonus multipliers with zip
+    enhanced_scores = []
+    for base, multiplier in zip(enumerated_levels, bonus_multipliers):
+        enhanced_scores.append(base * multiplier)
+    
+    # Calculate final score
+    enumerate_data = enhanced_scores[1:4]  # Take middle three elements
+    final_score = sum(enumerate_data)
+    
+    print(f"Target result: {final_score}")
 
-# Step 1: Calculate daily returns
-returns = []
-for i in range(1, len(prices)):
-    daily_return = prices[i] - prices[i-1]
-    returns.append(daily_return)
-
-# Step 2: Find longest positive streak
-max_positive_streak = 0
-current_streak = 0
-for ret in returns:
-    if ret > 0:
-        current_streak += 1
-        if current_streak > max_positive_streak:
-            max_positive_streak = current_streak
-    else:
-        current_streak = 0
-
-# Step 3: Calculate momentum score
-positive_returns = [r for r in returns if r > 0]
-if positive_returns:
-    avg_positive = sum(positive_returns) / len(positive_returns)
-    momentum_score = int(max_positive_streak * avg_positive * 10)
-else:
-    momentum_score = 0
-
-# Step 4: Generate trading signal
-if momentum_score > 50:
-    trading_signal = 2  # Strong buy
-elif momentum_score > 25:
-    trading_signal = 1  # Buy
-else:
-    trading_signal = 0  # Hold
-
-print(f"Result: {trading_signal}")
+calculate_game_score()

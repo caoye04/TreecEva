@@ -1,0 +1,49 @@
+Target: Find the value of variable final_value after [line 29] executes
+
+[line 3]  primary_sum = 0
+Assign: primary_sum = 0
+[line 4]  secondary_offset = 0
+Assign: secondary_offset = 0
+[line 8]  packet_ids = [101, 102, 103, 104, 105]
+Compute: [101, 102, 103, 104, 105] = [101, 102, 103, 104, 105]
+[line 9]  packet_sizes = [256, 512, 128, 1024, 768]
+Compute: [256, 512, 128, 1024, 768] = [256, 512, 128, 1024, 768]
+[line 10]  flags = [1, 0, 1, 1, 0]
+Compute: [1, 0, 1, 1, 0] = [1, 0, 1, 1, 0]
+[line 12]  for idx, (packet_id, size, flag) in enumerate(zip(packet_ids, packet_sizes, flags)):
+(Missing param: 'iter_var')
+[line 14]  if flag == 1:
+Condition: True, entering 'if' block
+[line 15]  primary_sum += size
+Update: primary_sum changed from 0 (defined at defined at [line 3]) to 0+size = 256
+[line 19]  if idx % 2 == 0:
+Condition: True, entering 'if' block
+[line 20]  secondary_offset += size // 8
+Update: secondary_offset changed from 0 (defined at defined at [line 4]) to 0+size // 8 = 32
+[line 12]  for idx, (packet_id, size, flag) in enumerate(zip(packet_ids, packet_sizes, flags)):
+(Missing param: 'iter_var')
+[line 14]  if flag == 1:
+Condition: True, entering 'if' block
+[line 19]  if idx % 2 == 0:
+Condition: True, entering 'if' block
+[line 22]  secondary_offset -= size // 16  # Distractor - opposite logic
+Update: secondary_offset changed from 32 (defined at defined at [line 20]) to 32-size // 16  # Distractor - opposite logic = 0
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+[line 12]  for idx, (packet_id, size, flag) in enumerate(zip(packet_ids, packet_sizes, flags)):
+(Missing param: 'iter_var')
+[line 14]  if flag == 1:
+Condition: True, entering 'if' block
+[line 19]  if idx % 2 == 0:
+Condition: True, entering 'if' block
+[line 20]  secondary_offset += size // 8
+Update: secondary_offset changed from -48 (defined at defined at [line 22]) to -48+size // 8 = 48
+[line 12]  for idx, (packet_id, size, flag) in enumerate(zip(packet_ids, packet_sizes, flags)):
+Loop End: Iteration finished
+[line 29]  final_value = primary_sum + secondary_offset
+Compute: primary_sum + secondary_offset, where primary_sum=1408 (defined at [line 15]), secondary_offset=48 (defined at [line 20]) = 1456
+
+Answer: final_value = 1456 (last updated on defined at [line 29])

@@ -1,0 +1,50 @@
+Target: Find the value of variable final_metric after [line 64] executes
+
+[line 49]  sensor_readings = [12, 8, 15, 3, 9, 11, 6, 14]
+Compute: [12, 8, 15, 3, 9, 11, 6, 14] = [12, 8, 15, 3, 9, ...]
+[line 50]  threshold = 7
+Assign: threshold = 7
+[line 1]  def analyze_sensor_readings(sensor_data):
+Enter function analyze_sensor_readings: sensor_data=[12, 8, 15, 3, 9, ...] (sensor_readings defined at [line 49])
+  [line 3]  temp_sum = sum([x * 2 for x in sensor_data if x > 5])
+  Call function sum([x * 2 for x in sensor_data if x > 5])
+  [line 4]  processed_readings = [abs(x - 10) for x in sensor_data]
+  Compute: [abs(x - 10) for x in sensor_data], where x=12 (an unknown source), sensor_data=[12, 8, 15, 3, 9, ...] (parameter sensor_data defined at [line 49]) = ?
+  [line 7]  calibration_factor = 3.14159
+  Assign: calibration_factor = 3.14159
+  [line 8]  sensor_offset = 7.5
+  Assign: sensor_offset = 7.5
+  [line 9]  dummy_calc = (temp_sum * calibration_factor) / sensor_offset
+  Compute: (temp_sum * calibration_factor) / sensor_offset, where temp_sum=150 (defined at [line 3]), calibration_factor=3.14159 (defined at [line 7]), sensor_offset=7.5 (defined at [line 8]) = 62.8318
+  [line 12]  if dummy_calc > 1000:
+  Condition: True, entering 'if' block
+  [line 18]  valid_readings = [x for x in processed_readings if x < 8]
+  Compute: [x for x in processed_readings if x < 8], where x=2 (an unknown source), processed_readings=[2, 2, 5, 7, 1, ...] (defined at [line 4]) = ?
+  [line 19]  return sum(valid_readings) + len(valid_readings)
+  Return: sum(valid_readings) + len(valid_readings)
+Function analyze_sensor_readings returns 34
+[line 57]  status_message = "Sensor Status: Active"
+Assign: status_message = 'Sensor Status: Active'
+[line 58]  if status_message.startswith("Sensor"):
+Condition: True, entering 'if' block
+[line 59]  filtered_data = [x for x in sensor_readings if x > 8]
+Compute: [x for x in sensor_readings if x > 8], where x=12 (an unknown source), sensor_readings=[12, 8, 15, 3, 9, ...] (defined at [line 49]) = ?
+[line 64]  final_metric = process_results(filtered_data, threshold)
+Call function process_results(filtered_data=[12, 15, 9, 11, 14] (defined at [line 59]), threshold=7 (defined at [line 50]))
+[line 21]  def process_results(data_points, cutoff):
+Enter function process_results: data_points=[12, 15, 9, 11, 14] (filtered_data defined at [line 59]), cutoff=7 (threshold defined at [line 50])
+  [line 27]  base_value = max(data_points) - min(data_points)
+  Compute: max(data_points) - min(data_points), where data_points=[12, 15, 9, 11, 14] (parameter data_points defined at [line 59]) = 6
+  [line 31]  if base_value > cutoff:
+  Condition: True, entering 'if' block
+  [line 38]  filtered_values = [x for x in data_points if x > cutoff // 2]
+  Compute: [x for x in data_points if x > cutoff // 2], where x=12 (an unknown source), data_points=[12, 15, 9, 11, 14] (parameter data_points defined at [line 59]), cutoff=7 (parameter cutoff defined at [line 50]) = ?
+  [line 39]  if len(filtered_values) > 0:
+  Condition: True, entering 'if' block
+  [line 40]  result = (sum(filtered_values) * len(data_points)) % 17
+  Compute: (sum(filtered_values) * len(data_points)) % 17, where filtered_values=[12, 15, 9, 11, 14] (defined at [line 38]), data_points=[12, 15, 9, 11, 14] (parameter data_points defined at [line 59]) = 16
+  [line 46]  return result
+  Return: result=16 (defined at [line 40])
+Function process_results returns 16
+
+Answer: final_metric = 16 (last updated on defined at [line 64])

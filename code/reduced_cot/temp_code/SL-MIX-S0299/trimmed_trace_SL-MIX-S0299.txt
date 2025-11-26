@@ -1,0 +1,39 @@
+52
+final_metrics
+---
+47 sample_data = [45, 67, 89, 23, 56, 78, 34]
+47 ['sample_data'] ['[45, 67, 89, 23, 56, ...]']
+48 data_validation_results = sample_data
+48 ['sample_data', 'data_validation_results'] ['[45, 67, 89, 23, 56, ...]', '[45, 67, 89, 23, 56, ...]']
+49 final_metrics = process_quality_check(data_validation_results)
+49 ['data_validation_results'] ['[45, 67, 89, 23, 56, ...]']
+25 primary_score = validate_data_quality(input_data)
+25 ['input_data'] ['[45, 67, 89, 23, 56, ...]']
+PARAM_MAPPING {'raw_values': {'actual_var': 'input_data', 'value': [45, 67, 89, 23, 56, 78, 34]}}
+FUNCTION_ENTER 1 validate_data_quality def validate_data_quality(raw_values):
+1 ['raw_values'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 56}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 34}], '_len': 7}]
+2 temp_sum = sum(raw_values)
+2 ['raw_values', 'temp_sum'] ['[45, 67, 89, 23, 56, ...]', '392']
+4 quality_score = temp_sum // len(raw_values) if raw_values else 0
+4 ['raw_values', 'temp_sum', 'quality_score'] ['[45, 67, 89, 23, 56, ...]', '392', '56']
+9 if quality_score > 50:
+9 ['quality_score'] ['56']
+10 adjusted_score = quality_score - (quality_score % 7)
+10 ['quality_score', 'adjusted_score'] ['56', '56']
+18 return adjusted_score
+18 ['adjusted_score'] ['56']
+FUNCTION_RETURN 18 validate_data_quality {'_type': 'int', '_value': 56}
+28 if primary_score > 100:
+28 ['input_data', 'primary_score'] ['[45, 67, 89, 23, 56, ...]', '56']
+34 data_range = max(input_data) - min(input_data) if input_data else 0
+34 ['input_data', 'primary_score', 'data_range'] ['[45, 67, 89, 23, 56, ...]', '56', '66']
+35 composite_metric = (primary_score * 2 + data_range) // 2
+35 ['primary_score', 'data_range', 'composite_metric'] ['56', '66', '89']
+41 bitwise_distraction = composite_metric & 0xFF
+41 ['composite_metric', 'bitwise_distraction'] ['89', '89']
+42 final_result = composite_metric - (bitwise_distraction % 5)
+42 ['composite_metric', 'bitwise_distraction', 'final_result'] ['89', '89', '85']
+44 return final_result
+44 ['final_result'] ['85']
+52 print(f"Result: {final_metrics}")
+52 ['final_metrics'] ['85']

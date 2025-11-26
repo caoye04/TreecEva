@@ -1,51 +1,44 @@
-import math
-from itertools import combinations
+def optimize_storage(capacity, items):
+    # Calculate base efficiency
+    base_efficiency = len(items) * 2 if capacity > 10 else len(items)
+    
+    # Distractor computation - not used in final result
+    temp_calc = (capacity * 3) // 2
+    
+    # Conditional expression for efficiency adjustment
+    adjusted_efficiency = base_efficiency + 5 if capacity % 2 == 0 else base_efficiency - 3
+    
+    # Recursive helper function
+    def calculate_utilization(current_cap, item_set):
+        if current_cap <= 0 or not item_set:
+            return current_cap
+        # Simple recursion with set operations
+        remaining_items = item_set - {min(item_set)}
+        return calculate_utilization(current_cap - 1, remaining_items)
+    
+    # Main optimization logic
+    final_utilization = calculate_utilization(capacity, items)
+    
+    # Final result computation with conditional
+    result = final_utilization + adjusted_efficiency if final_utilization > 0 else adjusted_efficiency
+    
+    # Unused intermediate variable
+    unused_var = temp_calc + len(items)
+    
+    return result
 
-def is_prime(n):
-    if n < 2:
-        return False
-    for i in range(2, int(math.sqrt(n)) + 1):
-        if n % i == 0:
-            return False
-    return True
+# Initialize storage parameters
+initial_capacity = 15
+items_set = {3, 7, 12, 5, 8}
 
-def compute_lcm(a, b):
-    return abs(a * b) // math.gcd(a, b)
+# Pre-computation that doesn't affect final result
+preliminary_analysis = sum(items_set) * 2
 
-# Character codes for a cryptographic key seed
-seed_chars = [65, 66, 67, 68, 69]  # A, B, C, D, E
+# Execute main optimization
+final_capacity = optimize_storage(initial_capacity, items_set)
 
-# Step 1: Generate all 3-character combinations
-char_combinations = list(combinations(seed_chars, 3))
+# Distractor print statement
+print(f"Analysis complete: {preliminary_analysis}")
 
-# Step 2: For each combination, compute a score based on number theory
-combination_scores = []
-for combo in char_combinations:
-    a, b, c = combo
-    # Compute LCM of first two
-    lcm_ab = compute_lcm(a, b)
-    # Compute GCD of result with third
-    gcd_result = math.gcd(lcm_ab, c)
-    # If the GCD is prime, square it; otherwise take log base 2
-    if is_prime(gcd_result):
-        score = gcd_result ** 2
-    else:
-        score = math.log2(gcd_result) if gcd_result > 0 else 0
-    combination_scores.append(score)
-
-# Step 3: Apply floating point operations to normalize scores
-normalized_scores = [score / max(combination_scores) for score in combination_scores]
-
-# Step 4: Use list comprehension to filter scores above threshold
-threshold = 0.5
-filtered_scores = [score for score in normalized_scores if score > threshold]
-
-# Step 5: Compute final cipher strength using exponentiation
-cipherStrength = 0
-for i, score in enumerate(filtered_scores):
-    cipherStrength += score * (2 ** i)
-
-# Apply final transformation
-cipherStrength = int(math.floor(cipherStrength * 1000))
-
-print(f"Result: {cipherStrength}")
+# Final target result
+print(f"Target result: {final_capacity}")

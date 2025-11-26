@@ -1,29 +1,54 @@
-def compute_archival_metric(tag_collection):
-    even_length_tags = frozenset(tag for tag in tag_collection if len(tag) % 2 == 0)
-    odd_length_tags = frozenset(tag for tag in tag_collection if len(tag) % 2 != 0)
+def analyze_text_fragments(text_data):
+    # Distractor: unnecessary text processing
+    temp_buffer = [char.upper() for char in text_data if char.isalpha()]
+    distractor_count = len([c for c in temp_buffer if c in 'AEIOU'])
     
-    # Quality check: tags must be disjoint by length parity
-    if even_length_tags & odd_length_tags:
-        return 0
+    # Relevant: extract numeric patterns and process
+    numeric_chunks = []
+    current_chunk = ''
+    for char in text_data:
+        if char.isdigit():
+            current_chunk += char
+        elif current_chunk:
+            numeric_chunks.append(int(current_chunk))
+            current_chunk = ''
     
-    # Context manager simulates database transaction for metric calculation
-    class MetricContext:
-        def __enter__(self):
-            return self
-        def __exit__(self, exc_type, exc_val, exc_tb):
-            pass
-        def calculate_combinations(self, s1, s2):
-            # Lambda to count valid pairings
-            count_pairs = lambda x, y: sum(1 for a in x for b in y if a[0] == b[-1])
-            return count_pairs(s1, s2)
+    # Distractor: unused bitwise operation
+    bit_mask = 0b1010
+    unused_result = numeric_chunks[0] & bit_mask if numeric_chunks else 0
     
-    with MetricContext() as ctx:
-        combination_count = ctx.calculate_combinations(even_length_tags, odd_length_tags)
-        # Archival score combines set sizes and valid combinations
-        archival_score = len(even_length_tags) * len(odd_length_tags) + combination_count
-        
-    return archival_score
+    # Relevant: filtering and transformation
+    filtered_values = [x for x in numeric_chunks if x % 3 == 0 or x % 5 == 0]
+    
+    # Misleading intermediate calculation
+    misleading_sum = sum(filtered_values) + distractor_count * 10
+    
+    # Distractor: dead code path
+    if misleading_sum > 1000:
+        dead_branch = misleading_sum // 2
+    
+    # Relevant: core processing with slicing
+    if len(filtered_values) >= 4:
+        middle_slice = filtered_values[1:-1]
+        processed_slice = [val * 2 if val % 2 == 0 else val + 1 for val in middle_slice]
+        processed_data = processed_slice
+    else:
+        processed_data = [x + 5 for x in filtered_values]
+    
+    # Add padding if needed (distractor)
+    padding_size = max(0, 6 - len(processed_data))
+    for _ in range(padding_size):
+        processed_data.append(padding_size * 7)
+    
+    # Final relevant operation with slicing
+    if len(processed_data) > 3:
+        final_result = processed_data[-1]
+    else:
+        final_result = processed_data[0] if processed_data else 0
+    
+    print(f"Result: {final_result}")
+    return final_result
 
-document_tags = {'history', 'WWII', 'archive', '1945', 'memoir', 'digital', 'scan'}
-archival_score = compute_archival_metric(document_tags)
-print(f"Result: {archival_score}")
+# Main execution with mixed data
+input_text = "abc42xyz789pqr123mno456def"
+analyze_text_fragments(input_text)

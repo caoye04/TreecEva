@@ -1,0 +1,103 @@
+68
+final_network_score
+---
+60 primary_nodes = [101, 103, 107, 109]
+60 ['primary_nodes'] ['[101, 103, 107, 109]']
+61 secondary_routers = ['router_a', 'router_b']
+61 ['primary_nodes', 'secondary_routers'] ['[101, 103, 107, 109]', "['router_a', 'router_b']"]
+62 bandwidth_map = {101: 1000, 103: 1500, 107: 800, 109: 1200}
+62 ['primary_nodes', 'secondary_routers', 'bandwidth_map'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '{101: 1000, 103: 1500, 107: 800, ...}']
+65 final_network_score = compute_network_efficiency(primary_nodes, secondary_routers, bandwidth_map)
+65 ['primary_nodes', 'secondary_routers', 'bandwidth_map'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '{101: 1000, 103: 1500, 107: 800, ...}']
+PARAM_MAPPING {'primary_nodes': {'actual_var': 'primary_nodes', 'value': [101, 103, 107, 109]}, 'secondary_routers': {'actual_var': 'secondary_routers', 'value': ['router_a', 'router_b']}, 'bandwidth_config': {'actual_var': 'bandwidth_map', 'value': {101: 1000, 103: 1500, 107: 800, 109: 1200}}}
+FUNCTION_ENTER 28 compute_network_efficiency def compute_network_efficiency(primary_nodes, secondary_routers, bandwidth_config):
+28 ['primary_nodes', 'secondary_routers', 'bandwidth_config'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 101}, {'_type': 'int', '_value': 103}, {'_type': 'int', '_value': 107}, {'_type': 'int', '_value': 109}], '_len': 4}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'router_a'}, {'_type': 'str', '_value': 'router_b'}], '_len': 2}, {'_type': 'dict', '_items': {'101': {'_type': 'int', '_value': 1000}, '103': {'_type': 'int', '_value': 1500}, '107': {'_type': 'int', '_value': 800}, '109': {'_type': 'int', '_value': 1200}}, '_len': 4}]
+30 active_paths = len(primary_nodes) * len(secondary_routers)
+30 ['primary_nodes', 'secondary_routers', 'bandwidth_config', 'active_paths'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '{101: 1000, 103: 1500, 107: 800, ...}', '8']
+31 total_capacity = sum(bandwidth_config.values())
+31 ['primary_nodes', 'secondary_routers', 'bandwidth_config', 'active_paths', 'total_capacity'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '{101: 1000, 103: 1500, 107: 800, ...}', '8', '4500']
+PARAM_MAPPING {'active_paths': {'actual_var': 'active_paths', 'value': 8}, 'total_capacity': {'actual_var': 'total_capacity', 'value': 4500}}
+FUNCTION_ENTER 3 calculate_redundancy_factor def calculate_redundancy_factor(active_paths, total_capacity):
+3 ['active_paths', 'total_capacity'] [{'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 4500}]
+5 efficiency_ratio = total_capacity / (active_paths + 1)
+5 ['active_paths', 'total_capacity', 'efficiency_ratio'] ['8', '4500', '500.0']
+6 return efficiency_ratio * 0.8  # dead coefficient
+6 ['total_capacity', 'efficiency_ratio'] ['4500', '500.0']
+FUNCTION_RETURN 6 calculate_redundancy_factor {'_type': 'float', '_value': 400.0}
+35 max_bandwidth = max(bandwidth_config.values()) if bandwidth_config else 0
+35 ['primary_nodes', 'secondary_routers', 'bandwidth_config', 'total_capacity', 'max_bandwidth'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '{101: 1000, 103: 1500, 107: 800, ...}', '4500', '1500']
+38 throughput_matrix = [[bandwidth_config.get(node, 0) for node in primary_nodes]]
+38 ['primary_nodes', 'secondary_routers', 'bandwidth_config', 'total_capacity', 'max_bandwidth', 'node'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '{101: 1000, 103: 1500, 107: 800, ...}', '4500', '1500', '101']
+38 throughput_matrix = [[bandwidth_config.get(node, 0) for node in primary_nodes]]
+38 ['primary_nodes', 'secondary_routers', 'bandwidth_config', 'total_capacity', 'max_bandwidth', 'node'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '{101: 1000, 103: 1500, 107: 800, ...}', '4500', '1500', '103']
+38 throughput_matrix = [[bandwidth_config.get(node, 0) for node in primary_nodes]]
+38 ['primary_nodes', 'secondary_routers', 'bandwidth_config', 'total_capacity', 'max_bandwidth', 'node'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '{101: 1000, 103: 1500, 107: 800, ...}', '4500', '1500', '107']
+38 throughput_matrix = [[bandwidth_config.get(node, 0) for node in primary_nodes]]
+38 ['primary_nodes', 'secondary_routers', 'bandwidth_config', 'total_capacity', 'max_bandwidth', 'node'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '{101: 1000, 103: 1500, 107: 800, ...}', '4500', '1500', '109']
+38 throughput_matrix = [[bandwidth_config.get(node, 0) for node in primary_nodes]]
+38 ['primary_nodes', 'secondary_routers', 'bandwidth_config', 'total_capacity', 'max_bandwidth', 'throughput_matrix'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '{101: 1000, 103: 1500, 107: 800, ...}', '4500', '1500', '[[1000, 1500, 800, 1200]]']
+39 utilization_score = compute_bandwidth_utilization(throughput_matrix, max_bandwidth)
+39 ['primary_nodes', 'secondary_routers', 'total_capacity', 'max_bandwidth', 'throughput_matrix'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '4500', '1500', '[[1000, 1500, 800, 1200]]']
+PARAM_MAPPING {'throughput_matrix': {'actual_var': 'throughput_matrix', 'value': [[1000, 1500, 800, 1200]]}, 'max_throughput': {'actual_var': 'max_bandwidth', 'value': 1500}}
+FUNCTION_ENTER 8 compute_bandwidth_utilization def compute_bandwidth_utilization(throughput_matrix, max_throughput):
+8 ['throughput_matrix', 'max_throughput'] [{'_type': 'list', '_items': [{'_type': 'list', '_items': [{'_type': 'int', '_value': 1000}, {'_type': 'int', '_value': 1500}, {'_type': 'int', '_value': 800}, {'_type': 'int', '_value': 1200}], '_len': 4}], '_len': 1}, {'_type': 'int', '_value': 1500}]
+9 temp_sum = sum(sum(row) for row in throughput_matrix)
+9 [] []
+9 temp_sum = sum(sum(row) for row in throughput_matrix)
+9 ['row'] ['[1000, 1500, 800, 1200]']
+9 temp_sum = sum(sum(row) for row in throughput_matrix)
+9 ['row'] ['[1000, 1500, 800, 1200]']
+10 utilization = temp_sum / (len(throughput_matrix) * max_throughput)
+10 ['throughput_matrix', 'max_throughput', 'temp_sum', 'utilization'] ['[[1000, 1500, 800, 1200]]', '1500', '4500', '3.0']
+12 return min(utilization, 1.0)
+12 ['utilization'] ['3.0']
+FUNCTION_RETURN 12 compute_bandwidth_utilization {'_type': 'float', '_value': 1.0}
+45 node_pairs = list(itertools.combinations(primary_nodes, 2))
+45 ['primary_nodes', 'secondary_routers', 'total_capacity', 'utilization_score', 'node_pairs'] ['[101, 103, 107, 109]', "['router_a', 'router_b']", '4500', '1.0', '[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]']
+46 average_latency = analyze_network_latency(node_pairs, 10)
+46 ['secondary_routers', 'total_capacity', 'utilization_score', 'node_pairs'] ["['router_a', 'router_b']", '4500', '1.0', '[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]']
+PARAM_MAPPING {'node_pairs': {'actual_var': 'node_pairs', 'value': [(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), (107, 109)]}, 'base_latency': {'actual_var': '10', 'value': '10'}}
+FUNCTION_ENTER 14 analyze_network_latency def analyze_network_latency(node_pairs, base_latency):
+14 ['node_pairs', 'base_latency'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 101}, {'_type': 'int', '_value': 103}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 101}, {'_type': 'int', '_value': 107}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 101}, {'_type': 'int', '_value': 109}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 103}, {'_type': 'int', '_value': 107}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 103}, {'_type': 'int', '_value': 109}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 107}, {'_type': 'int', '_value': 109}], '_len': 2}], '_len': 6}, {'_type': 'int', '_value': 10}]
+15 latency_values = []
+15 ['node_pairs', 'latency_values'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[]']
+16 for pair in node_pairs:
+16 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[]', '(101, 103)']
+17 if len(pair) == 2:
+17 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[]', '(101, 103)']
+16 for pair in node_pairs:
+16 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[11.0]', '(101, 107)']
+17 if len(pair) == 2:
+17 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[11.0]', '(101, 107)']
+16 for pair in node_pairs:
+16 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[11.0, 13.0]', '(101, 109)']
+17 if len(pair) == 2:
+17 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[11.0, 13.0]', '(101, 109)']
+16 for pair in node_pairs:
+16 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[11.0, 13.0, 14.0]', '(103, 107)']
+17 if len(pair) == 2:
+17 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[11.0, 13.0, 14.0]', '(103, 107)']
+16 for pair in node_pairs:
+16 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[11.0, 13.0, 14.0, 12.0]', '(103, 109)']
+17 if len(pair) == 2:
+17 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[11.0, 13.0, 14.0, 12.0]', '(103, 109)']
+16 for pair in node_pairs:
+16 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[11.0, 13.0, 14.0, 12.0, 13.0]', '(107, 109)']
+17 if len(pair) == 2:
+17 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[11.0, 13.0, 14.0, 12.0, 13.0]', '(107, 109)']
+16 for pair in node_pairs:
+16 ['node_pairs', 'latency_values', 'pair'] ['[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...]', '[11.0, 13.0, 14.0, 12.0, 13.0, ...]', '(107, 109)']
+23 if not latency_values:
+23 ['latency_values'] ['[11.0, 13.0, 14.0, 12.0, 13.0, ...]']
+26 return sum(latency_values) / len(latency_values)
+26 ['latency_values'] ['[11.0, 13.0, 14.0, 12.0, 13.0, ...]']
+FUNCTION_RETURN 26 analyze_network_latency {'_type': 'float', '_value': 12.333333333333334}
+49 efficiency_score = (total_capacity * utilization_score) / (average_latency + 1)
+49 ['secondary_routers', 'total_capacity', 'utilization_score', 'average_latency', 'efficiency_score'] ["['router_a', 'router_b']", '4500', '1.0', '12.333333333333334', '337.5']
+55 final_score = efficiency_score / (len(secondary_routers) + 1)
+55 ['secondary_routers', 'efficiency_score', 'final_score'] ["['router_a', 'router_b']", '337.5', '112.5']
+57 return int(final_score)
+57 ['final_score'] ['112.5']
+FUNCTION_RETURN 57 compute_network_efficiency {'_type': 'int', '_value': 112}
+68 print(f"Result: {final_network_score}")
+68 ['final_network_score'] ['112']

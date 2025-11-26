@@ -1,0 +1,117 @@
+54
+final_metric
+---
+40 sample_data = [25, 60, 45, 80, 35, 90]
+40 ['sample_data'] ['[25, 60, 45, 80, 35, ...]']
+41 base_multiplier = 3
+41 ['sample_data', 'base_multiplier'] ['[25, 60, 45, 80, 35, ...]', '3']
+PARAM_MAPPING {'items': {'actual_var': 'sample_data', 'value': [25, 60, 45, 80, 35, 90]}}
+FUNCTION_ENTER 1 validate_inputs def validate_inputs(items):
+1 ['items'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 60}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 35}, {'_type': 'int', '_value': 90}], '_len': 6}]
+2 irrelevant_check = sum(len(str(x)) for x in items) % 7
+2 [] []
+2 irrelevant_check = sum(len(str(x)) for x in items) % 7
+2 ['x'] ['25']
+2 irrelevant_check = sum(len(str(x)) for x in items) % 7
+2 ['x'] ['60']
+2 irrelevant_check = sum(len(str(x)) for x in items) % 7
+2 ['x'] ['45']
+2 irrelevant_check = sum(len(str(x)) for x in items) % 7
+2 ['x'] ['80']
+2 irrelevant_check = sum(len(str(x)) for x in items) % 7
+2 ['x'] ['35']
+2 irrelevant_check = sum(len(str(x)) for x in items) % 7
+2 ['x'] ['90']
+2 irrelevant_check = sum(len(str(x)) for x in items) % 7
+2 ['x'] ['90']
+3 misleading_flag = irrelevant_check == 0
+3 ['items', 'irrelevant_check', 'misleading_flag'] ['[25, 60, 45, 80, 35, ...]', '5', 'False']
+4 return misleading_flag
+4 ['items', 'misleading_flag'] ['[25, 60, 45, 80, 35, ...]', 'False']
+FUNCTION_RETURN 4 validate_inputs {'_type': 'bool', '_value': False}
+51 processed_items = process_metrics(sample_data)
+51 ['sample_data', 'base_multiplier'] ['[25, 60, 45, 80, 35, ...]', '3']
+13 processed = []
+13 ['values', 'threshold', 'processed'] ['[25, 60, 45, 80, 35, ...]', '50', '[]']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[]', '0', '25']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[]', '0', '25']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12]', '1', '60']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12]', '1', '60']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12, 120]', '2', '45']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12, 120]', '2', '45']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12, 120, 22]', '3', '80']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12, 120, 22]', '3', '80']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12, 120, 22, 160]', '4', '35']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12, 120, 22, 160]', '4', '35']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12, 120, 22, 160, 17]', '5', '90']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12, 120, 22, 160, 17]', '5', '90']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12, 120, 22, 160, 17, ...]', '5', '90']
+20 if len(processed) > 10:
+20 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12, 120, 22, 160, 17, ...]', '5', '90']
+22 return processed
+22 ['values', 'threshold', 'processed', 'i', 'val'] ['[25, 60, 45, 80, 35, ...]', '50', '[12, 120, 22, 160, 17, ...]', '5', '90']
+52 final_metric = compute_final_score(processed_items, base_multiplier)
+52 ['base_multiplier', 'processed_items'] ['3', '[12, 120, 22, 160, 17, ...]']
+25 base_val = compute_base_value(items)
+25 ['items', 'multiplier'] ['[12, 120, 22, 160, 17, ...]', '3']
+PARAM_MAPPING {'data_points': {'actual_var': 'items', 'value': [12, 120, 22, 160, 17, 180]}}
+FUNCTION_ENTER 6 compute_base_value def compute_base_value(data_points):
+6 ['data_points'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 22}, {'_type': 'int', '_value': 160}, {'_type': 'int', '_value': 17}, {'_type': 'int', '_value': 180}], '_len': 6}]
+7 temp_sum = sum(data_points)
+7 ['data_points', 'temp_sum'] ['[12, 120, 22, 160, 17, ...]', '511']
+10 return temp_sum
+10 ['temp_sum'] ['511']
+FUNCTION_RETURN 10 compute_base_value {'_type': 'int', '_value': 511}
+26 metrics = process_metrics(items)
+26 ['items', 'multiplier', 'base_val'] ['[12, 120, 22, 160, 17, ...]', '3', '511']
+13 processed = []
+13 ['values', 'threshold', 'processed'] ['[12, 120, 22, 160, 17, ...]', '50', '[]']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[]', '0', '12']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[]', '0', '12']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[6]', '1', '120']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[6]', '1', '120']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[6, 240]', '2', '22']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[6, 240]', '2', '22']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[6, 240, 11]', '3', '160']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[6, 240, 11]', '3', '160']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[6, 240, 11, 320]', '4', '17']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[6, 240, 11, 320]', '4', '17']
+14 for i, val in enumerate(values):
+14 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[6, 240, 11, 320, 8]', '5', '180']
+15 if val > threshold:
+15 ['values', 'threshold', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '50', '[6, 240, 11, 320, 8]', '5', '180']
+14 for i, val in enumerate(values):
+14 ['values', 'processed', 'i', 'val'] ['[12, 120, 22, 160, 17, ...]', '[6, 240, 11, 320, 8, ...]', '5', '180']
+20 if len(processed) > 10:
+20 ['processed'] ['[6, 240, 11, 320, 8, ...]']
+22 return processed
+22 ['processed'] ['[6, 240, 11, 320, 8, ...]']
+36 final_score = (base_val * multiplier) + len(metrics)
+36 ['multiplier', 'base_val', 'metrics', 'final_score'] ['3', '511', '[6, 240, 11, 320, 8, ...]', '1539']
+37 return final_score
+37 ['final_score'] ['1539']
+54 print(f"Result: {final_metric}")
+54 ['final_metric'] ['1539']

@@ -1,0 +1,50 @@
+Target: Find the value of variable final_balance after [line 42] executes
+
+[line 12]  transaction_log = log_entries
+Compute: log_entries, where log_entries=[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...] (an unknown source) = [('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]
+[line 14]  balance_adjustments = {'deposit': 0, 'withdrawal': 0, 'fee': 0}
+Compute: {'deposit': 0, 'withdrawal': 0, 'fee': 0} = {deposit: 0, withdrawal: 0, fee: 0}
+[line 16]  for entry in transaction_log:
+Loop Start: entry takes its first value ('deposit', 2500)
+[line 17]  operation, amount = entry
+(Missing param: 'result')
+[line 19]  if operation == 'deposit':
+Condition: True, entering 'if' block
+[line 16]  for entry in transaction_log:
+Loop Iteration: entry is now ('withdrawal', 1200) (iteration 2)
+[line 17]  operation, amount = entry
+(Missing param: 'result')
+[line 19]  if operation == 'deposit':
+Condition: True, entering 'if' block
+[line 21]  elif operation == 'withdrawal':
+'elif' Condition: True, entering block
+... [Line 16] repeats 4 more times ...
+... [Line 16] repeats 4 more times ...
+... [Line 16] repeats 4 more times ...
+... [Line 16] repeats 4 more times ...
+[line 16]  for entry in transaction_log:
+Loop Iteration: entry is now ('fee', 75) (iteration 7)
+[line 17]  operation, amount = entry
+(Missing param: 'result')
+[line 19]  if operation == 'deposit':
+Condition: True, entering 'if' block
+[line 21]  elif operation == 'withdrawal':
+'elif' Condition: True, entering block
+[line 23]  elif operation == 'fee':
+'elif' Condition: True, entering block
+[line 16]  for entry in transaction_log:
+Loop End: Iteration finished
+[line 35]  initial_balance = 10000
+Assign: initial_balance = 10000
+[line 36]  deposit_total = balance_adjustments['deposit']
+Compute: balance_adjustments['deposit'], where balance_adjustments={deposit: 7500, withdrawal: -2000, fee: -225} (defined at [line 14]) = 7500
+[line 37]  withdrawal_total = balance_adjustments['withdrawal']
+Compute: balance_adjustments['withdrawal'], where balance_adjustments={deposit: 7500, withdrawal: -2000, fee: -225} (defined at [line 14]) = -2000
+[line 38]  fee_total = balance_adjustments['fee']
+Compute: balance_adjustments['fee'], where balance_adjustments={deposit: 7500, withdrawal: -2000, fee: -225} (defined at [line 14]) = -225
+[line 41]  net_change = deposit_total + withdrawal_total + fee_total
+Compute: deposit_total + withdrawal_total + fee_total, where deposit_total=7500 (defined at [line 36]), withdrawal_total=-2000 (defined at [line 37]), fee_total=-225 (defined at [line 38]) = 5275
+[line 42]  final_balance = initial_balance + net_change
+Compute: initial_balance + net_change, where initial_balance=10000 (defined at [line 35]), net_change=5275 (defined at [line 41]) = 15275
+
+Answer: final_balance = 15275 (last updated on defined at [line 42])

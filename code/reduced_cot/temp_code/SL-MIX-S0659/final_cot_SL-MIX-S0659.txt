@@ -1,0 +1,41 @@
+Target: Find the value of variable final_output after [line 54] executes
+
+[line 50]  sensor_readings = [12, 8, 15, 6, 20, 9, 18, 5, 22, 7]
+Compute: [12, 8, 15, 6, 20, 9, 18, 5, 22, 7] = [12, 8, 15, 6, 20, ...]
+[line 51]  threshold = 10
+Assign: threshold = 10
+[line 54]  final_output = process_data(sensor_readings, threshold)
+Call function process_data(sensor_readings=[12, 8, 15, 6, 20, ...] (defined at [line 50]), threshold=10 (defined at [line 51]))
+[line 13]  def process_data(readings, limit):
+Enter function process_data: readings=[12, 8, 15, 6, 20, ...] (sensor_readings defined at [line 50]), limit=10 (threshold defined at [line 51])
+  [line 9]  bit_shift = base << 2
+  Compute: base << 2, where base=12 (an unknown source) = 48
+  [line 10]  xor_result = bit_shift ^ modifier
+  Compute: bit_shift ^ modifier, where bit_shift=48 (defined at [line 9]), modifier=15 (an unknown source) = 63
+  [line 11]  return xor_result // 4
+  Return: xor_result // 4
+  [line 23]  valid_readings = [r for r in readings if r >= limit]
+  Compute: [r for r in readings if r >= limit], where r=12 (an unknown source), readings=[12, 8, 15, 6, 20, ...] (parameter readings defined at [line 50]), limit=10 (parameter limit defined at [line 51]) = ?
+  [line 24]  if not valid_readings:
+  Condition: True, entering 'if' block
+  [line 29]  first_valid = valid_readings[0]
+  Compute: valid_readings[0], where valid_readings=[12, 15, 20, 18, 22] (defined at [line 23]) = 12
+  [line 30]  last_valid = valid_readings[-1]
+  Compute: valid_readings[-1], where valid_readings=[12, 15, 20, 18, 22] (defined at [line 23]) = 22
+  [line 33]  base_calc = (first_valid & 0x0F) | (last_valid & 0xF0)
+  Compute: (first_valid & 0x0F) | (last_valid & 0xF0), where first_valid=12 (defined at [line 29]), last_valid=22 (defined at [line 30]) = 28
+  [line 36]  adjustment = 25 if len(valid_readings) > 3 else 10
+  Compute: 25 if len(valid_readings) > 3 else 10, where valid_readings=[12, 15, 20, 18, 22] (defined at [line 23]) = 25
+  [line 39]  intermediate = base_calc * adjustment
+  Compute: base_calc * adjustment, where base_calc=28 (defined at [line 33]), adjustment=25 (defined at [line 36]) = 700
+  [line 4]  filtered = [v for v in values if v > min_val]
+  Compute: [v for v in values if v > min_val], where v=12 (an unknown source), values=[12, 8, 15, 6, 20, ...] (an unknown source), min_val=10 (an unknown source) = ?
+  [line 5]  return len(filtered) * 2.5
+  Return: len(filtered) * 2.5
+  [line 45]  result = intermediate - (len(valid_readings) * 5)
+  Compute: intermediate - (len(valid_readings) * 5), where intermediate=700 (defined at [line 39]), valid_readings=[12, 15, 20, 18, 22] (defined at [line 23]) = 675
+  [line 47]  return result
+  Return: result=675 (defined at [line 45])
+Function process_data returns 675
+
+Answer: final_output = 675 (last updated on defined at [line 54])

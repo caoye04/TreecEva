@@ -1,0 +1,61 @@
+21
+final_score
+---
+2 irrelevant_data = [i**2 for i in range(10)]
+2 ['data', 'cutoff', 'i'] ['[85, 92, 78, 65, 88, ...]', '70', '0']
+2 irrelevant_data = [i**2 for i in range(10)]
+2 ['data', 'cutoff', 'i'] ['[85, 92, 78, 65, 88, ...]', '70', '1']
+2 irrelevant_data = [i**2 for i in range(10)]
+2 ['data', 'cutoff', 'i'] ['[85, 92, 78, 65, 88, ...]', '70', '2']
+2 irrelevant_data = [i**2 for i in range(10)]
+2 ['data', 'cutoff', 'i'] ['[85, 92, 78, 65, 88, ...]', '70', '3']
+2 irrelevant_data = [i**2 for i in range(10)]
+2 ['data', 'cutoff', 'i'] ['[85, 92, 78, 65, 88, ...]', '70', '4']
+2 irrelevant_data = [i**2 for i in range(10)]
+2 ['data', 'cutoff', 'i'] ['[85, 92, 78, 65, 88, ...]', '70', '5']
+2 irrelevant_data = [i**2 for i in range(10)]
+2 ['data', 'cutoff', 'i'] ['[85, 92, 78, 65, 88, ...]', '70', '6']
+2 irrelevant_data = [i**2 for i in range(10)]
+2 ['data', 'cutoff', 'i'] ['[85, 92, 78, 65, 88, ...]', '70', '7']
+2 irrelevant_data = [i**2 for i in range(10)]
+2 ['data', 'cutoff', 'i'] ['[85, 92, 78, 65, 88, ...]', '70', '8']
+2 irrelevant_data = [i**2 for i in range(10)]
+2 ['data', 'cutoff', 'i'] ['[85, 92, 78, 65, 88, ...]', '70', '9']
+2 irrelevant_data = [i**2 for i in range(10)]
+2 ['data', 'cutoff', 'irrelevant_data'] ['[85, 92, 78, 65, 88, ...]', '70', '[0, 1, 4, 9, 16, ...]']
+3 misleading_sum = sum(irrelevant_data)
+3 ['data', 'cutoff', 'irrelevant_data', 'misleading_sum'] ['[85, 92, 78, 65, 88, ...]', '70', '[0, 1, 4, 9, 16, ...]', '285']
+5 temp_scores = [x for x in data if x >= cutoff]
+5 ['data', 'cutoff', 'misleading_sum', 'x'] ['[85, 92, 78, 65, 88, ...]', '70', '285', '85']
+5 temp_scores = [x for x in data if x >= cutoff]
+5 ['data', 'cutoff', 'misleading_sum', 'x'] ['[85, 92, 78, 65, 88, ...]', '70', '285', '92']
+5 temp_scores = [x for x in data if x >= cutoff]
+5 ['data', 'cutoff', 'misleading_sum', 'x'] ['[85, 92, 78, 65, 88, ...]', '70', '285', '78']
+5 temp_scores = [x for x in data if x >= cutoff]
+5 ['data', 'cutoff', 'misleading_sum', 'x'] ['[85, 92, 78, 65, 88, ...]', '70', '285', '65']
+5 temp_scores = [x for x in data if x >= cutoff]
+5 ['data', 'cutoff', 'misleading_sum', 'x'] ['[85, 92, 78, 65, 88, ...]', '70', '285', '88']
+5 temp_scores = [x for x in data if x >= cutoff]
+5 ['data', 'cutoff', 'misleading_sum', 'x'] ['[85, 92, 78, 65, 88, ...]', '70', '285', '95']
+5 temp_scores = [x for x in data if x >= cutoff]
+5 ['data', 'cutoff', 'misleading_sum', 'x'] ['[85, 92, 78, 65, 88, ...]', '70', '285', '42']
+5 temp_scores = [x for x in data if x >= cutoff]
+5 ['data', 'cutoff', 'misleading_sum', 'x'] ['[85, 92, 78, 65, 88, ...]', '70', '285', '73']
+5 temp_scores = [x for x in data if x >= cutoff]
+5 ['data', 'cutoff', 'misleading_sum', 'temp_scores'] ['[85, 92, 78, 65, 88, ...]', '70', '285', '[85, 92, 78, 88, 95, ...]']
+8 score_filter = lambda x: x > 0
+8 ['misleading_sum', 'temp_scores'] ['285', '[85, 92, 78, 88, 95, ...]']
+9 filtered_scores = list(filter(score_filter, temp_scores))
+9 ['misleading_sum', 'temp_scores'] ['285', '[85, 92, 78, 88, 95, ...]']
+12 if len(filtered_scores) == 0:
+12 ['misleading_sum', 'filtered_scores'] ['285', '[85, 92, 78, 88, 95, ...]']
+15 average_score = sum(filtered_scores) / len(filtered_scores)
+15 ['misleading_sum', 'filtered_scores', 'average_score'] ['285', '[85, 92, 78, 88, 95, ...]', '85.16666666666667']
+17 misleading_adjustment = (misleading_sum % 100) / 10
+17 ['misleading_sum', 'filtered_scores', 'average_score', 'misleading_adjustment'] ['285', '[85, 92, 78, 88, 95, ...]', '85.16666666666667', '8.5']
+18 intermediate = average_score + misleading_adjustment
+18 ['filtered_scores', 'average_score', 'misleading_adjustment', 'intermediate'] ['[85, 92, 78, 88, 95, ...]', '85.16666666666667', '8.5', '93.66666666666667']
+20 final_multiplier = 1.5 if len(filtered_scores) > 2 else 0.8
+20 ['filtered_scores', 'intermediate', 'final_multiplier'] ['[85, 92, 78, 88, 95, ...]', '93.66666666666667', '1.5']
+21 final_score = intermediate * final_multiplier
+21 ['intermediate', 'final_multiplier', 'final_score'] ['93.66666666666667', '1.5', '140.5']

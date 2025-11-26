@@ -1,257 +1,113 @@
-40
-congestion_window_size
+64
+final_result
 ---
-6 packet_window = deque(maxlen=5)
-6 ['packet_window'] ['deque([], maxlen=5)']
-8 congestion_window_size = 10
-8 ['packet_window', 'congestion_window_size'] ['deque([], maxlen=5)', '10']
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload'] ['deque([], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1001', '512']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1001', '512', 'False']
-23 if is_duplicate:
-23 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1001', '512', 'False']
-30 if payload > 1000:
-30 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([(1001, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1001', '512', 'False']
-32 elif is_duplicate:
-32 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([(1001, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1001', '512', 'False']
-36 seq_str = str(seq_num)
-36 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1001', '512', 'False', "'1001'"]
-37 if re.match(r'.*[02468]$', seq_str):  # Even ending digit
-37 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1001', '512', 'False', "'1001'"]
-40 congestion_window_size = congestion_window_size - 1
-40 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1001', '512', 'False', "'1001'"]
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1002', '256', 'False', "'1001'"]
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1002', '256', 'False', "'1001'", '(1001, 512)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1002', '256', 'False', "'1001'"]
-23 if is_duplicate:
-23 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1002', '256', 'False', "'1001'"]
-30 if payload > 1000:
-30 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1002', '256', 'False', "'1001'"]
-32 elif is_duplicate:
-32 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1002', '256', 'False', "'1001'"]
-36 seq_str = str(seq_num)
-36 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1002', '256', 'False', "'1002'"]
-37 if re.match(r'.*[02468]$', seq_str):  # Even ending digit
-37 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1002', '256', 'False', "'1002'"]
-38 congestion_window_size = congestion_window_size + 1
-38 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1002', '256', 'False', "'1002'"]
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '1024', 'False', "'1002'"]
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '1024', 'False', "'1002'", '(1001, 512)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '1024', 'False', "'1002'", '(1002, 256)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '1024', 'False', "'1002'"]
-23 if is_duplicate:
-23 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '1024', 'False', "'1002'"]
-30 if payload > 1000:
-30 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '1024', 'False', "'1002'"]
-31 congestion_window_size = congestion_window_size - 1 if congestion_window_size > 1 else 1
-31 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '1024', 'False', "'1002'"]
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1004', '128', 'False', "'1002'"]
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1004', '128', 'False', "'1002'", '(1001, 512)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1004', '128', 'False', "'1002'", '(1002, 256)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1004', '128', 'False', "'1002'", '(1003, 1024)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1004', '128', 'False', "'1002'"]
-23 if is_duplicate:
-23 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1004', '128', 'False', "'1002'"]
-30 if payload > 1000:
-30 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1004', '128', 'False', "'1002'"]
-32 elif is_duplicate:
-32 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1004', '128', 'False', "'1002'"]
-36 seq_str = str(seq_num)
-36 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1004', '128', 'False', "'1004'"]
-37 if re.match(r'.*[02468]$', seq_str):  # Even ending digit
-37 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1004', '128', 'False', "'1004'"]
-38 congestion_window_size = congestion_window_size + 1
-38 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1004', '128', 'False', "'1004'"]
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1004'"]
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1004'", '(1001, 512)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1004'", '(1002, 256)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1004'", '(1003, 1024)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1004'", '(1004, 128)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1004'"]
-23 if is_duplicate:
-23 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1004'"]
-30 if payload > 1000:
-30 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1004'"]
-32 elif is_duplicate:
-32 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1004'"]
-36 seq_str = str(seq_num)
-36 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1005'"]
-37 if re.match(r'.*[02468]$', seq_str):  # Even ending digit
-37 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1005'"]
-40 congestion_window_size = congestion_window_size - 1
-40 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1005', '64', 'False', "'1005'"]
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '512', 'False', "'1005'"]
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '512', 'False', "'1005'", '(1001, 512)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '512', 'False', "'1005'", '(1002, 256)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '512', 'False', "'1005'", '(1003, 1024)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '512', 'False', "'1005'", '(1004, 128)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '512', 'False', "'1005'", '(1005, 64)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '512', 'True', "'1005'"]
-23 if is_duplicate:
-23 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '512', 'True', "'1005'"]
-30 if payload > 1000:
-30 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1002, 256), (1003, 1024), (1004, 128), (1005, 64), (1003, 512)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '512', 'True', "'1005'"]
-32 elif is_duplicate:
-32 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1002, 256), (1003, 1024), (1004, 128), (1005, 64), (1003, 512)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '512', 'True', "'1005'"]
-33 congestion_window_size = congestion_window_size + 1 if congestion_window_size < 20 else 20
-33 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1002, 256), (1003, 1024), (1004, 128), (1005, 64), (1003, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1003', '512', 'True', "'1005'"]
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1002, 256), (1003, 1024), (1004, 128), (1005, 64), (1003, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1006', '2048', 'True', "'1005'"]
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1002, 256), (1003, 1024), (1004, 128), (1005, 64), (1003, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1006', '2048', 'True', "'1005'", '(1002, 256)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1002, 256), (1003, 1024), (1004, 128), (1005, 64), (1003, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1006', '2048', 'True', "'1005'", '(1003, 1024)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1002, 256), (1003, 1024), (1004, 128), (1005, 64), (1003, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1006', '2048', 'True', "'1005'", '(1004, 128)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1002, 256), (1003, 1024), (1004, 128), (1005, 64), (1003, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1006', '2048', 'True', "'1005'", '(1005, 64)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1002, 256), (1003, 1024), (1004, 128), (1005, 64), (1003, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1006', '2048', 'True', "'1005'", '(1003, 512)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1002, 256), (1003, 1024), (1004, 128), (1005, 64), (1003, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1006', '2048', 'False', "'1005'"]
-23 if is_duplicate:
-23 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1002, 256), (1003, 1024), (1004, 128), (1005, 64), (1003, 512)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1006', '2048', 'False', "'1005'"]
-30 if payload > 1000:
-30 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1003, 1024), (1004, 128), (1005, 64), (1003, 512), (1006, 2048)], maxlen=5)', '10', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1006', '2048', 'False', "'1005'"]
-31 congestion_window_size = congestion_window_size - 1 if congestion_window_size > 1 else 1
-31 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1003, 1024), (1004, 128), (1005, 64), (1003, 512), (1006, 2048)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1006', '2048', 'False', "'1005'"]
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1003, 1024), (1004, 128), (1005, 64), (1003, 512), (1006, 2048)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1005'"]
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1003, 1024), (1004, 128), (1005, 64), (1003, 512), (1006, 2048)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1005'", '(1003, 1024)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1003, 1024), (1004, 128), (1005, 64), (1003, 512), (1006, 2048)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1005'", '(1004, 128)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1003, 1024), (1004, 128), (1005, 64), (1003, 512), (1006, 2048)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1005'", '(1005, 64)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1003, 1024), (1004, 128), (1005, 64), (1003, 512), (1006, 2048)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1005'", '(1003, 512)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1003, 1024), (1004, 128), (1005, 64), (1003, 512), (1006, 2048)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1005'", '(1006, 2048)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1003, 1024), (1004, 128), (1005, 64), (1003, 512), (1006, 2048)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1005'"]
-23 if is_duplicate:
-23 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1003, 1024), (1004, 128), (1005, 64), (1003, 512), (1006, 2048)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1005'"]
-30 if payload > 1000:
-30 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1005'"]
-32 elif is_duplicate:
-32 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1005'"]
-36 seq_str = str(seq_num)
-36 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1007'"]
-37 if re.match(r'.*[02468]$', seq_str):  # Even ending digit
-37 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '9', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1007'"]
-40 congestion_window_size = congestion_window_size - 1
-40 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '8', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1007', '32', 'False', "'1007'"]
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '8', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '4096', 'False', "'1007'"]
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '8', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '4096', 'False', "'1007'", '(1004, 128)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '8', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '4096', 'False', "'1007'", '(1005, 64)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '8', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '4096', 'False', "'1007'", '(1003, 512)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '8', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '4096', 'False', "'1007'", '(1006, 2048)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '8', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '4096', 'False', "'1007'", '(1007, 32)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '8', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '4096', 'False', "'1007'"]
-23 if is_duplicate:
-23 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1004, 128), (1005, 64), (1003, 512), (1006, 2048), (1007, 32)], maxlen=5)', '8', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '4096', 'False', "'1007'"]
-30 if payload > 1000:
-30 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1005, 64), (1003, 512), (1006, 2048), (1007, 32), (1008, 4096)], maxlen=5)', '8', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '4096', 'False', "'1007'"]
-31 congestion_window_size = congestion_window_size - 1 if congestion_window_size > 1 else 1
-31 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1005, 64), (1003, 512), (1006, 2048), (1007, 32), (1008, 4096)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '4096', 'False', "'1007'"]
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1005, 64), (1003, 512), (1006, 2048), (1007, 32), (1008, 4096)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1007'"]
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1005, 64), (1003, 512), (1006, 2048), (1007, 32), (1008, 4096)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1007'", '(1005, 64)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1005, 64), (1003, 512), (1006, 2048), (1007, 32), (1008, 4096)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1007'", '(1003, 512)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1005, 64), (1003, 512), (1006, 2048), (1007, 32), (1008, 4096)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1007'", '(1006, 2048)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1005, 64), (1003, 512), (1006, 2048), (1007, 32), (1008, 4096)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1007'", '(1007, 32)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str', 'p'] ['deque([(1005, 64), (1003, 512), (1006, 2048), (1007, 32), (1008, 4096)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1007'", '(1008, 4096)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1005, 64), (1003, 512), (1006, 2048), (1007, 32), (1008, 4096)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1007'"]
-23 if is_duplicate:
-23 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1005, 64), (1003, 512), (1006, 2048), (1007, 32), (1008, 4096)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1007'"]
-30 if payload > 1000:
-30 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1007'"]
-32 elif is_duplicate:
-32 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1007'"]
-36 seq_str = str(seq_num)
-36 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1009'"]
-37 if re.match(r'.*[02468]$', seq_str):  # Even ending digit
-37 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'seq_str'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '7', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False', "'1009'"]
-40 congestion_window_size = congestion_window_size - 1
-40 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '6', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1009', '16', 'False']
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '6', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1010', '8192', 'False']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'p'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '6', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1010', '8192', 'False', '(1003, 512)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'p'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '6', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1010', '8192', 'False', '(1006, 2048)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'p'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '6', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1010', '8192', 'False', '(1007, 32)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'p'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '6', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1010', '8192', 'False', '(1008, 4096)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'p'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '6', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1010', '8192', 'False', '(1009, 16)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '6', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1010', '8192', 'False']
-23 if is_duplicate:
-23 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([(1003, 512), (1006, 2048), (1007, 32), (1008, 4096), (1009, 16)], maxlen=5)', '6', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1010', '8192', 'False']
-30 if payload > 1000:
-30 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5)', '6', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1010', '8192', 'False']
-31 congestion_window_size = congestion_window_size - 1 if congestion_window_size > 1 else 1
-31 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5)', '5', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1010', '8192', 'False']
-18 for seq_num, payload in packet_stream:
-18 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5)', '5', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '1024', 'False']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'p'] ['deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5)', '5', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '1024', 'False', '(1006, 2048)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'p'] ['deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5)', '5', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '1024', 'False', '(1007, 32)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'p'] ['deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5)', '5', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '1024', 'False', '(1008, 4096)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'p'] ['deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5)', '5', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '1024', 'False', '(1009, 16)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate', 'p'] ['deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5)', '5', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '1024', 'False', '(1010, 8192)']
-20 is_duplicate = seq_num in [p[0] for p in packet_window]
-20 ['packet_window', 'congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['deque([(1006, 2048), (1007, 32), (1008, 4096), (1009, 16), (1010, 8192)], maxlen=5)', '5', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '1024', 'True']
-23 if is_duplicate:
-23 ['congestion_window_size', 'packet_stream', 'seq_num', 'payload', 'is_duplicate'] ['5', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '1024', 'True']
-30 if payload > 1000:
-30 ['congestion_window_size', 'packet_stream', 'seq_num', 'payload'] ['5', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '1024']
-31 congestion_window_size = congestion_window_size - 1 if congestion_window_size > 1 else 1
-31 ['congestion_window_size', 'packet_stream', 'seq_num', 'payload'] ['4', '[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '1024']
-18 for seq_num, payload in packet_stream:
-18 ['packet_stream', 'seq_num', 'payload'] ['[(1001, 512), (1002, 256), (1003, 1024), (1004, 128), (1005, 64), ...]', '1008', '1024']
+53 input_stream = "alpha|beta|gamma|delta|epsilon|zeta"
+53 ['input_stream'] ["'alpha|beta|gamma|delta|epsilon|zeta'"]
+56 frequency_analysis = analyze_frequency(input_stream.split('|'))
+56 ['input_stream'] ["'alpha|beta|gamma|delta|epsilon|zeta'"]
+PARAM_MAPPING {'items': {'actual_var': "input_stream.split('|')", 'value': "input_stream.split('|')"}}
+FUNCTION_ENTER 7 analyze_frequency def analyze_frequency(items):
+7 ['items'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'alpha'}, {'_type': 'str', '_value': 'beta'}, {'_type': 'str', '_value': 'gamma'}, {'_type': 'str', '_value': 'delta'}, {'_type': 'str', '_value': 'epsilon'}, {'_type': 'str', '_value': 'zeta'}], '_len': 6}]
+9 freq = Counter(items)
+9 ['items', 'freq'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '{alpha: 1, beta: 1, gamma: 1, ...}']
+10 return max(freq.values()) - min(freq.values())
+10 ['freq'] ['{alpha: 1, beta: 1, gamma: 1, ...}']
+FUNCTION_RETURN 10 analyze_frequency {'_type': 'int', '_value': 0}
+5 return sum(x * 2 for x in data if x > 0)
+5 [] []
+5 return sum(x * 2 for x in data if x > 0)
+5 ['x'] ['1']
+5 return sum(x * 2 for x in data if x > 0)
+5 ['x'] ['2']
+5 return sum(x * 2 for x in data if x > 0)
+5 ['x'] ['3']
+5 return sum(x * 2 for x in data if x > 0)
+5 ['x'] ['4']
+5 return sum(x * 2 for x in data if x > 0)
+5 ['x'] ['5']
+5 return sum(x * 2 for x in data if x > 0)
+5 ['x'] ['5']
+60 result = process_data(input_stream)
+60 ['input_stream', 'frequency_analysis'] ["'alpha|beta|gamma|delta|epsilon|zeta'", '0']
+14 tokens = stream.split('|')
+14 ['stream', 'tokens'] ["'alpha|beta|gamma|delta|epsilon|zeta'", "['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]"]
+21 processed = []
+21 ['tokens', 'processed'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[]']
+22 for i, token in enumerate(tokens):
+22 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[]', '0', "'alpha'"]
+23 if i % 2 == 0:
+23 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[]', '0', "'alpha'"]
+22 for i, token in enumerate(tokens):
+22 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[5]', '1', "'beta'"]
+23 if i % 2 == 0:
+23 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[5]', '1', "'beta'"]
+22 for i, token in enumerate(tokens):
+22 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[5, 9]', '2', "'gamma'"]
+23 if i % 2 == 0:
+23 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[5, 9]', '2', "'gamma'"]
+22 for i, token in enumerate(tokens):
+22 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[5, 9, 3]', '3', "'delta'"]
+23 if i % 2 == 0:
+23 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[5, 9, 3]', '3', "'delta'"]
+22 for i, token in enumerate(tokens):
+22 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[5, 9, 3, 11]', '4', "'epsilon'"]
+23 if i % 2 == 0:
+23 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[5, 9, 3, 11]', '4', "'epsilon'"]
+22 for i, token in enumerate(tokens):
+22 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[5, 9, 3, 11, 11]', '5', "'zeta'"]
+23 if i % 2 == 0:
+23 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[5, 9, 3, 11, 11]', '5', "'zeta'"]
+22 for i, token in enumerate(tokens):
+22 ['tokens', 'processed', 'i', 'token'] ["['alpha', 'beta', 'gamma', 'delta', 'epsilon', ...]", '[5, 9, 3, 11, 11, ...]', '5', "'zeta'"]
+33 if len(processed) > 10:
+33 ['processed', 'i'] ['[5, 9, 3, 11, 11, ...]', '5']
+37 result = 0
+37 ['processed', 'i', 'result'] ['[5, 9, 3, 11, 11, ...]', '5', '0']
+38 for i, num in enumerate(processed):
+38 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '0', '0', '5']
+39 if i < len(processed) // 2:
+39 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '0', '0', '5']
+40 result += num << 1
+40 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '0', '10', '5']
+38 for i, num in enumerate(processed):
+38 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '1', '10', '9']
+39 if i < len(processed) // 2:
+39 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '1', '10', '9']
+40 result += num << 1
+40 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '1', '28', '9']
+38 for i, num in enumerate(processed):
+38 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '2', '28', '3']
+39 if i < len(processed) // 2:
+39 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '2', '28', '3']
+40 result += num << 1
+40 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '2', '34', '3']
+38 for i, num in enumerate(processed):
+38 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '3', '34', '11']
+39 if i < len(processed) // 2:
+39 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '3', '34', '11']
+42 result ^= num
+42 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '3', '41', '11']
+38 for i, num in enumerate(processed):
+38 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '4', '41', '11']
+39 if i < len(processed) // 2:
+39 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '4', '41', '11']
+42 result ^= num
+42 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '4', '34', '11']
+38 for i, num in enumerate(processed):
+38 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '5', '34', '9']
+39 if i < len(processed) // 2:
+39 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '5', '34', '9']
+42 result ^= num
+42 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '5', '43', '9']
+38 for i, num in enumerate(processed):
+38 ['processed', 'i', 'result', 'num'] ['[5, 9, 3, 11, 11, ...]', '5', '43', '9']
+45 if result > 100:
+45 ['result'] ['43']
+48 result = result * 3 + 7
+48 ['result'] ['136']
+50 return result
+50 ['result'] ['136']
+63 final_adjustment = (frequency_analysis * 2) % 13
+63 ['frequency_analysis', 'result', 'final_adjustment'] ['0', '136', '0']
+64 final_result = result + (final_adjustment // 2)
+64 ['result', 'final_adjustment', 'final_result'] ['136', '0', '136']

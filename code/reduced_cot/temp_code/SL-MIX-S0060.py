@@ -1,20 +1,10 @@
-import math
+def process_text(text):
+    words = text.lower().split()
+    word_set = set(words)
+    return word_set
 
-class PrecisionHandler:
-    def __enter__(self):
-        return self
-    
-    def __exit__(self, exc_type, exc_value, traceback):
-        pass
-    
-    def apply_log_correction(self, value):
-        return math.log(value) if value > 0 else 0
-
-decay_constant = 0.5
-initial_intensity = 100.0
-
-with PrecisionHandler() as ph:
-    exponential_decay = initial_intensity * math.exp(-decay_constant)
-    adjusted_signal_intensity = ph.apply_log_correction(exponential_decay)
-
-print(f"Result: {adjusted_signal_intensity}")
+sample_text = "the quick brown fox jumps over the lazy dog"
+word_collection = process_text(sample_text)
+unique_words = word_collection
+final_count = len(unique_words)
+print(f"Result: {final_count}")

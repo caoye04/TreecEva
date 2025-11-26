@@ -1,61 +1,40 @@
-import heapq
-from collections import deque
+def analyze_network_patterns():
+    network_data = {'A': [1, 2, 3], 'B': [2, 3, 4], 'C': [3, 4, 5], 'D': [4, 5, 6]}
+    pattern_sets = {}
+    total_patterns = 0
+    
+    for node, connections in network_data.items():
+        pattern_sets[node] = set(connections)
+        total_patterns += len(connections)
+    
+    # Distractor calculations that don't affect final result
+    max_connections = max(len(connections) for connections in network_data.values())
+    min_connections = min(len(connections) for connections in network_data.values())
+    average_connections = total_patterns / len(network_data)
+    
+    # Calculate unique patterns across all nodes
+    all_unique_patterns = set()
+    for pattern_set in pattern_sets.values():
+        all_unique_patterns.update(pattern_set)
+    
+    # Find redundant patterns (appearing in multiple nodes)
+    pattern_counts = {}
+    for pattern_set in pattern_sets.values():
+        for pattern in pattern_set:
+            pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+    
+    redundant_patterns = {pattern for pattern, count in pattern_counts.items() if count > 1}
+    
+    # More distractor operations
+    theoretical_max = max_connections * len(network_data)
+    efficiency_ratio = total_patterns / theoretical_max
+    
+    # Core logic for final result
+    unique_patterns = len(all_unique_patterns)
+    redundant_entries = len(redundant_patterns)
+    adjustment_factor = 2  # Constant adjustment for network topology
+    
+    final_count = unique_patterns - redundant_entries + adjustment_factor
+    print(f"Target result: {final_count}")
 
-def calculate_priority(distance, weight, deadline):
-    return (distance * 0.3) + (weight * 0.5) + (deadline * 0.2)
-
-def process_deliveries_divide_conquer(delivery_queue):
-    if len(delivery_queue) <= 1:
-        return delivery_queue
-    mid = len(delivery_queue) // 2
-    left = process_deliveries_divide_conquer(delivery_queue[:mid])
-    right = process_deliveries_divide_conquer(delivery_queue[mid:])
-    return merge_deliveries(left, right)
-
-def merge_deliveries(left, right):
-    result = []
-    i = j = 0
-    while i < len(left) and j < len(right):
-        if left[i][0] >= right[j][0]:
-            result.append(left[i])
-            i += 1
-        else:
-            result.append(right[j])
-            j += 1
-    result.extend(left[i:])
-    result.extend(right[j:])
-    return result
-
-delivery_data = [
-    (12.5, 4.2, 3),
-    (8.7, 6.1, 2),
-    (15.3, 3.8, 4),
-    (6.9, 7.5, 1),
-    (11.2, 5.3, 3)
-]
-
-priority_heap = []
-for idx, (dist, wt, dl) in enumerate(delivery_data):
-    priority = calculate_priority(dist, wt, dl)
-    heapq.heappush(priority_heap, (-priority, idx, dist, wt, dl))
-
-sorted_deliveries = []
-while priority_heap:
-    _, idx, d, w, dl = heapq.heappop(priority_heap)
-    sorted_deliveries.append((d, w, dl))
-
-processed_deliveries = process_deliveries_divide_conquer(sorted_deliveries)
-
-completion_times = []
-accumulated_time = 0.0
-for distance, weight, _ in processed_deliveries:
-    time_factor = distance * 0.8 + weight * 0.2
-    accumulated_time += time_factor
-    completion_times.append(accumulated_time)
-
-fleet_efficiency_score = 0.0
-for i in range(len(completion_times)):
-    fleet_efficiency_score += completion_times[i] * (i + 1)
-
-fleet_efficiency_score = round(fleet_efficiency_score, 2)
-print(f"Result: {fleet_efficiency_score}")
+analyze_network_patterns()

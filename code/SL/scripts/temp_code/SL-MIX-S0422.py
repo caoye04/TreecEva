@@ -1,26 +1,52 @@
-import math
-from itertools import combinations
-from statistics import variance
+class HashProcessor:
+    def __init__(self, base_value):
+        self.base = base_value
+        self.temp_cache = {}
+        self.unused_counter = 0  # Distractor variable
+        
+    def process_data(self, data):
+        # Main processing logic with distractions
+        processed_set = set()
+        intermediate = 0
+        
+        # Distractor operation - never used in final calculation
+        fake_processing = lambda x: (x * 3) // 2 + 7
+        distractor_result = fake_processing(len(data))
+        
+        # Actual processing logic
+        for item in data:
+            if item % 2 == 0:
+                processed_set.add(item * 2)
+            else:
+                processed_set.add(item + self.base)
+        
+        # More distractions
+        unused_list = [i for i in range(10)]  # Dead code path
+        misleading_sum = sum(unused_list)  # Never used
+        
+        # Key computation
+        filtered_data = filter(lambda x: x > 15, processed_set)
+        mapped_values = map(lambda x: x // 3 if x % 3 == 0 else x - 1, filtered_data)
+        
+        # Final calculation with set operations
+        unique_values = set(mapped_values)
+        result = sum(unique_values) ^ (len(unique_values) * self.base)
+        
+        return result
 
-# Sampled waveform data
-samples = [12, 7, 23, 8, 15, 3, 19, 5]
+# Main execution with distractions
+data_stream = [5, 8, 12, 3, 17, 20, 6, 11]
 
-# Step 1: Apply modular transformation with XOR
-mod_samples = [(x ^ 0b1101) % 16 for x in samples]
+# Multiple irrelevant variables and operations
+aux_processor = HashProcessor(7)  # Distractor instance
+aux_result = aux_processor.process_data([1, 2, 3])  # Never used
 
-# Step 2: Generate all 3-element combinations and compute their bitwise AND
-comb_results = [math.prod(c) & 0b1111 for c in combinations(mod_samples, 3)]
+unrelated_calc = (8 * 3) + (15 // 4) - 2  # Dead computation
+misleading_var = unrelated_calc * 2  # Never referenced
 
-# Step 3: Filter combinations with even parity (even number of 1s in binary representation)
-even_parity = [x for x in comb_results if bin(x).count('1') % 2 == 0]
+# Actual processing
+hash_processor = HashProcessor(5)
+final_hash = hash_processor.process_data(data_stream)
 
-# Step 4: Compute variance of filtered results
-var_value = variance(even_parity) if len(even_parity) > 1 else 0
-
-# Step 5: Apply ternary operation based on variance
-processed = var_value > 10 and math.floor(var_value) or math.ceil(var_value)
-
-# Step 6: Final signature calculation using modular arithmetic
-wave_signature = (int(processed) * 0b1011 + sum(mod_samples)) % 31
-
-print(f"Result: {wave_signature}")
+# Final output
+print(f"Result: {final_hash}")

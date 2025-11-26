@@ -1,34 +1,40 @@
-def simulate_sensor_processing():
-    # Sensor readings (raw data)
-    raw_readings = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
+def analyze_sensor_data(readings):
+    # Initialize counters
+    valid_count = 0
+    temp_total = 0
+    calibration_factor = 1.25
+    debug_sum = 0
     
-    # Initialize processing variables
-    accumulator = 0
-    mask_register = 0xF0
-    
-    # Process each reading
-    for idx, reading in enumerate(raw_readings):
-        # Step 1: Apply mask and XOR with index
-        masked_value = reading & mask_register
-        xor_result = masked_value ^ idx
+    # Process sensor readings
+    for reading in readings:
+        # Filter valid readings (within operational range)
+        if 10 <= reading <= 90:
+            valid_count += 1
+            temp_total += reading
+            debug_sum += reading * 2  # Distractor calculation
         
-        # Step 2: Rotate left by 2 bits (with wraparound)
-        rotated = ((xor_result << 2) | (xor_result >> 6)) & 0xFF
+        # Redundant check for debugging
+        if reading > 100:
+            calibration_factor *= 1.1
+    
+    # Calculate average and apply processing
+    if valid_count > 0:
+        average_temp = temp_total / valid_count
+        processed_data = average_temp * calibration_factor
         
-        # Step 3: Conditional update of accumulator
-        if rotated > 0x80 and (idx % 2 == 0):
-            accumulator |= rotated  # Set bits in accumulator
-        elif rotated <= 0x80 or not (idx % 3 == 0):
-            accumulator &= ~rotated  # Clear bits in accumulator
-        else:
-            accumulator ^= rotated   # Toggle bits in accumulator
+        # Additional processing steps
+        rounded_data = round(processed_data, 2)
+        final_adjustment = rounded_data - (debug_sum % 5)  # Distractor operation
+        
+        return int(final_adjustment * 10)
     
-    # Post-processing transformation
-    processed_output = (accumulator + 0x100) % 0x1FF
-    
-    # >>> PROCESSING COMPLETE <<<
-    return processed_output
+    return 0
 
-# Execute simulation
-final_value = simulate_sensor_processing()
-print(f"Result: {final_value}")
+# Sensor data processing
+sensor_readings = [25, 45, 67, 89, 12, 34, 78, 95, 102, 8, 56]
+calibration_offset = 3.7  # Unused variable
+backup_readings = [x for x in sensor_readings if x < 50]  # Unused list
+
+result = analyze_sensor_data(sensor_readings)
+final_count = result
+print(f"Result: {final_count}")

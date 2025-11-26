@@ -1,33 +1,31 @@
-from functools import reduce
+def calculate_player_stats():
+    player_data = {
+        'kills': 15,
+        'assists': 8,
+        'deaths': 6,
+        'objectives': 4
+    }
+    
+    # Base calculations
+    kill_points = player_data['kills'] * 100
+    assist_points = player_data['assists'] * 50
+    objective_points = player_data['objectives'] * 75
+    
+    # Distractor calculations (not used in final result)
+    kda_ratio = (player_data['kills'] + player_data['assists']) / max(1, player_data['deaths'])
+    total_actions = player_data['kills'] + player_data['assists'] + player_data['deaths']
+    
+    # Core logic
+    base_total = kill_points + assist_points + objective_points
+    death_penalty = player_data['deaths'] * 25
+    adjusted_total = base_total - death_penalty
+    
+    # Bonus system
+    performance_tier = 'gold' if adjusted_total >= 2000 else 'silver'
+    bonus_multipliers = {'silver': 1.1, 'gold': 1.25, 'platinum': 1.5}
+    bonus_factor = bonus_multipliers[performance_tier]
+    
+    final_score = adjusted_total * bonus_factor
+    print(f"Target result: {final_score}")
 
-class TreeNode:
-    def __init__(self, value=0, left=None, right=None):
-        self.value = value
-        self.left = left
-        self.right = right
-
-def traverse(node):
-    if not node:
-        return []
-    return [node.value] + traverse(node.left) + traverse(node.right)
-
-# Tree structure:
-#       5
-#      / \
-#     3   8
-#    /   / \
-#   2   7   9
-root = TreeNode(5)
-root.left = TreeNode(3)
-root.right = TreeNode(8)
-root.left.left = TreeNode(2)
-root.right.left = TreeNode(7)
-root.right.right = TreeNode(9)
-
-# Extract all node values
-node_values = traverse(root)
-
-# Compute total growth using lambda and reduce
-total_growth = reduce(lambda x, y: x + y, node_values)
-
-print(f"Result: {total_growth}")
+calculate_player_stats()

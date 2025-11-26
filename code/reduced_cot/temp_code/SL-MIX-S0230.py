@@ -1,43 +1,40 @@
-import heapq
-from collections import defaultdict
+def analyze_data_sequence(data_stream):
+    # Distractor: Calculate sum that won't be used
+    total_sum = sum(x * 2 for x in data_stream)
+    
+    # Relevant: Process data with enumerate and slicing
+    processed_values = []
+    for idx, value in enumerate(data_stream):
+        if idx % 2 == 0 and value > 5:
+            processed_values.append(value // 2)
+    
+    # Distractor: Create lambda that won't be used
+    square_lambda = lambda x: x ** 2
+    
+    # Relevant: Use zip and slicing for validation
+    first_half = processed_values[:len(processed_values)//2]
+    second_half = processed_values[len(processed_values)//2:]
+    
+    validation_results = []
+    for a, b in zip(first_half, second_half):
+        if (a + b) % 3 == 0:
+            validation_results.append(a + b)
+    
+    # Distractor: Calculate average that won't be used
+    if validation_results:
+        avg_result = sum(validation_results) / len(validation_results)
+    else:
+        avg_result = 0
+    
+    # Relevant: Final count logic
+    valid_entries_counter = len(validation_results)
+    
+    # Distractor: Additional computation that won't affect result
+    temp_adjustment = valid_entries_counter * 2 - 5
+    
+    final_count = valid_entries_counter
+    print(f"Result: {final_count}")
 
-def compute_fibonacci(n):
-    a, b = 1, 1
-    for _ in range(n - 1):
-        a, b = b, a + b
-    return a
-
-returns_data = [0.05, -0.02, 0.03, 0.07, -0.01, 0.04, 0.06]
-fib_weights = [compute_fibonacci(i+1) for i in range(len(returns_data))]
-
-weighted_returns = [r * w for r, w in zip(returns_data, fib_weights)]
-
-# Compute mean of weighted returns
-mean_return = sum(weighted_returns) / len(weighted_returns)
-
-# Compute variance
-variance = sum((x - mean_return) ** 2 for x in weighted_returns) / len(weighted_returns)
-
-# Hash table to store metrics
-metrics = defaultdict(float)
-metrics['mean'] = mean_return
-metrics['variance'] = variance
-
-# Use a max heap (negate values) to find top 3 weighted returns
-heap = [-x for x in weighted_returns]
-heapq.heapify(heap)
-top_three_sum = sum(-heapq.heappop(heap) for _ in range(3))
-
-# Statistical adjustment factor using a lambda
-adjustment_factor = (lambda m, v, top: (m + top) / (1 + v) if v > 0 else m)(mean_return, variance, top_three_sum)
-
-# Final portfolio score calculation
-risk_free_rate = 0.01
-sharpe_ratio = (adjustment_factor - risk_free_rate) / (variance ** 0.5) if variance > 0 else 0
-
-# Apply set-based filtering for positive contributions
-positive_contributions = {r for r in weighted_returns if r > 0}
-filtered_mean = sum(positive_contributions) / len(positive_contributions) if positive_contributions else 0
-
-final_score = round(sharpe_ratio * filtered_mean * 1000)
-print(f"Result: {final_score}")
+# Main execution
+input_data = [8, 3, 12, 7, 9, 4, 15, 6, 11, 2]
+analyze_data_sequence(input_data)

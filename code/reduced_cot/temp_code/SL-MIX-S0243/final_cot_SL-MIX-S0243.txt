@@ -1,70 +1,47 @@
-Target: Find the value of variable final_priority_score after [line 42] executes
+Target: Find the value of variable final_score after [line 26] executes
 
-[line 16]  packet_queue = []
+[line 2]  raw_data = [45, 78, 23, 91, 56, 34, 82, 67]
+Compute: [45, 78, 23, 91, 56, 34, 82, 67] = [45, 78, 23, 91, 56, ...]
+[line 3]  processed_values = []
 Compute: [] = []
-[line 17]  priority_heap = []
-Compute: [] = []
-[line 18]  processed_scores = set()
-Call function set()
-[line 21]  for enc_data, base_priority in encoded_packets:
+[line 7]  for idx, value in enumerate(raw_data):
 (Missing param: 'iter_var')
-[line 5]  return hash(s) % 1000
-Return: hash(s) % 1000
-[line 21]  for enc_data, base_priority in encoded_packets:
-Loop End: Iteration finished
-[line 5]  return hash(s) % 1000
-Return: hash(s) % 1000
-[line 21]  for enc_data, base_priority in encoded_packets:
-Loop End: Iteration finished
-[line 5]  return hash(s) % 1000
-Return: hash(s) % 1000
-[line 21]  for enc_data, base_priority in encoded_packets:
-Loop End: Iteration finished
-[line 28]  for priority, data in packet_queue:
+[line 8]  if value > 50:
+Condition: True, entering 'if' block
+[line 7]  for idx, value in enumerate(raw_data):
 (Missing param: 'iter_var')
-[line 28]  for priority, data in packet_queue:
+[line 8]  if value > 50:
+Condition: True, entering 'if' block
+... [Line 7] repeats 5 more times ...
+... [Line 7] repeats 5 more times ...
+[line 7]  for idx, value in enumerate(raw_data):
+(Missing param: 'iter_var')
+[line 8]  if value > 50:
+Condition: True, entering 'if' block
+[line 7]  for idx, value in enumerate(raw_data):
 Loop End: Iteration finished
-[line 28]  for priority, data in packet_queue:
+[line 15]  validation_mask = 0
+Assign: validation_mask = 0
+[line 16]  for i, val in enumerate(processed_values):
+(Missing param: 'iter_var')
+[line 17]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 16]  for i, val in enumerate(processed_values):
+(Missing param: 'iter_var')
+[line 17]  if i % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 16] repeats 2 more times ...
+... [Line 16] repeats 2 more times ...
+... [Line 16] repeats 2 more times ...
+[line 16]  for i, val in enumerate(processed_values):
+(Missing param: 'iter_var')
+[line 17]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 16]  for i, val in enumerate(processed_values):
 Loop End: Iteration finished
-[line 28]  for priority, data in packet_queue:
-Loop End: Iteration finished
-[line 32]  total_score = 0
-Assign: total_score = 0
-[line 33]  while priority_heap:
-while Loop Start: Condition is true
-[line 34]  priority, data = heapq.heappop(priority_heap)
-(Missing param: 'func_name')
-[line 35]  if len(data) > 4 and priority not in processed_scores:
-Condition: True, entering 'if' block
-[line 36]  score = priority ^ len(data)
-Compute: priority ^ len(data), where priority=34 (an unknown source), data='World' (an unknown source) = 39
-[line 37]  if score > 10 and (score % 2 == 0 or score < 50):
-Condition: True, entering 'if' block
-[line 38]  total_score += score
-Update: total_score changed from 0 (defined at defined at [line 32]) to 0+score = 39
-[line 33]  while priority_heap:
-while Loop Iteration: Condition is still true
-[line 34]  priority, data = heapq.heappop(priority_heap)
-(Missing param: 'func_name')
-[line 35]  if len(data) > 4 and priority not in processed_scores:
-Condition: True, entering 'if' block
-[line 36]  score = priority ^ len(data)
-Compute: priority ^ len(data), where priority=64 (an unknown source), data='Hello' (an unknown source) = 69
-[line 37]  if score > 10 and (score % 2 == 0 or score < 50):
-Condition: True, entering 'if' block
-[line 33]  while priority_heap:
-while Loop Iteration: Condition is still true
-[line 34]  priority, data = heapq.heappop(priority_heap)
-(Missing param: 'func_name')
-[line 35]  if len(data) > 4 and priority not in processed_scores:
-Condition: True, entering 'if' block
-[line 36]  score = priority ^ len(data)
-Compute: priority ^ len(data), where priority=76 (an unknown source), data='Pizza' (an unknown source) = 73
-[line 37]  if score > 10 and (score % 2 == 0 or score < 50):
-Condition: True, entering 'if' block
-[line 33]  while priority_heap:
-while Loop Iteration: Condition is still true
-[line 42]  final_priority_score = total_score & 0xFF
-Compute: total_score & 0xFF, where total_score=39 (defined at [line 38]) = 39
+[line 22]  processed_data = sum(processed_values) & 0xFF  # Keep lower 8 bits
+Compute: sum(processed_values) & 0xFF  # Keep lower 8 bits, where processed_values=[113, 100, 7, 109, 124] (defined at [line 3]) = 197
+[line 26]  final_score = processed_data | validation_mask
+Compute: processed_data | validation_mask, where processed_data=197 (defined at [line 22]), validation_mask=15 (defined at [line 15]) = 207
 
-Answer: final_priority_score = 39 (last updated on defined at [line 42])
+Answer: final_score = 207 (last updated on defined at [line 26])

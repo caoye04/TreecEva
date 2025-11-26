@@ -1,16 +1,19 @@
-from collections import Counter
+def validate_data_entries(entries):
+    valid_count = 0
+    temp_check = len(entries)  # temporary variable for length check
+    
+    for entry in entries:
+        if entry.strip() and entry.isdigit():
+            valid_count += 1
+    
+    # Process additional entries
+    additional_data = ["42", "", "test", "789"]
+    additional_entries = sum(1 for item in additional_data if item.strip() and item.isdigit())
+    
+    # Final calculation
+    total_valid = valid_count + additional_entries
+    print(f"Result: {total_valid}")
 
-# Daily sales quantities
-sales_quantities = Counter({'croissants': 40, 'muffins': 30, 'scones': 20})
-
-# Item prices
-prices = {'croissants': 2.50, 'muffins': 1.75, 'scones': 3.00}
-
-# Calculate total revenue using a lambda and ternary operator for discount application
-is_weekend = True
-discount_rate = 0.1 if is_weekend else 0
-
-revenue_calc = lambda item, qty: qty * prices[item] * (1 - discount_rate)
-total_revenue = sum(revenue_calc(item, qty) for item, qty in sales_quantities.items())
-
-print(f'Result: {total_revenue}')
+# Main execution
+initial_entries = ["123", "", "456", "abc", "789"]
+validate_data_entries(initial_entries)

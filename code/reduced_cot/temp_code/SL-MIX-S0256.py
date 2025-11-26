@@ -1,30 +1,30 @@
-import math
-from itertools import combinations
+def calculate_performance_metrics(data_points):
+    score_aggregator = {'raw': 0, 'processed': 0, 'temporary': 0}
+    
+    # Process each data point with multiple operations
+    for i, value in enumerate(data_points):
+        base_score = value * 2
+        adjustment = (i % 3) + 1
+        
+        # Calculate intermediate metrics (some are distractors)
+        raw_metric = base_score + adjustment
+        processed_metric = raw_metric // 2
+        temp_metric = processed_metric * 3
+        
+        # Update aggregator (only processed metric matters for final result)
+        score_aggregator['raw'] += raw_metric
+        score_aggregator['processed'] += processed_metric
+        score_aggregator['temporary'] += temp_metric
+    
+    # Final calculation with some unnecessary complexity
+    bonus_factor = len(data_points) // 2
+    irrelevant_computation = bonus_factor * 7
+    
+    # The critical execution point
+    final_score = score_aggregator['processed']
+    
+    print(f"Target result: {final_score}")
 
-# Portfolio parameters
-initial_capital = 10000.0
-txn_fees = [0.01, 0.02, 0.015, 0.03]
-expected_returns = [0.05, 0.07, 0.04, 0.09]
-
-# Compute adjusted returns considering fees
-adjusted_returns = []
-for i in range(len(txn_fees)):
-    log_fee = math.log(1 + txn_fees[i])
-    adj_return = expected_returns[i] - log_fee
-    adjusted_returns.append(adj_return)
-
-# Find the best combination of two investments using greedy selection
-investment_pairs = list(combinations(adjusted_returns, 2))
-profitability_scores = [sum(pair) for pair in investment_pairs]
-best_pair_index = profitability_scores.index(max(profitability_scores))
-selected_investments = investment_pairs[best_pair_index]
-
-# Calculate compounded yield from selected investments
-compounded_yield = 1.0
-for rate in selected_investments:
-    compounded_yield *= math.exp(rate)
-
-# Apply to initial capital
-final_yield = initial_capital * compounded_yield
-
-print(f"Result: {final_yield}")
+# Main execution
+data_points = [15, 22, 8, 31, 12]
+calculate_performance_metrics(data_points)

@@ -1,0 +1,69 @@
+47
+final_checksum
+---
+35 primary_data = [12, 45, 78, 23, 56, 89, 34, 67]
+35 ['primary_data'] ['[12, 45, 78, 23, 56, ...]']
+36 secondary_data = [8, 29, 51, 74, 16, 39, 62, 95]
+36 ['primary_data', 'secondary_data'] ['[12, 45, 78, 23, 56, ...]', '[8, 29, 51, 74, 16, ...]']
+39 checksum_a = sum(calculate_weights(primary_data))
+39 ['primary_data', 'secondary_data'] ['[12, 45, 78, 23, 56, ...]', '[8, 29, 51, 74, 16, ...]']
+5 base_mask = 0xFF
+5 ['data_stream', 'base_mask'] ['[12, 45, 78, 23, 56, ...]', '255']
+6 shift_count = 2
+6 ['data_stream', 'base_mask', 'shift_count'] ['[12, 45, 78, 23, 56, ...]', '255', '2']
+9 transformed = [(x << shift_count) & base_mask for x in data_stream]
+9 ['data_stream', 'base_mask', 'shift_count', 'x'] ['[12, 45, 78, 23, 56, ...]', '255', '2', '12']
+9 transformed = [(x << shift_count) & base_mask for x in data_stream]
+9 ['data_stream', 'base_mask', 'shift_count', 'x'] ['[12, 45, 78, 23, 56, ...]', '255', '2', '45']
+9 transformed = [(x << shift_count) & base_mask for x in data_stream]
+9 ['data_stream', 'base_mask', 'shift_count', 'x'] ['[12, 45, 78, 23, 56, ...]', '255', '2', '78']
+9 transformed = [(x << shift_count) & base_mask for x in data_stream]
+9 ['data_stream', 'base_mask', 'shift_count', 'x'] ['[12, 45, 78, 23, 56, ...]', '255', '2', '23']
+9 transformed = [(x << shift_count) & base_mask for x in data_stream]
+9 ['data_stream', 'base_mask', 'shift_count', 'x'] ['[12, 45, 78, 23, 56, ...]', '255', '2', '56']
+9 transformed = [(x << shift_count) & base_mask for x in data_stream]
+9 ['data_stream', 'base_mask', 'shift_count', 'x'] ['[12, 45, 78, 23, 56, ...]', '255', '2', '89']
+9 transformed = [(x << shift_count) & base_mask for x in data_stream]
+9 ['data_stream', 'base_mask', 'shift_count', 'x'] ['[12, 45, 78, 23, 56, ...]', '255', '2', '34']
+9 transformed = [(x << shift_count) & base_mask for x in data_stream]
+9 ['data_stream', 'base_mask', 'shift_count', 'x'] ['[12, 45, 78, 23, 56, ...]', '255', '2', '67']
+9 transformed = [(x << shift_count) & base_mask for x in data_stream]
+9 ['data_stream', 'base_mask', 'shift_count', 'transformed'] ['[12, 45, 78, 23, 56, ...]', '255', '2', '[48, 180, 56, 92, 224, ...]']
+15 weight_vector = [t % 17 for t in transformed]
+15 ['transformed', 't'] ['[48, 180, 56, 92, 224, ...]', '48']
+15 weight_vector = [t % 17 for t in transformed]
+15 ['transformed', 't'] ['[48, 180, 56, 92, 224, ...]', '180']
+15 weight_vector = [t % 17 for t in transformed]
+15 ['transformed', 't'] ['[48, 180, 56, 92, 224, ...]', '56']
+15 weight_vector = [t % 17 for t in transformed]
+15 ['transformed', 't'] ['[48, 180, 56, 92, 224, ...]', '92']
+15 weight_vector = [t % 17 for t in transformed]
+15 ['transformed', 't'] ['[48, 180, 56, 92, 224, ...]', '224']
+15 weight_vector = [t % 17 for t in transformed]
+15 ['transformed', 't'] ['[48, 180, 56, 92, 224, ...]', '100']
+15 weight_vector = [t % 17 for t in transformed]
+15 ['transformed', 't'] ['[48, 180, 56, 92, 224, ...]', '136']
+15 weight_vector = [t % 17 for t in transformed]
+15 ['transformed', 't'] ['[48, 180, 56, 92, 224, ...]', '12']
+15 weight_vector = [t % 17 for t in transformed]
+15 ['transformed', 'weight_vector'] ['[48, 180, 56, 92, 224, ...]', '[14, 10, 5, 7, 3, ...]']
+16 return weight_vector
+16 ['weight_vector'] ['[14, 10, 5, 7, 3, ...]']
+40 checksum_b = validate_pattern(secondary_data)
+40 ['secondary_data', 'checksum_a'] ['[8, 29, 51, 74, 16, ...]', '66']
+20 temp_sum = sum(pattern_data)
+20 ['pattern_data', 'temp_sum'] ['[8, 29, 51, 74, 16, ...]', '374']
+21 validation_flag = (temp_sum & 0x0F) == 7
+21 ['pattern_data', 'temp_sum', 'validation_flag'] ['[8, 29, 51, 74, 16, ...]', '374', 'False']
+24 if validation_flag and len(pattern_data) > 10:
+24 ['pattern_data', 'validation_flag'] ['[8, 29, 51, 74, 16, ...]', 'False']
+30 freq_counter = Counter(pattern_data)
+30 ['pattern_data', 'freq_counter'] ['[8, 29, 51, 74, 16, ...]', '{8: 1, 29: 1, 51: 1, ...}']
+31 dominant_value = freq_counter.most_common(1)[0][0] if freq_counter else 0
+31 ['freq_counter', 'dominant_value'] ['{8: 1, 29: 1, 51: 1, ...}', '8']
+32 return dominant_value
+32 ['dominant_value'] ['8']
+46 verification_mod = 97
+46 ['checksum_a', 'checksum_b', 'verification_mod'] ['66', '8', '97']
+47 final_checksum = (checksum_a ^ checksum_b) % verification_mod
+47 ['checksum_a', 'checksum_b', 'verification_mod', 'final_checksum'] ['66', '8', '97', '74']

@@ -1,50 +1,55 @@
-Target: Find the value of variable root_priority after [line 29] executes
+Target: Find the value of variable final_output after [line 57] executes
 
-[line 13]  packet_heap = []
-Compute: [] = []
-[line 5]  self.timestamp = timestamp
-(Missing param: 'result')
-[line 6]  self.sensor_id = sensor_id
-(Missing param: 'result')
-[line 5]  self.timestamp = timestamp
-(Missing param: 'result')
-[line 6]  self.sensor_id = sensor_id
-(Missing param: 'result')
-[line 5]  self.timestamp = timestamp
-(Missing param: 'result')
-[line 6]  self.sensor_id = sensor_id
-(Missing param: 'result')
-[line 5]  self.timestamp = timestamp
-(Missing param: 'result')
-[line 6]  self.sensor_id = sensor_id
-(Missing param: 'result')
-[line 5]  self.timestamp = timestamp
-(Missing param: 'result')
-[line 6]  self.sensor_id = sensor_id
-(Missing param: 'result')
-[line 24]  for pkt in packets:
-Loop Start: pkt takes its first value TelemetryPacket(...)
-[line 10]  return (self.timestamp * 3 + self.sensor_id * 2) % 100
-Return: (self.timestamp * 3 + self.sensor_id * 2) % 100
-[line 24]  for pkt in packets:
-Loop End: Iteration finished
-[line 10]  return (self.timestamp * 3 + self.sensor_id * 2) % 100
-Return: (self.timestamp * 3 + self.sensor_id * 2) % 100
-[line 24]  for pkt in packets:
-Loop End: Iteration finished
-[line 10]  return (self.timestamp * 3 + self.sensor_id * 2) % 100
-Return: (self.timestamp * 3 + self.sensor_id * 2) % 100
-[line 24]  for pkt in packets:
-Loop End: Iteration finished
-[line 10]  return (self.timestamp * 3 + self.sensor_id * 2) % 100
-Return: (self.timestamp * 3 + self.sensor_id * 2) % 100
-[line 24]  for pkt in packets:
-Loop End: Iteration finished
-[line 10]  return (self.timestamp * 3 + self.sensor_id * 2) % 100
-Return: (self.timestamp * 3 + self.sensor_id * 2) % 100
-[line 24]  for pkt in packets:
-Loop End: Iteration finished
-[line 29]  root_priority = packet_heap[0]
-Compute: packet_heap[0], where packet_heap=[3, 21, 86, 91, 82] (defined at [line 13]) = 3
+[line 52]  inventory_data = [12, 8, 25, 18, 7, 22, 14, 30, 5]
+Compute: [12, 8, 25, 18, 7, 22, 14, 30, 5] = [12, 8, 25, 18, 7, ...]
+[line 56]  final_output = compute_final_value(inventory_data)
+Call function compute_final_value(inventory_data=[12, 8, 25, 18, 7, ...] (defined at [line 52]))
+[line 24]  processed = process_inventory_data(data)
+Call function process_inventory_data(data=[12, 8, 25, 18, 7, ...] (an unknown source))
+[line 6]  filtered_data = [x for x in raw_data if x % 3 == 0]
+Compute: [x for x in raw_data if x % 3 == 0], where x=12 (an unknown source), raw_data=[12, 8, 25, 18, 7, ...] (an unknown source) = ?
+[line 7]  return filtered_data
+Return: filtered_data=[12, 18, 30] (defined at [line 6])
+[line 27]  if len(processed) >= 2:
+Condition: True, entering 'if' block
+[line 28]  core_pairs = list(itertools.combinations(processed, 2))
+Call function list(itertools.combinations(processed, 2))
+[line 29]  valid_pairs = [(a, b) for a, b in core_pairs if abs(a - b) <= 15]
+Compute: [(a, b) for a, b in core_pairs if abs(a - b) <= 15], where a=12 (an unknown source), b=18 (an unknown source), core_pairs=[(12, 18), (12, 30), (18, 30)] (defined at [line 28]) = ?
+[line 31]  if valid_pairs:
+Condition: True, entering 'if' block
+[line 32]  pair_sums = [a + b for a, b in valid_pairs]
+Compute: [a + b for a, b in valid_pairs], where a=12 (an unknown source), b=18 (an unknown source), valid_pairs=[(12, 18), (18, 30)] (defined at [line 29]) = ?
+[line 33]  min_sum = min(pair_sums) if pair_sums else 0
+Compute: min(pair_sums) if pair_sums else 0, where pair_sums=[30, 48] (defined at [line 32]) = 30
+[line 34]  max_sum = max(pair_sums) if pair_sums else 0
+Compute: max(pair_sums) if pair_sums else 0, where pair_sums=[30, 48] (defined at [line 32]) = 48
+[line 37]  turnover_metric = (max_sum - min_sum) * len(valid_pairs)
+Compute: (max_sum - min_sum) * len(valid_pairs), where max_sum=48 (defined at [line 34]), min_sum=30 (defined at [line 33]), valid_pairs=[(12, 18), (18, 30)] (defined at [line 29]) = 36
+[line 40]  inventory_cycles, _ = calculate_inventory_turnover(processed)
+(Missing param: 'func_name')
+[line 11]  avg_period = sum(periods) / len(periods) if periods else 0
+Compute: sum(periods) / len(periods) if periods else 0, where periods=[12, 18, 30] (an unknown source) = 20.0
+[line 12]  cycle_count = len(list(itertools.combinations(periods, 2)))
+Call function len(list(itertools.combinations(periods, 2)))
+[line 13]  return cycle_count, avg_period
+Return: cycle_count, avg_period
+[line 41]  final_result = turnover_metric // (inventory_cycles + 1) if inventory_cycles > 0 else turnover_metric
+Compute: turnover_metric // (inventory_cycles + 1) if inventory_cycles > 0 else turnover_metric, where turnover_metric=36 (defined at [line 37]), inventory_cycles=3 (an unknown source) = 9
+[line 44]  seasonal_factors = [2, 5, 8, 11]
+Compute: [2, 5, 8, 11] = [2, 5, 8, 11]
+[line 45]  adjusted = adjust_for_seasonality(final_result, seasonal_factors)
+Call function adjust_for_seasonality(final_result=9 (defined at [line 41]), seasonal_factors=[2, 5, 8, 11] (defined at [line 44]))
+[line 15]  def adjust_for_seasonality(base_value, seasonal_factors):
+Enter function adjust_for_seasonality: base_value=9 (final_result defined at [line 41]), seasonal_factors=[2, 5, 8, 11] (seasonal_factors defined at [line 44])
+  [line 17]  if len(seasonal_factors) > 4:
+  Condition: True, entering 'if' block
+  [line 20]  return base_value
+  Return: base_value=9 (parameter base_value defined at [line 41])
+Function adjust_for_seasonality returns 9
+[line 47]  return adjusted % 47
+Return: adjusted % 47
+[line 57]  print(f"Result: {final_output}")
+Output: f"Result: {final_output}"
 
-Answer: root_priority = 3 (last updated on defined at [line 29])
+Answer: final_output = 9 (last updated on defined at [line 56])

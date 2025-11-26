@@ -1,20 +1,13 @@
-import math
-import itertools
+def calculate_performance(values, adjustments, cutoff):
+    threshold = cutoff * 2
+    filtered_values = [v for v in values if v > threshold]
+    adjustment_factors = [adj * 0.5 for adj in adjustments[:len(filtered_values)]]
+    final_metric = sum([x**2 - y for x, y in zip(filtered_values, adjustment_factors) if x > threshold])
+    print(f"Result: {final_metric}")
 
-def calculate_combination_rank(combo, all_combos):
-    return all_combos.index(combo) + 1
+# Main execution
+performance_data = [8, 12, 5, 15, 3, 20]
+adjustment_values = [4, 6, 2, 8, 1, 10]
+base_cutoff = 7
 
-# Generate all 3-letter combinations of lowercase English letters
-letters = 'abcdefghijklmnopqrstuvwxyz'
-combinations = list(itertools.combinations_with_replacement(letters, 3))
-
-# Sort combinations lexicographically
-combinations.sort()
-
-# Calculate entropy sum
-entropy_sum = 0
-for combo in combinations:
-    rank = calculate_combination_rank(combo, combinations)
-    entropy_sum += math.log2(rank)
-
-print(f"Result: {entropy_sum}")
+calculate_performance(performance_data, adjustment_values, base_cutoff)

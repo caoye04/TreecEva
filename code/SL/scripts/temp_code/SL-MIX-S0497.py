@@ -1,47 +1,26 @@
 from collections import Counter
-import itertools
 
-def calculate_security_score(messages):
-    # Initialize tracking variables
-    char_pool = frozenset(''.join(messages))
-    frequency_map = Counter()
-    cumulative_shift = 0
-    
-    # Process each message with string transformations
-    for idx, msg in enumerate(messages):
-        # Apply Caesar cipher with index-based shift
-        shifted_msg = ''.join(chr((ord(c) - ord('a') + idx) % 26 + ord('a')) if c.isalpha() else c for c in msg.lower())
-        
-        # Update frequency map with transformed characters
-        frequency_map.update(shifted_msg)
-        
-        # Conditional logic with short-circuit evaluation
-        if idx > 0 and len(msg) > 5 and msg[0] != msg[-1]:
-            # Perform set intersection with character pool
-            msg_chars = set(msg.lower())
-            common_chars = msg_chars & char_pool
-            cumulative_shift += len(common_chars) * idx
-    
-    # Calculate base score from most frequent characters
-    top_chars = frequency_map.most_common(3)
-    base_score = sum(count * (ord(char) - ord('a') + 1) for char, count in top_chars)
-    
-    # Apply modular transformation
-    mod_factor = (len(messages) * 7) % 13
-    adjusted_score = (base_score * mod_factor) % 1000
-    
-    # Combine with cumulative shift using modular arithmetic
-    final_score = (adjusted_score + cumulative_shift) % 10000
-    
-    return final_score
+# Process inventory data for different warehouse sections
+inventory_counts = [15, 8, 23, 15, 8, 42, 15, 23, 8]
+count_freq = Counter(inventory_counts)
 
-# Test data representing intercepted messages
-intercepted_messages = [
-    "alpha",
-    "bravocharlie",
-    "deltaechofoxtrot",
-    "golfhotelindia"
-]
+# Calculate processing factors (some operations are distractor)
+total_items = sum(inventory_counts)
+weighted_sum = sum([count * freq for count, freq in count_freq.items()])
+avg_weight = weighted_sum / total_items if total_items > 0 else 0
 
-final_score = calculate_security_score(intercepted_messages)
-print(f"Result: {final_score}")
+# Main processing logic (relevant operations)
+unique_counts = len(count_freq)
+most_common_count, most_common_freq = count_freq.most_common(1)[0]
+processed_count = unique_counts * most_common_freq
+
+# Additional computations (partially relevant)
+factor = (len(inventory_counts) + unique_counts) // 2
+secondary_factor = factor * 2 - 1  # Distractor calculation
+
+# Final computation (key statement)
+adjustment = total_items % (unique_counts + 1)
+final_computation = (processed_count * factor) - adjustment
+
+# Print target result
+print(f"Target result: {final_computation}")

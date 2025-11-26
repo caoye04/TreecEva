@@ -1,44 +1,33 @@
-from collections import Counter
-from functools import reduce
-
-def compute_positional_weight(char_freq_map, sequence_length):
-    weighted_sum = 0
-    for char, freq in char_freq_map.items():
-        char_code = ord(char)
-        position_factor = (char_code * freq) % 7
-        weighted_sum += position_factor * (sequence_length // (freq + 1))
-    return weighted_sum
-
-def calculate_mutation_checksum(dna_sequence):
-    # Step 1: Count nucleotide frequencies
-    nucleotide_counter = Counter(dna_sequence)
+def analyze_performance(data_points):
+    baseline = 42
+    processed_data = []
     
-    # Step 2: Apply positional weighting
-    seq_len = len(dna_sequence)
-    position_weight = compute_positional_weight(nucleotide_counter, seq_len)
+    for value in data_points:
+        if value % 2 == 0:
+            processed_value = value * 3 - 5
+        else:
+            processed_value = value + 7
+        processed_data.append(processed_value)
     
-    # Step 3: Transform sequence - reverse complement simulation
-    complement_map = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
-    transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
+    # Distractor operations that don't affect final result
+    temp_sum = sum(processed_data[:2])
+    average_temp = temp_sum / 2
     
-    # Step 4: Calculate transformation hash
-    transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
+    adjustment_factor = len(processed_data) // 2
     
-    # Step 5: Combine metrics with modular arithmetic
-    frequency_product = reduce(lambda x, y: (x * y) % 97, nucleotide_counter.values(), 1)
+    # More distractor calculations
+    max_val = max(processed_data)
+    min_val = min(processed_data)
+    range_val = max_val - min_val
     
-    # Step 6: Final checksum computation
-    checksum_components = [
-        position_weight % 13,
-        transform_hash % 17,
-        frequency_product % 19,
-        seq_len % 23
-    ]
+    final_score = processed_data[2] * adjustment_factor
     
-    checksum_result = sum(component * (i + 11) for i, component in enumerate(checksum_components)) % 100
-    return checksum_result
+    # Final verification (distractor)
+    verification_check = final_score > 50
+    
+    print(f"Result: {final_score}")
+    return final_score
 
 # Main execution
-sample_dna = "ATCGATCGATCGATCGATCG"
-checksum_result = calculate_mutation_checksum(sample_dna)
-print(f"Result: {checksum_result}")
+performance_data = [12, 8, 15, 6, 9]
+result = analyze_performance(performance_data)

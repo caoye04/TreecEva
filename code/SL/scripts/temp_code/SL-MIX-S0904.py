@@ -1,38 +1,35 @@
 from collections import Counter
-from itertools import combinations
 
-def calculate_positional_score(fragment):
-    char_positions = {}
-    for idx, char in enumerate(fragment):
-        if char not in char_positions:
-            char_positions[char] = []
-        char_positions[char].append(idx)
+def analyze_team_scores():
+    team_scores = [85, 92, 78, 96, 88, 91, 83, 79, 95, 87]
+    score_counter = Counter(team_scores)
     
-    score = 0
-    for positions in char_positions.values():
-        if len(positions) > 1:
-            # Calculate sum of distances between all position pairs
-            for pos1, pos2 in combinations(positions, 2):
-                score += abs(pos2 - pos1)
-    return score
+    # Calculate statistics (some relevant, some not)
+    average_score = sum(team_scores) / len(team_scores)
+    highest_score = max(team_scores)
+    lowest_score = min(team_scores)
+    
+    # Find most common score (distractor - not used in final answer)
+    most_common_score = score_counter.most_common(1)[0][0]
+    
+    # Calculate score ranges (semi-relevant operations)
+    score_range = highest_score - lowest_score
+    mid_range = (highest_score + lowest_score) / 2
+    
+    # Target calculation
+    scores_above_90 = [score for score in team_scores if score > 90]
+    target_sum = sum(scores_above_90)
+    
+    # Adjustment calculations (some relevant, some not)
+    bonus_points = len(scores_above_90) * 2
+    penalty_points = 3  # distractor - never used
+    adjustment_factor = bonus_points
+    
+    # Final result
+    final_result = target_sum - adjustment_factor
+    
+    # Print verification
+    print(f"Result: {final_result}")
+    return final_result
 
-def compute_frequency_weight(fragment):
-    freq = Counter(fragment)
-    total_chars = len(fragment)
-    weight = 1.0
-    for count in freq.values():
-        ratio = count / total_chars
-        weight *= (1.0 + ratio) if ratio > 0.25 else (1.0 - ratio)
-    return weight
-
-ancient_fragment = "abracadabra"
-positional_score = calculate_positional_score(ancient_fragment)
-frequency_weight = compute_frequency_weight(ancient_fragment)
-
-# Apply ternary operator for normalization based on fragment length
-normalized_score = positional_score/len(ancient_fragment) if len(ancient_fragment) > 10 else positional_score
-
-# Final fragment score combines positional analysis with frequency adjustments
-fragment_score = int(normalized_score * (frequency_weight * 100)) if frequency_weight > 0.8 else int(normalized_score + (frequency_weight * 10))
-
-print(f"Result: {fragment_score}")
+analyze_team_scores()

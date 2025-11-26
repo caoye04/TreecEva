@@ -1,51 +1,41 @@
-from collections import Counter
-import math
+def compute_modular_sum(values):
+    # Helper function with some irrelevant calculations
+    temp_sum = sum(values)
+    unused_mod = temp_sum % 7  # Unused calculation
+    shifted = temp_sum << 2  # Distractor operation
+    return temp_sum
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+# Initialize data structures with mixed operations
+student_ids = [101, 102, 103, 104, 105]
+exam_scores = [88, 92, 76, 85, 94]
+attendance_weights = [0.9, 0.85, 0.95, 0.88, 0.92]
 
-def prime_weight(num):
-    factors = []
-    d = 2
-    while d * d <= num:
-        while (num % d) == 0:
-            factors.append(d)
-            num //= d
-        d += 1
-    if num > 1:
-        factors.append(num)
-    prime_factors = [f for f in factors if is_prime(f)]
-    return sum(prime_factors)
+# Irrelevant processing that doesn't affect final result
+bonus_points = [5, 3, 7, 4, 6]
+adjusted_bonus = [x * 1.1 for x in bonus_points]  # Unused calculation
 
-hex_hashes = ['a1b2c3d4', '1e2f3a4b', 'deadbeef', 'cafebabe']
-weights = []
+# Main computation chain
+processed_values = []
+for i, (score, weight) in enumerate(zip(exam_scores, attendance_weights)):
+    if i % 2 == 0:
+        processed = (score * weight) // 2
+    else:
+        processed = (score * weight) + 10
+    processed_values.append(processed)
 
-for h in hex_hashes:
-    val = int(h, 16)
-    weight = prime_weight(val)
-    weights.append(weight)
+# More distractions
+prime_check = 17  # Used in final calculation
+composite_check = 23  # Unused distractor
 
-# Normalize weights using mean adjustment
-mean_weight = sum(weights) / len(weights)
-normalized_weights = [(w - mean_weight) ** 2 for w in weights]
-variance = sum(normalized_weights) / len(normalized_weights)
+# Sorting operations
+sorted_scores = sorted(exam_scores, reverse=True)
+redundant_sorted = sorted(student_ids)  # Unused
 
-# Apply modular arithmetic with a cryptographic constant
-MOD_CONST = 997  # Large prime
-mod_values = [int(w * 1000) % MOD_CONST for w in normalized_weights]
+# Dead code path - never executed
+if len(student_ids) > 10:
+    unused_result = compute_modular_sum(student_ids)
+else:
+    # Final computation - critical execution point
+    final_score = (sorted_scores[1] + processed_values[2]) % prime_check
 
-# Compute anomaly score as weighted checksum
-anomaly_score = sum(mod_values[i] * (i + 1) for i in range(len(mod_values))) % MOD_CONST
-
-print(f"Result: {anomaly_score}")
+print(f"Result: {final_score}")

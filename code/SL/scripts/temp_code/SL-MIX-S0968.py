@@ -1,58 +1,21 @@
-from dataclasses import dataclass
-from collections import namedtuple
-import statistics
-
-temperature_record = namedtuple('TemperatureRecord', ['day', 'min_temp', 'max_temp'])
-
-@dataclass
-class StabilityAnalyzer:
-    records: list
+def process_grades(raw_grades):
+    # Convert letter grades to numeric values
+    grade_map = {'A': 4.0, 'B': 3.0, 'C': 2.0, 'D': 1.0, 'F': 0.0}
+    numeric_grades = [grade_map[grade] for grade in raw_grades if grade in grade_map]
     
-    def calculate_variance_index(self):
-        temp_ranges = [rec.max_temp - rec.min_temp for rec in self.records]
-        return statistics.variance(temp_ranges)
+    # Apply bonus for grades above C
+    bonus_grades = [grade + 0.5 if grade > 2.0 else grade for grade in numeric_grades]
     
-    def calculate_mean_range(self):
-        temp_ranges = [rec.max_temp - rec.min_temp for rec in self.records]
-        return statistics.mean(temp_ranges)
+    # Remove lowest grade and calculate final score
+    if bonus_grades:
+        processed_values = sorted(bonus_grades)[1:]
+        final_score = sum(processed_values)
+    else:
+        final_score = 0
+    
+    print(f"Final result: {final_score}")
+    return final_score
 
-# Temperature data for a 5-day period
-climate_data = [
-    temperature_record(1, 12.5, 24.3),
-    temperature_record(2, 14.2, 26.1),
-    temperature_record(3, 16.8, 28.9),
-    temperature_record(4, 13.7, 22.4),
-    temperature_record(5, 15.3, 27.2)
-]
-
-analyzer = StabilityAnalyzer(climate_data)
-variance_score = analyzer.calculate_variance_index()
-mean_temp_range = analyzer.calculate_mean_range()
-
-# Weather stability classification logic
-stability_category = None
-if variance_score < 2.0:
-    stability_category = 'STABLE'
-elif variance_score < 4.0:
-    stability_category = 'MODERATE'
-elif variance_score < 6.0:
-    stability_category = 'UNSTABLE'
-else:
-    stability_category = 'VOLATILE'
-
-# Calculate final stability index based on category
-base_modifier = 0
-match stability_category:
-    case 'STABLE':
-        base_modifier = 10
-    case 'MODERATE':
-        base_modifier = 5
-    case 'UNSTABLE':
-        base_modifier = -5
-    case 'VOLATILE':
-        base_modifier = -15
-    case _:
-        base_modifier = 0
-
-final_stability_index = int(mean_temp_range * base_modifier)
-print(f"Result: {final_stability_index}")
+# Input data
+student_grades = ['A', 'B', 'C', 'A', 'B']
+final_score = process_grades(student_grades)

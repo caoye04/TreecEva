@@ -1,0 +1,16 @@
+Target: Find the value of variable final_result after [line 9] executes
+
+[line 4]  raw_readings = [12, 8, 15, 22, 18, 25]
+Compute: [12, 8, 15, 22, 18, 25] = [12, 8, 15, 22, 18, ...]
+[line 5]  calibration_offset = 3
+Assign: calibration_offset = 3
+[line 6]  adjusted_readings = [x + calibration_offset for x in raw_readings]
+Compute: [x + calibration_offset for x in raw_readings], where x=12 (an unknown source), calibration_offset=3 (defined at [line 5]), raw_readings=[12, 8, 15, 22, 18, ...] (defined at [line 4]) = ?
+[line 7]  threshold_filter = [x for x in adjusted_readings if x > 15]
+Compute: [x for x in adjusted_readings if x > 15], where x=15 (an unknown source), adjusted_readings=[15, 11, 18, 25, 21, ...] (defined at [line 6]) = ?
+[line 8]  processed_data = list(accumulate(threshold_filter))
+Call function list(accumulate(threshold_filter))
+[line 9]  final_result = sum(processed_data)
+Call function sum(processed_data=[18, 43, 64, 92] (defined at [line 8]))
+
+Answer: final_result = 217 (last updated on defined at [line 9])

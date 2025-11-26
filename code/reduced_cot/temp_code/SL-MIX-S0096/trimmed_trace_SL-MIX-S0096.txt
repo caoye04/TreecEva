@@ -1,93 +1,35 @@
-58
-final_portfolio_value
+13
+final_solution
 ---
-27 portfolio = PortfolioManager()
-27 [] []
-6 self.portfolio_value = 1000.0
-6 ['self'] ['PortfolioManager(portfolio_value=1000.0)']
-7 self.risk_multiplier = 1.05
-7 ['self'] ['PortfolioManager(risk_multiplier=1.05)']
-8 self.transaction_log = []
-8 ['self'] ['PortfolioManager(transaction_log=[])']
-37 transaction_rules = "ADD:500.0;APPLY:bull;ADD:200.0;APPLY:risk_context_1.2;ADD:300.0"
-37 ['portfolio', 'market_conditions', 'transaction_rules'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "'ADD:500.0;APPLY:bull;ADD:200.0;APPLY:risk_context_1.2;ADD:300.0'"]
-40 tokens = transaction_rules.split(';')
-40 ['portfolio', 'market_conditions', 'transaction_rules', 'tokens'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "'ADD:500.0;APPLY:bull;ADD:200.0;APPLY:risk_context_1.2;ADD:300.0'", "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']"]
-42 for token in tokens:
-42 ['portfolio', 'market_conditions', 'tokens', 'token'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:500.0'"]
-43 operation, value = token.split(':')
-43 ['portfolio', 'market_conditions', 'tokens', 'token', 'value'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:500.0'", "'500.0'"]
-44 if operation == 'ADD':
-44 ['portfolio', 'market_conditions', 'tokens', 'token', 'value'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:500.0'", "'500.0'"]
-45 adjustment = float(value)
-45 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:500.0'", "'500.0'", '500.0']
-46 portfolio.portfolio_value += adjustment
-46 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment'] ['PortfolioManager(portfolio_value=1500.0)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:500.0'", "'500.0'", '500.0']
-42 for token in tokens:
-42 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:bull'", "'500.0'", '500.0']
-43 operation, value = token.split(':')
-43 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:bull'", "'bull'", '500.0']
-44 if operation == 'ADD':
-44 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:bull'", "'bull'", '500.0']
-48 elif operation == 'APPLY':
-48 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:bull'", "'bull'", '500.0']
-49 if value.startswith('risk_context_'):
-49 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:bull'", "'bull'", '500.0']
-54 factor = market_conditions[value]
-54 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:bull'", "'bull'", '500.0', '1.12']
-55 portfolio.portfolio_value = portfolio.apply_market_condition(factor)
-55 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(portfolio_value=1500.0)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:bull'", "'bull'", '500.0', '1.12']
-11 self.portfolio_value *= condition_factor
-11 ['self', 'condition_factor'] ['PortfolioManager(portfolio_value=1680.0000000000002)', '1.12']
-12 return self.portfolio_value
-12 ['self', 'condition_factor'] ['PortfolioManager(portfolio_value=1680.0000000000002)', '1.12']
-42 for token in tokens:
-42 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:200.0'", "'bull'", '500.0', '1.12']
-43 operation, value = token.split(':')
-43 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:200.0'", "'200.0'", '500.0', '1.12']
-44 if operation == 'ADD':
-44 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:200.0'", "'200.0'", '500.0', '1.12']
-45 adjustment = float(value)
-45 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:200.0'", "'200.0'", '200.0', '1.12']
-46 portfolio.portfolio_value += adjustment
-46 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(portfolio_value=1880.0000000000002)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:200.0'", "'200.0'", '200.0', '1.12']
-42 for token in tokens:
-42 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:risk_context_1.2'", "'200.0'", '200.0', '1.12']
-43 operation, value = token.split(':')
-43 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:risk_context_1.2'", "'risk_context_1.2'", '200.0', '1.12']
-44 if operation == 'ADD':
-44 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:risk_context_1.2'", "'risk_context_1.2'", '200.0', '1.12']
-48 elif operation == 'APPLY':
-48 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:risk_context_1.2'", "'risk_context_1.2'", '200.0', '1.12']
-49 if value.startswith('risk_context_'):
-49 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:risk_context_1.2'", "'risk_context_1.2'", '200.0', '1.12']
-50 factor = float(value.split('_')[2])
-50 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(...)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:risk_context_1.2'", "'risk_context_1.2'", '200.0', '1.2']
-51 with portfolio.risk_adjustment_context(factor):
-51 [] []
-20 self.risk_multiplier *= risk_factor
-20 ['self', 'risk_factor'] ['PortfolioManager(risk_multiplier=1.26)', '1.2']
-21 try:
-21 ['self'] ['PortfolioManager(...)']
-52 portfolio.portfolio_value = portfolio.apply_market_condition(market_conditions['bull'])
-52 ['portfolio', 'market_conditions', 'tokens', 'token', 'value', 'adjustment', 'factor'] ['PortfolioManager(portfolio_value=1880.0000000000002)', '{bull: 1.12, bear: 0.92, neutral: 1.01}', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'APPLY:risk_context_1.2'", "'risk_context_1.2'", '200.0', '1.2']
-11 self.portfolio_value *= condition_factor
-11 ['self', 'condition_factor'] ['PortfolioManager(portfolio_value=2105.6000000000004)', '1.12']
-12 return self.portfolio_value
-12 ['self'] ['PortfolioManager(portfolio_value=2105.6000000000004)']
-51 with portfolio.risk_adjustment_context(factor):
-51 ['value'] ['None']
-42 for token in tokens:
-42 ['portfolio', 'tokens', 'token', 'value', 'adjustment'] ['PortfolioManager(...)', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:300.0'", "'risk_context_1.2'", '200.0']
-43 operation, value = token.split(':')
-43 ['portfolio', 'tokens', 'token', 'value', 'adjustment'] ['PortfolioManager(...)', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:300.0'", "'300.0'", '200.0']
-44 if operation == 'ADD':
-44 ['portfolio', 'tokens', 'token', 'value', 'adjustment'] ['PortfolioManager(...)', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:300.0'", "'300.0'", '200.0']
-45 adjustment = float(value)
-45 ['portfolio', 'tokens', 'token', 'value', 'adjustment'] ['PortfolioManager(...)', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:300.0'", "'300.0'", '300.0']
-46 portfolio.portfolio_value += adjustment
-46 ['portfolio', 'tokens', 'token', 'adjustment'] ['PortfolioManager(portfolio_value=2405.6000000000004)', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:300.0'", '300.0']
-42 for token in tokens:
-42 ['portfolio', 'tokens', 'token'] ['PortfolioManager(...)', "['ADD:500.0', 'APPLY:bull', 'ADD:200.0', 'APPLY:risk_context_1.2', 'ADD:300.0']", "'ADD:300.0'"]
-58 final_portfolio_value = portfolio.portfolio_value * portfolio.risk_multiplier
-58 ['portfolio', 'final_portfolio_value'] ['PortfolioManager(portfolio_value=2405.6000000000004, risk_multiplier=1.05)', '2525.8800000000006']
+2 base_inventory = [45, 23, 67, 89, 12, 34, 56, 78, 91, 15]
+2 ['base_inventory'] ['[45, 23, 67, 89, 12, ...]']
+3 threshold = 50
+3 ['base_inventory', 'threshold'] ['[45, 23, 67, 89, 12, ...]', '50']
+6 high_value_items = [item for item in base_inventory if item > threshold]
+6 ['base_inventory', 'threshold', 'item'] ['[45, 23, 67, 89, 12, ...]', '50', '45']
+6 high_value_items = [item for item in base_inventory if item > threshold]
+6 ['base_inventory', 'threshold', 'item'] ['[45, 23, 67, 89, 12, ...]', '50', '23']
+6 high_value_items = [item for item in base_inventory if item > threshold]
+6 ['base_inventory', 'threshold', 'item'] ['[45, 23, 67, 89, 12, ...]', '50', '67']
+6 high_value_items = [item for item in base_inventory if item > threshold]
+6 ['base_inventory', 'threshold', 'item'] ['[45, 23, 67, 89, 12, ...]', '50', '89']
+6 high_value_items = [item for item in base_inventory if item > threshold]
+6 ['base_inventory', 'threshold', 'item'] ['[45, 23, 67, 89, 12, ...]', '50', '12']
+6 high_value_items = [item for item in base_inventory if item > threshold]
+6 ['base_inventory', 'threshold', 'item'] ['[45, 23, 67, 89, 12, ...]', '50', '34']
+6 high_value_items = [item for item in base_inventory if item > threshold]
+6 ['base_inventory', 'threshold', 'item'] ['[45, 23, 67, 89, 12, ...]', '50', '56']
+6 high_value_items = [item for item in base_inventory if item > threshold]
+6 ['base_inventory', 'threshold', 'item'] ['[45, 23, 67, 89, 12, ...]', '50', '78']
+6 high_value_items = [item for item in base_inventory if item > threshold]
+6 ['base_inventory', 'threshold', 'item'] ['[45, 23, 67, 89, 12, ...]', '50', '91']
+6 high_value_items = [item for item in base_inventory if item > threshold]
+6 ['base_inventory', 'threshold', 'item'] ['[45, 23, 67, 89, 12, ...]', '50', '15']
+6 high_value_items = [item for item in base_inventory if item > threshold]
+6 ['base_inventory', 'threshold', 'high_value_items'] ['[45, 23, 67, 89, 12, ...]', '50', '[67, 89, 56, 78, 91]']
+9 optimized_total = sum(high_value_items)
+9 ['high_value_items', 'optimized_total'] ['[67, 89, 56, 78, 91]', '381']
+12 adjustment_factor = 25
+12 ['optimized_total', 'adjustment_factor'] ['381', '25']
+13 final_solution = optimized_total + adjustment_factor
+13 ['optimized_total', 'adjustment_factor', 'final_solution'] ['381', '25', '406']

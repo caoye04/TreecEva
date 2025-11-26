@@ -1,62 +1,12 @@
-Target: Find the value of variable anomaly_score after [line 35] executes
+Target: Find the value of variable final_count after [line 18] executes
 
-[line 17]  encoded_packets = [encode_header(header) for header in packet_headers]
-Compute: [encode_header(header) for header in packet_headers], where header='SRC:192.168.1.1|DST:10.0.0.1|PORT:8080' (an unknown source), packet_headers=['SRC:192.168.1.1|DST:10.0.0.1|PORT:8080', 'SRC:192.168.1.2|DST:10.0.0.2|PORT:80', 'SRC:192.168.1.3|DST:10.0.0.3|PORT:443', 'SRC:192.168.1.4|DST:10.0.0.4|PORT:22'] (an unknown source) = ?
-[line 5]  return hashlib.sha256(header_str.encode()).hexdigest()[:8]
-Return: hashlib.sha256(header_str.encode()).hexdigest()[:8]
-[line 5]  return hashlib.sha256(header_str.encode()).hexdigest()[:8]
-Return: hashlib.sha256(header_str.encode()).hexdigest()[:8]
-[line 5]  return hashlib.sha256(header_str.encode()).hexdigest()[:8]
-Return: hashlib.sha256(header_str.encode()).hexdigest()[:8]
-[line 5]  return hashlib.sha256(header_str.encode()).hexdigest()[:8]
-Return: hashlib.sha256(header_str.encode()).hexdigest()[:8]
-[line 19]  decoded_values = [decode_header(packet) for packet in encoded_packets]
-Compute: [decode_header(packet) for packet in encoded_packets], where packet='a5668418' (an unknown source), encoded_packets=['a5668418', 'd2cfded5', 'e1f940dd', 'a2eedd3d'] (defined at [line 17]) = ?
-[line 8]  return int(encoded_str, 16)
-Return: int(encoded_str, 16)
-[line 8]  return int(encoded_str, 16)
-Return: int(encoded_str, 16)
-[line 8]  return int(encoded_str, 16)
-Return: int(encoded_str, 16)
-[line 8]  return int(encoded_str, 16)
-Return: int(encoded_str, 16)
-[line 25]  anomaly_score = 0
-Assign: anomaly_score = 0
-[line 26]  for value in decoded_values:
-Loop Start: value takes its first value 2774959128
-[line 30]  is_suspicious = (value & 0xF0000000) != 0
-Compute: (value & 0xF0000000) != 0, where value=2774959128 (defined at [line 26]) = True
-[line 31]  weight = 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1)
-Compute: 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1), where risk_level='high_risk' (an unknown source) = 3
-[line 33]  anomaly_score += weight if is_suspicious else 0
-Update: anomaly_score changed from 0 (defined at defined at [line 25]) to 0+weight if is_suspicious else 0 = 3
-[line 26]  for value in decoded_values:
-Loop Iteration: value is now 3536838357 (iteration 2)
-[line 30]  is_suspicious = (value & 0xF0000000) != 0
-Compute: (value & 0xF0000000) != 0, where value=3536838357 (defined at [line 26]) = True
-[line 31]  weight = 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1)
-Compute: 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1), where risk_level='high_risk' (an unknown source) = 3
-[line 33]  anomaly_score += weight if is_suspicious else 0
-Update: anomaly_score changed from 3 (defined at defined at [line 33]) to 3+weight if is_suspicious else 0 = 6
-[line 26]  for value in decoded_values:
-Loop Iteration: value is now 3791208669 (iteration 3)
-[line 30]  is_suspicious = (value & 0xF0000000) != 0
-Compute: (value & 0xF0000000) != 0, where value=3791208669 (defined at [line 26]) = True
-[line 31]  weight = 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1)
-Compute: 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1), where risk_level='high_risk' (an unknown source) = 3
-[line 33]  anomaly_score += weight if is_suspicious else 0
-Update: anomaly_score changed from 6 (defined at defined at [line 33]) to 6+weight if is_suspicious else 0 = 9
-[line 26]  for value in decoded_values:
-Loop Iteration: value is now 2733563197 (iteration 4)
-[line 30]  is_suspicious = (value & 0xF0000000) != 0
-Compute: (value & 0xF0000000) != 0, where value=2733563197 (defined at [line 26]) = True
-[line 31]  weight = 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1)
-Compute: 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1), where risk_level='high_risk' (an unknown source) = 3
-[line 33]  anomaly_score += weight if is_suspicious else 0
-Update: anomaly_score changed from 9 (defined at defined at [line 33]) to 9+weight if is_suspicious else 0 = 12
-[line 26]  for value in decoded_values:
-Loop End: Iteration finished
-[line 35]  anomaly_score = anomaly_score if anomaly_score > 0 else -1
-Compute: anomaly_score if anomaly_score > 0 else -1, where anomaly_score=12 (defined at [line 33]) = 12
+[line 2]  research_group_a = {'bioinformatics', 'computational_biology', 'machine_learning', 'data_science'}
+Compute: {'bioinformatics', 'computational_biology', 'machine_learning', 'data_science'} = {'bioinformatics', 'computational_biology', 'data_science', 'machine_learning'}
+[line 3]  research_group_b = {'computational_biology', 'genomics', 'machine_learning', 'statistics'}
+Compute: {'computational_biology', 'genomics', 'machine_learning', 'statistics'} = {'computational_biology', 'genomics', 'statistics', 'machine_learning'}
+[line 17]  remaining_items = research_group_a.symmetric_difference(research_group_b)
+(Missing param: 'func_name')
+[line 18]  final_count = len(remaining_items)
+Call function len(remaining_items={'bioinformatics', 'genomics', 'statistics', 'data_science'} (an unknown source))
 
-Answer: anomaly_score = 12 (last updated on defined at [line 35])
+Answer: final_count = 4 (last updated on defined at [line 18])

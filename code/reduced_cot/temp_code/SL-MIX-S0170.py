@@ -1,17 +1,16 @@
-from collections import namedtuple
+data_records = {
+    'A001': 45,
+    'B002': 67,
+    'C003': 23,
+    'D004': 89,
+    'E005': 12
+}
 
-# Define item prices
-Item = namedtuple('Item', ['name', 'price'])
-croissant = Item('croissant', 2.5)
-muffin = Item('muffin', 3.0)
-scone = Item('scone', 2.0)
+primary_sum = sum([value for key, value in data_records.items() if key.startswith(('A', 'B', 'C'))])
+temp_calc = primary_sum * 2  # Unused intermediate calculation
+modifier = len([key for key in data_records.keys() if key.endswith('3')]) + 1
+secondary_sum = sum([value for key, value in data_records.items() if value > 50])  # Unused calculation
+adjustment = len(data_records) * 10
+final_total = primary_sum * modifier - adjustment
 
-# Daily sales quantities
-sales_quantities = [40, 25, 30]  # croissants, muffins, scones
-
-# Calculate total revenue using list comprehension
-prices = [croissant.price, muffin.price, scone.price]
-revenues = [qty * price for qty, price in zip(sales_quantities, prices)]
-total_revenue = sum(revenues) if all(revenues) else 0
-
-print(f'Total revenue: {total_revenue}')
+print(f"Result: {final_total}")

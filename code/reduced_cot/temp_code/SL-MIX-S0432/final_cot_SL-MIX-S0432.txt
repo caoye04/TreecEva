@@ -1,0 +1,49 @@
+Target: Find the value of variable final_calibration after [line 27] executes
+
+[line 1]  sensor_readings = [15.2, 18.7, 22.4, 19.8, 16.5]
+Compute: [15.2, 18.7, 22.4, 19.8, 16.5] = [15.2, 18.7, 22.4, 19.8, 16.5]
+[line 2]  calibration_offsets = [-1.3, 0.8, -0.5, 1.2, -0.9]
+Compute: [-1.3, 0.8, -0.5, 1.2, -0.9] = [-1.3, 0.8, -0.5, 1.2, -0.9]
+[line 5]  compensated_sum = 0
+Assign: compensated_sum = 0
+[line 6]  valid_count = 0
+Assign: valid_count = 0
+[line 9]  for idx, (reading, offset) in enumerate(zip(sensor_readings, calibration_offsets)):
+(Missing param: 'iter_var')
+[line 10]  compensated = reading + offset
+Compute: reading + offset, where reading=15.2 (an unknown source), offset=-1.3 (an unknown source) = 13.899999999999999
+[line 12]  if compensated > 17.0:
+Condition: True, entering 'if' block
+[line 9]  for idx, (reading, offset) in enumerate(zip(sensor_readings, calibration_offsets)):
+(Missing param: 'iter_var')
+[line 10]  compensated = reading + offset
+Compute: reading + offset, where reading=18.7 (an unknown source), offset=0.8 (an unknown source) = 19.5
+[line 12]  if compensated > 17.0:
+Condition: True, entering 'if' block
+[line 13]  compensated_sum += compensated
+Update: compensated_sum changed from 0 (defined at defined at [line 5]) to 0+compensated = 19.5
+[line 14]  valid_count += 1
+Update: valid_count changed from 0 (defined at defined at [line 6]) to 0+1 = 1
+... [Line 9] repeats 2 more times ...
+... [Line 9] repeats 2 more times ...
+... [Line 9] repeats 2 more times ...
+... [Line 9] repeats 2 more times ...
+... [Line 9] repeats 2 more times ...
+[line 9]  for idx, (reading, offset) in enumerate(zip(sensor_readings, calibration_offsets)):
+(Missing param: 'iter_var')
+[line 10]  compensated = reading + offset
+Compute: reading + offset, where reading=16.5 (an unknown source), offset=-0.9 (an unknown source) = 15.6
+[line 12]  if compensated > 17.0:
+Condition: True, entering 'if' block
+[line 9]  for idx, (reading, offset) in enumerate(zip(sensor_readings, calibration_offsets)):
+Loop End: Iteration finished
+[line 17]  if valid_count > 0:
+Condition: True, entering 'if' block
+[line 18]  target_value = compensated_sum / valid_count
+Compute: compensated_sum / valid_count, where compensated_sum=62.4 (defined at [line 13]), valid_count=3 (defined at [line 14]) = 20.8
+[line 23]  offset_adjustment = sum(calibration_offsets[::2]) - sum(calibration_offsets[1::2])
+Compute: sum(calibration_offsets[::2]) - sum(calibration_offsets[1::2]), where calibration_offsets=[-1.3, 0.8, -0.5, 1.2, -0.9] (defined at [line 2]) = -4.7
+[line 27]  final_calibration = target_value + offset_adjustment
+Compute: target_value + offset_adjustment, where target_value=20.8 (defined at [line 18]), offset_adjustment=-4.7 (defined at [line 23]) = 16.1
+
+Answer: final_calibration = 16.1 (last updated on defined at [line 27])

@@ -1,0 +1,33 @@
+32
+final_result
+---
+25 primary_set = {4, 7, 12, 15}
+25 ['primary_set'] ['{7, 4, 12, 15}']
+26 secondary_set = {7, 12, 20, 25}
+26 ['primary_set', 'secondary_set'] ['{7, 4, 12, 15}', '{25, 12, 20, 7}']
+29 final_result = process_data(primary_set, secondary_set)
+29 ['primary_set', 'secondary_set'] ['{7, 4, 12, 15}', '{25, 12, 20, 7}']
+3 common_elements = set_a.intersection(set_b)
+3 ['set_a', 'set_b', 'common_elements'] ['{7, 4, 12, 15}', '{25, 12, 20, 7}', '{12, 7}']
+4 unique_to_a = set_a.difference(set_b)
+4 ['set_a', 'set_b', 'common_elements', 'unique_to_a'] ['{7, 4, 12, 15}', '{25, 12, 20, 7}', '{12, 7}', '{4, 15}']
+5 unique_to_b = set_b.difference(set_a)
+5 ['set_a', 'set_b', 'common_elements', 'unique_to_a', 'unique_to_b'] ['{7, 4, 12, 15}', '{25, 12, 20, 7}', '{12, 7}', '{4, 15}', '{25, 20}']
+12 xor_result = 0
+12 ['common_elements', 'unique_to_a', 'unique_to_b', 'xor_result'] ['{12, 7}', '{4, 15}', '{25, 20}', '0']
+13 for i, val in enumerate(common_elements):
+13 ['common_elements', 'unique_to_a', 'unique_to_b', 'xor_result', 'i', 'val'] ['{12, 7}', '{4, 15}', '{25, 20}', '0', '0', '12']
+14 xor_result ^= (val << 1)  # Shift and XOR
+14 ['common_elements', 'unique_to_a', 'unique_to_b', 'xor_result', 'i', 'val'] ['{12, 7}', '{4, 15}', '{25, 20}', '24', '0', '12']
+13 for i, val in enumerate(common_elements):
+13 ['common_elements', 'unique_to_a', 'unique_to_b', 'xor_result', 'i', 'val'] ['{12, 7}', '{4, 15}', '{25, 20}', '24', '1', '7']
+14 xor_result ^= (val << 1)  # Shift and XOR
+14 ['common_elements', 'unique_to_a', 'unique_to_b', 'xor_result', 'i', 'val'] ['{12, 7}', '{4, 15}', '{25, 20}', '22', '1', '7']
+13 for i, val in enumerate(common_elements):
+13 ['common_elements', 'unique_to_a', 'unique_to_b', 'xor_result', 'i', 'val'] ['{12, 7}', '{4, 15}', '{25, 20}', '22', '1', '7']
+20 result = xor_result + len(unique_to_a) - len(unique_to_b)
+20 ['unique_to_a', 'unique_to_b', 'xor_result', 'result'] ['{4, 15}', '{25, 20}', '22', '22']
+22 return result
+22 ['result'] ['22']
+32 print(f"Result: {final_result}")
+32 ['final_result'] ['22']

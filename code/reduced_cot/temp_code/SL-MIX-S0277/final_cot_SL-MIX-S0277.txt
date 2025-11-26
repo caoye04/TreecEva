@@ -1,0 +1,18 @@
+Target: Find the value of variable final_result after [line 10] executes
+
+[line 1]  student_records = [('Alice', 85), ('Bob', 72), ('Charlie', 91), ('Diana', 78), ('Evan', 95)]
+Compute: [('Alice', 85), ('Bob', 72), ('Charlie', 91), ('Diana', 78), ('Evan', 95)] = [('Alice', 85), ('Bob', 72), ('Charlie', 91), ('Diana', 78), ('Evan', 95)]
+[line 2]  score_threshold = 80
+Assign: score_threshold = 80
+[line 3]  preliminary_scores = [score for name, score in student_records]
+Compute: [score for name, score in student_records], where score=85 (an unknown source), name='Alice' (an unknown source), student_records=[('Alice', 85), ('Bob', 72), ('Charlie', 91), ('Diana', 78), ('Evan', 95)] (defined at [line 1]) = ?
+[line 4]  above_threshold = [score for score in preliminary_scores if score > score_threshold]
+Compute: [score for score in preliminary_scores if score > score_threshold], where score=85 (an unknown source), preliminary_scores=[85, 72, 91, 78, 95] (defined at [line 3]), score_threshold=80 (defined at [line 2]) = ?
+[line 5]  filtered_scores = sorted(above_threshold)
+Call function sorted(above_threshold=[85, 91, 95] (defined at [line 4]))
+[line 8]  adjustment_factor = max(filtered_scores) - min(filtered_scores) - 5
+Compute: max(filtered_scores) - min(filtered_scores) - 5, where filtered_scores=[85, 91, 95] (defined at [line 5]) = 5
+[line 10]  final_result = filtered_scores[-1] + adjustment_factor
+Compute: filtered_scores[-1] + adjustment_factor, where filtered_scores=[85, 91, 95] (defined at [line 5]), adjustment_factor=5 (defined at [line 8]) = 100
+
+Answer: final_result = 100 (last updated on defined at [line 10])

@@ -1,0 +1,18 @@
+Target: Find the value of variable final_temperature after [line 17] executes
+
+[line 1]  temperature_readings = [15.2, 18.7, 22.4, 19.8, 25.3, 17.9, 21.5]
+Compute: [15.2, 18.7, 22.4, 19.8, 25.3, 17.9, 21.5] = [15.2, 18.7, 22.4, 19.8, 25.3, ...]
+[line 2]  calibration_offset = 0.5
+Assign: calibration_offset = 0.5
+[line 3]  threshold_temp = 20.0
+Assign: threshold_temp = 20.0
+[line 6]  adjusted_temps = [temp + calibration_offset for temp in temperature_readings]
+Compute: [temp + calibration_offset for temp in temperature_readings], where temp=15.2 (an unknown source), calibration_offset=0.5 (defined at [line 2]), temperature_readings=[15.2, 18.7, 22.4, 19.8, 25.3, ...] (defined at [line 1]) = ?
+[line 7]  filtered_temps = [temp for temp in adjusted_temps if temp >= threshold_temp]
+Compute: [temp for temp in adjusted_temps if temp >= threshold_temp], where temp=15.7 (an unknown source), adjusted_temps=[15.7, 19.2, 22.9, 20.3, 25.8, ...] (defined at [line 6]), threshold_temp=20.0 (defined at [line 3]) = ?
+[line 16]  processed_data = [round(temp * 1.1, 2) for temp in filtered_temps]
+Compute: [round(temp * 1.1, 2) for temp in filtered_temps], where temp=22.9 (an unknown source), filtered_temps=[22.9, 20.3, 25.8, 22.0] (defined at [line 7]) = ?
+[line 17]  final_temperature = processed_data[-1]
+Compute: processed_data[-1], where processed_data=[25.19, 22.33, 28.38, 24.2] (defined at [line 16]) = 24.2
+
+Answer: final_temperature = 24.2 (last updated on defined at [line 17])

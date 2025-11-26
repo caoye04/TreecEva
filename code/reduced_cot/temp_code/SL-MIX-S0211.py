@@ -1,60 +1,41 @@
-import functools
+def calculate_fib(n):
+    return n if n <= 1 else calculate_fib(n-1) + calculate_fib(n-2)
 
-def calculate_priority_score(weight, distance):
-    return weight * distance
+def process_data(data_tuple):
+    primary, secondary, flags = data_tuple
+    
+    # Distractor computations
+    temp_sum = sum([i**2 for i in range(primary)])
+    irrelevant_metric = (temp_sum % 17) * 3.14159
+    
+    # Main logic with conditional expression
+    threshold_check = lambda x: x > 50 if secondary % 2 == 0 else x <= 30
+    adjusted_value = primary * 3 if threshold_check(secondary) else primary // 2
+    
+    # Bitwise operations and dead code path
+    bit_shifted = (adjusted_value << 2) ^ 0xFF
+    misleading_result = bit_shifted - irrelevant_metric  # This is never used
+    
+    # Early return based on flags
+    if flags.get('skip_processing', False):
+        return -999  # Dead code path
+    
+    # Combinatorics calculation
+    combination_count = len([(i, j) for i in range(1, adjusted_value) 
+                            for j in range(i+1, min(adjusted_value+1, 8))])
+    
+    # Final computation chain
+    fib_result = calculate_fib(combination_count % 7)
+    result = (fib_result + adjusted_value) * (1 if secondary > 25 else -1)
+    
+    return result
 
-def load_packages_greedy(truck_capacity, package_list):
-    # Sort packages by priority score descending (greedy)
-    scored_packages = [(pkg[0], pkg[1], calculate_priority_score(pkg[0], pkg[1])) for pkg in package_list]
-    scored_packages.sort(key=lambda x: x[2], reverse=True)
-    
-    # Initialize data structures
-    loaded_stack = []
-    pending_queue = scored_packages[:]
-    current_load = 0
-    
-    # Process using greedy + backtracking approach
-    def backtrack_load(remaining_capacity, index):
-        if index >= len(pending_queue):
-            return 0
-        
-        weight, _, _ = pending_queue[index]
-        
-        # Try loading current package (if fits)
-        if weight <= remaining_capacity:
-            loaded_stack.append(weight)
-            taken = 1 + backtrack_load(remaining_capacity - weight, index + 1)
-            loaded_stack.pop()
-        else:
-            taken = 0
-            
-        # Skip current package
-        skipped = backtrack_load(remaining_capacity, index + 1)
-        
-        return max(taken, skipped)
-    
-    # Execute greedy loading first
-    for pkg in scored_packages:
-        if current_load + pkg[0] <= truck_capacity:
-            current_load += pkg[0]
-            loaded_stack.append(pkg[0])
-    
-    # Refine with backtracking
-    final_load_count = backtrack_load(truck_capacity, 0)
-    return final_load_count
+# Main execution with multiple assignments
+data_config = (18, 32, {'validation': True})
+backup_data = (22, 28, {'skip_processing': True})  # Misleading data
+cache_value = calculate_fib(5)  # Irrelevant computation
 
-# Define truck specs and packages
-max_capacity = 50
-packages = [
-    (10, 5),   # (weight, delivery_distance)
-    (20, 3),
-    (15, 4),
-    (12, 6),
-    (8, 2),
-    (25, 1),
-    (5, 8)
-]
+main_data = data_config
+final_value = process_data(main_data)
 
-# Compute optimized loading
-final_load_count = load_packages_greedy(max_capacity, packages)
-print(f"Result: {final_load_count}")
+print(f"Target result: {final_value}")

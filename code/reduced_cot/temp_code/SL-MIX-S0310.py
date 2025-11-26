@@ -1,50 +1,26 @@
-import re
-from collections import defaultdict
-from itertools import permutations
+import collections
 
-def geohash_transform(coords):
-    # Phase 1: Normalize coordinates
-    norm_coords = []
-    for coord in coords:
-        normalized = round(coord * 100000) if coord >= 0 else -round(abs(coord) * 100000)
-        norm_coords.append(normalized)
-    
-    # Phase 2: Apply bit manipulation
-    bit_results = []
-    for i in range(len(norm_coords)):
-        x = norm_coords[i]
-        if i % 2 == 0:
-            result = (x >> 2) & 0xFF
-        else:
-            result = (x << 1) & 0xFF
-        bit_results.append(result)
-    
-    # Phase 3: Pattern matching and string conversion
-    patterns = defaultdict(int)
-    for val in bit_results:
-        bin_str = format(val, '08b')
-        matches = re.findall(r'10+', bin_str)
-        for match in matches:
-            patterns[len(match)] += 1
-    
-    # Phase 4: Hash computation
-    hash_value = 0
-    for length, count in patterns.items():
-        hash_value += (length * count * 7) % 256
-    
-    # Phase 5: Permutation entropy
-    perm_entropy = 0
-    for perm in permutations(str(hash_value)[:3]):
-        perm_str = ''.join(perm)
-        perm_entropy += int(perm_str) if perm_str.isdigit() else 0
-    
-    # Final hash computation
-    final_hash = (hash_value + perm_entropy) % 1000
-    return final_hash
+# Analyze student performance across multiple assessments
+student_scores = [85, 92, 78, 96, 88, 74, 91, 89]
+bonus_points = 3
+temp_calculation = sum(student_scores) // len(student_scores)
 
-# Initial coordinates
-coordinates = [40.7128, -74.0060, 34.0522, -118.2437]
+# Calculate weighted scores with some distraction operations
+score_counter = collections.Counter(student_scores)
+common_scores = score_counter.most_common(2)
 
-# Execute transformation
-final_hash = geohash_transform(coordinates)
-print(f'Result: {final_hash}')
+# Process scores with list comprehension and filtering
+filtered_scores = [score + bonus_points for score in student_scores if score >= 80]
+intermediate_sum = sum(filtered_scores)
+
+# More distraction operations
+unused_set = set(student_scores)
+set_operations = len(unused_set.intersection({85, 90, 95}))
+
+# Final processing with logical operations
+processed_scores = [score * 0.8 + 20 if score > 85 else score * 0.9 + 10 for score in filtered_scores]
+processed_scores.sort()
+
+# Calculate final result
+final_score = processed_scores[-1]
+print(f"Result: {final_score}")

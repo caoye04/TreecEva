@@ -1,52 +1,27 @@
-import math
-from collections import defaultdict
+data_samples = [12.5, 8.3, 15.7, 9.1, 11.4]
+threshold_check = 10.0
 
-def volatility_weight(x):
-    return 1.0 + abs(math.log(1.0 + abs(x)))
+# Primary processing path
+base_value = sum(data_samples) / len(data_samples)
+scaling_factor = 1.25 if base_value > 10 else 0.8
+processed_mean = base_value * scaling_factor
 
-def risk_transform(value, threshold=0.05):
-    return value ** 2 if value > threshold else math.sqrt(abs(value))
+# Secondary processing path (distractor)
+max_sample = max(data_samples)
+min_sample = min(data_samples)
+range_calc = max_sample - min_sample
+normalized_range = range_calc / 2.0
 
-# Simulated daily returns for 5 assets over 10 days
-asset_returns = [
-    [0.02, -0.01, 0.03, -0.02, 0.01, 0.04, -0.03, 0.02, -0.01, 0.05],
-    [-0.01, 0.02, -0.02, 0.03, -0.01, 0.02, -0.04, 0.03, -0.02, 0.01],
-    [0.03, 0.01, -0.03, 0.02, -0.02, 0.01, -0.01, 0.04, -0.03, 0.02],
-    [-0.02, 0.03, 0.01, -0.01, 0.04, -0.02, 0.03, -0.01, 0.02, -0.03],
-    [0.01, -0.02, 0.04, -0.03, 0.02, -0.01, 0.05, -0.02, 0.01, -0.04]
-]
+# Validation logic
+validation_flag = processed_mean > 12.0
+primary_score = int(processed_mean * 100)
+secondary_score = int(normalized_range * 50)
 
-# Asset weights in portfolio
-asset_weights = [0.2, 0.15, 0.3, 0.25, 0.1]
+# Temporary calculations (unused)
+temp_product = base_value * max_sample
+temp_difference = max_sample - base_value
 
-# Calculate daily portfolio returns
-portfolio_daily_returns = []
-for day_idx in range(len(asset_returns[0])):
-    daily_return = sum(asset_returns[asset_idx][day_idx] * asset_weights[asset_idx] 
-                       for asset_idx in range(len(asset_weights)))
-    portfolio_daily_returns.append(daily_return)
+# Final decision point
+final_metric = primary_score if validation_flag else secondary_score
 
-# Apply volatility weighting and risk transformation
-weighted_returns = [risk_transform(ret) * volatility_weight(ret) for ret in portfolio_daily_returns]
-
-# Compute base risk metrics
-avg_daily_return = sum(portfolio_daily_returns) / len(portfolio_daily_returns)
-volatility = math.sqrt(sum((r - avg_daily_return) ** 2 for r in portfolio_daily_returns) / (len(portfolio_daily_returns) - 1))
-
-# Risk adjustment logic with short-circuit evaluation
-is_high_volatility = volatility > 0.02
-has_negative_trend = sum(1 for r in portfolio_daily_returns if r < 0) > len(portfolio_daily_returns) // 2
-
-# Conditional risk scoring
-if is_high_volatility and has_negative_trend:
-    risk_factor = 1.5
-elif is_high_volatility or has_negative_trend:
-    risk_factor = 1.2
-else:
-    risk_factor = 1.0
-
-# Final risk score calculation
-raw_risk_score = sum(weighted_returns) * risk_factor
-portfolio_risk_score = round(raw_risk_score * 1000, 2)
-
-print(f"Result: {portfolio_risk_score}")
+print(f"Result: {final_metric}")

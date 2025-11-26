@@ -1,113 +1,16 @@
-Target: Find the value of variable aggregated_threat_score after [line 55] executes
+Target: Find the value of variable final_balance after [line 15] executes
 
-[line 13]  threat_score = 0
-Assign: threat_score = 0
-[line 14]  protocol_weights = {'TCP': 3, 'UDP': 1, 'ICMP': 2}
-Compute: {'TCP': 3, 'UDP': 1, 'ICMP': 2} = {TCP: 3, UDP: 1, ICMP: 2}
-[line 15]  flag_danger_bits = 0b00010010  # SYN and URG flags
-Assign: flag_danger_bits = 18
-[line 16]  size_threshold = 1000
-Assign: size_threshold = 1000
-[line 19]  for packet in packet_headers:
-Loop Start: packet takes its first value {proto: 'TCP', flags: 18, size: 1420, ...}
-[line 20]  score = 0
-Assign: score = 0
-[line 22]  score += protocol_weights.get(packet['proto'], 0)
-Update: score changed from 0 (defined at defined at [line 20]) to 0+protocol_weights.get(packet['proto'], 0) = 3
-[line 25]  if packet['flags'] & flag_danger_bits:
-Condition: True, entering 'if' block
-[line 26]  score += 5
-Update: score changed from 3 (defined at defined at [line 22]) to 3+5 = 8
-[line 29]  if packet['size'] > size_threshold:
-Condition: True, entering 'if' block
-[line 30]  score += 2
-Update: score changed from 8 (defined at defined at [line 26]) to 8+2 = 10
-[line 33]  if packet['ttl'] == 2**5 - 1 or packet['ttl'] == 2**7 - 1 or packet['ttl'] == 2**8 - 1:
-Condition: True, entering 'if' block
-[line 36]  threat_score += score
-Update: threat_score changed from 0 (defined at defined at [line 13]) to 0+score = 10
-[line 19]  for packet in packet_headers:
-Loop Iteration: packet is now {proto: 'UDP', flags: 0, size: 512, ...} (iteration 2)
-[line 20]  score = 0
-Assign: score = 0
-[line 22]  score += protocol_weights.get(packet['proto'], 0)
-Update: score changed from 0 (defined at defined at [line 20]) to 0+protocol_weights.get(packet['proto'], 0) = 1
-[line 25]  if packet['flags'] & flag_danger_bits:
-Condition: True, entering 'if' block
-[line 29]  if packet['size'] > size_threshold:
-Condition: True, entering 'if' block
-[line 33]  if packet['ttl'] == 2**5 - 1 or packet['ttl'] == 2**7 - 1 or packet['ttl'] == 2**8 - 1:
-Condition: True, entering 'if' block
-[line 36]  threat_score += score
-Update: threat_score changed from 10 (defined at defined at [line 36]) to 10+score = 11
-[line 19]  for packet in packet_headers:
-Loop Iteration: packet is now {proto: 'TCP', flags: 17, size: 890, ...} (iteration 3)
-[line 20]  score = 0
-Assign: score = 0
-[line 22]  score += protocol_weights.get(packet['proto'], 0)
-Update: score changed from 0 (defined at defined at [line 20]) to 0+protocol_weights.get(packet['proto'], 0) = 3
-[line 25]  if packet['flags'] & flag_danger_bits:
-Condition: True, entering 'if' block
-[line 26]  score += 5
-Update: score changed from 3 (defined at defined at [line 22]) to 3+5 = 8
-[line 29]  if packet['size'] > size_threshold:
-Condition: True, entering 'if' block
-[line 33]  if packet['ttl'] == 2**5 - 1 or packet['ttl'] == 2**7 - 1 or packet['ttl'] == 2**8 - 1:
-Condition: True, entering 'if' block
-[line 36]  threat_score += score
-Update: threat_score changed from 11 (defined at defined at [line 36]) to 11+score = 19
-[line 19]  for packet in packet_headers:
-Loop Iteration: packet is now {proto: 'ICMP', flags: 0, size: 76, ...} (iteration 4)
-[line 20]  score = 0
-Assign: score = 0
-[line 22]  score += protocol_weights.get(packet['proto'], 0)
-Update: score changed from 0 (defined at defined at [line 20]) to 0+protocol_weights.get(packet['proto'], 0) = 2
-[line 25]  if packet['flags'] & flag_danger_bits:
-Condition: True, entering 'if' block
-[line 29]  if packet['size'] > size_threshold:
-Condition: True, entering 'if' block
-[line 33]  if packet['ttl'] == 2**5 - 1 or packet['ttl'] == 2**7 - 1 or packet['ttl'] == 2**8 - 1:
-Condition: True, entering 'if' block
-[line 34]  score += 3
-Update: score changed from 2 (defined at defined at [line 22]) to 2+3 = 5
-[line 36]  threat_score += score
-Update: threat_score changed from 19 (defined at defined at [line 36]) to 19+score = 24
-[line 19]  for packet in packet_headers:
-Loop End: Iteration finished
-[line 40]  suspicious_combinations = [('TCP', 'ICMP')]
-Compute: [('TCP', 'ICMP')] = [('TCP', 'ICMP')]
-[line 41]  correlation_penalty = 0
-Assign: correlation_penalty = 0
-[line 43]  for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
-(Missing param: 'iter_var')
-[line 44]  combo = tuple(sorted([pkt1['proto'], pkt2['proto']]))
-Call function tuple(sorted([pkt1['proto'], pkt2['proto']]))
-[line 45]  if combo in suspicious_combinations:
-Condition: True, entering 'if' block
-[line 43]  for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
-(Missing param: 'iter_var')
-[line 44]  combo = tuple(sorted([pkt1['proto'], pkt2['proto']]))
-Call function tuple(sorted([pkt1['proto'], pkt2['proto']]))
-[line 45]  if combo in suspicious_combinations:
-Condition: True, entering 'if' block
-... [Line 43] repeats 3 more times ...
-... [Line 43] repeats 3 more times ...
-... [Line 43] repeats 3 more times ...
-[line 43]  for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
-(Missing param: 'iter_var')
-[line 44]  combo = tuple(sorted([pkt1['proto'], pkt2['proto']]))
-Call function tuple(sorted([pkt1['proto'], pkt2['proto']]))
-[line 45]  if combo in suspicious_combinations:
-Condition: True, entering 'if' block
-[line 43]  for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
-Loop End: Iteration finished
-[line 49]  aggregated_threat_score = 0
-Assign: aggregated_threat_score = 0
-[line 50]  if threat_score > 10 and correlation_penalty > 0:
-Condition: True, entering 'if' block
-[line 52]  elif threat_score <= 10:
-'elif' Condition: True, entering block
-[line 55]  aggregated_threat_score = threat_score
-Compute: threat_score, where threat_score=24 (defined at [line 36]) = 24
+[line 2]  transaction_history = {45, 78, 23, 91, 67, 34}
+Compute: {45, 78, 23, 91, 67, 34} = {34, 67, 23, 91, 45, ...}
+[line 3]  audit_log = {23, 67, 12, 89, 45, 56}
+Compute: {23, 67, 12, 89, 45, 56} = {67, 23, 56, 89, 12, ...}
+[line 6]  primary_set = transaction_history - audit_log
+Compute: transaction_history - audit_log, where transaction_history={34, 67, 23, 91, 45, ...} (defined at [line 2]), audit_log={67, 23, 56, 89, 12, ...} (defined at [line 3]) = {34, 91, 78}
+[line 10]  secondary_set = audit_log - transaction_history
+Compute: audit_log - transaction_history, where audit_log={67, 23, 56, 89, 12, ...} (defined at [line 3]), transaction_history={34, 67, 23, 91, 45, ...} (defined at [line 2]) = {56, 89, 12}
+[line 14]  merged_operations = primary_set | secondary_set
+Compute: primary_set | secondary_set, where primary_set={34, 91, 78} (defined at [line 6]), secondary_set={56, 89, 12} (defined at [line 10]) = {34, 56, 89, 91, 12, ...}
+[line 15]  final_balance = len(merged_operations)
+Call function len(merged_operations={34, 56, 89, 91, 12, ...} (defined at [line 14]))
 
-Answer: aggregated_threat_score = 24 (last updated on defined at [line 55])
+Answer: final_balance = 6 (last updated on defined at [line 15])

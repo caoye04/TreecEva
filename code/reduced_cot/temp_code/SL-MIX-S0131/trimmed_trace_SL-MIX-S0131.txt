@@ -1,29 +1,45 @@
-6
-warehouse_zones
+37
+final_analysis
 ---
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['0']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['1']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['2']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['0']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['0']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['1']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['2']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['1']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['0']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['1']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['2']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['_'] ['2']
-6 warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-6 ['warehouse_zones'] ['[[0, 0, 0], [0, 0, 0], [0, 0, 0]]']
+36 final_analysis = process_network_data(network_nodes)
+36 ['network_nodes'] ["[{status: 'active', capacity: 25, connections: 8}, {status: 'inactive', capacity: 40, connections: 12}, {status: 'active', capacity: 18, connections: 5}, {status: 'active', capacity: 32, connections: 9}, {status: 'maintenance', capacity: 28, connections: 7}]"]
+2 active_nodes = [node for node in nodes if node['status'] == 'active']
+2 ['nodes', 'node'] ["[{status: 'active', capacity: 25, connections: 8}, {status: 'inactive', capacity: 40, connections: 12}, {status: 'active', capacity: 18, connections: 5}, {status: 'active', capacity: 32, connections: 9}, {status: 'maintenance', capacity: 28, connections: 7}]", "{status: 'active', capacity: 25, connections: 8}"]
+2 active_nodes = [node for node in nodes if node['status'] == 'active']
+2 ['nodes', 'node'] ["[{status: 'active', capacity: 25, connections: 8}, {status: 'inactive', capacity: 40, connections: 12}, {status: 'active', capacity: 18, connections: 5}, {status: 'active', capacity: 32, connections: 9}, {status: 'maintenance', capacity: 28, connections: 7}]", "{status: 'inactive', capacity: 40, connections: 12}"]
+2 active_nodes = [node for node in nodes if node['status'] == 'active']
+2 ['nodes', 'node'] ["[{status: 'active', capacity: 25, connections: 8}, {status: 'inactive', capacity: 40, connections: 12}, {status: 'active', capacity: 18, connections: 5}, {status: 'active', capacity: 32, connections: 9}, {status: 'maintenance', capacity: 28, connections: 7}]", "{status: 'active', capacity: 18, connections: 5}"]
+2 active_nodes = [node for node in nodes if node['status'] == 'active']
+2 ['nodes', 'node'] ["[{status: 'active', capacity: 25, connections: 8}, {status: 'inactive', capacity: 40, connections: 12}, {status: 'active', capacity: 18, connections: 5}, {status: 'active', capacity: 32, connections: 9}, {status: 'maintenance', capacity: 28, connections: 7}]", "{status: 'active', capacity: 32, connections: 9}"]
+2 active_nodes = [node for node in nodes if node['status'] == 'active']
+2 ['nodes', 'node'] ["[{status: 'active', capacity: 25, connections: 8}, {status: 'inactive', capacity: 40, connections: 12}, {status: 'active', capacity: 18, connections: 5}, {status: 'active', capacity: 32, connections: 9}, {status: 'maintenance', capacity: 28, connections: 7}]", "{status: 'maintenance', capacity: 28, connections: 7}"]
+2 active_nodes = [node for node in nodes if node['status'] == 'active']
+2 ['nodes', 'active_nodes'] ["[{status: 'active', capacity: 25, connections: 8}, {status: 'inactive', capacity: 40, connections: 12}, {status: 'active', capacity: 18, connections: 5}, {status: 'active', capacity: 32, connections: 9}, {status: 'maintenance', capacity: 28, connections: 7}]", "[{status: 'active', capacity: 25, connections: 8}, {status: 'active', capacity: 18, connections: 5}, {status: 'active', capacity: 32, connections: 9}]"]
+3 total_capacity = sum(node['capacity'] for node in active_nodes)
+3 [] []
+3 total_capacity = sum(node['capacity'] for node in active_nodes)
+3 ['node'] ["{status: 'active', capacity: 25, connections: 8}"]
+3 total_capacity = sum(node['capacity'] for node in active_nodes)
+3 ['node'] ["{status: 'active', capacity: 18, connections: 5}"]
+3 total_capacity = sum(node['capacity'] for node in active_nodes)
+3 ['node'] ["{status: 'active', capacity: 32, connections: 9}"]
+3 total_capacity = sum(node['capacity'] for node in active_nodes)
+3 ['node'] ["{status: 'active', capacity: 32, connections: 9}"]
+9 connectivity_scores = list(map(lambda x: x['connections'] % 7, active_nodes))
+9 ['active_nodes', 'total_capacity'] ["[{status: 'active', capacity: 25, connections: 8}, {status: 'active', capacity: 18, connections: 5}, {status: 'active', capacity: 32, connections: 9}]", '75']
+9 connectivity_scores = list(map(lambda x: x['connections'] % 7, active_nodes))
+9 ['x'] ["{status: 'active', capacity: 25, connections: 8}"]
+9 connectivity_scores = list(map(lambda x: x['connections'] % 7, active_nodes))
+9 ['x'] ["{status: 'active', capacity: 18, connections: 5}"]
+9 connectivity_scores = list(map(lambda x: x['connections'] % 7, active_nodes))
+9 ['x'] ["{status: 'active', capacity: 32, connections: 9}"]
+10 connectivity_sum = sum(connectivity_scores)
+10 ['total_capacity', 'connectivity_scores', 'connectivity_sum'] ['75', '[1, 5, 2]', '8']
+13 processed_value = (total_capacity * 3) % 17
+13 ['total_capacity', 'connectivity_sum', 'processed_value'] ['75', '8', '4']
+14 processed_value += connectivity_sum if connectivity_sum % 2 == 0 else 0
+14 ['connectivity_sum', 'processed_value'] ['8', '12']
+24 return processed_value
+24 ['processed_value'] ['12']
+37 print(f"Result: {final_analysis}")
+37 ['final_analysis'] ['12']

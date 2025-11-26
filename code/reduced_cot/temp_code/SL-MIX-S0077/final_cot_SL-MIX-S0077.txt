@@ -1,111 +1,87 @@
-Target: Find the value of variable remaining_capacity after [line 38] executes
+Target: Find the value of variable final_output after [line 57] executes
 
-[line 17]  inventory_levels = defaultdict(int)
-Call function defaultdict(int)
-[line 18]  max_product_capacity = {'SODA': 20, 'CHIPS': 15, 'CANDY': 25}
-Compute: {'SODA': 20, 'CHIPS': 15, 'CANDY': 25} = {SODA: 20, CHIPS: 15, CANDY: 25}
-[line 19]  state_machine = 'IDLE'
-Assign: state_machine = 'IDLE'
-[line 31]  remaining_capacity = 0
-Assign: remaining_capacity = 0
-[line 32]  for event in restocking_queue:
-Loop Start: event takes its first value ('SODA', 8)
-[line 33]  state_machine = update_state_machine(state_machine, 'RESTOCK')
-Call function update_state_machine(state_machine='IDLE' (defined at [line 19]), 'RESTOCK')
-[line 9]  def update_state_machine(state, event_type):
-Enter function update_state_machine: state='IDLE' (state_machine defined at [line 33]), event_type='RESTOCK'
-  [line 14]  return transitions.get(state, {}).get(event_type, state)
-  Return: transitions.get(state, {}).get(event_type, state)
-Function update_state_machine returns 'PROCESSING'
-[line 34]  remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
-Update: remaining_capacity changed from ? (defined at defined at [line 31]) to ?+process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0 = 0
-[line 4]  product, amount = restock_event
-(Missing param: 'result')
-[line 5]  current = inventory[product]
-Compute: inventory[product], where inventory={SODA: 0} (an unknown source), product='SODA' (an unknown source) = 0
-[line 6]  inventory[product] = min(current + amount, max_capacity[product])
-(Missing param: 'func_name')
-[line 7]  return max_capacity[product] - inventory[product]
-Return: max_capacity[product] - inventory[product]
-[line 35]  state_machine = update_state_machine(state_machine, 'COMPLETE')
-Call function update_state_machine(state_machine='PROCESSING' (defined at [line 33]), 'COMPLETE')
-[line 9]  def update_state_machine(state, event_type):
-Enter function update_state_machine: state='PROCESSING' (state_machine defined at [line 35]), event_type='COMPLETE'
-  [line 14]  return transitions.get(state, {}).get(event_type, state)
-  Return: transitions.get(state, {}).get(event_type, state)
-Function update_state_machine returns 'IDLE'
-[line 32]  for event in restocking_queue:
-Loop Iteration: event is now ('CHIPS', 10) (iteration 2)
-[line 33]  state_machine = update_state_machine(state_machine, 'RESTOCK')
-Call function update_state_machine(state_machine='IDLE' (defined at [line 35]), 'RESTOCK')
-[line 9]  def update_state_machine(state, event_type):
-Enter function update_state_machine: state='IDLE' (state_machine defined at [line 33]), event_type='RESTOCK'
-  [line 14]  return transitions.get(state, {}).get(event_type, state)
-  Return: transitions.get(state, {}).get(event_type, state)
-Function update_state_machine returns 'PROCESSING'
-[line 34]  remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
-Update: remaining_capacity changed from ? (defined at defined at [line 34]) to ?+process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0 = 12
-[line 4]  product, amount = restock_event
-(Missing param: 'result')
-[line 5]  current = inventory[product]
-Compute: inventory[product], where inventory={SODA: 8, CHIPS: 0} (an unknown source), product='CHIPS' (an unknown source) = 0
-[line 6]  inventory[product] = min(current + amount, max_capacity[product])
-(Missing param: 'func_name')
-[line 7]  return max_capacity[product] - inventory[product]
-Return: max_capacity[product] - inventory[product]
-[line 35]  state_machine = update_state_machine(state_machine, 'COMPLETE')
-Call function update_state_machine(state_machine='PROCESSING' (defined at [line 33]), 'COMPLETE')
-[line 9]  def update_state_machine(state, event_type):
-Enter function update_state_machine: state='PROCESSING' (state_machine defined at [line 35]), event_type='COMPLETE'
-  [line 14]  return transitions.get(state, {}).get(event_type, state)
-  Return: transitions.get(state, {}).get(event_type, state)
-Function update_state_machine returns 'IDLE'
-... [Line 32] repeats 2 more times ...
-... [Line 32] repeats 2 more times ...
-[line 9]  def update_state_machine(state, event_type):
-Enter function update_state_machine: state='IDLE' (state_machine defined at [line 35]), event_type='RESTOCK'
-... [Line 32] repeats 2 more times ...
-Function update_state_machine returns 'PROCESSING'
-... [Line 32] repeats 2 more times ...
-... [Line 32] repeats 2 more times ...
-... [Line 32] repeats 2 more times ...
-... [Line 32] repeats 2 more times ...
-... [Line 32] repeats 2 more times ...
-... [Line 32] repeats 2 more times ...
-[line 9]  def update_state_machine(state, event_type):
-Enter function update_state_machine: state='PROCESSING' (state_machine defined at [line 35]), event_type='COMPLETE'
-... [Line 32] repeats 2 more times ...
-Function update_state_machine returns 'IDLE'
-[line 9]  def update_state_machine(state, event_type):
-Enter function update_state_machine: state='IDLE' (state_machine defined at [line 35]), event_type='RESTOCK'
-Function update_state_machine returns 'PROCESSING'
-[line 9]  def update_state_machine(state, event_type):
-Enter function update_state_machine: state='PROCESSING' (state_machine defined at [line 35]), event_type='COMPLETE'
-Function update_state_machine returns 'IDLE'
-[line 32]  for event in restocking_queue:
-Loop Iteration: event is now ('CHIPS', 8) (iteration 5)
-[line 33]  state_machine = update_state_machine(state_machine, 'RESTOCK')
-Call function update_state_machine(state_machine='IDLE' (defined at [line 35]), 'RESTOCK')
-[line 9]  def update_state_machine(state, event_type):
-Enter function update_state_machine: state='IDLE' (state_machine defined at [line 33]), event_type='RESTOCK'
-  [line 14]  return transitions.get(state, {}).get(event_type, state)
-  Return: transitions.get(state, {}).get(event_type, state)
-Function update_state_machine returns 'PROCESSING'
-[line 34]  remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
-Update: remaining_capacity changed from ? (defined at defined at [line 34]) to ?+process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0 = 42
-[line 4]  product, amount = restock_event
-(Missing param: 'result')
-[line 5]  current = inventory[product]
-Compute: inventory[product], where inventory={SODA: 15, CHIPS: 10, CANDY: 5} (an unknown source), product='CHIPS' (an unknown source) = 10
-[line 6]  inventory[product] = min(current + amount, max_capacity[product])
-(Missing param: 'func_name')
-[line 7]  return max_capacity[product] - inventory[product]
-Return: max_capacity[product] - inventory[product]
-[line 14]  return transitions.get(state, {}).get(event_type, state)
-Return: transitions.get(state, {}).get(event_type, state)
-[line 32]  for event in restocking_queue:
-Loop End: Iteration finished
-[line 38]  remaining_capacity = remaining_capacity if remaining_capacity > 0 else sum(max_product_capacity.values()) - sum(inventory_levels.values())
-Compute: remaining_capacity if remaining_capacity > 0 else sum(max_product_capacity.values()) - sum(inventory_levels.values()), where remaining_capacity=42 (defined at [line 34]), max_product_capacity={SODA: 20, CHIPS: 15, CANDY: 25} (defined at [line 18]), inventory_levels={SODA: 15, CHIPS: 15, CANDY: 5} (defined at [line 17]) = 42
+[line 55]  text_samples = ['algorithm', 'processing', 'benchmark', 'reasoning']
+Compute: ['algorithm', 'processing', 'benchmark', 'reasoning'] = ['algorithm', 'processing', 'benchmark', 'reasoning']
+[line 56]  final_output = process_text_data(text_samples)
+Call function process_text_data(text_samples=['algorithm', 'processing', 'benchmark', 'reasoning'] (defined at [line 55]))
+[line 1]  def process_text_data(text_samples):
+Enter function process_text_data: text_samples=['algorithm', 'processing', 'benchmark', 'reasoning'] (text_samples defined at [line 55])
+  [line 7]  char_sets = []
+  Compute: [] = []
+  [line 8]  processed_values = []
+  Compute: [] = []
+  [line 10]  for text in text_samples:
+  Loop Start: text takes its first value 'algorithm'
+  [line 15]  char_set = set(text)
+  Call function set(text='algorithm' (defined at [line 10]))
+  [line 22]  if len(text) % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 25]  processed = len(char_set) * 5
+  Compute: len(char_set) * 5, where char_set={'t', 'l', 'i', 'm', 'h', ...} (defined at [line 15]) = 45
+  [line 28]  if processed > 100:
+  Condition: True, entering 'if' block
+  [line 10]  for text in text_samples:
+  Loop Iteration: text is now 'processing' (iteration 2)
+  [line 15]  char_set = set(text)
+  Call function set(text='processing' (defined at [line 10]))
+  [line 22]  if len(text) % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 23]  processed = len(char_set) * 10
+  Compute: len(char_set) * 10, where char_set={'s', 'n', 'i', 'c', 'p', ...} (defined at [line 15]) = 90
+  [line 28]  if processed > 100:
+  Condition: True, entering 'if' block
+  [line 10]  for text in text_samples:
+  Loop Iteration: text is now 'benchmark' (iteration 3)
+  [line 15]  char_set = set(text)
+  Call function set(text='benchmark' (defined at [line 10]))
+  [line 22]  if len(text) % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 25]  processed = len(char_set) * 5
+  Compute: len(char_set) * 5, where char_set={'b', 'n', 'c', 'm', 'h', ...} (defined at [line 15]) = 45
+  [line 28]  if processed > 100:
+  Condition: True, entering 'if' block
+  [line 10]  for text in text_samples:
+  Loop Iteration: text is now 'reasoning' (iteration 4)
+  [line 15]  char_set = set(text)
+  Call function set(text='reasoning' (defined at [line 10]))
+  [line 22]  if len(text) % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 25]  processed = len(char_set) * 5
+  Compute: len(char_set) * 5, where char_set={'s', 'n', 'i', 'r', 'a', ...} (defined at [line 15]) = 40
+  [line 28]  if processed > 100:
+  Condition: True, entering 'if' block
+  [line 10]  for text in text_samples:
+  Loop End: Iteration finished
+  [line 34]  union_set = set()
+  Call function set()
+  [line 35]  for cs in char_sets:
+  Loop Start: cs takes its first value {'t', 'l', 'i', 'm', 'h', ...}
+  [line 36]  union_set = union_set.union(cs)
+  (Missing param: 'func_name')
+  [line 35]  for cs in char_sets:
+  Loop Iteration: cs is now {'s', 'n', 'i', 'c', 'p', ...} (iteration 2)
+  [line 36]  union_set = union_set.union(cs)
+  (Missing param: 'func_name')
+  [line 35]  for cs in char_sets:
+  Loop Iteration: cs is now {'b', 'n', 'c', 'm', 'h', ...} (iteration 3)
+  [line 36]  union_set = union_set.union(cs)
+  (Missing param: 'func_name')
+  [line 35]  for cs in char_sets:
+  Loop Iteration: cs is now {'s', 'n', 'i', 'r', 'a', ...} (iteration 4)
+  [line 36]  union_set = union_set.union(cs)
+  (Missing param: 'func_name')
+  [line 35]  for cs in char_sets:
+  Loop End: Iteration finished
+  [line 42]  base_value = sum(processed_values)
+  Call function sum(processed_values=[45, 90, 45, 40] (defined at [line 8]))
+  [line 43]  unique_chars = len(union_set)
+  Call function len(union_set={'t', 'i', 'c', 'm', 'p', ...} (defined at [line 34]))
+  [line 46]  result = base_value - unique_chars * 2
+  Compute: base_value - unique_chars * 2, where base_value=220 (defined at [line 42]), unique_chars=16 (defined at [line 43]) = 188
+  [line 52]  return result
+  Return: result=188 (defined at [line 46])
+Function process_text_data returns 188
+[line 57]  print(f"Result: {final_output}")
+Output: f"Result: {final_output}"
 
-Answer: remaining_capacity = 42 (last updated on defined at [line 38])
+Answer: final_output = 188 (last updated on defined at [line 56])

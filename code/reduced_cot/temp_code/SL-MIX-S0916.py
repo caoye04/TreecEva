@@ -1,50 +1,45 @@
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-def build_linked_list(values):
-    if not values:
-        return None
-    head = ListNode(values[0])
-    current = head
-    for v in values[1:]:
-        current.next = ListNode(v)
-        current = current.next
-    return head
-
-def process_packets(node_head):
-    node_map = {i: [] for i in range(1, 6)}
-    current = node_head
-    index = 1
-    while current:
-        node_map[index].append(current.val)
-        current = current.next
-        index += 1
-        if index > 5:
-            index = 1
-    
-    base_config = {k: sum(v) for k, v in node_map.items()}
-    adjustments = {k: (v << 1) & 0xFF if k % 2 == 0 else v ^ 0x55 for k, v in base_config.items()}
-    merged = {**base_config, **adjustments}
-    
-    routing_sum = 0
-    for k in sorted(merged.keys()):
-        val = merged[k]
-        if k < 4:
-            for i in range(1, k+1):
-                if i & k:
-                    val ^= i
+def process_data_stream(incoming_data):
+    processed_values = []
+    for idx, value in enumerate(incoming_data):
+        if idx % 2 == 0:
+            processed_values.append(value * 2)
         else:
-            val = val | ((val >> 2) & 0x0F)
-        routing_sum += val
+            processed_values.append(value // 2)
+    return processed_values
+
+def calculate_adjustments(processed_data):
+    adjustments = []
+    temp_buffer = 0
+    for item in processed_data:
+        temp_buffer += item * 0.1
+        adjustments.append(item + int(temp_buffer))
+    return adjustments
+
+def final_calculation(data_sequence):
+    intermediate_results = process_data_stream(data_sequence)
+    adjusted_values = calculate_adjustments(intermediate_results)
     
-    return routing_sum
+    # Distractor calculations that don't affect final result
+    redundancy_check = sum(intermediate_results) * 0.05
+    validation_sum = sum(adjusted_values) + redundancy_check
+    
+    zipped_pairs = list(zip(intermediate_results, adjusted_values))
+    net_result = 0
+    for base, adj in zipped_pairs:
+        if base > adj:
+            net_result -= (base - adj)
+        else:
+            net_result += (adj - base)
+    
+    # More distractor operations
+    verification_value = net_result * 1.1
+    safety_margin = verification_value - net_result
+    
+    return net_result
 
-with open('temp_data.txt', 'w') as f:
-    f.write('')
+# Main execution
+data_stream = [15, 8, 22, 12, 18, 6]
+preliminary_sum = sum(data_stream) * 2  # Distractor
+net_balance = final_calculation(data_stream)
 
-packet_sequence = [0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0]
-head_node = build_linked_list(packet_sequence)
-final_routing_key = process_packets(head_node) + (len(packet_sequence) << 2)
-print(f'Result: {final_routing_key}')
+print(f"Target result: {net_balance}")

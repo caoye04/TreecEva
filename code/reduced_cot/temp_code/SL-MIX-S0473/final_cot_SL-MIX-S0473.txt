@@ -1,0 +1,26 @@
+Target: Find the value of variable final_output after [line 36] executes
+
+[line 5]  warehouse_stock = [45, 32, 67, 89, 23, 54, 76, 31, 45, 67]
+Compute: [45, 32, 67, 89, 23, 54, 76, 31, 45, 67] = [45, 32, 67, 89, 23, ...]
+[line 8]  stock_counter = Counter(warehouse_stock)
+Call function Counter(warehouse_stock=[45, 32, 67, 89, 23, ...] (defined at [line 5]))
+[line 9]  most_common_item = stock_counter.most_common(1)[0][0]
+Compute: stock_counter.most_common(1)[0][0], where stock_counter={45: 2, 32: 1, 67: 2, ...} (defined at [line 8]) = 45
+[line 12]  average_stock = sum(warehouse_stock) / len(warehouse_stock)
+Compute: sum(warehouse_stock) / len(warehouse_stock), where warehouse_stock=[45, 32, 67, 89, 23, ...] (defined at [line 5]) = 52.9
+[line 19]  adjusted_stock = [item + 5 if item < average_stock else item - 3 for item in warehouse_stock]
+Compute: [item + 5 if item < average_stock else item - 3 for item in warehouse_stock], where item=45 (an unknown source), average_stock=52.9 (defined at [line 12]), warehouse_stock=[45, 32, 67, 89, 23, ...] (defined at [line 5]) = ?
+[line 27]  processed_data = {}
+Compute: {} = {}
+[line 28]  processed_data["common"] = most_common_item
+(Missing param: 'result')
+[line 29]  processed_data["adjusted_avg"] = sum(adjusted_stock) / len(adjusted_stock)
+(Missing param: 'result')
+[line 30]  processed_data["target"] = (most_common_item * 2) - (int(average_stock) // 3)
+(Missing param: 'result')
+[line 33]  data_map = {"common_key": "common", "avg_key": "adjusted_avg", "result_key": "target"}
+Compute: {"common_key": "common", "avg_key": "adjusted_avg", "result_key": "target"} = {common_key: 'common', avg_key: 'adjusted_avg', result_key: 'target'}
+[line 36]  final_output = processed_data[data_map["result_key"]]
+Compute: processed_data[data_map["result_key"]], where processed_data={common: 45, adjusted_avg: 53.9, target: 73} (defined at [line 27]), data_map={common_key: 'common', avg_key: 'adjusted_avg', result_key: 'target'} (defined at [line 33]) = 73
+
+Answer: final_output = 73 (last updated on defined at [line 36])

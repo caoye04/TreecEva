@@ -1,41 +1,27 @@
-import math
-from collections import namedtuple
+def analyze_network_connections(nodes):
+    connection_matrix = [[i * j for j in range(1, 4)] for i in range(1, nodes + 1)]
+    
+    # Calculate potential connections (distractor)
+    potential_links = sum(len(row) for row in connection_matrix)
+    
+    # Find valid bidirectional pairs using slicing
+    valid_pairs = []
+    for i in range(len(connection_matrix)):
+        for j in range(i + 1, min(i + 3, len(connection_matrix))):
+            if connection_matrix[i][0] + connection_matrix[j][-1] > 5:
+                valid_pairs.append(connection_matrix[i][1] + connection_matrix[j][1])
+    
+    # Calculate adjustment factor (partially relevant)
+    adjustment_factor = len([x for x in valid_pairs if x % 2 == 0])
+    
+    # Redundant computation that doesn't affect final result
+    total_weight = sum(valid_pairs) * 0.5
+    
+    # Final computation
+    final_count = valid_pairs[-1] + adjustment_factor
+    
+    print(f"Result: {final_count}")
+    return final_count
 
-# Define a point in 2D space
-Point = namedtuple('Point', ['x', 'y'])
-
-def distance(p1, p2):
-    return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2)
-
-# Drone positions and surveillance radii
-DroneSpec = namedtuple('DroneSpec', ['position', 'radius'])
-drones = [
-    DroneSpec(Point(2, 3), 5),
-    DroneSpec(Point(-1, 4), 3),
-    DroneSpec(Point(6, 0), 4)
-]
-
-# Package drop-off locations
-package_locations = [Point(x, y) for x in range(-5, 10) for y in range(-5, 10) 
-                   if (x + y) % 3 == 0 and not (x == 0 and y == 0)]
-
-# Calculate coverage using set comprehension and short-circuit evaluation
-covered_points = {
-    pkg for pkg in package_locations
-    if any(distance(pkg, drone.position) <= drone.radius 
-           and (pkg.x > 0 or pkg.y > 0)  # Only consider points in positive quadrants
-           for drone in drones)
-}
-
-# Apply combinatorial filter: remove points that form equilateral triangles with any two drones
-filtered_coverage = {
-    point for point in covered_points
-    if not any(
-        abs(distance(point, d1.position) - distance(point, d2.position)) < 1e-9 and
-        abs(distance(d1.position, d2.position) - distance(point, d1.position)) < 1e-9
-        for i, d1 in enumerate(drones) for d2 in drones[i+1:]
-    )
-}
-
-surveillance_coverage = len(filtered_coverage) + sum(1 for d in drones if d.position.x >= 0)
-print(f"Result: {surveillance_coverage}")
+# Execute with specific input
+result = analyze_network_connections(4)

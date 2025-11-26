@@ -1,19 +1,25 @@
-from collections import namedtuple
+from collections import Counter
 
-# Define a simple data structure for tree sample
-tree_sample = namedtuple('Sample', ['rings'])
+initial_deposits = [1500, 2200, 800, 3100, 1200, 950]
+processing_fees = [25, 40, 15, 60, 20, 30]
+bonus_codes = ['B50', 'B25', 'B100', 'B75', 'B50', 'B25']
 
-# Sample data for an oak tree
-oak_sample_a = tree_sample(rings=15)
-oak_sample_b = tree_sample(rings=18)
+bonus_map = {'B50': 50, 'B25': 25, 'B100': 100, 'B75': 75}
+account_balances = []
 
-# Environmental stress factor for oak trees
-stress_factor = 0.9
+# Calculate net amounts after fees and bonuses
+for i in range(len(initial_deposits)):
+    net_amount = initial_deposits[i] - processing_fees[i]
+    if bonus_codes[i] in bonus_map:
+        net_amount += bonus_map[bonus_codes[i]]
+    account_balances.append(net_amount)
 
-# Calculate raw age estimation
-raw_age = oak_sample_a.rings + oak_sample_b.rings
+# Some intermediate calculations that don't affect final result
+total_fees = sum(processing_fees)
+average_bonus = sum(bonus_map.values()) / len(bonus_map)
 
-# Apply environmental stress adjustment
-adjusted_age = raw_age * stress_factor
+# Sort balances and get final result
+sorted_balances = sorted(account_balances)
+final_balance = sorted_balances[-1]
 
-print(f'Result: {int(adjusted_age)}')
+print(f"Target result: {final_balance}")

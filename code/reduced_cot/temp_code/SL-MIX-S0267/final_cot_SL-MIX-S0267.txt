@@ -1,0 +1,24 @@
+Target: Find the value of variable target_result after [line 29] executes
+
+[line 3]  base_value = sum(data[:3]) * 2
+Compute: sum(data[:3]) * 2, where data=[8, 15, 22, 9, 17, ...] (an unknown source) = 90
+[line 10]  dummy_metric = base_value // 3
+Compute: base_value // 3, where base_value=90 (defined at [line 3]) = 30
+[line 11]  fake_result = (dummy_metric * 7) % 11
+Compute: (dummy_metric * 7) % 11, where dummy_metric=30 (defined at [line 10]) = 1
+[line 14]  if fake_result > 5:
+Condition: True, entering 'if' block
+[line 20]  processed_data = [x * 2 if x % 2 == 0 else x // 2 for x in data]
+Compute: [x * 2 if x % 2 == 0 else x // 2 for x in data], where x=8 (an unknown source), data=[8, 15, 22, 9, 17, ...] (an unknown source) = ?
+[line 21]  transformed_result = transform(processed_data)
+Call function transform(processed_data=[16, 7, 44, 4, 8, ...] (defined at [line 20]))
+[line 24]  noise_factor = len([x for x in data if x > 10])
+Call function len([x for x in data if x > 10])
+[line 25]  distraction_value = (noise_factor * transformed_result) ^ 0b1100
+Compute: (noise_factor * transformed_result) ^ 0b1100, where noise_factor=4 (defined at [line 24]), transformed_result=4 (defined at [line 21]) = 28
+[line 28]  intermediate = (transformed_result & 0b0110) | (distraction_value >> 2)
+Compute: (transformed_result & 0b0110) | (distraction_value >> 2), where transformed_result=4 (defined at [line 21]), distraction_value=28 (defined at [line 25]) = 7
+[line 29]  target_result = intermediate + (base_value % 7)
+Compute: intermediate + (base_value % 7), where intermediate=7 (defined at [line 28]), base_value=90 (defined at [line 3]) = 13
+
+Answer: target_result = 13 (last updated on defined at [line 29])

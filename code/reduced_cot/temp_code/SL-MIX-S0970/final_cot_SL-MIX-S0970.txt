@@ -1,0 +1,22 @@
+Target: Find the value of variable final_output after [line 21] executes
+
+[line 2]  threshold = 25
+Assign: threshold = 25
+[line 3]  base_offset = 10
+Assign: base_offset = 10
+[line 4]  temp_sum = sum(temperatures)
+Call function sum(temperatures=[18, 22, 27, 31, 19, ...] (an unknown source))
+[line 5]  avg_temp = temp_sum / len(temperatures)
+Compute: temp_sum / len(temperatures), where temp_sum=203 (defined at [line 4]), temperatures=[18, 22, 27, 31, 19, ...] (an unknown source) = 25.375
+[line 13]  adjusted_temp = avg_temp + base_offset
+Compute: avg_temp + base_offset, where avg_temp=25.375 (defined at [line 5]), base_offset=10 (defined at [line 3]) = 35.375
+[line 14]  multiplier = 2 if adjusted_temp > 30 else 3
+Compute: 2 if adjusted_temp > 30 else 3, where adjusted_temp=35.375 (defined at [line 13]) = 2
+[line 17]  high_temps = [temp for temp in temperatures if temp > threshold]
+Compute: [temp for temp in temperatures if temp > threshold], where temp=18 (an unknown source), temperatures=[18, 22, 27, 31, 19, ...] (an unknown source), threshold=25 (defined at [line 2]) = ?
+[line 18]  result = len(high_temps) * multiplier
+Compute: len(high_temps) * multiplier, where high_temps=[27, 31, 29, 33] (defined at [line 17]), multiplier=2 (defined at [line 14]) = 8
+[line 21]  final_output = result * multiplier if result > threshold else result // multiplier
+Compute: result * multiplier if result > threshold else result // multiplier, where result=8 (defined at [line 18]), multiplier=2 (defined at [line 14]), threshold=25 (defined at [line 2]) = 4
+
+Answer: final_output = 4 (last updated on defined at [line 21])

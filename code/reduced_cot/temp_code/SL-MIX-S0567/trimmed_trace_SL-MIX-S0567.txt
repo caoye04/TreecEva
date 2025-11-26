@@ -1,0 +1,89 @@
+55
+target_value
+---
+11 all_items = []
+11 ['warehouse_data', 'all_items'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[]']
+12 warehouse_counts = []
+12 ['warehouse_data', 'all_items', 'warehouse_counts'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[]', '[]']
+14 for wh in warehouse_data:
+14 ['warehouse_data', 'all_items', 'warehouse_counts', 'wh'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[]', '[]', "{items: ['A', 'B', 'C', 'A', 'D'], id: 1}"]
+14 for wh in warehouse_data:
+14 ['warehouse_data', 'all_items', 'warehouse_counts', 'wh'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "['A', 'B', 'C', 'A', 'D']", '[{A: 2, B: 1, C: 1, ...}]', "{items: ['B', 'C', 'E', 'F', 'B'], id: 2}"]
+14 for wh in warehouse_data:
+14 ['warehouse_data', 'all_items', 'warehouse_counts', 'wh'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "['A', 'B', 'C', 'A', 'D', ...]", '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}"]
+14 for wh in warehouse_data:
+14 ['warehouse_data', 'all_items', 'warehouse_counts', 'wh'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "['A', 'B', 'C', 'A', 'D', ...]", '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}"]
+24 overall_counter = Counter(all_items)
+24 ['warehouse_data', 'all_items', 'warehouse_counts', 'wh', 'overall_counter'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "['A', 'B', 'C', 'A', 'D', ...]", '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '{A: 4, B: 3, C: 2, ...}']
+25 common_items = [item for item, count in overall_counter.items() if count >= 2]
+25 ['warehouse_data', 'warehouse_counts', 'wh', 'overall_counter', 'item', 'count'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '{A: 4, B: 3, C: 2, ...}', "'A'", '4']
+25 common_items = [item for item, count in overall_counter.items() if count >= 2]
+25 ['warehouse_data', 'warehouse_counts', 'wh', 'overall_counter', 'item', 'count'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '{A: 4, B: 3, C: 2, ...}', "'B'", '3']
+25 common_items = [item for item, count in overall_counter.items() if count >= 2]
+25 ['warehouse_data', 'warehouse_counts', 'wh', 'overall_counter', 'item', 'count'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '{A: 4, B: 3, C: 2, ...}', "'C'", '2']
+25 common_items = [item for item, count in overall_counter.items() if count >= 2]
+25 ['warehouse_data', 'warehouse_counts', 'wh', 'overall_counter', 'item', 'count'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '{A: 4, B: 3, C: 2, ...}', "'D'", '2']
+25 common_items = [item for item, count in overall_counter.items() if count >= 2]
+25 ['warehouse_data', 'warehouse_counts', 'wh', 'overall_counter', 'item', 'count'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '{A: 4, B: 3, C: 2, ...}', "'E'", '1']
+25 common_items = [item for item, count in overall_counter.items() if count >= 2]
+25 ['warehouse_data', 'warehouse_counts', 'wh', 'overall_counter', 'item', 'count'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '{A: 4, B: 3, C: 2, ...}', "'F'", '2']
+25 common_items = [item for item, count in overall_counter.items() if count >= 2]
+25 ['warehouse_data', 'warehouse_counts', 'wh', 'overall_counter', 'item', 'count'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '{A: 4, B: 3, C: 2, ...}', "'G'", '1']
+25 common_items = [item for item, count in overall_counter.items() if count >= 2]
+25 ['warehouse_data', 'warehouse_counts', 'wh', 'overall_counter', 'common_items'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '{A: 4, B: 3, C: 2, ...}', "['A', 'B', 'C', 'D', 'F']"]
+29 for idx, item in enumerate(common_items):
+29 ['warehouse_data', 'warehouse_counts', 'wh', 'common_items', 'idx', 'item'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", "['A', 'B', 'C', 'D', 'F']", '0', "'A'"]
+29 for idx, item in enumerate(common_items):
+29 ['warehouse_data', 'warehouse_counts', 'wh', 'common_items', 'idx', 'item'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", "['A', 'B', 'C', 'D', 'F']", '1', "'B'"]
+29 for idx, item in enumerate(common_items):
+29 ['warehouse_data', 'warehouse_counts', 'wh', 'common_items', 'idx', 'item'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", "['A', 'B', 'C', 'D', 'F']", '2', "'C'"]
+29 for idx, item in enumerate(common_items):
+29 ['warehouse_data', 'warehouse_counts', 'wh', 'common_items', 'idx', 'item'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", "['A', 'B', 'C', 'D', 'F']", '3', "'D'"]
+29 for idx, item in enumerate(common_items):
+29 ['warehouse_data', 'warehouse_counts', 'wh', 'common_items', 'idx', 'item'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", "['A', 'B', 'C', 'D', 'F']", '4', "'F'"]
+29 for idx, item in enumerate(common_items):
+29 ['warehouse_data', 'warehouse_counts', 'wh', 'common_items', 'idx', 'item'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", "['A', 'B', 'C', 'D', 'F']", '4', "'F'"]
+34 for wh_count in warehouse_counts:
+34 ['warehouse_data', 'warehouse_counts', 'wh', 'idx', 'wh_count'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '4', '{A: 2, B: 1, C: 1, ...}']
+34 for wh_count in warehouse_counts:
+34 ['warehouse_data', 'warehouse_counts', 'wh', 'idx', 'wh_count'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '4', '{B: 2, C: 1, E: 1, ...}']
+34 for wh_count in warehouse_counts:
+34 ['warehouse_data', 'warehouse_counts', 'wh', 'idx', 'wh_count'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '4', '{A: 2, D: 1, F: 1, ...}']
+34 for wh_count in warehouse_counts:
+34 ['warehouse_data', 'warehouse_counts', 'wh', 'idx', 'wh_count'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', '[{A: 2, B: 1, C: 1, ...}, {B: 2, C: 1, E: 1, ...}, {A: 2, D: 1, F: 1, ...}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '4', '{A: 2, D: 1, F: 1, ...}']
+39 valid_warehouses = []
+39 ['warehouse_data', 'wh', 'idx', 'valid_warehouses'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '4', '[]']
+40 for i, wh in enumerate(warehouse_data):
+40 ['warehouse_data', 'wh', 'idx', 'valid_warehouses', 'i'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "{items: ['A', 'B', 'C', 'A', 'D'], id: 1}", '4', '[]', '0']
+42 if len(common_in_wh) >= 2:
+42 ['warehouse_data', 'wh', 'idx', 'valid_warehouses', 'i'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "{items: ['A', 'B', 'C', 'A', 'D'], id: 1}", '4', '[]', '0']
+40 for i, wh in enumerate(warehouse_data):
+40 ['warehouse_data', 'wh', 'idx', 'valid_warehouses', 'i'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "{items: ['B', 'C', 'E', 'F', 'B'], id: 2}", '4', '[0]', '1']
+42 if len(common_in_wh) >= 2:
+42 ['warehouse_data', 'wh', 'idx', 'valid_warehouses', 'i'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "{items: ['B', 'C', 'E', 'F', 'B'], id: 2}", '4', '[0]', '1']
+40 for i, wh in enumerate(warehouse_data):
+40 ['warehouse_data', 'wh', 'idx', 'valid_warehouses', 'i'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '4', '[0, 1]', '2']
+42 if len(common_in_wh) >= 2:
+42 ['warehouse_data', 'wh', 'idx', 'valid_warehouses', 'i'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '4', '[0, 1]', '2']
+40 for i, wh in enumerate(warehouse_data):
+40 ['warehouse_data', 'wh', 'idx', 'valid_warehouses', 'i'] ['[{items: [...5 items], id: 1}, {items: [...5 items], id: 2}, {items: [...5 items], id: 3}]', "{items: ['A', 'D', 'F', 'G', 'A'], id: 3}", '4', '[0, 1, 2]', '2']
+46 final_results = []
+46 ['idx', 'valid_warehouses', 'i', 'final_results'] ['4', '[0, 1, 2]', '2', '[]']
+47 for idx in valid_warehouses:
+47 ['idx', 'valid_warehouses', 'i', 'final_results'] ['0', '[0, 1, 2]', '2', '[]']
+47 for idx in valid_warehouses:
+47 ['idx', 'valid_warehouses', 'i', 'final_results'] ['1', '[0, 1, 2]', '2', '[10]']
+47 for idx in valid_warehouses:
+47 ['idx', 'valid_warehouses', 'i', 'final_results'] ['2', '[0, 1, 2]', '2', '[10, 10]']
+47 for idx in valid_warehouses:
+47 ['idx', 'valid_warehouses', 'i', 'final_results'] ['2', '[0, 1, 2]', '2', '[10, 10, 10]']
+54 valid_indices = [i for i, val in enumerate(final_results) if val > 0]
+54 ['i', 'final_results', 'val'] ['0', '[10, 10, 10]', '10']
+54 valid_indices = [i for i, val in enumerate(final_results) if val > 0]
+54 ['i', 'final_results', 'val'] ['1', '[10, 10, 10]', '10']
+54 valid_indices = [i for i, val in enumerate(final_results) if val > 0]
+54 ['i', 'final_results', 'val'] ['2', '[10, 10, 10]', '10']
+54 valid_indices = [i for i, val in enumerate(final_results) if val > 0]
+54 ['i', 'final_results', 'valid_indices'] ['2', '[10, 10, 10]', '[0, 1, 2]']
+55 target_value = final_results[valid_indices[-1]]
+55 ['final_results', 'valid_indices', 'target_value'] ['[10, 10, 10]', '[0, 1, 2]', '10']

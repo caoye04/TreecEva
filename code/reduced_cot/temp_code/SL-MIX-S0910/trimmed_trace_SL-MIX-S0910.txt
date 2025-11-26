@@ -1,0 +1,69 @@
+45
+encryption_checksum
+---
+37 data_sequence = [45, 128, 77, 201, 63, 92, 144, 31]
+37 ['data_sequence'] ['[45, 128, 77, 201, 63, ...]']
+45 encryption_checksum = encrypt_data(data_sequence)
+45 ['data_sequence'] ['[45, 128, 77, 201, 63, ...]']
+PARAM_MAPPING {'data_values': {'actual_var': 'data_sequence', 'value': [45, 128, 77, 201, 63, 92, 144, 31]}}
+FUNCTION_ENTER 3 encrypt_data def encrypt_data(data_values):
+3 ['data_values'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 128}, {'_type': 'int', '_value': 77}, {'_type': 'int', '_value': 201}, {'_type': 'int', '_value': 63}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 144}, {'_type': 'int', '_value': 31}], '_len': 8}]
+9 checksum = 0
+9 ['data_values', 'checksum'] ['[45, 128, 77, 201, 63, ...]', '0']
+13 for idx, value in enumerate(data_values):
+13 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '0', '0', '45']
+18 if idx % 2 == 0:
+18 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '0', '0', '45']
+19 checksum += value & 0xFF
+19 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '45', '0', '45']
+13 for idx, value in enumerate(data_values):
+13 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '45', '1', '128']
+18 if idx % 2 == 0:
+18 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '45', '1', '128']
+21 checksum -= value | 0x7F
+21 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-210', '1', '128']
+13 for idx, value in enumerate(data_values):
+13 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-210', '2', '77']
+18 if idx % 2 == 0:
+18 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-210', '2', '77']
+19 checksum += value & 0xFF
+19 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-133', '2', '77']
+13 for idx, value in enumerate(data_values):
+13 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-133', '3', '201']
+18 if idx % 2 == 0:
+18 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-133', '3', '201']
+21 checksum -= value | 0x7F
+21 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-388', '3', '201']
+13 for idx, value in enumerate(data_values):
+13 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-388', '4', '63']
+18 if idx % 2 == 0:
+18 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-388', '4', '63']
+19 checksum += value & 0xFF
+19 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-325', '4', '63']
+13 for idx, value in enumerate(data_values):
+13 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-325', '5', '92']
+18 if idx % 2 == 0:
+18 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-325', '5', '92']
+21 checksum -= value | 0x7F
+21 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-452', '5', '92']
+13 for idx, value in enumerate(data_values):
+13 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-452', '6', '144']
+18 if idx % 2 == 0:
+18 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-452', '6', '144']
+19 checksum += value & 0xFF
+19 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-308', '6', '144']
+13 for idx, value in enumerate(data_values):
+13 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-308', '7', '31']
+18 if idx % 2 == 0:
+18 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-308', '7', '31']
+21 checksum -= value | 0x7F
+21 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-435', '7', '31']
+13 for idx, value in enumerate(data_values):
+13 ['data_values', 'checksum', 'idx', 'value'] ['[45, 128, 77, 201, 63, ...]', '-435', '7', '31']
+24 if checksum > 1000:
+24 ['checksum'] ['-435']
+29 checksum = checksum % 256
+29 ['checksum'] ['77']
+34 return checksum
+34 ['checksum'] ['77']
+FUNCTION_RETURN 34 encrypt_data {'_type': 'int', '_value': 77}

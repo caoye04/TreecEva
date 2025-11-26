@@ -1,0 +1,67 @@
+Target: Find the value of variable final_checksum after [line 49] executes
+
+[line 42]  sensor_readings = [45.2, 67.8, 23.1, 89.5, 12.3, 78.9, 34.6]
+Compute: [45.2, 67.8, 23.1, 89.5, 12.3, 78.9, 34.6] = [45.2, 67.8, 23.1, 89.5, 12.3, ...]
+[line 43]  calibration_factors = [1.05, 0.98, 1.12, 0.95]
+Compute: [1.05, 0.98, 1.12, 0.95] = [1.05, 0.98, 1.12, 0.95]
+[line 49]  final_checksum = validate_sensor_data(sensor_readings, calibration_factors)
+Call function validate_sensor_data(sensor_readings=[45.2, 67.8, 23.1, 89.5, 12.3, ...] (defined at [line 42]), calibration_factors=[1.05, 0.98, 1.12, 0.95] (defined at [line 43]))
+[line 3]  def validate_sensor_data(readings, calibration):
+Enter function validate_sensor_data: readings=[45.2, 67.8, 23.1, 89.5, 12.3, ...] (sensor_readings defined at [line 42]), calibration=[1.05, 0.98, 1.12, 0.95] (calibration_factors defined at [line 43])
+  [line 8]  adjusted_readings = []
+  Compute: [] = []
+  [line 9]  for i, reading in enumerate(readings):
+  (Missing param: 'iter_var')
+  [line 15]  calib_index = i % len(calibration)
+  Compute: i % len(calibration), where i=0 (an unknown source), calibration=[1.05, 0.98, 1.12, 0.95] (parameter calibration defined at [line 43]) = 0
+  [line 16]  adjusted = reading * calibration[calib_index]
+  Compute: reading * calibration[calib_index], where reading=45.2 (an unknown source), calibration=[1.05, 0.98, 1.12, 0.95] (parameter calibration defined at [line 43]), calib_index=0 (defined at [line 15]) = 47.46000000000001
+  [line 20]  if adjusted > 1000:
+  Condition: True, entering 'if' block
+  [line 9]  for i, reading in enumerate(readings):
+  (Missing param: 'iter_var')
+  [line 15]  calib_index = i % len(calibration)
+  Compute: i % len(calibration), where i=1 (an unknown source), calibration=[1.05, 0.98, 1.12, 0.95] (parameter calibration defined at [line 43]) = 1
+  [line 16]  adjusted = reading * calibration[calib_index]
+  Compute: reading * calibration[calib_index], where reading=67.8 (an unknown source), calibration=[1.05, 0.98, 1.12, 0.95] (parameter calibration defined at [line 43]), calib_index=1 (defined at [line 15]) = 66.444
+  [line 20]  if adjusted > 1000:
+  Condition: True, entering 'if' block
+... [Line 9] repeats 4 more times ...
+... [Line 9] repeats 4 more times ...
+... [Line 9] repeats 4 more times ...
+... [Line 9] repeats 4 more times ...
+  [line 9]  for i, reading in enumerate(readings):
+  (Missing param: 'iter_var')
+  [line 15]  calib_index = i % len(calibration)
+  Compute: i % len(calibration), where i=6 (an unknown source), calibration=[1.05, 0.98, 1.12, 0.95] (parameter calibration defined at [line 43]) = 2
+  [line 16]  adjusted = reading * calibration[calib_index]
+  Compute: reading * calibration[calib_index], where reading=34.6 (an unknown source), calibration=[1.05, 0.98, 1.12, 0.95] (parameter calibration defined at [line 43]), calib_index=2 (defined at [line 15]) = 38.752
+  [line 20]  if adjusted > 1000:
+  Condition: True, entering 'if' block
+  [line 9]  for i, reading in enumerate(readings):
+  Loop End: Iteration finished
+  [line 28]  checksum = 0
+  Assign: checksum = 0
+  [line 29]  for val in adjusted_readings:
+  Loop Start: val takes its first value 47.46000000000001
+  [line 30]  checksum = (checksum + int(val)) % 256
+  Compute: (checksum + int(val)) % 256, where checksum=0 (defined at [line 28]), val=47.46000000000001 (defined at [line 29]) = 47
+  [line 29]  for val in adjusted_readings:
+  Loop Iteration: val is now 66.444 (iteration 2)
+  [line 30]  checksum = (checksum + int(val)) % 256
+  Compute: (checksum + int(val)) % 256, where checksum=47 (defined at [line 30]), val=66.444 (defined at [line 29]) = 113
+... [Line 29] repeats 4 more times ...
+... [Line 29] repeats 4 more times ...
+  [line 29]  for val in adjusted_readings:
+  Loop Iteration: val is now 38.752 (iteration 7)
+  [line 30]  checksum = (checksum + int(val)) % 256
+  Compute: (checksum + int(val)) % 256, where checksum=56 (defined at [line 30]), val=38.752 (defined at [line 29]) = 94
+  [line 29]  for val in adjusted_readings:
+  Loop End: Iteration finished
+  [line 37]  validation_key = (checksum * 13) % 97
+  Compute: (checksum * 13) % 97, where checksum=94 (defined at [line 30]) = 58
+  [line 39]  return validation_key
+  Return: validation_key=58 (defined at [line 37])
+Function validate_sensor_data returns 58
+
+Answer: final_checksum = 58 (last updated on defined at [line 49])

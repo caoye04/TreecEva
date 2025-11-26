@@ -1,37 +1,45 @@
-from collections import defaultdict
-import math
+def analyze_pattern_sequence(data_points):
+    temp_sum = sum(data_points)
+    pattern_index = len(data_points) // 2
+    return temp_sum * pattern_index
 
-def fibonacci(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        a, b = b, a + b
-    return b
+def filter_valid_patterns(sequence):
+    threshold = 15
+    filtered = [x for x in sequence if x % 2 == 0 and x > threshold]
+    misleading_count = len(filtered) * 3  # Distractor computation
+    return filtered, misleading_count
 
-def calculate_variance(values):
-    if len(values) == 0:
-        return 0
-    mean_val = sum(values) / len(values)
-    return sum((x - mean_val) ** 2 for x in values) / len(values)
+def process_sequence_patterns(main_data, aux_data):
+    primary_sum = sum(main_data)
+    aux_sum = sum(aux_data)
+    
+    # Irrelevant intermediate calculations
+    temp_product = primary_sum * aux_sum
+    offset_adjustment = temp_product % 7  # Never used
+    
+    filtered_main, dummy = filter_valid_patterns(main_data)
+    filtered_aux, another_dummy = filter_valid_patterns(aux_data)
+    
+    # Distractor operations that don't affect final result
+    combined_length = len(filtered_main) + len(filtered_aux)
+    pattern_multiplier = combined_length * 2  # Misleading calculation
+    
+    # Key logic chain
+    processed_main = analyze_pattern_sequence(filtered_main)
+    processed_aux = analyze_pattern_sequence(filtered_aux)
+    
+    final_count = processed_main + processed_aux
+    return final_count
 
-daily_changes = [3, -1, 4, -2, 5, -3, 6]
-weight_factors = [fibonacci(i) for i in range(1, len(daily_changes) + 1)]
-portfolio_log = defaultdict(list)
+# Main execution
+primary_data = [8, 12, 16, 20, 24, 28, 32]
+secondary_data = [10, 14, 18, 22, 26, 30]
 
-for idx, (change, weight) in enumerate(zip(daily_changes, weight_factors)):
-    adjusted_change = change * weight
-    portfolio_log['adjusted'].append(adjusted_change)
-    if idx > 0 and adjusted_change > 0 and portfolio_log['adjusted'][-2] < 0:
-        portfolio_log['signals'].append(idx)
+# Irrelevant computations that don't affect the answer
+preliminary_check = len(primary_data) == len(secondary_data)  # False but unused
+backup_calculation = (sum(primary_data) + sum(secondary_data)) // 5  # Dead code path
 
-# Greedy selection of top 3 positive adjustments
-positive_adjustments = [(i, val) for i, val in enumerate(portfolio_log['adjusted']) if val > 0]
-positive_adjustments.sort(key=lambda x: x[1], reverse=True)
-top_indices = {i for i, _ in positive_adjustments[:3]}
+result = process_sequence_patterns(primary_data, secondary_data)
+final_sequence_count = result
 
-selected_values = [portfolio_log['adjusted'][i] for i in top_indices]
-variance_of_selected = calculate_variance(selected_values)
-
-final_adjustment_score = int(sum(selected_values) - variance_of_selected)
-print(f"Result: {final_adjustment_score}")
+print(f"Target result: {final_sequence_count}")

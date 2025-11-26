@@ -1,0 +1,21 @@
+19
+total_inventory_value
+---
+2 inventory_data = {"widgets": 45, "gadgets": 32, "tools": 67, "parts": 23}
+2 ['inventory_data'] ['{widgets: 45, gadgets: 32, tools: 67, ...}']
+3 pricing_info = {"widgets": 12.5, "gadgets": 8.75, "tools": 15.25, "components": 9.99}
+3 ['inventory_data', 'pricing_info'] ['{widgets: 45, gadgets: 32, tools: 67, ...}', '{widgets: 12.5, gadgets: 8.75, tools: 15.25, ...}']
+14 available_products = set(inventory_data.keys()) & set(pricing_info.keys())
+14 ['inventory_data', 'pricing_info', 'available_products'] ['{widgets: 45, gadgets: 32, tools: 67, ...}', '{widgets: 12.5, gadgets: 8.75, tools: 15.25, ...}', "{'gadgets', 'widgets', 'tools'}"]
+15 item_data = inventory_data
+15 ['inventory_data', 'pricing_info', 'available_products', 'item_data'] ['{widgets: 45, gadgets: 32, tools: 67, ...}', '{widgets: 12.5, gadgets: 8.75, tools: 15.25, ...}', "{'gadgets', 'widgets', 'tools'}", '{widgets: 45, gadgets: 32, tools: 67, ...}']
+16 prices = pricing_info
+16 ['pricing_info', 'available_products', 'item_data', 'prices'] ['{widgets: 12.5, gadgets: 8.75, tools: 15.25, ...}', "{'gadgets', 'widgets', 'tools'}", '{widgets: 45, gadgets: 32, tools: 67, ...}', '{widgets: 12.5, gadgets: 8.75, tools: 15.25, ...}']
+19 total_inventory_value = sum([item_data[product] * prices.get(product, 0) for product in available_products])
+19 ['available_products', 'item_data', 'prices', 'product'] ["{'gadgets', 'widgets', 'tools'}", '{widgets: 45, gadgets: 32, tools: 67, ...}', '{widgets: 12.5, gadgets: 8.75, tools: 15.25, ...}', "'gadgets'"]
+19 total_inventory_value = sum([item_data[product] * prices.get(product, 0) for product in available_products])
+19 ['available_products', 'item_data', 'prices', 'product'] ["{'gadgets', 'widgets', 'tools'}", '{widgets: 45, gadgets: 32, tools: 67, ...}', '{widgets: 12.5, gadgets: 8.75, tools: 15.25, ...}', "'widgets'"]
+19 total_inventory_value = sum([item_data[product] * prices.get(product, 0) for product in available_products])
+19 ['available_products', 'item_data', 'prices', 'product'] ["{'gadgets', 'widgets', 'tools'}", '{widgets: 45, gadgets: 32, tools: 67, ...}', '{widgets: 12.5, gadgets: 8.75, tools: 15.25, ...}', "'tools'"]
+19 total_inventory_value = sum([item_data[product] * prices.get(product, 0) for product in available_products])
+19 ['available_products', 'item_data', 'prices', 'total_inventory_value'] ["{'gadgets', 'widgets', 'tools'}", '{widgets: 45, gadgets: 32, tools: 67, ...}', '{widgets: 12.5, gadgets: 8.75, tools: 15.25, ...}', '1864.25']

@@ -1,5 +1,16 @@
-bakery_inventory = [('muffins', 12), ('apple pies', 5), ('croissants', 20), ('orange cakes', 8), ('donuts', 15), ('egg tarts', 10)]
-vowels = {'a', 'e', 'i', 'o', 'u'}
-sorted_inventory = sorted(bakery_inventory)
-vowel_item_total = sum(quantity for item, quantity in sorted_inventory if item[0].lower() in vowels)
-print(f'Result: {vowel_item_total}')
+initial_balance = 1000
+transaction_log = ["deposit:200", "withdrawal:150", "deposit:300", "withdrawal:50"]
+
+total_deposits = 0
+total_withdrawals = 0
+
+for entry in transaction_log:
+    if entry.startswith("deposit:"):
+        amount = int(entry.split(":")[1])
+        total_deposits += amount
+    elif entry.startswith("withdrawal:"):
+        amount = int(entry.split(":")[1])
+        total_withdrawals += amount
+
+final_balance = total_deposits - total_withdrawals + initial_balance
+print(f"Result: {final_balance}")

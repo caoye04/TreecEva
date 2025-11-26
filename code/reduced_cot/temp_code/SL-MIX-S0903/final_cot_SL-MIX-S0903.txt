@@ -1,0 +1,78 @@
+Target: Find the value of variable final_output after [line 58] executes
+
+[line 55]  transaction_data = [8, 15, 22, 37, 45, 12, 29, 51, 18, 33, 26, 41]
+Compute: [8, 15, 22, 37, 45, 12, 29, 51, 18, 33, 26, 41] = [8, 15, 22, 37, 45, ...]
+[line 58]  final_output = data_processor(transaction_data)
+Call function data_processor(transaction_data=[8, 15, 22, 37, 45, ...] (defined at [line 55]))
+[line 1]  def data_processor(records):
+Enter function data_processor: records=[8, 15, 22, 37, 45, ...] (transaction_data defined at [line 55])
+  [line 3]  temp_sum = 0
+  Assign: temp_sum = 0
+  [line 4]  processed_count = 0
+  Assign: processed_count = 0
+  [line 5]  validation_flag = True
+  Assign: validation_flag = True
+  [line 9]  batch_size = len(records) // 2
+  Compute: len(records) // 2, where records=[8, 15, 22, 37, 45, ...] (parameter records defined at [line 55]) = 6
+  [line 10]  capacity_check = batch_size * 3 + 7
+  Compute: batch_size * 3 + 7, where batch_size=6 (defined at [line 9]) = 25
+  [line 13]  for record in records:
+  Loop Start: record takes its first value 8
+  [line 15]  if record % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 16]  validation_flag = validation_flag and (record > 0)
+  Compute: validation_flag and (record > 0), where validation_flag=True (defined at [line 5]), record=8 (defined at [line 13]) = True
+  [line 21]  if record >= 10 and record <= 50:
+  Condition: True, entering 'if' block
+  [line 27]  elif record > 50:
+  'elif' Condition: True, entering block
+  [line 13]  for record in records:
+  Loop Iteration: record is now 15 (iteration 2)
+  [line 15]  if record % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 21]  if record >= 10 and record <= 50:
+  Condition: True, entering 'if' block
+  [line 22]  processed_value = (record ^ 15) & 31
+  Compute: (record ^ 15) & 31, where record=15 (defined at [line 13]) = 0
+  [line 23]  temp_sum += processed_value
+  Update: temp_sum changed from 0 (defined at defined at [line 3]) to 0+processed_value = 0
+  [line 24]  processed_count += 1
+  Update: processed_count changed from 0 (defined at defined at [line 4]) to 0+1 = 1
+... [Line 13] repeats 9 more times ...
+... [Line 13] repeats 9 more times ...
+... [Line 13] repeats 9 more times ...
+... [Line 13] repeats 9 more times ...
+... [Line 13] repeats 9 more times ...
+... [Line 13] repeats 9 more times ...
+... [Line 13] repeats 9 more times ...
+  [line 13]  for record in records:
+  Loop Iteration: record is now 41 (iteration 12)
+  [line 15]  if record % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 21]  if record >= 10 and record <= 50:
+  Condition: True, entering 'if' block
+  [line 22]  processed_value = (record ^ 15) & 31
+  Compute: (record ^ 15) & 31, where record=41 (defined at [line 13]) = 6
+  [line 23]  temp_sum += processed_value
+  Update: temp_sum changed from 122 (defined at defined at [line 23]) to 122+processed_value = 128
+  [line 24]  processed_count += 1
+  Update: processed_count changed from 9 (defined at defined at [line 24]) to 9+1 = 10
+  [line 13]  for record in records:
+  Loop End: Iteration finished
+  [line 33]  filtered_transactions = [x for x in records if x in range(10, 51)]
+  Compute: [x for x in records if x in range(10, 51)], where x=8 (an unknown source), records=[8, 15, 22, 37, 45, ...] (parameter records defined at [line 55]) = ?
+  [line 35]  if filtered_transactions:
+  Condition: True, entering 'if' block
+  [line 36]  slice_avg = sum(filtered_transactions[::2]) / len(filtered_transactions[::2])
+  Compute: sum(filtered_transactions[::2]) / len(filtered_transactions[::2]), where filtered_transactions=[15, 22, 37, 45, 12, ...] (defined at [line 33]) = 21.6
+  [line 37]  base_adjustment = int(slice_avg) % 8
+  Compute: int(slice_avg) % 8, where slice_avg=21.6 (defined at [line 36]) = 5
+  [line 45]  final_result = (temp_sum + base_adjustment) ^ (processed_count * 2)
+  Compute: (temp_sum + base_adjustment) ^ (processed_count * 2), where temp_sum=128 (defined at [line 23]), base_adjustment=5 (defined at [line 37]), processed_count=10 (defined at [line 24]) = 145
+  [line 48]  if validation_flag and capacity_check > 100:
+  Condition: True, entering 'if' block
+  [line 52]  return final_result
+  Return: final_result=145 (defined at [line 45])
+Function data_processor returns 145
+
+Answer: final_output = 145 (last updated on defined at [line 58])

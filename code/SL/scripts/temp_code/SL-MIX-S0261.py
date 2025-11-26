@@ -1,43 +1,25 @@
-import math
-from collections import defaultdict
-
-def calculate_zone_capacity(zone_id):
-    return 50 + (zone_id * 15) % 100
-
-def simulate_visitor_flow():
-    zones = {i: {'capacity': calculate_zone_capacity(i), 'current': 0} for i in range(1, 6)}
-    overflow_counter = 0
-    visitor_patterns = [
-        [1, 3, 2, 5],
-        [2, 4, 1, 3],
-        [3, 1, 4, 2],
-        [4, 2, 5, 1],
-        [5, 3, 1, 4]
-    ]
+def calculate_text_offsets():
+    text_data = "programming_evaluation_benchmark"
+    # Process the text data
+    processed_data = text_data.replace('_', '').upper()
     
-    # Lambda to check if zone can accept more visitors
-    is_available = lambda z: zones[z]['current'] < zones[z]['capacity']
+    # Calculate initial offset (distractor - not used in final calculation)
+    initial_offset = len(text_data) * 2
     
-    for cycle in range(10):
-        for pattern in visitor_patterns:
-            for zone in pattern:
-                if is_available(zone):
-                    zones[zone]['current'] += 1
-                    break
-                else:
-                    continue
-            else:
-                # Visitor could not enter any preferred zone
-                overflow_counter += 1
-        
-        # Reset every 3 cycles with modulo arithmetic
-        if (cycle + 1) % 3 == 0:
-            for zone_id in zones:
-                reset_amount = zones[zone_id]['current'] // 2
-                zones[zone_id]['current'] = zones[zone_id]['current'] - reset_amount
+    # Get substring positions
+    substr_start = text_data.find('eval')
+    substr_end = text_data.rfind('mark')
     
-    return overflow_counter
+    # Calculate offset adjustment using slicing
+    relevant_slice = text_data[substr_start:substr_end + 4]
+    offset_adjustment = len(relevant_slice) // 2
+    
+    # Additional unused computation (interference)
+    temp_calc = (initial_offset - substr_start) * 3
+    unused_result = temp_calc % 7
+    
+    # Final calculation
+    final_offset = offset_adjustment + len(processed_data)
+    print(f"Target result: {final_offset}")
 
-# Main execution
-final_overflow_count = simulate_visitor_flow()
-print(f"Result: {final_overflow_count}")
+calculate_text_offsets()

@@ -1,17 +1,20 @@
-from functools import reduce
+from collections import Counter
 
-# Define the modified Fibonacci sequence generator using lambda
-fib_lambda = lambda a, b: a + b
+# Analyze word frequency in a small text passage
+text_passage = "the quick brown fox jumps over the lazy dog the fox is quick"
+words = text_passage.split()
+word_counts = Counter(words)
 
-# Initialize the sequence
-population_sequence = [1, 1]
+# Find words that appear more than once
+repeated_words = [word for word, count in word_counts.items() if count > 1]
 
-# Generate the sequence up to the 10th term
-for i in range(2, 10):
-    next_term = fib_lambda(population_sequence[i-1], population_sequence[i-2])
-    population_sequence.append(next_term)
+# Use enumerate to process repeated words with their positions
+enumerate_results = []
+for index, word in enumerate(repeated_words):
+    if index % 2 == 0:
+        enumerate_results.append(len(word) + index)
+    else:
+        enumerate_results.append(len(word) - index)
 
-# Get the population in the 10th year
-tenth_year_population = population_sequence[9]
-
-print(f'Result: {tenth_year_population}')
+final_count = sum(enumerate_results)
+print(f"Result: {final_count}")

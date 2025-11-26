@@ -1,66 +1,50 @@
-import heapq
-import itertools
-import statistics
+from collections import Counter
 
-def compute_skewness_approx(data):
-    if len(data) < 2:
-        return 0
-    mean_val = statistics.mean(data)
-    variance = statistics.variance(data) if len(data) > 1 else 0
-    third_moment = sum((x - mean_val)**3 for x in data) / len(data)
-    return third_moment / (variance**1.5) if variance > 0 else 0
-
-class SpectralWindowProcessor:
-    def __init__(self, window_size=5):
-        self.window_size = window_size
-        self.metric_heap = []
+def calculate_weights(data_stream):
+    # Primary data processing with bitwise operations
+    base_mask = 0xFF
+    shift_count = 2
     
-    def process_signal(self, signal_segments):
-        scores = []
-        for segment in signal_segments:
-            # Generate all combinations of window_size elements
-            window_combinations = list(itertools.combinations(segment, self.window_size))
-            segment_scores = []
-            for window in window_combinations:
-                var = statistics.variance(window) if len(window) > 1 else 0
-                skew = compute_skewness_approx(window)
-                # Combinatorial weight based on index positions
-                weight = sum(window) * len([x for x in window if x > statistics.mean(window)])
-                score = (var * 0.5) + (abs(skew) * 0.3) + (weight * 0.2)
-                segment_scores.append(score)
-            
-            # Use ternary to determine segment aggregation
-            agg_score = max(segment_scores) if segment_scores else 0
-            scores.append(agg_score)
-        
-        # Maintain top 3 scores in a min-heap
-        for score in scores:
-            if len(self.metric_heap) < 3:
-                heapq.heappush(self.metric_heap, score)
-            elif score > self.metric_heap[0]:
-                heapq.heapreplace(self.metric_heap, score)
-        
-        return statistics.mean(self.metric_heap) if self.metric_heap else 0
+    # Main computation - transform data using modular arithmetic
+    transformed = [(x << shift_count) & base_mask for x in data_stream]
+    
+    # Distractor: unused computation that looks important
+    inverse_weights = [~x & base_mask for x in data_stream]
+    
+    # Actual weight calculation
+    weight_vector = [t % 17 for t in transformed]
+    return weight_vector
 
-# Signal processing pipeline
-processor = SpectralWindowProcessor(window_size=4)
+def validate_pattern(pattern_data):
+    # Misleading validation that appears crucial but isn't
+    temp_sum = sum(pattern_data)
+    validation_flag = (temp_sum & 0x0F) == 7
+    
+    # Dead code path that never executes
+    if validation_flag and len(pattern_data) > 10:
+        redundancy_check = pattern_data[-1] * 3
+    else:
+        redundancy_check = 0
+    
+    # Counter-based frequency analysis (relevant)
+    freq_counter = Counter(pattern_data)
+    dominant_value = freq_counter.most_common(1)[0][0] if freq_counter else 0
+    return dominant_value
 
-# Audio feature segments (each sub-array represents a time segment)
-audio_segments = [
-    [23, 45, 12, 67, 89, 34],
-    [15, 78, 29, 53, 64, 91, 37],
-    [42, 18, 76, 25, 83, 59, 11, 68],
-    [33, 72, 28, 95, 16, 47, 84]
-]
+# Main execution with multiple data streams
+primary_data = [12, 45, 78, 23, 56, 89, 34, 67]
+secondary_data = [8, 29, 51, 74, 16, 39, 62, 95]
 
-# Process all segments and get final metric
-final_metric_score = processor.process_signal(audio_segments)
+# Compute checksums with various operations
+checksum_a = sum(calculate_weights(primary_data))
+checksum_b = validate_pattern(secondary_data)
 
-# Apply final transformation using logical operations
-is_high_energy = final_metric_score > 50
-is_stable = final_metric_score < 100
-adjusted_score = final_metric_score * 1.5 if (is_high_energy and is_stable) else \
-                 final_metric_score * 0.8 if (not is_high_energy) else \
-                 final_metric_score * 0.9
+# Misleading intermediate calculation
+auxiliary_mod = (checksum_a * 3 + checksum_b) % 256
 
-print(f"Result: {round(adjusted_score, 2)}")
+# Critical execution point
+verification_mod = 97
+final_checksum = (checksum_a ^ checksum_b) % verification_mod
+
+# Print target result
+print(f"Target result: {final_checksum}")

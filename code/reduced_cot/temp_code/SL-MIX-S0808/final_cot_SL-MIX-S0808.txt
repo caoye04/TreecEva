@@ -1,0 +1,49 @@
+Target: Find the value of variable final_checksum after [line 35] executes
+
+[line 5]  data_blocks = [15, 42, 7, 99, 23]
+Compute: [15, 42, 7, 99, 23] = [15, 42, 7, 99, 23]
+[line 6]  validation_masks = [0b1100, 0b1010, 0b1111, 0b0011, 0b1001]
+Compute: [0b1100, 0b1010, 0b1111, 0b0011, 0b1001] = [12, 10, 15, 3, 9]
+[line 17]  parity_tracker = 0
+Assign: parity_tracker = 0
+[line 18]  for i, (a, b) in enumerate(zip(data_blocks, validation_masks)):
+(Missing param: 'iter_var')
+[line 20]  masked_value = a & b
+Compute: a & b, where a=15 (an unknown source), b=12 (an unknown source) = 12
+[line 21]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 22]  parity_tracker += masked_value >> 1
+Update: parity_tracker changed from 0 (defined at defined at [line 17]) to 0+masked_value >> 1 = 6
+[line 31]  if i > 2:
+Condition: True, entering 'if' block
+[line 18]  for i, (a, b) in enumerate(zip(data_blocks, validation_masks)):
+(Missing param: 'iter_var')
+[line 20]  masked_value = a & b
+Compute: a & b, where a=42 (an unknown source), b=10 (an unknown source) = 10
+[line 21]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 24]  parity_tracker -= masked_value & 0x0F
+Update: parity_tracker changed from 6 (defined at defined at [line 22]) to 6-masked_value & 0x0F = -4
+[line 31]  if i > 2:
+Condition: True, entering 'if' block
+... [Line 18] repeats 2 more times ...
+... [Line 18] repeats 2 more times ...
+... [Line 18] repeats 2 more times ...
+... [Line 18] repeats 2 more times ...
+... [Line 18] repeats 2 more times ...
+[line 18]  for i, (a, b) in enumerate(zip(data_blocks, validation_masks)):
+(Missing param: 'iter_var')
+[line 20]  masked_value = a & b
+Compute: a & b, where a=23 (an unknown source), b=9 (an unknown source) = 1
+[line 21]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 22]  parity_tracker += masked_value >> 1
+Update: parity_tracker changed from -4 (defined at defined at [line 24]) to -4+masked_value >> 1 = -4
+[line 31]  if i > 2:
+Condition: True, entering 'if' block
+[line 18]  for i, (a, b) in enumerate(zip(data_blocks, validation_masks)):
+Loop End: Iteration finished
+[line 35]  final_checksum = parity_tracker
+Compute: parity_tracker, where parity_tracker=-4 (defined at [line 22]) = -4
+
+Answer: final_checksum = -4 (last updated on defined at [line 35])

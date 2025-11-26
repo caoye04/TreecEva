@@ -1,26 +1,46 @@
-import itertools
-
-def analyze_protocol_stream(token_stream):
-    state = 'header'
-    delimiter_count = 0
-    control_char_freq = {'\x02': 0, '\x03': 0, '\x1e': 0}
-    header_delimiters = {':', ';', ','}
+def calculate_temperature_stats(measurements):
+    temp_sum = sum(measurements)
+    temp_count = len(measurements)
+    temp_avg = temp_sum / temp_count
     
-    for token in token_stream:
-        if state == 'header' and token == '\x1f':
-            state = 'body'
-            continue
-        elif state == 'body' and token == '\x1f':
-            state = 'header'
-            continue
-            
-        if state == 'header' and token in header_delimiters:
-            delimiter_count += 1
-        elif state == 'body' and token in control_char_freq:
-            control_char_freq[token] += 1
+    # Distractor calculations that don't affect final result
+    temp_range = max(measurements) - min(measurements)
+    temp_squared = [x**2 for x in measurements]
+    temp_variance = sum(temp_squared) / temp_count - temp_avg**2
     
-    return delimiter_count, control_char_freq
+    # Main logic chain
+    adjusted_temps = [temp + 5 for temp in measurements]
+    filtered_temps = [temp for temp in adjusted_temps if temp > 20]
+    
+    # More distractors
+    temp_product = 1
+    for temp in measurements:
+        temp_product *= temp
+    
+    # Key calculation path
+    if filtered_temps:
+        final_temp = sum(filtered_temps) / len(filtered_temps)
+    else:
+        final_temp = temp_avg
+    
+    # Build metrics dictionary
+    metrics = {
+        'average': temp_avg,
+        'range': temp_range,
+        'temperature': final_temp,
+        'variance': temp_variance,
+        'product': temp_product
+    }
+    
+    # Final metrics with some unused operations
+    final_metrics = {}
+    for key, value in metrics.items():
+        if key in ['average', 'temperature', 'variance']:
+            final_metrics[key] = round(value, 2)
+    
+    target_value = final_metrics['temperature']
+    print(f"Target result: {target_value}")
 
-token_stream = [':', 'data', ';', '\x02', '\x1f', '\x02', '\x03', '\x1e', '\x02', '\x1f', ',', ':', ';']
-delimiter_count, control_char_freq = analyze_protocol_stream(token_stream)
-print(f"Result: {delimiter_count}")
+# Execute with sample data
+sensor_readings = [15, 22, 18, 25, 20, 17]
+calculate_temperature_stats(sensor_readings)

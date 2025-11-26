@@ -1,0 +1,51 @@
+Target: Find the value of variable final_throughput after [line 53] executes
+
+[line 40]  active_nodes = [1, 2, 3, 4, 5, 6]
+Compute: [1, 2, 3, 4, 5, 6] = [1, 2, 3, 4, 5, ...]
+[line 41]  packet_sizes = [512, 1024, 768, 1536, 896, 1280]
+Compute: [512, 1024, 768, 1536, 896, 1280] = [512, 1024, 768, 1536, 896, ...]
+[line 42]  transmission_rates = [75, 45, 90, 60, 85, 55]
+Compute: [75, 45, 90, 60, 85, 55] = [75, 45, 90, 60, 85, ...]
+[line 48]  final_throughput = compute_network_efficiency(active_nodes, packet_sizes, transmission_rates)
+Call function compute_network_efficiency(active_nodes=[1, 2, 3, 4, 5, ...] (defined at [line 40]), packet_sizes=[512, 1024, 768, 1536, 896, ...] (defined at [line 41]), transmission_rates=[75, 45, 90, 60, 85, ...] (defined at [line 42]))
+[line 9]  transmission_pairs = list(zip(sizes, rates))
+Call function list(zip(sizes, rates))
+[line 10]  successful_transmissions = []
+Compute: [] = []
+[line 12]  for i, (size, rate) in enumerate(transmission_pairs):
+(Missing param: 'iter_var')
+[line 14]  if size > 1500:
+Condition: True, entering 'if' block
+[line 18]  if rate > 50:
+Condition: True, entering 'if' block
+[line 12]  for i, (size, rate) in enumerate(transmission_pairs):
+(Missing param: 'iter_var')
+[line 14]  if size > 1500:
+Condition: True, entering 'if' block
+[line 18]  if rate > 50:
+Condition: True, entering 'if' block
+... [Line 12] repeats 3 more times ...
+... [Line 12] repeats 3 more times ...
+... [Line 12] repeats 3 more times ...
+[line 12]  for i, (size, rate) in enumerate(transmission_pairs):
+(Missing param: 'iter_var')
+[line 14]  if size > 1500:
+Condition: True, entering 'if' block
+[line 18]  if rate > 50:
+Condition: True, entering 'if' block
+[line 12]  for i, (size, rate) in enumerate(transmission_pairs):
+Loop End: Iteration finished
+[line 29]  if successful_transmissions:
+Condition: True, entering 'if' block
+[line 30]  avg_throughput = sum(successful_transmissions) / len(successful_transmissions)
+Compute: sum(successful_transmissions) / len(successful_transmissions), where successful_transmissions=[37.5, 67.5, 90.0, 74.375, 68.75] (defined at [line 10]) = 67.625
+[line 31]  quality_factor = len([n for n in nodes if n % 2 == 0]) / len(nodes)
+Compute: len([n for n in nodes if n % 2 == 0]) / len(nodes), where n=1 (an unknown source), nodes=[1, 2, 3, 4, 5, ...] (an unknown source) = ?
+[line 32]  final_result = avg_throughput * quality_factor
+Compute: avg_throughput * quality_factor, where avg_throughput=67.625 (defined at [line 30]), quality_factor=0.5 (defined at [line 31]) = 33.8125
+[line 37]  return round(final_result, 2)
+Return: round(final_result, 2)
+[line 53]  print(f"Result: {final_throughput}")
+Output: f"Result: {final_throughput}"
+
+Answer: final_throughput = 33.81 (last updated on defined at [line 48])

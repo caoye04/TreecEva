@@ -1,42 +1,54 @@
-from functools import reduce
-import hashlib
+def calculate_data_stats(input_values):
+    # Irrelevant processing that creates misleading intermediate values
+    temp_sum = sum(input_values)
+    max_val = max(input_values)
+    min_val = min(input_values)
+    
+    # Distractor operations that don't affect final result
+    avg_val = temp_sum / len(input_values)
+    range_val = max_val - min_val
+    
+    # Redundant calculations for interference
+    product_val = 1
+    for val in input_values:
+        product_val *= val
+    
+    # Main logic path with bitwise operations
+    processed = []
+    for i, val in enumerate(input_values):
+        if i % 2 == 0:
+            processed.append((val << 1) | 0b1)  # Left shift and OR
+        else:
+            processed.append((val >> 1) & 0b1111)  # Right shift and AND
+    
+    # Set operations for interference
+    unique_vals = set(processed)
+    common_elements = unique_vals & {3, 7, 15}
+    
+    # Dictionary operations with misleading keys
+    data_map = {k: v * 2 for k, v in enumerate(processed)}
+    adjustment_factor = len(common_elements) * 5
+    
+    # Conditional expression with logical operations
+    penalty_offset = 10 if len(processed) > 3 and max(processed) < 20 else 15
+    
+    # Dead code path that's never executed
+    if product_val > 1000:
+        bonus = 25
+    else:
+        bonus = 0
+    
+    # The actual computation that matters
+    final_score = processed[2] + adjustment_factor - penalty_offset
+    
+    # Print irrelevant values for distraction
+    print(f"Debug - temp_sum: {temp_sum}, range_val: {range_val}")
+    print(f"Debug - unique_count: {len(unique_vals)}, common_count: {len(common_elements)}")
+    
+    # Critical output
+    print(f"Target result: {final_score}")
+    return final_score
 
-def fibonacci(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
-
-def gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
-
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
-
-# Protocol initialization
-participants = {'Alice', 'Bob', 'Charlie'}
-shared_secrets = frozenset(['secret1', 'secret2', 'secret3'])
-prime_indices = [2, 3, 5, 7, 11]
-
-# Generate base values from prime-indexed Fibonacci numbers
-fib_values = [fibonacci(p) for p in prime_indices]
-modulus_base = reduce(lcm, fib_values[:3])
-
-# Hash shared secrets and combine
-hashes = [int(hashlib.sha256(s.encode()).hexdigest(), 16) for s in shared_secrets]
-combined_hash = sum(hashes) % modulus_base
-
-# Compute session key using remaining Fibonacci values and transformations
-transformed_values = [((f % combined_hash) if combined_hash != 0 else 1) for f in fib_values[3:]]
-string_transform = ''.join(chr((ord(c) + 13) % 256) for c in "crypto")
-hashed_transform = int(hashlib.md5(string_transform.encode()).hexdigest(), 16)
-
-# Final computation
-if combined_hash > 0:
-    session_key = (reduce(lambda x, y: (x * y) % combined_hash, transformed_values, 1) + hashed_transform) % modulus_base
-else:
-    session_key = hashed_transform % 1000000
-
-print(f"Result: {session_key}")
+# Test execution with specific input
+sample_data = [4, 9, 12, 7, 3]
+result = calculate_data_stats(sample_data)

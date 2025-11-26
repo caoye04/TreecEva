@@ -1,16 +1,27 @@
-import math
+def calculate_student_performance(scores_data):
+    base_scores = [85, 92, 78, 96, 88]
+    adjustments = [5, -3, 8, -2, 4]
+    
+    processed_scores = []
+    temp_calc = 0
+    
+    for idx, (score, adj) in enumerate(zip(base_scores, adjustments)):
+        adjusted_score = score + adj
+        processed_scores.append(adjusted_score)
+        temp_calc += idx * 2  # Distractor calculation
+    
+    score_set = set(processed_scores)
+    unique_bonus = len(score_set) * 3
+    
+    total_score = sum(processed_scores)
+    intermediate_val = total_score // len(base_scores)
+    
+    bonus_adjustment = unique_bonus - 5
+    processed_total = total_score - intermediate_val
+    
+    # Final calculation
+    final_score = processed_total + bonus_adjustment
+    print(f"Result: {final_score}")
 
-def min_boxes(total_cookies, box_capacity):
-    if total_cookies <= box_capacity:
-        return 1
-    mid = total_cookies // 2
-    left_boxes = min_boxes(mid, box_capacity)
-    right_boxes = min_boxes(total_cookies - mid, box_capacity)
-    return left_boxes + right_boxes
-
-cookie_count = 987
-box_size = 12
-required_boxes = min_boxes(cookie_count, box_size)
-# Adjust for overcounting due to recursive splitting
-actual_boxes = math.ceil(cookie_count / box_size)
-print(f'Result: {actual_boxes}')
+# Execute the function
+calculate_student_performance([])

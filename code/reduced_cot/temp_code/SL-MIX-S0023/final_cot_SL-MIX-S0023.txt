@@ -1,65 +1,56 @@
-Target: Find the value of variable final_efficiency after [line 26] executes
+Target: Find the value of variable final_balance after [line 30] executes
 
-[line 25]  network_nodes = 12
-Assign: network_nodes = 12
-[line 26]  final_efficiency = transmission_efficiency(network_nodes)
-Call function transmission_efficiency(network_nodes=12 (defined at [line 25]))
-[line 3]  def transmission_efficiency(nodes, depth=0):
-Enter function transmission_efficiency: nodes=12 (network_nodes defined at [line 25]), depth=0
-  [line 4]  if depth > 3:
-  Condition: True, entering 'if' block
-  [line 6]  if nodes <= 1:
-  Condition: True, entering 'if' block
-  [line 10]  base = (nodes & (nodes - 1)) ^ (nodes >> 1)
-  Compute: (nodes & (nodes - 1)) ^ (nodes >> 1), where nodes=12 (parameter nodes defined at [line 25]) = 14
-  [line 13]  recursive_part = transmission_efficiency(nodes // 2, depth + 1)
-  Call function transmission_efficiency(nodes // 2, depth + 1)
-  [line 4]  if depth > 3:
-  Condition: True, entering 'if' block
-  [line 6]  if nodes <= 1:
-  Condition: True, entering 'if' block
-  [line 10]  base = (nodes & (nodes - 1)) ^ (nodes >> 1)
-  Compute: (nodes & (nodes - 1)) ^ (nodes >> 1), where nodes=6 (parameter nodes defined at [line 25]) = 7
-  [line 13]  recursive_part = transmission_efficiency(nodes // 2, depth + 1)
-  Call function transmission_efficiency(nodes // 2, depth + 1)
-  [line 4]  if depth > 3:
-  Condition: True, entering 'if' block
-  [line 6]  if nodes <= 1:
-  Condition: True, entering 'if' block
-  [line 10]  base = (nodes & (nodes - 1)) ^ (nodes >> 1)
-  Compute: (nodes & (nodes - 1)) ^ (nodes >> 1), where nodes=3 (parameter nodes defined at [line 25]) = 3
-  [line 13]  recursive_part = transmission_efficiency(nodes // 2, depth + 1)
-  Call function transmission_efficiency(nodes // 2, depth + 1)
-  [line 4]  if depth > 3:
-  Condition: True, entering 'if' block
-  [line 6]  if nodes <= 1:
-  Condition: True, entering 'if' block
-  [line 7]  return nodes
-  Return: nodes=1 (parameter nodes defined at [line 25])
-  [line 16]  combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
-  Call function list(itertools.combinations(range(min(nodes, 4)), 2))
-  [line 17]  combo_count = len(combinations)
-  Call function len(combinations=[(0, 1), (0, 2), (1, 2)] (defined at [line 16]))
-  [line 20]  adjusted = base + combo_count if base < combo_count else base - combo_count
-  Compute: base + combo_count if base < combo_count else base - combo_count, where base=3 (defined at [line 10]), combo_count=3 (defined at [line 17]) = 0
-  [line 22]  return adjusted + recursive_part
-  Return: adjusted + recursive_part
-  [line 16]  combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
-  Call function list(itertools.combinations(range(min(nodes, 4)), 2))
-  [line 17]  combo_count = len(combinations)
-  Call function len(combinations=[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...] (defined at [line 16]))
-  [line 20]  adjusted = base + combo_count if base < combo_count else base - combo_count
-  Compute: base + combo_count if base < combo_count else base - combo_count, where base=7 (defined at [line 10]), combo_count=6 (defined at [line 17]) = 1
-  [line 22]  return adjusted + recursive_part
-  Return: adjusted + recursive_part
-  [line 16]  combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
-  Call function list(itertools.combinations(range(min(nodes, 4)), 2))
-  [line 17]  combo_count = len(combinations)
-  Call function len(combinations=[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...] (defined at [line 16]))
-  [line 20]  adjusted = base + combo_count if base < combo_count else base - combo_count
-  Compute: base + combo_count if base < combo_count else base - combo_count, where base=14 (defined at [line 10]), combo_count=6 (defined at [line 17]) = 8
-  [line 22]  return adjusted + recursive_part
-  Return: adjusted + recursive_part
-Function transmission_efficiency returns 10
+[line 4]  for rule in rules:
+Loop Start: rule takes its first value 'amount_limit'
+[line 4]  for rule in rules:
+Loop End: Iteration finished
+[line 4]  for rule in rules:
+Loop End: Iteration finished
+[line 4]  for rule in rules:
+Loop End: Iteration finished
+[line 12]  balance_tracker = 1000  # Starting balance
+Assign: balance_tracker = 1000
+[line 13]  for operation in transactions:
+Loop Start: operation takes its first value 'DEPOSIT_250'
+[line 14]  if operation.startswith('DEPOSIT_'):
+Condition: True, entering 'if' block
+[line 15]  amount = int(operation.split('_')[1])
+Call function int(operation.split('_')[1])
+[line 16]  balance_tracker += amount
+Update: balance_tracker changed from 1000 (defined at defined at [line 12]) to 1000+amount = 1250
+[line 13]  for operation in transactions:
+Loop Iteration: operation is now 'WITHDRAW_100' (iteration 2)
+[line 14]  if operation.startswith('DEPOSIT_'):
+Condition: True, entering 'if' block
+[line 17]  elif operation.startswith('WITHDRAW_'):
+'elif' Condition: True, entering block
+[line 18]  amount = int(operation.split('_')[1])
+Call function int(operation.split('_')[1])
+[line 19]  balance_tracker -= amount
+Update: balance_tracker changed from 1250 (defined at defined at [line 16]) to 1250-amount = 1150
+[line 13]  for operation in transactions:
+Loop Iteration: operation is now 'DEPOSIT_75' (iteration 3)
+[line 14]  if operation.startswith('DEPOSIT_'):
+Condition: True, entering 'if' block
+[line 15]  amount = int(operation.split('_')[1])
+Call function int(operation.split('_')[1])
+[line 16]  balance_tracker += amount
+Update: balance_tracker changed from 1150 (defined at defined at [line 19]) to 1150+amount = 1225
+[line 13]  for operation in transactions:
+Loop Iteration: operation is now 'WITHDRAW_50' (iteration 4)
+[line 14]  if operation.startswith('DEPOSIT_'):
+Condition: True, entering 'if' block
+[line 17]  elif operation.startswith('WITHDRAW_'):
+'elif' Condition: True, entering block
+[line 18]  amount = int(operation.split('_')[1])
+Call function int(operation.split('_')[1])
+[line 19]  balance_tracker -= amount
+Update: balance_tracker changed from 1225 (defined at defined at [line 16]) to 1225-amount = 1175
+[line 13]  for operation in transactions:
+Loop End: Iteration finished
+[line 29]  service_fee = max(10, len(transactions) * 2)
+Call function max(10, len(transactions) * 2)
+[line 30]  final_balance = balance_tracker - service_fee
+Compute: balance_tracker - service_fee, where balance_tracker=1175 (defined at [line 19]), service_fee=10 (defined at [line 29]) = 1165
 
-Answer: final_efficiency = ? (last updated on defined at [line 26])
+Answer: final_balance = 1165 (last updated on defined at [line 30])

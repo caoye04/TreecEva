@@ -1,50 +1,42 @@
-from collections import deque
-from functools import reduce
-import math
+import itertools
 
-def is_valid_reading(x):
-    return x >= 0 and x <= 100
-
-def compute_rolling_avg(window):
-    return sum(window) / len(window) if window else 0
-
-# Sensor readings
-readings = [10, 15, 105, 20, 25, 30, -5, 35, 40, 45, 50]
-window_size = 3
-threshold = 30
-
-# Initialize data structures
-sensor_window = deque(maxlen=window_size)
-valid_readings = []
-processed_samples = 0
-avg_history = []
-
-def process_sensor_data(readings):
-    global processed_samples
-    for i, reading in enumerate(readings):
-        # Apply short-circuit evaluation for efficiency
-        if is_valid_reading(reading) and (not avg_history or abs(reading - avg_history[-1]) < 20):
-            sensor_window.append(reading)
-            valid_readings.append(reading)
-            
-            # Compute rolling average when window is full
-            if len(sensor_window) == window_size:
-                avg = compute_rolling_avg(sensor_window)
-                avg_history.append(avg)
-                
-                # Count samples exceeding threshold
-                if avg > threshold:
-                    processed_samples += 1
-        
-        # Special handling for every third invalid reading
-        elif not is_valid_reading(reading) and len([r for r in readings[:i] if not is_valid_reading(r)]) % 3 == 2:
-            if sensor_window:
-                sensor_window.popleft()
+# Energy optimization analysis for sensor network
+def analyze_energy_patterns():
+    sensor_readings = [12, 8, 15, 6, 9, 11, 7]
+    calibration_offsets = [-1, 2, -3, 1, -2, 3, -1]
     
-    # Final adjustment using functional programming
-    if avg_history:
-        adjusted_values = list(map(lambda x: x * 1.1 if x > threshold else x, avg_history))
-        processed_samples = reduce(lambda acc, val: acc + (1 if val > threshold else 0), adjusted_values, 0)
+    # Combine readings with calibration offsets
+    adjusted_readings = [reading + offset for reading, offset in zip(sensor_readings, calibration_offsets)]
+    
+    # Calculate energy metrics
+    total_energy = sum(adjusted_readings)
+    max_reading = max(adjusted_readings)
+    min_reading = min(adjusted_readings)
+    
+    # This intermediate calculation is a distractor (not used in final result)
+    energy_variance = sum((x - total_energy/len(adjusted_readings))**2 for x in adjusted_readings)
+    
+    # Find optimal energy subset using itertools combinations
+    optimal_energy = 0
+    for i in range(1, len(adjusted_readings) + 1):
+        for combination in itertools.combinations(adjusted_readings, i):
+            current_sum = sum(combination)
+            # Select combination that maximizes efficiency
+            if 18 <= current_sum <= 25 and current_sum > optimal_energy:
+                optimal_energy = current_sum
+    
+    # More distraction calculations
+    efficiency_ratio = (max_reading - min_reading) / len(sensor_readings)
+    
+    # Key calculation for final result
+    conversion_factor = 2.5
+    optimal_sum = optimal_energy
+    
+    # Final result calculation
+    final_energy = optimal_sum * conversion_factor
+    
+    print(f"Target result: {final_energy}")
+    return final_energy
 
-process_sensor_data(readings)
-print(f"Result: {processed_samples}")
+# Execute the analysis
+analyze_energy_patterns()

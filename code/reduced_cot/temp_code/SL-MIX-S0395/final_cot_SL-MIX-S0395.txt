@@ -1,0 +1,12 @@
+Target: Find the value of variable crypto_key after [line 15] executes
+
+[line 7]  processed = [(bit << 1) & 0xFF for bit in bits]
+Compute: [(bit << 1) & 0xFF for bit in bits], where bit=45 (an unknown source), bits=[45, 0, 13, 9, 33, ...] (an unknown source) = ?
+[line 8]  masked = [p | modifier for p in processed]
+Compute: [p | modifier for p in processed], where p=90 (an unknown source), modifier=12 (an unknown source), processed=[90, 0, 26, 18, 66, ...] (defined at [line 7]) = ?
+[line 14]  filtered = [m for m in masked if m % 3 == 0]
+Compute: [m for m in masked if m % 3 == 0], where m=94 (an unknown source), masked=[94, 12, 30, 30, 78, ...] (defined at [line 8]) = ?
+[line 15]  crypto_key = sum(filtered) ^ modifier
+Compute: sum(filtered) ^ modifier, where filtered=[12, 30, 30, 78, 60] (defined at [line 14]), modifier=12 (an unknown source) = 222
+
+Answer: crypto_key = 222 (last updated on defined at [line 15])

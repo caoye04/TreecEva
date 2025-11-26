@@ -1,41 +1,24 @@
-Target: Find the value of variable filtered_signal_strength after [line 23] executes
+Target: Find the value of variable final_result after [line 30] executes
 
-[line 19]  space_signals = [5, 8, 13, 21, 34]
-Compute: [5, 8, 13, 21, 34] = [5, 8, 13, 21, 34]
-[line 22]  weighted_sum = apply_fibonacci_filter(space_signals)
-Call function apply_fibonacci_filter(space_signals=[5, 8, 13, 21, 34] (defined at [line 19]))
-[line 11]  fib_weights = list(fibonacci_sequence(len(signals)))
-Call function list(fibonacci_sequence(len(signals)))
-[line 6]  for _ in range(n):
-Loop Start: _ takes its first value 0
-[line 6]  for _ in range(n):
-Loop End: Iteration finished
-[line 6]  for _ in range(n):
-Loop End: Iteration finished
-[line 6]  for _ in range(n):
-Loop End: Iteration finished
-[line 6]  for _ in range(n):
-Loop End: Iteration finished
-[line 6]  for _ in range(n):
-Loop End: Iteration finished
-[line 12]  weighted_signals = [s * w for s, w in zip(signals, fib_weights)]
-Compute: [s * w for s, w in zip(signals, fib_weights)], where s=5 (an unknown source), w=0 (an unknown source), signals=[5, 8, 13, 21, 34] (an unknown source), fib_weights=[0, 1, 1, 2, 3] (defined at [line 11]) = ?
-[line 13]  return reduce(lambda x, y: x + y, weighted_signals)
-Return: reduce(lambda x, y: x + y, weighted_signals)
-[line 13]  return reduce(lambda x, y: x + y, weighted_signals)
-Return: reduce(lambda x, y: x + y, weighted_signals)
-[line 13]  return reduce(lambda x, y: x + y, weighted_signals)
-Return: reduce(lambda x, y: x + y, weighted_signals)
-[line 13]  return reduce(lambda x, y: x + y, weighted_signals)
-Return: reduce(lambda x, y: x + y, weighted_signals)
-[line 13]  return reduce(lambda x, y: x + y, weighted_signals)
-Return: reduce(lambda x, y: x + y, weighted_signals)
-[line 23]  filtered_signal_strength = normalize_signal(weighted_sum)
-Call function normalize_signal(weighted_sum=165 (defined at [line 22]))
-[line 15]  def normalize_signal(signal_value, normalization_factor=10):
-Enter function normalize_signal: signal_value=165 (weighted_sum defined at [line 22]), normalization_factor=10
-  [line 16]  return signal_value / normalization_factor if normalization_factor != 0 else 0
-  Return: signal_value / normalization_factor if normalization_factor != 0 else 0
-Function normalize_signal returns 16.5
+[line 3]  valid_readings = [reading for reading in sensor_readings if reading > 10]
+Compute: [reading for reading in sensor_readings if reading > 10], where reading=8 (an unknown source), sensor_readings=[8, 15, 22, 45, 18, ...] (an unknown source) = ?
+[line 16]  threshold = 25
+Assign: threshold = 25
+[line 17]  filtered_readings = [reading for reading in valid_readings if reading > threshold]
+Compute: [reading for reading in valid_readings if reading > threshold], where reading=15 (an unknown source), valid_readings=[15, 22, 45, 18, 60, ...] (defined at [line 3]), threshold=25 (defined at [line 16]) = ?
+[line 20]  filtered_sum = sum(filtered_readings)
+Call function sum(filtered_readings=[45, 60, 33, 28, 51] (defined at [line 17]))
+[line 21]  filtered_count = len(filtered_readings)
+Call function len(filtered_readings=[45, 60, 33, 28, 51] (defined at [line 17]))
+[line 22]  filtered_avg = filtered_sum / filtered_count if filtered_count > 0 else 0
+Compute: filtered_sum / filtered_count if filtered_count > 0 else 0, where filtered_sum=217 (defined at [line 20]), filtered_count=5 (defined at [line 21]) = 43.4
+[line 25]  total_readings = len(sensor_readings)
+Call function len(sensor_readings=[8, 15, 22, 45, 18, ...] (an unknown source))
+[line 26]  compressed_ratio = filtered_count / total_readings if total_readings > 0 else 0
+Compute: filtered_count / total_readings if total_readings > 0 else 0, where filtered_count=5 (defined at [line 21]), total_readings=12 (defined at [line 25]) = 0.4166666666666667
+[line 29]  compression_ratio = 1.5 if compressed_ratio > 0.3 else 2.0
+Compute: 1.5 if compressed_ratio > 0.3 else 2.0, where compressed_ratio=0.4166666666666667 (defined at [line 26]) = 1.5
+[line 30]  final_result = filtered_avg * compression_ratio
+Compute: filtered_avg * compression_ratio, where filtered_avg=43.4 (defined at [line 22]), compression_ratio=1.5 (defined at [line 29]) = 65.1
 
-Answer: filtered_signal_strength = 16.5 (last updated on defined at [line 23])
+Answer: final_result = 65.1 (last updated on defined at [line 30])

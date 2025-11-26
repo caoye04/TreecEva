@@ -1,48 +1,44 @@
-import itertools
+def calculate_discount(base_price, quantity):
+    temp_multiplier = (base_price << 1) - (base_price // 2)
+    irrelevant_calc = temp_multiplier * 3.14159
+    
+    discount_rate = 0.15 if quantity >= 5 else 0.05
+    misleading_total = base_price * quantity * (1 - discount_rate + 0.02)
+    
+    if quantity > 10:
+        bonus = base_price * 0.1
+        dead_code = bonus * 2.5
+    else:
+        bonus = 0
+    
+    actual_discount = discount_rate - 0.02
+    final_price = (base_price * quantity * (1 - actual_discount)) + bonus
+    return final_price
 
-def calculate_weight_class(weight):
-    return 0 if weight < 5 else (1 if weight < 15 else 2)
-
-def compute_package_priority(weights):
-    classifications = [calculate_weight_class(w) for w in weights]
-    # Apply dynamic programming to find max non-adjacent sum
-    n = len(classifications)
-    if n == 0:
+def process_transaction(item_list):
+    price_map = {'A': 25, 'B': 40, 'C': 15, 'D': 60}
+    irrelevant_counter = len(item_list) * 2 - 1
+    
+    total_items = sum(item_list.count(item) for item in price_map)
+    misleading_sum = sum(price_map.values()) * irrelevant_counter
+    
+    if total_items == 0:
         return 0
-    elif n == 1:
-        return classifications[0]
-    dp = [0] * n
-    dp[0] = classifications[0]
-    dp[1] = max(classifications[0], classifications[1])
-    for i in range(2, n):
-        dp[i] = max(dp[i-1], dp[i-2] + classifications[i])
-    return dp[-1]
+    
+    category_total = 0
+    for item in item_list:
+        if item in price_map:
+            item_count = lambda x: sum(1 for i in item_list if i == x)
+            count = item_count(item)
+            category_total += calculate_discount(price_map[item], count)
+        else:
+            dead_path = price_map.get('Z', 100) * 1.5
+    
+    redundant_check = (category_total > 1000) and (total_items < 20)
+    final_output = category_total * (0.95 if redundant_check else 1.0)
+    
+    return final_output
 
-# Package weights in kg
-package_weights = [3, 7, 16, 2, 9, 14, 1, 18, 5, 11]
-
-# Divide and conquer grouping: split into chunks of 3
-chunk_size = 3
-groups = [package_weights[i:i + chunk_size] for i in range(0, len(package_weights), chunk_size)]
-
-# Compute priority scores for each group using dynamic programming
-priority_scores = [compute_package_priority(group) for group in groups]
-
-# Bitwise score adjustment based on group position
-adjusted_scores = [
-    score << (i & 3) if i % 2 == 0 else score >> (i & 3)
-    for i, score in enumerate(priority_scores)
-]
-
-# Merge scores using XOR as a diversification operator
-merged_score = 0
-for score in adjusted_scores:
-    merged_score ^= score
-
-# Final ternary-based loading optimization
-optimal_loading_score = (
-    merged_score * 2 if merged_score > 10 
-    else (merged_score + 5 if merged_score > 5 else merged_score)
-)
-
-print(f"Result: {optimal_loading_score}")
+items = ['A', 'B', 'A', 'C', 'B', 'A', 'D']
+result = process_transaction(items)
+print(f"Result: {result}")

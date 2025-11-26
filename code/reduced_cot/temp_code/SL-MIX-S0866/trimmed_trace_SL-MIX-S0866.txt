@@ -1,0 +1,15 @@
+9
+final_checksum
+---
+2 header_data = [0x45, 0x00, 0x00, 0x3C]
+2 ['header_data'] ['[69, 0, 0, 60]']
+3 payload_data = [0x10, 0x11, 0x12, 0x13, 0x14]
+3 ['header_data', 'payload_data'] ['[69, 0, 0, 60]', '[16, 17, 18, 19, 20]']
+5 header_xor = header_data[0] ^ header_data[1] ^ header_data[2] ^ header_data[3]
+5 ['header_data', 'payload_data', 'header_xor'] ['[69, 0, 0, 60]', '[16, 17, 18, 19, 20]', '121']
+6 payload_xor = payload_data[0] ^ payload_data[1] ^ payload_data[2] ^ payload_data[3] ^ payload_data[4]
+6 ['payload_data', 'header_xor', 'payload_xor'] ['[16, 17, 18, 19, 20]', '121', '20']
+8 mask_value = 0xFF
+8 ['header_xor', 'payload_xor', 'mask_value'] ['121', '20', '255']
+9 final_checksum = (header_xor ^ payload_xor) & mask_value
+9 ['header_xor', 'payload_xor', 'mask_value', 'final_checksum'] ['121', '20', '255', '109']

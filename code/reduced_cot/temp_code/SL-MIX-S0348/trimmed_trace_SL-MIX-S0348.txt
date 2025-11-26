@@ -1,0 +1,49 @@
+65
+final_metric
+---
+63 final_metric = process_circuit_data(circuit_data, analyze_circuit_patterns)
+63 ['circuit_data'] ['{input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...}']
+22 voltage_data = circuit_parameters['input_voltage']
+22 ['circuit_parameters', 'voltage_data'] ['{input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...}', '[12.5, 8.3, 15.7, 9.1, 11.2, ...]']
+35 valid_count = filter_func(voltage_data, circuit_parameters['threshold'])
+35 ['circuit_parameters', 'voltage_data'] ['{input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...}', '[12.5, 8.3, 15.7, 9.1, 11.2, ...]']
+7 max_reading = max(voltage_readings)
+7 ['voltage_readings', 'current_threshold', 'max_reading'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '15.7']
+8 min_reading = min(voltage_readings)
+8 ['voltage_readings', 'current_threshold', 'max_reading', 'min_reading'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '15.7', '7.5']
+9 range_analysis = max_reading - min_reading
+9 ['voltage_readings', 'current_threshold', 'max_reading', 'min_reading', 'range_analysis'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '15.7', '7.5', '8.2']
+12 if range_analysis > 1000:
+12 ['voltage_readings', 'current_threshold', 'range_analysis'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '8.2']
+18 filtered_readings = [v for v in voltage_readings if v > current_threshold]
+18 ['voltage_readings', 'current_threshold', 'v'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '12.5']
+18 filtered_readings = [v for v in voltage_readings if v > current_threshold]
+18 ['voltage_readings', 'current_threshold', 'v'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '8.3']
+18 filtered_readings = [v for v in voltage_readings if v > current_threshold]
+18 ['voltage_readings', 'current_threshold', 'v'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '15.7']
+18 filtered_readings = [v for v in voltage_readings if v > current_threshold]
+18 ['voltage_readings', 'current_threshold', 'v'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '9.1']
+18 filtered_readings = [v for v in voltage_readings if v > current_threshold]
+18 ['voltage_readings', 'current_threshold', 'v'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '11.2']
+18 filtered_readings = [v for v in voltage_readings if v > current_threshold]
+18 ['voltage_readings', 'current_threshold', 'v'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '13.8']
+18 filtered_readings = [v for v in voltage_readings if v > current_threshold]
+18 ['voltage_readings', 'current_threshold', 'v'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '7.5']
+18 filtered_readings = [v for v in voltage_readings if v > current_threshold]
+18 ['voltage_readings', 'current_threshold', 'v'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '14.6']
+18 filtered_readings = [v for v in voltage_readings if v > current_threshold]
+18 ['voltage_readings', 'current_threshold', 'filtered_readings'] ['[12.5, 8.3, 15.7, 9.1, 11.2, ...]', '10.0', '[12.5, 15.7, 11.2, 13.8, 14.6]']
+19 return len(filtered_readings)
+19 ['filtered_readings'] ['[12.5, 15.7, 11.2, 13.8, 14.6]']
+38 base_metric = valid_count * circuit_parameters['scale_factor']
+38 ['circuit_parameters', 'valid_count', 'base_metric'] ['{input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...}', '5', '35']
+39 adjustment = circuit_parameters['calibration'] * 0.85
+39 ['circuit_parameters', 'base_metric', 'adjustment'] ['{input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...}', '35', '15.299999999999999']
+40 intermediate = (base_metric + adjustment) // 3
+40 ['circuit_parameters', 'base_metric', 'adjustment', 'intermediate'] ['{input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...}', '35', '15.299999999999999', '16.0']
+43 final_value = intermediate * 2 - circuit_parameters['offset']
+43 ['circuit_parameters', 'intermediate', 'final_value'] ['{input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...}', '16.0', '17.0']
+44 return final_value
+44 ['final_value'] ['17.0']
+65 print(f"Result: {final_metric}")
+65 ['final_metric'] ['17.0']

@@ -1,0 +1,56 @@
+Target: Find the value of variable final_result after [line 37] executes
+
+[line 32]  sensor_readings = [18.5, 22.3, 19.8, 25.1, 20.9, 24.7, 17.2]
+Compute: [18.5, 22.3, 19.8, 25.1, 20.9, 24.7, 17.2] = [18.5, 22.3, 19.8, 25.1, 20.9, ...]
+[line 33]  threshold = 20.0
+Assign: threshold = 20.0
+[line 6]  def process_sensors(raw_data):
+Enter function process_sensors: raw_data=[18.5, 22.3, 19.8, 25.1, 20.9, ...] (sensor_readings defined at [line 32])
+  [line 7]  temp_calc = lambda x: (x * 1.8) + 32
+  Compute: lambda x: (x * 1.8) + 32 = ?
+  [line 8]  converted = [temp_calc(val) for val in raw_data]
+  Compute: [temp_calc(val) for val in raw_data], where val=18.5 (an unknown source), raw_data=[18.5, 22.3, 19.8, 25.1, 20.9, ...] (parameter raw_data defined at [line 32]) = ?
+  [line 7]  temp_calc = lambda x: (x * 1.8) + 32
+  Compute: lambda x: (x * 1.8) + 32, where x=18.5 (an unknown source) = ?
+  [line 7]  temp_calc = lambda x: (x * 1.8) + 32
+  Compute: lambda x: (x * 1.8) + 32, where x=22.3 (an unknown source) = ?
+  [line 7]  temp_calc = lambda x: (x * 1.8) + 32
+  Compute: lambda x: (x * 1.8) + 32, where x=19.8 (an unknown source) = ?
+  [line 7]  temp_calc = lambda x: (x * 1.8) + 32
+  Compute: lambda x: (x * 1.8) + 32, where x=25.1 (an unknown source) = ?
+  [line 7]  temp_calc = lambda x: (x * 1.8) + 32
+  Compute: lambda x: (x * 1.8) + 32, where x=20.9 (an unknown source) = ?
+  [line 7]  temp_calc = lambda x: (x * 1.8) + 32
+  Compute: lambda x: (x * 1.8) + 32, where x=24.7 (an unknown source) = ?
+  [line 7]  temp_calc = lambda x: (x * 1.8) + 32
+  Compute: lambda x: (x * 1.8) + 32, where x=17.2 (an unknown source) = ?
+  [line 10]  return converted
+  Return: converted=[65.30000000000001, 72.14, 67.64, 77.18, 69.62, ...] (defined at [line 8])
+Function process_sensors returns [65.30000000000001, 72.14, 67.64, 77.18, 69.62, ...]
+[line 4]  return [x for x in data_points if x > 0]
+Return: [x for x in data_points if x > 0]
+[line 36]  final_result = aggregate_data(sensor_readings, threshold)
+Call function aggregate_data(sensor_readings=[18.5, 22.3, 19.8, 25.1, 20.9, ...] (defined at [line 32]), threshold=20.0 (defined at [line 33]))
+[line 12]  def aggregate_data(readings, threshold):
+Enter function aggregate_data: readings=[18.5, 22.3, 19.8, 25.1, 20.9, ...] (sensor_readings defined at [line 32]), threshold=20.0 (threshold defined at [line 33])
+  [line 13]  validation_map = {'valid': lambda x: x > threshold, 'invalid': lambda x: x <= threshold}
+  Compute: {'valid': lambda x: x > threshold, 'invalid': lambda x: x <= threshold}, where threshold=20.0 (parameter threshold defined at [line 33]) = {valid: function(...), invalid: function(...)}
+  [line 14]  filtered_data = list(filter(validation_map['valid'], readings))
+  Call function list(filter(validation_map['valid'], readings))
+  [line 19]  if len(filtered_data) > 2:
+  Condition: True, entering 'if' block
+  [line 20]  sorted_values = sorted(filtered_data)
+  Call function sorted(filtered_data=[22.3, 25.1, 20.9, 24.7] (defined at [line 14]))
+  [line 21]  middle_index = len(sorted_values) // 2
+  Compute: len(sorted_values) // 2, where sorted_values=[20.9, 22.3, 24.7, 25.1] (defined at [line 20]) = 2
+  [line 22]  if len(sorted_values) % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 23]  result = (sorted_values[middle_index - 1] + sorted_values[middle_index]) / 2
+  Compute: (sorted_values[middle_index - 1] + sorted_values[middle_index]) / 2, where sorted_values=[20.9, 22.3, 24.7, 25.1] (defined at [line 20]), middle_index=2 (defined at [line 21]) = 23.5
+  [line 30]  return round(result, 2)
+  Return: round(result, 2)
+Function aggregate_data returns 23.5
+[line 37]  print(f"Target result: {final_result}")
+Output: f"Target result: {final_result}"
+
+Answer: final_result = 23.5 (last updated on defined at [line 36])

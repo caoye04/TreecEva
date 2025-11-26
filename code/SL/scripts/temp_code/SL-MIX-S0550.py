@@ -1,47 +1,51 @@
-import heapq
-
-class SignalNode:
-    def __init__(self, freq=0):
-        self.freq = freq
-        self.left = None
-        self.right = None
-
-def build_signal_tree():
-    # Create leaf nodes
-    leaves = [SignalNode(12), SignalNode(25), SignalNode(36), SignalNode(48)]
+def calculate_quality_scores(data_points):
+    base_scores = [85, 92, 78, 96, 88, 74, 91, 83]
+    irrelevant_metric = sum(data_points) * 2.5  # Misleading calculation
+    adjustment_factor = len(base_scores) // 2
     
-    # Level 1 internal nodes
-    node1 = SignalNode()
-    node1.left = leaves[0]
-    node1.right = leaves[1]
-    node1.freq = (node1.left.freq ^ node1.right.freq) >> 1
+    # Distractor operations
+    temp_array = base_scores[:4] + base_scores[-2:]
+    dead_code_value = temp_array[1] * temp_array[3]  # Never used
     
-    node2 = SignalNode()
-    node2.left = leaves[2]
-    node2.right = leaves[3]
-    node2.freq = (node2.left.freq ^ node2.right.freq) >> 1
+    quality_sum = 0
+    for i, score in enumerate(base_scores):
+        if i % 2 == 0:
+            quality_sum += score * (i + 1)
+        else:
+            quality_sum += score // 2
     
-    # Root node
-    root = SignalNode()
-    root.left = node1
-    root.right = node2
-    root.freq = (root.left.freq ^ root.right.freq) >> 1
+    return quality_sum
+
+def compute_final_result(input_data):
+    # Multiple irrelevant variables and misleading calculations
+    initial_value = 42
+    offset_correction = 17
+    bogus_calculation = (initial_value * offset_correction) % 23
     
-    return root, leaves
+    # Slicing operations (as required)
+    data_slice = input_data[2:6]
+    reversed_segment = data_slice[::-1]
+    
+    # Core logic with distractor
+    if len(reversed_segment) > 2:
+        core_component = sum(reversed_segment) - min(reversed_segment)
+    else:
+        core_component = 0  # Dead code path
+    
+    # More distractions
+    unused_intermediate = core_component * 3.14159
+    red_herring = [x + 10 for x in input_data]
+    
+    quality_result = calculate_quality_scores(input_data)
+    final_value = (quality_result + core_component) // len(input_data)
+    
+    # Final distraction that looks important but isn't
+    if final_value > 100:
+        final_adjustment = final_value - 50  # Never executed
+    
+    return final_value
 
-def collect_all_frequencies(node):
-    if not node:
-        return []
-    return [node.freq] + collect_all_frequencies(node.left) + collect_all_frequencies(node.right)
-
-tree_root, leaf_nodes = build_signal_tree()
-all_freqs = collect_all_frequencies(tree_root)
-max_heap = [-f for f in all_freqs]  # Negative for max-heap behavior
-heapq.heapify(max_heap)
-
-max_frequency = -heapq.heappop(max_heap)
-leaf_count = len(leaf_nodes)
-root_frequency = tree_root.freq
-
-final_signal_strength = root_frequency + (max_frequency * leaf_count)
-print(f"Result: {final_signal_strength}")
+# Main execution
+performance_data = [15, 28, 42, 56, 31, 49, 23, 67, 38, 52]
+final_score = compute_final_result(performance_data)
+print(f"Result: {final_score}")

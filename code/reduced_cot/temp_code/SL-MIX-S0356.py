@@ -1,28 +1,23 @@
-from collections import defaultdict
+data_values = [12, 8, 15, 23, 7, 19]
+threshold = 10
 
-daily_sales = [
-    {'croissant': 15, 'muffin': 20, 'scone': 10},
-    {'croissant': 12, 'muffin': 18, 'scone': 15},
-    {'croissant': 10, 'muffin': 15, 'scone': 12},
-    {'croissant': 18, 'muffin': 25, 'scone': 8},
-    {'croissant': 20, 'muffin': 30, 'scone': 10},
-    {'croissant': 8, 'muffin': 12, 'scone': 20},
-    {'croissant': 22, 'muffin': 28, 'scone': 15}
-]
+# Filter values above threshold
+filtered_values = [x for x in data_values if x > threshold]
 
-prices = {'croissant': 2.50, 'muffin': 1.75, 'scone': 2.00}
+# Create some intermediate calculations (distractor)
+intermediate_sum = sum(data_values)
+intermediate_count = len(data_values)
 
-total_revenue = 0.0
-found_target_week = False
+# Process data with transformations
+processed_data = [x % 7 + 2 for x in filtered_values]
 
-for day in daily_sales:
-    if not found_target_week:
-        croissant_muffin_total = day['croissant'] + day['muffin']
-        if croissant_muffin_total > 100:
-            found_target_week = True
-            
-    if found_target_week:
-        for item, quantity in day.items():
-            total_revenue += quantity * prices[item]
+# Unused calculation that seems relevant but isn't
+unused_calculation = intermediate_sum // intermediate_count
 
-print(f"Result: {total_revenue}")
+# Another distractor operation
+dummy_operation = [x * 2 for x in data_values if x < threshold]
+
+# Final calculation
+final_result = sum([x * y for x, y in zip(filtered_values, processed_data)])
+
+print(f"Result: {final_result}")

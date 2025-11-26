@@ -1,53 +1,28 @@
-from math import gcd
-from functools import reduce
-from collections import defaultdict
+from collections import Counter
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+# Warehouse inventory analysis
+initial_stock = [15, 23, 15, 42, 23, 15, 8, 42, 15, 23]
+stock_counter = Counter(initial_stock)
 
-tetrahedron_edges = [
-    [12, 15, 18, 21, 24, 27],
-    [10, 14, 22, 26, 34, 38],
-    [11, 13, 17, 19, 23, 29],
-    [16, 20, 25, 30, 35, 40],
-    [28, 32, 36, 42, 45, 48]
-]
+# Find most common item and its frequency
+most_common_item, frequency = stock_counter.most_common(1)[0]
+total_items = len(initial_stock)
 
-accumulated_energy = 0.0
-prime_edge_cache = {}
+# Calculate processing metrics
+base_processing = frequency * 3
+secondary_calc = total_items * 2  # This doesn't affect final result
+temp_adjustment = most_common_item // 2  # Intermediate unused calculation
 
-def get_prime_product(edges):
-    product = 1
-    for edge in edges:
-        if edge not in prime_edge_cache:
-            prime_edge_cache[edge] = is_prime(edge)
-        if prime_edge_cache[edge]:
-            product *= edge
-    return product
+# Process items with efficiency factor
+processed_items = base_processing + frequency
+efficiency_factor = 1.75
+adjustment_value = total_items - frequency
 
-for edges in tetrahedron_edges:
-    prime_product = get_prime_product(edges)
-    if prime_product > 1:
-        g = reduce(gcd, edges)
-        resonance_index = prime_product / g
-        accumulated_energy += resonance_index
-    else:
-        # If no prime edges, contribute zero to energy
-        pass
+# Distraction calculations
+unused_metric = (frequency * total_items) / 2
+redundant_check = stock_counter[8] * 3  # Unused operation
 
-# Apply a final normalization factor based on number of tetrahedrons
-normalization_factor = len(tetrahedron_edges) ** 0.5
-accumulated_energy = accumulated_energy / normalization_factor
+# Final quantity calculation
+final_quantity = processed_items * efficiency_factor - adjustment_value
 
-print(f"Result: {accumulated_energy}")
+print(f"Result: {final_quantity}")

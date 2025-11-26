@@ -1,37 +1,41 @@
-from itertools import combinations
-from collections import defaultdict
-
-genetic_markers = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-marker_indices = {marker: idx+1 for idx, marker in enumerate(genetic_markers)}
-
-# Generate all 3-marker combinations
-all_combinations = list(combinations(genetic_markers, 3))
-
-# Apply filters
-valid_combinations = []
-for combo in all_combinations:
-    # Filter 1: Cannot contain both A and B
-    if 'A' in combo and 'B' in combo:
-        continue
+def calculate_quality_score(sensor_readings):
+    # Irrelevant temperature conversion - never used
+    temp_f = lambda c: (c * 9/5) + 32
+    celsius_readings = [25, 30, 35, 40]
+    fahrenheit_map = list(map(temp_f, celsius_readings))
     
-    # Filter 2: Lexicographical product must not exceed 100
-    product = 1
-    for marker in combo:
-        product *= marker_indices[marker]
+    # Main processing with misleading intermediate
+    base_offset = 12
+    raw_sum = sum(sensor_readings)
+    avg_reading = raw_sum / len(sensor_readings)
     
-    if product <= 100:
-        valid_combinations.append(combo)
+    # Distractor calculation that looks important
+    variance_sum = sum((x - avg_reading) ** 2 for x in sensor_readings)
+    misleading_variance = variance_sum / (len(sensor_readings) - 1)
+    
+    # Dead code path that seems relevant
+    if avg_reading > 50:
+        adjustment_factor = 0.8
+    else:
+        adjustment_factor = 1.2
+    
+    # More misleading operations
+    bit_shift_temp = base_offset << 2
+    redundant_xor = bit_shift_temp ^ 15
+    
+    # Critical path - actual calculation
+    quality_adjustment = max(sensor_readings) - min(sensor_readings)
+    normalized_range = quality_adjustment / 10
+    
+    # Final calibration (this is the answer)
+    final_calibration = int((avg_reading + normalized_range) * 10)
+    
+    # Unused lambda that seems important
+    normalize_fn = lambda x: (x - min(sensor_readings)) / quality_adjustment
+    
+    result = final_calibration
+    print(f"Target result: {result}")
 
-# Score each valid combination by summing ASCII values
-combination_scores = {}
-for combo in valid_combinations:
-    score = sum(ord(marker) for marker in combo)
-    combination_scores[combo] = score
-
-# Find the highest scoring combination
-if combination_scores:
-    max_score = max(combination_scores.values())
-else:
-    max_score = 0
-
-print(f"Result: {max_score}")
+# Execute with sensor data
+sensor_data = [45, 52, 48, 55, 50]
+calculate_quality_score(sensor_data)

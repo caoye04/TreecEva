@@ -1,66 +1,51 @@
-import hashlib
-from collections import deque
-
-class GrowthPhaseNode:
-    def __init__(self, phase_id, growth_factor, left=None, right=None):
-        self.phase_id = phase_id
-        self.growth_factor = growth_factor
-        self.left = left
-        self.right = right
-
-def compute_environmental_hash(phase_data):
-    return int(hashlib.md5(phase_data.encode()).hexdigest()[:8], 16) % 1000
-
-def simulate_growth_phases(root_phase):
-    if not root_phase:
-        return 0
+def process_data(data_list):
+    # Misleading variable - never actually used
+    initial_offset = 37
+    processing_factor = lambda x: (x * 3 - 7) if x % 2 == 0 else (x * 2 + 5)
     
-    processing_stack = [root_phase]
-    bloom_accumulator = 0
+    # Dead code path - never called
+    unused_function = lambda y: y ** 2 + y * 3 - 10
     
-    while processing_stack:
-        current_phase = processing_stack.pop()
-        phase_hash = compute_environmental_hash(current_phase.phase_id)
+    temp_results = []
+    for item in data_list:
+        # Irrelevant intermediate calculation
+        intermediate = item + initial_offset - 15
         
-        if phase_hash % 3 == 0:
-            bloom_accumulator += current_phase.growth_factor * 2
-        elif phase_hash % 3 == 1:
-            bloom_accumulator -= current_phase.growth_factor // 2
+        if item > 0:
+            processed = processing_factor(item)
+            temp_results.append(processed)
         else:
-            bloom_accumulator ^= current_phase.growth_factor
-        
-        if current_phase.left and current_phase.right:
-            processing_stack.append(current_phase.left)
-            processing_stack.append(current_phase.right)
-        elif current_phase.left:
-            processing_stack.append(current_phase.left)
-        elif current_phase.right:
-            processing_stack.append(current_phase.right)
+            # This branch is never taken in actual execution
+            negative_result = item * 2 - 8
+            temp_results.append(negative_result)
     
-    return bloom_accumulator
+    # Misleading calculation that gets discarded
+    distraction_sum = sum(temp_results) + 42
+    
+    # Actual relevant processing
+    filtered_data = [x for x in temp_results if x > 10]
+    result_value = sum(filtered_data) if filtered_data else 0
+    
+    return result_value
 
-def transform_species_name(name):
-    vowels = 'aeiou'
-    transformed = ''.join([char.upper() if char in vowels else char.lower() for char in name])
-    return transformed[::-1]
+# Main execution with distractions
+data_collection = [4, 7, 2, 9, 5]
 
-# Construct the growth phase tree
-primary_phase = GrowthPhaseNode("photosynthesis-optimal", 15)
-secondary_left = GrowthPhaseNode("nutrient-rich-soil", 12)
-secondary_right = GrowthPhaseNode("high-humidity", 8)
-tertiary_left = GrowthPhaseNode("low-light", 5)
-tertiary_right = GrowthPhaseNode("wind-exposure", 7)
+# Irrelevant variable that creates confusion
+processing_threshold = 15
 
-primary_phase.left = secondary_left
-primary_phase.right = secondary_right
-secondary_left.left = tertiary_left
-secondary_right.right = tertiary_right
+# Dead assignment that never affects the result
+setup_config = {'mode': 'advanced', 'limit': 100}
 
-# Process the growth simulation
-final_bloom_score = simulate_growth_phases(primary_phase)
+# Key execution point
+items_to_process = [x for x in data_collection if x < 8]
+result = process_data(items_to_process)
 
-# Apply species transformation as final step
-species_code = transform_species_name("Xerophyta_resilience")
-final_bloom_score += len(species_code)
+# More distractions
+secondary_processing = lambda a, b: a * b - 25
+redundant_check = secondary_processing(10, 3)
 
-print(f"Result: {final_bloom_score}")
+# Final answer variable
+final_output = result + 3
+
+print(f"Target result: {final_output}")

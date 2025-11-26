@@ -1,68 +1,49 @@
-Target: Find the value of variable processed_signals_count after [line 29] executes
+Target: Find the value of variable final_result after [line 55] executes
 
-[line 29]  processed_signals_count = 0
-Assign: processed_signals_count = 0
-[line 6]  self.size = size
-(Missing param: 'result')
-[line 7]  self.data = []
-(Missing param: 'result')
-[line 10]  return self
-Return: self=DataBuffer(...) (an unknown source)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
-[line 16]  if len(self.data) < self.size:
-Condition: True, entering 'if' block
-[line 18]  return len(self.data)
-Return: len(self.data)
+[line 42]  nodes = {12, 15, 18, 21, 24, 27, 30, 33}
+Compute: {12, 15, 18, 21, 24, 27, 30, 33} = {33, 12, 15, 18, 21, ...}
+[line 43]  connections = {(12, 15), (18, 21), (24, 27), (30, 33), (12, 18), (21, 24)}
+Compute: {(12, 15), (18, 21), (24, 27), (30, 33), (12, 18), (21, 24)} = {(24, 27), (30, 33), (12, 15), (18, 21), (12, 18), ...}
+[line 50]  result = analyze_network(nodes, connections)
+Call function analyze_network(nodes={33, 12, 15, 18, 21, ...} (defined at [line 42]), connections={(24, 27), (30, 33), (12, 15), (18, 21), (12, 18), ...} (defined at [line 43]))
+[line 1]  def analyze_network(nodes, connections):
+Enter function analyze_network: nodes={33, 12, 15, 18, 21, ...} (nodes defined at [line 42]), connections={(24, 27), (30, 33), (12, 15), (18, 21), (12, 18), ...} (connections defined at [line 43])
+  [line 11]  if len(nodes) > 100:
+  Condition: True, entering 'if' block
+  [line 16]  connected_nodes = set()
+  Call function set()
+  [line 17]  for connection in connections:
+  Loop Start: connection takes its first value (24, 27)
+  [line 18]  if connection[0] in nodes and connection[1] in nodes:
+  Condition: True, entering 'if' block
+  [line 17]  for connection in connections:
+  Loop Iteration: connection is now (30, 33) (iteration 2)
+  [line 18]  if connection[0] in nodes and connection[1] in nodes:
+  Condition: True, entering 'if' block
+... [Line 17] repeats 3 more times ...
+... [Line 17] repeats 3 more times ...
+  [line 17]  for connection in connections:
+  Loop Iteration: connection is now (21, 24) (iteration 6)
+  [line 18]  if connection[0] in nodes and connection[1] in nodes:
+  Condition: True, entering 'if' block
+  [line 17]  for connection in connections:
+  Loop End: Iteration finished
+  [line 25]  primary_nodes = {n for n in nodes if n % 3 == 0}
+  Compute: {n for n in nodes if n % 3 == 0}, where n=33 (an unknown source), nodes={33, 12, 15, 18, 21, ...} (parameter nodes defined at [line 42]) = ?
+  [line 29]  if len(critical_connections) == 0:
+  Condition: True, entering 'if' block
+  [line 33]  valid_pairs = {(a, b) for a, b in connections if a in connected_nodes and b in connected_nodes}
+  Compute: {(a, b) for a, b in connections if a in connected_nodes and b in connected_nodes}, where a=24 (an unknown source), b=27 (an unknown source), connections={(24, 27), (30, 33), (12, 15), (18, 21), (12, 18), ...} (parameter connections defined at [line 43]), connected_nodes={33, 12, 15, 18, 21, ...} (defined at [line 16]) = ?
+  [line 34]  network_efficiency = len(valid_pairs) * (len(primary_nodes & connected_nodes) + 1)
+  Compute: len(valid_pairs) * (len(primary_nodes & connected_nodes) + 1), where valid_pairs={(24, 27), (30, 33), (12, 15), (18, 21), (12, 18), ...} (defined at [line 33]), primary_nodes={33, 12, 15, 18, 21, ...} (defined at [line 25]), connected_nodes={33, 12, 15, 18, 21, ...} (defined at [line 16]) = 54
+  [line 39]  return network_efficiency
+  Return: network_efficiency=54 (defined at [line 34])
+Function analyze_network returns 54
+[line 53]  network_size = len(nodes)
+Call function len(nodes={33, 12, 15, 18, 21, ...} (defined at [line 42]))
+[line 54]  connection_density = len(connections) / max(network_size, 1)
+Compute: len(connections) / max(network_size, 1), where connections={(24, 27), (30, 33), (12, 15), (18, 21), (12, 18), ...} (defined at [line 43]), network_size=8 (defined at [line 53]) = 0.75
+[line 55]  final_result = result + int(connection_density * 10)
+Compute: result + int(connection_density * 10), where result=54 (defined at [line 50]), connection_density=0.75 (defined at [line 54]) = 61
 
-Answer: processed_signals_count = 0 (last updated on defined at [line 29])
+Answer: final_result = 61 (last updated on defined at [line 55])

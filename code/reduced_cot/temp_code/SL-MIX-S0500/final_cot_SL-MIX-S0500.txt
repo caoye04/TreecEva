@@ -1,0 +1,23 @@
+Target: Find the value of variable cipher_key after [line 35] executes
+
+[line 35]  cipher_key = 0b01101001  # 105 in decimal
+Assign: cipher_key = 105
+[line 1]  def compute_final_key(initial_key, bit_mask):
+Enter function compute_final_key: initial_key=105 (cipher_key defined at [line 35]), bit_mask=52
+  [line 6]  key_xor = initial_key ^ bit_mask
+  Compute: initial_key ^ bit_mask, where initial_key=105 (parameter initial_key defined at [line 35]), bit_mask=52 (parameter bit_mask) = 93
+  [line 18]  rotated = rotate_bits(key_xor, 1)
+  Call function rotate_bits(key_xor=93 (defined at [line 6]), 1)
+  [line 14]  shift = shift % 8 + 1
+  Compute: shift % 8 + 1 = 2
+  [line 15]  return ((value << shift) | (value >> (8 - shift))) & 0xFF
+  Return: ((value << shift) | (value >> (8 - shift))) & 0xFF
+  [line 21]  if rotated > 200:
+  Condition: True, entering 'if' block
+  [line 27]  final_key = (rotated | 0x0F) & 0x7F
+  Compute: (rotated | 0x0F) & 0x7F, where rotated=117 (defined at [line 18]) = 127
+  [line 32]  return final_key
+  Return: final_key=127 (defined at [line 27])
+Function compute_final_key returns 127
+
+Answer: cipher_key = 105 (last updated on defined at [line 35])

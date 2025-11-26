@@ -1,29 +1,12 @@
-from functools import reduce
-
-def transform_modifier(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result * 2 if result > 0 else result // 2
-    return wrapper
-
-@transform_modifier
-def signal_filter(value, threshold=10):
-    if value > threshold:
-        return value - threshold
-    else:
-        return threshold - value
-
-def process_packets(packet_sequence):
-    impact_log = {}
-    for idx, packet in enumerate(packet_sequence):
-        filtered = signal_filter(packet)
-        impact_log[idx] = filtered
-        if idx > 0:
-            impact_log[idx] += impact_log[idx-1]
-    return impact_log
-
-packets = [15, 7, 22, 3, 18]
-processed_log = process_packets(packets)
-cumulative_impact = reduce(lambda a, b: a + b, processed_log.values())
-
-print(f"Result: {cumulative_impact}")
+text_data = "PyThOnPrOgRaMmInG"
+vowel_count = sum(1 for char in text_data if char.lower() in 'aeiou')
+consonant_analysis = {char: ord(char) for char in text_data if char.isalpha()}
+processed_chars = [c.upper() if i % 2 == 0 else c.lower() for i, c in enumerate(text_data)]
+case_pattern = ''.join(processed_chars)
+char_frequency = {}
+for char in case_pattern:
+    if char.isalpha():
+        char_frequency[char] = char_frequency.get(char, 0) + 1
+vowel_distraction = vowel_count * 2 - len(text_data)
+final_count = sum(char_frequency.values())
+print(f"Result: {final_count}")

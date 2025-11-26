@@ -1,0 +1,50 @@
+Target: Find the value of variable final_hash after [line 51] executes
+
+[line 40]  mask_pattern = 0x3A
+Assign: mask_pattern = 58
+[line 41]  data_buffer = [45, 128, 77, 201, 92, 156]
+Compute: [45, 128, 77, 201, 92, 156] = [45, 128, 77, 201, 92, ...]
+[line 48]  final_hash = compute_checksum(data_buffer, mask_pattern)
+Call function compute_checksum(data_buffer=[45, 128, 77, 201, 92, ...] (defined at [line 41]), mask_pattern=58 (defined at [line 40]))
+[line 5]  process_chunk = lambda x: (x ^ 0xFF) & 0x7F
+Compute: lambda x: (x ^ 0xFF) & 0x7F = ?
+[line 8]  checksum = 0
+Assign: checksum = 0
+[line 15]  for value in data:
+Loop Start: value takes its first value 45
+[line 16]  processed = process_chunk(value)
+Call function process_chunk(value=45 (defined at [line 15]))
+[line 5]  process_chunk = lambda x: (x ^ 0xFF) & 0x7F
+Compute: lambda x: (x ^ 0xFF) & 0x7F, where x=45 (an unknown source) = ?
+[line 18]  checksum = (checksum + processed) % 256
+Compute: (checksum + processed) % 256, where processed=82 (defined at [line 16]) = 82
+[line 15]  for value in data:
+Loop Iteration: value is now 128 (iteration 2)
+[line 16]  processed = process_chunk(value)
+Call function process_chunk(value=128 (defined at [line 15]))
+[line 5]  process_chunk = lambda x: (x ^ 0xFF) & 0x7F
+Compute: lambda x: (x ^ 0xFF) & 0x7F, where x=128 (an unknown source) = ?
+[line 18]  checksum = (checksum + processed) % 256
+Compute: (checksum + processed) % 256, where processed=127 (defined at [line 16]) = 209
+... [Line 15] repeats 3 more times ...
+... [Line 15] repeats 3 more times ...
+... [Line 15] repeats 3 more times ...
+... [Line 15] repeats 3 more times ...
+[line 15]  for value in data:
+Loop Iteration: value is now 156 (iteration 6)
+[line 16]  processed = process_chunk(value)
+Call function process_chunk(value=156 (defined at [line 15]))
+[line 18]  checksum = (checksum + processed) % 256
+Compute: (checksum + processed) % 256, where checksum=92 (defined at [line 18]), processed=99 (defined at [line 16]) = 191
+[line 15]  for value in data:
+Loop End: Iteration finished
+[line 28]  hash_val = checksum ^ mask
+Compute: checksum ^ mask, where checksum=191 (defined at [line 18]), mask=58 (an unknown source) = 133
+[line 31]  final_result = (hash_val * 3 - 17) % 1000
+Compute: (hash_val * 3 - 17) % 1000, where hash_val=133 (defined at [line 28]) = 382
+[line 37]  return final_result
+Return: final_result=382 (defined at [line 31])
+[line 51]  print(f"Result: {final_hash}")
+Output: f"Result: {final_hash}"
+
+Answer: final_hash = 382 (last updated on defined at [line 48])

@@ -1,42 +1,21 @@
-import heapq
-from itertools import combinations
-
-def calculate_entropy(key):
-    return len(set(key))  # Simplified entropy as unique character count
-
-def key_score_aggregate(keys):
-    return sum(hash(k) % 100 for k in keys)  # Simplified scoring
-
-# Initial set of encryption keys
-encryption_keys = ['abc123', 'xyz789', 'def456', 'abc123', 'uvw000']
-key_heap = []
-
-# Populate heap with (entropy, key) tuples
-for key in encryption_keys:
-    entropy = calculate_entropy(key)
-    heapq.heappush(key_heap, (entropy, key))
-
-# Process: Remove keys with entropy < 5 or duplicate keys
-processed_keys = set()
-filtered_heap = []
-
-while key_heap:
-    entropy, key = heapq.heappop(key_heap)
-    # Short-circuit evaluation: check entropy first, then duplication
-    if entropy >= 5 and key not in processed_keys:
-        processed_keys.add(key)
-        heapq.heappush(filtered_heap, (entropy, key))
+def process_inventory():
+    inventory_data = {'items': [25, 42, 18, 67, 33], 'threshold': 30}
     
-# Add new keys from combinatorial generation
-base_components = ['a', 'b', 'c', '1', '2', '3']
-generated_keys = [''.join(combo) for combo in combinations(base_components, 4)]
+    # Process items above threshold
+    high_value_items = {item for item in inventory_data['items'] if item > inventory_data['threshold']}
+    
+    # Calculate statistics
+    item_count = len(high_value_items)
+    max_item = max(high_value_items) if high_value_items else 0
+    
+    # Create result set with calculated values
+    result_set = {item_count * 10, max_item // 2}
+    
+    # Final computation
+    final_result = result_set.pop() if result_set else 0
+    
+    print(f"Target result: {final_result}")
+    return final_result
 
-for key in generated_keys[:10]:  # Limit to first 10 combinations
-    entropy = calculate_entropy(key)
-    if entropy >= 3:  # Only add keys with minimum entropy
-        heapq.heappush(filtered_heap, (entropy, key))
-
-# Final processing: calculate aggregate score of remaining keys
-final_key_score = key_score_aggregate([key for _, key in filtered_heap])
-
-print(f"Result: {final_key_score}")
+# Execute the function
+process_inventory()

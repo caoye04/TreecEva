@@ -1,35 +1,38 @@
-from math import gcd
-from functools import reduce
+def account_manager(transactions, rules):
+    # Distractor: unused validation logic
+    validation_status = {}
+    for rule in rules:
+        validation_status[rule] = len(rule) > 5
+    
+    # Distractor: misleading intermediate calculations
+    temp_sum = sum(len(tx) for tx in transactions) * 3.14159
+    processed_data = [tx.upper() if tx.isalpha() else tx for tx in transactions]
+    
+    # Relevant: actual balance calculation
+    balance_tracker = 1000  # Starting balance
+    for operation in transactions:
+        if operation.startswith('DEPOSIT_'):
+            amount = int(operation.split('_')[1])
+            balance_tracker += amount
+        elif operation.startswith('WITHDRAW_'):
+            amount = int(operation.split('_')[1])
+            balance_tracker -= amount
+        else:
+            # Distractor: unused error handling
+            error_count = len([c for c in operation if c.isdigit()])
+    
+    # Distractor: irrelevant bonus calculation
+    bonus_amount = (len(transactions) ** 2) / 4
+    seasonal_adjustment = bonus_amount * 0.75
+    
+    # Key operation: final balance with service fee
+    service_fee = max(10, len(transactions) * 2)
+    final_balance = balance_tracker - service_fee
+    
+    print(f"Result: {final_balance}")
+    return final_balance
 
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
-
-def generate_primes_up_to(n):
-    sieve = [True] * (n + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if sieve[i]:
-            for j in range(i*i, n + 1, i):
-                sieve[j] = False
-    return [i for i, is_prime in enumerate(sieve) if is_prime]
-
-# Initialize cryptographic parameters
-initial_values = [12, 18, 24, 30]
-prime_set = frozenset(generate_primes_up_to(30))
-
-# Step 1: Calculate LCM of initial values
-lcm_result = reduce(lcm, initial_values)
-
-# Step 2: Find GCD of LCM result and a prime from our set
-reference_prime = max(prime_set)
-gcd_result = gcd(lcm_result, reference_prime)
-
-# Step 3: Apply modular arithmetic with prime counting
-modulus_base = len(prime_set) * 7
-intermediate_mod = (lcm_result % modulus_base) + (gcd_result << 2)
-
-# Step 4: Final key derivation using bit operations and arithmetic
-shift_amount = bin(intermediate_mod).count('1')  # Count set bits
-cryptographic_key = (intermediate_mod ^ (shift_amount * 3)) & 0xFF
-
-print(f"Result: {cryptographic_key}")
+# Main execution
+transaction_log = ['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']
+validation_rules = ['amount_limit', 'frequency_check', 'suspicious_activity']
+final_balance = account_manager(transaction_log, validation_rules)

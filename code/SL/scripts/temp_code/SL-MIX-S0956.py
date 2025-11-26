@@ -1,52 +1,43 @@
-import base64
-import math
-from collections import Counter
+def process_inventory(items):
+    total_quantity = sum(items.values())
+    low_stock_threshold = 5
+    high_stock_threshold = 20
+    
+    # Distractor: unused tracking variables
+    stock_categories = {'low': 0, 'medium': 0, 'high': 0}
+    inventory_ratio = total_quantity / len(items) if items else 0
+    
+    # Misleading intermediate calculations
+    temp_adjustment = (high_stock_threshold - low_stock_threshold) * 3
+    redundancy_factor = temp_adjustment // 2
+    
+    # Main logic with bit operations
+    adjustment_mask = 0b1101
+    base_adjustment = (adjustment_mask & 0b1111) ^ 0b1010
+    
+    # Process items with enumerate
+    primary_sum = 0
+    for idx, (item_name, quantity) in enumerate(items.items()):
+        if quantity < low_stock_threshold:
+            category_modifier = (idx | 0x1) & 0xF
+        elif quantity > high_stock_threshold:
+            category_modifier = (idx ^ 0x3) % 8
+        else:
+            category_modifier = (idx + 2) & 0x7
+        
+        primary_sum += quantity * category_modifier
+    
+    # Dead code path that looks relevant
+    if total_quantity > 100:
+        emergency_adjust = primary_sum // 10
+        # This path is never taken with given data
+    
+    # Final calculation chain
+    adjustment_factor = base_adjustment + redundancy_factor
+    final_result = primary_sum - adjustment_factor
+    
+    print(f"Target result: {final_result}")
 
-def xor_cipher(text, key):
-    return ''.join(chr(ord(c) ^ ord(key[i % len(key)])) for i, c in enumerate(text))
-
-def calculate_shannon_entropy(s):
-    counts = Counter(s)
-    total_chars = len(s)
-    entropy = 0.0
-    for count in counts.values():
-        probability = count / total_chars
-        entropy -= probability * math.log2(probability)
-    return entropy
-
-# Initial log entries
-log_entries = [
-    "USER_LOGIN_SUCCESS",
-    "FILE_ACCESS_GRANTED",
-    "DATA_EXPORT_INITIATED",
-    "SECURITY_SCAN_COMPLETED"
-]
-
-# Encoding parameters
-xor_key = "Cyb3rS3cur1ty"
-encoded_logs = []
-
-for entry in log_entries:
-    # Step 1: Base64 encode the entry
-    b64_encoded = base64.b64encode(entry.encode()).decode()
-    # Step 2: Apply XOR cipher with rotating key
-    encrypted = xor_cipher(b64_encoded, xor_key)
-    encoded_logs.append(encrypted)
-
-# Combine all encoded logs into one string
-combined_logs = ''.join(encoded_logs)
-
-# Convert to set to get unique characters
-unique_chars = frozenset(combined_logs)
-
-# Calculate entropy of unique character set
-char_string = ''.join(unique_chars)
-entropy_per_char = [calculate_shannon_entropy(c*10) for c in char_string]  # Amplify for measurement
-
-# Compute final entropy score
-final_entropy_score = round(sum(
-    (i + 1) * entropy_val 
-    for i, entropy_val in enumerate(entropy_per_char)
-), 2)
-
-print(f"Result: {final_entropy_score}")
+# Execute with sample data
+inventory_data = {'widgets': 8, 'gadgets': 15, 'tools': 3, 'parts': 22}
+process_inventory(inventory_data)

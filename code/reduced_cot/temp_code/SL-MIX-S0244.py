@@ -1,18 +1,7 @@
-import hashlib
-from statistics import mean
-
-temperature_readings = [23.5, 24.1, 22.8, 25.0, 23.9]
-
-with open('temp_log.txt', 'w') as f:
-    for temp in temperature_readings:
-        f.write(str(temp) + '\n')
-
-hash_values = []
-with open('temp_log.txt', 'r') as f:
-    for line in f:
-        temp_str = line.strip()
-        hash_val = int(hashlib.md5(temp_str.encode()).hexdigest(), 16) % 1000
-        hash_values.append(hash_val)
-
-stability_index = int(mean(hash_values))
-print(f'Result: {stability_index}')
+student_scores = [85, 92, 78, 96, 88, 74, 95]
+passing_threshold = 80
+filtered_scores = [score for score in student_scores if score >= passing_threshold]
+sorted_scores = sorted(filtered_scores)
+score_range = max(filtered_scores) - min(filtered_scores)
+final_score = max(filtered_scores) - min(filtered_scores)
+print(f"Result: {final_score}")

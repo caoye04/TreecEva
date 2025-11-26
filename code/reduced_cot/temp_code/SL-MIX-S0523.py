@@ -1,57 +1,48 @@
-def transform_paper_id(paper_title):
-    # Convert title to lowercase and remove spaces
-    cleaned = paper_title.lower().replace(' ', '')
-    # Calculate hash of the cleaned title
-    title_hash = hash(cleaned)
-    # Extract last 4 digits of hash (absolute value)
-    hash_suffix = abs(title_hash) % 10000
-    return hash_suffix
+def analyze_text_patterns(text_data):
+    # Irrelevant processing that doesn't affect final result
+    word_list = text_data.split()
+    char_counts = [len(word) for word in word_list]  # list comprehension
+    total_chars = sum(char_counts)
+    
+    # Misleading calculations that look important
+    avg_length = total_chars / len(word_list) if word_list else 0
+    max_length = max(char_counts) if char_counts else 0
+    
+    # Dead code path that doesn't get executed
+    if len(text_data) > 1000:
+        bonus_points = 15
+        # This branch never executes with current input
+    
+    # The actual relevant processing
+    vowels = 'aeiouAEIOU'
+    vowel_count = sum(1 for char in text_data if char in vowels)
+    consonant_count = len(text_data) - vowel_count - text_data.count(' ')
+    
+    # More misleading intermediate results
+    ratio = vowel_count / consonant_count if consonant_count > 0 else 0
+    complexity_score = vowel_count * 2 + consonant_count // 3
+    
+    return vowel_count, consonant_count, complexity_score
 
-def generate_verification_layer(base_value, transformations):
-    result = base_value
-    for op, operand in transformations:
-        if op == 'multiply':
-            result *= operand
-        elif op == 'add':
-            result += operand
-        elif op == 'xor':
-            result ^= operand
-    return result
+# Main execution with distractions
+input_text = "The quick brown fox jumps over the lazy dog"
+vowels, consonants, complexity = analyze_text_patterns(input_text)
 
-def create_academic_verifier(paper_titles):
-    # Dictionary comprehension to get initial hashes
-    paper_hashes = {title: transform_paper_id(title) for title in paper_titles}
-    
-    # Merge with predefined weights using dictionary merging
-    weight_factors = {'quantum': 7, 'neural': 13, 'blockchain': 19}
-    enhanced_weights = {**paper_hashes, **{k: v for k, v in weight_factors.items() if k not in paper_hashes}}
-    
-    # Lambda function for weighted combination
-    combine_weighted = lambda x, y: (x * 3 + y * 5) % 1000
-    
-    # Apply transformations
-    transformation_sequence = [
-        ('multiply', 3),
-        ('add', 127),
-        ('xor', 0xABC)
-    ]
-    
-    accumulator = 0
-    for title, initial_hash in paper_hashes.items():
-        weighted_value = combine_weighted(initial_hash, len(title))
-        transformed_value = generate_verification_layer(weighted_value, transformation_sequence)
-        accumulator += transformed_value
-    
-    # Final verification code calculation
-    verification_code = (accumulator ^ 0xDEADBEEF) % 9973
-    return verification_code
+# Irrelevant variables that don't contribute to final result
+temp_buffer = [vowels * 2, consonants // 2, complexity + 10]
+shadow_counter = temp_buffer[0] + temp_buffer[1] - temp_buffer[2]
 
-# Academic paper titles for verification
-research_papers = [
-    "Quantum Computing Approaches",
-    "Neural Network Optimization",
-    "Blockchain Security Analysis"
-]
+# Misleading calculations that look like they matter
+redundancy_factor = len(input_text) % 7
+quality_index = (vowels + consonants) // len(input_text.split())
 
-verification_code = create_academic_verifier(research_papers)
-print(f"Result: {verification_code}")
+# The actual relevant computations
+processed_data = vowels * 3 - consonants // 2
+adjustment_factor = quality_index * 2
+redundancy_offset = redundancy_factor + 5
+
+# Final calculation that gives the answer
+final_count = processed_data + adjustment_factor - redundancy_offset
+
+# Print the result
+print(f"Result: {final_count}")

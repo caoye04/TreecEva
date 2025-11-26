@@ -1,25 +1,33 @@
-password = "SecurePass2024"
+# Adjacency matrix: graph[i][j] = cost from node i to j (0 means no edge)
+graph = [
+    [0, 10, 15, 0],
+    [0, 0, 0, 12],
+    [0, 8, 0, 14],
+    [0, 0, 0, 0]
+]
 
-# Step 1: Count character types
-uppercase_count = sum(1 for c in password if c.isupper())
-lowercase_count = sum(1 for c in password if c.islower())
-digit_count = sum(1 for c in password if c.isdigit())
+start_node = 0
+target_node = 3
+max_hops = 2
 
-# Step 2: Calculate base score with weights
-base_score = uppercase_count * 3 + lowercase_count * 2 + digit_count * 4
+# Find all paths within max_hops
+valid_paths = []
+for intermediate in range(len(graph)):
+    # Direct path (1 hop)
+    if graph[start_node][intermediate] > 0 and graph[intermediate][target_node] > 0:
+        cost = graph[start_node][intermediate] + graph[intermediate][target_node]
+        valid_paths.append(cost)
 
-# Step 3: Check for common patterns and apply penalty
-has_consecutive = False
-for i in range(len(password) - 1):
-    if ord(password[i+1]) - ord(password[i]) == 1:
-        has_consecutive = True
-        break
+# Calculate minimum cost
+if valid_paths:
+    min_cost = min(valid_paths)
+    num_paths = len(valid_paths)
+    
+    # Apply discount based on number of paths
+    discount_rate = num_paths * 2
+    discount = min_cost * discount_rate // 100
+    final_cost = min_cost - discount
+else:
+    final_cost = 0
 
-penalty = 5 if has_consecutive else 0
-adjusted_score = base_score - penalty
-
-# Step 4: Encode strength using bitwise operations
-strength_level = adjusted_score // 10
-strength_code = (strength_level << 2) | (digit_count & 0x3)
-
-print(f"Result: {strength_code}")
+print(f"Result: {final_cost}")

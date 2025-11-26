@@ -1,23 +1,24 @@
-import math
+from collections import Counter
 
-def process_sensor_data(readings, decay_factor):
-    # Generate weights using exponential decay
-    weights = [(lambda x: math.exp(-decay_factor * i))(i) for i in range(len(readings))]
+def process_inventory():
+    inventory_counts = [5, 3, 5, 2, 5, 3, 4, 2, 5, 4]
+    item_frequency = Counter(inventory_counts)
     
-    # Normalize weights so they sum to 1
-    total_weight = sum(weights)
-    normalized_weights = [w / total_weight for w in weights]
+    target_items = [k for k, v in item_frequency.items() if v > 2]
     
-    # Calculate weighted sum using generator expression
-    weighted_sum = sum(r * w for r, w in zip(readings, normalized_weights))
+    # Distractor: processing all items (not used in final result)
+    all_items_total = sum(item_frequency.keys()) * 2
     
-    # Apply final transformation
-    final_output = int(round(weighted_sum * 10))
-    return final_output
+    # Main logic: sum of qualifying items
+    target_sum = sum(target_items) if target_items else 0
+    
+    # Distractor: adjustment calculation (not used)
+    adjustment = len([x for x in inventory_counts if x % 2 == 0]) * 3
+    
+    # Final correction offset
+    offset_correction = -1 if len(target_items) > 1 else 2
+    
+    final_result = target_sum + offset_correction
+    print(f"Target result: {final_result}")
 
-# Sensor readings from a monitoring system
-sensor_readings = [4, 7, 2, 9, 1, 5]
-decay = 0.5
-
-final_output = process_sensor_data(sensor_readings, decay)
-print(f'Result: {final_output}')
+process_inventory()

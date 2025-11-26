@@ -1,12 +1,10 @@
-import heapq
+from collections import Counter
 
-ingredients = [42, 18, 73, 29, 55, 64, 37]
-selected = []
-heap = [-x for x in ingredients]
-heapq.heapify(heap)
+inventory_items = ['hammer', 'wrench', 'screwdriver', 'hammer', 'wrench', 'wrench', 'bolt']
+tool_counts = Counter(inventory_items)
 
-for _ in range(3):
-    selected.append(-heapq.heappop(heap))
+counter_a = tool_counts['hammer']
+counter_b = tool_counts['wrench']
+final_tally = counter_a + counter_b
 
-total_priority = sum(selected)
-print(f"Result: {total_priority}")
+print(f"Result: {final_tally}")

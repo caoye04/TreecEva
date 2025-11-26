@@ -1,0 +1,26 @@
+Target: Find the value of variable final_metric after [line 32] executes
+
+[line 4]  text_sample = "algorithm data structure optimization performance efficiency algorithm data structure complexity"
+Assign: text_sample = 'algorithm data structure optimization performance efficiency algorithm data structure complexity'
+[line 5]  words = text_sample.split()
+(Missing param: 'func_name')
+[line 8]  word_counts = Counter(words)
+Call function Counter(words=['algorithm', 'data', 'structure', 'optimization', 'performance', ...] (an unknown source))
+[line 9]  unique_words = len(word_counts)
+Call function len(word_counts={algorithm: 2, data: 2, structure: 2, ...} (defined at [line 8]))
+[line 10]  total_words = len(words)
+Call function len(words=['algorithm', 'data', 'structure', 'optimization', 'performance', ...] (an unknown source))
+[line 13]  most_common_count = word_counts.most_common(1)[0][1]
+Compute: word_counts.most_common(1)[0][1], where word_counts={algorithm: 2, data: 2, structure: 2, ...} (defined at [line 8]) = 2
+[line 21]  base_score = sum(word_counts.values()) * 2
+Compute: sum(word_counts.values()) * 2, where word_counts={algorithm: 2, data: 2, structure: 2, ...} (defined at [line 8]) = 20
+[line 22]  adjusted_base = base_score - (unique_words * 3)
+Compute: base_score - (unique_words * 3), where base_score=20 (defined at [line 21]), unique_words=7 (defined at [line 9]) = -1
+[line 28]  processed_sum = adjusted_base + (total_words // 2)
+Compute: adjusted_base + (total_words // 2), where adjusted_base=-1 (defined at [line 22]), total_words=10 (defined at [line 10]) = 4
+[line 29]  adjustment_factor = (most_common_count - 1) * 2
+Compute: (most_common_count - 1) * 2, where most_common_count=2 (defined at [line 13]) = 2
+[line 32]  final_metric = processed_sum - adjustment_factor
+Compute: processed_sum - adjustment_factor, where processed_sum=4 (defined at [line 28]), adjustment_factor=2 (defined at [line 29]) = 2
+
+Answer: final_metric = 2 (last updated on defined at [line 32])

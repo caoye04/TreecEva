@@ -1,0 +1,47 @@
+37
+final_result
+---
+33 bonus_threshold = 85
+33 ['performance_data', 'bonus_threshold'] ["[{score: 85, category: 'technical'}, {score: 92, category: 'analytical'}, {score: 78, category: 'creative'}, {score: 88, category: 'collaborative'}]", '85']
+36 final_result = compute_final_score(performance_data, bonus_threshold)
+36 ['performance_data', 'bonus_threshold'] ["[{score: 85, category: 'technical'}, {score: 92, category: 'analytical'}, {score: 78, category: 'creative'}, {score: 88, category: 'collaborative'}]", '85']
+PARAM_MAPPING {'performance_data': {'actual_var': 'performance_data', 'value': [{'score': 85, 'category': 'technical'}, {'score': 92, 'category': 'analytical'}, {'score': 78, 'category': 'creative'}, {'score': 88, 'category': 'collaborative'}]}, 'bonus_threshold': {'actual_var': 'bonus_threshold', 'value': 85}}
+FUNCTION_ENTER 1 compute_final_score def compute_final_score(performance_data, bonus_threshold):
+1 ['performance_data', 'bonus_threshold'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'score': {'_type': 'int', '_value': 85}, 'category': {'_type': 'str', '_value': 'technical'}}, '_len': 2}, {'_type': 'dict', '_items': {'score': {'_type': 'int', '_value': 92}, 'category': {'_type': 'str', '_value': 'analytical'}}, '_len': 2}, {'_type': 'dict', '_items': {'score': {'_type': 'int', '_value': 78}, 'category': {'_type': 'str', '_value': 'creative'}}, '_len': 2}, {'_type': 'dict', '_items': {'score': {'_type': 'int', '_value': 88}, 'category': {'_type': 'str', '_value': 'collaborative'}}, '_len': 2}], '_len': 4}, {'_type': 'int', '_value': 85}]
+3 base_scores = [entry['score'] for entry in performance_data]
+3 ['performance_data', 'entry'] ["[{score: 85, category: 'technical'}, {score: 92, category: 'analytical'}, {score: 78, category: 'creative'}, {score: 88, category: 'collaborative'}]", "{score: 85, category: 'technical'}"]
+3 base_scores = [entry['score'] for entry in performance_data]
+3 ['performance_data', 'entry'] ["[{score: 85, category: 'technical'}, {score: 92, category: 'analytical'}, {score: 78, category: 'creative'}, {score: 88, category: 'collaborative'}]", "{score: 92, category: 'analytical'}"]
+3 base_scores = [entry['score'] for entry in performance_data]
+3 ['performance_data', 'entry'] ["[{score: 85, category: 'technical'}, {score: 92, category: 'analytical'}, {score: 78, category: 'creative'}, {score: 88, category: 'collaborative'}]", "{score: 78, category: 'creative'}"]
+3 base_scores = [entry['score'] for entry in performance_data]
+3 ['performance_data', 'entry'] ["[{score: 85, category: 'technical'}, {score: 92, category: 'analytical'}, {score: 78, category: 'creative'}, {score: 88, category: 'collaborative'}]", "{score: 88, category: 'collaborative'}"]
+3 base_scores = [entry['score'] for entry in performance_data]
+3 ['performance_data', 'base_scores'] ["[{score: 85, category: 'technical'}, {score: 92, category: 'analytical'}, {score: 78, category: 'creative'}, {score: 88, category: 'collaborative'}]", '[85, 92, 78, 88]']
+4 max_score = max(base_scores)
+4 ['base_scores', 'max_score'] ['[85, 92, 78, 88]', '92']
+8 weighted_sum = sum(score * (index + 1) for index, score in enumerate(base_scores))
+8 [] []
+8 weighted_sum = sum(score * (index + 1) for index, score in enumerate(base_scores))
+8 ['index', 'score'] ['0', '85']
+8 weighted_sum = sum(score * (index + 1) for index, score in enumerate(base_scores))
+8 ['index', 'score'] ['1', '92']
+8 weighted_sum = sum(score * (index + 1) for index, score in enumerate(base_scores))
+8 ['index', 'score'] ['2', '78']
+8 weighted_sum = sum(score * (index + 1) for index, score in enumerate(base_scores))
+8 ['index', 'score'] ['3', '88']
+8 weighted_sum = sum(score * (index + 1) for index, score in enumerate(base_scores))
+8 ['index', 'score'] ['3', '88']
+9 total_weight = sum(range(1, len(base_scores) + 1))
+9 ['base_scores', 'max_score', 'weighted_sum', 'total_weight'] ['[85, 92, 78, 88]', '92', '855', '10']
+10 weighted_avg = weighted_sum / total_weight
+10 ['max_score', 'weighted_sum', 'total_weight', 'weighted_avg'] ['92', '855', '10', '85.5']
+20 performance_ratio = weighted_avg / max_score
+20 ['max_score', 'weighted_avg', 'performance_ratio'] ['92', '85.5', '0.9293478260869565']
+21 final_score = int(performance_ratio * 100)
+21 ['performance_ratio', 'final_score'] ['0.9293478260869565', '92']
+23 return final_score
+23 ['final_score'] ['92']
+FUNCTION_RETURN 23 compute_final_score {'_type': 'int', '_value': 92}
+37 print(f"Result: {final_result}")
+37 ['final_result'] ['92']

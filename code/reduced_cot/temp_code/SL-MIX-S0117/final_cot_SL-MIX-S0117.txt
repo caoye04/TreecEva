@@ -1,102 +1,16 @@
-Target: Find the value of variable final_adjustment after [line 46] executes
+Target: Find the value of variable final_count after [line 20] executes
 
-[line 29]  for i in range(len(exchange_rates) - 1):
-Loop Start: i takes its first value 0
-[line 29]  for i in range(len(exchange_rates) - 1):
-Loop End: Iteration finished
-[line 29]  for i in range(len(exchange_rates) - 1):
-Loop End: Iteration finished
-[line 29]  for i in range(len(exchange_rates) - 1):
-Loop End: Iteration finished
-[line 29]  for i in range(len(exchange_rates) - 1):
-Loop End: Iteration finished
-[line 32]  rate_map = defaultdict(int)
-Call function defaultdict(int)
-[line 33]  current = exchange_rates[0]
-Compute: exchange_rates[0], where exchange_rates=[ExchangeNode(change=2, next=ExchangeNode(...)), ExchangeNode(change=-1, next=ExchangeNode(...)), ExchangeNode(change=3, next=ExchangeNode(...)), ExchangeNode(change=-2, next=ExchangeNode(...)), ExchangeNode(change=1, next=None)] (an unknown source) = ExchangeNode(change=2, next=ExchangeNode(change=-1, next=ExchangeNode(...)))
-[line 34]  cumulative_change = 0
-Assign: cumulative_change = 0
-[line 37]  while current:
-while Loop Start: Condition is true
-[line 38]  cumulative_change += current.change
-Update: cumulative_change changed from 0 (defined at defined at [line 34]) to 0+current.change = 2
-[line 39]  rate_map[visited_count] = cumulative_change
-(Missing param: 'result')
-[line 40]  if cumulative_change > 4:
-Condition: True, entering 'if' block
-[line 42]  current = current.next
-Compute: current.next, where current=ExchangeNode(...) (defined at [line 33]) = ExchangeNode(next=ExchangeNode(change=3, next=ExchangeNode(...)))
-[line 37]  while current:
-while Loop Iteration: Condition is still true
-[line 38]  cumulative_change += current.change
-Update: cumulative_change changed from 2 (defined at defined at [line 38]) to 2+current.change = 1
-[line 39]  rate_map[visited_count] = cumulative_change
-(Missing param: 'result')
-[line 40]  if cumulative_change > 4:
-Condition: True, entering 'if' block
-[line 42]  current = current.next
-Compute: current.next, where current=ExchangeNode(...) (defined at [line 42]) = ExchangeNode(next=ExchangeNode(change=-2, next=ExchangeNode(...)))
-... [Line 37] repeats 2 more times ...
-... [Line 37] repeats 2 more times ...
-... [Line 37] repeats 2 more times ...
-... [Line 37] repeats 2 more times ...
-... [Line 37] repeats 2 more times ...
-[line 37]  while current:
-while Loop Iteration: Condition is still true
-[line 38]  cumulative_change += current.change
-Update: cumulative_change changed from 2 (defined at defined at [line 38]) to 2+current.change = 3
-[line 39]  rate_map[visited_count] = cumulative_change
-(Missing param: 'result')
-[line 40]  if cumulative_change > 4:
-Condition: True, entering 'if' block
-[line 42]  current = current.next
-Compute: current.next, where current=ExchangeNode(...) (defined at [line 42]) = None
-[line 37]  while current:
-while Loop Iteration: Condition is still true
-[line 45]  weight_list = [rate_map[i] for i in sorted(rate_map.keys())]
-Compute: [rate_map[i] for i in sorted(rate_map.keys())], where rate_map={0: 2, 1: 1, 2: 4, ...} (defined at [line 32]), i=0 (defined at [line 29]) = ?
-[line 45]  weight_list = [rate_map[i] for i in sorted(rate_map.keys())]
-Compute: [rate_map[i] for i in sorted(rate_map.keys())], where rate_map={0: 2, 1: 1, 2: 4, ...} (defined at [line 32]), i=1 (defined at [line 29]) = ?
-[line 45]  weight_list = [rate_map[i] for i in sorted(rate_map.keys())]
-Compute: [rate_map[i] for i in sorted(rate_map.keys())], where rate_map={0: 2, 1: 1, 2: 4, ...} (defined at [line 32]), i=2 (defined at [line 29]) = ?
-[line 45]  weight_list = [rate_map[i] for i in sorted(rate_map.keys())]
-Compute: [rate_map[i] for i in sorted(rate_map.keys())], where rate_map={0: 2, 1: 1, 2: 4, ...} (defined at [line 32]), i=3 (defined at [line 29]) = ?
-[line 45]  weight_list = [rate_map[i] for i in sorted(rate_map.keys())]
-Compute: [rate_map[i] for i in sorted(rate_map.keys())], where rate_map={0: 2, 1: 1, 2: 4, ...} (defined at [line 32]), i=4 (defined at [line 29]) = ?
-[line 45]  weight_list = [rate_map[i] for i in sorted(rate_map.keys())]
-Compute: [rate_map[i] for i in sorted(rate_map.keys())], where rate_map={0: 2, 1: 1, 2: 4, ...} (defined at [line 32]), i=3 (defined at [line 29]) = [2, 1, 4, 2, 3]
-[line 46]  final_adjustment = compute_weighted_fib(len(weight_list), weight_list)
-Call function compute_weighted_fib(len(weight_list), weight_list=[2, 1, 4, 2, 3] (defined at [line 45]))
-[line 8]  def compute_weighted_fib(n, weights):
-Enter function compute_weighted_fib: n=5, weights=[2, 1, 4, 2, 3] (weight_list defined at [line 45])
-  [line 9]  if n <= 0:
-  Condition: True, entering 'if' block
-  [line 11]  elif n == 1:
-  'elif' Condition: True, entering block
-  [line 13]  fib = [0] * (n + 1)
-  Compute: [0] * (n + 1), where n=5 (parameter n) = [0, 0, 0, 0, 0, ...]
-  [line 14]  fib[1] = weights[0]
-  (Missing param: 'result')
-  [line 15]  if n > 1:
-  Condition: True, entering 'if' block
-  [line 16]  fib[2] = weights[1]
-  (Missing param: 'result')
-  [line 17]  for i in range(3, n + 1):
-  Loop Start: i takes its first value 3
-  [line 18]  fib[i] = fib[i-1] + fib[i-2] + weights[i-1]
-  (Missing param: 'result')
-  [line 17]  for i in range(3, n + 1):
-  Loop Iteration: i is now 4 (iteration 2)
-  [line 18]  fib[i] = fib[i-1] + fib[i-2] + weights[i-1]
-  (Missing param: 'result')
-  [line 17]  for i in range(3, n + 1):
-  Loop Iteration: i is now 5 (iteration 3)
-  [line 18]  fib[i] = fib[i-1] + fib[i-2] + weights[i-1]
-  (Missing param: 'result')
-  [line 17]  for i in range(3, n + 1):
-  Loop End: Iteration finished
-  [line 19]  return fib[n]
-  Return: fib[n]
-Function compute_weighted_fib returns 20
+[line 3]  upper_count = sum(1 for char in text if char.isupper())
+Call function sum(1 for char in text if char.isupper())
+[line 4]  lower_count = sum(1 for char in text if char.islower())
+Call function sum(1 for char in text if char.islower())
+[line 5]  digit_count = sum(1 for char in text if char.isdigit())
+Call function sum(1 for char in text if char.isdigit())
+[line 12]  processed_chars = (upper_count * 3) + (lower_count * 2) + digit_count
+Compute: (upper_count * 3) + (lower_count * 2) + digit_count, where upper_count=4 (defined at [line 3]), lower_count=14 (defined at [line 4]), digit_count=6 (defined at [line 5]) = 46
+[line 19]  compression_factor = 2 if len(text) > 10 else 3
+Compute: 2 if len(text) > 10 else 3, where text='PyThon3.8! DataAnalysis2024' (an unknown source) = 2
+[line 20]  final_count = processed_chars // compression_factor
+Compute: processed_chars // compression_factor, where processed_chars=46 (defined at [line 12]), compression_factor=2 (defined at [line 19]) = 23
 
-Answer: final_adjustment = 20 (last updated on defined at [line 46])
+Answer: final_count = 23 (last updated on defined at [line 20])

@@ -1,0 +1,82 @@
+Target: Find the value of variable final_score after [line 42] executes
+
+[line 24]  if min_threshold > 100:
+Condition: True, entering 'if' block
+[line 30]  processed_data = process_metrics(data_points)
+Call function process_metrics(data_points=[15, 8, 22, 12] (an unknown source))
+[line 1]  def process_metrics(raw_data):
+Enter function process_metrics: raw_data=[15, 8, 22, 12]
+  [line 2]  processed = []
+  Compute: [] = []
+  [line 3]  for item in raw_data:
+  Loop Start: item takes its first value 15
+  [line 4]  temp_val = item * 2 - 5
+  Compute: item * 2 - 5, where item=15 (defined at [line 3]) = 25
+  [line 5]  if temp_val > 10:
+  Condition: True, entering 'if' block
+  [line 3]  for item in raw_data:
+  Loop Iteration: item is now 8 (iteration 2)
+  [line 4]  temp_val = item * 2 - 5
+  Compute: item * 2 - 5, where item=8 (defined at [line 3]) = 11
+  [line 5]  if temp_val > 10:
+  Condition: True, entering 'if' block
+  [line 3]  for item in raw_data:
+  Loop Iteration: item is now 22 (iteration 3)
+  [line 4]  temp_val = item * 2 - 5
+  Compute: item * 2 - 5, where item=22 (defined at [line 3]) = 39
+  [line 5]  if temp_val > 10:
+  Condition: True, entering 'if' block
+  [line 3]  for item in raw_data:
+  Loop Iteration: item is now 12 (iteration 4)
+  [line 4]  temp_val = item * 2 - 5
+  Compute: item * 2 - 5, where item=12 (defined at [line 3]) = 19
+  [line 5]  if temp_val > 10:
+  Condition: True, entering 'if' block
+  [line 3]  for item in raw_data:
+  Loop End: Iteration finished
+  [line 9]  return processed
+  Return: processed=[28, 14, 42, 22] (defined at [line 2])
+Function process_metrics returns [28, 14, 42, 22]
+[line 31]  weights = [0.3, 0.4, 0.2, 0.1]
+Compute: [0.3, 0.4, 0.2, 0.1] = [0.3, 0.4, 0.2, 0.1]
+[line 32]  base_score = calculate_weighted_scores(processed_data, weights)
+Call function calculate_weighted_scores(processed_data=[28, 14, 42, 22] (defined at [line 30]), weights=[0.3, 0.4, 0.2, 0.1] (defined at [line 31]))
+[line 11]  def calculate_weighted_scores(scores, weights):
+Enter function calculate_weighted_scores: scores=[28, 14, 42, 22] (processed_data defined at [line 30]), weights=[0.3, 0.4, 0.2, 0.1] (weights defined at [line 31])
+  [line 12]  weighted_sum = 0
+  Assign: weighted_sum = 0
+  [line 13]  total_weight = sum(weights)
+  Call function sum(weights=[0.3, 0.4, 0.2, 0.1] (parameter weights defined at [line 31]))
+  [line 14]  for i in range(len(scores)):
+  Loop Start: i takes its first value 0
+  [line 15]  weighted_sum += scores[i] * weights[i]
+  Update: weighted_sum changed from 0 (defined at defined at [line 12]) to 0+scores[i] * weights[i] = 8.4
+  [line 14]  for i in range(len(scores)):
+  Loop Iteration: i is now 1 (iteration 2)
+  [line 15]  weighted_sum += scores[i] * weights[i]
+  Update: weighted_sum changed from 8.4 (defined at defined at [line 15]) to 8.4+scores[i] * weights[i] = 14.0
+  [line 14]  for i in range(len(scores)):
+  Loop Iteration: i is now 2 (iteration 3)
+  [line 15]  weighted_sum += scores[i] * weights[i]
+  Update: weighted_sum changed from 14.0 (defined at defined at [line 15]) to 14.0+scores[i] * weights[i] = 22.4
+  [line 14]  for i in range(len(scores)):
+  Loop Iteration: i is now 3 (iteration 4)
+  [line 15]  weighted_sum += scores[i] * weights[i]
+  Update: weighted_sum changed from 22.4 (defined at defined at [line 15]) to 22.4+scores[i] * weights[i] = 24.599999999999998
+  [line 14]  for i in range(len(scores)):
+  Loop End: Iteration finished
+  [line 16]  return weighted_sum / total_weight if total_weight != 0 else 0
+  Return: weighted_sum / total_weight if total_weight != 0 else 0
+Function calculate_weighted_scores returns 24.599999999999998
+[line 35]  irrelevant_set = {x // 2 for x in data_points if x > min_threshold}
+Compute: {x // 2 for x in data_points if x > min_threshold}, where x=15 (an unknown source), data_points=[15, 8, 22, 12] (an unknown source), min_threshold=10 (an unknown source) = ?
+[line 36]  fake_adjustment = len(irrelevant_set) * 3.5
+Compute: len(irrelevant_set) * 3.5, where irrelevant_set={11, 6, 7} (defined at [line 35]) = 10.5
+[line 39]  category = "HIGH" if base_score > 20 else "LOW"
+Compute: "HIGH" if base_score > 20 else "LOW", where base_score=24.599999999999998 (defined at [line 32]) = 'HIGH'
+[line 40]  category_modifier = 1.5 if category.lower() == "high" else 0.8
+Compute: 1.5 if category.lower() == "high" else 0.8, where category='HIGH' (defined at [line 39]) = 1.5
+[line 42]  final_score = (base_score * category_modifier) - fake_adjustment + 7.25
+Compute: (base_score * category_modifier) - fake_adjustment + 7.25, where base_score=24.599999999999998 (defined at [line 32]), category_modifier=1.5 (defined at [line 40]), fake_adjustment=10.5 (defined at [line 36]) = 33.65
+
+Answer: final_score = 33.65 (last updated on defined at [line 42])

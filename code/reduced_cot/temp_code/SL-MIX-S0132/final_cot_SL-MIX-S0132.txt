@@ -1,20 +1,50 @@
-Target: Find the value of variable flour_count after [line 16] executes
+Target: Find the value of variable final_count after [line 18] executes
 
-[line 10]  ingredient_tokens = []
+[line 2]  text_samples = ["python programming", "data analysis", "machine learning", "python scripts", "data processing"]
+Compute: ["python programming", "data analysis", "machine learning", "python scripts", "data processing"] = ['python programming', 'data analysis', 'machine learning', 'python scripts', 'data processing']
+[line 3]  keywords = ["python", "data", "analysis"]
+Compute: ["python", "data", "analysis"] = ['python', 'data', 'analysis']
+[line 6]  matches = []
 Compute: [] = []
-[line 11]  for recipe in recipes_text:
-Loop Start: recipe takes its first value 'flour eggs butter sugar'
-[line 11]  for recipe in recipes_text:
+[line 7]  for sample in text_samples:
+Loop Start: sample takes its first value 'python programming'
+[line 8]  for keyword in keywords:
+Loop Start: keyword takes its first value 'python'
+[line 9]  if keyword in sample:
+Condition: True, entering 'if' block
+[line 7]  for sample in text_samples:
+Loop Iteration: sample is now 'data analysis' (iteration 2)
+[line 8]  for keyword in keywords:
+Loop Iteration: keyword is now 'python' (iteration 2)
+[line 9]  if keyword in sample:
+Condition: True, entering 'if' block
+... [Line 8] repeats 6 more times ...
+... [Line 8] repeats 6 more times ...
+... [Line 8] repeats 6 more times ...
+... [Line 8] repeats 6 more times ...
+[line 7]  for sample in text_samples:
+Loop Iteration: sample is now 'python scripts' (iteration 4)
+[line 8]  for keyword in keywords:
+Loop Iteration: keyword is now 'python' (iteration 8)
+[line 9]  if keyword in sample:
+Condition: True, entering 'if' block
+[line 7]  for sample in text_samples:
+Loop Iteration: sample is now 'data processing' (iteration 5)
+[line 8]  for keyword in keywords:
+Loop Iteration: keyword is now 'python' (iteration 9)
+[line 9]  if keyword in sample:
+Condition: True, entering 'if' block
+[line 8]  for keyword in keywords:
+Loop Iteration: keyword is now 'data' (iteration 10)
+[line 9]  if keyword in sample:
+Condition: True, entering 'if' block
+[line 7]  for sample in text_samples:
 Loop End: Iteration finished
-[line 11]  for recipe in recipes_text:
-Loop End: Iteration finished
-[line 11]  for recipe in recipes_text:
-Loop End: Iteration finished
-[line 11]  for recipe in recipes_text:
-Loop End: Iteration finished
-[line 15]  ingredient_counter = Counter(ingredient_tokens)
-Call function Counter(ingredient_tokens=['flour', 'eggs', 'butter', 'sugar', 'flour', ...] (defined at [line 10]))
-[line 16]  flour_count = ingredient_counter['flour']
-Compute: ingredient_counter['flour'], where ingredient_counter={flour: 4, eggs: 3, butter: 2, ...} (defined at [line 15]) = 4
+[line 14]  unique_matches = set(matches)
+Call function set(matches=['python programming', 'data analysis', 'python scripts', 'data processing'] (defined at [line 6]))
+[line 17]  result = len(unique_matches)
+Call function len(unique_matches={'python scripts', 'data analysis', 'data processing', 'python programming'} (defined at [line 14]))
+[line 18]  final_count = result + 2  # Add small offset
+Compute: result + 2  # Add small offset, where result=4 (defined at [line 17]) = 6
 
-Answer: flour_count = 4 (last updated on defined at [line 16])
+Answer: final_count = 6 (last updated on defined at [line 18])

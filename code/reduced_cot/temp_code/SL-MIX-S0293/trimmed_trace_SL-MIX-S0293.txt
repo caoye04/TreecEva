@@ -1,0 +1,55 @@
+41
+final_value
+---
+41 final_value = process_data(data_pool)
+41 ['data_pool'] ['{data_alpha: 12, data_beta: 8, data_gamma: 15, ...}']
+PARAM_MAPPING {'input_data': {'actual_var': 'data_pool', 'value': {'data_alpha': 12, 'data_beta': 8, 'data_gamma': 15, 'temp_data': 20, 'backup': 6, 'data_delta': 9}}}
+FUNCTION_ENTER 1 process_data def process_data(input_data):
+1 ['input_data'] [{'_type': 'dict', '_items': {'data_alpha': {'_type': 'int', '_value': 12}, 'data_beta': {'_type': 'int', '_value': 8}, 'data_gamma': {'_type': 'int', '_value': 15}, 'temp_data': {'_type': 'int', '_value': 20}, 'backup': {'_type': 'int', '_value': 6}}, '_len': 6}]
+10 filtered = {k: v for k, v in input_data.items() if v > 8}
+10 ['input_data', 'k', 'v'] ['{data_alpha: 12, data_beta: 8, data_gamma: 15, ...}', "'data_alpha'", '12']
+10 filtered = {k: v for k, v in input_data.items() if v > 8}
+10 ['input_data', 'k', 'v'] ['{data_alpha: 12, data_beta: 8, data_gamma: 15, ...}', "'data_beta'", '8']
+10 filtered = {k: v for k, v in input_data.items() if v > 8}
+10 ['input_data', 'k', 'v'] ['{data_alpha: 12, data_beta: 8, data_gamma: 15, ...}', "'data_gamma'", '15']
+10 filtered = {k: v for k, v in input_data.items() if v > 8}
+10 ['input_data', 'k', 'v'] ['{data_alpha: 12, data_beta: 8, data_gamma: 15, ...}', "'temp_data'", '20']
+10 filtered = {k: v for k, v in input_data.items() if v > 8}
+10 ['input_data', 'k', 'v'] ['{data_alpha: 12, data_beta: 8, data_gamma: 15, ...}', "'backup'", '6']
+10 filtered = {k: v for k, v in input_data.items() if v > 8}
+10 ['input_data', 'k', 'v'] ['{data_alpha: 12, data_beta: 8, data_gamma: 15, ...}', "'data_delta'", '9']
+10 filtered = {k: v for k, v in input_data.items() if v > 8}
+10 ['input_data', 'filtered'] ['{data_alpha: 12, data_beta: 8, data_gamma: 15, ...}', '{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}']
+17 result = 0
+17 ['filtered', 'result'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '0']
+18 for key, value in filtered.items():
+18 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '0', "'data_alpha'", '12']
+19 if key.startswith('data_'):
+19 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '0', "'data_alpha'", '12']
+20 result += value
+20 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '12', "'data_alpha'", '12']
+18 for key, value in filtered.items():
+18 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '12', "'data_gamma'", '15']
+19 if key.startswith('data_'):
+19 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '12', "'data_gamma'", '15']
+20 result += value
+20 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '27', "'data_gamma'", '15']
+18 for key, value in filtered.items():
+18 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '27', "'temp_data'", '20']
+19 if key.startswith('data_'):
+19 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '27', "'temp_data'", '20']
+22 result -= value // 2
+22 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '17', "'temp_data'", '20']
+18 for key, value in filtered.items():
+18 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '17', "'data_delta'", '9']
+19 if key.startswith('data_'):
+19 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '17', "'data_delta'", '9']
+20 result += value
+20 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '26', "'data_delta'", '9']
+18 for key, value in filtered.items():
+18 ['filtered', 'result', 'key', 'value'] ['{data_alpha: 12, data_gamma: 15, temp_data: 20, ...}', '26', "'data_delta'", '9']
+25 adjustment = (result & 0b1111) | ((result >> 4) & 0b1111)
+25 ['result', 'adjustment'] ['26', '11']
+26 return result + adjustment
+26 ['result', 'adjustment'] ['26', '11']
+FUNCTION_RETURN 26 process_data {'_type': 'int', '_value': 37}

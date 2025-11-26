@@ -1,42 +1,16 @@
-Target: Find the value of variable aggregate_metric after [line 34] executes
+Target: Find the value of variable final_quantity after [line 6] executes
 
-[line 2]  if len(transmitted) != len(received):
-Condition: True, entering 'if' block
-[line 5]  errors = [t ^ r for t, r in zip(transmitted, received)]
-Compute: [t ^ r for t, r in zip(transmitted, received)], where t=26 (an unknown source), r=26 (an unknown source), transmitted=[26, 43, 60, 77, 94, ...] (an unknown source), received=[26, 47, 60, 73, 94, ...] (an unknown source) = ?
-[line 8]  if all(e == 0 for e in errors):
-Condition: True, entering 'if' block
-[line 12]  error_positions = []
-Compute: [] = []
-[line 13]  for i, e in enumerate(errors):
-(Missing param: 'iter_var')
-[line 14]  if e & 0xFF:  # Check if any bit is set in the byte
-Condition: True, entering 'if' block
-[line 13]  for i, e in enumerate(errors):
-(Missing param: 'iter_var')
-[line 14]  if e & 0xFF:  # Check if any bit is set in the byte
-Condition: True, entering 'if' block
-... [Line 13] repeats 4 more times ...
-... [Line 13] repeats 4 more times ...
-[line 13]  for i, e in enumerate(errors):
-(Missing param: 'iter_var')
-[line 14]  if e & 0xFF:  # Check if any bit is set in the byte
-Condition: True, entering 'if' block
-[line 13]  for i, e in enumerate(errors):
-Loop End: Iteration finished
-[line 18]  if len(error_positions) > len(transmitted) // 2:
-Condition: True, entering 'if' block
-[line 23]  mean_error = statistics.mean(errors)
-(Missing param: 'func_name')
-[line 24]  if len(errors) > 1:
-Condition: True, entering 'if' block
-[line 25]  variance_error = statistics.variance(errors)
-(Missing param: 'func_name')
-[line 30]  normalized_mean = int(mean_error) >> 2
-Compute: int(mean_error) >> 2, where mean_error=1.7142857142857142 (an unknown source) = 0
-[line 31]  normalized_variance = int(variance_error) << 1
-Compute: int(variance_error) << 1, where variance_error=4.571428571428571 (an unknown source) = 8
-[line 34]  aggregate_metric = normalized_mean ^ normalized_variance
-Compute: normalized_mean ^ normalized_variance, where normalized_mean=0 (defined at [line 30]), normalized_variance=8 (defined at [line 31]) = 8
+[line 1]  initial_inventory = 150
+Assign: initial_inventory = 150
+[line 2]  warehouse_capacity = 500
+Assign: warehouse_capacity = 500
+[line 3]  current_stock = initial_inventory - 45
+Compute: initial_inventory - 45, where initial_inventory=150 (defined at [line 1]) = 105
+[line 4]  incoming_shipment = 120 if warehouse_capacity - current_stock >= 100 else 80
+Compute: 120 if warehouse_capacity - current_stock >= 100 else 80, where warehouse_capacity=500 (defined at [line 2]), current_stock=105 (defined at [line 3]) = 120
+[line 5]  urgent_orders = 35
+Assign: urgent_orders = 35
+[line 6]  final_quantity = current_stock + incoming_shipment - urgent_orders
+Compute: current_stock + incoming_shipment - urgent_orders, where current_stock=105 (defined at [line 3]), incoming_shipment=120 (defined at [line 4]), urgent_orders=35 (defined at [line 5]) = 190
 
-Answer: aggregate_metric = 8 (last updated on defined at [line 34])
+Answer: final_quantity = 190 (last updated on defined at [line 6])

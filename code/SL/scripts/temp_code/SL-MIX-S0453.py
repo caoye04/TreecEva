@@ -1,49 +1,26 @@
-def process_document_metadata():
-    document_tags = [
-        {'history': 15, 'military': 8, 'europe': 12},
-        {'science': 20, 'physics': 15, 'quantum': 7},
-        {'literature': 25, 'poetry': 10, 'french': 5},
-        {'history': 10, 'asia': 18, 'culture': 14}
-    ]
+def analyze_temperature_trends():
+    raw_readings = [25, 32, 18, 29, 34, 22, 31, 27]
+    filtered_data = [temp for temp in raw_readings if temp > 20]
     
-    tag_weights = {
-        'history': 3, 'military': 2, 'europe': 1,
-        'science': 4, 'physics': 3, 'quantum': 2,
-        'literature': 3, 'poetry': 2, 'french': 1,
-        'asia': 2, 'culture': 1
-    }
+    # Intermediate calculations (distractor)
+    max_temp = max(raw_readings)
+    min_temp = min(raw_readings)
+    temp_range = max_temp - min_temp
     
-    # Initialize archival scoring system
-    archival_score = 0
-    unique_tag_set = frozenset()
+    # Process data
+    adjusted_data = [temp + 5 if temp < 25 else temp - 3 for temp in filtered_data]
     
-    # Process each document
-    for doc in document_tags:
-        doc_vector = [0] * len(tag_weights)
-        temp_score = 0
-        
-        # Calculate weighted score for current document
-        for tag, frequency in doc.items():
-            if tag in tag_weights and frequency > 0:
-                weight = tag_weights[tag]
-                temp_score += frequency * weight
-                unique_tag_set |= {tag}
-                
-                # Update document vector representation
-                tag_index = list(tag_weights.keys()).index(tag)
-                doc_vector[tag_index] = frequency
-        
-        # Apply divide and conquer approach to normalize score
-        if temp_score > 0:
-            max_freq = max(doc.values()) if doc.values() else 1
-            normalized_score = (temp_score // max_freq) if max_freq and temp_score >= 50 else temp_score
-            archival_score += normalized_score
+    # More intermediate variables (distractor)
+    total_adjusted = sum(adjusted_data)
+    average_temp = total_adjusted / len(adjusted_data)
     
-    # Final adjustment based on unique tags
-    unique_bonus = len(unique_tag_set) * 2
-    archival_score = (archival_score + unique_bonus) if archival_score > 0 and len(unique_tag_set) >= 8 else archival_score - 5
+    # Key calculation
+    scaling_factor = 4 if len(adjusted_data) > 5 else 2
+    final_metric = adjusted_data[-1] // scaling_factor
     
-    return archival_score
+    # Unused calculation (distractor)
+    normalized_metric = final_metric * 1.5
+    
+    print(f"Result: {final_metric}")
 
-archival_score = process_document_metadata()
-print(f"Result: {archival_score}")
+analyze_temperature_trends()

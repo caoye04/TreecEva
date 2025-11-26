@@ -1,78 +1,45 @@
-class PackageNode:
-    def __init__(self, weight, value, next_node=None):
-        self.weight = weight
-        self.value = value
-        self.next = next_node
+import itertools
 
-def knapsack_dp(weights, values, capacity):
-    n = len(weights)
-    dp = [0] * (capacity + 1)
-    for i in range(n):
-        for w in range(capacity, weights[i] - 1, -1):
-            dp[w] = max(dp[w], dp[w - weights[i]] + values[i])
-    return dp[capacity]
+def compute_quality_metric(measurements):
+    # Distractor: misleading intermediate calculation
+    temp_sum = sum(measurements) * 2  # Irrelevant multiplication
+    
+    # Main logic: find unique pairs and compute average difference
+    unique_pairs = list(itertools.combinations(set(measurements), 2))
+    
+    # Distractor: dead code path
+    if len(unique_pairs) > 10:
+        redundant_check = min(measurements) // 2  # Never executed
+    
+    # Core calculation: average absolute difference
+    differences = [abs(pair[0] - pair[1]) for pair in unique_pairs]
+    
+    # Distractor: misleading variable
+    max_diff = max(differences) + 5  # Irrelevant offset
+    
+    # Final computation with modular arithmetic
+    base_score = sum(differences) // len(differences) if differences else 0
+    quality_modifier = base_score % 7
+    
+    # Distractor: unused operation
+    potential_bonus = (quality_modifier * 3) - 2
+    
+    return base_score + quality_modifier
 
-def divide_conquer_knapsack(packages_head, capacity):
-    if not packages_head:
-        return 0
-    if not packages_head.next:
-        return packages_head.value if packages_head.weight <= capacity else 0
-    
-    # Split the list into two halves
-    slow = fast = packages_head
-    prev = None
-    while fast and fast.next:
-        prev = slow
-        slow = slow.next
-        fast = fast.next.next
-    
-    # Disconnect first half from second half
-    prev.next = None
-    
-    left_weights, left_values = [], []
-    right_weights, right_values = [], []
-    
-    current = packages_head
-    while current:
-        left_weights.append(current.weight)
-        left_values.append(current.value)
-        current = current.next
-    
-    current = slow
-    while current:
-        right_weights.append(current.weight)
-        right_values.append(current.value)
-        current = current.next
-    
-    left_capacity_map = {}
-    right_capacity_map = {}
-    
-    for cap in range(capacity + 1):
-        left_capacity_map[cap] = knapsack_dp(left_weights, left_values, cap)
-        right_capacity_map[cap] = knapsack_dp(right_weights, right_values, cap)
-    
-    max_value = 0
-    for cap in range(capacity + 1):
-        remaining_cap = capacity - cap
-        if remaining_cap >= 0:
-            val = left_capacity_map[cap] + right_capacity_map.get(remaining_cap, 0)
-            max_value = max(max_value, val)
-    
-    return max_value
+# Main execution with distracting variables
+data_points = [15, 22, 8, 22, 31, 15, 8]
 
-# Build linked list of packages
-packages_data = [
-    (2, 3),
-    (3, 4),
-    (4, 5),
-    (5, 8),
-    (9, 10)
-]
+# Distractor: misleading intermediate variable
+preliminary_analysis = len(data_points) * 4
 
-head = None
-for weight, value in reversed(packages_data):
-    head = PackageNode(weight, value, head)
+# Distractor: unused set operation
+all_unique = set(data_points)
+redundant_max = max(all_unique) if all_unique else 0
 
-truck_capacity = 15
-max_total_value = divide_conquer_knapsack(head, truck_capacity)
-print(f"Result: {max_total_value}")
+# Key computation
+final_score = compute_quality_metric(data_points)
+
+# Distractor: post-processing that doesn't affect final_score
+final_check = final_score * 1.5
+
+print(f"Result: {final_score}")

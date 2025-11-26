@@ -1,0 +1,112 @@
+Target: Find the value of variable final_hash after [line 67] executes
+
+[line 63]  hash_processor = HashProcessor()
+Call function HashProcessor()
+[line 3]  self.seed = 137
+(Missing param: 'var')
+[line 4]  self.cache = {}
+(Missing param: 'result')
+[line 5]  self.debug_mode = False
+(Missing param: 'var')
+[line 64]  final_hash = hash_processor.process(data_blocks)
+(Missing param: 'func_name')
+[line 23]  intermediate_results = []
+Compute: [] = []
+[line 26]  for i, block in enumerate(data_list):
+(Missing param: 'iter_var')
+[line 27]  checksum = self._calculate_checksum(block)
+(Missing param: 'func_name')
+[line 9]  temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+Call function sum([ord(c) if isinstance(c, str) else c for c in data])
+[line 11]  return temp_sum % 256
+Return: temp_sum % 256
+[line 28]  bit_result = self._apply_bit_operations(checksum)
+(Missing param: 'func_name')
+[line 15]  step1 = value & 0x0F
+Compute: value & 0x0F, where value=28 (an unknown source) = 12
+[line 16]  step2 = step1 | 0x80
+Compute: step1 | 0x80, where step1=12 (defined at [line 15]) = 140
+[line 17]  step3 = step2 ^ 0x55
+Compute: step2 ^ 0x55, where step2=140 (defined at [line 16]) = 217
+[line 19]  return step3
+Return: step3=217 (defined at [line 17])
+[line 31]  if i == 0:
+Condition: True, entering 'if' block
+[line 32]  current_hash = bit_result
+Compute: bit_result, where bit_result=217 (an unknown source) = 217
+[line 38]  self.cache[f'block_{i}'] = current_hash  # Unused caching
+(Missing param: 'result')
+[line 26]  for i, block in enumerate(data_list):
+(Missing param: 'iter_var')
+[line 27]  checksum = self._calculate_checksum(block)
+(Missing param: 'func_name')
+[line 11]  return temp_sum % 256
+Return: temp_sum % 256
+[line 28]  bit_result = self._apply_bit_operations(checksum)
+(Missing param: 'func_name')
+[line 15]  step1 = value & 0x0F
+Compute: value & 0x0F, where value=32 (an unknown source) = 0
+[line 16]  step2 = step1 | 0x80
+Compute: step1 | 0x80, where step1=0 (defined at [line 15]) = 128
+[line 17]  step3 = step2 ^ 0x55
+Compute: step2 ^ 0x55, where step2=128 (defined at [line 16]) = 213
+[line 19]  return step3
+Return: step3=213 (defined at [line 17])
+[line 31]  if i == 0:
+Condition: True, entering 'if' block
+[line 38]  self.cache[f'block_{i}'] = current_hash  # Unused caching
+(Missing param: 'result')
+[line 26]  for i, block in enumerate(data_list):
+(Missing param: 'iter_var')
+[line 27]  checksum = self._calculate_checksum(block)
+(Missing param: 'func_name')
+[line 11]  return temp_sum % 256
+Return: temp_sum % 256
+[line 28]  bit_result = self._apply_bit_operations(checksum)
+(Missing param: 'func_name')
+[line 15]  step1 = value & 0x0F
+Compute: value & 0x0F, where value=36 (an unknown source) = 4
+[line 16]  step2 = step1 | 0x80
+Compute: step1 | 0x80, where step1=4 (defined at [line 15]) = 132
+[line 17]  step3 = step2 ^ 0x55
+Compute: step2 ^ 0x55, where step2=132 (defined at [line 16]) = 209
+[line 19]  return step3
+Return: step3=209 (defined at [line 17])
+[line 31]  if i == 0:
+Condition: True, entering 'if' block
+[line 38]  self.cache[f'block_{i}'] = current_hash  # Unused caching
+(Missing param: 'result')
+[line 26]  for i, block in enumerate(data_list):
+(Missing param: 'iter_var')
+[line 27]  checksum = self._calculate_checksum(block)
+(Missing param: 'func_name')
+[line 11]  return temp_sum % 256
+Return: temp_sum % 256
+[line 28]  bit_result = self._apply_bit_operations(checksum)
+(Missing param: 'func_name')
+[line 15]  step1 = value & 0x0F
+Compute: value & 0x0F, where value=40 (an unknown source) = 8
+[line 16]  step2 = step1 | 0x80
+Compute: step1 | 0x80, where step1=8 (defined at [line 15]) = 136
+[line 17]  step3 = step2 ^ 0x55
+Compute: step2 ^ 0x55, where step2=136 (defined at [line 16]) = 221
+[line 19]  return step3
+Return: step3=221 (defined at [line 17])
+[line 31]  if i == 0:
+Condition: True, entering 'if' block
+[line 38]  self.cache[f'block_{i}'] = current_hash  # Unused caching
+(Missing param: 'result')
+[line 26]  for i, block in enumerate(data_list):
+Loop End: Iteration finished
+[line 41]  weight_factors = {idx: (val % 8) + 1 for idx, val in enumerate(intermediate_results)}
+Compute: {idx: (val % 8) + 1 for idx, val in enumerate(intermediate_results)}, where idx=0 (an unknown source), val=217 (an unknown source), intermediate_results=[217, 12, 221, 0] (defined at [line 23]) = ?
+[line 44]  weighted_sum = sum([val * weight_factors[i] for i, val in enumerate(intermediate_results)])
+Call function sum([val * weight_factors[i] for i, val in enumerate(intermediate_results)])
+[line 47]  final_value = (weighted_sum & 0x7F) | ((self.seed % 64) << 7)
+Compute: (weighted_sum & 0x7F) | ((self.seed % 64) << 7), where weighted_sum=1820 (defined at [line 44]), self=HashProcessor(seed=137) (an unknown source) = 1180
+[line 52]  return final_value
+Return: final_value=1180 (defined at [line 47])
+[line 67]  print(f"Result: {final_hash}")
+Output: f"Result: {final_hash}"
+
+Answer: final_hash = 1180 (last updated on an unknown source)

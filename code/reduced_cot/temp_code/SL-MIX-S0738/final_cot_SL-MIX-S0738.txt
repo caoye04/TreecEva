@@ -1,0 +1,62 @@
+Target: Find the value of variable final_signal after [line 57] executes
+
+[line 46]  raw_inputs = [15, 22, 8, 31, 45, 12, 7, 18]
+Compute: [15, 22, 8, 31, 45, 12, 7, 18] = [15, 22, 8, 31, 45, ...]
+[line 54]  final_signal = process_data_chain(raw_inputs)
+Call function process_data_chain(raw_inputs=[15, 22, 8, 31, 45, ...] (defined at [line 46]))
+[line 14]  filtered_data = [x for x in data_stream if x % 3 != 0]
+Compute: [x for x in data_stream if x % 3 != 0], where x=15 (an unknown source), data_stream=[15, 22, 8, 31, 45, ...] (an unknown source) = ?
+[line 21]  processed = [bitwise_transform(x) for x in filtered_data]
+Compute: [bitwise_transform(x) for x in filtered_data], where x=22 (an unknown source), filtered_data=[22, 8, 31, 7] (defined at [line 14]) = ?
+[line 10]  transformed = (value & 0x0F) | ((value >> 4) << 4)
+Compute: (value & 0x0F) | ((value >> 4) << 4), where value=22 (an unknown source) = 22
+[line 11]  return transformed
+Return: transformed=22 (defined at [line 10])
+[line 10]  transformed = (value & 0x0F) | ((value >> 4) << 4)
+Compute: (value & 0x0F) | ((value >> 4) << 4), where value=8 (an unknown source) = 8
+[line 11]  return transformed
+Return: transformed=8 (defined at [line 10])
+[line 10]  transformed = (value & 0x0F) | ((value >> 4) << 4)
+Compute: (value & 0x0F) | ((value >> 4) << 4), where value=31 (an unknown source) = 31
+[line 11]  return transformed
+Return: transformed=31 (defined at [line 10])
+[line 10]  transformed = (value & 0x0F) | ((value >> 4) << 4)
+Compute: (value & 0x0F) | ((value >> 4) << 4), where value=7 (an unknown source) = 7
+[line 11]  return transformed
+Return: transformed=7 (defined at [line 10])
+[line 24]  unique_vals = set(processed)
+Call function set(processed=[22, 8, 31, 7] (defined at [line 21]))
+[line 31]  accumulator = 0
+Assign: accumulator = 0
+[line 32]  for idx, val in enumerate(processed):
+(Missing param: 'iter_var')
+[line 33]  if idx % 2 == 0:
+Condition: True, entering 'if' block
+[line 34]  accumulator += val
+Update: accumulator changed from 0 (defined at defined at [line 31]) to 0+val = 22
+[line 32]  for idx, val in enumerate(processed):
+(Missing param: 'iter_var')
+[line 33]  if idx % 2 == 0:
+Condition: True, entering 'if' block
+[line 36]  accumulator -= val
+Update: accumulator changed from 22 (defined at defined at [line 34]) to 22-val = 14
+[line 32]  for idx, val in enumerate(processed):
+(Missing param: 'iter_var')
+[line 33]  if idx % 2 == 0:
+Condition: True, entering 'if' block
+[line 34]  accumulator += val
+Update: accumulator changed from 14 (defined at defined at [line 36]) to 14+val = 45
+[line 32]  for idx, val in enumerate(processed):
+(Missing param: 'iter_var')
+[line 33]  if idx % 2 == 0:
+Condition: True, entering 'if' block
+[line 36]  accumulator -= val
+Update: accumulator changed from 45 (defined at defined at [line 34]) to 45-val = 38
+[line 32]  for idx, val in enumerate(processed):
+Loop End: Iteration finished
+[line 43]  return accumulator + len(unique_vals)
+Return: accumulator + len(unique_vals)
+[line 57]  print(f"Result: {final_signal}")
+Output: f"Result: {final_signal}"
+
+Answer: final_signal = 42 (last updated on defined at [line 54])

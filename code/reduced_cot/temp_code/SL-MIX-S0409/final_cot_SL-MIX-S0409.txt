@@ -1,0 +1,53 @@
+Target: Find the value of variable final_hash after [line 35] executes
+
+[line 3]  primary_sum = 0
+Assign: primary_sum = 0
+[line 4]  secondary_mask = 0xFF
+Assign: secondary_mask = 255
+[line 5]  checksum_accumulator = 0
+Assign: checksum_accumulator = 0
+[line 7]  validation_flag = True
+Assign: validation_flag = True
+[line 10]  for i, byte_val in enumerate(data_stream):
+(Missing param: 'iter_var')
+[line 12]  primary_sum += byte_val
+Update: primary_sum changed from 0 (defined at defined at [line 3]) to 0+byte_val = 18
+[line 13]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 20]  secondary_mask = (secondary_mask << 1) & 0xFF
+Compute: (secondary_mask << 1) & 0xFF, where secondary_mask=255 (defined at [line 4]) = 254
+[line 10]  for i, byte_val in enumerate(data_stream):
+(Missing param: 'iter_var')
+[line 12]  primary_sum += byte_val
+Update: primary_sum changed from 18 (defined at defined at [line 12]) to 18+byte_val = 70
+[line 13]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 20]  secondary_mask = (secondary_mask << 1) & 0xFF
+Compute: (secondary_mask << 1) & 0xFF, where secondary_mask=254 (defined at [line 20]) = 252
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+[line 10]  for i, byte_val in enumerate(data_stream):
+(Missing param: 'iter_var')
+[line 12]  primary_sum += byte_val
+Update: primary_sum changed from 276 (defined at defined at [line 12]) to 276+byte_val = 430
+[line 13]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 20]  secondary_mask = (secondary_mask << 1) & 0xFF
+Compute: (secondary_mask << 1) & 0xFF, where secondary_mask=240 (defined at [line 20]) = 224
+[line 10]  for i, byte_val in enumerate(data_stream):
+Loop End: Iteration finished
+[line 23]  offset_adjust = len(data_stream) * 3
+Compute: len(data_stream) * 3, where data_stream=[18, 52, 86, 120, 154] (an unknown source) = 15
+[line 27]  if validation_flag and offset_adjust > 100:
+Condition: True, entering 'if' block
+[line 31]  mask_transform = (secondary_mask ^ 0xAA) | (primary_sum & 0x55)
+Compute: (secondary_mask ^ 0xAA) | (primary_sum & 0x55), where secondary_mask=224 (defined at [line 20]), primary_sum=430 (defined at [line 12]) = 78
+[line 32]  checksum_accumulator = (checksum_accumulator << 2) & 0xFF
+Compute: (checksum_accumulator << 2) & 0xFF, where checksum_accumulator=210 (defined at [line 5]) = 72
+[line 35]  final_hash = checksum_accumulator ^ mask_transform
+Compute: checksum_accumulator ^ mask_transform, where checksum_accumulator=72 (defined at [line 32]), mask_transform=78 (defined at [line 31]) = 6
+
+Answer: final_hash = 6 (last updated on defined at [line 35])

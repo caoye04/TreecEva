@@ -1,20 +1,46 @@
-import math
+from collections import Counter
 
-# Normalized annual returns for two portfolios over 5 years
-portfolio_a = [0.08, 0.12, 0.05, 0.15, 0.09]
-portfolio_b = [0.11, 0.07, 0.13, 0.06, 0.10]
+def process_transactions(transactions, threshold):
+    # Process transaction amounts and filter by threshold
+    amounts = [t['amount'] for t in transactions]
+    valid_amounts = [amt for amt in amounts if amt >= threshold]
+    
+    # Calculate some intermediate values (distraction)
+    total_sum = sum(amounts)
+    avg_transaction = total_sum / len(amounts) if amounts else 0
+    
+    # Count occurrences of each amount (relevant operation)
+    amount_counts = Counter(valid_amounts)
+    
+    # Find most common valid amount
+    if amount_counts:
+        most_common = amount_counts.most_common(1)[0]
+        base_result = most_common[0] * most_common[1]
+    else:
+        base_result = 0
+    
+    # Apply some transformations (mixed relevant/semi-relevant)
+    tax_adjustment = base_result * 0.1  # 10% tax (distraction)
+    processing_fee = len(valid_amounts) * 2  # $2 per transaction (semi-relevant)
+    
+    # Final calculation (relevant)
+    result = base_result - processing_fee
+    return result
 
-# Combine and normalize using logarithmic transformation
-combined_log_returns = list(map(lambda x: math.log(1 + x), portfolio_a + portfolio_b))
+# Sample transaction data
+transactions = [
+    {'amount': 150, 'type': 'purchase'},
+    {'amount': 75, 'type': 'refund'},
+    {'amount': 200, 'type': 'purchase'},
+    {'amount': 150, 'type': 'purchase'},
+    {'amount': 50, 'type': 'refund'},
+    {'amount': 200, 'type': 'transfer'}
+]
 
-# Sort to find median performance
-sorted_log_returns = sorted(combined_log_returns)
+threshold = 100
 
-# Calculate median of log returns
-n = len(sorted_log_returns)
-median_log_return = (sorted_log_returns[n//2] + sorted_log_returns[(n//2)-1]) / 2 if n % 2 == 0 else sorted_log_returns[n//2]
+# Process transactions
+result = process_transactions(transactions, threshold)
+final_result = int(result)
 
-# Convert back to percentage using exponential
-final_cagr_percentage = (math.exp(median_log_return) - 1) * 100
-
-print(f"Result: {final_cagr_percentage}")
+print(f"Target result: {final_result}")

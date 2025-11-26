@@ -1,5 +1,39 @@
-15
-suspicious_count
+28
+critical_result
 ---
-15 suspicious_count = 0
-15 ['suspicious_count'] ['0']
+3 header_flags = [packet & 0xFF for packet in packet_data]
+3 ['packet_data', 'packet'] ['[1193046, 7903932, 14610450, 3430008]', '1193046']
+3 header_flags = [packet & 0xFF for packet in packet_data]
+3 ['packet_data', 'packet'] ['[1193046, 7903932, 14610450, 3430008]', '7903932']
+3 header_flags = [packet & 0xFF for packet in packet_data]
+3 ['packet_data', 'packet'] ['[1193046, 7903932, 14610450, 3430008]', '14610450']
+3 header_flags = [packet & 0xFF for packet in packet_data]
+3 ['packet_data', 'packet'] ['[1193046, 7903932, 14610450, 3430008]', '3430008']
+3 header_flags = [packet & 0xFF for packet in packet_data]
+3 ['packet_data', 'header_flags'] ['[1193046, 7903932, 14610450, 3430008]', '[86, 188, 18, 120]']
+11 mask_flags = 0b1101
+11 ['header_flags', 'mask_flags'] ['[86, 188, 18, 120]', '13']
+12 redundant_mask = 0b1010
+12 ['header_flags', 'mask_flags', 'redundant_mask'] ['[86, 188, 18, 120]', '13', '10']
+13 protocol_ids = {1: 0xAA, 2: 0xBB, 3: 0xCC}
+13 ['header_flags', 'mask_flags', 'redundant_mask', 'protocol_ids'] ['[86, 188, 18, 120]', '13', '10', '{1: 170, 2: 187, 3: 204}']
+16 processed_data = {}
+16 ['header_flags', 'mask_flags', 'redundant_mask', 'protocol_ids', 'processed_data'] ['[86, 188, 18, 120]', '13', '10', '{1: 170, 2: 187, 3: 204}', '{}']
+17 actual_packets = [0x1234, 0x5678, 0x9ABC]
+17 ['header_flags', 'mask_flags', 'redundant_mask', 'protocol_ids', 'processed_data', 'actual_packets'] ['[86, 188, 18, 120]', '13', '10', '{1: 170, 2: 187, 3: 204}', '{}', '[4660, 22136, 39612]']
+20 valid_count = len([p for p in actual_packets if p & 0x8000 == 0])
+20 ['header_flags', 'mask_flags', 'redundant_mask', 'protocol_ids', 'processed_data', 'actual_packets', 'p'] ['[86, 188, 18, 120]', '13', '10', '{1: 170, 2: 187, 3: 204}', '{}', '[4660, 22136, 39612]', '4660']
+20 valid_count = len([p for p in actual_packets if p & 0x8000 == 0])
+20 ['header_flags', 'mask_flags', 'redundant_mask', 'protocol_ids', 'processed_data', 'actual_packets', 'p'] ['[86, 188, 18, 120]', '13', '10', '{1: 170, 2: 187, 3: 204}', '{}', '[4660, 22136, 39612]', '22136']
+20 valid_count = len([p for p in actual_packets if p & 0x8000 == 0])
+20 ['header_flags', 'mask_flags', 'redundant_mask', 'protocol_ids', 'processed_data', 'actual_packets', 'p'] ['[86, 188, 18, 120]', '13', '10', '{1: 170, 2: 187, 3: 204}', '{}', '[4660, 22136, 39612]', '39612']
+20 valid_count = len([p for p in actual_packets if p & 0x8000 == 0])
+20 ['header_flags', 'mask_flags', 'redundant_mask', 'protocol_ids', 'processed_data', 'actual_packets', 'valid_count'] ['[86, 188, 18, 120]', '13', '10', '{1: 170, 2: 187, 3: 204}', '{}', '[4660, 22136, 39612]', '2']
+21 protocol_sum = sum(protocol_ids.values())
+21 ['header_flags', 'mask_flags', 'redundant_mask', 'protocol_ids', 'processed_data', 'valid_count', 'protocol_sum'] ['[86, 188, 18, 120]', '13', '10', '{1: 170, 2: 187, 3: 204}', '{}', '2', '561']
+24 processed_data["actual_value"] = (valid_count * 4) | (protocol_sum & 0xF)
+24 ['header_flags', 'mask_flags', 'redundant_mask', 'processed_data', 'valid_count', 'protocol_sum'] ['[86, 188, 18, 120]', '13', '10', '{actual_value: 9}', '2', '561']
+27 final_computation = (processed_data.get("actual_value") << 2) | (mask_flags ^ redundant_mask)
+27 ['header_flags', 'mask_flags', 'redundant_mask', 'processed_data', 'final_computation'] ['[86, 188, 18, 120]', '13', '10', '{actual_value: 9}', '39']
+28 critical_result = final_computation - (len(header_flags) // 2)
+28 ['header_flags', 'final_computation', 'critical_result'] ['[86, 188, 18, 120]', '39', '37']

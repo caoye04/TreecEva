@@ -1,79 +1,43 @@
-import re
-from collections import deque
+def compute_data_checksum(data_points):
+    # Initial processing - irrelevant for final result
+    temp_buffer = [x * 2 for x in data_points if x % 3 == 0]
+    offset_calc = sum(temp_buffer) // len(temp_buffer) if temp_buffer else 0
+    
+    # Main computation path
+    valid_entries = [x for x in data_points if x > 0]
+    checksum_candidates = []
+    
+    for entry in valid_entries:
+        # Distractor: intermediate calculations that don't affect final result
+        parity_check = entry & 0x01
+        if parity_check:
+            checksum_candidates.append(entry * 3 - 7)
+        else:
+            checksum_candidates.append(entry + 15)
+    
+    # Final computation
+    if checksum_candidates:
+        base_sum = sum(checksum_candidates[:len(checksum_candidates)//2])
+        adjustment = sum(checksum_candidates[len(checksum_candidates)//2:]) % 100
+        final_sum = base_sum + adjustment
+    else:
+        final_sum = -999  # Dead code path
+    
+    # More irrelevant computations
+    redundant_calc = offset_calc * 2 + 5
+    dummy_var = redundant_calc // 3
+    
+    return final_sum
 
-class PlantNode:
-    def __init__(self, genome_hash, left=None, right=None, parent=None):
-        self.genome_hash = genome_hash
-        self.left = left
-        self.right = right
-        self.parent = parent
+# Main execution
+raw_data = [12, 7, 4, 9, 15, 2, 8, 11, 6]
 
-def calculate_genetic_distance(ancestor, descendant):
-    distance = 0
-    current = descendant
-    while current != ancestor and current is not None:
-        distance += 1
-        current = current.parent
-    return distance if current == ancestor else -1
+# Distractor: multiple variable assignments
+preliminary_sum = sum(raw_data)
+filtered_data = [x for x in raw_data if x % 2 == 1]
+processed_data = [x + 2 for x in raw_data[:5]]
 
-def hash_genome_sequence(sequence):
-    return hash(sequence) % 1000000
+# Key statement
+result = compute_data_checksum(processed_data)
 
-def classify_species_variants(node_list):
-    pattern = re.compile(r'^(ATG)([CGAT]{3})*(TAA|TAG|TGA)$')
-    valid_genomes = [node for node in node_list if pattern.match(str(node.genome_hash))]
-    return len(valid_genomes)
-
-# Create plant lineage tree
-root = PlantNode(hash_genome_sequence('ATGCCCTAA'))
-node2 = PlantNode(hash_genome_sequence('ATGCCGTAAG'), parent=root)
-node3 = PlantNode(hash_genome_sequence('ATGCCGTAAT'), parent=root)
-node4 = PlantNode(hash_genome_sequence('ATGCCGTAAA'), parent=node2)
-node5 = PlantNode(hash_genome_sequence('ATGCCGTACA'), parent=node2)
-node6 = PlantNode(hash_genome_sequence('ATGCCGTAGA'), parent=node3)
-
-root.left = node2
-root.right = node3
-node2.left = node4
-node2.right = node5
-node3.left = node6
-
-# Process lineage data
-all_nodes = [root, node2, node3, node4, node5, node6]
-genetic_marker_sets = [
-    {node.genome_hash % 100 for node in all_nodes if node.genome_hash % 3 == 0},
-    {node.genome_hash % 100 for node in all_nodes if node.genome_hash % 5 == 0},
-    {node.genome_hash % 100 for node in all_nodes if node.genome_hash % 7 == 0}
-]
-
-# Find common genetic markers
-common_markers = set.intersection(*genetic_marker_sets)
-
-# Calculate lineage distances using BFS
-queue = deque([(root, 0)])
-total_distance = 0
-visited = set()
-
-while queue:
-    node, depth = queue.popleft()
-    if node.genome_hash not in visited:
-        visited.add(node.genome_hash)
-        total_distance += depth
-        if node.left:
-            node.left.parent = node
-            queue.append((node.left, depth + 1))
-        if node.right:
-            node.right.parent = node
-            queue.append((node.right, depth + 1))
-
-# Apply species classification
-valid_species_count = classify_species_variants(all_nodes)
-
-# Compute final classification score
-final_classification_score = (
-    len(common_markers) * 100 +
-    total_distance * 10 +
-    valid_species_count
-) ^ (root.genome_hash % 100)
-
-print(f'Result: {final_classification_score}')
+print(f"Target result: {result}")

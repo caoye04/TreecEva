@@ -1,0 +1,55 @@
+Target: Find the value of variable final_output after [line 59] executes
+
+[line 45]  base_sequence = [15, 22, 8, 34, 12, 19, 27]
+Compute: [15, 22, 8, 34, 12, 19, 27] = [15, 22, 8, 34, 12, ...]
+[line 46]  validation_flags = [True, False, True, True, False, True, True]
+Compute: [True, False, True, True, False, True, True] = [True, False, True, True, False, ...]
+[line 56]  result_aggregator = process_data_stream(base_sequence, validation_flags)
+Call function process_data_stream(base_sequence=[15, 22, 8, 34, 12, ...] (defined at [line 45]), validation_flags=[True, False, True, True, False, ...] (defined at [line 46]))
+[line 7]  temp_sum = 0
+Assign: temp_sum = 0
+[line 8]  count_valid = 0
+Assign: count_valid = 0
+[line 13]  for idx, (data, is_valid) in enumerate(zip(stream, mask)):
+(Missing param: 'iter_var')
+[line 14]  if is_valid:
+Condition: True, entering 'if' block
+[line 16]  temp_sum += data * (idx + 1)
+Update: temp_sum changed from 0 (defined at defined at [line 7]) to 0+data * (idx + 1) = 15
+[line 17]  count_valid += 1
+Update: count_valid changed from 0 (defined at defined at [line 8]) to 0+1 = 1
+[line 21]  if idx > len(stream) + 5:
+Condition: True, entering 'if' block
+[line 13]  for idx, (data, is_valid) in enumerate(zip(stream, mask)):
+(Missing param: 'iter_var')
+[line 14]  if is_valid:
+Condition: True, entering 'if' block
+[line 25]  temp_sum -= idx * 2
+Update: temp_sum changed from 15 (defined at defined at [line 16]) to 15-idx * 2 = 13
+... [Line 13] repeats 4 more times ...
+... [Line 13] repeats 4 more times ...
+... [Line 13] repeats 4 more times ...
+... [Line 13] repeats 4 more times ...
+... [Line 13] repeats 4 more times ...
+[line 13]  for idx, (data, is_valid) in enumerate(zip(stream, mask)):
+(Missing param: 'iter_var')
+[line 14]  if is_valid:
+Condition: True, entering 'if' block
+[line 16]  temp_sum += data * (idx + 1)
+Update: temp_sum changed from 279 (defined at defined at [line 25]) to 279+data * (idx + 1) = 468
+[line 17]  count_valid += 1
+Update: count_valid changed from 4 (defined at defined at [line 17]) to 4+1 = 5
+[line 21]  if idx > len(stream) + 5:
+Condition: True, entering 'if' block
+[line 13]  for idx, (data, is_valid) in enumerate(zip(stream, mask)):
+Loop End: Iteration finished
+[line 34]  weighted_average = temp_sum / count_valid if count_valid else 0
+Compute: temp_sum / count_valid if count_valid else 0, where temp_sum=468 (defined at [line 16]), count_valid=5 (defined at [line 17]) = 93.6
+[line 37]  result = int((weighted_average * 7) % 256)
+Call function int((weighted_average * 7) % 256)
+[line 42]  return result
+Return: result=143 (defined at [line 37])
+[line 59]  final_output = (result_aggregator ^ 0b10101010) & 0xFF
+Compute: (result_aggregator ^ 0b10101010) & 0xFF, where result_aggregator=143 (defined at [line 56]) = 37
+
+Answer: final_output = 37 (last updated on defined at [line 59])

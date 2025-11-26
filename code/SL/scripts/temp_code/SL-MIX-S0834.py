@@ -1,29 +1,34 @@
-import re
-from functools import reduce
+def analyze_string_patterns(words, patterns):
+    character_frequency = {}
+    irrelevant_count = 0
+    
+    # Process patterns first (distractor)
+    for pattern in patterns:
+        irrelevant_count += len(pattern)
+    
+    # Main analysis: find words containing exactly 2 pattern characters
+    valid_words = []
+    for word in words:
+        matching_chars = set(word) & set(patterns)
+        if len(matching_chars) == 2:
+            valid_words.append(word)
+            # Count character frequencies in valid words
+            for char in word:
+                character_frequency[char] = character_frequency.get(char, 0) + 1
+    
+    # Calculate target value based on frequency analysis
+    target_value = 0
+    for word in valid_words:
+        for char in word:
+            if char in patterns:
+                target_value += character_frequency.get(char, 0)
+    
+    # Final irrelevant computation (doesn't affect result)
+    dummy_calc = irrelevant_count * 3 - len(valid_words)
+    
+    print(f"Target result: {target_value}")
+    return target_value
 
-def process_feedback(feedback_entries):
-    # Extract numeric sentiment values using regex
-    sentiment_values = [int(re.search(r'value:(-?\d+)', entry).group(1)) for entry in feedback_entries]
-    
-    # Filter out neutral sentiments (0 values)
-    non_zero_sentiments = list(filter(lambda x: x != 0, sentiment_values))
-    
-    # Square each sentiment value
-    squared_sentiments = list(map(lambda x: x**2, non_zero_sentiments))
-    
-    # Sum all squared values
-    final_sentiment_score = reduce(lambda a, b: a + b, squared_sentiments, 0)
-    
-    return final_sentiment_score
-
-# Sample feedback entries with encoded sentiment values
-feedback_data = [
-    "FeedbackID:001|value:3|type:positive",
-    "FeedbackID:002|value:0|type:neutral",
-    "FeedbackID:003|value:-2|type:negative",
-    "FeedbackID:004|value:4|type:positive",
-    "FeedbackID:005|value:0|type:neutral"
-]
-
-final_sentiment_score = process_feedback(feedback_data)
-print(f"Result: {final_sentiment_score}")
+word_list = ['python', 'program', 'logic', 'analysis', 'pattern', 'computation']
+pattern_chars = {'a', 'o', 'n'}
+result_analysis = analyze_string_patterns(word_list, pattern_chars)

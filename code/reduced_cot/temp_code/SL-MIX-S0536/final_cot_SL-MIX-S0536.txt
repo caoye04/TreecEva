@@ -1,0 +1,30 @@
+Target: Find the value of variable final_composite after [line 50] executes
+
+[line 37]  input_data = [25, 18, 42, 7, 33, 29, 56, 11]
+Compute: [25, 18, 42, 7, 33, 29, 56, 11] = [25, 18, 42, 7, 33, ...]
+[line 38]  offset_sequence = [8, 15, 22, 9, 14]
+Compute: [8, 15, 22, 9, 14] = [8, 15, 22, 9, 14]
+[line 46]  processed_data = analyze_data_patterns(input_data)
+Call function analyze_data_patterns(input_data=[25, 18, 42, 7, 33, ...] (defined at [line 37]))
+[line 13]  relevant_values = [x for x in data_stream if x > 15 and x < 45]
+Compute: [x for x in data_stream if x > 15 and x < 45], where x=25 (an unknown source), data_stream=[25, 18, 42, 7, 33, ...] (an unknown source) = ?
+[line 14]  if len(relevant_values) >= 2:
+Condition: True, entering 'if' block
+[line 15]  sorted_relevant = sorted(relevant_values)
+Call function sorted(relevant_values=[25, 18, 42, 33, 29] (defined at [line 13]))
+[line 17]  core_metric = (sorted_relevant[-1] - sorted_relevant[0]) * 3
+Compute: (sorted_relevant[-1] - sorted_relevant[0]) * 3, where sorted_relevant=[18, 25, 29, 33, 42] (defined at [line 15]) = 72
+[line 18]  return core_metric
+Return: core_metric=72 (defined at [line 17])
+[line 47]  scaling_factor = calculate_scaling(offset_sequence)
+Call function calculate_scaling(offset_sequence=[8, 15, 22, 9, 14] (defined at [line 38]))
+[line 31]  if len(offset_values) > 3:
+Condition: True, entering 'if' block
+[line 32]  scaling = (offset_values[1] + offset_values[3]) // 2
+Compute: (offset_values[1] + offset_values[3]) // 2, where offset_values=[8, 15, 22, 9, 14] (an unknown source) = 12
+[line 33]  return scaling
+Return: scaling=12 (defined at [line 32])
+[line 50]  final_composite = processed_data * scaling_factor
+Compute: processed_data * scaling_factor, where processed_data=72 (defined at [line 46]), scaling_factor=12 (defined at [line 47]) = 864
+
+Answer: final_composite = 864 (last updated on defined at [line 50])

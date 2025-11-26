@@ -1,35 +1,45 @@
-import math
-from collections import defaultdict
+def checksum_operations():
+    from collections import Counter
+    
+    # Data processing pipeline
+    raw_data = [17, 42, 8, 33, 56, 29, 71, 14, 91, 5]
+    irrelevant_set = {x % 10 for x in raw_data}
+    
+    # Distractor computations
+    temp_sum = sum(raw_data) + 100  # Misleading sum
+    filtered_data = [x for x in raw_data if x > 25 and x < 80]
+    
+    # Main logic chain
+    processed_values = []
+    for i, val in enumerate(raw_data):
+        if i % 2 == 0:
+            processed_values.append(val * 2 + 1)
+        else:
+            processed_values.append(val // 2 + 3)
+    
+    # More distractions
+    dummy_counter = Counter(processed_values)
+    max_freq = max(dummy_counter.values()) if dummy_counter else 0
+    
+    # Key computation
+    bit_ops_result = 0
+    for val in processed_values:
+        bit_ops_result ^= (val & 0xFF)
+        bit_ops_result = (bit_ops_result << 1) | (bit_ops_result >> 7)
+    
+    # Final calculation
+    sorted_unique = sorted(set(processed_values))
+    checksum_base = sum(sorted_unique[-3:]) - sum(sorted_unique[:3])
+    
+    # Answer variable
+    final_checksum = (bit_ops_result & 0xFFFF) + checksum_base
+    
+    # Dead code path
+    if max_freq > 5:
+        unused_result = final_checksum * 2  # Never executed
+    
+    print(f"Target result: {final_checksum}")
+    return final_checksum
 
-def calculate_priority(base_val, position):
-    match position % 4:
-        case 0:
-            return base_val << 2
-        case 1:
-            return base_val >> 1
-        case 2:
-            return base_val ^ 0xF
-        case 3:
-            return ~base_val & 0xFF
-
-def adjust_with_trig(score, index):
-    return int(score * math.sin(index) + math.cos(index * 2))
-
-packages = [12, 25, 8, 33, 19, 42, 7]
-processed_scores = []
-score_map = defaultdict(int)
-
-for i, pkg in enumerate(packages):
-    priority = calculate_priority(pkg, i)
-    adjusted = adjust_with_trig(priority, i)
-    processed_scores.append(adjusted)
-    score_map[i] = adjusted
-
-# Dynamic programming to find optimal loading sequence
-n = len(processed_scores)
-dp = [0] * (n + 1)
-for i in range(1, n + 1):
-    dp[i] = max(dp[i-1], dp[i-2] + processed_scores[i-1]) if i > 1 else processed_scores[i-1]
-
-final_loading_score = dp[n] + (sum(packages) & 0x7)
-print(f"Result: {final_loading_score}")
+# Execute the main function
+checksum_operations()

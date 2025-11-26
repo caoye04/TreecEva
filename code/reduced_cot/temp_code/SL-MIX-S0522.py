@@ -1,34 +1,19 @@
-import heapq
-from collections import defaultdict
-import math
+def analyze_sensor_readings(readings):
+    filtered_readings = [r for r in readings if r > 50 and r % 2 == 0]
+    sensor_sum = sum(filtered_readings)
+    
+    # Configuration parameters
+    calibration_offset = 12
+    scaling_factor = 2.5
+    
+    # Main computation
+    base_value = sensor_sum + calibration_offset
+    adjusted_value = base_value * scaling_factor
+    final_computation = adjusted_value // 10
+    
+    target_result = final_computation
+    print(f"Result: {target_result}")
 
-def compute_entropy(freq_map):
-    total = sum(freq_map.values())
-    entropy = 0.0
-    for freq in freq_map.values():
-        if freq > 0:
-            p = freq / total
-            entropy -= p * math.log2(p)
-    return entropy
-
-packet_sizes = [128, 64, 128, 256, 64, 128, 512, 256, 128]
-frequency_map = defaultdict(int)
-max_heap = []
-
-for size in packet_sizes:
-    frequency_map[size] += 1
-    heapq.heappush(max_heap, -size)  # Max heap using negative values
-
-base_entropy = compute_entropy(frequency_map)
-unique_sizes = len(frequency_map)
-smoothing_factor = 0.1 if unique_sizes < 5 else 0.05
-
-# Extract top 3 largest packet sizes
-largest_packets = []
-for _ in range(min(3, len(max_heap))):
-    largest_packets.append(-heapq.heappop(max_heap))
-
-entropy_adjustment = sum(largest_packets) * smoothing_factor / 1000
-adjusted_entropy = base_entropy + entropy_adjustment
-
-print(f"Result: {adjusted_entropy:.6f}")
+# Test data
+sensor_data = [45, 62, 78, 33, 54, 91, 68, 29]
+analyze_sensor_readings(sensor_data)

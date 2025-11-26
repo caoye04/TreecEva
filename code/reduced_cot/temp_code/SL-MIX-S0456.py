@@ -1,52 +1,50 @@
-from collections import defaultdict
-from itertools import permutations
-from functools import wraps
-import time
-
-def timing_decorator(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        result = func(*args, **kwargs)
-        end = time.time()
-        wrapper.execution_time = end - start
-        return result
-    return wrapper
-
-class ResourceContext:
-    def __enter__(self):
-        self.resource_data = defaultdict(int)
-        return self.resource_data
+def calculate_performance(employee_data):
+    base_score = 75
+    irrelevant_bonus = 42
+    misleading_multiplier = 1.5
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+    # Distractor operations with strings
+    employee_names = ['alice', 'bob', 'charlie', 'diana']
+    name_lengths = [len(name.upper()) for name in employee_names]
+    total_chars = sum(name_lengths)
+    
+    # Relevant logic starts here
+    performance_scores = []
+    for i, employee in enumerate(employee_data):
+        base = employee['hours'] * 2
+        quality_bonus = employee['quality'] * 3
+        score = base + quality_bonus
+        
+        # Distractor condition that never executes
+        if score > 1000:
+            score = score * misleading_multiplier
+        
+        performance_scores.append(score)
+    
+    # More distractor operations with sets
+    unique_scores = set(performance_scores)
+    score_difference = max(unique_scores) - min(unique_scores) if unique_scores else 0
+    
+    # Relevant computation
+    final_score = sum(performance_scores)
+    scaling_factor = 1.25
+    
+    # Dead code path - unused variable
+    unused_adjustment = final_score / len(employee_data) if employee_data else 0
+    
+    # Target operation
+    target_result = final_score * scaling_factor
+    
+    # Final distractor that doesn't affect result
+    misleading_total = total_chars * irrelevant_bonus
+    
+    print(f"Target result: {target_result}")
 
-@timing_decorator
-def compute_similarity(tokens1, tokens2):
-    # Compute similarity as number of common permutations of length 2
-    perms1 = set(permutations(tokens1, 2))
-    perms2 = set(permutations(tokens2, 2))
-    return len(perms1.intersection(perms2))
-
-documents = [
-    "machine learning algorithms",
-    "deep learning neural networks",
-    "reinforcement learning agents"
+# Test data
+employee_records = [
+    {'hours': 40, 'quality': 8},
+    {'hours': 35, 'quality': 9},
+    {'hours': 45, 'quality': 7}
 ]
 
-tokenized_docs = [doc.split() for doc in documents]
-
-aggregate_score = 0
-
-with ResourceContext() as resources:
-    for i in range(len(tokenized_docs)):
-        for j in range(i+1, len(tokenized_docs)):
-            score = compute_similarity(tokenized_docs[i], tokenized_docs[j])
-            aggregate_score += score * (i+j)
-            resources[f'doc_pair_{i}_{j}'] = score
-
-# Apply correction factor based on decorator timing
-if hasattr(compute_similarity, 'execution_time'):
-    aggregate_score = int(aggregate_score / (compute_similarity.execution_time * 1000 + 1))
-
-print(f"Result: {aggregate_score}")
+calculate_performance(employee_records)

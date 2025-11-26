@@ -1,0 +1,24 @@
+Target: Find the value of variable final_score after [line 25] executes
+
+[line 3]  processed_data = {}
+Compute: {} = {}
+[line 6]  valid_points = [x for x in data_points if x > 0]
+Compute: [x for x in data_points if x > 0], where x=12 (an unknown source), data_points=[12, 25, 8, 45, 3, ...] (an unknown source) = ?
+[line 7]  processed_data["valid_count"] = len(valid_points)
+(Missing param: 'func_name')
+[line 10]  temp_sum = sum(valid_points)
+Call function sum(valid_points=[12, 25, 8, 45, 3, ...] (defined at [line 6]))
+[line 11]  processed_data["avg_valid"] = temp_sum / processed_data["valid_count"] if valid_points else 0
+(Missing param: 'result')
+[line 14]  max_point = max(data_points) if data_points else 0
+Compute: max(data_points) if data_points else 0, where data_points=[12, 25, 8, 45, 3, ...] (an unknown source) = 55
+[line 15]  min_point = min(data_points) if data_points else 0
+Compute: min(data_points) if data_points else 0, where data_points=[12, 25, 8, 45, 3, ...] (an unknown source) = 2
+[line 16]  range_factor = (max_point - min_point) % 5
+Compute: (max_point - min_point) % 5, where max_point=55 (defined at [line 14]), min_point=2 (defined at [line 15]) = 3
+[line 22]  adjustment_factor = range_factor * 3 if len(data_points) > 3 else 2
+Compute: range_factor * 3 if len(data_points) > 3 else 2, where range_factor=3 (defined at [line 16]), data_points=[12, 25, 8, 45, 3, ...] (an unknown source) = 9
+[line 25]  final_score = processed_data["valid_count"] + adjustment_factor
+Compute: processed_data["valid_count"] + adjustment_factor, where processed_data={valid_count: 10, avg_valid: 20.7} (defined at [line 3]), adjustment_factor=9 (defined at [line 22]) = 19
+
+Answer: final_score = 19 (last updated on defined at [line 25])

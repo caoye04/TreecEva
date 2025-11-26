@@ -1,34 +1,40 @@
-import heapq
-from collections import defaultdict
+def process_inventory(items):
+    # Distractor: calculate total items (not used in final result)
+    total_items = sum(items.values())
+    
+    # Main logic: filter items with quantity > 5
+    filtered_items = {k: v for k, v in items.items() if v > 5}
+    
+    # Distractor: create a sorted list of keys (not used directly)
+    sorted_keys = sorted(filtered_items.keys())
+    
+    # Apply lambda function to process quantities
+    process_quantity = lambda x: x * 2 - 3
+    processed_data = {k: process_quantity(v) for k, v in filtered_items.items()}
+    
+    # Distractor: calculate average (not used in final result)
+    avg_quantity = sum(processed_data.values()) / len(processed_data) if processed_data else 0
+    
+    # Key slicing operation to get specific keys
+    filtered_keys = list(processed_data.keys())[1:3]
+    
+    # Final target calculation
+    final_quantity = processed_data[filtered_keys[1]]
+    
+    # Distractor: additional unused calculation
+    potential_max = max(processed_data.values()) if processed_data else 0
+    
+    print(f"Result: {final_quantity}")
+    return final_quantity
 
-def calculate_packet_checksum(events):
-    checksum_heap = []
-    event_tracker = defaultdict(int)
-    
-    for i, event in enumerate(events):
-        # Update tracker with XOR of event and its position
-        event_tracker[i] = event ^ (i << 2)
-        
-        # Push negative value for max-heap behavior
-        heapq.heappush(checksum_heap, -((event & 0xF) | ((i & 0x3) << 4)))
-        
-        # Every third event, adjust with XOR of heap top
-        if (i + 1) % 3 == 0:
-            top_val = -heapq.heappop(checksum_heap)
-            adjustment = top_val ^ event_tracker[i-1]
-            heapq.heappush(checksum_heap, -adjustment)
-    
-    # Final checksum calculation
-    primary_checksum = 0
-    while checksum_heap:
-        val = -heapq.heappop(checksum_heap)
-        primary_checksum ^= val
-    
-    # Apply final transformation
-    final_integrity_checksum = (primary_checksum >> 1) & 0xFF
-    return final_integrity_checksum
+# Main execution
+inventory = {
+    'widget_a': 8,
+    'widget_b': 3,
+    'widget_c': 12,
+    'widget_d': 6,
+    'widget_e': 15
+}
 
-# Network events data
-network_events = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F, 0x70, 0x81]
-final_integrity_checksum = calculate_packet_checksum(network_events)
-print(f"Result: {final_integrity_checksum}")
+result = process_inventory(inventory)
+print(f"Target result: {result}")

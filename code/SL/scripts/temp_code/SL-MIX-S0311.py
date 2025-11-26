@@ -1,40 +1,40 @@
-from functools import reduce
+import itertools
 
-def transform_identifier(traffic_id):
-    # Convert hex to integer
-    numeric_id = int(traffic_id, 16)
+def account_processor(transactions):
+    # Distractor: complex-looking but ultimately unused calculations
+    base_balance = 1000
+    fee_multiplier = 1.05
+    monthly_charges = [25, 15, 30, 20]
     
-    # Apply bitwise transformations
-    step1 = numeric_id ^ 0xFFFF  # XOR with mask
-    step2 = (step1 >> 4) & 0x0FFF  # Right shift and mask
+    # Misleading intermediate results
+    processed_fees = sum(monthly_charges) * fee_multiplier
+    adjusted_base = base_balance - processed_fees
     
-    # Create mapping dictionaries
-    hex_mapping = {hex(i)[-1]: i for i in range(16)}
-    transformed_mapping = {k: v*3 + 7 for k, v in hex_mapping.items()}
-    merged_dict = {**hex_mapping, **transformed_mapping}
+    # Relevant processing logic
+    valid_transactions = [tx for tx in transactions if tx > 0]
+    grouped_transactions = itertools.groupby(valid_transactions, key=lambda x: x // 100)
     
-    # Apply logical conditions
-    condition_a = (step2 & 0x0F00) != 0
-    condition_b = (step2 & 0x00F0) > 0x10
-    condition_c = not (step2 & 0x000F == 0)
+    # Dead code path
+    if len(valid_transactions) > 10:
+        bonus_amount = 50
+        adjusted_base += bonus_amount
     
-    # Functional transformation
-    hex_chars = [c for c in hex(step2)[2:].upper()]
-    mapped_values = list(map(lambda x: merged_dict.get(x, 0), hex_chars))
-    filtered_values = list(filter(lambda x: x > 10, mapped_values))
+    # Core calculation
+    transaction_total = sum(valid_transactions)
+    balance_adjustment = transaction_total - (len(valid_transactions) * 2)
     
-    # Calculate security score
-    base_score = reduce(lambda x, y: x + y, filtered_values, 0) if filtered_values else 0
+    # Final calculation (this is the relevant one)
+    final_result = base_balance + balance_adjustment
     
-    # Apply final logical combination
-    if condition_a and (condition_b or condition_c):
-        final_security_score = base_score * 2 + 0x100
-    else:
-        final_security_score = base_score // 2 - 0x50
+    # More distractions
+    unused_calculation = adjusted_base * 1.1
+    redundant_check = final_result if final_result > 500 else 500
     
-    return final_security_score
+    return final_result
 
-# Process the network traffic
-network_identifier = '0x3A7F'
-final_security_score = transform_identifier(network_identifier)
-print(f"Result: {final_security_score}")
+# Transaction data
+transaction_data = [150, 75, -25, 200, 50, -10, 125, 80, 175]
+
+# Process transactions
+final_balance = account_processor(transaction_data)
+print(f"Result: {final_balance}")

@@ -1,0 +1,16 @@
+Target: Find the value of variable data_quality_score after [line 21] executes
+
+[line 12]  processed_samples = [s * 2 if s > 50 else s + 10 for s in samples]
+Compute: [s * 2 if s > 50 else s + 10 for s in samples], where s=45 (an unknown source), samples=[45, 67, 89, 23, 78, ...] (an unknown source) = ?
+[line 13]  processed_total = sum(processed_samples)
+Call function sum(processed_samples=[55, 134, 178, 33, 156, ...] (defined at [line 12]))
+[line 16]  error_count = sum(1 for s in samples if s < 30)
+Call function sum(1 for s in samples if s < 30)
+[line 17]  correction_factor = error_count * 15
+Compute: error_count * 15, where error_count=2 (defined at [line 16]) = 30
+[line 18]  error_correction = correction_factor if error_count > 0 else 25
+Compute: correction_factor if error_count > 0 else 25, where correction_factor=30 (defined at [line 17]), error_count=2 (defined at [line 16]) = 30
+[line 21]  data_quality_score = processed_total - error_correction
+Compute: processed_total - error_correction, where processed_total=1097 (defined at [line 13]), error_correction=30 (defined at [line 18]) = 1067
+
+Answer: data_quality_score = 1067 (last updated on defined at [line 21])

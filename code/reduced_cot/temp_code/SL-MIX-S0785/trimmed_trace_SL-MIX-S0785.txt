@@ -1,0 +1,43 @@
+39
+processing_timestamp
+---
+33 threshold = 15
+33 ['log_entries', 'threshold'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '15']
+34 offset_factor = 2.5
+34 ['log_entries', 'threshold', 'offset_factor'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '15', '2.5']
+38 processing_timestamp = final_time_calculation(log_entries, threshold, offset_factor)
+38 ['log_entries', 'threshold', 'offset_factor'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '15', '2.5']
+5 valid_entries = [entry for entry in log_data if entry['duration'] > cutoff]
+5 ['log_data', 'cutoff', 'multiplier', 'entry'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '15', '2.5', "{timestamp: 1654321000, duration: 45, type: 'api'}"]
+5 valid_entries = [entry for entry in log_data if entry['duration'] > cutoff]
+5 ['log_data', 'cutoff', 'multiplier', 'entry'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '15', '2.5', "{timestamp: 1654321500, duration: 12, type: 'batch'}"]
+5 valid_entries = [entry for entry in log_data if entry['duration'] > cutoff]
+5 ['log_data', 'cutoff', 'multiplier', 'entry'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '15', '2.5', "{timestamp: 1654322000, duration: 28, type: 'api'}"]
+5 valid_entries = [entry for entry in log_data if entry['duration'] > cutoff]
+5 ['log_data', 'cutoff', 'multiplier', 'entry'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '15', '2.5', "{timestamp: 1654322500, duration: 8, type: 'cron'}"]
+5 valid_entries = [entry for entry in log_data if entry['duration'] > cutoff]
+5 ['log_data', 'cutoff', 'multiplier', 'entry'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '15', '2.5', "{timestamp: 1654323000, duration: 52, type: 'batch'}"]
+5 valid_entries = [entry for entry in log_data if entry['duration'] > cutoff]
+5 ['log_data', 'cutoff', 'multiplier', 'valid_entries'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '15', '2.5', "[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]"]
+6 sorted_entries = sorted(valid_entries, key=lambda x: x['timestamp'], reverse=True)
+6 ['log_data', 'multiplier', 'valid_entries'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '2.5', "[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]"]
+6 sorted_entries = sorted(valid_entries, key=lambda x: x['timestamp'], reverse=True)
+6 ['x'] ["{timestamp: 1654321000, duration: 45, type: 'api'}"]
+6 sorted_entries = sorted(valid_entries, key=lambda x: x['timestamp'], reverse=True)
+6 ['x'] ["{timestamp: 1654322000, duration: 28, type: 'api'}"]
+6 sorted_entries = sorted(valid_entries, key=lambda x: x['timestamp'], reverse=True)
+6 ['x'] ["{timestamp: 1654323000, duration: 52, type: 'batch'}"]
+8 timing_offset = multiplier * 1000
+8 ['log_data', 'multiplier', 'valid_entries', 'sorted_entries', 'timing_offset'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '2.5', "[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", "[{timestamp: 1654323000, duration: 52, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654321000, duration: 45, type: 'api'}]", '2500.0']
+11 if len(sorted_entries) > 0:
+11 ['log_data', 'multiplier', 'valid_entries', 'sorted_entries', 'timing_offset'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '2.5', "[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", "[{timestamp: 1654323000, duration: 52, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654321000, duration: 45, type: 'api'}]", '2500.0']
+12 primary_timestamp = sorted_entries[0]['timestamp']
+12 ['log_data', 'multiplier', 'valid_entries', 'sorted_entries', 'timing_offset', 'primary_timestamp'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '2.5', "[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", "[{timestamp: 1654323000, duration: 52, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654321000, duration: 45, type: 'api'}]", '2500.0', '1654323000']
+15 adjustment_factor = len(log_data) - len(valid_entries)
+15 ['log_data', 'multiplier', 'valid_entries', 'timing_offset', 'primary_timestamp', 'adjustment_factor'] ["[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '2.5', "[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654323000, duration: 52, type: 'batch'}]", '2500.0', '1654323000', '2']
+18 result = primary_timestamp - (adjustment_factor * multiplier) + timing_offset
+18 ['multiplier', 'timing_offset', 'primary_timestamp', 'adjustment_factor', 'result'] ['2.5', '2500.0', '1654323000', '2', '1654325495.0']
+23 return result
+23 ['result'] ['1654325495.0']
+39 print(f"Result: {processing_timestamp}")
+39 ['processing_timestamp'] ['1654325495.0']

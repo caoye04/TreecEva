@@ -1,66 +1,33 @@
-import re
-from contextlib import contextmanager
-from dataclasses import dataclass
-from typing import Set
+import collections
 
-def hash_string(s: str) -> int:
-    return hash(s) % 1000000
+def analyze_student_grades(student_records, passing_grade):
+    grade_counter = collections.Counter()
+    processed_grades = []
+    temp_calculations = []
+    
+    for record in student_records:
+        adjusted_grade = record + 2
+        temp_calculations.append(adjusted_grade * 0.5)
+        if record >= passing_grade:
+            grade_counter['pass'] += 1
+            processed_grades.append(record * 1.1)
+        else:
+            grade_counter['fail'] += 1
+            processed_grades.append(record * 0.9)
+    
+    irrelevant_sum = sum(temp_calculations)
+    bonus_points = len([g for g in student_records if g > 85])
+    
+    if grade_counter['pass'] > grade_counter['fail']:
+        base_score = sum(processed_grades) / len(processed_grades)
+    else:
+        base_score = sum(student_records) / len(student_records)
+    
+    final_score = round(base_score + bonus_points, 2)
+    return final_score
 
-@contextmanager
-def hash_tracker():
-    matched_hashes: Set[int] = set()
-    try:
-        yield matched_hashes
-    finally:
-        pass
+grades_data = [78, 92, 65, 88, 71, 95, 82, 69, 87, 74]
+threshold = 75
 
-@dataclass
-class PasswordEntry:
-    username: str
-    password_hash: int
-    is_compromised: bool = False
-
-# Password database
-password_entries = [
-    PasswordEntry("admin", hash_string("password123")),
-    PasswordEntry("user1", hash_string("qwerty")),
-    PasswordEntry("guest", hash_string("guest123")),
-    PasswordEntry("dev", hash_string("devpass!")),
-]
-
-# Common weak password patterns
-weak_patterns = [r"password", r"qwerty", r"123", r"admin", r"guest"]
-
-# Known compromised hashes
-compromised_hashes = {hash_string("password123"), hash_string("qwerty"), hash_string("123456")}
-
-vulnerability_score = 0
-
-with hash_tracker() as tracked:
-    for entry in password_entries:
-        # Check if hash is in compromised set
-        if entry.password_hash in compromised_hashes:
-            entry.is_compromised = True
-            vulnerability_score += 10
-            tracked.add(entry.password_hash)
-        
-        # Check for pattern matches
-        pattern_match = False
-        for pattern in weak_patterns:
-            if re.search(pattern, entry.username, re.IGNORECASE):
-                pattern_match = True
-                break
-        
-        # Apply scoring logic
-        if entry.is_compromised and not pattern_match:
-            vulnerability_score += 5
-        elif not entry.is_compromised and pattern_match:
-            vulnerability_score += 3
-        elif entry.is_compromised and pattern_match:
-            vulnerability_score += 7
-        
-        # Additional check for admin accounts
-        if entry.username == "admin" and entry.is_compromised:
-            vulnerability_score *= 2
-
-print(f"Result: {vulnerability_score}")
+result = analyze_student_grades(grades_data, threshold)
+print(f"Result: {result}")

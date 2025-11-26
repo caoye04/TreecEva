@@ -1,0 +1,28 @@
+14 cart_total = 650
+14 ['cart_total'] [{'_type': 'int', '_value': 650}]
+15 membership_level = 'silver'
+15 ['cart_total', 'membership_level'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}]
+16 final_pricing = apply_discounts(cart_total, membership_level)
+16 ['cart_total', 'membership_level'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}]
+PARAM_MAPPING apply_discounts {'base_total': {'actual_var': 'cart_total', 'value': 650}, 'membership': {'actual_var': 'membership_level', 'value': 'silver'}}
+FUNCTION_ENTER 1 apply_discounts def apply_discounts(base_total, membership):
+1 ['base_total', 'membership'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}]
+DEPTH_2 2     tier_multipliers = {'bronze': 0.95, 'silver': 0.90, 'gold': 0.85}
+2 ['base_total', 'membership', 'tier_multipliers'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}, {'_type': 'dict', '_items': {'bronze': {'_type': 'float', '_value': 0.95}, 'silver': {'_type': 'float', '_value': 0.9}, 'gold': {'_type': 'float', '_value': 0.85}}, '_len': 3}]
+DEPTH_2 3     base_discount = tier_multipliers.get(membership, 1.0)
+3 ['base_total', 'membership', 'tier_multipliers', 'base_discount'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}, {'_type': 'dict', '_items': {'bronze': {'_type': 'float', '_value': 0.95}, 'silver': {'_type': 'float', '_value': 0.9}, 'gold': {'_type': 'float', '_value': 0.85}}, '_len': 3}, {'_type': 'float', '_value': 0.9}]
+DEPTH_2 4     adjusted_total = base_total * base_discount
+4 ['base_total', 'membership', 'tier_multipliers', 'base_discount', 'adjusted_total'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}, {'_type': 'dict', '_items': {'bronze': {'_type': 'float', '_value': 0.95}, 'silver': {'_type': 'float', '_value': 0.9}, 'gold': {'_type': 'float', '_value': 0.85}}, '_len': 3}, {'_type': 'float', '_value': 0.9}, {'_type': 'float', '_value': 585.0}]
+DEPTH_2 7     if base_total > 500:
+7 ['base_total', 'membership', 'tier_multipliers', 'base_discount', 'adjusted_total'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}, {'_type': 'dict', '_items': {'bronze': {'_type': 'float', '_value': 0.95}, 'silver': {'_type': 'float', '_value': 0.9}, 'gold': {'_type': 'float', '_value': 0.85}}, '_len': 3}, {'_type': 'float', '_value': 0.9}, {'_type': 'float', '_value': 585.0}]
+DEPTH_2 8         bulk_reduction = adjusted_total * 0.05
+8 ['base_total', 'membership', 'tier_multipliers', 'base_discount', 'adjusted_total', 'bulk_reduction'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}, {'_type': 'dict', '_items': {'bronze': {'_type': 'float', '_value': 0.95}, 'silver': {'_type': 'float', '_value': 0.9}, 'gold': {'_type': 'float', '_value': 0.85}}, '_len': 3}, {'_type': 'float', '_value': 0.9}, {'_type': 'float', '_value': 585.0}, {'_type': 'float', '_value': 29.25}]
+DEPTH_2 9         adjusted_total -= bulk_reduction
+9 ['base_total', 'membership', 'tier_multipliers', 'base_discount', 'adjusted_total', 'bulk_reduction'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}, {'_type': 'dict', '_items': {'bronze': {'_type': 'float', '_value': 0.95}, 'silver': {'_type': 'float', '_value': 0.9}, 'gold': {'_type': 'float', '_value': 0.85}}, '_len': 3}, {'_type': 'float', '_value': 0.9}, {'_type': 'float', '_value': 555.75}, {'_type': 'float', '_value': 29.25}]
+DEPTH_2 11     total_discount = base_total - adjusted_total
+11 ['base_total', 'membership', 'tier_multipliers', 'base_discount', 'adjusted_total', 'bulk_reduction', 'total_discount'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}, {'_type': 'dict', '_items': {'bronze': {'_type': 'float', '_value': 0.95}, 'silver': {'_type': 'float', '_value': 0.9}, 'gold': {'_type': 'float', '_value': 0.85}}, '_len': 3}, {'_type': 'float', '_value': 0.9}, {'_type': 'float', '_value': 555.75}, {'_type': 'float', '_value': 29.25}, {'_type': 'float', '_value': 94.25}]
+DEPTH_2 12     return total_discount
+12 ['base_total', 'membership', 'tier_multipliers', 'base_discount', 'adjusted_total', 'bulk_reduction', 'total_discount'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}, {'_type': 'dict', '_items': {'bronze': {'_type': 'float', '_value': 0.95}, 'silver': {'_type': 'float', '_value': 0.9}, 'gold': {'_type': 'float', '_value': 0.85}}, '_len': 3}, {'_type': 'float', '_value': 0.9}, {'_type': 'float', '_value': 555.75}, {'_type': 'float', '_value': 29.25}, {'_type': 'float', '_value': 94.25}]
+FUNCTION_RETURN 12 apply_discounts {'_type': 'float', '_value': 94.25}
+17 print(f"Result: {final_pricing}")
+17 ['cart_total', 'membership_level', 'final_pricing'] [{'_type': 'int', '_value': 650}, {'_type': 'str', '_value': 'silver'}, {'_type': 'float', '_value': 94.25}]

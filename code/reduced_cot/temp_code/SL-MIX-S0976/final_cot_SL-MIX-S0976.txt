@@ -1,0 +1,42 @@
+Target: Find the value of variable final_balance after [line 26] executes
+
+[line 2]  initial_balance = 2500
+Assign: initial_balance = 2500
+[line 3]  transactions = [150, -80, 200, -120, 75, -45]
+Compute: [150, -80, 200, -120, 75, -45] = [150, -80, 200, -120, 75, ...]
+[line 4]  processing_fee_rate = 0.02
+Assign: processing_fee_rate = 0.02
+[line 5]  reconciliation_threshold = 100
+Assign: reconciliation_threshold = 100
+[line 8]  processed_transactions = [txn * (1 - processing_fee_rate) for txn in transactions if abs(txn) > reconciliation_threshold]
+Compute: [txn * (1 - processing_fee_rate) for txn in transactions if abs(txn) > reconciliation_threshold], where txn=150 (an unknown source), processing_fee_rate=0.02 (defined at [line 4]), transactions=[150, -80, 200, -120, 75, ...] (defined at [line 3]), reconciliation_threshold=100 (defined at [line 5]) = ?
+[line 13]  for txn in transactions:
+Loop Start: txn takes its first value 150
+[line 13]  for txn in transactions:
+Loop End: Iteration finished
+[line 13]  for txn in transactions:
+Loop End: Iteration finished
+[line 13]  for txn in transactions:
+Loop End: Iteration finished
+[line 13]  for txn in transactions:
+Loop End: Iteration finished
+[line 13]  for txn in transactions:
+Loop End: Iteration finished
+[line 13]  for txn in transactions:
+Loop End: Iteration finished
+[line 18]  processed_operations = [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))]
+Compute: [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))], where initial_balance=2500 (defined at [line 2]), processed_transactions=[147.0, 196.0, -117.6] (defined at [line 8]), i=0 (an unknown source) = ?
+[line 18]  processed_operations = [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))]
+Compute: [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))], where initial_balance=2500 (defined at [line 2]), processed_transactions=[147.0, 196.0, -117.6] (defined at [line 8]), i=1 (an unknown source) = ?
+[line 18]  processed_operations = [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))]
+Compute: [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))], where initial_balance=2500 (defined at [line 2]), processed_transactions=[147.0, 196.0, -117.6] (defined at [line 8]), i=2 (an unknown source) = ?
+[line 18]  processed_operations = [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))]
+Compute: [initial_balance + sum(processed_transactions[:i+1]) for i in range(len(processed_transactions))], where initial_balance=2500 (defined at [line 2]), processed_transactions=[147.0, 196.0, -117.6] (defined at [line 8]), i=2 (an unknown source) = [2647.0, 2843.0, 2725.4]
+[line 21]  total_processed = sum(processed_transactions)
+Call function sum(processed_transactions=[147.0, 196.0, -117.6] (defined at [line 8]))
+[line 23]  adjustment_factor = total_processed - sum(transactions)
+Compute: total_processed - sum(transactions), where total_processed=225.4 (defined at [line 21]), transactions=[150, -80, 200, -120, 75, ...] (defined at [line 3]) = 45.400000000000006
+[line 26]  final_balance = processed_operations[-1] + adjustment_factor
+Compute: processed_operations[-1] + adjustment_factor, where processed_operations=[2647.0, 2843.0, 2725.4] (defined at [line 18]), adjustment_factor=45.400000000000006 (defined at [line 23]) = 2770.8
+
+Answer: final_balance = 2770.8 (last updated on defined at [line 26])

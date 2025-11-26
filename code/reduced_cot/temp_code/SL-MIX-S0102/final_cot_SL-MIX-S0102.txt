@@ -1,6 +1,42 @@
-Target: Find the value of variable encoded_sum after [line 6] executes
+Target: Find the value of variable final_result after [line 37] executes
 
-[line 6]  encoded_sum = 0
-Assign: encoded_sum = 0
+[line 5]  processed_segments = []
+Compute: [] = []
+[line 6]  for segment in text_segments:
+Loop Start: segment takes its first value 'python3'
+[line 6]  for segment in text_segments:
+Loop End: Iteration finished
+[line 6]  for segment in text_segments:
+Loop End: Iteration finished
+[line 6]  for segment in text_segments:
+Loop End: Iteration finished
+[line 6]  for segment in text_segments:
+Loop End: Iteration finished
+[line 6]  for segment in text_segments:
+Loop End: Iteration finished
+[line 12]  combined_chars = set()
+Call function set()
+[line 13]  for segment_set in processed_segments:
+Loop Start: segment_set takes its first value {'p', 'h', 't', 'o', 'n', ...}
+[line 13]  for segment_set in processed_segments:
+Loop Iteration: segment_set is now {'a', 'i', 'r', 'p', 'o', ...} (iteration 2)
+... [Line 13] repeats 2 more times ...
+... [Line 13] repeats 2 more times ...
+[line 13]  for segment_set in processed_segments:
+Loop Iteration: segment_set is now {'a', 'b', 'r', 'h', 'c', ...} (iteration 5)
+[line 13]  for segment_set in processed_segments:
+Loop End: Iteration finished
+[line 20]  processed_set_count = len(processed_segments) * len(combined_chars)
+Compute: len(processed_segments) * len(combined_chars), where processed_segments=[{'p', 'h', 't', 'o', 'n', ...}, {'a', 'i', 'r', 'p', 'o', ...}, {'a', 'g', 'h', 'c', 'n', ...}, {'a', 'v', 'i', 't', 'o', ...}, {'a', 'b', 'r', 'h', 'c', ...}] (defined at [line 5]), combined_chars={'i', 'o', 'n', '3', 'u', ...} (defined at [line 12]) = 95
+[line 23]  vowels = {'a', 'e', 'i', 'o', 'u'}
+Compute: {'a', 'e', 'i', 'o', 'u'} = {'a', 'o', 'i', 'u', 'e'}
+[line 24]  remaining_chars = combined_chars - vowels
+Compute: combined_chars - vowels, where combined_chars={'i', 'o', 'n', '3', 'u', ...} (defined at [line 12]), vowels={'a', 'o', 'i', 'u', 'e'} (defined at [line 23]) = {'v', 'b', 'g', 'p', 'h', ...}
+[line 32]  if len(remaining_chars) > 50:
+Condition: True, entering 'if' block
+[line 36]  adjustment_factor = (len(remaining_chars) % 7) + 1
+Compute: (len(remaining_chars) % 7) + 1, where remaining_chars={'v', 'b', 'g', 'p', 'h', ...} (defined at [line 24]) = 1
+[line 37]  final_result = processed_set_count % len(remaining_chars) + adjustment_factor
+Compute: processed_set_count % len(remaining_chars) + adjustment_factor, where processed_set_count=95 (defined at [line 20]), remaining_chars={'v', 'b', 'g', 'p', 'h', ...} (defined at [line 24]), adjustment_factor=1 (defined at [line 36]) = 12
 
-Answer: encoded_sum = 0 (last updated on defined at [line 6])
+Answer: final_result = 12 (last updated on defined at [line 37])

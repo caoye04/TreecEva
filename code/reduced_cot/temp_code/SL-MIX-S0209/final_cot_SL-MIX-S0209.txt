@@ -1,40 +1,53 @@
-Target: Find the value of variable final_metric after [line 26] executes
+Target: Find the value of variable final_balance after [line 58] executes
 
-[line 11]  data_stream = [3, 7, 2, 9, 1, 8, 4, 6, 5]
-Compute: [3, 7, 2, 9, 1, 8, 4, 6, 5] = [3, 7, 2, 9, 1, ...]
-[line 12]  threshold_filter = lambda x: x > 4
-Compute: lambda x: x > 4 = ?
-[line 13]  transformer = lambda x: x * 2 if x % 2 == 0 else x + 1
-Compute: lambda x: x * 2 if x % 2 == 0 else x + 1 = ?
-[line 8]  wrapper.calls = 0
-(Missing param: 'var')
-[line 9]  return wrapper
-Return: wrapper
-[line 22]  processed_data = process_chunk(data_stream)
-Call function process_chunk(data_stream=[3, 7, 2, 9, 1, ...] (defined at [line 11]))
-[line 7]  return func(*args, **kwargs)
-Return: func(*args, **kwargs)
-[line 17]  squared_values = map(lambda val: val**2, chunk)
-Call function map(lambda val: val**2, chunk=[3, 7, 2, 9, 1, ...] (an unknown source))
-[line 18]  filtered_mask = map(threshold_filter, squared_values)
-Call function map(threshold_filter, squared_values=<map object at 0x000001D3DC6474F0> (defined at [line 17]))
-[line 19]  selected_items = list(compress(squared_values, filtered_mask))
-Call function list(compress(squared_values, filtered_mask))
-[line 20]  return selected_items
-Return: selected_items=[9, 4, 1, 16] (defined at [line 19])
-[line 23]  transformed_values = list(map(transformer, processed_data))
-Call function list(map(transformer, processed_data))
-[line 24]  sorted_values = sorted(transformed_values, reverse=True)
-Call function sorted(transformed_values, reverse=True)
-[line 26]  final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-Call function reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values=[32, 10, 8, 2] (defined at [line 24]), 0)
-[line 26]  final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-Call function reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values=[32, 10, 8, 2] (defined at [line 24]), 0)
-[line 26]  final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-Call function reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-[line 26]  final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-Call function reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-[line 26]  final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-Call function reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
+[line 40]  principal = 10000
+Assign: principal = 10000
+[line 45]  market_conditions = {'volatility_index': 1.2, 'leverage': 2}
+Compute: {'volatility_index': 1.2, 'leverage': 2} = {volatility_index: 1.2, leverage: 2}
+[line 3]  total_volume = sum(transaction_log.values()) * 0.85
+Compute: sum(transaction_log.values()) * 0.85, where transaction_log={BTC: 10000, ETH: 8000} (an unknown source) = 15300.0
+[line 5]  market_cap = assets.get('bitcoin', 0) * 45000 + assets.get('ethereum', 0) * 3000
+Compute: assets.get('bitcoin', 0) * 45000 + assets.get('ethereum', 0) * 3000, where assets={bitcoin: 2, ethereum: 5} (an unknown source) = 105000
+[line 6]  return market_cap + total_volume
+Return: market_cap + total_volume
+[line 52]  final_balance = apply_crypto_operations(principal, operations_data, market_conditions)
+Call function apply_crypto_operations(principal=10000 (defined at [line 40]), operations_data={completed: {long: 5000, short: 3000}, pending: ['trade_A', 'trade_B']} (an unknown source), market_conditions={volatility_index: 1.2, leverage: 2} (defined at [line 45]))
+[line 8]  def apply_crypto_operations(principal, operations, conditions):
+Enter function apply_crypto_operations: principal=10000 (principal defined at [line 40]), operations={completed: {long: 5000, short: 3000}, pending: ['trade_A', 'trade_B']}, conditions={volatility_index: 1.2, leverage: 2} (market_conditions defined at [line 45])
+  [line 10]  volatility_multiplier = conditions.get('volatility_index', 1.0)
+  (Missing param: 'func_name')
+  [line 11]  leverage_factor = conditions.get('leverage', 1)
+  (Missing param: 'func_name')
+  [line 15]  pending_transactions = operations.get('pending', [])
+  (Missing param: 'func_name')
+  [line 16]  completed_trades = operations.get('completed', {})
+  (Missing param: 'func_name')
+  [line 19]  base_return = principal
+  Compute: principal, where principal=10000 (parameter principal defined at [line 40]) = 10000
+  [line 20]  for trade_type, amount in completed_trades.items():
+  (Missing param: 'iter_var')
+  [line 21]  if trade_type == 'long':
+  Condition: True, entering 'if' block
+  [line 22]  base_return += amount * 0.15 * leverage_factor
+  Update: base_return changed from 10000 (defined at defined at [line 19]) to 10000+amount * 0.15 * leverage_factor = 11500.0
+  [line 20]  for trade_type, amount in completed_trades.items():
+  (Missing param: 'iter_var')
+  [line 21]  if trade_type == 'long':
+  Condition: True, entering 'if' block
+  [line 23]  elif trade_type == 'short':
+  'elif' Condition: True, entering block
+  [line 24]  base_return -= amount * 0.12 * volatility_multiplier
+  Update: base_return changed from 11500.0 (defined at defined at [line 22]) to 11500.0-amount * 0.12 * volatility_multiplier = 11068.0
+  [line 20]  for trade_type, amount in completed_trades.items():
+  Loop End: Iteration finished
+  [line 31]  final_amount = base_return * volatility_multiplier
+  Compute: base_return * volatility_multiplier, where base_return=11068.0 (defined at [line 24]), volatility_multiplier=1.2 (an unknown source) = 13281.6
+  [line 34]  if len(pending_transactions) > 10:
+  Condition: True, entering 'if' block
+  [line 37]  return int(final_amount)
+  Return: int(final_amount)
+Function apply_crypto_operations returns 13281
+[line 58]  print(f"Target result: {final_balance}")
+Output: f"Target result: {final_balance}"
 
-Answer: final_metric = ? (last updated on defined at [line 26])
+Answer: final_balance = 13281 (last updated on defined at [line 52])

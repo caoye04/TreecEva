@@ -1,41 +1,40 @@
-from functools import reduce
-from itertools import combinations
-
-def modular_power(base, exp, mod):
-    return pow(base, exp, mod)
-
-def compute_coefficients(sequence):
-    # Generate all 2-element combinations and compute their products
-    combo_products = [a * b for a, b in combinations(sequence, 2)]
-    # Apply modular arithmetic to each product
-    mod_products = [p % 17 for p in combo_products]
-    # Sum all modular products
-    return sum(mod_products) % 17
-
-def transform_value(initial, coeffs):
-    # Apply a series of transformations using modular arithmetic
-    transformed = initial
-    for i, coeff in enumerate(coeffs):
-        transformed = (transformed * coeff + i) % 19
-    return transformed
-
-def cryptographic_hash(initial_value, data_sequence):
-    # Step 1: Compute coefficients from data sequence
-    coefficients = compute_coefficients(data_sequence)
+def compute_final_value(data_list):
+    # Initialize processing variables
+    temp_sum = 0
+    intermediate_result = 0
+    processed_count = 0
     
-    # Step 2: Generate a secondary transformation sequence
-    secondary_seq = [modular_power(x, 3, 13) for x in data_sequence]
+    # Process each element with zip and enumerate
+    for idx, (val_a, val_b) in enumerate(zip(data_list, [x * 2 for x in data_list])):
+        # Calculate intermediate values (some are relevant, some are distractors)
+        temp_product = val_a * val_b
+        temp_sum += temp_product
+        
+        # Distractor calculation that doesn't affect final result
+        unused_value = idx * 3 + temp_product % 7
+        
+        # Relevant logic with bitwise operations
+        if idx % 2 == 0:
+            intermediate_result |= (temp_product & 0xFF)
+        else:
+            intermediate_result ^= (temp_product >> 2)
+        
+        processed_count += 1
     
-    # Step 3: Apply transformations
-    interim_result = transform_value(initial_value, secondary_seq)
+    # Additional distractor operations
+    redundant_avg = temp_sum / len(data_list) if data_list else 0
+    normalized_value = redundant_avg * 0.5
     
-    # Step 4: Apply final transformation using coefficients
-    final_hash = (interim_result * coefficients + 7) % 23
-    
-    return final_hash
+    # Final computation using processed results
+    final_value = intermediate_result - (temp_sum % 256)
+    return final_value
 
-# Execution
-sensor_readings = [4, 7, 2, 9, 5]
-baseline_value = 11
-final_hash = cryptographic_hash(baseline_value, sensor_readings)
-print(f"Result: {final_hash}")
+# Main execution
+input_data = [12, 8, 15, 6, 20]
+secondary_data = [x + 3 for x in input_data]  # Distractor data not used
+
+# Process the data through multiple steps
+processed_data = [x | (x % 4) for x in input_data]
+final_output = compute_final_value(processed_data)
+
+print(f"Target result: {final_output}")

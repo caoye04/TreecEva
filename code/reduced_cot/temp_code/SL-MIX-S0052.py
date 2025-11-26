@@ -1,55 +1,57 @@
-import heapq
-from collections import deque
+def data_validator(records):
+    # Irrelevant metadata processing
+    file_header = [0xDE, 0xAD, 0xBE, 0xEF]
+    header_sum = sum(file_header)  # This is irrelevant distractor
+    
+    # Main data processing with misleading intermediate steps
+    temp_buffer = []
+    validation_flags = []
+    
+    for idx, record in enumerate(records):
+        # Misleading conditional that doesn't affect final result
+        if idx % 3 == 0:
+            validation_flags.append(record * 2)  # Dead code path
+        else:
+            temp_buffer.append(record)
+    
+    # Distractor calculations that look important
+    buffer_sum = sum(temp_buffer) * 17 % 256
+    
+    # Actual core logic with modular arithmetic
+    processed_data = []
+    for record in records:
+        # Key transformation using modular arithmetic
+        processed_val = (record * 7 + 13) % 100
+        processed_data.append(processed_val)
+    
+    # More irrelevant operations
+    debug_counter = len(validation_flags)  # Unused variable
+    
+    # Final checksum calculation (this is the actual answer)
+    checksum = 0
+    for val in processed_data:
+        checksum = (checksum + val) % 1000
+    
+    # Final irrelevant transformation that gets discarded
+    final_debug = (checksum + buffer_sum) % 500  # Misleading result
+    
+    return checksum
 
-def calculate_urgency(code):
-    return sum(ord(c) for c in code)
+# Initialize test data
+raw_measurements = [45, 23, 67, 89, 12, 34, 78, 56, 91, 14]
 
-def process_deliveries():
-    priority_queue = []
-    special_stack = []
-    
-    # Initial packages with encoded IDs
-    package_ids = ['X2K9', 'M4N1', 'Q8B3']
-    
-    # Encode and add to queue with calculated urgencies
-    for pid in package_ids:
-        urgency = calculate_urgency(pid)
-        heapq.heappush(priority_queue, (urgency, pid))
-    
-    # Special handling items added to stack
-    special_items = ['Z1H7', 'Y6G2']
-    for item in special_items:
-        special_stack.append(item)
-    
-    # Process one normal delivery
-    if priority_queue:
-        heapq.heappop(priority_queue)
-    
-    # Add more packages
-    new_packages = ['V3F5', 'U7E4']
-    for np in new_packages:
-        urgency = calculate_urgency(np)
-        heapq.heappush(priority_queue, (urgency, np))
-    
-    # Process special item if exists
-    special_code = 0
-    if special_stack:
-        item = special_stack.pop()
-        special_code = calculate_urgency(item)
-    
-    # Early return condition check
-    if len(priority_queue) > 3:
-        total = 0
-        while priority_queue:
-            total += heapq.heappop(priority_queue)[0]
-        return total + special_code
-    
-    # Final processing
-    score_accumulator = special_code
-    while priority_queue:
-        score_accumulator += heapq.heappop(priority_queue)[0]
-    
-    return score_accumulator
+# Irrelevant preprocessing steps
+calibration_offset = 17
+calibrated_data = [x + calibration_offset for x in raw_measurements]
 
-final_score = process_deliveries()
-print(f"Result: {final_score}")
+# More distraction - unused operations
+quality_metrics = [x * 0.5 for x in calibrated_data]
+
+# Actual processing
+processed_records = [x % 50 + 10 for x in calibrated_data]
+
+# Call the validator function
+final_checksum = data_validator(processed_records)
+
+# Print the result
+print(f"Result: {final_checksum}")

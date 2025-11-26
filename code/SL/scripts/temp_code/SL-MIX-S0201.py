@@ -1,40 +1,33 @@
-def process_text(input_string):
-    states = {'NORMAL': 0, 'ESCAPE': 1, 'HEX': 2}
-    current_state = states['NORMAL']
-    processed_length = 0
-    i = 0
+def calculate_product_quality(ratings):
+    base_scores = [rating * 2 for rating in ratings]
+    adjusted_scores = []
+    temp_calc = 0
     
-    while i < len(input_string):
-        char = input_string[i]
-        
-        if current_state == states['NORMAL']:
-            if char == '\\':
-                current_state = states['ESCAPE']
-            else:
-                processed_length += 1
-        elif current_state == states['ESCAPE']:
-            if char == 'x':
-                current_state = states['HEX']
-                i += 1  # Skip the 'x'
-                # Read two hex digits
-                hex_digits = input_string[i:i+2]
-                i += 1  # Move past first hex digit
-                # Convert hex to character (we just count it)
-                processed_length += 1
-            else:
-                # Invalid escape, treat as normal characters
-                processed_length += 2  # Backslash and the character
-                current_state = states['NORMAL']
-        elif current_state == states['HEX']:
-            # We've already processed the hex in the ESCAPE state
-            current_state = states['NORMAL']
-            continue  # Skip incrementing i as we've already moved
-        
-        i += 1
+    for i, score in enumerate(base_scores):
+        if i % 2 == 0:
+            adjusted = score + 5
+        else:
+            adjusted = score - 3
+        adjusted_scores.append(adjusted)
+        temp_calc += score * i  # This calculation doesn't affect final result
     
-    return processed_length
+    quality_ranges = {'high': 15, 'medium': 10, 'low': 5}
+    intermediate_check = quality_ranges.get('medium', 0)
+    
+    quality_assessment = []
+    for score in adjusted_scores:
+        if score > 12:
+            quality_assessment.append(score // 2)
+        else:
+            quality_assessment.append(score + 1)
+    
+    # Distractor operations that don't impact final result
+    dummy_analysis = [x for x in quality_assessment if x > 7]
+    verification_sum = sum(dummy_analysis)
+    
+    final_quality_score = quality_assessment[-1]
+    print(f"Target result: {final_quality_score}")
 
-# Process the input string
-input_text = 'Hello\\x41\\x42\\x43World'
-processed_length = process_text(input_text)
-print(f"Result: {processed_length}")
+# Test data
+product_ratings = [4, 7, 3, 9, 6]
+calculate_product_quality(product_ratings)

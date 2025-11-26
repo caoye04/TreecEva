@@ -1,23 +1,40 @@
-import re
-from collections import namedtuple
+import itertools
 
-# Define a LogEntry structure
-LogEntry = namedtuple('LogEntry', ['timestamp', 'ip_address', 'user_agent'])
+def compute_ranking_score(data_points):
+    # Distractor: unnecessary tuple operations
+    redundant_tuples = [(x, x*2) for x in range(5, 15)]
+    misleading_sum = sum(x[1] for x in redundant_tuples)
+    
+    # Main logic: process data with conditional expressions
+    filtered_data = [x if x % 3 != 0 else x // 2 for x in data_points]
+    sorted_data = sorted(filtered_data, reverse=True)
+    
+    # Distractor: dead code path with string operations
+    fake_metrics = "score:85,rank:3,tier:gold"
+    parsed_metrics = fake_metrics.split(',')
+    unused_score = int(parsed_metrics[0].split(':')[1])  # Dead code
+    
+    # Key computation: combinatorics with filtering
+    combinations = list(itertools.combinations(sorted_data[:4], 2))
+    valid_pairs = [pair for pair in combinations if abs(pair[0] - pair[1]) > 5]
+    
+    # Distractor: misleading intermediate calculation
+    distraction_value = len(valid_pairs) * misleading_sum // 10
+    
+    # Final score calculation
+    base_score = sum(sorted_data[:3])
+    bonus = len(valid_pairs) * 7
+    penalty = sum(1 for x in data_points if x % 4 == 0) * 3
+    
+    return base_score + bonus - penalty
 
-# Sample log entries
-log_entries = [
-    LogEntry('2023-05-15 10:23:01', '192.168.1.10', 'Mozilla/5.0'),
-    LogEntry('2023-05-15 10:25:12', '192.168.1.12', 'Chrome/90.0'),
-    LogEntry('2023-05-15 10:27:45', '10.0.0.5', 'Safari/14.0'),
-    LogEntry('2023-05-15 10:30:01', '192.168.1.10', 'Mozilla/5.0'),
-    LogEntry('2023-05-15 10:32:17', '192.168.2.15', 'Firefox/88.0'),
-    LogEntry('2023-05-15 10:35:22', '172.16.0.1', 'Edge/91.0')
-]
+# Main execution
+raw_data = [12, 8, 25, 17, 9, 31, 6, 19, 14, 27]
 
-# Extract IP addresses matching the pattern 192.168.x.x
-subnet_pattern = r'^192\.168\.\d{1,3}\.\d{1,3}$'
-suspicious_ips = {entry.ip_address for entry in log_entries if re.match(subnet_pattern, entry.ip_address)}
+# Distractor: irrelevant data processing
+processed_data = [x + 2 if x > 15 else x - 1 for x in raw_data]
+unused_calc = sum(processed_data[::2])  # Dead variable
 
-# Count unique device IPs
-unique_device_count = len(suspicious_ips)
-print(f'Result: {unique_device_count}')
+# Target computation
+final_score = compute_ranking_score(processed_data)
+print(f"Result: {final_score}")

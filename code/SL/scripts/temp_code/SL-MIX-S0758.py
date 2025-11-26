@@ -1,47 +1,51 @@
-from collections import deque
-import itertools
-
-def encode_nucleotide(nucleotide):
-    encoding_map = {'A': 0b00, 'T': 0b01, 'G': 0b10, 'C': 0b11}
-    return encoding_map[nucleotide]
-
-def decode_nucleotide(value):
-    decoding_map = {0b00: 'A', 0b01: 'T', 0b10: 'G', 0b11: 'C'}
-    return decoding_map[value]
-
-class DNAMutationProcessor:
-    def __init__(self, initial_strand):
-        self.nucleotide_sequence = deque([encode_nucleotide(n) for n in initial_strand])
-        self.mutation_stack = []
-        self.checksum = 0
+def calculate_network_efficiency(transmissions, sizes, limit):
+    # Distractor: unused network metrics
+    latency_stats = [45, 67, 89, 23, 156]
+    jitter_analysis = sum(latency_stats) * 0.1
     
-    def add_mutation_protocol(self, protocol_func):
-        self.mutation_stack.append(protocol_func)
+    # Relevant: packet filtering and processing
+    filtered_packets = [size for size in sizes if size > 64]
+    total_payload = sum(filtered_packets)
     
-    def process_mutations(self):
-        while self.mutation_stack:
-            protocol = self.mutation_stack.pop()
-            self.nucleotide_sequence = deque(protocol(list(self.nucleotide_sequence)))
-        
-    def calculate_checksum(self):
-        self.checksum = 0
-        for nucleotide_code in self.nucleotide_sequence:
-            self.checksum ^= nucleotide_code
-        return self.checksum
+    # Misleading: bandwidth calculation (distractor)
+    max_possible = limit * 1.25
+    bandwidth_utilization = (total_payload / max_possible) * 100
+    
+    # Relevant: transmission efficiency calculation
+    successful_transmissions = transmissions * 0.85  # 15% packet loss
+    efficiency_factor = successful_transmissions / len(filtered_packets)
+    
+    # Distractor: unused network optimization
+    compression_ratio = [0.6, 0.7, 0.8, 0.9]
+    optimal_compression = max(compression_ratio) * 1.1
+    
+    # Relevant: final throughput calculation
+    if total_payload > limit:
+        actual_throughput = limit * efficiency_factor
+    else:
+        actual_throughput = total_payload * efficiency_factor
+    
+    # More distractors: protocol overhead calculations
+    tcp_overhead = actual_throughput * 0.05
+    udp_loss_factor = actual_throughput * 0.03
+    
+    return actual_throughput
 
-# Initialize processor with DNA strand
-genome_processor = DNAMutationProcessor("ATGCATGC")
+# Main execution
+packet_sizes = [128, 256, 512, 64, 1024, 32, 768]
+transmission_count = 150
+bandwidth_limit = 50000
 
-# Define mutation protocols
-protocol_1 = lambda seq: [((x << 1) & 0b11) for x in seq]  # Bit shift left
-protocol_2 = lambda seq: [x ^ 0b10 for x in seq]           # XOR with 10
-protocol_3 = lambda seq: list(itertools.chain.from_iterable([[x, x] for x in seq]))  # Duplicate each
+# Distractor: unused network configuration
+network_latency = [25, 30, 35, 40]
+average_latency = sum(network_latency) / len(network_latency)
 
-# Apply protocols in reverse order of definition (stack behavior)
-genome_processor.add_mutation_protocol(protocol_3)
-genome_processor.add_mutation_protocol(protocol_2)
-genome_processor.add_mutation_protocol(protocol_1)
+# Key execution
+result = calculate_network_efficiency(transmission_count, packet_sizes, bandwidth_limit)
+final_throughput = round(result, 2)
 
-genome_processor.process_mutations()
-strand_checksum = genome_processor.calculate_checksum()
-print(f"Result: {strand_checksum}")
+# More distractors: quality metrics (unused)
+quality_scores = [8.5, 7.2, 9.1, 6.8]
+mean_quality = sum(quality_scores) / len(quality_scores)
+
+print(f"Target result: {final_throughput}")

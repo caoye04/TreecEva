@@ -1,64 +1,57 @@
-Target: Find the value of variable final_signal_strength after [line 39] executes
+Target: Find the value of variable final_balance after [line 49] executes
 
-[line 7]  wrapper.call_count = 0
-(Missing param: 'var')
-[line 8]  return wrapper
-Return: wrapper
-[line 7]  wrapper.call_count = 0
-(Missing param: 'var')
-[line 8]  return wrapper
-Return: wrapper
-[line 19]  frequency_bands = [[120, 180, 240], [95, 155, 215], [110, 170, 230]]
-Compute: [[120, 180, 240], [95, 155, 215], [110, 170, 230]] = [[120, 180, 240], [95, 155, 215], [110, 170, 230]]
-[line 23]  processed_signals = []
-Compute: [] = []
-[line 24]  for i in range(len(frequency_bands)):
-Loop Start: i takes its first value 0
-[line 25]  if i % 2 == 0:
-Condition: True, entering 'if' block
-[line 6]  return func(*args, **kwargs)
-Return: func(*args, **kwargs)
-[line 12]  return [math.floor(x * attenuation_factor) for x in band_data]
-Return: [math.floor(x * attenuation_factor) for x in band_data]
-[line 24]  for i in range(len(frequency_bands)):
-Loop Iteration: i is now 1 (iteration 2)
-[line 25]  if i % 2 == 0:
-Condition: True, entering 'if' block
-[line 6]  return func(*args, **kwargs)
-Return: func(*args, **kwargs)
-[line 16]  return list(map(lambda x: x if x > threshold else 0, signal_values))
-Return: list(map(lambda x: x if x > threshold else 0, signal_values))
-[line 16]  return list(map(lambda x: x if x > threshold else 0, signal_values))
-Return: list(map(lambda x: x if x > threshold else 0, signal_values))
-[line 16]  return list(map(lambda x: x if x > threshold else 0, signal_values))
-Return: list(map(lambda x: x if x > threshold else 0, signal_values))
-[line 16]  return list(map(lambda x: x if x > threshold else 0, signal_values))
-Return: list(map(lambda x: x if x > threshold else 0, signal_values))
-[line 24]  for i in range(len(frequency_bands)):
-Loop Iteration: i is now 2 (iteration 3)
-[line 25]  if i % 2 == 0:
-Condition: True, entering 'if' block
-[line 6]  return func(*args, **kwargs)
-Return: func(*args, **kwargs)
-[line 24]  for i in range(len(frequency_bands)):
-Loop End: Iteration finished
-[line 35]  for band_idx in range(len(processed_signals))
-(Missing param: 'iter_var')
-[line 35]  for band_idx in range(len(processed_signals))
-Loop End: Iteration finished
-[line 36]  if sum(processed_signals[band_idx]) > 0
-Condition: True, entering 'if' block
-[line 35]  for band_idx in range(len(processed_signals))
-(Missing param: 'iter_var')
-[line 36]  if sum(processed_signals[band_idx]) > 0
-Condition: True, entering 'if' block
-[line 35]  for band_idx in range(len(processed_signals))
-(Missing param: 'iter_var')
-[line 36]  if sum(processed_signals[band_idx]) > 0
-Condition: True, entering 'if' block
-[line 35]  for band_idx in range(len(processed_signals))
-Loop End: Iteration finished
-[line 39]  final_signal_strength = math.ceil(weighted_sum / (process_frequency_band.call_count + apply_noise_gate.call_count))
-(Missing param: 'func_name')
+[line 39]  initial_deposit = 7500
+Assign: initial_deposit = 7500
+[line 40]  monthly_contributions = 300
+Assign: monthly_contributions = 300
+[line 41]  interest_calculations = 12
+Assign: interest_calculations = 12
+[line 49]  final_balance = compute_final_balance(initial_deposit, monthly_contributions, interest_calculations)
+Call function compute_final_balance(initial_deposit=7500 (defined at [line 39]), monthly_contributions=300 (defined at [line 40]), interest_calculations=12 (defined at [line 41]))
+[line 3]  def compute_final_balance(principal, contributions, interest_ops):
+Enter function compute_final_balance: principal=7500 (initial_deposit defined at [line 39]), contributions=300 (monthly_contributions defined at [line 40]), interest_ops=12 (interest_calculations defined at [line 41])
+  [line 9]  monthly_rate = 0.008
+  Assign: monthly_rate = 0.008
+  [line 10]  balance = principal
+  Compute: principal, where principal=7500 (parameter principal defined at [line 39]) = 7500
+  [line 15]  for month in range(interest_ops):
+  Loop Start: month takes its first value 0
+  [line 17]  interest = balance * monthly_rate
+  Compute: balance * monthly_rate, where balance=7500 (defined at [line 10]), monthly_rate=0.008 (defined at [line 9]) = 60.0
+  [line 18]  balance += interest
+  Update: balance changed from 7500 (defined at defined at [line 10]) to 7500+interest = 7560.0
+  [line 19]  balance += contributions
+  Update: balance changed from 7560.0 (defined at defined at [line 18]) to 7560.0+contributions = 7860.0
+  [line 15]  for month in range(interest_ops):
+  Loop Iteration: month is now 1 (iteration 2)
+  [line 17]  interest = balance * monthly_rate
+  Compute: balance * monthly_rate, where balance=7860.0 (defined at [line 19]), monthly_rate=0.008 (defined at [line 9]) = 62.88
+  [line 18]  balance += interest
+  Update: balance changed from 7860.0 (defined at defined at [line 19]) to 7860.0+interest = 7922.88
+  [line 19]  balance += contributions
+  Update: balance changed from 7922.88 (defined at defined at [line 18]) to 7922.88+contributions = 8222.880000000001
+... [Line 15] repeats 9 more times ...
+... [Line 15] repeats 9 more times ...
+... [Line 15] repeats 9 more times ...
+... [Line 15] repeats 9 more times ...
+  [line 15]  for month in range(interest_ops):
+  Loop Iteration: month is now 11 (iteration 12)
+  [line 17]  interest = balance * monthly_rate
+  Compute: balance * monthly_rate, where balance=11622.263112327964 (defined at [line 19]), monthly_rate=0.008 (defined at [line 9]) = 92.97810489862371
+  [line 18]  balance += interest
+  Update: balance changed from 11622.263112327964 (defined at defined at [line 19]) to 11622.263112327964+interest = 11715.241217226589
+  [line 19]  balance += contributions
+  Update: balance changed from 11715.241217226589 (defined at defined at [line 18]) to 11715.241217226589+contributions = 12015.241217226589
+  [line 15]  for month in range(interest_ops):
+  Loop End: Iteration finished
+  [line 28]  final_adjustment = balance * 0.02 if balance > 10000 else balance * 0.01
+  Compute: balance * 0.02 if balance > 10000 else balance * 0.01, where balance=12015.241217226589 (defined at [line 19]) = 240.30482434453177
+  [line 29]  balance -= final_adjustment
+  Update: balance changed from 12015.241217226589 (defined at defined at [line 19]) to 12015.241217226589-final_adjustment = 11774.936392882057
+  [line 32]  if balance < principal:
+  Condition: True, entering 'if' block
+  [line 36]  return round(balance, 2)
+  Return: round(balance, 2)
+Function compute_final_balance returns 11774.94
 
-Answer: final_signal_strength = 527 (last updated on an unknown source)
+Answer: final_balance = 11774.94 (last updated on defined at [line 49])

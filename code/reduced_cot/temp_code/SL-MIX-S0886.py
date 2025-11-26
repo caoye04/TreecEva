@@ -1,64 +1,27 @@
-from functools import reduce
-from collections import defaultdict
+from collections import Counter
 
-def merge_sort_with_metadata(arr, metadata_map):
-    if len(arr) <= 1:
-        return arr
-    mid = len(arr) // 2
-    left = merge_sort_with_metadata(arr[:mid], metadata_map)
-    right = merge_sort_with_metadata(arr[mid:], metadata_map)
-    return merge_with_tracking(left, right, metadata_map)
+student_grades = [85, 92, 78, 96, 88, 91, 74, 89]
+# Distractor operations that don't affect the result
+grade_frequencies = Counter(student_grades)
+most_common_grade = grade_frequencies.most_common(1)[0][0]
 
-def merge_with_tracking(left, right, metadata_map):
-    result = []
-    i = j = 0
-    while i < len(left) and j < len(right):
-        if metadata_map[left[i]]['priority'] <= metadata_map[right[j]]['priority']:
-            result.append(left[i])
-            i += 1
-        else:
-            result.append(right[j])
-            j += 1
-    result.extend(left[i:])
-    result.extend(right[j:])
-    return result
+def calculate_weighted_sum(grades):
+    return sum(map(lambda x: x * 1.1, grades))
 
-class DeliveryContext:
-    def __init__(self):
-        self.package_registry = defaultdict(dict)
-    
-    def __enter__(self):
-        return self
-    
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
-    
-    def register_package(self, pkg_id, deadline, weight):
-        priority_score = (deadline << 2) ^ (weight & 0xF)
-        self.package_registry[pkg_id] = {
-            'deadline': deadline,
-            'weight': weight,
-            'priority': priority_score
-        }
-        return priority_score
+weighted_sum = calculate_weighted_sum(student_grades)
+avg_grade = sum(student_grades) / len(student_grades)
 
-# Main processing logic
-with DeliveryContext() as warehouse:
-    shipment_batch = ['PKG001', 'PKG002', 'PKG003', 'PKG004', 'PKG005', 'PKG006']
-    deadlines = [24, 12, 36, 6, 18, 48]
-    weights = [15, 8, 22, 5, 12, 30]
-    
-    # Register all packages and calculate priorities
-    for idx, pkg in enumerate(shipment_batch):
-        warehouse.register_package(pkg, deadlines[idx], weights[idx])
-    
-    # Sort packages by priority
-    sorted_packages = merge_sort_with_metadata(shipment_batch, warehouse.package_registry)
-    
-    # Count critical deliveries (priority > 100)
-    critical_delivery_count = reduce(
-        lambda count, pkg: count + (1 if warehouse.package_registry[pkg]['priority'] > 100 else 0),
-        sorted_packages, 0
-    )
+# Relevant computations for final score
+base_sum = sum(student_grades[:5])
+adjustment_factor = 1.05
+adjusted_sum = int(base_sum * adjustment_factor)
 
-print(f"Result: {critical_delivery_count}")
+# More distractor calculations
+temp_calc = (max(student_grades) - min(student_grades)) * 0.5
+threshold_check = len([g for g in student_grades if g > 85])
+
+penalty_points = 12
+bonus_credit = 25
+final_score = adjusted_sum - penalty_points + bonus_credit
+
+print(f"Result: {final_score}")

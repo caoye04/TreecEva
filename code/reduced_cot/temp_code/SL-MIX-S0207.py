@@ -1,52 +1,54 @@
-from collections import defaultdict
-import math
-
-def encode_triangulation(triangles):
-    encoded = 0
-    for i, triangle in enumerate(triangles):
-        # Simple encoding: sum of vertex indices shifted by position
-        value = sum(triangle) << (i % 8)
-        encoded ^= value
-    return encoded
-
-def greedy_triangulation(points):
-    # Sort points by x-coordinate (greedy choice)
-    points.sort(key=lambda p: p[0])
-    triangles = []
+def compute_product_quality(product_dict):
+    # Distractor variables and misleading computations
+    temp_adjustment = 15
+    base_factor = 7
+    weight_factor = 3
+    irrelevant_multiplier = 2
     
-    # Create triangles using consecutive triplets after sorting
-    for i in range(len(points) - 2):
-        triangle = (points[i][2], points[i+1][2], points[i+2][2])  # Use point IDs
-        triangles.append(tuple(sorted(triangle)))  # Normalize triangle representation
+    # Misleading intermediate calculation (unused)
+    misleading_total = sum(len(name) for name in product_dict.keys()) * base_factor
     
-    return triangles
+    # Dead code path that doesn't affect result
+    if misleading_total > 100:
+        dead_result = misleading_total // 2
+    else:
+        dead_result = misleading_total * 2
+    
+    # Main computation with list comprehension and set operations
+    quality_scores = [
+        (details['rating'] * weight_factor - temp_adjustment) 
+        for details in product_dict.values() 
+        if details.get('active', False)
+    ]
+    
+    # More distractor operations
+    distractor_set = set(range(len(quality_scores) * 2))
+    filtered_scores = {score for score in quality_scores if score > 0}
+    
+    # Irrelevant string manipulation
+    status_check = 'processed_' + str(len(product_dict))
+    
+    # Actual result computation
+    if filtered_scores:
+        final_score = sum(filtered_scores) * base_factor
+    else:
+        final_score = base_factor * weight_factor
+    
+    return final_score
 
-def calculate_elevation_stats(elevations):
-    total = sum(elevations)
-    count = len(elevations)
-    avg = total // count if count else 0
-    return avg
+# Main execution
+products_data = {
+    'widget_a': {'rating': 8, 'active': True},
+    'widget_b': {'rating': 6, 'active': False},
+    'widget_c': {'rating': 9, 'active': True},
+    'widget_d': {'rating': 7, 'active': True}
+}
 
-elevation_data = [
-    (10.5, 20.3, 1),   # (x, y, point_id)
-    (15.2, 25.1, 2),
-    (12.8, 22.7, 3),
-    (18.9, 30.4, 4),
-    (14.6, 24.8, 5),
-    (16.3, 26.9, 6)
-]
+# Distractor variable initialization
+initial_rating_sum = sum(p['rating'] for p in products_data.values())
+unused_calculation = initial_rating_sum * 3
 
-# Step 1: Calculate average elevation
-elevations = [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric
-avg_elevation = calculate_elevation_stats(elevations)
+# Key statement
+final_quality_score = compute_product_quality(products_data)
 
-# Step 2: Filter points above average (greedy filtering)
-filtered_points = [p for p in elevation_data if int(p[0]*p[1]) > avg_elevation]
-
-# Step 3: Generate triangulation
-triangulation_result = greedy_triangulation(filtered_points)
-
-# Step 4: Encode triangulation
-encoded_result = encode_triangulation(triangulation_result)
-
-print(f"Result: {encoded_result}")
+print(f"Result: {final_quality_score}")

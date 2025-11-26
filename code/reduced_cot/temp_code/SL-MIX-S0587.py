@@ -1,10 +1,8 @@
-import math
+from collections import Counter
 
-def lcm(a, b):
-    return abs(a * b) // math.gcd(a, b)
+text_sample = "programming assessment benchmark"
+character_frequency = Counter(text_sample)
+character_set = set(text_sample)
+unique_character_count = len(character_set)
 
-flour_required = 240
-dough_required = 360
-
-minimum_packages = lcm(flour_required, dough_required) // 120
-print(f'Result: {minimum_packages}')
+print(f"Result: {unique_character_count}")

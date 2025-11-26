@@ -1,56 +1,38 @@
-class PackageNode:
-    def __init__(self, weight, priority):
-        self.weight = weight
-        self.priority = priority
-        self.next = None
+def analyze_sensor_data(sensor_readings):
+    processed_samples = len(sensor_readings)
+    calibration_offset = 2.5
+    threshold = 15.0
+    
+    valid_count = 0
+    temp_sum = 0
+    max_reading = float('-inf')
+    
+    for i, reading in enumerate(sensor_readings):
+        # Apply calibration offset (distractor - not used in final result)
+        calibrated_reading = reading + calibration_offset
+        temp_sum += calibrated_reading
+        
+        # Check if reading exceeds threshold
+        if reading > threshold:
+            valid_count += 1
+        
+        # Track maximum reading (distractor - not used in final result)
+        if reading > max_reading:
+            max_reading = reading
+    
+    # Calculate average (distractor - not used in final result)
+    average_reading = temp_sum / processed_samples if processed_samples > 0 else 0
+    
+    # Calculate ratio of valid samples using conditional expression
+    final_ratio = valid_count / processed_samples if processed_samples > 0 else 0
+    
+    # Slicing operations to analyze first and last segments (distractors)
+    first_quarter = sensor_readings[:len(sensor_readings)//4]
+    last_quarter = sensor_readings[3*len(sensor_readings)//4:]
+    
+    print(f"Result: {final_ratio}")
+    return final_ratio
 
-def build_package_chain(weights, priorities):
-    head = PackageNode(weights[0], priorities[0])
-    current = head
-    for i in range(1, len(weights)):
-        current.next = PackageNode(weights[i], priorities[i])
-        current = current.next
-    return head
-
-def calculate_adjusted_priority(node):
-    adjustment_factor = 3
-    return (node.weight * 2 + node.priority) // adjustment_factor
-
-def update_chain_priorities(head):
-    current = head
-    while current:
-        current.priority = calculate_adjusted_priority(current)
-        current = current.next
-
-# Initialize package data
-package_weights = [15, 22, 18, 30]
-package_priorities = [4, 7, 5, 9]
-
-# Build the linked list
-logistics_chain = build_package_chain(package_weights, package_priorities)
-
-# Update priorities based on weight calculations
-update_chain_priorities(logistics_chain)
-
-# Dictionary comprehension to map weights to updated priorities
-priority_mapping = {node.weight: node.priority for node in [
-    logistics_chain, 
-    logistics_chain.next, 
-    logistics_chain.next.next, 
-    logistics_chain.next.next.next
-]}
-
-# Merge with base operational factors
-base_factors = {15: 2, 22: 3, 18: 1, 30: 4}
-merged_data = {**base_factors, **priority_mapping}
-
-# Lambda to compute final score
-compute_final_score = lambda mapping: sum(
-    (weight + priority) * 2 - 1 
-    for weight, priority in mapping.items()
-    if weight > 20
-)
-
-# Calculate the final priority score
-final_priority_score = compute_final_score(merged_data)
-print(f"Result: {final_priority_score}")
+# Test data
+sensor_data = [12.8, 18.2, 9.5, 22.1, 16.7, 25.3, 8.9, 19.6, 14.2, 27.8]
+result = analyze_sensor_data(sensor_data)

@@ -1,0 +1,18 @@
+Target: Find the value of variable final_output after [line 33] executes
+
+[line 9]  reading_counter = Counter(sensor_readings)
+Call function Counter(sensor_readings=[45, 67, 45, 89, 67, ...] (an unknown source))
+[line 10]  most_common_value = reading_counter.most_common(1)[0][0]
+Compute: reading_counter.most_common(1)[0][0], where reading_counter={45: 3, 67: 3, 89: 1, ...} (defined at [line 9]) = 45
+[line 20]  filtered_values = [x for x in sensor_readings if x > most_common_value]
+Compute: [x for x in sensor_readings if x > most_common_value], where x=45 (an unknown source), sensor_readings=[45, 67, 45, 89, 67, ...] (an unknown source), most_common_value=45 (defined at [line 10]) = ?
+[line 21]  if len(filtered_values) > 0:
+Condition: True, entering 'if' block
+[line 22]  processed_values = [x * 1.25 for x in filtered_values]
+Compute: [x * 1.25 for x in filtered_values], where x=67 (an unknown source), filtered_values=[67, 89, 67, 67, 91] (defined at [line 20]) = ?
+[line 23]  delta_adjustment = len(filtered_values) * 3.5
+Compute: len(filtered_values) * 3.5, where filtered_values=[67, 89, 67, 67, 91] (defined at [line 20]) = 17.5
+[line 33]  final_output = processed_values[2] + delta_adjustment
+Compute: processed_values[2] + delta_adjustment, where processed_values=[83.75, 111.25, 83.75, 83.75, 113.75] (defined at [line 22]), delta_adjustment=17.5 (defined at [line 23]) = 101.25
+
+Answer: final_output = 101.25 (last updated on defined at [line 33])

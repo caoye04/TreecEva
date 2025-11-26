@@ -1,58 +1,50 @@
-import math
-from collections import deque
+def calculate_parity(data_segment):
+    temp_xor = 0
+    for byte_val in data_segment:
+        temp_xor ^= byte_val
+    # Misleading intermediate calculation (distractor)
+    fake_sum = sum(data_segment) * 2
+    return temp_xor
 
-class PriceNode:
-    def __init__(self, price_change, next_node=None):
-        self.price_change = price_change
-        self.next = next_node
-
-def calculate_volatility(head_node):
-    volatility_stack = []
-    transaction_queue = deque()
-    volatility_score = 0.0
+def validate_data_integrity(data_blocks, parity_values):
+    # Irrelevant preprocessing step
+    irrelevant_offset = 17
+    processed_blocks = []
     
-    # Initialize queue with absolute values of changes
-    current = head_node
-    while current:
-        transaction_queue.append(abs(current.price_change))
-        current = current.next
-    
-    # Process transactions
-    while transaction_queue:
-        change = transaction_queue.popleft()
-        if change == 0:
-            continue
-        elif change < 0.5:
-            # Small change case - use linear scaling
-            scaled_change = change * 2
-            volatility_stack.append(scaled_change)
-        elif change >= 0.5 and change < 2.0:
-            # Medium change case - use logarithmic scaling
-            scaled_change = math.log(change + 1)
-            volatility_stack.append(scaled_change)
+    # Main logic with distractions
+    computed_checksum = 0
+    for block_idx, data_block in enumerate(data_blocks):
+        # Dead code path (never executed due to condition)
+        if block_idx > len(data_blocks) + 5:
+            unused_var = block_idx * 2
+            
+        # Actual relevant computation
+        block_parity = calculate_parity(data_block)
+        expected_parity = parity_values[block_idx]
+        
+        # Misleading intermediate calculation
+        fake_verification = (block_parity + expected_parity) * 3
+        
+        if block_parity == expected_parity:
+            computed_checksum += sum(data_block)
         else:
-            # Large change case - use exponential dampening
-            scaled_change = 1 - math.exp(-change)
-            volatility_stack.append(scaled_change)
+            # Red herring - this path is never taken in this data
+            computed_checksum -= block_idx * 10
+            
+    # Final adjustment with distractor
+    adjustment_factor = (len(data_blocks) % 4) * 7
+    final_result = computed_checksum + adjustment_factor
     
-    # Calculate final score
-    while volatility_stack:
-        value = volatility_stack.pop()
-        if value > 0.8:
-            volatility_score += value * 1.5
-        elif value > 0.3:
-            volatility_score += value
-        else:
-            volatility_score += value * 0.5
+    # Completely irrelevant calculation
+    dummy_calc = (adjustment_factor * 3) // 2
     
-    return round(volatility_score, 6)
+    return final_result
 
-# Create linked list: 0.1 -> 1.5 -> 3.0 -> 0.0 -> 0.75
-node5 = PriceNode(0.75)
-node4 = PriceNode(0.0, node5)
-node3 = PriceNode(3.0, node4)
-node2 = PriceNode(1.5, node3)
-node1 = PriceNode(0.1, node2)
+# Main execution with test data
+data_blocks = [[5, 12, 8, 3], [7, 9, 14, 6], [11, 4, 13, 2]]
+parity_set = [10, 6, 4]  # Calculated XOR values
 
-volatility_score = calculate_volatility(node1)
-print(f"Result: {volatility_score}")
+# Execute the key statement
+final_checksum = validate_data_integrity(data_blocks, parity_set)
+
+print(f"Result: {final_checksum}")

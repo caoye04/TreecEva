@@ -1,6 +1,10 @@
-Target: Find the value of variable suspicious_score after [line 20] executes
+Target: Find the value of variable final_result after [line 10] executes
 
-[line 20]  suspicious_score = 0
-Assign: suspicious_score = 0
+[line 1]  data_stream = [15, 28, 42, 57, 63, 71, 89, 94]
+Compute: [15, 28, 42, 57, 63, 71, 89, 94] = [15, 28, 42, 57, 63, ...]
+[line 4]  processed_items = [item // 3 for item in data_stream]
+Compute: [item // 3 for item in data_stream], where item=15 (an unknown source), data_stream=[15, 28, 42, 57, 63, ...] (defined at [line 1]) = ?
+[line 10]  final_result = processed_items[2] + processed_items[4]
+Compute: processed_items[2] + processed_items[4], where processed_items=[5, 9, 14, 19, 21, ...] (defined at [line 4]) = 35
 
-Answer: suspicious_score = 0 (last updated on defined at [line 20])
+Answer: final_result = 35 (last updated on defined at [line 10])

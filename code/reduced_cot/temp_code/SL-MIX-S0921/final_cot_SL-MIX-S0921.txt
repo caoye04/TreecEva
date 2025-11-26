@@ -1,0 +1,38 @@
+Target: Find the value of variable final_capacity after [line 33] executes
+
+[line 5]  storage_units = [8, 16, 32, 64, 128, 256, 512]
+Compute: [8, 16, 32, 64, 128, 256, 512] = [8, 16, 32, 64, 128, ...]
+[line 6]  capacity_log = []
+Compute: [] = []
+[line 8]  for unit in storage_units:
+Loop Start: unit takes its first value 8
+[line 9]  if unit >= 32:
+Condition: True, entering 'if' block
+[line 8]  for unit in storage_units:
+Loop Iteration: unit is now 16 (iteration 2)
+[line 9]  if unit >= 32:
+Condition: True, entering 'if' block
+... [Line 8] repeats 4 more times ...
+... [Line 8] repeats 4 more times ...
+[line 8]  for unit in storage_units:
+Loop Iteration: unit is now 512 (iteration 7)
+[line 9]  if unit >= 32:
+Condition: True, entering 'if' block
+[line 8]  for unit in storage_units:
+Loop End: Iteration finished
+[line 16]  temp_buffer = sum(capacity_log) * 0.25  # Misleading intermediate
+Compute: sum(capacity_log) * 0.25  # Misleading intermediate, where capacity_log=[16, 32, 8, 16, 32, ...] (defined at [line 6]) = 74.0
+[line 20]  base_capacity = storage_units[3]  # 64
+Compute: storage_units[3]  # 64, where storage_units=[8, 16, 32, 64, 128, ...] (defined at [line 5]) = 64
+[line 21]  redundancy_factor = len([x for x in storage_units if x > 100])  # 3
+Call function len([x for x in storage_units if x > 100])
+[line 28]  effective_storage = base_capacity - (redundancy_factor * 8)
+Compute: base_capacity - (redundancy_factor * 8), where base_capacity=64 (defined at [line 20]), redundancy_factor=3 (defined at [line 21]) = 40
+[line 29]  scaling_factor = (effective_storage % 20) + 2
+Compute: (effective_storage % 20) + 2, where effective_storage=40 (defined at [line 28]) = 2
+[line 30]  buffer_overflow = temp_buffer // 4  # Actually relevant
+Compute: temp_buffer // 4  # Actually relevant, where temp_buffer=74.0 (defined at [line 16]) = 18.0
+[line 33]  final_capacity = effective_storage * scaling_factor - buffer_overflow
+Compute: effective_storage * scaling_factor - buffer_overflow, where effective_storage=40 (defined at [line 28]), scaling_factor=2 (defined at [line 29]), buffer_overflow=18.0 (defined at [line 30]) = 62.0
+
+Answer: final_capacity = 62.0 (last updated on defined at [line 33])

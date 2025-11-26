@@ -1,40 +1,39 @@
-def process_text(input_string):
-    states = {'NORMAL': 0, 'ESCAPE': 1, 'HEX': 2}
-    current_state = states['NORMAL']
-    processed_length = 0
-    i = 0
+def evaluate_performance(data_strings):
+    quality_scores = []
+    efficiency_values = []
     
-    while i < len(input_string):
-        char = input_string[i]
+    for data_str in data_strings:
+        # Calculate quality score based on string length and content
+        base_quality = len(data_str.strip())
+        vowel_count = sum(1 for char in data_str.lower() if char in 'aeiou')
+        quality_score = base_quality * 2 + vowel_count
+        quality_scores.append(quality_score)
         
-        if current_state == states['NORMAL']:
-            if char == '\\':
-                current_state = states['ESCAPE']
-            else:
-                processed_length += 1
-        elif current_state == states['ESCAPE']:
-            if char == 'x':
-                current_state = states['HEX']
-                i += 1  # Skip the 'x'
-                # Read two hex digits
-                hex_digits = input_string[i:i+2]
-                i += 1  # Move past first hex digit
-                # Convert hex to character (we just count it)
-                processed_length += 1
-            else:
-                # Invalid escape, treat as normal characters
-                processed_length += 2  # Backslash and the character
-                current_state = states['NORMAL']
-        elif current_state == states['HEX']:
-            # We've already processed the hex in the ESCAPE state
-            current_state = states['NORMAL']
-            continue  # Skip incrementing i as we've already moved
-        
-        i += 1
+        # Calculate efficiency (distractor - not used in final result)
+        digit_count = sum(1 for char in data_str if char.isdigit())
+        efficiency = digit_count * 3
+        efficiency_values.append(efficiency)
     
-    return processed_length
+    # Process quality scores
+    max_quality = max(quality_scores) if quality_scores else 0
+    min_quality = min(quality_scores) if quality_scores else 0
+    quality_range = max_quality - min_quality
+    
+    # Calculate final metrics
+    quality_score = sum(quality_scores) // len(quality_scores) if quality_scores else 0
+    efficiency_bonus = 5 if quality_range > 10 else 2
+    multiplier = 3 if max_quality > 25 else 1
+    
+    # Distractor calculations that don't affect final result
+    unused_metric = sum(efficiency_values) * 2
+    temp_adjustment = len(data_strings) * 4
+    
+    # Key calculation
+    final_score = (quality_score + efficiency_bonus) * multiplier
+    
+    print(f"Target result: {final_score}")
+    return final_score
 
-# Process the input string
-input_text = 'Hello\\x41\\x42\\x43World'
-processed_length = process_text(input_text)
-print(f"Result: {processed_length}")
+# Test data
+data_samples = ["Project Alpha", "Task Beta v2", "Operation Gamma 3.0", "Analysis Delta"]
+result = evaluate_performance(data_samples)

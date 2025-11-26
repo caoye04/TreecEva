@@ -1,0 +1,102 @@
+Target: Find the value of variable result after [line 52] executes
+
+[line 49]  inventory_tracker = InventoryTracker()
+Call function InventoryTracker()
+[line 3]  self.stock_levels = {'widget_a': 150, 'widget_b': 200, 'widget_c': 75}
+(Missing param: 'result')
+[line 4]  self.price_list = {'widget_a': 25.5, 'widget_b': 18.75, 'widget_c': 32.0}
+(Missing param: 'result')
+[line 5]  self.discount_threshold = 100
+(Missing param: 'var')
+[line 6]  self.tax_rate = 0.0875
+(Missing param: 'var')
+[line 50]  result = inventory_tracker.process_transaction(batch_operations)
+(Missing param: 'func_name')
+[line 21]  total_revenue = 0
+Assign: total_revenue = 0
+[line 24]  for op_type, data in operations.items():
+(Missing param: 'iter_var')
+[line 25]  if op_type == 'sale':
+Condition: True, entering 'if' block
+[line 26]  subtotal = self.calculate_subtotal(data)
+(Missing param: 'func_name')
+[line 9]  subtotal = 0
+Assign: subtotal = 0
+[line 10]  for item, qty in quantities.items():
+(Missing param: 'iter_var')
+[line 11]  if item in self.stock_levels:
+Condition: True, entering 'if' block
+[line 12]  if qty > self.stock_levels[item]:
+Condition: True, entering 'if' block
+[line 14]  price = self.price_list[item]
+Compute: self.price_list[item], where self=InventoryTracker(price_list={widget_a: 25.5, widget_b: 18.75, widget_c: 32.0}) (an unknown source), item='widget_a' (an unknown source) = 25.5
+[line 15]  if qty >= self.discount_threshold:
+Condition: True, entering 'if' block
+[line 17]  subtotal += price * qty
+Update: subtotal changed from 0 (defined at defined at [line 9]) to 0+price * qty = 2040.0
+[line 10]  for item, qty in quantities.items():
+(Missing param: 'iter_var')
+[line 11]  if item in self.stock_levels:
+Condition: True, entering 'if' block
+[line 12]  if qty > self.stock_levels[item]:
+Condition: True, entering 'if' block
+[line 14]  price = self.price_list[item]
+Compute: self.price_list[item], where self=InventoryTracker(price_list={widget_a: 25.5, widget_b: 18.75, widget_c: 32.0}) (an unknown source), item='widget_b' (an unknown source) = 18.75
+[line 15]  if qty >= self.discount_threshold:
+Condition: True, entering 'if' block
+[line 16]  price *= 0.85
+Update: price changed from 18.75 (defined at defined at [line 14]) to 18.75*0.85 = 15.9375
+[line 17]  subtotal += price * qty
+Update: subtotal changed from 2040.0 (defined at defined at [line 17]) to 2040.0+price * qty = 3952.5
+[line 10]  for item, qty in quantities.items():
+(Missing param: 'iter_var')
+[line 11]  if item in self.stock_levels:
+Condition: True, entering 'if' block
+[line 12]  if qty > self.stock_levels[item]:
+Condition: True, entering 'if' block
+[line 14]  price = self.price_list[item]
+Compute: self.price_list[item], where self=InventoryTracker(price_list={widget_a: 25.5, widget_b: 18.75, widget_c: 32.0}) (an unknown source), item='widget_c' (an unknown source) = 32.0
+[line 15]  if qty >= self.discount_threshold:
+Condition: True, entering 'if' block
+[line 17]  subtotal += price * qty
+Update: subtotal changed from 3952.5 (defined at defined at [line 17]) to 3952.5+price * qty = 5552.5
+[line 10]  for item, qty in quantities.items():
+Loop End: Iteration finished
+[line 18]  return subtotal
+Return: subtotal=5552.5 (defined at [line 17])
+[line 27]  tax_amount = subtotal * self.tax_rate
+Compute: subtotal * self.tax_rate, where subtotal=5552.5 (defined at [line 17]), self=InventoryTracker(tax_rate=0.0875) (an unknown source) = 485.84374999999994
+[line 28]  final_amount = subtotal + tax_amount
+Compute: subtotal + tax_amount, where subtotal=5552.5 (defined at [line 17]), tax_amount=485.84374999999994 (defined at [line 27]) = 6038.34375
+[line 29]  total_revenue += final_amount
+Update: total_revenue changed from 0 (defined at defined at [line 21]) to 0+final_amount = 6038.34375
+[line 31]  for item, qty in data.items():
+(Missing param: 'iter_var')
+[line 32]  if item in self.stock_levels:
+Condition: True, entering 'if' block
+[line 31]  for item, qty in data.items():
+(Missing param: 'iter_var')
+[line 32]  if item in self.stock_levels:
+Condition: True, entering 'if' block
+[line 31]  for item, qty in data.items():
+(Missing param: 'iter_var')
+[line 32]  if item in self.stock_levels:
+Condition: True, entering 'if' block
+[line 31]  for item, qty in data.items():
+Loop End: Iteration finished
+[line 24]  for op_type, data in operations.items():
+(Missing param: 'iter_var')
+[line 25]  if op_type == 'sale':
+Condition: True, entering 'if' block
+[line 24]  for op_type, data in operations.items():
+(Missing param: 'iter_var')
+[line 25]  if op_type == 'sale':
+Condition: True, entering 'if' block
+[line 24]  for op_type, data in operations.items():
+Loop End: Iteration finished
+[line 41]  return round(total_revenue, 2)
+Return: round(total_revenue, 2)
+[line 52]  print(f"Result: {result}")
+Output: f"Result: {result}"
+
+Answer: result = 6038.34 (last updated on an unknown source)

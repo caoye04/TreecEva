@@ -1,30 +1,25 @@
-import math
-from itertools import combinations
+data = "apple,banana,cherry,date,elderberry"
+fruits = data.split(',')
+fruit_counts = list(map(lambda x: len(x), fruits))
+sorted_counts = sorted(fruit_counts)
 
-# Portfolio parameters
-initial_capital = 10000.0
-txn_fees = [0.01, 0.02, 0.015, 0.03]
-expected_returns = [0.05, 0.07, 0.04, 0.09]
+# Processing logic
+middle_index = len(sorted_counts) // 2
+median_length = sorted_counts[middle_index]
 
-# Compute adjusted returns considering fees
-adjusted_returns = []
-for i in range(len(txn_fees)):
-    log_fee = math.log(1 + txn_fees[i])
-    adj_return = expected_returns[i] - log_fee
-    adjusted_returns.append(adj_return)
+# Distractor computations
+fruit_lengths = [len(fruit) for fruit in fruits]
+max_length = max(fruit_lengths)
+avg_length = sum(fruit_lengths) / len(fruit_lengths)
 
-# Find the best combination of two investments using greedy selection
-investment_pairs = list(combinations(adjusted_returns, 2))
-profitability_scores = [sum(pair) for pair in investment_pairs]
-best_pair_index = profitability_scores.index(max(profitability_scores))
-selected_investments = investment_pairs[best_pair_index]
+# Core calculation
+weighted_score = median_length * 3
+vowel_bonus = sum(1 for fruit in fruits if fruit[0] in 'aeiou')
+adjustment = vowel_bonus * 2
 
-# Calculate compounded yield from selected investments
-compounded_yield = 1.0
-for rate in selected_investments:
-    compounded_yield *= math.exp(rate)
+# Redundant operations
+fruit_char_total = sum(len(fruit) for fruit in fruits)
+dummy_operation = (fruit_char_total - max_length) // 2
 
-# Apply to initial capital
-final_yield = initial_capital * compounded_yield
-
-print(f"Result: {final_yield}")
+final_score = weighted_score + adjustment
+print(f"Result: {final_score}")

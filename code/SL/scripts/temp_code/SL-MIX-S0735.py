@@ -1,25 +1,13 @@
-import itertools
+def apply_filter(data_tuple):
+    filter_func = lambda x: x * 2 if x > 5 else x + 3
+    return tuple(filter_func(item) for item in data_tuple)
 
-def transform_char(c):
-    return (ord(c) ^ 0x5C) & 0xFF
+def convert_data(points):
+    conversion = lambda x: x - 1
+    return tuple(conversion(p) for p in points)
 
-def generate_tokens(phrase):
-    tokens = []
-    for char in phrase:
-        if char.isalpha():
-            tokens.append(transform_char(char))
-    return tokens
-
-def compute_verification(tokens):
-    pairs = list(itertools.combinations(tokens, 2))
-    total = 0
-    for a, b in pairs:
-        xor_result = a ^ b
-        if xor_result % 3 == 0:
-            total += xor_result
-    return total
-
-secret_phrase = "CRYPTO"
-token_list = generate_tokens(secret_phrase)
-verification_code = compute_verification(token_list)
-print(f"Result: {verification_code}")
+data_points = (8, 4, 7, 2)
+converted_data = convert_data(data_points)
+final_processing = apply_filter(converted_data)
+processed_value = sum(final_processing)
+print(f"Result: {processed_value}")

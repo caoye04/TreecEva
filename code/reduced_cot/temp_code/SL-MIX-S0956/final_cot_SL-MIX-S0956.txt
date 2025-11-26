@@ -1,0 +1,66 @@
+Target: Find the value of variable final_result after [line 37] executes
+
+[line 2]  total_quantity = sum(items.values())
+Call function sum(items.values())
+[line 3]  low_stock_threshold = 5
+Assign: low_stock_threshold = 5
+[line 4]  high_stock_threshold = 20
+Assign: high_stock_threshold = 20
+[line 11]  temp_adjustment = (high_stock_threshold - low_stock_threshold) * 3
+Compute: (high_stock_threshold - low_stock_threshold) * 3, where high_stock_threshold=20 (defined at [line 4]), low_stock_threshold=5 (defined at [line 3]) = 45
+[line 12]  redundancy_factor = temp_adjustment // 2
+Compute: temp_adjustment // 2, where temp_adjustment=45 (defined at [line 11]) = 22
+[line 15]  adjustment_mask = 0b1101
+Assign: adjustment_mask = 13
+[line 16]  base_adjustment = (adjustment_mask & 0b1111) ^ 0b1010
+Compute: (adjustment_mask & 0b1111) ^ 0b1010, where adjustment_mask=13 (defined at [line 15]) = 7
+[line 19]  primary_sum = 0
+Assign: primary_sum = 0
+[line 20]  for idx, (item_name, quantity) in enumerate(items.items()):
+(Missing param: 'iter_var')
+[line 21]  if quantity < low_stock_threshold:
+Condition: True, entering 'if' block
+[line 23]  elif quantity > high_stock_threshold:
+'elif' Condition: True, entering block
+[line 26]  category_modifier = (idx + 2) & 0x7
+Compute: (idx + 2) & 0x7, where idx=0 (an unknown source) = 2
+[line 28]  primary_sum += quantity * category_modifier
+Update: primary_sum changed from 0 (defined at defined at [line 19]) to 0+quantity * category_modifier = 16
+[line 20]  for idx, (item_name, quantity) in enumerate(items.items()):
+(Missing param: 'iter_var')
+[line 21]  if quantity < low_stock_threshold:
+Condition: True, entering 'if' block
+[line 23]  elif quantity > high_stock_threshold:
+'elif' Condition: True, entering block
+[line 26]  category_modifier = (idx + 2) & 0x7
+Compute: (idx + 2) & 0x7, where idx=1 (an unknown source) = 3
+[line 28]  primary_sum += quantity * category_modifier
+Update: primary_sum changed from 16 (defined at defined at [line 28]) to 16+quantity * category_modifier = 61
+[line 20]  for idx, (item_name, quantity) in enumerate(items.items()):
+(Missing param: 'iter_var')
+[line 21]  if quantity < low_stock_threshold:
+Condition: True, entering 'if' block
+[line 22]  category_modifier = (idx | 0x1) & 0xF
+Compute: (idx | 0x1) & 0xF, where idx=2 (an unknown source) = 3
+[line 28]  primary_sum += quantity * category_modifier
+Update: primary_sum changed from 61 (defined at defined at [line 28]) to 61+quantity * category_modifier = 70
+[line 20]  for idx, (item_name, quantity) in enumerate(items.items()):
+(Missing param: 'iter_var')
+[line 21]  if quantity < low_stock_threshold:
+Condition: True, entering 'if' block
+[line 23]  elif quantity > high_stock_threshold:
+'elif' Condition: True, entering block
+[line 24]  category_modifier = (idx ^ 0x3) % 8
+Compute: (idx ^ 0x3) % 8, where idx=3 (an unknown source) = 0
+[line 28]  primary_sum += quantity * category_modifier
+Update: primary_sum changed from 70 (defined at defined at [line 28]) to 70+quantity * category_modifier = 70
+[line 20]  for idx, (item_name, quantity) in enumerate(items.items()):
+Loop End: Iteration finished
+[line 31]  if total_quantity > 100:
+Condition: True, entering 'if' block
+[line 36]  adjustment_factor = base_adjustment + redundancy_factor
+Compute: base_adjustment + redundancy_factor, where base_adjustment=7 (defined at [line 16]), redundancy_factor=22 (defined at [line 12]) = 29
+[line 37]  final_result = primary_sum - adjustment_factor
+Compute: primary_sum - adjustment_factor, where primary_sum=70 (defined at [line 28]), adjustment_factor=29 (defined at [line 36]) = 41
+
+Answer: final_result = 41 (last updated on defined at [line 37])

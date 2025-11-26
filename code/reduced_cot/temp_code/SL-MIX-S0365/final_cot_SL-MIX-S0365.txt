@@ -1,0 +1,71 @@
+Target: Find the value of variable final_balance after [line 51] executes
+
+[line 3]  fee_total = sum([amt * 0.02 if amt > 100 else amt * 0.01 for amt in amounts])
+Call function sum([amt * 0.02 if amt > 100 else amt * 0.01 for amt in amounts])
+[line 4]  penalty = max(amounts) * 0.05 if len(amounts) > 3 else 0
+Compute: max(amounts) * 0.05 if len(amounts) > 3 else 0, where amounts=[200, 150, 300, 75] (an unknown source) = 15.0
+[line 5]  return fee_total + penalty
+Return: fee_total + penalty
+[line 51]  final_balance = process_transactions(account_data, transaction_log)
+Call function process_transactions(account_data={initial: 1000, references: [101, 102, 103, 104]} (an unknown source), transaction_log=[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}] (an unknown source))
+[line 7]  def process_transactions(accounts, transactions):
+Enter function process_transactions: accounts={initial: 1000, references: [101, 102, 103, 104]}, transactions=[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]
+  [line 8]  balance = accounts['initial']
+  Compute: accounts['initial'], where accounts={initial: 1000, references: [101, 102, 103, 104]} (parameter accounts) = 1000
+  [line 12]  for i, trans in enumerate(transactions):
+  (Missing param: 'iter_var')
+  [line 13]  if trans['type'] == 'deposit':
+  Condition: True, entering 'if' block
+  [line 14]  balance += trans['amount'] * 0.8  # Wrong multiplier
+  Update: balance changed from 1000 (defined at defined at [line 8]) to 1000+trans['amount'] * 0.8  # Wrong multiplier = 1160.0
+  [line 12]  for i, trans in enumerate(transactions):
+  (Missing param: 'iter_var')
+  [line 13]  if trans['type'] == 'deposit':
+  Condition: True, entering 'if' block
+  [line 12]  for i, trans in enumerate(transactions):
+  (Missing param: 'iter_var')
+  [line 13]  if trans['type'] == 'deposit':
+  Condition: True, entering 'if' block
+  [line 14]  balance += trans['amount'] * 0.8  # Wrong multiplier
+  Update: balance changed from 1160.0 (defined at defined at [line 14]) to 1160.0+trans['amount'] * 0.8  # Wrong multiplier = 1400.0
+  [line 12]  for i, trans in enumerate(transactions):
+  (Missing param: 'iter_var')
+  [line 13]  if trans['type'] == 'deposit':
+  Condition: True, entering 'if' block
+  [line 12]  for i, trans in enumerate(transactions):
+  Loop End: Iteration finished
+  [line 18]  for account_ref, trans in zip(accounts['references'], transactions):
+  (Missing param: 'iter_var')
+  [line 19]  if trans['type'] == 'deposit':
+  Condition: True, entering 'if' block
+  [line 20]  balance += trans['amount']
+  Update: balance changed from 1400.0 (defined at defined at [line 14]) to 1400.0+trans['amount'] = 1600.0
+  [line 18]  for account_ref, trans in zip(accounts['references'], transactions):
+  (Missing param: 'iter_var')
+  [line 19]  if trans['type'] == 'deposit':
+  Condition: True, entering 'if' block
+  [line 21]  elif trans['type'] == 'withdrawal':
+  'elif' Condition: True, entering block
+  [line 22]  balance -= trans['amount']
+  Update: balance changed from 1600.0 (defined at defined at [line 20]) to 1600.0-trans['amount'] = 1450.0
+  [line 18]  for account_ref, trans in zip(accounts['references'], transactions):
+  (Missing param: 'iter_var')
+  [line 19]  if trans['type'] == 'deposit':
+  Condition: True, entering 'if' block
+  [line 20]  balance += trans['amount']
+  Update: balance changed from 1450.0 (defined at defined at [line 22]) to 1450.0+trans['amount'] = 1750.0
+  [line 18]  for account_ref, trans in zip(accounts['references'], transactions):
+  (Missing param: 'iter_var')
+  [line 19]  if trans['type'] == 'deposit':
+  Condition: True, entering 'if' block
+  [line 21]  elif trans['type'] == 'withdrawal':
+  'elif' Condition: True, entering block
+  [line 22]  balance -= trans['amount']
+  Update: balance changed from 1750.0 (defined at defined at [line 20]) to 1750.0-trans['amount'] = 1675.0
+  [line 18]  for account_ref, trans in zip(accounts['references'], transactions):
+  Loop End: Iteration finished
+  [line 33]  return balance
+  Return: balance=1675.0 (defined at [line 22])
+Function process_transactions returns 1675.0
+
+Answer: final_balance = 1675.0 (last updated on defined at [line 51])

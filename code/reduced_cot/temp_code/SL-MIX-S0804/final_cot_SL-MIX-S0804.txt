@@ -1,0 +1,12 @@
+Target: Find the value of variable final_value after [line 8] executes
+
+[line 2]  temp_analysis = [item * 2 for item in items]
+Compute: [item * 2 for item in items], where item=7 (an unknown source), items=[7, 12, 5, 18, 9] (an unknown source) = ?
+[line 4]  filtered_items = [x for x in temp_analysis if x % 3 != 0]
+Compute: [x for x in temp_analysis if x % 3 != 0], where x=14 (an unknown source), temp_analysis=[14, 24, 10, 36, 18] (defined at [line 2]) = ?
+[line 6]  processed_items = [val + 10 for val in filtered_items]
+Compute: [val + 10 for val in filtered_items], where val=14 (an unknown source), filtered_items=[14, 10] (defined at [line 4]) = ?
+[line 8]  final_value = processed_items[-1]
+Compute: processed_items[-1], where processed_items=[24, 20] (defined at [line 6]) = 20
+
+Answer: final_value = 20 (last updated on defined at [line 8])

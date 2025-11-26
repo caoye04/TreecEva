@@ -1,0 +1,42 @@
+Target: Find the value of variable final_output after [line 47] executes
+
+[line 38]  primary_result = process_data_sequence()
+Call function process_data_sequence()
+[line 4]  data_stream = [4, 8, 15, 16, 23, 42]
+Compute: [4, 8, 15, 16, 23, 42] = [4, 8, 15, 16, 23, ...]
+[line 5]  processing_buffer = []
+Compute: [] = []
+[line 8]  for i, value in enumerate(data_stream):
+(Missing param: 'iter_var')
+[line 8]  for i, value in enumerate(data_stream):
+Loop End: Iteration finished
+[line 8]  for i, value in enumerate(data_stream):
+Loop End: Iteration finished
+[line 8]  for i, value in enumerate(data_stream):
+Loop End: Iteration finished
+[line 8]  for i, value in enumerate(data_stream):
+Loop End: Iteration finished
+[line 8]  for i, value in enumerate(data_stream):
+Loop End: Iteration finished
+[line 8]  for i, value in enumerate(data_stream):
+Loop End: Iteration finished
+[line 17]  filtered_values = [x for x in processing_buffer if x > 5]
+Compute: [x for x in processing_buffer if x > 5], where x=8 (an unknown source), processing_buffer=[8, 9, 8, 0, 10, ...] (defined at [line 5]) = ?
+[line 22]  if len(filtered_values) >= 2:
+Condition: True, entering 'if' block
+[line 24]  first_val = filtered_values[0]
+Compute: filtered_values[0], where filtered_values=[8, 9, 8, 10] (defined at [line 17]) = 8
+[line 25]  last_val = filtered_values[-1]
+Compute: filtered_values[-1], where filtered_values=[8, 9, 8, 10] (defined at [line 17]) = 10
+[line 26]  intermediate = (first_val ^ last_val) & 0b1111
+Compute: (first_val ^ last_val) & 0b1111, where first_val=8 (defined at [line 24]), last_val=10 (defined at [line 25]) = 2
+[line 31]  result = intermediate * 3 - 7
+Compute: intermediate * 3 - 7, where intermediate=2 (defined at [line 26]) = -1
+[line 35]  return result
+Return: result=-1 (defined at [line 31])
+[line 41]  adjustment = (primary_result >> 1) | 1
+Compute: (primary_result >> 1) | 1, where primary_result=-1 (defined at [line 38]) = -1
+[line 47]  final_output = adjustment + 10
+Compute: adjustment + 10, where adjustment=-1 (defined at [line 41]) = 9
+
+Answer: final_output = 9 (last updated on defined at [line 47])

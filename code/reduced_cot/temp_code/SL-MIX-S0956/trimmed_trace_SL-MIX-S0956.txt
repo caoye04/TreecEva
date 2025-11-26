@@ -1,0 +1,65 @@
+37
+final_result
+---
+2 total_quantity = sum(items.values())
+2 ['items', 'total_quantity'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48']
+3 low_stock_threshold = 5
+3 ['items', 'total_quantity', 'low_stock_threshold'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5']
+4 high_stock_threshold = 20
+4 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20']
+11 temp_adjustment = (high_stock_threshold - low_stock_threshold) * 3
+11 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'temp_adjustment'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '45']
+12 redundancy_factor = temp_adjustment // 2
+12 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'temp_adjustment', 'redundancy_factor'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '45', '22']
+15 adjustment_mask = 0b1101
+15 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'adjustment_mask'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '13']
+16 base_adjustment = (adjustment_mask & 0b1111) ^ 0b1010
+16 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'adjustment_mask', 'base_adjustment'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '13', '7']
+19 primary_sum = 0
+19 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '0']
+20 for idx, (item_name, quantity) in enumerate(items.items()):
+20 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '0', '0', "'widgets'", '8']
+21 if quantity < low_stock_threshold:
+21 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '0', '0', "'widgets'", '8']
+23 elif quantity > high_stock_threshold:
+23 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '0', '0', "'widgets'", '8']
+26 category_modifier = (idx + 2) & 0x7
+26 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '0', '0', "'widgets'", '8', '2']
+28 primary_sum += quantity * category_modifier
+28 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '16', '0', "'widgets'", '8', '2']
+20 for idx, (item_name, quantity) in enumerate(items.items()):
+20 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '16', '1', "'gadgets'", '15', '2']
+21 if quantity < low_stock_threshold:
+21 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '16', '1', "'gadgets'", '15', '2']
+23 elif quantity > high_stock_threshold:
+23 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '16', '1', "'gadgets'", '15', '2']
+26 category_modifier = (idx + 2) & 0x7
+26 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '16', '1', "'gadgets'", '15', '3']
+28 primary_sum += quantity * category_modifier
+28 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '61', '1', "'gadgets'", '15', '3']
+20 for idx, (item_name, quantity) in enumerate(items.items()):
+20 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '61', '2', "'tools'", '3', '3']
+21 if quantity < low_stock_threshold:
+21 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '61', '2', "'tools'", '3', '3']
+22 category_modifier = (idx | 0x1) & 0xF
+22 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '61', '2', "'tools'", '3', '3']
+28 primary_sum += quantity * category_modifier
+28 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '70', '2', "'tools'", '3', '3']
+20 for idx, (item_name, quantity) in enumerate(items.items()):
+20 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '70', '3', "'parts'", '22', '3']
+21 if quantity < low_stock_threshold:
+21 ['items', 'total_quantity', 'low_stock_threshold', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '5', '20', '22', '7', '70', '3', "'parts'", '22', '3']
+23 elif quantity > high_stock_threshold:
+23 ['items', 'total_quantity', 'high_stock_threshold', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '20', '22', '7', '70', '3', "'parts'", '22', '3']
+24 category_modifier = (idx ^ 0x3) % 8
+24 ['items', 'total_quantity', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '22', '7', '70', '3', "'parts'", '22', '0']
+28 primary_sum += quantity * category_modifier
+28 ['items', 'total_quantity', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity', 'category_modifier'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '22', '7', '70', '3', "'parts'", '22', '0']
+20 for idx, (item_name, quantity) in enumerate(items.items()):
+20 ['items', 'total_quantity', 'redundancy_factor', 'base_adjustment', 'primary_sum', 'idx', 'item_name', 'quantity'] ['{widgets: 8, gadgets: 15, tools: 3, ...}', '48', '22', '7', '70', '3', "'parts'", '22']
+31 if total_quantity > 100:
+31 ['total_quantity', 'redundancy_factor', 'base_adjustment', 'primary_sum'] ['48', '22', '7', '70']
+36 adjustment_factor = base_adjustment + redundancy_factor
+36 ['redundancy_factor', 'base_adjustment', 'primary_sum', 'adjustment_factor'] ['22', '7', '70', '29']
+37 final_result = primary_sum - adjustment_factor
+37 ['primary_sum', 'adjustment_factor', 'final_result'] ['70', '29', '41']

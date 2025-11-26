@@ -1,61 +1,35 @@
-import math
-from collections import namedtuple
+from collections import Counter
 
-# Define a structure for cryptographic analysis
-CryptoKey = namedtuple('CryptoKey', ['identifier', 'content', 'base_rating'])
+# Process customer transaction categories
+transactions = ['retail', 'online', 'retail', 'wholesale', 'online', 'retail', 'service', 'online']
+category_counts = Counter(transactions)
 
-# Sample encryption keys with their base security ratings
-encryption_keys = [
-    CryptoKey('AES-256', 'xK9#mNp$2vLq@4zR', 8.2),
-    CryptoKey('RSA-4096', 'Ht7&bVf*9wSd%1jK', 9.1),
-    CryptoKey('ECC-P256', 'aB3$dEf^7gHi&9jL', 7.6)
-]
+# Initial processing with some unnecessary intermediate steps
+retail_count = category_counts['retail']
+online_count = category_counts['online']
+wholesale_count = category_counts.get('wholesale', 0)
+service_count = category_counts.get('service', 0)
 
-# Character set categories
-lowercase_chars = frozenset('abcdefghijklmnopqrstuvwxyz')
-uppercase_chars = frozenset('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-digit_chars = frozenset('0123456789')
-special_chars = frozenset('!@#$%^&*()_+-=[]{}|;:,.<>?')
+# Distractor calculations that don't affect final result
+potential_revenue = retail_count * 150 + online_count * 200
+discount_factor = 0.85 if retail_count > 2 else 0.90
 
-# Initialize accumulators
-composite_entropy_measure = 0
-advanced_factor_count = 0
+# Core logic with moderate nesting
+base_tally = retail_count * 3
+if online_count > 1:
+    base_tally += online_count * 2
+    if wholesale_count > 0:
+        base_tally += 5  # This condition is never met
 
-for key in encryption_keys:
-    # Determine character set diversity
-    key_chars = frozenset(key.content)
-    diversity_score = sum([
-        bool(key_chars & lowercase_chars),
-        bool(key_chars & uppercase_chars),
-        bool(key_chars & digit_chars),
-        bool(key_chars & special_chars)
-    ])
-    
-    # Calculate entropy-based adjustment using logarithms
-    char_space_size = len(lowercase_chars | uppercase_chars | digit_chars | special_chars)
-    theoretical_max_entropy = len(key.content) * math.log2(char_space_size)
-    actual_entropy = len(key.content) * math.log2(len(key_chars)) if len(key_chars) > 0 else 0
-    entropy_efficiency = actual_entropy / theoretical_max_entropy if theoretical_max_entropy > 0 else 0
-    
-    # Apply exponential weighting to diversity
-    weighted_diversity = math.pow(diversity_score, 1.5)
-    
-    # Compute key strength modifier
-    strength_modifier = key.base_rating * entropy_efficiency * weighted_diversity
-    
-    # Track advanced factors (keys with high diversity and efficiency)
-    if diversity_score >= 3 and entropy_efficiency > 0.75:
-        advanced_factor_count += 1
-    
-    # Accumulate composite measure
-    composite_entropy_measure += strength_modifier
+# More distraction
+intermediate_sum = sum(category_counts.values())
+average_transactions = intermediate_sum / len(category_counts)
 
-# Calculate final security rating with logical conditions
-if advanced_factor_count >= 2 and composite_entropy_measure > 20:
-    final_security_rating = math.ceil(composite_entropy_measure * 1.25)
-elif advanced_factor_count >= 1 or composite_entropy_measure > 15:
-    final_security_rating = math.floor(composite_entropy_measure * 1.1)
-else:
-    final_security_rating = math.floor(composite_entropy_measure)
+# Final processing
+final_tally = base_tally + service_count
+adjustment_factor = 2 if retail_count >= online_count else 3
 
-print(f"Result: {final_security_rating}")
+# Target variable assignment
+processed_result = final_tally * adjustment_factor
+
+print(f"Target result: {processed_result}")

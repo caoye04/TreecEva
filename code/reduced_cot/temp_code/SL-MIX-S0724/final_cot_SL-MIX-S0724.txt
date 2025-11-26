@@ -1,0 +1,38 @@
+Target: Find the value of variable final_count after [line 35] executes
+
+[line 3]  initial_offset = 15
+Assign: initial_offset = 15
+[line 8]  core_segment = text_corpus[3:15]
+Compute: text_corpus[3:15], where text_corpus='abxypatternqrwpatternzvpatternmnopattern' (an unknown source) = 'ypatternqrwp'
+[line 9]  pattern_matches = 0
+Assign: pattern_matches = 0
+[line 12]  fake_count = len(core_segment) * 2 + initial_offset
+Compute: len(core_segment) * 2 + initial_offset, where core_segment='ypatternqrwp' (defined at [line 8]), initial_offset=15 (defined at [line 3]) = 39
+[line 15]  if fake_count > 100:
+Condition: True, entering 'if' block
+[line 21]  for i in range(len(core_segment) - len(pattern_key) + 1):
+Loop Start: i takes its first value 0
+[line 23]  if window == pattern_key:
+Condition: True, entering 'if' block
+[line 21]  for i in range(len(core_segment) - len(pattern_key) + 1):
+Loop Iteration: i is now 1 (iteration 2)
+[line 23]  if window == pattern_key:
+Condition: True, entering 'if' block
+[line 24]  pattern_matches += 1
+Update: pattern_matches changed from 0 (defined at defined at [line 9]) to 0+1 = 1
+... [Line 21] repeats 3 more times ...
+... [Line 21] repeats 3 more times ...
+[line 21]  for i in range(len(core_segment) - len(pattern_key) + 1):
+Loop Iteration: i is now 5 (iteration 6)
+[line 23]  if window == pattern_key:
+Condition: True, entering 'if' block
+[line 21]  for i in range(len(core_segment) - len(pattern_key) + 1):
+Loop End: Iteration finished
+[line 31]  pattern_factor = (pattern_matches << 2) | 1
+Compute: (pattern_matches << 2) | 1, where pattern_matches=1 (defined at [line 24]) = 5
+[line 34]  valid_sequences = pattern_matches * 3 - 1
+Compute: pattern_matches * 3 - 1, where pattern_matches=1 (defined at [line 24]) = 2
+[line 35]  final_count = valid_sequences * pattern_factor
+Compute: valid_sequences * pattern_factor, where valid_sequences=2 (defined at [line 34]), pattern_factor=5 (defined at [line 31]) = 10
+
+Answer: final_count = 10 (last updated on defined at [line 35])

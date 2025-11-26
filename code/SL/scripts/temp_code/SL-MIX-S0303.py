@@ -1,42 +1,21 @@
-import math
-
-class EnergyTracker:
-    def __init__(self):
-        self.total_energy_loss = 0
+def result_comparison(values):
+    threshold_check = lambda x: x > 15
+    filtered_count = len(list(filter(threshold_check, values)))
     
-    def __enter__(self):
-        return self
+    # Some basic data processing
+    total_points = len(values)
+    ratio_calc = filtered_count / total_points if total_points > 0 else 0
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+    # Comparison operations
+    meets_criteria = filtered_count >= 3
+    base_score = 25 if meets_criteria else 10
     
-    def record_loss(self, loss):
-        self.total_energy_loss += loss
+    # Final adjustment
+    adjustment = ratio_calc * 5
+    final_score = base_score + adjustment
+    
+    return int(final_score)
 
-def correction_factor(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result * 1.25 if result > 0 else result * 0.9
-    return wrapper
-
-@correction_factor
-def calculate_base_score(particles_count, decay_constant):
-    base = particles_count * math.log(decay_constant)
-    adjusted = base - (particles_count // 3)
-    return adjusted
-
-initial_particles = 120
-constant = 7
-correction_applied = False
-final_score = 0
-
-with EnergyTracker() as tracker:
-    base_score = calculate_base_score(initial_particles, constant)
-    tracker.record_loss(initial_particles * 0.05)
-    corrected_base = base_score - tracker.total_energy_loss
-    if corrected_base > 50:
-        final_score = int(corrected_base * 1.1)
-    else:
-        final_score = int(corrected_base * 0.95)
-
-print(f'Result: {final_score}')
+data_points = [8, 22, 14, 19, 11, 25, 17]
+final_value = result_comparison(data_points)
+print(f"Target result: {final_value}")

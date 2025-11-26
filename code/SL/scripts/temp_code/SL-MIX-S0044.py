@@ -1,33 +1,34 @@
-import itertools
+from collections import Counter
 
-def hash_subseq(subseq):
-    return hash(''.join(subseq)) % 1000
+def analyze_text_patterns(text_samples):
+    char_frequencies = Counter()
+    processed_total = 0
+    temp_storage = []
+    
+    for sample in text_samples:
+        char_frequencies.update(sample)
+        temp_storage.extend([ord(c) for c in sample if c.isalpha()])
+    
+    # Distractor: Calculate but don't use
+    max_freq_char = char_frequencies.most_common(1)[0] if char_frequencies else ('', 0)
+    
+    # Relevant processing
+    vowel_counts = sum(1 for char, count in char_frequencies.items() 
+                      if char.lower() in 'aeiou')
+    consonant_counts = sum(1 for char, count in char_frequencies.items() 
+                          if char.isalpha() and char.lower() not in 'aeiou')
+    
+    # Distractor: Intermediate calculation that's not used in final result
+    ratio_calc = vowel_counts * 3 if consonant_counts > 0 else 0
+    
+    processed_total = vowel_counts + consonant_counts
+    
+    # Final relevant computation
+    final_count = processed_total // 2
+    
+    print(f"Result: {final_count}")
+    return final_count
 
-def is_palindrome(subseq):
-    return subseq == subseq[::-1]
-
-dna_sequence = "ATGCCGTAATGC"
-target_length = 4
-unique_hashes = set()
-palindrome_count = 0
-
-for i in range(len(dna_sequence) - target_length + 1):
-    subseq = dna_sequence[i:i+target_length]
-    if is_palindrome(subseq):
-        h = hash_subseq(subseq)
-        if h in unique_hashes:
-            palindrome_count += 1
-            break
-        else:
-            unique_hashes.add(h)
-    if len(unique_hashes) > 5:
-        break
-
-# Additional processing with itertools
-for combo in itertools.combinations(unique_hashes, 2):
-    if sum(combo) % 7 == 0:
-        palindrome_count += 1
-        if palindrome_count > 3:
-            break
-
-print(f"Result: {palindrome_count}")
+# Test data
+text_data = ["programming", "benchmark", "evaluation", "reasoning"]
+analyze_text_patterns(text_data)

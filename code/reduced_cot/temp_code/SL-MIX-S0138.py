@@ -1,33 +1,21 @@
-from collections import defaultdict
+def process_inventory():
+    inventory_data = {'items': [25, 42, 18, 67, 33], 'threshold': 30}
+    
+    # Process items above threshold
+    high_value_items = {item for item in inventory_data['items'] if item > inventory_data['threshold']}
+    
+    # Calculate statistics
+    item_count = len(high_value_items)
+    max_item = max(high_value_items) if high_value_items else 0
+    
+    # Create result set with calculated values
+    result_set = {item_count * 10, max_item // 2}
+    
+    # Final computation
+    final_result = result_set.pop() if result_set else 0
+    
+    print(f"Target result: {final_result}")
+    return final_result
 
-def bit_reverse(num, bits):
-    result = 0
-    for _ in range(bits):
-        result = (result << 1) | (num & 1)
-        num >>= 1
-    return result
-
-def custom_sort_key(x):
-    return bit_reverse(x, 4)
-
-# Frequency bins from a signal analysis
-freq_bins = [15, 7, 12, 3, 9, 6, 10, 5]
-
-# Logical filter: values must be even AND greater than 4
-filtered_bins = list(filter(lambda x: x > 4 and x % 2 == 0, freq_bins))
-
-# Sort using custom bit-reversed key
-sorted_bins = sorted(filtered_bins, key=custom_sort_key)
-
-# Divide and conquer aggregation using defaultdict
-aggregation = defaultdict(int)
-for idx, val in enumerate(sorted_bins):
-    if idx % 2 == 0:
-        aggregation['even'] += val
-    else:
-        aggregation['odd'] += val
-
-# Final metric calculation
-final_metric = (aggregation['even'] >> 1) ^ (aggregation['odd'] << 1)
-
-print(f"Result: {final_metric}")
+# Execute the function
+process_inventory()

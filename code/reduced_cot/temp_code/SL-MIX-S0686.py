@@ -1,76 +1,54 @@
-from functools import reduce
-import itertools
+def process_data(items):
+    # Initialize counters and trackers
+    primary_count = 0
+    secondary_tracker = []
+    misleading_total = 0
+    temp_buffer = []
+    
+    # Distractor operations - string processing that won't be used
+    test_string = "unused_data_processing_sample"
+    unused_length = len(test_string)
+    unused_upper = test_string.upper()
+    unused_split = test_string.split("_")
+    
+    # Main logic with complex interdependencies
+    for item in items:
+        # Primary counting logic
+        if (item > 25 and item < 75) or (item % 3 == 0 and item % 5 != 0):
+            primary_count += 2
+            temp_buffer.append(item * 2)
+        elif item % 7 == 0 and len(str(item)) > 1:
+            primary_count -= 1
+            secondary_tracker.append(item // 2)
+        else:
+            # Distractor operation that doesn't affect final result
+            misleading_total += item * 3
+            
+        # Dead code path - condition never true for given input
+        if item > 1000:
+            primary_count = primary_count * 10
+            
+    # Process collected data with string operations
+    result_string = "".join(chr((x % 26) + 65) for x in temp_buffer if x > 0)
+    string_length = len(result_string)
+    
+    # Final calculation with bitwise operations
+    if secondary_tracker:
+        last_element = secondary_tracker[-1] if secondary_tracker else 0
+        bit_shifted = (primary_count << 2) | (last_element & 0xF)
+        final_value = bit_shifted - (string_length * 3)
+    else:
+        final_value = (primary_count * 4) + misleading_total
+    
+    # Final adjustment based on string analysis
+    if result_string and result_string.startswith("B"):
+        final_value += 15
+    else:
+        final_value -= 8
+    
+    return final_value
 
-def decode_hex_pattern(hex_string):
-    # Convert hex string to list of integers
-    return [int(char, 16) for char in hex_string]
-
-def calculate_cluster_weights(defect_list):
-    # Apply weighted scoring: first defect counts double, last defect counts half (rounded down)
-    if len(defect_list) <= 1:
-        return defect_list
-    weighted = defect_list.copy()
-    weighted[0] *= 2
-    weighted[-1] //= 2
-    return weighted
-
-def apply_adaptive_filter(weighted_defects):
-    # Recursively smooth the values using adjacent averaging
-    def smooth(values, index=1):
-        if index >= len(values) - 1:
-            return values
-        avg = (values[index-1] + values[index] + values[index+1]) // 3
-        values[index] = avg
-        return smooth(values, index + 1)
-    
-    if len(weighted_defects) < 3:
-        return weighted_defects
-    return smooth(weighted_defects.copy())
-
-def compute_quality_score(processed_values):
-    # State machine for quality assessment
-    state = 'NORMAL'
-    score = 0
-    
-    for val in processed_values:
-        if state == 'NORMAL':
-            if val > 10:
-                state = 'ALERT'
-                score += val * 2
-            else:
-                score += val
-        elif state == 'ALERT':
-            if val < 5:
-                state = 'RECOVERY'
-                score -= val
-            else:
-                score += val * 3
-        elif state == 'RECOVERY':
-            if val > 8:
-                state = 'ALERT'
-                score += val * 2
-            else:
-                score += val
-    
-    return score
-
-def main():
-    # Initial encoded defect pattern
-    encoded_pattern = "B3F7A2"
-    
-    # Step 1: Decode hex pattern
-    defect_clusters = decode_hex_pattern(encoded_pattern)
-    
-    # Step 2: Calculate weights
-    weighted_defects = calculate_cluster_weights(defect_clusters)
-    
-    # Step 3: Apply adaptive filter
-    smoothed_defects = apply_adaptive_filter(weighted_defects)
-    
-    # Step 4: Compute final quality score
-    final_score = compute_quality_score(smoothed_defects)
-    
-    print(f"Result: {final_score}")
-
-if __name__ == "__main__":
-    main()
+# Main execution with test data
+items = [42, 63, 28, 91, 35, 14, 77, 21, 56, 84]
+final_result = process_data(items)
+print(f"Result: {final_result}")

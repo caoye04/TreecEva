@@ -1,55 +1,44 @@
-from collections import deque
-import math
+def calculate_offset(base_value, multiplier):
+    offset = base_value * multiplier - 15
+    temp_offset = offset + 7
+    return temp_offset
 
-def encode_char(c):
-    ascii_val = ord(c)
-    return float(ascii_val) * 0.75 + 12.5
+def process_data_set(data_points, threshold):
+    valid_points = {}
+    processed_count = 0
+    for key, value in data_points.items():
+        if value > threshold:
+            valid_points[key] = value * 2
+            processed_count += 1
+        else:
+            valid_points[key] = value // 3
+    dummy_counter = len(data_points) * 2
+    unused_value = dummy_counter - processed_count
+    return valid_points, processed_count
 
-def process_signal(signal_chars):
-    # Encode characters
-    encoded_values = [encode_char(c) for c in signal_chars]
+def update_results(primary, secondary, adjustment):
+    primary_processed, primary_count = process_data_set(primary, 20)
+    secondary_processed, secondary_count = process_data_set(secondary, 15)
     
-    # Initialize data structures
-    buffer_queue = deque()
-    reversal_stack = []
+    offset_calc = calculate_offset(primary_count, 3)
+    misleading_temp = offset_calc + secondary_count * 2
     
-    # Distribute values between queue and stack
-    for i, val in enumerate(encoded_values):
-        if i % 2 == 0:
-            buffer_queue.append(val)
-        else:
-            reversal_stack.append(val)
+    combined_values = []
+    for key in primary_processed:
+        if key in secondary_processed:
+            combined_values.append(primary_processed[key] + secondary_processed[key])
     
-    # Perform stack reversal
-    reversed_values = []
-    while reversal_stack:
-        reversed_values.append(reversal_stack.pop())
-    
-    # Process buffered values with reversed values
-    processed_results = []
-    while buffer_queue:
-        buf_val = buffer_queue.popleft()
-        if reversed_values:
-            rev_val = reversed_values.pop(0)
-            # Arithmetic computation combining values
-            combined = (buf_val * 1.5 - rev_val) / 2.0
-            processed_results.append(combined)
-        else:
-            processed_results.append(buf_val * 0.5)
-    
-    # Final aggregation using floating point operations
-    aggregated_sum = sum(processed_results)
-    normalized_value = aggregated_sum / len(processed_results)
-    
-    # Apply logarithmic scaling
-    if normalized_value > 0:
-        final_signal_strength = math.log(normalized_value) * 10
+    if len(combined_values) > 0:
+        final_adjustment = sum(combined_values) * adjustment
+        result = final_adjustment - offset_calc
     else:
-        final_signal_strength = 0.0
+        result = adjustment * 100
     
-    return final_signal_strength
+    return result
 
-# Signal processing
-input_signal = "PYTH"
-final_signal_strength = process_signal(input_signal)
-print(f"Result: {final_signal_strength}")
+primary_data = {'A': 25, 'B': 18, 'C': 32, 'D': 12}
+secondary_data = {'A': 8, 'B': 22, 'E': 45}
+adjustment_factor = 2
+
+final_result = update_results(primary_data, secondary_data, adjustment_factor)
+print(f"Result: {final_result}")

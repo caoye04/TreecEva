@@ -1,37 +1,39 @@
-from functools import reduce
+def calculate_processing_efficiency(data_streams):
+    # Initialize processing metrics
+    raw_processing_times = [45, 28, 67, 34, 52]
+    buffer_sizes = [128, 256, 64, 512, 192]
+    
+    # Calculate normalized processing times (distractor - not used in final answer)
+    normalized_times = [time * 1.25 for time in raw_processing_times]
+    
+    # Filter streams and calculate actual processing durations
+    active_streams = [stream for stream in data_streams if stream['status'] == 'active']
+    processing_durations = [stream['duration'] for stream in active_streams]
+    
+    # Apply efficiency factors and sort
+    efficiency_factors = [0.85, 1.15, 0.95, 1.05, 0.90]
+    adjusted_times = [duration * factor for duration, factor in zip(processing_durations, efficiency_factors)]
+    sorted_times = sorted(adjusted_times)
+    
+    # Calculate items processed with lambda function
+    processed_items = list(map(lambda x: int(x // 10), adjusted_times))
+    
+    # Final calculation (key statement)
+    final_processing_time = sorted_times[-1] - processed_items[1]
+    
+    # Distractor calculation that doesn't affect final result
+    unused_metric = sum(buffer_sizes) // len(buffer_sizes)
+    
+    print(f"Result: {final_processing_time}")
+    return final_processing_time
 
-def calculate_waveform_metrics(raw_samples):
-    metrics = {}
-    # Apply noise reduction using XOR and bit shifting
-    cleaned_samples = [sample ^ (sample >> 3) for sample in raw_samples]
-    
-    # Compute power levels using floating point operations
-    power_levels = list(map(lambda x: round((x * 0.75) ** 0.5, 2), cleaned_samples))
-    
-    # Identify significant peaks using bitwise AND
-    peak_flags = [1 if (int(p) & 0b1111) > 7 else 0 for p in power_levels]
-    
-    # Early return if no significant peaks found
-    if sum(peak_flags) == 0:
-        return 0
-    
-    # Calculate weighted average of significant peaks
-    weighted_sum = 0
-    count = 0
-    for i in range(len(power_levels)):
-        if peak_flags[i]:
-            weighted_sum += power_levels[i] * (i + 1)
-            count += 1
-            if count >= 3:  # Limit to first 3 significant peaks
-                break
-    
-    # Final signal strength calculation
-    processed_signal_strength = int(weighted_sum / count) & 0xFF
-    return processed_signal_strength
+# Input data
+stream_data = [
+    {'id': 1, 'status': 'active', 'duration': 38},
+    {'id': 2, 'status': 'inactive', 'duration': 25},
+    {'id': 3, 'status': 'active', 'duration': 42},
+    {'id': 4, 'status': 'active', 'duration': 31},
+    {'id': 5, 'status': 'active', 'duration': 29}
+]
 
-# Input data representing raw sensor readings
-sensor_readings = [120, 85, 200, 95, 160, 75, 220, 110, 145, 90]
-
-# Execute the processing pipeline
-processed_signal_strength = calculate_waveform_metrics(sensor_readings)
-print(f"Result: {processed_signal_strength}")
+calculate_processing_efficiency(stream_data)

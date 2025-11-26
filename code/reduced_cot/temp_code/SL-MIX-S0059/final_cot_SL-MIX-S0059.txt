@@ -1,48 +1,18 @@
-Target: Find the value of variable final_risk_score after [line 47] executes
+Target: Find the value of variable final_metric after [line 20] executes
 
-[line 21]  ip_profiles = defaultdict(list)
-Call function defaultdict(list)
-[line 22]  suspicious_ips = frozenset(['10.0.0.5', '192.168.1.10'])
-Call function frozenset(['10.0.0.5', '192.168.1.10'])
-[line 30]  for ip, event_type, count in event_log:
-(Missing param: 'iter_var')
-[line 31]  if ip in suspicious_ips:
-Condition: True, entering 'if' block
-[line 30]  for ip, event_type, count in event_log:
-(Missing param: 'iter_var')
-[line 31]  if ip in suspicious_ips:
-Condition: True, entering 'if' block
-... [Line 30] repeats 2 more times ...
-... [Line 30] repeats 2 more times ...
-[line 30]  for ip, event_type, count in event_log:
-(Missing param: 'iter_var')
-[line 31]  if ip in suspicious_ips:
-Condition: True, entering 'if' block
-[line 30]  for ip, event_type, count in event_log:
-Loop End: Iteration finished
-[line 37]  for ip, scores in ip_profiles.items()
-(Missing param: 'iter_var')
-[line 37]  for ip, scores in ip_profiles.items()
-Loop End: Iteration finished
-[line 37]  for ip, scores in ip_profiles.items()
-Loop End: Iteration finished
-[line 37]  for ip, scores in ip_profiles.items()
-Loop End: Iteration finished
-[line 41]  for ip, stats in profile_stats.items():
-(Missing param: 'iter_var')
-[line 42]  if stats['total'] > 10:
-Condition: True, entering 'if' block
-[line 41]  for ip, stats in profile_stats.items():
-(Missing param: 'iter_var')
-[line 42]  if stats['total'] > 10:
-Condition: True, entering 'if' block
-[line 41]  for ip, stats in profile_stats.items():
-Loop End: Iteration finished
-[line 44]  intermediate_score = calc_state['score']
-Compute: calc_state['score'], where calc_state={score: 46.5} (an unknown source) = 46.5
-[line 46]  penalty_factors = {ip: len(scores) for ip, scores in ip_profiles.items()}
-Compute: {ip: len(scores) for ip, scores in ip_profiles.items()}, where ip='192.168.1.10' (an unknown source), scores=[6, 6] (an unknown source), ip_profiles={192.168.1.10: [6, 6], 10.0.0.5: [25, 56]} (defined at [line 21]) = ?
-[line 47]  final_risk_score = intermediate_score - sum(penalty_factors.values())
-Compute: intermediate_score - sum(penalty_factors.values()), where intermediate_score=46.5 (defined at [line 44]), penalty_factors={192.168.1.10: 2, 10.0.0.5: 2} (defined at [line 46]) = 42.5
+[line 3]  data_stream = [45, 82, 67, 93, 28, 74, 51, 88, 36, 95]
+Compute: [45, 82, 67, 93, 28, 74, 51, 88, 36, 95] = [45, 82, 67, 93, 28, ...]
+[line 5]  filter_base = 9
+Assign: filter_base = 9
+[line 6]  threshold_modifier = 3
+Assign: threshold_modifier = 3
+[line 13]  processed_data = [x for x in data_stream if x % filter_base == 0]
+Compute: [x for x in data_stream if x % filter_base == 0], where x=45 (an unknown source), data_stream=[45, 82, 67, 93, 28, ...] (defined at [line 3]), filter_base=9 (defined at [line 5]) = ?
+[line 16]  filtered_sum = sum(processed_data) if processed_data else 0
+Compute: sum(processed_data) if processed_data else 0, where processed_data=[45, 36] (defined at [line 13]) = 81
+[line 17]  backup_check = len(data_stream) * threshold_modifier
+Compute: len(data_stream) * threshold_modifier, where data_stream=[45, 82, 67, 93, 28, ...] (defined at [line 3]), threshold_modifier=3 (defined at [line 6]) = 30
+[line 20]  final_metric = filtered_sum - backup_check
+Compute: filtered_sum - backup_check, where filtered_sum=81 (defined at [line 16]), backup_check=30 (defined at [line 17]) = 51
 
-Answer: final_risk_score = 42.5 (last updated on defined at [line 47])
+Answer: final_metric = 51 (last updated on defined at [line 20])

@@ -1,59 +1,37 @@
-from collections import namedtuple
+def validate_readings(data_points):
+    irrelevant_var = [x * 2 for x in range(10)]
+    misleading_sum = sum(range(15)) + 25
+    return [x for x in data_points if x > 0]
 
-def analyze_packets(packet_sequence):
-    # Define packet structure
-    Packet = namedtuple('Packet', ['syn', 'ack', 'fin', 'rst'])
-    
-    # State definitions
-    STATE_NORMAL = 0
-    STATE_MONITORING = 1
-    STATE_ALERT = 2
-    
-    # Initialize state machine
-    current_state = STATE_NORMAL
-    intrusion_score = 0
-    
-    # Process each packet
-    for i, flags in enumerate(packet_sequence):
-        packet = Packet(*flags)
-        
-        # State transition logic with scoring
-        if current_state == STATE_NORMAL:
-            if packet.syn and not packet.ack:
-                current_state = STATE_MONITORING
-                intrusion_score += 10
-            elif packet.syn and packet.ack:
-                intrusion_score += 1
-        elif current_state == STATE_MONITORING:
-            if packet.fin and packet.rst:
-                current_state = STATE_ALERT
-                intrusion_score *= 3
-            elif not packet.syn and packet.ack:
-                intrusion_score += 5
-            else:
-                intrusion_score -= 2
-        elif current_state == STATE_ALERT:
-            if packet.rst:
-                intrusion_score += 15
-            elif not packet.fin:
-                intrusion_score -= 5
-        
-        # Apply additional scoring based on position and flags
-        if i % 3 == 0 and packet.syn:
-            intrusion_score += 7
-    
-    return intrusion_score
+def process_sensors(raw_data):
+    temp_calc = lambda x: (x * 1.8) + 32
+    converted = [temp_calc(val) for val in raw_data]
+    dead_code_path = [val ** 2 for val in converted if val < 50]
+    return converted
 
-# Test sequence representing network packets [SYN, ACK, FIN, RST]
-packets = [
-    (1, 0, 0, 0),  # SYN only
-    (1, 1, 0, 0),  # SYN+ACK
-    (0, 1, 0, 0),  # ACK only
-    (0, 0, 1, 1),  # FIN+RST
-    (0, 0, 0, 1),  # RST only
-    (1, 0, 0, 0),  # SYN only
-    (0, 0, 1, 0),  # FIN only
-]
+def aggregate_data(readings, threshold):
+    validation_map = {'valid': lambda x: x > threshold, 'invalid': lambda x: x <= threshold}
+    filtered_data = list(filter(validation_map['valid'], readings))
+    
+    irrelevant_dict = {'a': 42, 'b': 73, 'c': 19}
+    misleading_avg = sum(irrelevant_dict.values()) / len(irrelevant_dict)
+    
+    if len(filtered_data) > 2:
+        sorted_values = sorted(filtered_data)
+        middle_index = len(sorted_values) // 2
+        if len(sorted_values) % 2 == 0:
+            result = (sorted_values[middle_index - 1] + sorted_values[middle_index]) / 2
+        else:
+            result = sorted_values[middle_index]
+    else:
+        result = sum(filtered_data) / len(filtered_data) if filtered_data else 0
+    
+    distractor_op = (result * 3.14) - 15.7
+    return round(result, 2)
 
-intrusion_score = analyze_packets(packets)
-print(f"Result: {intrusion_score}")
+sensor_readings = [18.5, 22.3, 19.8, 25.1, 20.9, 24.7, 17.2]
+threshold = 20.0
+processed = process_sensors(sensor_readings)
+validated = validate_readings(processed)
+final_result = aggregate_data(sensor_readings, threshold)
+print(f"Target result: {final_result}")

@@ -1,6 +1,13 @@
-from functools import reduce
+tank_capacity = 150
+units_per_vehicle = 12
+vehicle_count = 8
+fuel_efficiency = 15
 
-temperature_anomalies = [1.2, -0.5, 0.3, 2.1, -1.0, 0.8, 1.5, -0.2]
-positive_anomalies = list(filter(lambda x: x > 0, temperature_anomalies))
-total_warming_impact = reduce(lambda acc, val: acc + val, positive_anomalies, 0)
-print(f"Result: {total_warming_impact}")
+# Calculate final capacity using conditional expression
+final_capacity = tank_capacity // units_per_vehicle if units_per_vehicle > 0 else 0
+
+# Additional calculations for fleet management
+remaining_fuel = tank_capacity - (vehicle_count * fuel_efficiency)
+total_distance = vehicle_count * fuel_efficiency * 2
+
+print(f"Result: {final_capacity}")

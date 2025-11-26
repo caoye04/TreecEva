@@ -1,47 +1,48 @@
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+def calculate_transmission_interval(throughput, latency):
+    return (throughput * 2) + latency
 
-def create_linked_list(values):
-    if not values:
-        return None
-    head = ListNode(values[0])
-    current = head
-    for val in values[1:]:
-        current.next = ListNode(val)
-        current = current.next
-    return head
+def process_network_config(nodes, packets, redundancy):
+    # Irrelevant intermediate calculations
+    temp_throughput = nodes * packets * 3
+    unused_calc = (temp_throughput >> 2) & 0xFF
+    
+    # Misleading variable that looks important
+    network_load = temp_throughput // redundancy if redundancy else 0
+    
+    # Dead code path that's never executed
+    if network_load > 1000:
+        unused_buffer = network_load * 2
+    else:
+        dummy_var = network_load // 10
+    
+    # Core logic with multiple operations
+    base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+    adjusted_capacity = base_capacity - (redundancy * 2)
+    
+    # Lambda function with conditional expression
+    capacity_multiplier = lambda x: x * 3 if x % 2 == 0 else x * 2
+    
+    # Final calculation with slicing operation
+    capacity_values = [adjusted_capacity, network_load, temp_throughput]
+    final_value = capacity_multiplier(capacity_values[0:2][-1])
+    
+    return final_value
 
-def sum_linked_list(head):
-    total = 0
-    current = head
-    while current:
-        total += current.val
-        current = current.next
-    return total
+# Main execution with irrelevant setup
+network_nodes = 4
+data_packets = 7
+redundancy_factor = 2
 
-def process_sensor_data(raw_timestamps):
-    # Create linked list from raw timestamps
-    sensor_buffer = create_linked_list(raw_timestamps)
-    
-    # Calculate base delay as sum of all timestamps
-    base_delay = sum_linked_list(sensor_buffer)
-    
-    # Apply correction factor using arithmetic operations
-    correction_factor = (base_delay * 3 - 17) // 4
-    
-    # Apply secondary adjustment using modulo
-    secondary_adjustment = (correction_factor + 5) % 7
-    
-    # Final compensation calculation
-    final_compensation = (base_delay - correction_factor) * secondary_adjustment
-    
-    return final_compensation
+# Distractor calculations that don't affect final result
+max_throughput = network_nodes * data_packets * 10
+latency_estimate = max_throughput // 3
+transmission_delay = calculate_transmission_interval(max_throughput, latency_estimate)
 
-# Sensor timestamp data (in milliseconds)
-sensor_readings = [12, 28, 35, 44, 19]
+# Key execution point
+final_capacity = process_network_config(network_nodes, data_packets, redundancy_factor)
 
-# Process the sensor data
-final_compensation = process_sensor_data(sensor_readings)
-print(f"Result: {final_compensation}")
+# More irrelevant operations
+optimization_factor = (transmission_delay & 0xF) | 0x10
+network_efficiency = optimization_factor / 2.5
+
+print(f"Target result: {final_capacity}")

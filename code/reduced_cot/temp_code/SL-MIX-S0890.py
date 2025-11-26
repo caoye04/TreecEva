@@ -1,48 +1,64 @@
-from math import gcd
-from functools import reduce
-from collections import defaultdict
+from collections import Counter
 
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b) if a and b else 0
+def process_inventory_data(data_stream):
+    processed = []
+    for item in data_stream:
+        processed.append((item * 3) % 17 + 2)
+    return processed
 
-def sieve_of_eratosthenes(limit):
-    is_prime = [True] * (limit + 1)
-    is_prime[0:2] = [False, False]
-    for i in range(2, int(limit**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, limit + 1, i):
-                is_prime[j] = False
-    return [i for i, prime in enumerate(is_prime) if prime]
+def analyze_sales_pattern(sales_data):
+    temp_sum = 0
+    temp_product = 1
+    for val in sales_data:
+        temp_sum += val
+        temp_product *= (val % 7 + 1)
+    return temp_sum, temp_product
 
-# Generate primes up to 30
-primes = sieve_of_eratosthenes(30)
-prime_index_map = {prime: idx for idx, prime in enumerate(primes)}
+def calculate_profit_margin(base_cost, selling_price):
+    margin_data = []
+    for i in range(len(base_cost)):
+        margin = selling_price[i] - base_cost[i]
+        margin_data.append(margin * 0.85)
+    return margin_data
 
-# Initialize structures
-factor_indices = defaultdict(list)
-encryption_components = []
+def process_analysis_data(raw_data):
+    # Distractor: Unused computation path
+    irrelevant_calc = sum([x * 2 for x in raw_data[:3]]) - 15
+    
+    # Main logic path
+    counter_data = Counter(raw_data)
+    filtered_items = [k for k, v in counter_data.items() if v >= 2]
+    
+    # Misleading intermediate result
+    intermediate_val = len(filtered_items) * 7 - 3
+    
+    # Key computation
+    if filtered_items:
+        core_result = sum(filtered_items) // len(filtered_items)
+        adjusted_result = (core_result * 11) % 23
+    else:
+        adjusted_result = 8
+    
+    # More distractions
+    dead_code_path = [x for x in raw_data if x > 20]
+    unused_computation = sum(dead_code_path) if dead_code_path else 0
+    
+    return adjusted_result
 
-# Process numbers 4 through 20
-for num in range(4, 21):
-    temp_num = num
-    for prime in primes:
-        if prime * prime > temp_num:
-            break
-        if temp_num % prime == 0:
-            count = 0
-            while temp_num % prime == 0:
-                temp_num //= prime
-                count += 1
-            factor_indices[num].extend([prime_index_map[prime]] * count)
-    if temp_num > 1:  # Remaining prime factor
-        factor_indices[num].append(prime_index_map[temp_num])
+# Main execution
+inventory_stream = [4, 12, 4, 8, 15, 12, 7, 4, 9, 15]
+cost_data = [25, 40, 35, 30, 45]
+price_data = [32, 50, 42, 38, 55]
 
-# Compute LCM of prime index lists
-for indices in factor_indices.values():
-    if indices:
-        component = reduce(lcm, indices)
-        encryption_components.append(component)
+# Irrelevant computations
+processed_inventory = process_inventory_data(inventory_stream)
+sales_analysis = analyze_sales_pattern(processed_inventory)
+profit_margins = calculate_profit_margin(cost_data, price_data)
 
-# Final encryption key calculation
-encryption_key = sum(encryption_components) % 1000
-print(f"Result: {encryption_key}")
+# Critical execution point
+analysis_data = [item % 10 for item in inventory_stream]
+result = process_analysis_data(analysis_data)
+
+# Final output with some manipulation
+final_output = (result * 3 + 7) // 2
+print(f"Result: {final_output}")

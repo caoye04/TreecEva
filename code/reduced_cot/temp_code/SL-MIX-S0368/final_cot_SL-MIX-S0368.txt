@@ -1,0 +1,51 @@
+Target: Find the value of variable final_score after [line 48] executes
+
+[line 3]  def calculate_initial_metrics(data_points):
+Enter function calculate_initial_metrics: data_points=[5, 3, 5, 7, 3, ...]
+  [line 5]  temp_sum = sum(data_points) * 2
+  Compute: sum(data_points) * 2, where data_points=[5, 3, 5, 7, 3, ...] (parameter data_points) = 90
+  [line 9]  point_counter = Counter(data_points)
+  Call function Counter(data_points=[5, 3, 5, 7, 3, ...] (parameter data_points))
+  [line 10]  unique_count = len(point_counter)
+  Call function len(point_counter={5: 4, 3: 2, 7: 1, ...} (defined at [line 9]))
+  [line 11]  most_common_freq = point_counter.most_common(1)[0][1] if point_counter else 0
+  Compute: point_counter.most_common(1)[0][1] if point_counter else 0, where point_counter={5: 4, 3: 2, 7: 1, ...} (defined at [line 9]) = 4
+  [line 14]  misleading_total = temp_sum + unique_count + most_common_freq
+  Compute: temp_sum + unique_count + most_common_freq, where temp_sum=90 (defined at [line 5]), unique_count=5 (defined at [line 10]), most_common_freq=4 (defined at [line 11]) = 99
+  [line 16]  return (unique_count, most_common_freq, misleading_total)
+  Return: (unique_count, most_common_freq, misleading_total)
+Function calculate_initial_metrics returns (5, 4, 99)
+[line 18]  def apply_adjustments(base_values, adjustment_factors):
+Enter function apply_adjustments: base_values=(5, 4, 99), adjustment_factors=(3, 2)
+  [line 19]  base1, base2, _ = base_values
+  (Missing param: 'result')
+  [line 20]  factor1, factor2 = adjustment_factors
+  (Missing param: 'result')
+  [line 23]  if factor1 > 100:
+  Condition: True, entering 'if' block
+  [line 27]  adjusted1 = base1 * factor1
+  Compute: base1 * factor1, where base1=5 (an unknown source), factor1=3 (an unknown source) = 15
+  [line 28]  adjusted2 = base2 * factor2
+  Compute: base2 * factor2, where base2=4 (an unknown source), factor2=2 (an unknown source) = 8
+  [line 31]  temp_product = adjusted1 * adjusted2
+  Compute: adjusted1 * adjusted2, where adjusted1=15 (defined at [line 27]), adjusted2=8 (defined at [line 28]) = 120
+  [line 33]  return (adjusted1, adjusted2, temp_product)
+  Return: (adjusted1, adjusted2, temp_product)
+Function apply_adjustments returns (15, 8, 120)
+[line 35]  def calculate_final_score(metrics, adjustments, multiplier):
+Enter function calculate_final_score: metrics=(5, 4, 99), adjustments=(15, 8, 120), multiplier=4
+  [line 37]  unique_count, most_common_freq, _ = metrics
+  (Missing param: 'result')
+  [line 41]  weighted_unique = unique_count * multiplier
+  Compute: unique_count * multiplier, where unique_count=5 (defined at [line 10]), multiplier=4 (parameter multiplier) = 20
+  [line 42]  weighted_freq = most_common_freq * (multiplier // 2)
+  Compute: most_common_freq * (multiplier // 2), where most_common_freq=4 (defined at [line 11]), multiplier=4 (parameter multiplier) = 8
+  [line 45]  bit_distraction = (weighted_unique ^ weighted_freq) & 0xFF
+  Compute: (weighted_unique ^ weighted_freq) & 0xFF, where weighted_unique=20 (defined at [line 41]), weighted_freq=8 (defined at [line 42]) = 28
+  [line 48]  final_score = (weighted_unique + weighted_freq) - bit_distraction
+  Compute: (weighted_unique + weighted_freq) - bit_distraction, where weighted_unique=20 (defined at [line 41]), weighted_freq=8 (defined at [line 42]), bit_distraction=28 (defined at [line 45]) = 0
+  [line 53]  return final_score
+  Return: final_score=0 (defined at [line 48])
+Function calculate_final_score returns 0
+
+Answer: final_score = 0 (last updated on defined at [line 48])

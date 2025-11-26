@@ -1,54 +1,31 @@
-from collections import namedtuple
-
-def process_sensor_readings():
-    # Define sensor reading structure
-    SensorReading = namedtuple('SensorReading', ['type_id', 'value'])
-    
-    # Simulated sensor data
-    raw_readings = [
-        SensorReading(type_id=3, value=142),
-        SensorReading(type_id=1, value=87),
-        SensorReading(type_id=2, value=205),
-        SensorReading(type_id=3, value=96)
+def analyze_inventory():
+    inventory_data = [
+        ('electronics', 'laptop', 15),
+        ('electronics', 'phone', 23),
+        ('furniture', 'chair', 8),
+        ('electronics', 'tablet', 12),
+        ('furniture', 'desk', 5),
+        ('books', 'novel', 31)
     ]
     
-    # Process readings with modular adjustments
-    adjusted_values = [
-        (reading.value * 3 + 7) % 256 if reading.type_id == 1
-        else (reading.value + 19) % 256 if reading.type_id == 2
-        else (reading.value ** 2 - 4) % 256
-        for reading in raw_readings
-    ]
+    category_counts = {}
+    temp_calculations = []
     
-    # Custom encoding function
-    def custom_encode(val):
-        if val < 64:
-            return val + 192
-        elif val < 128:
-            return val + 64
-        elif val < 192:
-            return val - 64
-        else:
-            return val - 192
+    for category, item, quantity in inventory_data:
+        if category not in category_counts:
+            category_counts[category] = 0
+            temp_calculations.append(quantity * 2)  # Distractor - not used
+        category_counts[category] += quantity
     
-    # Apply encoding to adjusted values
-    encoded_sequence = [custom_encode(v) for v in adjusted_values]
+    target_category = 'electronics'
+    multiplier = 3
     
-    # Final accumulation with modular arithmetic
-    encoded_result = 0
-    for i, enc_val in enumerate(encoded_sequence):
-        match i % 4:
-            case 0:
-                encoded_result = (encoded_result + enc_val * 2) % 256
-            case 1:
-                encoded_result = (encoded_result ^ enc_val) % 256
-            case 2:
-                encoded_result = (encoded_result - enc_val) % 256
-            case 3:
-                encoded_result = (encoded_result + enc_val) % 256
+    # Intermediate calculation that doesn't affect final result
+    total_items = sum(category_counts.values())
+    average_items = total_items // len(category_counts)
     
-    return encoded_result
+    final_count = category_counts.get(target_category, 0) * multiplier
+    
+    print(f"Result: {final_count}")
 
-# Execute processing and print result
-final_value = process_sensor_readings()
-print(f"Result: {final_value}")
+analyze_inventory()

@@ -1,41 +1,35 @@
-import heapq
-import math
+from itertools import permutations
 
-def process_sensor_data(readings):
-    # Convert readings to log scale and store with their original indices
-    log_scaled = [(math.log(r + 1), i) for i, r in enumerate(readings) if r > 0]
-    
-    # Create a max heap using negative values
-    max_heap = [(-log_val, idx) for log_val, idx in log_scaled]
-    heapq.heapify(max_heap)
-    
-    # Transformation keys encoded as strings
-    transform_keys = ["EXP", "SQRT", "LOG", "SQUARE"]
-    
-    modulated_output = 0
-    
-    # Process top 3 values from heap
-    for _ in range(min(3, len(max_heap))):
-        neg_log_val, idx = heapq.heappop(max_heap)
-        log_val = -neg_log_val
-        original_val = readings[idx]
-        
-        # Apply transformation based on index
-        key = transform_keys[idx % len(transform_keys)]
-        if key == "EXP":
-            transformed = math.exp(log_val)
-        elif key == "SQRT":
-            transformed = math.sqrt(original_val)
-        elif key == "LOG":
-            transformed = math.log(original_val + 1)
-        else:  # SQUARE
-            transformed = original_val ** 2
-        
-        modulated_output += int(transformed)
-    
-    return modulated_output
+# Inventory management scenario
+initial_items = {'widget_a': 15, 'widget_b': 8, 'widget_c': 22, 'widget_d': 7}
+restock_threshold = 10
 
-# Sensor readings from an environmental monitoring system
-sensor_readings = [10, 100, 3, 50, 7]
-final_result = process_sensor_data(sensor_readings)
-print(f"Result: {final_result}")
+# Calculate which items need restocking
+restock_needed = [item for item, quantity in initial_items.items() if quantity <= restock_threshold]
+restock_count = len(restock_needed)
+
+# Process permutations (distractor - not used in final calculation)
+permutation_samples = list(permutations(['x', 'y', 'z'], 2))
+permutation_total = len(permutation_samples)
+
+# Calculate adjusted quantities based on restocking needs
+adjusted_quantities = {}
+for item, quantity in initial_items.items():
+    if item in restock_needed:
+        adjusted_quantities[item] = quantity + 25
+    else:
+        adjusted_quantities[item] = quantity - 5
+
+# Create list of processed quantities
+processed_quantities = list(adjusted_quantities.values())
+
+# Calculate adjustment factor (key computation)
+adjustment_factor = (restock_count * 3) - 7
+
+# Redundant calculation (distractor)
+redundant_sum = sum(processed_quantities) // len(processed_quantities)
+
+# Final output calculation
+final_output = processed_quantities[2] + adjustment_factor
+
+print(f"Result: {final_output}")

@@ -1,12 +1,43 @@
-Target: Find the value of variable dynamic_range_db after [line 8] executes
+Target: Find the value of variable final_balance after [line 30] executes
 
-[line 3]  amplitude_measurements = [0.05, 0.2, 1.5, 0.8, 3.2, 0.1]
-Compute: [0.05, 0.2, 1.5, 0.8, 3.2, 0.1] = [0.05, 0.2, 1.5, 0.8, 3.2, ...]
-[line 4]  max_amplitude = max(amplitude_measurements)
-Call function max(amplitude_measurements=[0.05, 0.2, 1.5, 0.8, 3.2, ...] (defined at [line 3]))
-[line 5]  min_amplitude = min(amplitude_measurements)
-Call function min(amplitude_measurements=[0.05, 0.2, 1.5, 0.8, 3.2, ...] (defined at [line 3]))
-[line 8]  dynamic_range_db = 20 * math.log10(max_amplitude / min_amplitude)
-Compute: 20 * math.log10(max_amplitude / min_amplitude), where max_amplitude=3.2 (defined at [line 4]), min_amplitude=0.05 (defined at [line 5]) = 36.12359947967774
+[line 4]  transactions = [('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]
+Compute: [('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)] = [('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]
+[line 5]  account_summary = defaultdict(int)
+Call function defaultdict(int)
+[line 9]  for transaction_type, amount in transactions:
+(Missing param: 'iter_var')
+[line 10]  if transaction_type == 'deposit':
+Condition: True, entering 'if' block
+[line 9]  for transaction_type, amount in transactions:
+(Missing param: 'iter_var')
+[line 10]  if transaction_type == 'deposit':
+Condition: True, entering 'if' block
+[line 13]  elif transaction_type == 'withdrawal':
+'elif' Condition: True, entering block
+... [Line 9] repeats 2 more times ...
+... [Line 9] repeats 2 more times ...
+... [Line 9] repeats 2 more times ...
+[line 9]  for transaction_type, amount in transactions:
+(Missing param: 'iter_var')
+[line 10]  if transaction_type == 'deposit':
+Condition: True, entering 'if' block
+[line 13]  elif transaction_type == 'withdrawal':
+'elif' Condition: True, entering block
+[line 16]  elif transaction_type == 'service_fee':
+'elif' Condition: True, entering block
+[line 9]  for transaction_type, amount in transactions:
+Loop End: Iteration finished
+[line 20]  base_balance = account_summary['balance']
+Compute: account_summary['balance'], where account_summary={balance: 1550, fees: 25} (defined at [line 5]) = 1550
+[line 21]  total_fees = account_summary['fees']
+Compute: account_summary['fees'], where account_summary={balance: 1550, fees: 25} (defined at [line 5]) = 25
+[line 25]  balance_adjustment = 100
+Assign: balance_adjustment = 100
+[line 26]  adjusted_balance = base_balance + balance_adjustment
+Compute: base_balance + balance_adjustment, where base_balance=1550 (defined at [line 20]), balance_adjustment=100 (defined at [line 25]) = 1650
+[line 27]  service_fee = total_fees + 5  # Additional fixed fee
+Compute: total_fees + 5  # Additional fixed fee, where total_fees=25 (defined at [line 21]) = 30
+[line 30]  final_balance = adjusted_balance - service_fee
+Compute: adjusted_balance - service_fee, where adjusted_balance=1650 (defined at [line 26]), service_fee=30 (defined at [line 27]) = 1620
 
-Answer: dynamic_range_db = 36.12359947967774 (last updated on defined at [line 8])
+Answer: final_balance = 1620 (last updated on defined at [line 30])

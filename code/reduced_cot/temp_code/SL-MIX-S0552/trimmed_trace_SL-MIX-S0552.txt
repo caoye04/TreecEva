@@ -1,0 +1,21 @@
+19
+final_result
+---
+3 device_a = {45, 32, 78, 12, 67}
+3 ['device_a'] ['{32, 67, 12, 45, 78}']
+4 device_b = {32, 89, 12, 54, 91}
+4 ['device_a', 'device_b'] ['{32, 67, 12, 45, 78}', '{32, 54, 89, 91, 12}']
+5 device_c = {78, 91, 23, 45, 67}
+5 ['device_a', 'device_b', 'device_c'] ['{32, 67, 12, 45, 78}', '{32, 54, 89, 91, 12}', '{67, 23, 91, 45, 78}']
+8 ab_common = device_a & device_b
+8 ['device_a', 'device_b', 'device_c', 'ab_common'] ['{32, 67, 12, 45, 78}', '{32, 54, 89, 91, 12}', '{67, 23, 91, 45, 78}', '{32, 12}']
+9 bc_common = device_b & device_c
+9 ['device_a', 'device_b', 'device_c', 'ab_common', 'bc_common'] ['{32, 67, 12, 45, 78}', '{32, 54, 89, 91, 12}', '{67, 23, 91, 45, 78}', '{32, 12}', '{91}']
+10 ac_common = device_a & device_c
+10 ['device_a', 'device_c', 'ab_common', 'bc_common', 'ac_common'] ['{32, 67, 12, 45, 78}', '{67, 23, 91, 45, 78}', '{32, 12}', '{91}', '{67, 45, 78}']
+13 shared_readings = ab_common | bc_common | ac_common
+13 ['ab_common', 'bc_common', 'ac_common', 'shared_readings'] ['{32, 12}', '{91}', '{67, 45, 78}', '{32, 67, 91, 12, 45, ...}']
+16 merged_unique = sorted(list(shared_readings))
+16 ['shared_readings', 'merged_unique'] ['{32, 67, 91, 12, 45, ...}', '[12, 32, 45, 67, 78, ...]']
+19 final_result = merged_unique[-2]
+19 ['merged_unique', 'final_result'] ['[12, 32, 45, 67, 78, ...]', '78']

@@ -1,0 +1,109 @@
+66
+final_result
+---
+65 final_result = process_transactions(customer_transactions, discount_policies)
+65 ['customer_transactions', 'discount_policies'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}"]
+16 processed_total = 0
+16 ['transactions', 'discount_rules', 'processed_total'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '0']
+17 bonus_points = 0
+17 ['transactions', 'discount_rules', 'processed_total', 'bonus_points'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '0', '0']
+24 for customer, amount in transactions.items():
+24 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '0', '0', "'C001'", '750.0']
+25 rule = discount_rules.get(customer, 'standard')
+25 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '0', '0', "'C001'", '750.0', "'standard'"]
+26 discounted = apply_rule(amount, rule)
+26 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '0', '0', "'C001'", '750.0', "'standard'"]
+PARAM_MAPPING {'amount': {'actual_var': 'amount', 'value': 750.0}, 'rule_type': {'actual_var': 'rule', 'value': 'standard'}}
+FUNCTION_ENTER 1 apply_rule def apply_rule(amount, rule_type):
+1 ['amount', 'rule_type'] [{'_type': 'float', '_value': 750.0}, {'_type': 'str', '_value': 'standard'}]
+6 if rule_type == 'premium':
+6 ['amount'] ['750.0']
+8 elif rule_type == 'standard':
+8 ['amount'] ['750.0']
+9 return amount * 0.95
+9 ['amount'] ['750.0']
+FUNCTION_RETURN 9 apply_rule {'_type': 'float', '_value': 712.5}
+29 if amount > 500:
+29 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '0', '0', "'C001'", '750.0', "'standard'", '712.5']
+30 bonus_points += int(amount * 0.02)
+30 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '0', '15', "'C001'", '750.0', "'standard'", '712.5']
+32 processed_total += discounted
+32 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '712.5', '15', "'C001'", '750.0', "'standard'", '712.5']
+35 if customer.startswith('C'):
+35 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '712.5', '15', "'C001'", '750.0', "'standard'", '712.5']
+24 for customer, amount in transactions.items():
+24 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '712.5', '15', "'C002'", '350.0', "'standard'", '712.5']
+25 rule = discount_rules.get(customer, 'standard')
+25 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '712.5', '15', "'C002'", '350.0', "'standard'", '712.5']
+26 discounted = apply_rule(amount, rule)
+26 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '712.5', '15', "'C002'", '350.0', "'standard'", '712.5']
+PARAM_MAPPING {'amount': {'actual_var': 'amount', 'value': 350.0}, 'rule_type': {'actual_var': 'rule', 'value': 'standard'}}
+FUNCTION_ENTER 1 apply_rule def apply_rule(amount, rule_type):
+1 ['amount', 'rule_type'] [{'_type': 'float', '_value': 350.0}, {'_type': 'str', '_value': 'standard'}]
+6 if rule_type == 'premium':
+6 ['amount'] ['350.0']
+8 elif rule_type == 'standard':
+8 ['amount'] ['350.0']
+9 return amount * 0.95
+9 ['amount'] ['350.0']
+FUNCTION_RETURN 9 apply_rule {'_type': 'float', '_value': 332.5}
+29 if amount > 500:
+29 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '712.5', '15', "'C002'", '350.0', "'standard'", '332.5']
+32 processed_total += discounted
+32 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '1045.0', '15', "'C002'", '350.0', "'standard'", '332.5']
+35 if customer.startswith('C'):
+35 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '1045.0', '15', "'C002'", '350.0', "'standard'", '332.5']
+24 for customer, amount in transactions.items():
+24 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '1045.0', '15', "'B001'", '1200.0', "'standard'", '332.5']
+25 rule = discount_rules.get(customer, 'standard')
+25 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '1045.0', '15', "'B001'", '1200.0', "'premium'", '332.5']
+26 discounted = apply_rule(amount, rule)
+26 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '1045.0', '15', "'B001'", '1200.0', "'premium'", '332.5']
+PARAM_MAPPING {'amount': {'actual_var': 'amount', 'value': 1200.0}, 'rule_type': {'actual_var': 'rule', 'value': 'premium'}}
+FUNCTION_ENTER 1 apply_rule def apply_rule(amount, rule_type):
+1 ['amount', 'rule_type'] [{'_type': 'float', '_value': 1200.0}, {'_type': 'str', '_value': 'premium'}]
+6 if rule_type == 'premium':
+6 ['amount'] ['1200.0']
+7 return amount * 0.85
+7 ['amount'] ['1200.0']
+FUNCTION_RETURN 7 apply_rule {'_type': 'float', '_value': 1020.0}
+29 if amount > 500:
+29 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '1045.0', '15', "'B001'", '1200.0', "'premium'", '1020.0']
+30 bonus_points += int(amount * 0.02)
+30 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '1045.0', '39', "'B001'", '1200.0', "'premium'", '1020.0']
+32 processed_total += discounted
+32 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '2065.0', '39', "'B001'", '1200.0', "'premium'", '1020.0']
+35 if customer.startswith('C'):
+35 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '2065.0', '39', "'B001'", '1200.0', "'premium'", '1020.0']
+24 for customer, amount in transactions.items():
+24 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '2065.0', '39', "'A005'", '280.0', "'premium'", '1020.0']
+25 rule = discount_rules.get(customer, 'standard')
+25 ['transactions', 'discount_rules', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', "{C001: 'standard', B001: 'premium', A005: 'standard'}", '2065.0', '39', "'A005'", '280.0', "'standard'", '1020.0']
+26 discounted = apply_rule(amount, rule)
+26 ['transactions', 'processed_total', 'bonus_points', 'customer', 'amount', 'rule', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', '2065.0', '39', "'A005'", '280.0', "'standard'", '1020.0']
+PARAM_MAPPING {'amount': {'actual_var': 'amount', 'value': 280.0}, 'rule_type': {'actual_var': 'rule', 'value': 'standard'}}
+FUNCTION_ENTER 1 apply_rule def apply_rule(amount, rule_type):
+1 ['amount', 'rule_type'] [{'_type': 'float', '_value': 280.0}, {'_type': 'str', '_value': 'standard'}]
+6 if rule_type == 'premium':
+6 ['amount'] ['280.0']
+8 elif rule_type == 'standard':
+8 ['amount'] ['280.0']
+9 return amount * 0.95
+9 ['amount'] ['280.0']
+FUNCTION_RETURN 9 apply_rule {'_type': 'float', '_value': 266.0}
+29 if amount > 500:
+29 ['transactions', 'processed_total', 'bonus_points', 'customer', 'amount', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', '2065.0', '39', "'A005'", '280.0', '266.0']
+32 processed_total += discounted
+32 ['transactions', 'processed_total', 'bonus_points', 'customer', 'amount', 'discounted'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', '2331.0', '39', "'A005'", '280.0', '266.0']
+35 if customer.startswith('C'):
+35 ['transactions', 'processed_total', 'bonus_points', 'customer', 'amount'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', '2331.0', '39', "'A005'", '280.0']
+24 for customer, amount in transactions.items():
+24 ['transactions', 'processed_total', 'bonus_points', 'customer', 'amount'] ['{C001: 750.0, C002: 350.0, B001: 1200.0, ...}', '2331.0', '39', "'A005'", '280.0']
+39 adjustment_factor = (bonus_points % 13) / 100
+39 ['processed_total', 'bonus_points', 'adjustment_factor'] ['2331.0', '39', '0.0']
+40 final_amount = processed_total - adjustment_factor
+40 ['processed_total', 'adjustment_factor', 'final_amount'] ['2331.0', '0.0', '2331.0']
+45 return round(final_amount, 2)
+45 ['final_amount'] ['2331.0']
+66 print(f"Result: {final_result}")
+66 ['final_result'] ['2331.0']

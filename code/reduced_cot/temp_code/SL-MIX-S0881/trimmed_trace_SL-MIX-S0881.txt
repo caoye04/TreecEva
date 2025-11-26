@@ -1,0 +1,35 @@
+42
+final_processed
+---
+41 original_data = 27
+41 ['original_data'] ['27']
+42 final_processed = process_data_chain(original_data)
+42 ['original_data'] ['27']
+PARAM_MAPPING {'input_data': {'actual_var': 'original_data', 'value': 27}}
+FUNCTION_ENTER 1 process_data_chain def process_data_chain(input_data):
+1 ['input_data'] [{'_type': 'int', '_value': 27}]
+8 processed = input_data * 3
+8 ['input_data', 'processed'] ['27', '81']
+9 processed = processed - 15  # Red herring subtraction
+9 ['input_data', 'processed'] ['27', '66']
+12 if processed > 50:
+12 ['input_data', 'processed'] ['27', '66']
+13 processed = processed // 2
+13 ['input_data', 'processed'] ['27', '33']
+15 shadow_value = processed * 7 + 3
+15 ['input_data', 'processed', 'shadow_value'] ['27', '33', '234']
+22 data_map = {'primary': processed, 'secondary': shadow_value, 'tertiary': input_data * 2}
+22 ['input_data', 'processed', 'shadow_value', 'data_map'] ['27', '33', '234', '{primary: 33, secondary: 234, tertiary: 54}']
+28 result = data_map['primary'] + data_map['secondary']
+28 ['data_map', 'result'] ['{primary: 33, secondary: 234, tertiary: 54}', '267']
+29 result = result - data_map['tertiary']
+29 ['data_map', 'result'] ['{primary: 33, secondary: 234, tertiary: 54}', '213']
+32 adjustment_factor = (result % 10) + 1
+32 ['result', 'adjustment_factor'] ['213', '4']
+33 final_result = result // adjustment_factor
+33 ['result', 'adjustment_factor', 'final_result'] ['213', '4', '53']
+36 if final_result < 0:
+36 ['final_result'] ['53']
+39 return final_result
+39 ['final_result'] ['53']
+FUNCTION_RETURN 39 process_data_chain {'_type': 'int', '_value': 53}

@@ -1,18 +1,30 @@
-import hashlib
+def analyze_competition_results(data):
+    # Calculate base scores
+    base_total = sum(entry['score'] for entry in data if entry['active'])
+    
+    # Intermediate calculation (distractor)
+    temp_adjustment = len([entry for entry in data if entry['score'] > 50]) * 2
+    
+    # Apply bonus rules
+    bonus_candidates = [entry for entry in data if entry['category'] == 'expert']
+    bonus_total = sum(entry['bonus'] for entry in bonus_candidates) if bonus_candidates else 0
+    
+    # Final score calculation
+    final_score = (base_total + bonus_total) // len(data)
+    
+    # Unused intermediate (distractor)
+    max_possible = max(entry['score'] for entry in data) * 1.5
+    
+    return final_score
 
-def process_device_id(d_id):
-    reversed_id = d_id[::-1]
-    hashed = hashlib.md5(reversed_id.encode()).hexdigest()
-    hex_sum = sum(ord(c) for c in hashed[:8])
-    return (hex_sum * 3) % 17
+# Competition data
+participants_data = [
+    {'name': 'Alice', 'score': 85, 'bonus': 10, 'category': 'expert', 'active': True},
+    {'name': 'Bob', 'score': 42, 'bonus': 5, 'category': 'novice', 'active': True},
+    {'name': 'Charlie', 'score': 78, 'bonus': 15, 'category': 'expert', 'active': True},
+    {'name': 'Diana', 'score': 91, 'bonus': 20, 'category': 'expert', 'active': False}
+]
 
-device_pool = ['DEV001', 'SEN202', 'MON303', 'ALR404']
-transformed_values = {d: process_device_id(d) for d in device_pool}
-
-enhanced_pool = {k: v + (7 if k.startswith('D') else 13) for k, v in transformed_values.items()}
-filtered_pool = dict(filter(lambda item: item[1] > 10, enhanced_pool.items()))
-
-aggregated_score = sum(map(lambda x: x**2, filtered_pool.values())) % 23
-validation_checksum = (aggregated_score * 5 + 7) % 19
-
-print(f"Result: {validation_checksum}")
+# Main execution
+result = analyze_competition_results(participants_data)
+print(f"Result: {result}")

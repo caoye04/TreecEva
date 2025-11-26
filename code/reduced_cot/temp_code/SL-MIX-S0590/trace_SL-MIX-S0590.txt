@@ -1,0 +1,29 @@
+8 survey_data = [85, 92, 78, 88, 95]
+8 ['survey_data'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}]
+9 weight_factor = 1.2
+9 ['survey_data', 'weight_factor'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}, {'_type': 'float', '_value': 1.2}]
+10 result_data = survey_data
+10 ['survey_data', 'weight_factor', 'result_data'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}, {'_type': 'float', '_value': 1.2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}]
+11 final_score = calculate_final(result_data, weight_factor)
+11 ['survey_data', 'weight_factor', 'result_data'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}, {'_type': 'float', '_value': 1.2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}]
+PARAM_MAPPING calculate_final {'data': {'actual_var': 'result_data', 'value': [85, 92, 78, 88, 95]}, 'weight': {'actual_var': 'weight_factor', 'value': 1.2}}
+FUNCTION_ENTER 1 calculate_final def calculate_final(data, weight):
+1 ['data', 'weight'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}, {'_type': 'float', '_value': 1.2}]
+DEPTH_2 2     base_score = sum(data) / len(data)
+2 ['data', 'weight', 'base_score'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}, {'_type': 'float', '_value': 1.2}, {'_type': 'float', '_value': 87.6}]
+DEPTH_2 3     adjustment = lambda x: x * 0.85 if x > 80 else x * 1.15
+3 ['data', 'weight', 'base_score'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}, {'_type': 'float', '_value': 1.2}, {'_type': 'float', '_value': 87.6}]
+DEPTH_2 4     weighted_base = base_score * weight
+4 ['data', 'weight', 'base_score', 'weighted_base'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}, {'_type': 'float', '_value': 1.2}, {'_type': 'float', '_value': 87.6}, {'_type': 'float', '_value': 105.11999999999999}]
+DEPTH_2 5     final_result = adjustment(weighted_base)
+5 ['data', 'weight', 'base_score', 'weighted_base'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}, {'_type': 'float', '_value': 1.2}, {'_type': 'float', '_value': 87.6}, {'_type': 'float', '_value': 105.11999999999999}]
+FUNCTION_ENTER 3 <lambda>     adjustment = lambda x: x * 0.85 if x > 80 else x * 1.15
+3 ['x'] [{'_type': 'float', '_value': 105.11999999999999}]
+DEPTH_3 3     adjustment = lambda x: x * 0.85 if x > 80 else x * 1.15
+3 ['x'] [{'_type': 'float', '_value': 105.11999999999999}]
+FUNCTION_RETURN 3 <lambda> {'_type': 'float', '_value': 89.35199999999999}
+DEPTH_2 6     return round(final_result, 2)
+6 ['data', 'weight', 'base_score', 'weighted_base', 'final_result'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}, {'_type': 'float', '_value': 1.2}, {'_type': 'float', '_value': 87.6}, {'_type': 'float', '_value': 105.11999999999999}, {'_type': 'float', '_value': 89.35199999999999}]
+FUNCTION_RETURN 6 calculate_final {'_type': 'float', '_value': 89.35}
+12 print(f"Result: {final_score}")
+12 ['survey_data', 'weight_factor', 'result_data', 'final_score'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}, {'_type': 'float', '_value': 1.2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 95}], '_len': 5}, {'_type': 'float', '_value': 89.35}]

@@ -1,35 +1,33 @@
-def analyze_collection():
-    # Digital archive categories with document hashes
-    archive_categories = [
-        [frozenset({1024, 2048, 4096}), frozenset({8192, 16384}), frozenset({1024, 32768})],
-        [frozenset({65536, 131072}), frozenset({1024, 2048, 65536}), frozenset({262144})],
-        [frozenset({524288}), frozenset({1024, 1048576}), frozenset({2048, 4096, 8192})]
-    ]
+def calculate_efficiency(sensor_readings):
+    # Process sensor data for efficiency analysis
+    initial_readings = [reading * 2.5 for reading in sensor_readings]
+    processed_data = [(idx, val * 0.8 + 15) for idx, val in enumerate(initial_readings)]
     
-    # Greedy frequency tracking
-    hash_occurrences = {}
+    # Calculate base efficiencies (distractor - not used in final result)
+    base_efficiencies = [data[1] * 0.9 for data in processed_data]
     
-    # Nested loop to process categories and documents
-    for category in archive_categories:
-        temp_category_hashes = set()
-        for document in category:
-            temp_category_hashes.update(document)
-        
-        # Count occurrences using lambda
-        count_hash = lambda h: sum(1 for doc in category if h in doc)
-        
-        for hash_val in temp_category_hashes:
-            freq = count_hash(hash_val)
-            hash_occurrences[hash_val] = hash_occurrences.get(hash_val, 0) + freq
+    # Filter and rank valid efficiencies
+    efficiency_threshold = 25.0
+    valid_efficiencies = [data for data in processed_data if data[1] > efficiency_threshold]
     
-    # Early termination condition with logical operations
-    peak_frequency = 0
-    for freq in hash_occurrences.values():
-        # Ternary operator for updating peak
-        peak_frequency = freq if freq > peak_frequency and not (freq % 2 == 0 and freq < 10) else peak_frequency
+    # Create efficiency tuples with adjustment factors
+    adjustment_factors = [0.85, 1.2, 0.95, 1.1, 1.05]
+    efficiency_tuples = []
     
-    return peak_frequency
+    for i, data in enumerate(valid_efficiencies):
+        if i < len(adjustment_factors):
+            adjusted_value = data[1] * adjustment_factors[i]
+            efficiency_tuples.append((data[0], adjusted_value))
+    
+    # Intermediate calculation that doesn't affect final result
+    avg_efficiency = sum([eff[1] for eff in efficiency_tuples]) / len(efficiency_tuples) if efficiency_tuples else 0
+    
+    # Select final efficiency based on highest adjusted value
+    filtered_efficiencies = [eff for eff in efficiency_tuples if eff[1] > 28]
+    final_efficiency = max(filtered_efficiencies, key=lambda x: x[1])[0]
+    
+    print(f"Result: {final_efficiency}")
 
-# Execute analysis
-peak_frequency = analyze_collection()
-print(f"Result: {peak_frequency}")
+# Main execution
+sensor_data = [12, 8, 15, 6, 20]
+calculate_efficiency(sensor_data)

@@ -1,11 +1,59 @@
-8
-dynamic_range_db
+30
+final_balance
 ---
-3 amplitude_measurements = [0.05, 0.2, 1.5, 0.8, 3.2, 0.1]
-3 ['amplitude_measurements'] ['[0.05, 0.2, 1.5, 0.8, 3.2, ...]']
-4 max_amplitude = max(amplitude_measurements)
-4 ['amplitude_measurements', 'max_amplitude'] ['[0.05, 0.2, 1.5, 0.8, 3.2, ...]', '3.2']
-5 min_amplitude = min(amplitude_measurements)
-5 ['amplitude_measurements', 'max_amplitude', 'min_amplitude'] ['[0.05, 0.2, 1.5, 0.8, 3.2, ...]', '3.2', '0.05']
-8 dynamic_range_db = 20 * math.log10(max_amplitude / min_amplitude)
-8 ['max_amplitude', 'min_amplitude', 'dynamic_range_db'] ['3.2', '0.05', '36.12359947967774']
+4 transactions = [('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]
+4 ['transactions'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]"]
+5 account_summary = defaultdict(int)
+5 ['transactions', 'account_summary'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{}']
+9 for transaction_type, amount in transactions:
+9 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{}', "'deposit'", '1500']
+10 if transaction_type == 'deposit':
+10 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{}', "'deposit'", '1500']
+11 account_summary['balance'] += amount
+11 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1500}', "'deposit'", '1500']
+9 for transaction_type, amount in transactions:
+9 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1500}', "'withdrawal'", '450']
+10 if transaction_type == 'deposit':
+10 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1500}', "'withdrawal'", '450']
+13 elif transaction_type == 'withdrawal':
+13 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1500}', "'withdrawal'", '450']
+14 account_summary['balance'] -= amount
+14 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1050}', "'withdrawal'", '450']
+9 for transaction_type, amount in transactions:
+9 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1050}', "'deposit'", '800']
+10 if transaction_type == 'deposit':
+10 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1050}', "'deposit'", '800']
+11 account_summary['balance'] += amount
+11 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1850}', "'deposit'", '800']
+9 for transaction_type, amount in transactions:
+9 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1850}', "'withdrawal'", '300']
+10 if transaction_type == 'deposit':
+10 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1850}', "'withdrawal'", '300']
+13 elif transaction_type == 'withdrawal':
+13 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1850}', "'withdrawal'", '300']
+14 account_summary['balance'] -= amount
+14 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1550}', "'withdrawal'", '300']
+9 for transaction_type, amount in transactions:
+9 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1550}', "'service_fee'", '25']
+10 if transaction_type == 'deposit':
+10 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1550}', "'service_fee'", '25']
+13 elif transaction_type == 'withdrawal':
+13 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1550}', "'service_fee'", '25']
+16 elif transaction_type == 'service_fee':
+16 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1550}', "'service_fee'", '25']
+17 account_summary['fees'] += amount
+17 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1550, fees: 25}', "'service_fee'", '25']
+9 for transaction_type, amount in transactions:
+9 ['transactions', 'account_summary', 'transaction_type', 'amount'] ["[('deposit', 1500), ('withdrawal', 450), ('deposit', 800), ('withdrawal', 300), ('service_fee', 25)]", '{balance: 1550, fees: 25}', "'service_fee'", '25']
+20 base_balance = account_summary['balance']
+20 ['account_summary', 'base_balance'] ['{balance: 1550, fees: 25}', '1550']
+21 total_fees = account_summary['fees']
+21 ['account_summary', 'base_balance', 'total_fees'] ['{balance: 1550, fees: 25}', '1550', '25']
+25 balance_adjustment = 100
+25 ['base_balance', 'total_fees', 'balance_adjustment'] ['1550', '25', '100']
+26 adjusted_balance = base_balance + balance_adjustment
+26 ['base_balance', 'total_fees', 'balance_adjustment', 'adjusted_balance'] ['1550', '25', '100', '1650']
+27 service_fee = total_fees + 5  # Additional fixed fee
+27 ['total_fees', 'adjusted_balance', 'service_fee'] ['25', '1650', '30']
+30 final_balance = adjusted_balance - service_fee
+30 ['adjusted_balance', 'service_fee', 'final_balance'] ['1650', '30', '1620']

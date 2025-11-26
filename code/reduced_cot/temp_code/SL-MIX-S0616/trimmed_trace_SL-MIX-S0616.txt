@@ -1,0 +1,29 @@
+45
+final_balance
+---
+27 initial_deposit = 5000
+27 ['initial_deposit'] ['5000']
+31 monthly_withdrawals = defaultdict(int)
+31 ['initial_deposit', 'monthly_withdrawals'] ['5000', '{}']
+32 monthly_withdrawals['january'] = 850
+32 ['initial_deposit', 'monthly_withdrawals'] ['5000', '{january: 850}']
+33 monthly_withdrawals['february'] = 320
+33 ['initial_deposit', 'monthly_withdrawals'] ['5000', '{january: 850, february: 320}']
+34 monthly_withdrawals['march'] = 610
+34 ['initial_deposit', 'monthly_withdrawals'] ['5000', '{january: 850, february: 320, march: 610}']
+35 monthly_withdrawals['april'] = 280  # This key is never accessed
+35 ['initial_deposit', 'monthly_withdrawals'] ['5000', '{january: 850, february: 320, march: 610, ...}']
+42 final_balance = account_processor(initial_deposit, monthly_withdrawals)
+42 ['initial_deposit', 'monthly_withdrawals'] ['5000', '{january: 850, february: 320, march: 610, ...}']
+9 total_withdrawn = sum(withdrawals.values())
+9 ['principal', 'withdrawals', 'total_withdrawn'] ['5000', '{january: 850, february: 320, march: 610, ...}', '2060']
+10 remaining = principal - total_withdrawn
+10 ['principal', 'total_withdrawn', 'remaining'] ['5000', '2060', '2940']
+17 if remaining < -10000:
+17 ['remaining'] ['2940']
+22 adjusted_balance = remaining * 0.99  # Actually used
+22 ['remaining', 'adjusted_balance'] ['2940', '2910.6']
+24 return int(adjusted_balance)
+24 ['adjusted_balance'] ['2910.6']
+45 print(f"Result: {final_balance}")
+45 ['final_balance'] ['2910']

@@ -1,28 +1,27 @@
-from math import factorial
-from itertools import combinations
+from collections import Counter
 
-def compute_interaction_score(marker_set):
-    if len(marker_set) == 1:
-        return marker_set[0] * 2
-    else:
-        mid = len(marker_set) // 2
-        left_score = compute_interaction_score(marker_set[:mid])
-        right_score = compute_interaction_score(marker_set[mid:])
-        return left_score + right_score + (marker_set[0] & marker_set[-1])
+student_grades = [85, 92, 78, 96, 88, 91, 74, 89, 95, 82]
 
-genetic_markers = [3, 7, 7, 15]
-subset_scores = []
+# Calculate grade statistics
+grade_counter = Counter(student_grades)
+most_common_grade = grade_counter.most_common(1)[0][0]
+average_grade = sum(student_grades) / len(student_grades)
 
-for r in range(1, len(genetic_markers) + 1):
-    for subset_tuple in combinations(genetic_markers, r):
-        subset_list = list(subset_tuple)
-        score = compute_interaction_score(subset_list)
-        subset_scores.append(score)
+# Process grades with adjustments
+processed_data = []
+for grade in student_grades:
+    temp_adjustment = grade * 0.1  # Not used in final calculation
+    adjusted_grade = grade + 2 if grade < 90 else grade - 1
+    processed_data.append(adjusted_grade)
 
-# Normalize using variance adjustment
-mean_score = sum(subset_scores) / len(subset_scores)
-squared_differences = [(x - mean_score) ** 2 for x in subset_scores]
-variance = sum(squared_differences) / len(subset_scores)
+# Calculate adjustment factor based on grade distribution
+high_grades = [g for g in student_grades if g >= 90]
+low_grades = [g for g in student_grades if g < 80]
+adjustment_factor = len(high_grades) - len(low_grades)
 
-final_diversity_score = int(mean_score + variance)
-print(f"Result: {final_diversity_score}")
+# Redundant calculation that doesn't affect final result
+bonus_points = sum(g % 10 for g in student_grades)
+
+# Final computation
+final_score = processed_data[-1] + adjustment_factor
+print(f"Result: {final_score}")

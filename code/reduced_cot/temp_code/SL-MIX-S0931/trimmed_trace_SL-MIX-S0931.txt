@@ -1,0 +1,63 @@
+60
+final_checksum
+---
+54 input_data = [15, 22, 15, 8, 22, 15, 30, 8, 15, 22, 45, 22]
+54 ['input_data'] ['[15, 22, 15, 8, 22, ...]']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '15']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '22']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '15']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '8']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '22']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '15']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '30']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '8']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '15']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '22']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '45']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'x'] ['[15, 22, 15, 8, 22, ...]', '22']
+55 encoded_values = [x + 10 for x in input_data]
+55 ['input_data', 'encoded_values'] ['[15, 22, 15, 8, 22, ...]', '[25, 32, 25, 18, 32, ...]']
+57 checksum_processor = ChecksumProcessor()
+57 ['encoded_values'] ['[25, 32, 25, 18, 32, ...]']
+58 final_checksum = checksum_processor.process_data(encoded_values)
+58 ['encoded_values', 'checksum_processor'] ['[25, 32, 25, 18, 32, ...]', 'ChecksumProcessor(...)']
+32 counter = Counter(values)
+32 ['values', 'counter'] ['[25, 32, 25, 18, 32, ...]', '{25: 4, 32: 4, 18: 2, ...}']
+33 most_common = counter.most_common(2)
+33 ['values', 'counter', 'most_common'] ['[25, 32, 25, 18, 32, ...]', '{25: 4, 32: 4, 18: 2, ...}', '[(25, 4), (32, 4)]']
+35 if len(most_common) >= 2:
+35 ['values', 'most_common'] ['[25, 32, 25, 18, 32, ...]', '[(25, 4), (32, 4)]']
+36 primary, secondary = most_common[0][0], most_common[1][0]
+36 ['values', 'most_common', 'primary', 'secondary'] ['[25, 32, 25, 18, 32, ...]', '[(25, 4), (32, 4)]', '25', '32']
+37 validation_result = validate_data_pattern(values)
+37 ['values', 'primary', 'secondary'] ['[25, 32, 25, 18, 32, ...]', '25', '32']
+7 if len(data) > 10:
+7 ['data'] ['[25, 32, 25, 18, 32, ...]']
+8 temp = data[:5] + data[-5:]
+8 ['data', 'temp'] ['[25, 32, 25, 18, 32, ...]', '[25, 32, 25, 18, 32, ...]']
+9 pattern_check = sum(temp) * 2
+9 ['temp', 'pattern_check'] ['[25, 32, 25, 18, 32, ...]', '588']
+16 return pattern_check
+16 ['pattern_check'] ['588']
+40 bit_ops = (primary ^ secondary) & 0xFF
+40 ['primary', 'secondary', 'validation_result', 'bit_ops'] ['25', '32', '588', '57']
+41 adjustment = (validation_result % 256) >> 3
+41 ['validation_result', 'bit_ops', 'adjustment'] ['588', '57', '9']
+42 result = bit_ops + adjustment
+42 ['bit_ops', 'adjustment', 'result'] ['57', '9', '66']
+49 return result
+49 ['result'] ['66']
+60 print(f"Target result: {final_checksum}")
+60 ['final_checksum'] ['66']

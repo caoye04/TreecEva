@@ -1,88 +1,40 @@
-import re
-import math
-from functools import wraps
+def analyze_data_stream(data_chunks):
+    # Initialize tracking variables
+    raw_count = len(data_chunks)
+    processed_count = 0
+    discarded_count = 0
+    quality_modifier = 17
+    
+    # Distractor: irrelevant buffer operations
+    buffer_size = 1024
+    buffer_utilization = buffer_size // 8
+    compression_ratio = 3.2
+    
+    # Process data chunks with filtering
+    valid_chunks = [chunk for chunk in data_chunks if len(chunk) > 5]
+    processed_count = len(valid_chunks)
+    
+    # Misleading intermediate calculation
+    temp_efficiency = (raw_count * buffer_utilization) // compression_ratio
+    
+    # Quality assessment with conditional expressions
+    quality_scores = [8 if 'error' not in chunk else 2 for chunk in valid_chunks]
+    high_quality_count = sum(1 for score in quality_scores if score > 5)
+    discarded_count = processed_count - high_quality_count
+    
+    # Dead code path - never executed
+    if compression_ratio > 10:
+        optimization_factor = 2
+        # This branch is never taken
+        processed_count *= optimization_factor
+    
+    # Final throughput calculation (target statement)
+    final_throughput = (processed_count * 2 - discarded_count) % quality_modifier
+    
+    # Print result
+    print(f"Result: {final_throughput}")
+    return final_throughput
 
-def encode_dna_sequence(sequence):
-    mapping = {'A': '00', 'T': '01', 'C': '10', 'G': '11'}
-    return ''.join(mapping[nucleotide] for nucleotide in sequence)
-
-def decode_dna_sequence(encoded):
-    mapping = {'00': 'A', '01': 'T', '10': 'C', '11': 'G'}
-    return ''.join(mapping[encoded[i:i+2]] for i in range(0, len(encoded), 2))
-
-def fibonacci(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
-
-class GeneticAnalyzer:
-    def __init__(self):
-        self.marker_values = []
-    
-    def add_marker(self, value):
-        self.marker_values.append(value)
-    
-    def calculate_variance(self):
-        if not self.marker_values:
-            return 0
-        mean = sum(self.marker_values) / len(self.marker_values)
-        return sum((x - mean) ** 2 for x in self.marker_values) / len(self.marker_values)
-
-def retry_analysis(max_attempts=3):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            for attempt in range(max_attempts):
-                try:
-                    return func(*args, **kwargs)
-                except Exception:
-                    if attempt == max_attempts - 1:
-                        raise
-            return None
-        return wrapper
-    return decorator
-
-@retry_analysis(max_attempts=2)
-def process_genetic_data(dna_sequence):
-    # Encode sequence
-    encoded = encode_dna_sequence(dna_sequence)
-    
-    # Apply transformation using Fibonacci
-    transformed = ''
-    for i, bit in enumerate(encoded):
-        fib_val = fibonacci(i+1) % 2
-        transformed += str(int(bit) ^ fib_val)  # XOR with Fibonacci bit
-    
-    # Decode back
-    decoded = decode_dna_sequence(transformed)
-    
-    # Extract marker patterns
-    analyzer = GeneticAnalyzer()
-    marker_pattern = re.compile(r'[AT]{2,}')
-    matches = marker_pattern.findall(decoded)
-    
-    for match in matches:
-        # Calculate marker value based on length and composition
-        at_count = match.count('A') + match.count('T')
-        cg_count = match.count('C') + match.count('G')
-        marker_value = (at_count * 2) + (cg_count * 3) if at_count > cg_count else (cg_count * 4) - (at_count * 1)
-        analyzer.add_marker(marker_value)
-    
-    return analyzer.calculate_variance()
-
-# Main analysis
-original_sequence = "ATCGATCGATCG"
-
-with open('genetic_analysis.log', 'w') as log_file:
-    log_file.write(f"Starting analysis of {original_sequence}\n")
-    
-    # Check if sequence meets quality criteria
-    quality_check = len(original_sequence) >= 10 and \
-                   original_sequence.count('N') == 0  # N represents unknown nucleotides
-    
-    final_genetic_marker_score = quality_check and process_genetic_data(original_sequence) or 0
-    
-    log_file.write(f"Analysis complete. Score: {final_genetic_marker_score}\n")
-
-print(f"Result: {final_genetic_marker_score}")
+# Test data
+test_chunks = ['data_packet_1', 'error_data', 'valid_stream_3', 'corrupt_4', 'good_packet_5', 'data_6']
+result = analyze_data_stream(test_chunks)

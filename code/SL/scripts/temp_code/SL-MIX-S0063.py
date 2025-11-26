@@ -1,23 +1,12 @@
-import math
+base_coordinates = (15, 8, 22)
+threshold = 12
+x, y, z = base_coordinates
 
-def tokenize(message):
-    return [ord(c) for c in message]
+adjusted_x = x + 5 if x < threshold else x - 3
+adjusted_y = y * 2 if y > threshold else y + 7
+adjusted_z = z // 2 if z % 2 == 0 else z * 2
 
-def hash_token(token):
-    return (token * 31) % 256
+adjusted_value = adjusted_x + adjusted_y + adjusted_z
+final_result = adjusted_value
 
-def process_layer(tokens, shift_val):
-    hashed = [hash_token(t) for t in tokens]
-    shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-    xor_result = 0
-    for s in shifted:
-        xor_result ^= s
-    return xor_result >> shift_val
-
-token_sequence = tokenize("SECURE")
-layer1_result = process_layer(token_sequence, 1)
-layer2_result = process_layer(token_sequence[::-1], 2)
-auth_signature = (layer1_result ^ layer2_result) & 0xFF
-exp_component = int(math.log2(layer1_result + 1)) if layer1_result > 0 else 0
-auth_signature = (auth_signature << 2) | exp_component
-print(f"Result: {auth_signature}")
+print(f"Result: {final_result}")

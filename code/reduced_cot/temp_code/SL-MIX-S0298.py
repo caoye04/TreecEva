@@ -1,18 +1,28 @@
-def fibonacci(n):
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
+def analyze_inventory():
+    # Inventory analysis for warehouse management
+    initial_stock = {101, 102, 103, 104, 105, 106, 107, 108}
+    current_stock = {101, 103, 105, 107, 109, 110, 111}
+    
+    # Calculate common items between initial and current stock
+    common_items = initial_stock.intersection(current_stock)
+    
+    # Additional analysis (distractor operations)
+    total_items = len(initial_stock) + len(current_stock)
+    potential_new = current_stock - initial_stock
+    
+    # Intermediate calculations with some redundancy
+    stock_ratio = len(common_items) / len(initial_stock)
+    processed_count = len(potential_new) * 2
+    
+    # Key calculation for final result
+    remaining_set = initial_stock - current_stock
+    adjustment_factor = len(remaining_set) // 2
+    
+    # Final computation
+    final_count = len(common_items) - len(remaining_set)
+    
+    # Output the target variable
+    print(f"Result: {final_count}")
+    return final_count
 
-def hash_chain(depth, accumulator=0):
-    if depth <= 0 or (depth > 10 and accumulator > 1000):
-        return accumulator
-    fib_index = fibonacci(depth)
-    transform = lambda x: (x * 17 + 23) % 1000
-    transformed_value = transform(fib_index)
-    return hash_chain(depth - 1, accumulator + transformed_value)
-
-# Initialize security parameters
-initial_values = {i: fibonacci(i) for i in range(5, 8)}
-combined_seed = sum(initial_values.values())
-security_token = hash_chain(6, combined_seed)
-print(f"Result: {security_token}")
+analyze_inventory()

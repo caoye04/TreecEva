@@ -1,44 +1,39 @@
-from collections import deque
-from statistics import mean, variance
-class SignalNode:
-    def __init__(self, value=0, next_node=None):
-        self.value = value
-        self.next = next_node
+def process_teams(team_data):
+    team_scores = {}
+    bonus_points = 15
+    temporary_buffer = []
+    
+    for idx, (team_name, scores) in enumerate(team_data):
+        team_total = sum(scores) + (idx * 2)
+        adjusted_score = team_total - 5
+        team_scores[team_name] = adjusted_score
+        temporary_buffer.append(team_total)
+    
+    # Calculate some intermediate values that won't be used
+    max_possible = max(temporary_buffer) if temporary_buffer else 0
+    average_temp = sum(temporary_buffer) / len(temporary_buffer) if temporary_buffer else 0
+    
+    # Process rankings
+    sorted_teams = sorted(team_scores.items(), key=lambda x: x[1], reverse=True)
+    ranking_multiplier = [3, 2, 1, 0]
+    
+    total_score = 0
+    for rank, (team_name, score) in enumerate(sorted_teams[:4]):
+        multiplier = ranking_multiplier[rank] if rank < len(ranking_multiplier) else 0
+        total_score += score * multiplier
+    
+    # Some unused calculations
+    unused_calc = bonus_points * len(team_data)
+    alternative_total = sum(team_scores.values())
+    
+    return total_score
 
-def build_signal_chain(values):
-    if not values:
-        return None
-    head = SignalNode(values[0])
-    current = head
-    for val in values[1:]:
-        current.next = SignalNode(val)
-        current = current.next
-    return head
+team_data = [
+    ("Alpha", [12, 8, 15]),
+    ("Bravo", [10, 14, 9]),
+    ("Charlie", [11, 13, 12]),
+    ("Delta", [9, 16, 8])
+]
 
-def compute_variance_of_linked_list(head):
-    values = []
-    current = head
-    while current:
-        values.append(current.value)
-        current = current.next
-    return variance(values) if len(values) > 1 else 0
-
-def apply_bitwise_mask(head, mask):
-    current = head
-    while current:
-        current.value &= mask
-        current = current.next
-
-signal_data = [12, 28, 35, 42, 56, 63]
-signal_chain = build_signal_chain(signal_data)
-mask = 0b111100  # 60 in decimal
-apply_bitwise_mask(signal_chain, mask)
-variance_result = compute_variance_of_linked_list(signal_chain)
-values_for_mean = []
-current = signal_chain
-while current:
-    values_for_mean.append(current.value)
-    current = current.next
-mean_value = mean(values_for_mean)
-processed_signal_strength = int(mean_value + variance_result) ^ (mask >> 2)
-print(f"Result: {processed_signal_strength}")
+result = process_teams(team_data)
+print(f"Target result: {result}")

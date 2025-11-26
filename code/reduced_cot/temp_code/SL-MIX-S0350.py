@@ -1,39 +1,68 @@
-import math
-
-def modified_fibonacci_with_decay(n, decay_rate=0.1):
-    if n <= 0:
-        return 0
-    elif n == 1:
-        return 1
-    else:
-        # Dynamic programming approach to avoid redundant calculations
-        fib_cache = [0] * (n + 1)
-        fib_cache[1] = 1
+def analyze_data_stream(stream_data):
+    processed_values = []
+    temp_buffer = []
+    irrelevant_sum = 0
+    
+    # Process stream with irrelevant operations
+    for idx, value in enumerate(stream_data):
+        temp_buffer.append(value * 2)  # Misleading operation
+        irrelevant_sum += value ** 2   # Dead calculation
         
-        for i in range(2, n + 1):
-            # Modified Fibonacci: F(n) = F(n-1) + F(n-2) + decay_factor
-            decay_factor = math.exp(-decay_rate * i)
-            fib_cache[i] = fib_cache[i-1] + fib_cache[i-2] + decay_factor
+        # Relevant filtering logic
+        if idx % 3 == 0:
+            processed_values.append(value + 5)
+        elif idx % 3 == 1:
+            processed_values.append(value * 3)
+        else:
+            processed_values.append(value - 2)  # Dead path for this input
+    
+    # More distractions
+    fake_max = max(temp_buffer)  # Unused
+    fake_min = min(stream_data)  # Unused
+    
+    return processed_values
+
+def combine_metrics(data_a, data_b):
+    combined = []
+    misleading_product = 1
+    
+    # Zip and enumerate with distractions
+    for i, (a_val, b_val) in enumerate(zip(data_a, data_b)):
+        misleading_product *= a_val + b_val  # Red herring
         
-        return fib_cache[n]
+        # Core logic with set operations
+        unique_vals = {a_val, b_val, i}
+        if len(unique_vals) == 3:
+            combined.append(a_val + b_val + i)
+        elif a_val > b_val:
+            combined.append(a_val - b_val)  # Dead path
+        else:
+            combined.append(a_val * b_val)  # Dead path
+    
+    return combined
 
-# Analysis period
-analysis_period = 15
+# Main execution with distractions
+sensor_readings = [12, 8, 15, 6, 20, 10]
+calibration_data = [3, 7, 2, 9, 4, 11]
 
-degradation_sequence = [modified_fibonacci_with_decay(i, 0.05) for i in range(1, analysis_period + 1)]
+# Irrelevant preprocessing
+scaled_readings = [x * 1.5 for x in sensor_readings]  # Unused
+shifted_calibration = [x + 10 for x in calibration_data]  # Unused
 
-# Calculate cumulative impact with weighted contributions
-signal_weights = [math.log(i+2) for i in range(analysis_period)]
+# Actual processing
+processed_stream = analyze_data_stream(sensor_readings)
+combined_results = combine_metrics(processed_stream, calibration_data)
 
-weighted_degradations = [degradation_sequence[i] * signal_weights[i] for i in range(len(degradation_sequence))]
+# Final calculation with enumerate
+enumerate_filtered = []
+for index, value in enumerate(combined_results):
+    if index % 2 == 0:
+        enumerate_filtered.append(value)
 
-# Apply a secondary filter to focus on significant degradation events
-significant_degradations = list(filter(lambda x: x > 5, weighted_degradations))
+# Dead code path
+if sum(combined_results) > 100:
+    final_metric = sum(combined_results)  # Never executed
+else:
+    final_metric = sum(enumerate_filtered)
 
-# Calculate the cumulative impact
-from functools import reduce
-cumulative_impact = reduce(lambda acc, val: acc + val * 0.75, significant_degradations, 0)
-
-cumulative_impact = round(cumulative_impact, 2)
-
-print(f"Result: {cumulative_impact}")
+print(f"Result: {final_metric}")

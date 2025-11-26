@@ -1,5 +1,37 @@
-10
-loaded_packages_count
+24
+final_output
 ---
-10 loaded_packages_count = 0
-10 ['loaded_packages_count'] ['0']
+2 inventory_counts = {'A': 45, 'B': 67, 'C': 89, 'D': 23, 'E': 56}
+2 ['inventory_counts'] ['{A: 45, B: 67, C: 89, ...}']
+3 adjustment_factors = {'X': 15, 'Y': 28, 'Z': 42}
+3 ['inventory_counts', 'adjustment_factors'] ['{A: 45, B: 67, C: 89, ...}', '{X: 15, Y: 28, Z: 42}']
+6 primary_key = 'C'
+6 ['inventory_counts', 'adjustment_factors', 'primary_key'] ['{A: 45, B: 67, C: 89, ...}', '{X: 15, Y: 28, Z: 42}', "'C'"]
+14 adjustment_mask = adjustment_factors['Y'] & 0b1111
+14 ['inventory_counts', 'adjustment_factors', 'primary_key', 'adjustment_mask'] ['{A: 45, B: 67, C: 89, ...}', '{X: 15, Y: 28, Z: 42}', "'C'", '12']
+15 processed_data = {}
+15 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{}']
+16 for key, value in inventory_counts.items():
+16 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data', 'key', 'value'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{}', "'A'", '45']
+17 processed_data[key] = value | 0x10
+17 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data', 'key', 'value'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{A: 61}', "'A'", '45']
+16 for key, value in inventory_counts.items():
+16 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data', 'key', 'value'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{A: 61}', "'B'", '67']
+17 processed_data[key] = value | 0x10
+17 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data', 'key', 'value'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{A: 61, B: 83}', "'B'", '67']
+16 for key, value in inventory_counts.items():
+16 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data', 'key', 'value'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{A: 61, B: 83}', "'C'", '89']
+17 processed_data[key] = value | 0x10
+17 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data', 'key', 'value'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{A: 61, B: 83, C: 89}', "'C'", '89']
+16 for key, value in inventory_counts.items():
+16 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data', 'key', 'value'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{A: 61, B: 83, C: 89}', "'D'", '23']
+17 processed_data[key] = value | 0x10
+17 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data', 'key', 'value'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{A: 61, B: 83, C: 89, ...}', "'D'", '23']
+16 for key, value in inventory_counts.items():
+16 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data', 'key', 'value'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{A: 61, B: 83, C: 89, ...}', "'E'", '56']
+17 processed_data[key] = value | 0x10
+17 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data', 'key', 'value'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{A: 61, B: 83, C: 89, ...}', "'E'", '56']
+16 for key, value in inventory_counts.items():
+16 ['inventory_counts', 'primary_key', 'adjustment_mask', 'processed_data', 'key', 'value'] ['{A: 45, B: 67, C: 89, ...}', "'C'", '12', '{A: 61, B: 83, C: 89, ...}', "'E'", '56']
+24 final_output = processed_data[primary_key] ^ adjustment_mask
+24 ['primary_key', 'adjustment_mask', 'processed_data', 'final_output'] ["'C'", '12', '{A: 61, B: 83, C: 89, ...}', '85']

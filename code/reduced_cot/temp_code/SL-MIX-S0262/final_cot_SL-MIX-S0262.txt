@@ -1,0 +1,54 @@
+Target: Find the value of variable crypto_sum after [line 49] executes
+
+[line 12]  processed_tx = []
+Compute: [] = []
+[line 13]  for idx, tx in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 14]  if tx % 2 == 0 and tx > 100:
+Condition: True, entering 'if' block
+[line 16]  elif tx < 50:
+'elif' Condition: True, entering block
+[line 13]  for idx, tx in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 14]  if tx % 2 == 0 and tx > 100:
+Condition: True, entering 'if' block
+[line 16]  elif tx < 50:
+'elif' Condition: True, entering block
+... [Line 13] repeats 4 more times ...
+... [Line 13] repeats 4 more times ...
+[line 13]  for idx, tx in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 14]  if tx % 2 == 0 and tx > 100:
+Condition: True, entering 'if' block
+[line 13]  for idx, tx in enumerate(transactions):
+Loop End: Iteration finished
+[line 21]  trading_fee = 0.0025
+Assign: trading_fee = 0.0025
+[line 25]  temp_result = 0
+Assign: temp_result = 0
+[line 26]  for val in processed_tx:
+Loop Start: val takes its first value 400
+[line 26]  for val in processed_tx:
+Loop Iteration: val is now 52 (iteration 2)
+[line 26]  for val in processed_tx:
+Loop Iteration: val is now 312 (iteration 3)
+[line 26]  for val in processed_tx:
+Loop Iteration: val is now 360 (iteration 4)
+[line 26]  for val in processed_tx:
+Loop End: Iteration finished
+[line 30]  misleading_total = sum(processed_tx) * trading_fee
+Compute: sum(processed_tx) * trading_fee, where processed_tx=[400, 52, 312, 360] (defined at [line 12]), trading_fee=0.0025 (defined at [line 21]) = 2.81
+[line 33]  final_values = [x | 0x1F for x in processed_tx]  # Bitwise OR
+Compute: [x | 0x1F for x in processed_tx]  # Bitwise OR, where x=400 (an unknown source), processed_tx=[400, 52, 312, 360] (defined at [line 12]) = ?
+[line 43]  base_value = temp_result
+Compute: temp_result, where temp_result=244 (defined at [line 25]) = 244
+[line 44]  adjustment = len(final_values) * 7
+Compute: len(final_values) * 7, where final_values=[415, 63, 319, 383] (defined at [line 33]) = 28
+[line 45]  intermediate = (base_value << 2) + adjustment  # Bitwise shift
+Compute: (base_value << 2) + adjustment  # Bitwise shift, where base_value=244 (defined at [line 43]), adjustment=28 (defined at [line 44]) = 1004
+[line 48]  final_total = intermediate - (misleading_total % 100)
+Compute: intermediate - (misleading_total % 100), where intermediate=1004 (defined at [line 45]), misleading_total=2.81 (defined at [line 30]) = 1001.19
+[line 49]  crypto_sum = final_total
+Compute: final_total, where final_total=1001.19 (defined at [line 48]) = 1001.19
+
+Answer: crypto_sum = 1001.19 (last updated on defined at [line 49])

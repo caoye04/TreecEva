@@ -1,33 +1,25 @@
-from collections import deque
+def process_data(data_sequence):
+    intermediate_sum = sum(data_sequence)
+    processed_values = [x * 2 for x in data_sequence if x > 5]
+    
+    # Distractor calculation - not used in final result
+    temp_product = 1
+    for num in data_sequence:
+        temp_product *= (num + 1)
+    
+    filtered_numbers = [x for x in processed_values if x < 25]
+    
+    # Another distractor operation
+    redundant_check = len([x for x in filtered_numbers if x % 2 == 0])
+    
+    final_result = [x for x in filtered_numbers if x % 3 == 0]
+    target_value = sum(final_result)
+    
+    # More distraction
+    unused_calculation = intermediate_sum - temp_product % 10
+    
+    print(f"Result: {target_value}")
 
-class DayNode:
-    def __init__(self, duration):
-        self.duration = duration
-        self.next = None
-
-def create_linked_list(durations):
-    if not durations:
-        return None
-    head = DayNode(durations[0])
-    current = head
-    for duration in durations[1:]:
-        current.next = DayNode(duration)
-        current = current.next
-    return head
-
-daily_durations = deque([10, 15, 12, 8, 20, 18, 22])
-checkout_history = []
-
-for _ in range(len(daily_durations)):
-    day_duration = daily_durations.popleft()
-    checkout_history.append(day_duration)
-
-linked_days = create_linked_list(checkout_history)
-weekly_total = 0
-current_day = linked_days
-
-while current_day:
-    weekly_total += current_day.duration
-    current_day = current_day.next
-
-print(f"Result: {weekly_total}")
+# Main execution
+sample_data = [3, 7, 4, 9, 2, 8, 6]
+process_data(sample_data)

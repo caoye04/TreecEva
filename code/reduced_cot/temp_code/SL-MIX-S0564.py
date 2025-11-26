@@ -1,34 +1,58 @@
-from collections import defaultdict
+def analyze_inventory(products):
+    stock_analysis = {}
+    total_items = 0
+    
+    for product, details in products.items():
+        current_stock = details['stock']
+        price = details['price']
+        
+        # Calculate value but don't use it
+        stock_value = current_stock * price
+        
+        # Distractor operation
+        temp_check = current_stock % 3
+        
+        if current_stock > 15:
+            status = 'High'
+            adjustment = current_stock - 10
+        elif current_stock > 5:
+            status = 'Medium'
+            adjustment = current_stock * 2
+        else:
+            status = 'Low'
+            adjustment = current_stock + 8
+            
+        stock_analysis[product] = {
+            'status': status,
+            'adjusted': adjustment
+        }
+        total_items += current_stock
+    
+    # Find product with highest adjusted value
+    target_key = max(stock_analysis.keys(), 
+                    key=lambda x: stock_analysis[x]['adjusted'])
+    
+    processed_data = {}
+    for product, analysis in stock_analysis.items():
+        # Unused intermediate calculation
+        score = len(product) * analysis['adjusted']
+        
+        if analysis['status'] == 'High':
+            processed_data[product] = analysis['adjusted'] - 7
+        elif analysis['status'] == 'Medium':
+            processed_data[product] = analysis['adjusted'] + 3
+        else:
+            processed_data[product] = analysis['adjusted'] * 2
+    
+    final_result = processed_data[target_key]
+    print(f"Result: {final_result}")
 
-def process_packets():
-    # Initialize packet tracking system
-    packet_registry = defaultdict(int)
-    validation_flag = 0x1F3C
-    
-    # Encrypted packet headers
-    packet_headers = [0xA7, 0x3B, 0x9E, 0x64, 0xF1]
-    
-    # Process each packet
-    for idx, header in enumerate(packet_headers):
-        # Register packet occurrence
-        packet_registry[header & 0x0F] += 1
-        
-        # Apply custom checksum: XOR with shifted header
-        validation_flag ^= (header << (idx & 3))
-        
-        # Conditional update based on packet registry
-        active_channels = sum(1 for count in packet_registry.values() if count > 0)
-        validation_flag = validation_flag & 0xFFFF if active_channels > 2 else validation_flag | 0x8000
-        
-        # Apply modular adjustment
-        validation_flag = (validation_flag + (header * idx)) % 0xFFFF
-    
-    # Final security check
-    channel_diversity = len([k for k in packet_registry if packet_registry[k] > 0])
-    validation_flag = validation_flag ^ (0xFF & (channel_diversity << 4))
-    
-    return validation_flag
+# Main execution
+product_inventory = {
+    'widget_A': {'stock': 25, 'price': 12.5},
+    'widget_B': {'stock': 8, 'price': 18.0},
+    'widget_C': {'stock': 3, 'price': 22.0},
+    'widget_D': {'stock': 18, 'price': 15.5}
+}
 
-# Execute packet processing
-final_validation_flag = process_packets()
-print(f"Result: {final_validation_flag}")
+analyze_inventory(product_inventory)

@@ -1,5 +1,45 @@
-4
-available_count
+26
+final_result
 ---
-4 available_count = 0
-4 ['available_count'] ['0']
+3 raw_orders = [25, 42, 18, 56, 31, 29, 48, 15]
+3 ['raw_orders'] ['[25, 42, 18, 56, 31, ...]']
+7 threshold = 30
+7 ['raw_orders', 'threshold'] ['[25, 42, 18, 56, 31, ...]', '30']
+8 filtered_orders = [order for order in raw_orders if order > threshold]
+8 ['raw_orders', 'threshold', 'order'] ['[25, 42, 18, 56, 31, ...]', '30', '25']
+8 filtered_orders = [order for order in raw_orders if order > threshold]
+8 ['raw_orders', 'threshold', 'order'] ['[25, 42, 18, 56, 31, ...]', '30', '42']
+8 filtered_orders = [order for order in raw_orders if order > threshold]
+8 ['raw_orders', 'threshold', 'order'] ['[25, 42, 18, 56, 31, ...]', '30', '18']
+8 filtered_orders = [order for order in raw_orders if order > threshold]
+8 ['raw_orders', 'threshold', 'order'] ['[25, 42, 18, 56, 31, ...]', '30', '56']
+8 filtered_orders = [order for order in raw_orders if order > threshold]
+8 ['raw_orders', 'threshold', 'order'] ['[25, 42, 18, 56, 31, ...]', '30', '31']
+8 filtered_orders = [order for order in raw_orders if order > threshold]
+8 ['raw_orders', 'threshold', 'order'] ['[25, 42, 18, 56, 31, ...]', '30', '29']
+8 filtered_orders = [order for order in raw_orders if order > threshold]
+8 ['raw_orders', 'threshold', 'order'] ['[25, 42, 18, 56, 31, ...]', '30', '48']
+8 filtered_orders = [order for order in raw_orders if order > threshold]
+8 ['raw_orders', 'threshold', 'order'] ['[25, 42, 18, 56, 31, ...]', '30', '15']
+8 filtered_orders = [order for order in raw_orders if order > threshold]
+8 ['raw_orders', 'threshold', 'filtered_orders'] ['[25, 42, 18, 56, 31, ...]', '30', '[42, 56, 31, 48]']
+11 base_total = sum(filtered_orders)
+11 ['filtered_orders', 'base_total'] ['[42, 56, 31, 48]', '177']
+12 high_value_bonus = len([order for order in filtered_orders if order > 40]) * 10
+12 ['filtered_orders', 'base_total', 'order'] ['[42, 56, 31, 48]', '177', '42']
+12 high_value_bonus = len([order for order in filtered_orders if order > 40]) * 10
+12 ['filtered_orders', 'base_total', 'order'] ['[42, 56, 31, 48]', '177', '56']
+12 high_value_bonus = len([order for order in filtered_orders if order > 40]) * 10
+12 ['filtered_orders', 'base_total', 'order'] ['[42, 56, 31, 48]', '177', '31']
+12 high_value_bonus = len([order for order in filtered_orders if order > 40]) * 10
+12 ['filtered_orders', 'base_total', 'order'] ['[42, 56, 31, 48]', '177', '48']
+12 high_value_bonus = len([order for order in filtered_orders if order > 40]) * 10
+12 ['filtered_orders', 'base_total', 'high_value_bonus'] ['[42, 56, 31, 48]', '177', '30']
+15 processed_count = len(filtered_orders)
+15 ['filtered_orders', 'base_total', 'high_value_bonus', 'processed_count'] ['[42, 56, 31, 48]', '177', '30', '4']
+23 target_value = base_total if processed_count >= 3 else base_total // 2
+23 ['base_total', 'high_value_bonus', 'processed_count', 'target_value'] ['177', '30', '4', '177']
+24 adjustment = high_value_bonus if target_value > 100 else high_value_bonus // 2
+24 ['high_value_bonus', 'target_value', 'adjustment'] ['30', '177', '30']
+26 final_result = target_value + adjustment
+26 ['target_value', 'adjustment', 'final_result'] ['177', '30', '207']

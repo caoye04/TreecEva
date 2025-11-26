@@ -1,35 +1,33 @@
-from collections import deque
+from collections import Counter
 
-def process_signals(signal_stream):
-    state = 'INIT'
-    accumulator = 0
-    key_rotation = deque([3, 7, 11, 5])
-    processed_count = 0
-    
-    for signal in signal_stream:
-        if state == 'INIT':
-            if signal < 0:
-                state = 'ERROR'
-                break
-            else:
-                state = 'PROCESS'
-        
-        if state == 'PROCESS':
-            key = key_rotation[0]
-            accumulator ^= (signal & key)
-            key_rotation.rotate(-1)
-            processed_count += 1
-            
-            if processed_count >= 3:
-                state = 'FINALIZE'
-                break
-    
-    if state == 'FINALIZE':
-        accumulator &= 0xFF  # Mask to 8 bits
-        accumulator |= (accumulator >> 4) & 0x0F
-    
-    return accumulator
+text_sample = "algorithmic complexity analysis demonstrates recursive patterns"
+words = text_sample.split()
 
-signal_data = [15, 29, 42, 8]
-final_accumulator = process_signals(signal_data)
-print(f"Result: {final_accumulator}")
+# Analyze word length distribution
+word_lengths = [len(word) for word in words]
+length_stats = Counter(word_lengths)
+max_length = max(word_lengths)
+
+# Count character frequencies (main analysis)
+all_chars = ''.join(words)
+char_frequencies = Counter(all_chars.lower())
+
+# Some intermediate calculations (partially relevant)
+vowel_count = sum(1 for char in all_chars.lower() if char in 'aeiou')
+consonant_count = len(all_chars) - vowel_count
+ratio_analysis = vowel_count / consonant_count if consonant_count > 0 else 0
+
+# Target analysis: specific character statistics
+word_stats = {}
+for word in words:
+    first_char = word[0].lower()
+    word_stats[first_char] = word_stats.get(first_char, 0) + 1
+
+# Some additional processing (distraction)
+processed_words = [word.upper() for word in words[:3]]
+reverse_analysis = sum(len(word) for word in processed_words)
+
+target_letter = 'a'
+final_count = word_stats[target_letter]
+
+print(f"Target result: {final_count}")

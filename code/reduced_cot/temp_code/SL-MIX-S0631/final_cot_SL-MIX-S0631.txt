@@ -1,0 +1,22 @@
+Target: Find the value of variable final_result after [line 30] executes
+
+[line 5]  item_counts = Counter(inventory_items)
+Call function Counter(inventory_items=['widget', 'gadget', 'widget', 'tool', 'gadget', ...] (an unknown source))
+[line 8]  total_items = len(inventory_items)
+Call function len(inventory_items=['widget', 'gadget', 'widget', 'tool', 'gadget', ...] (an unknown source))
+[line 9]  unique_items = len(item_counts)
+Call function len(item_counts={widget: 3, gadget: 2, tool: 2, ...} (defined at [line 5]))
+[line 15]  high_demand_items = sum(1 for count in item_counts.values() if count >= 3)
+Call function sum(1 for count in item_counts.values() if count >= 3)
+[line 16]  low_stock_items = sum(1 for count in item_counts.values() if count <= 1)
+Call function sum(1 for count in item_counts.values() if count <= 1)
+[line 22]  base_score = high_demand_items * 15 + low_stock_items * 8
+Compute: high_demand_items * 15 + low_stock_items * 8, where high_demand_items=1 (defined at [line 15]), low_stock_items=1 (defined at [line 16]) = 23
+[line 23]  processed_data = base_score - (unique_items * 2)
+Compute: base_score - (unique_items * 2), where base_score=23 (defined at [line 22]), unique_items=4 (defined at [line 9]) = 15
+[line 26]  adjustment_factor = (total_items % 7) * 3
+Compute: (total_items % 7) * 3, where total_items=8 (defined at [line 8]) = 3
+[line 30]  final_result = processed_data - adjustment_factor
+Compute: processed_data - adjustment_factor, where processed_data=15 (defined at [line 23]), adjustment_factor=3 (defined at [line 26]) = 12
+
+Answer: final_result = 12 (last updated on defined at [line 30])

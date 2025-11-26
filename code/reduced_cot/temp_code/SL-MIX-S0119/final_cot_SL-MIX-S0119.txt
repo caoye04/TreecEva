@@ -1,10 +1,42 @@
-Target: Find the value of variable unique_hashes after [line 4] executes
+Target: Find the value of variable cipher_key after [line 27] executes
 
-[line 2]  logs = ['login_success', 'login_failure', 'access_granted', 'login_success', 'access_denied', 'login_failure']
-Compute: ['login_success', 'login_failure', 'access_granted', 'login_success', 'access_denied', 'login_failure'] = ['login_success', 'login_failure', 'access_granted', 'login_success', 'access_denied', ...]
-[line 3]  hashes = [hashlib.md5(log.encode()).hexdigest() for log in logs]
-Compute: [hashlib.md5(log.encode()).hexdigest() for log in logs], where log='login_success' (an unknown source), logs=['login_success', 'login_failure', 'access_granted', 'login_success', 'access_denied', ...] (defined at [line 2]) = ?
-[line 4]  unique_hashes = len(set(hashes))
-Call function len(set(hashes))
+[line 5]  for val in seq:
+Loop Start: val takes its first value 45
+[line 5]  for val in seq:
+Loop End: Iteration finished
+[line 5]  for val in seq:
+Loop End: Iteration finished
+[line 5]  for val in seq:
+Loop End: Iteration finished
+[line 5]  for val in seq:
+Loop End: Iteration finished
+[line 5]  for val in seq:
+Loop End: Iteration finished
+[line 5]  for val in seq:
+Loop End: Iteration finished
+[line 5]  for val in seq:
+Loop End: Iteration finished
+[line 9]  xor_result = seq[0]
+Compute: seq[0], where seq=[45, 67, 89, 12, 34, ...] (an unknown source) = 45
+[line 10]  for i in range(1, len(seq)):
+Loop Start: i takes its first value 1
+[line 10]  for i in range(1, len(seq)):
+Loop Iteration: i is now 2 (iteration 2)
+... [Line 10] repeats 3 more times ...
+... [Line 10] repeats 3 more times ...
+[line 10]  for i in range(1, len(seq)):
+Loop Iteration: i is now 6 (iteration 6)
+[line 10]  for i in range(1, len(seq)):
+Loop End: Iteration finished
+[line 19]  pattern_slice = seq[1:4]
+Compute: seq[1:4], where seq=[45, 67, 89, 12, 34, ...] (an unknown source) = [67, 89, 12]
+[line 20]  slice_sum = sum(pattern_slice)
+Call function sum(pattern_slice=[67, 89, 12] (defined at [line 19]))
+[line 23]  base_key = xor_result + slice_sum
+Compute: xor_result + slice_sum, where xor_result=111 (defined at [line 9]), slice_sum=168 (defined at [line 20]) = 279
+[line 24]  offset = len(seq) * 3
+Compute: len(seq) * 3, where seq=[45, 67, 89, 12, 34, ...] (an unknown source) = 21
+[line 27]  cipher_key = (base_key - offset) % 256
+Compute: (base_key - offset) % 256, where base_key=279 (defined at [line 23]), offset=21 (defined at [line 24]) = 2
 
-Answer: unique_hashes = 4 (last updated on defined at [line 4])
+Answer: cipher_key = 2 (last updated on defined at [line 27])

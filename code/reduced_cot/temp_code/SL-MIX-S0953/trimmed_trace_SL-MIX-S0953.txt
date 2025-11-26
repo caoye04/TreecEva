@@ -1,0 +1,87 @@
+51
+final_score
+---
+41 sensor_data = [45, 78, 92, 33, 67, 84, 29, 51, 76, 88]
+41 ['sensor_data'] ['[45, 78, 92, 33, 67, ...]']
+42 quality_metrics = {'precision': 85, 'accuracy': 92, 'reliability': 78}  # reliability unused
+42 ['sensor_data', 'quality_metrics'] ['[45, 78, 92, 33, 67, ...]', '{precision: 85, accuracy: 92, reliability: 78}']
+PARAM_MAPPING {'readings': {'actual_var': 'sensor_data', 'value': [45, 78, 92, 33, 67, 84, 29, 51, 76, 88]}}
+FUNCTION_ENTER 8 process_sensor_readings def process_sensor_readings(readings):
+8 ['readings'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 33}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 29}, {'_type': 'int', '_value': 51}, {'_type': 'int', '_value': 76}, {'_type': 'int', '_value': 88}], '_len': 10}]
+10 filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+10 ['readings', 'r'] ['[45, 78, 92, 33, 67, ...]', '45']
+10 filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+10 ['readings', 'r'] ['[45, 78, 92, 33, 67, ...]', '78']
+10 filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+10 ['readings', 'r'] ['[45, 78, 92, 33, 67, ...]', '92']
+10 filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+10 ['readings', 'r'] ['[45, 78, 92, 33, 67, ...]', '33']
+10 filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+10 ['readings', 'r'] ['[45, 78, 92, 33, 67, ...]', '67']
+10 filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+10 ['readings', 'r'] ['[45, 78, 92, 33, 67, ...]', '84']
+10 filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+10 ['readings', 'r'] ['[45, 78, 92, 33, 67, ...]', '29']
+10 filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+10 ['readings', 'r'] ['[45, 78, 92, 33, 67, ...]', '51']
+10 filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+10 ['readings', 'r'] ['[45, 78, 92, 33, 67, ...]', '76']
+10 filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+10 ['readings', 'r'] ['[45, 78, 92, 33, 67, ...]', '88']
+10 filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+10 ['readings', 'filtered'] ['[45, 78, 92, 33, 67, ...]', '[45, 78, 33, 84, 51]']
+12 return sum(filtered) * 1.25  # Misleading intermediate result
+12 ['filtered'] ['[45, 78, 33, 84, 51]']
+FUNCTION_RETURN 12 process_sensor_readings {'_type': 'float', '_value': 363.75}
+PARAM_MAPPING {'data_points': {'actual_var': 'sensor_data', 'value': [45, 78, 92, 33, 67, 84, 29, 51, 76, 88]}}
+FUNCTION_ENTER 3 calculate_data_quality def calculate_data_quality(data_points, threshold=75):
+3 ['data_points', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 33}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 29}, {'_type': 'int', '_value': 51}, {'_type': 'int', '_value': 76}, {'_type': 'int', '_value': 88}], '_len': 10}, {'_type': 'int', '_value': 75}]
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold'] ['75']
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold', 'x'] ['75', '45']
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold', 'x'] ['75', '78']
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold', 'x'] ['75', '92']
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold', 'x'] ['75', '33']
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold', 'x'] ['75', '67']
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold', 'x'] ['75', '84']
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold', 'x'] ['75', '29']
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold', 'x'] ['75', '51']
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold', 'x'] ['75', '76']
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold', 'x'] ['75', '88']
+5 valid_count = sum(1 for x in data_points if x > threshold)
+5 ['threshold', 'x'] ['75', '88']
+6 return valid_count * 2.5  # Misleading calculation
+6 ['valid_count'] ['5']
+FUNCTION_RETURN 6 calculate_data_quality {'_type': 'float', '_value': 12.5}
+49 final_score = calculate_final_score(sensor_data, quality_metrics)
+49 ['sensor_data', 'quality_metrics'] ['[45, 78, 92, 33, 67, ...]', '{precision: 85, accuracy: 92, reliability: 78}']
+16 base_score = sum(data_values) // len(data_values)
+16 ['data_values', 'quality_factors', 'base_score'] ['[45, 78, 92, 33, 67, ...]', '{precision: 85, accuracy: 92, reliability: 78}', '64']
+19 bit_mask = 0b10101010
+19 ['data_values', 'quality_factors', 'base_score', 'bit_mask'] ['[45, 78, 92, 33, 67, ...]', '{precision: 85, accuracy: 92, reliability: 78}', '64', '170']
+20 processed_bits = base_score & bit_mask | 0b01010101
+20 ['data_values', 'quality_factors', 'base_score', 'bit_mask', 'processed_bits'] ['[45, 78, 92, 33, 67, ...]', '{precision: 85, accuracy: 92, reliability: 78}', '64', '170', '85']
+23 adjust_quality = lambda x, y: (x * y) % 100 + min(x, y)
+23 ['data_values', 'quality_factors', 'base_score', 'processed_bits'] ['[45, 78, 92, 33, 67, ...]', '{precision: 85, accuracy: 92, reliability: 78}', '64', '85']
+26 quality_adjustment = adjust_quality(quality_factors['precision'], quality_factors['accuracy'])
+26 ['data_values', 'quality_factors', 'base_score', 'processed_bits'] ['[45, 78, 92, 33, 67, ...]', '{precision: 85, accuracy: 92, reliability: 78}', '64', '85']
+29 data_slice = data_values[2:7]  # Fixed slice
+29 ['data_values', 'base_score', 'processed_bits', 'quality_adjustment', 'data_slice'] ['[45, 78, 92, 33, 67, ...]', '64', '85', '105', '[92, 33, 67, 84, 29]']
+30 slice_sum = sum(data_slice) * quality_adjustment // 10
+30 ['base_score', 'processed_bits', 'quality_adjustment', 'data_slice', 'slice_sum'] ['64', '85', '105', '[92, 33, 67, 84, 29]', '3202']
+33 final_result = (base_score ^ processed_bits) + slice_sum - quality_adjustment
+33 ['base_score', 'processed_bits', 'quality_adjustment', 'slice_sum', 'final_result'] ['64', '85', '105', '3202', '3118']
+38 return final_result
+38 ['final_result'] ['3118']
+51 print(f"Result: {final_score}")
+51 ['final_score'] ['3118']

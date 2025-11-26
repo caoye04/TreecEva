@@ -1,6 +1,86 @@
-Target: Find the value of variable qualifying_customers after [line 15] executes
+Target: Find the value of variable final_checksum after [line 45] executes
 
-[line 15]  qualifying_customers = 0
-Assign: qualifying_customers = 0
+[line 38]  data_items = [12, 8, 15, 23, 6]
+Compute: [12, 8, 15, 23, 6] = [12, 8, 15, 23, 6]
+[line 39]  verification_keys = [3, 5, 2, 7, 4]
+Compute: [3, 5, 2, 7, 4] = [3, 5, 2, 7, 4]
+[line 45]  final_checksum = data_validator(data_items, verification_keys)
+Call function data_validator(data_items=[12, 8, 15, 23, 6] (defined at [line 38]), verification_keys=[3, 5, 2, 7, 4] (defined at [line 39]))
+[line 1]  def data_validator(items, keys):
+Enter function data_validator: items=[12, 8, 15, 23, 6] (data_items defined at [line 38]), keys=[3, 5, 2, 7, 4] (verification_keys defined at [line 39])
+  [line 7]  temp_sum = 0
+  Assign: temp_sum = 0
+  [line 8]  for i in range(len(items)):
+  Loop Start: i takes its first value 0
+  [line 9]  temp_sum += items[i] * (i + 1)
+  Update: temp_sum changed from 0 (defined at defined at [line 7]) to 0+items[i] * (i + 1) = 12
+  [line 8]  for i in range(len(items)):
+  Loop Iteration: i is now 1 (iteration 2)
+  [line 9]  temp_sum += items[i] * (i + 1)
+  Update: temp_sum changed from 12 (defined at defined at [line 9]) to 12+items[i] * (i + 1) = 28
+... [Line 8] repeats 2 more times ...
+... [Line 8] repeats 2 more times ...
+  [line 8]  for i in range(len(items)):
+  Loop Iteration: i is now 4 (iteration 5)
+  [line 9]  temp_sum += items[i] * (i + 1)
+  Update: temp_sum changed from 165 (defined at defined at [line 9]) to 165+items[i] * (i + 1) = 195
+  [line 8]  for i in range(len(items)):
+  Loop End: Iteration finished
+  [line 12]  if temp_sum > 1000:
+  Condition: True, entering 'if' block
+  [line 18]  validation_sum = 0
+  Assign: validation_sum = 0
+  [line 19]  for idx, (item, key) in enumerate(zip(items, keys)):
+  (Missing param: 'iter_var')
+  [line 24]  if item % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 25]  validation_sum += item + key
+  Update: validation_sum changed from 0 (defined at defined at [line 18]) to 0+item + key = 15
+  [line 3]  def fake_processor(x):
+  Enter function fake_processor: x=0
+    [line 4]  return (x * 3 + 7) % 11
+    Return: (x * 3 + 7) % 11
+  Function fake_processor returns 7
+  [line 19]  for idx, (item, key) in enumerate(zip(items, keys)):
+  (Missing param: 'iter_var')
+  [line 24]  if item % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 25]  validation_sum += item + key
+  Update: validation_sum changed from 15 (defined at defined at [line 25]) to 15+item + key = 28
+  [line 3]  def fake_processor(x):
+  Enter function fake_processor: x=1
+    [line 4]  return (x * 3 + 7) % 11
+    Return: (x * 3 + 7) % 11
+  Function fake_processor returns 10
+... [Line 19] repeats 2 more times ...
+... [Line 19] repeats 2 more times ...
+... [Line 19] repeats 2 more times ...
+  [line 3]  def fake_processor(x):
+  Enter function fake_processor: x=2
+... [Line 19] repeats 2 more times ...
+  Function fake_processor returns 2
+  [line 3]  def fake_processor(x):
+  Enter function fake_processor: x=3
+  Function fake_processor returns 5
+  [line 19]  for idx, (item, key) in enumerate(zip(items, keys)):
+  (Missing param: 'iter_var')
+  [line 24]  if item % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 25]  validation_sum += item + key
+  Update: validation_sum changed from 57 (defined at defined at [line 25]) to 57+item + key = 67
+  [line 3]  def fake_processor(x):
+  Enter function fake_processor: x=4
+    [line 4]  return (x * 3 + 7) % 11
+    Return: (x * 3 + 7) % 11
+  Function fake_processor returns 8
+  [line 19]  for idx, (item, key) in enumerate(zip(items, keys)):
+  Loop End: Iteration finished
+  [line 33]  intermediate = validation_sum % 50
+  Compute: validation_sum % 50, where validation_sum=67 (defined at [line 25]) = 17
+  [line 34]  checksum = intermediate * 3 - 7
+  Compute: intermediate * 3 - 7, where intermediate=17 (defined at [line 33]) = 44
+  [line 36]  return checksum
+  Return: checksum=44 (defined at [line 34])
+Function data_validator returns 44
 
-Answer: qualifying_customers = 0 (last updated on defined at [line 15])
+Answer: final_checksum = 7 (last updated on defined at [line 45])

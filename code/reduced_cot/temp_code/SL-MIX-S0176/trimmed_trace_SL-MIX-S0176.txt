@@ -1,13 +1,153 @@
-14
-optimal_proofing_temperature
+39
+final_count
 ---
-4 base_proofing_factor = 2.5
-4 ['base_proofing_factor'] ['2.5']
-5 humidity_coefficient = 0.7
-5 ['base_proofing_factor', 'humidity_coefficient'] ['2.5', '0.7']
-8 exponential_component = math.exp(base_proofing_factor)
-8 ['base_proofing_factor', 'humidity_coefficient', 'exponential_component'] ['2.5', '0.7', '12.182493960703473']
-11 log_humidity_adjustment = math.log(humidity_coefficient * 10)
-11 ['humidity_coefficient', 'exponential_component', 'log_humidity_adjustment'] ['0.7', '12.182493960703473', '1.9459101490553132']
-14 optimal_proofing_temperature = exponential_component + log_humidity_adjustment
-14 ['exponential_component', 'log_humidity_adjustment', 'optimal_proofing_temperature'] ['12.182493960703473', '1.9459101490553132', '14.128404109758787']
+4 node_connections = {'A': ['B', 'C'], 'B': ['A', 'C', 'D'], 'C': ['A', 'B'], 'D': ['B', 'E'], 'E': ['D']}
+4 ['node_connections'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}"]
+7 all_nodes = list(node_connections.keys())
+7 ['node_connections', 'all_nodes'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "['A', 'B', 'C', 'D', 'E']"]
+8 all_combinations = list(combinations(all_nodes, 2))
+8 ['node_connections', 'all_nodes', 'all_combinations'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "['A', 'B', 'C', 'D', 'E']", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]"]
+11 unique_pairs = set()
+11 ['node_connections', 'all_combinations', 'unique_pairs'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", 'set()']
+12 for node, neighbors in node_connections.items():
+12 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", 'set()', "'A'", "['B', 'C']"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", 'set()', "'A'", "['B', 'C']", "'B'"]
+14 pair = tuple(sorted([node, neighbor]))
+14 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", 'set()', "'A'", "['B', 'C']", "'B'", "('A', 'B')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('A', 'B')}", "'A'", "['B', 'C']", "'C'", "('A', 'B')"]
+14 pair = tuple(sorted([node, neighbor]))
+14 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('A', 'B')}", "'A'", "['B', 'C']", "'C'", "('A', 'C')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('A', 'C'), ('A', 'B')}", "'A'", "['B', 'C']", "'C'", "('A', 'C')"]
+12 for node, neighbors in node_connections.items():
+12 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('A', 'C'), ('A', 'B')}", "'B'", "['A', 'C', 'D']", "'C'", "('A', 'C')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('A', 'C'), ('A', 'B')}", "'B'", "['A', 'C', 'D']", "'A'", "('A', 'C')"]
+14 pair = tuple(sorted([node, neighbor]))
+14 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('A', 'C'), ('A', 'B')}", "'B'", "['A', 'C', 'D']", "'A'", "('A', 'B')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('A', 'C'), ('A', 'B')}", "'B'", "['A', 'C', 'D']", "'C'", "('A', 'B')"]
+14 pair = tuple(sorted([node, neighbor]))
+14 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('A', 'C'), ('A', 'B')}", "'B'", "['A', 'C', 'D']", "'C'", "('B', 'C')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('A', 'B')}", "'B'", "['A', 'C', 'D']", "'D'", "('B', 'C')"]
+14 pair = tuple(sorted([node, neighbor]))
+14 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('A', 'B')}", "'B'", "['A', 'C', 'D']", "'D'", "('B', 'D')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'B'", "['A', 'C', 'D']", "'D'", "('B', 'D')"]
+12 for node, neighbors in node_connections.items():
+12 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'C'", "['A', 'B']", "'D'", "('B', 'D')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'C'", "['A', 'B']", "'A'", "('B', 'D')"]
+14 pair = tuple(sorted([node, neighbor]))
+14 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'C'", "['A', 'B']", "'A'", "('A', 'C')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'C'", "['A', 'B']", "'B'", "('A', 'C')"]
+14 pair = tuple(sorted([node, neighbor]))
+14 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'C'", "['A', 'B']", "'B'", "('B', 'C')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'C'", "['A', 'B']", "'B'", "('B', 'C')"]
+12 for node, neighbors in node_connections.items():
+12 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'D'", "['B', 'E']", "'B'", "('B', 'C')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'D'", "['B', 'E']", "'B'", "('B', 'C')"]
+14 pair = tuple(sorted([node, neighbor]))
+14 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'D'", "['B', 'E']", "'B'", "('B', 'D')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'D'", "['B', 'E']", "'E'", "('B', 'D')"]
+14 pair = tuple(sorted([node, neighbor]))
+14 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('B', 'C'), ('A', 'C'), ('B', 'D'), ('A', 'B')}", "'D'", "['B', 'E']", "'E'", "('D', 'E')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "'D'", "['B', 'E']", "'E'", "('D', 'E')"]
+12 for node, neighbors in node_connections.items():
+12 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "'E'", "['D']", "'E'", "('D', 'E')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "'E'", "['D']", "'D'", "('D', 'E')"]
+14 pair = tuple(sorted([node, neighbor]))
+14 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "'E'", "['D']", "'D'", "('D', 'E')"]
+13 for neighbor in neighbors:
+13 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'neighbor', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "'E'", "['D']", "'D'", "('D', 'E')"]
+12 for node, neighbors in node_connections.items():
+12 ['node_connections', 'all_combinations', 'unique_pairs', 'node', 'neighbors', 'pair'] ["{A: ['B', 'C'], B: ['A', 'C', 'D'], C: ['A', 'B'], ...}", "[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "'E'", "['D']", "('D', 'E')"]
+19 for pair in all_combinations:
+19 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'B')"]
+20 if pair not in unique_pairs:
+20 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'B')"]
+19 for pair in all_combinations:
+19 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'C')"]
+20 if pair not in unique_pairs:
+20 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'C')"]
+19 for pair in all_combinations:
+19 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'D')"]
+20 if pair not in unique_pairs:
+20 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'D')"]
+19 for pair in all_combinations:
+19 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'E')"]
+20 if pair not in unique_pairs:
+20 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'E')"]
+19 for pair in all_combinations:
+19 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'C')"]
+20 if pair not in unique_pairs:
+20 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'C')"]
+19 for pair in all_combinations:
+19 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'D')"]
+20 if pair not in unique_pairs:
+20 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'D')"]
+19 for pair in all_combinations:
+19 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'E')"]
+20 if pair not in unique_pairs:
+20 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'E')"]
+19 for pair in all_combinations:
+19 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('C', 'D')"]
+20 if pair not in unique_pairs:
+20 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('C', 'D')"]
+19 for pair in all_combinations:
+19 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('C', 'E')"]
+20 if pair not in unique_pairs:
+20 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('C', 'E')"]
+19 for pair in all_combinations:
+19 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('D', 'E')"]
+20 if pair not in unique_pairs:
+20 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('D', 'E')"]
+19 for pair in all_combinations:
+19 ['all_combinations', 'unique_pairs', 'pair'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('D', 'E')"]
+24 unique_combinations = len(all_combinations)
+24 ['all_combinations', 'unique_pairs', 'pair', 'unique_combinations'] ["[('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'C'), ...]", "{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('D', 'E')", '10']
+34 overlap_count = 0
+34 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('D', 'E')", '10', '0']
+35 for pair in unique_pairs:
+35 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('D', 'E')", '10', '0']
+36 if len(pair[0]) == len(pair[1]):
+36 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('D', 'E')", '10', '0']
+37 overlap_count += 1
+37 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('D', 'E')", '10', '1']
+35 for pair in unique_pairs:
+35 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'C')", '10', '1']
+36 if len(pair[0]) == len(pair[1]):
+36 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'C')", '10', '1']
+37 overlap_count += 1
+37 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'C')", '10', '2']
+35 for pair in unique_pairs:
+35 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'B')", '10', '2']
+36 if len(pair[0]) == len(pair[1]):
+36 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'B')", '10', '2']
+37 overlap_count += 1
+37 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('A', 'B')", '10', '3']
+35 for pair in unique_pairs:
+35 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'D')", '10', '3']
+36 if len(pair[0]) == len(pair[1]):
+36 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'D')", '10', '3']
+37 overlap_count += 1
+37 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'D')", '10', '4']
+35 for pair in unique_pairs:
+35 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'C')", '10', '4']
+36 if len(pair[0]) == len(pair[1]):
+36 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'C')", '10', '4']
+37 overlap_count += 1
+37 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'C')", '10', '5']
+35 for pair in unique_pairs:
+35 ['unique_pairs', 'pair', 'unique_combinations', 'overlap_count'] ["{('D', 'E'), ('A', 'C'), ('A', 'B'), ('B', 'D'), ('B', 'C')}", "('B', 'C')", '10', '5']
+39 final_count = unique_combinations - overlap_count
+39 ['unique_combinations', 'overlap_count', 'final_count'] ['10', '5', '5']

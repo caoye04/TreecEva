@@ -1,44 +1,23 @@
-from collections import deque
-import math
-
-def gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
-
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
-
-class TunnelScheduler:
-    def __init__(self):
-        self.entry_queue = deque()
-        self.max_wait_time = 0
+def process_inventory(items):
+    base_stock = 42
+    temp_buffer = 15
+    seasonal_factor = 3
     
-    def add_vehicle(self, arrival_time, processing_time):
-        self.entry_queue.append((arrival_time, processing_time))
+    # Distractor calculations
+    total_items = len(items) * seasonal_factor
+    average_stock = (base_stock + temp_buffer) / 2
+    max_capacity = base_stock * seasonal_factor
     
-    def process_vehicles(self):
-        current_time = 0
-        while self.entry_queue:
-            arrival_time, processing_time = self.entry_queue.popleft()
-            if arrival_time > current_time:
-                current_time = arrival_time
-            wait_time = current_time - arrival_time
-            if wait_time > self.max_wait_time:
-                self.max_wait_time = wait_time
-            current_time += processing_time
-        return self.max_wait_time
+    # Relevant calculations
+    base_value = base_stock - temp_buffer
+    offset_multiplier = lambda x: x * 2
+    offset_calc = offset_multiplier(seasonal_factor)
+    temporary_adjustment = sum([ord(c) for c in 'test']) % 10
+    
+    # Final computation
+    final_adjustment = base_value + offset_calc - temporary_adjustment
+    
+    print(f"Result: {final_adjustment}")
 
-scheduler = TunnelScheduler()
-# Vehicle arrivals: (arrival_time, processing_time)
-scheduler.add_vehicle(0, 3)
-scheduler.add_vehicle(1, 2)
-scheduler.add_vehicle(3, 1)
-scheduler.add_vehicle(4, 2)
-scheduler.add_vehicle(6, 1)
-
-# Calculate LCM of first two processing times for synchronization
-sync_interval = lcm(3, 2)
-
-max_wait_time = scheduler.process_vehicles() + sync_interval
-print(f"Result: {max_wait_time}")
+# Execute with sample data
+process_inventory(['item_a', 'item_b', 'item_c'])

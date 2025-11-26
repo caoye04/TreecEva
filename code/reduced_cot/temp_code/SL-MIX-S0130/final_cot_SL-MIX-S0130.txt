@@ -1,28 +1,24 @@
-Target: Find the value of variable unique_word_count after [line 22] executes
+Target: Find the value of variable final_calibration after [line 22] executes
 
-[line 4]  document = "The quick brown fox jumps over the lazy dog. The dog was really lazy."
-Assign: document = 'The quick brown fox jumps over the lazy dog. The dog was really lazy.'
-[line 5]  stop_words = {'the', 'over', 'was', 'really'}
-Compute: {'the', 'over', 'was', 'really'} = {'was', 'really', 'the', 'over'}
-[line 8]  tokens = re.findall(r'\b\w+\b', document.lower())
-(Missing param: 'func_name')
-[line 11]  filtered_tokens = [word for word in tokens if word not in stop_words]
-Compute: [word for word in tokens if word not in stop_words], where word='the' (an unknown source), tokens=['the', 'quick', 'brown', 'fox', 'jumps', ...] (an unknown source), stop_words={'was', 'really', 'the', 'over'} (defined at [line 5]) = ?
-[line 14]  freq_map = defaultdict(int)
-Call function defaultdict(int)
-[line 15]  for word in filtered_tokens:
-Loop Start: word takes its first value 'quick'
-[line 15]  for word in filtered_tokens:
-Loop Iteration: word is now 'brown' (iteration 2)
-... [Line 15] repeats 5 more times ...
-... [Line 15] repeats 5 more times ...
-[line 15]  for word in filtered_tokens:
-Loop Iteration: word is now 'lazy' (iteration 8)
-[line 15]  for word in filtered_tokens:
+[line 7]  valid_readings = [r for i, r in enumerate(initial_readings) if i % 2 == 0]
+Compute: [r for i, r in enumerate(initial_readings) if i % 2 == 0], where r=12 (an unknown source), i=0 (an unknown source), initial_readings=[12, 8, 5, 17, 9, ...] (an unknown source) = ?
+[line 8]  sensor_correction = sum([x * y for x, y in zip(valid_readings, valid_readings[1:] + [valid_readings[0]])])
+Call function sum([x * y for x, y in zip(valid_readings, valid_readings[1:] + [valid_readings[0]])])
+[line 11]  bitwise_adjustment = (sensor_correction & 0b1010) | (sensor_correction & 0b0101)
+Compute: (sensor_correction & 0b1010) | (sensor_correction & 0b0101), where sensor_correction=213 (defined at [line 8]) = 5
+[line 15]  parity_check = 0
+Assign: parity_check = 0
+[line 16]  for reading in initial_readings:
+Loop Start: reading takes its first value 12
+[line 16]  for reading in initial_readings:
+Loop Iteration: reading is now 8 (iteration 2)
+... [Line 16] repeats 3 more times ...
+... [Line 16] repeats 3 more times ...
+[line 16]  for reading in initial_readings:
+Loop Iteration: reading is now 3 (iteration 6)
+[line 16]  for reading in initial_readings:
 Loop End: Iteration finished
-[line 19]  single_occurrence = {word: count for word, count in freq_map.items() if count == 1}
-Compute: {word: count for word, count in freq_map.items() if count == 1}, where word='quick' (defined at [line 15]), count=1 (an unknown source), freq_map={quick: 1, brown: 1, fox: 1, ...} (defined at [line 14]) = ?
-[line 22]  unique_word_count = len(single_occurrence)
-Call function len(single_occurrence={quick: 1, brown: 1, fox: 1, ...} (defined at [line 19]))
+[line 22]  final_calibration = sensor_correction + (bitwise_adjustment ^ parity_check)
+Compute: sensor_correction + (bitwise_adjustment ^ parity_check), where sensor_correction=213 (defined at [line 8]), bitwise_adjustment=5 (defined at [line 11]), parity_check=2 (defined at [line 15]) = 220
 
-Answer: unique_word_count = 4 (last updated on defined at [line 22])
+Answer: final_calibration = 220 (last updated on defined at [line 22])

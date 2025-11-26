@@ -1,0 +1,46 @@
+Target: Find the value of variable final_output after [line 33] executes
+
+[line 4]  initial_items = {'widget_a': 15, 'widget_b': 8, 'widget_c': 22, 'widget_d': 7}
+Compute: {'widget_a': 15, 'widget_b': 8, 'widget_c': 22, 'widget_d': 7} = {widget_a: 15, widget_b: 8, widget_c: 22, ...}
+[line 5]  restock_threshold = 10
+Assign: restock_threshold = 10
+[line 8]  restock_needed = [item for item, quantity in initial_items.items() if quantity <= restock_threshold]
+Compute: [item for item, quantity in initial_items.items() if quantity <= restock_threshold], where item='widget_a' (an unknown source), quantity=15 (an unknown source), initial_items={widget_a: 15, widget_b: 8, widget_c: 22, ...} (defined at [line 4]), restock_threshold=10 (defined at [line 5]) = ?
+[line 9]  restock_count = len(restock_needed)
+Call function len(restock_needed=['widget_b', 'widget_d'] (defined at [line 8]))
+[line 16]  adjusted_quantities = {}
+Compute: {} = {}
+[line 17]  for item, quantity in initial_items.items():
+(Missing param: 'iter_var')
+[line 18]  if item in restock_needed:
+Condition: True, entering 'if' block
+[line 21]  adjusted_quantities[item] = quantity - 5
+(Missing param: 'result')
+[line 17]  for item, quantity in initial_items.items():
+(Missing param: 'iter_var')
+[line 18]  if item in restock_needed:
+Condition: True, entering 'if' block
+[line 19]  adjusted_quantities[item] = quantity + 25
+(Missing param: 'result')
+[line 17]  for item, quantity in initial_items.items():
+(Missing param: 'iter_var')
+[line 18]  if item in restock_needed:
+Condition: True, entering 'if' block
+[line 21]  adjusted_quantities[item] = quantity - 5
+(Missing param: 'result')
+[line 17]  for item, quantity in initial_items.items():
+(Missing param: 'iter_var')
+[line 18]  if item in restock_needed:
+Condition: True, entering 'if' block
+[line 19]  adjusted_quantities[item] = quantity + 25
+(Missing param: 'result')
+[line 17]  for item, quantity in initial_items.items():
+Loop End: Iteration finished
+[line 24]  processed_quantities = list(adjusted_quantities.values())
+Call function list(adjusted_quantities.values())
+[line 27]  adjustment_factor = (restock_count * 3) - 7
+Compute: (restock_count * 3) - 7, where restock_count=2 (defined at [line 9]) = -1
+[line 33]  final_output = processed_quantities[2] + adjustment_factor
+Compute: processed_quantities[2] + adjustment_factor, where processed_quantities=[10, 33, 17, 32] (defined at [line 24]), adjustment_factor=-1 (defined at [line 27]) = 16
+
+Answer: final_output = 16 (last updated on defined at [line 33])

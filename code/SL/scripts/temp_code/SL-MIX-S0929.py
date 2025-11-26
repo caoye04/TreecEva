@@ -1,31 +1,26 @@
-import math
-from collections import defaultdict
+def analyze_workload(load_data):
+    base_set = {12, 18, 24, 30, 36}
+    processed_data = {x * 2 for x in load_data}
+    processed_data.add(42)
+    processed_data.discard(24)
+    return processed_data
 
-def prime_factors(n):
-    factors = []
-    d = 2
-    while d * d <= n:
-        while n % d == 0:
-            factors.append(d)
-            n //= d
-        d += 1
-    if n > 1:
-        factors.append(n)
-    return factors
+def evaluate_metrics(primary_set, secondary_set):
+    common_metrics = primary_set.intersection(secondary_set)
+    unique_to_primary = primary_set - secondary_set
+    temp_result = len(common_metrics) * 5
+    adjusted_set = {x + temp_result for x in unique_to_primary}
+    adjusted_set.update({x * 2 for x in common_metrics})
+    return adjusted_set
 
-security_tokens = [24, 35, 49, 77]
-factor_counts = defaultdict(int)
+workload_data = {6, 9, 12, 15, 18}
+initial_processing = analyze_workload(workload_data)
+reference_set = {20, 25, 30, 35, 40}
+intermediate_calc = len(initial_processing) + len(reference_set)
 
-for token in security_tokens:
-    factors = prime_factors(token)
-    for f in factors:
-        factor_counts[f] += 1
+adjusted_set = evaluate_metrics(initial_processing, reference_set)
+extra_metrics = {55, 60, 65}
+final_score = adjusted_set.union(extra_metrics)
 
-weight_function = lambda p, count: int(math.log(p) * count * pow(p, count % 3))
-total_weight = sum(weight_function(prime, count) for prime, count in factor_counts.items())
-
-modulus = 10007
-base_exponent = sum(factor_counts.values())
-derived_key = (total_weight * pow(3, base_exponent, modulus)) % modulus
-
-print(f"Result: {derived_key}")
+performance_score = sum(final_score) - sum(extra_metrics)
+print(f"Result: {performance_score}")

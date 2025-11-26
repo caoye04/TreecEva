@@ -1,29 +1,46 @@
-from collections import defaultdict
+def calculate_sensor_readings():
+    sensor_data = {
+        'temp_sensor': [22.5, 23.1, 21.8, 24.2, 22.9],
+        'humidity_sensor': [45, 47, 43, 49, 46],
+        'pressure_sensor': [1013, 1015, 1012, 1016, 1014]
+    }
+    
+    # Process temperature readings (not used in final result)
+    temp_sum = sum(sensor_data['temp_sensor'])
+    temp_avg = temp_sum / len(sensor_data['temp_sensor'])
+    
+    # Process humidity readings (not used in final result)
+    humidity_max = max(sensor_data['humidity_sensor'])
+    humidity_min = min(sensor_data['humidity_sensor'])
+    humidity_range = humidity_max - humidity_min
+    
+    # Main calculation - pressure readings
+    pressure_readings = sensor_data['pressure_sensor']
+    pressure_sum = sum(pressure_readings)
+    pressure_count = len(pressure_readings)
+    
+    # Some intermediate calculations that don't affect final result
+    normalized_temp = (temp_avg - 20) / 5
+    humidity_variance = (humidity_range ** 2) / 10
+    
+    # Core logic for result
+    base_pressure = 1010
+    adjustment_factor = (pressure_sum / pressure_count - base_pressure) * 2
+    calibrated_pressure = base_pressure + adjustment_factor
+    
+    # Create result mapping
+    result_map = {
+        'calibrated': round(calibrated_pressure, 1),
+        'raw_avg': pressure_sum / pressure_count,
+        'normalized': (pressure_sum / pressure_count) / 10
+    }
+    
+    target_key = 'calibrated'
+    default_value = 0
+    
+    # Final assignment
+    final_result = result_map.get(target_key, default_value)
+    
+    print(f"Target result: {final_result}")
 
-def hash_color(r, g, b):
-    return (r * 31 + g) * 31 + b
-
-def transform_pixel(canvas, x, y):
-    if x < 0 or y < 0 or x >= len(canvas) or y >= len(canvas[0]):
-        return 0
-    r, g, b = canvas[x][y]
-    # Neighbor influence: average of immediate neighbors' red values
-    neighbors = [(x-1,y), (x+1,y), (x,y-1), (x,y+1)]
-    neighbor_reds = [canvas[nx][ny][0] for nx, ny in neighbors if 0 <= nx < len(canvas) and 0 <= ny < len(canvas[0])]
-    avg_red = sum(neighbor_reds) // len(neighbor_reds) if neighbor_reds else r
-    # Transformation: increase blue by neighbor influence
-    new_b = min(255, b + (avg_red // 10))
-    return hash_color(r, g, new_b)
-
-canvas = [
-    [(100, 150, 200), (120, 160, 180)],
-    [(110, 155, 190), (125, 165, 185)]
-]
-
-artistic_score = 0
-for i in range(len(canvas)):
-    for j in range(len(canvas[0])):
-        transformed_hash = transform_pixel(canvas, i, j)
-        artistic_score += transformed_hash
-
-print(f"Result: {artistic_score}")
+calculate_sensor_readings()

@@ -1,0 +1,61 @@
+58
+network_efficiency
+---
+37 active_nodes = 12
+37 ['active_nodes'] ['12']
+38 processed_packets = 96
+38 ['active_nodes', 'processed_packets'] ['12', '96']
+39 error_flags = 2
+39 ['active_nodes', 'processed_packets', 'error_flags'] ['12', '96', '2']
+42 network_latency = active_nodes * 3
+42 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency'] ['12', '96', '2', '36']
+43 packet_overflow = processed_packets % 7
+43 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency', 'packet_overflow'] ['12', '96', '2', '36', '5']
+44 protocol_overhead = network_latency + packet_overflow
+44 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency', 'packet_overflow', 'protocol_overhead'] ['12', '96', '2', '36', '5', '41']
+47 if protocol_overhead > 20:
+47 ['active_nodes', 'processed_packets', 'error_flags', 'protocol_overhead'] ['12', '96', '2', '41']
+52 network_efficiency = final_computation(active_nodes, processed_packets, error_flags)
+52 ['active_nodes', 'processed_packets', 'error_flags'] ['12', '96', '2']
+PARAM_MAPPING {'nodes': {'actual_var': 'active_nodes', 'value': 12}, 'packets': {'actual_var': 'processed_packets', 'value': 96}, 'errors': {'actual_var': 'error_flags', 'value': 2}}
+FUNCTION_ENTER 15 final_computation def final_computation(nodes, packets, errors):
+15 ['nodes', 'packets', 'errors'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}]
+16 throughput_result = calculate_throughput(nodes, packets)
+16 ['nodes', 'packets', 'errors'] ['12', '96', '2']
+PARAM_MAPPING {'nodes': {'actual_var': 'nodes', 'value': 12}, 'packets': {'actual_var': 'packets', 'value': 96}}
+FUNCTION_ENTER 1 calculate_throughput def calculate_throughput(nodes, packets):
+1 ['nodes', 'packets'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}]
+2 throughput = (packets * 8) // nodes
+2 ['nodes', 'packets', 'throughput'] ['12', '96', '64']
+3 redundancy_factor = nodes % 3
+3 ['nodes', 'throughput', 'redundancy_factor'] ['12', '64', '0']
+4 return throughput - redundancy_factor
+4 ['nodes', 'throughput', 'redundancy_factor'] ['12', '64', '0']
+FUNCTION_RETURN 4 calculate_throughput {'_type': 'int', '_value': 64}
+17 connectivity_result = analyze_connectivity(nodes, errors)
+17 ['nodes', 'errors', 'throughput_result'] ['12', '2', '64']
+PARAM_MAPPING {'active_nodes': {'actual_var': 'nodes', 'value': 12}, 'error_count': {'actual_var': 'errors', 'value': 2}}
+FUNCTION_ENTER 6 analyze_connectivity def analyze_connectivity(active_nodes, error_count):
+6 ['active_nodes', 'error_count'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}]
+7 connectivity_score = active_nodes * 10
+7 ['active_nodes', 'error_count', 'connectivity_score'] ['12', '2', '120']
+8 if error_count > 0:
+8 ['error_count', 'connectivity_score'] ['2', '120']
+9 penalty = error_count * 15
+9 ['error_count', 'connectivity_score', 'penalty'] ['2', '120', '30']
+10 connectivity_score -= penalty
+10 ['connectivity_score', 'penalty'] ['90', '30']
+13 return connectivity_score
+13 ['connectivity_score'] ['90']
+FUNCTION_RETURN 13 analyze_connectivity {'_type': 'int', '_value': 90}
+24 if errors == 0:
+24 ['errors', 'throughput_result', 'connectivity_result'] ['2', '64', '90']
+27 error_penalty = errors * 8
+27 ['errors', 'throughput_result', 'connectivity_result', 'error_penalty'] ['2', '64', '90', '16']
+28 efficiency = (throughput_result * connectivity_result) // 100 - error_penalty
+28 ['throughput_result', 'connectivity_result', 'error_penalty', 'efficiency'] ['64', '90', '16', '41']
+34 return efficiency
+34 ['efficiency'] ['41']
+FUNCTION_RETURN 34 final_computation {'_type': 'int', '_value': 41}
+58 print(f"Result: {network_efficiency}")
+58 ['network_efficiency'] ['41']

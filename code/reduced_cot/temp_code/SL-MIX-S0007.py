@@ -1,15 +1,32 @@
-import base64
+def setup_encryption():
+    # Primary encryption parameters
+    seed_value = 0xDEADBEEF
+    mask = 0xFFFF
+    xor_pattern = 0xAAAA
+    
+    # Distractor: Unrelated computation
+    temp_buffer = [i * 2 for i in range(10)]
+    buffer_sum = sum(temp_buffer)
+    
+    # Core calculation
+    checksum = (seed_value & 0xFF) + ((seed_value >> 8) & 0xFF)
+    intermediate = (checksum << 4) | (buffer_sum & 0xF)
+    
+    # Misleading dead code path
+    if intermediate > 1000:
+        unused_var = intermediate * 2  # Never executed
+    
+    # Key generation logic
+    crypto_key = (intermediate ^ xor_pattern) & mask
+    
+    # Final transformation
+    final_operation = lambda x: (x & mask) | (xor_pattern ^ checksum)
+    crypto_key = final_operation(crypto_key)
+    
+    # More distractions
+    dummy_encrypt = {k: v for k, v in enumerate(temp_buffer)}
+    noise_factor = len(dummy_encrypt) * 3.14159
+    
+    print(f"Result: {crypto_key}")
 
-encoded_packets = [b'SGVsbG8=', b'V29ybGQ=', b'UHl0aG9u']
-
-def calculate_checksum(text):
-    return sum(ord(char) for char in text)
-
-packet_checksums = []
-for packet in encoded_packets:
-    decoded_text = base64.b64decode(packet).decode('utf-8')
-    checksum = calculate_checksum(decoded_text)
-    packet_checksums.append(checksum)
-
-final_security_checksum = sum(packet_checksums)
-print(f"Result: {final_security_checksum}")
+setup_encryption()

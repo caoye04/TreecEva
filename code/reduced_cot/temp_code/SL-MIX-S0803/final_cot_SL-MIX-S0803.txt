@@ -1,0 +1,18 @@
+Target: Find the value of variable final_encryption_key after [line 29] executes
+
+[line 11]  key_seed = seed_value * 3 + 7
+Compute: seed_value * 3 + 7, where seed_value=42 (an unknown source) = 133
+[line 12]  rotation_mask = (key_seed >> 2) & 0xFF
+Compute: (key_seed >> 2) & 0xFF, where key_seed=133 (defined at [line 11]) = 33
+[line 18]  intermediate_key = (key_seed + rotation_mask) % 1000
+Compute: (key_seed + rotation_mask) % 1000, where key_seed=133 (defined at [line 11]), rotation_mask=33 (defined at [line 12]) = 166
+[line 19]  validation_code = intermediate_key // 4
+Compute: intermediate_key // 4, where intermediate_key=166 (defined at [line 18]) = 41
+[line 22]  if validation_code > 100:
+Condition: True, entering 'if' block
+[line 28]  key_modifier = (intermediate_key & 0x3F) | 0x40
+Compute: (intermediate_key & 0x3F) | 0x40, where intermediate_key=166 (defined at [line 18]) = 102
+[line 29]  final_encryption_key = (intermediate_key * key_modifier) % 987
+Compute: (intermediate_key * key_modifier) % 987, where intermediate_key=166 (defined at [line 18]), key_modifier=102 (defined at [line 28]) = 153
+
+Answer: final_encryption_key = 153 (last updated on defined at [line 29])

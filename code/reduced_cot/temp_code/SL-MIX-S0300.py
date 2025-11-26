@@ -1,10 +1,46 @@
-from collections import defaultdict
-sales_data = ['bread:12,croissant:15', 'bread:20,croissant:18', 'bread:8,croissant:10', 'bread:25,croissant:30']
-excess_days = 0
-for day in sales_data:
-    items = day.split(',')
-    bread_sales = int(items[0].split(':')[1])
-    croissant_sales = int(items[1].split(':')[1])
-    if croissant_sales > bread_sales:
-        excess_days += 1
-print(f'Result: {excess_days}')
+from collections import Counter
+
+def process_transactions(transactions, threshold):
+    # Process transaction amounts and filter by threshold
+    amounts = [t['amount'] for t in transactions]
+    valid_amounts = [amt for amt in amounts if amt >= threshold]
+    
+    # Calculate some intermediate values (distraction)
+    total_sum = sum(amounts)
+    avg_transaction = total_sum / len(amounts) if amounts else 0
+    
+    # Count occurrences of each amount (relevant operation)
+    amount_counts = Counter(valid_amounts)
+    
+    # Find most common valid amount
+    if amount_counts:
+        most_common = amount_counts.most_common(1)[0]
+        base_result = most_common[0] * most_common[1]
+    else:
+        base_result = 0
+    
+    # Apply some transformations (mixed relevant/semi-relevant)
+    tax_adjustment = base_result * 0.1  # 10% tax (distraction)
+    processing_fee = len(valid_amounts) * 2  # $2 per transaction (semi-relevant)
+    
+    # Final calculation (relevant)
+    result = base_result - processing_fee
+    return result
+
+# Sample transaction data
+transactions = [
+    {'amount': 150, 'type': 'purchase'},
+    {'amount': 75, 'type': 'refund'},
+    {'amount': 200, 'type': 'purchase'},
+    {'amount': 150, 'type': 'purchase'},
+    {'amount': 50, 'type': 'refund'},
+    {'amount': 200, 'type': 'transfer'}
+]
+
+threshold = 100
+
+# Process transactions
+result = process_transactions(transactions, threshold)
+final_result = int(result)
+
+print(f"Target result: {final_result}")

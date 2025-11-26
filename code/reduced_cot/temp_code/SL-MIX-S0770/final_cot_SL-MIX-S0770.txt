@@ -1,0 +1,94 @@
+Target: Find the value of variable data_quality_score after [line 35] executes
+
+[line 3]  entries = log_content.strip().split('\n')
+(Missing param: 'func_name')
+[line 4]  total_records = len(entries)
+Call function len(entries=['2024-01-15 10:30:00 | USER_LOGIN | COMPLETED', '2024-01-15 10:31:15 | DATA_UPLOAD | FAILED | ERROR: Connection timeout', '2024-01-15 10:32:30 | FILE_PROCESS | COMPLETED', '2024-01-15 10:33:45 | USER_LOGOUT | COMPLETED', '2024-01-15 10:34:20 | BACKUP_TASK | FAILED | ERROR: Insufficient space', ...] (an unknown source))
+[line 8]  for entry in entries:
+Loop Start: entry takes its first value '2024-01-15 10:30:00 | USER_LOGIN | COMPLETED'
+[line 9]  if '|' in entry:
+Condition: True, entering 'if' block
+[line 10]  parts = entry.split('|')
+(Missing param: 'func_name')
+[line 11]  if len(parts) > 1:
+Condition: True, entering 'if' block
+[line 8]  for entry in entries:
+Loop Iteration: entry is now '2024-01-15 10:31:15 | DATA_UPLOAD | FAILED | ERROR: Connection timeout' (iteration 2)
+[line 9]  if '|' in entry:
+Condition: True, entering 'if' block
+[line 10]  parts = entry.split('|')
+(Missing param: 'func_name')
+[line 11]  if len(parts) > 1:
+Condition: True, entering 'if' block
+... [Line 8] repeats 3 more times ...
+... [Line 8] repeats 3 more times ...
+... [Line 8] repeats 3 more times ...
+... [Line 8] repeats 3 more times ...
+[line 8]  for entry in entries:
+Loop Iteration: entry is now '2024-01-15 10:35:10 | DATA_SYNC | COMPLETED' (iteration 6)
+[line 9]  if '|' in entry:
+Condition: True, entering 'if' block
+[line 10]  parts = entry.split('|')
+(Missing param: 'func_name')
+[line 11]  if len(parts) > 1:
+Condition: True, entering 'if' block
+[line 8]  for entry in entries:
+Loop End: Iteration finished
+[line 16]  for entry in entries:
+Loop Start: entry takes its first value '2024-01-15 10:30:00 | USER_LOGIN | COMPLETED'
+[line 17]  if 'ERROR' in entry:
+Condition: True, entering 'if' block
+[line 16]  for entry in entries:
+Loop Iteration: entry is now '2024-01-15 10:31:15 | DATA_UPLOAD | FAILED | ERROR: Connection timeout' (iteration 2)
+[line 17]  if 'ERROR' in entry:
+Condition: True, entering 'if' block
+... [Line 16] repeats 3 more times ...
+... [Line 16] repeats 3 more times ...
+[line 16]  for entry in entries:
+Loop Iteration: entry is now '2024-01-15 10:35:10 | DATA_SYNC | COMPLETED' (iteration 6)
+[line 17]  if 'ERROR' in entry:
+Condition: True, entering 'if' block
+[line 16]  for entry in entries:
+Loop End: Iteration finished
+[line 22]  valid_entries = []
+Compute: [] = []
+[line 23]  for entry in entries:
+Loop Start: entry takes its first value '2024-01-15 10:30:00 | USER_LOGIN | COMPLETED'
+[line 24]  if '|' in entry and 'COMPLETED' in entry:
+Condition: True, entering 'if' block
+[line 25]  data_parts = entry.split('|')
+(Missing param: 'func_name')
+[line 26]  if len(data_parts) >= 3:
+Condition: True, entering 'if' block
+[line 27]  status_field = data_parts[2].strip()
+(Missing param: 'func_name')
+[line 28]  if status_field.isalpha() and len(status_field) > 2:
+Condition: True, entering 'if' block
+[line 23]  for entry in entries:
+Loop Iteration: entry is now '2024-01-15 10:31:15 | DATA_UPLOAD | FAILED | ERROR: Connection timeout' (iteration 2)
+[line 24]  if '|' in entry and 'COMPLETED' in entry:
+Condition: True, entering 'if' block
+... [Line 23] repeats 3 more times ...
+... [Line 23] repeats 3 more times ...
+... [Line 23] repeats 3 more times ...
+... [Line 23] repeats 3 more times ...
+... [Line 23] repeats 3 more times ...
+... [Line 23] repeats 3 more times ...
+[line 23]  for entry in entries:
+Loop Iteration: entry is now '2024-01-15 10:35:10 | DATA_SYNC | COMPLETED' (iteration 6)
+[line 24]  if '|' in entry and 'COMPLETED' in entry:
+Condition: True, entering 'if' block
+[line 25]  data_parts = entry.split('|')
+(Missing param: 'func_name')
+[line 26]  if len(data_parts) >= 3:
+Condition: True, entering 'if' block
+[line 27]  status_field = data_parts[2].strip()
+(Missing param: 'func_name')
+[line 28]  if status_field.isalpha() and len(status_field) > 2:
+Condition: True, entering 'if' block
+[line 23]  for entry in entries:
+Loop End: Iteration finished
+[line 35]  data_quality_score = (len(valid_entries) * 100) // total_records
+Compute: (len(valid_entries) * 100) // total_records, where valid_entries=['2024-01-15 10:30:00 | USER_LOGIN | COMPLETED', '2024-01-15 10:32:30 | FILE_PROCESS | COMPLETED', '2024-01-15 10:33:45 | USER_LOGOUT | COMPLETED', '2024-01-15 10:35:10 | DATA_SYNC | COMPLETED'] (defined at [line 22]), total_records=6 (defined at [line 4]) = 66
+
+Answer: data_quality_score = 66 (last updated on defined at [line 35])

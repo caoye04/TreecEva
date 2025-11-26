@@ -1,28 +1,13 @@
-from collections import defaultdict
+packet_headers = [0x45, 0x00, 0x00, 0x3C, 0x1C, 0x46]
+header_xor = 0
+for i, header in enumerate(packet_headers):
+    header_xor ^= header
 
-tokens = ['0x1A3F', '0x4B2C', '0x1A3F', '0xF0F0', '0x4B2C', '0x1A3F', '0xC3A5']
-valid_token_freq = defaultdict(int)
+protocol_flags = [0x01, 0x80, 0x40]
+flag_xor = 0
+for flag in protocol_flags:
+    flag_xor |= flag
 
-for hex_token in tokens:
-    # Remove '0x' prefix and convert to uppercase for uniformity
-    clean_token = hex_token[2:].upper()
-    
-    # Calculate checksum by XOR-ing all nibbles
-    checksum = 0
-    for char in clean_token:
-        # Convert hex character to its decimal value
-        nibble_val = int(char, 16)
-        checksum ^= nibble_val
-    
-    # If checksum is zero, consider it a valid token
-    if checksum == 0:
-        valid_token_freq[clean_token] += 1
-
-# Compute security score
-security_score = 0
-for token_hex, freq in valid_token_freq.items():
-    # Convert token back to integer base 10
-    token_numeric = int(token_hex, 16)
-    security_score += token_numeric * freq
-
-print(f"Result: {security_score}")
+final_xor_value = header_xor & flag_xor
+network_checksum = final_xor_value
+print(f"Result: {network_checksum}")

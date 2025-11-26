@@ -1,56 +1,48 @@
-import math
+def validate_filtering(data_points, thresholds):
+    # Initialize tracking variables
+    temp_storage = []
+    redundant_counter = 0
+    misleading_total = 0
+    
+    # Process each data point with thresholds
+    for idx, point in enumerate(data_points):
+        # Distractor: irrelevant calculation that's never used
+        redundant_counter += (idx * 2) - (idx % 3)
+        
+        # Main filtering logic
+        if point > thresholds[0] and point < thresholds[1]:
+            temp_storage.append(point)
+        elif point == thresholds[0]:
+            # Dead code path - this condition never occurs with current data
+            misleading_total += point * 2
+        
+        # Another distractor: unused bitwise operation
+        bit_check = point & 0xFF
+    
+    # Misleading intermediate result
+    partial_count = len(temp_storage) + redundant_counter % 5
+    
+    # Secondary filtering with list comprehension
+    secondary_filter = [x for x in temp_storage if x % 2 == 0]
+    
+    # Final count calculation with conditional expression
+    filtered_count = len(secondary_filter) if len(secondary_filter) > 2 else len(temp_storage)
+    
+    # More distractors that don't affect the result
+    unused_var = sum(temp_storage) + misleading_total
+    dead_code = [x * 2 for x in secondary_filter if x > 100]  # Empty with current data
+    
+    return filtered_count
 
-def buffer_zone(radius):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            original_area = func(*args, **kwargs)
-            buffered_area = original_area + (2 * math.pi * radius * math.sqrt(original_area/math.pi))
-            return buffered_area
-        return wrapper
-    return decorator
+# Main execution
+threshold_values = (15, 45)
+data_sequence = [10, 25, 30, 40, 50, 20, 35, 60, 28]
 
-elevation_points = [(10, 20), (30, 40), (50, 60)]
-base_radius = 5
+# Distractor: irrelevant processing
+fake_analysis = [x * 3 for x in data_sequence if x < 30]
+misleading_sum = sum(fake_analysis) % 17
 
-@buffer_zone(base_radius)
-def calculate_circular_region(coords):
-    x, y = coords
-    return math.pi * (x/10)**2
+# Key execution
+final_check = validate_filtering(data_sequence, threshold_values)
 
-terrain_segments = [
-    {'type': 'hill', 'center': elevation_points[0], 'radius': base_radius},
-    {'type': 'mountain', 'center': elevation_points[1], 'radius': base_radius*2},
-    {'type': 'peak', 'center': elevation_points[2], 'radius': base_radius*1.5}
-]
-
-def get_protected_area(segment):
-    area_type = segment['type']
-    match area_type:
-        case 'hill':
-            return calculate_circular_region(segment['center'])
-        case 'mountain':
-            base_area = math.pi * segment['radius']**2
-            return base_area * 1.5
-        case 'peak':
-            base_area = math.pi * segment['radius']**2
-            return base_area + (base_area * 0.75)
-        case _:
-            return 0
-
-conservation_area = 0
-for segment in terrain_segments:
-    segment_area = get_protected_area(segment)
-    conservation_area += int(segment_area) if isinstance(segment_area, float) else segment_area
-
-# Adjust for overlapping zones
-overlap_deduction = 0
-for i in range(len(elevation_points)):
-    for j in range(i+1, len(elevation_points)):
-        xi, yi = elevation_points[i]
-        xj, yj = elevation_points[j]
-        distance = math.sqrt((xi-xj)**2 + (yi-yj)**2)
-        if distance < base_radius*2:
-            overlap_deduction += (base_radius*2 - distance) * 10
-
-conservation_area = int(conservation_area - overlap_deduction)
-print(f"Result: {conservation_area}")
+print(f"Result: {final_check}")

@@ -1,103 +1,70 @@
-import heapq
-from collections import defaultdict
+from collections import Counter
 
-def tokenize(expr):
-    tokens = []
-    i = 0
-    while i < len(expr):
-        if expr[i].isspace():
-            i += 1
-            continue
-        if expr[i] in '+-*/()':
-            tokens.append(expr[i])
-            i += 1
-        else:
-            num = ''
-            while i < len(expr) and expr[i].isdigit():
-                num += expr[i]
-                i += 1
-            tokens.append(int(num))
-    return tokens
-
-def hash_token(token):
-    if isinstance(token, int):
-        return hash(str(token)) % 1000
-    else:
-        return hash(token) % 1000
-
-# Priority queue for operators
-operator_queue = []
-# Stack for operands
-operand_stack = []
-# Accumulator for expression value
-expression_value = 0
-
-# Transformation function
-transform = lambda x: x * 2 if isinstance(x, int) else ord(x[0])
-
-# Input expression
-input_expression = "3 + 5 * ( 2 + 8 )"
-tokens = tokenize(input_expression)
-
-precedence = {'+': 1, '-': 1, '*': 2, '/': 2}
-
-for token in tokens:
-    token_hash = hash_token(token)
-    transformed_token = transform(token)
+def calculate_initial_metrics(data_points):
+    # Irrelevant intermediate calculations
+    temp_sum = sum(data_points) * 2
+    irrelevant_avg = temp_sum / len(data_points) if data_points else 0
     
-    if isinstance(token, int):
-        operand_stack.append(transformed_token)
-    elif token == '(':
-        heapq.heappush(operator_queue, (0, token))
-    elif token == ')':
-        while operator_queue and operator_queue[0][1] != '(':
-            op = heapq.heappop(operator_queue)[1]
-            if len(operand_stack) >= 2:
-                b = operand_stack.pop()
-                a = operand_stack.pop()
-                if op == '+':
-                    operand_stack.append(a + b)
-                elif op == '-':
-                    operand_stack.append(a - b)
-                elif op == '*':
-                    operand_stack.append(a * b)
-                elif op == '/':
-                    operand_stack.append(a // b)
-        if operator_queue:
-            heapq.heappop(operator_queue)  # Remove the '('
-    elif token in precedence:
-        while (operator_queue and 
-               operator_queue[0][1] != '(' and
-               precedence.get(operator_queue[0][1], 0) >= precedence[token]):
-            op = heapq.heappop(operator_queue)[1]
-            if len(operand_stack) >= 2:
-                b = operand_stack.pop()
-                a = operand_stack.pop()
-                if op == '+':
-                    operand_stack.append(a + b)
-                elif op == '-':
-                    operand_stack.append(a - b)
-                elif op == '*':
-                    operand_stack.append(a * b)
-                elif op == '/':
-                    operand_stack.append(a // b)
-        heapq.heappush(operator_queue, (precedence[token], token))
+    # Actual relevant calculation
+    point_counter = Counter(data_points)
+    unique_count = len(point_counter)
+    most_common_freq = point_counter.most_common(1)[0][1] if point_counter else 0
+    
+    # Misleading variable
+    misleading_total = temp_sum + unique_count + most_common_freq
+    
+    return (unique_count, most_common_freq, misleading_total)
 
-while operator_queue:
-    op = heapq.heappop(operator_queue)[1]
-    if len(operand_stack) >= 2:
-        b = operand_stack.pop()
-        a = operand_stack.pop()
-        if op == '+':
-            operand_stack.append(a + b)
-        elif op == '-':
-            operand_stack.append(a - b)
-        elif op == '*':
-            operand_stack.append(a * b)
-        elif op == '/':
-            operand_stack.append(a // b)
+def apply_adjustments(base_values, adjustment_factors):
+    base1, base2, _ = base_values
+    factor1, factor2 = adjustment_factors
+    
+    # Dead code path
+    if factor1 > 100:
+        unused_calc = base1 * base2 * factor1
+    
+    # Relevant calculations with distractions
+    adjusted1 = base1 * factor1
+    adjusted2 = base2 * factor2
+    
+    # Irrelevant intermediate
+    temp_product = adjusted1 * adjusted2
+    
+    return (adjusted1, adjusted2, temp_product)
 
-if operand_stack:
-    expression_value = operand_stack[0]
+def calculate_final_score(metrics, adjustments, multiplier):
+    # Unpack with distraction
+    unique_count, most_common_freq, _ = metrics
+    adj1, adj2, _ = adjustments
+    
+    # Core calculation with multiple steps
+    weighted_unique = unique_count * multiplier
+    weighted_freq = most_common_freq * (multiplier // 2)
+    
+    # Irrelevant bitwise operation
+    bit_distraction = (weighted_unique ^ weighted_freq) & 0xFF
+    
+    # Actual final calculation
+    final_score = (weighted_unique + weighted_freq) - bit_distraction
+    
+    # Misleading alternative calculation
+    alternative_score = (adj1 + adj2) * multiplier
+    
+    return final_score
 
-print(f"Result: {expression_value}")
+# Main execution with distractions
+data_points = [5, 3, 5, 7, 3, 2, 5, 8, 5, 2]
+adjustment_factors = (3, 2)
+multiplier = 4
+
+# Calculate metrics with irrelevant intermediate
+metrics = calculate_initial_metrics(data_points)
+print(f"Intermediate metrics: {metrics}")
+
+# Apply adjustments with distraction
+adjustments = apply_adjustments(metrics, adjustment_factors)
+print(f"Adjustments applied: {adjustments}")
+
+# Final calculation
+final_score = calculate_final_score(metrics, adjustments, multiplier)
+print(f"Result: {final_score}")

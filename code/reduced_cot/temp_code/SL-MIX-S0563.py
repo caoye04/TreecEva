@@ -1,40 +1,49 @@
-from collections import defaultdict
-from functools import reduce
-import math
-
-def calculate_base_score(flags, size):
-    frag_flag = (flags >> 2) & 1
-    df_flag = (flags >> 1) & 1
-    mf_flag = flags & 1
-    base = (frag_flag << 3) | (df_flag << 2) | (mf_flag << 1)
-    return base if size <= 1024 else base ^ 0xF
-
-packets = [
-    {'flags': 0b110, 'size': 512},
-    {'flags': 0b011, 'size': 2048},
-    {'flags': 0b101, 'size': 768},
-    {'flags': 0b000, 'size': 4096}
-]
-
-flag_counts = defaultdict(int)
-threat_components = []
-
-for pkt in packets:
-    flags, size = pkt['flags'], pkt['size']
-    base_score = calculate_base_score(flags, size)
-    normalized_size = size / 1024.0
-    size_factor = math.log(normalized_size + 1) if normalized_size > 0 else 0
-    component = int(base_score * size_factor * 10) & 0xFF
-    threat_components.append(component)
+def analyze_network_packets(packet_data):
+    # Irrelevant network simulation setup
+    max_bandwidth = 1000
+    min_latency = 5
+    protocol_headers = ['TCP', 'UDP', 'ICMP', 'HTTP']
     
-    # Update flag counts using bitwise inspection
-    for i in range(3):
-        if flags & (1 << i):
-            flag_counts[i] += 1
+    # Distractor calculations that don't affect final result
+    total_bytes = sum(len(p) for p in packet_data)
+    avg_packet_size = total_bytes / len(packet_data) if packet_data else 0
+    protocol_distribution = {proto: 0 for proto in protocol_headers}
+    
+    # Relevant data processing with slicing and enumerate
+    valid_packets = []
+    for i, packet in enumerate(packet_data):
+        if i % 2 == 0:  # Skip every other packet (misleading condition)
+            continue
+        if len(packet) > 10:  # Actual filtering condition
+            valid_packets.append(packet)
+    
+    # More irrelevant computations
+    redundant_sum = sum(ord(c) for packet in packet_data for c in packet[:3])
+    temp_buffer = [x * 2 for x in range(len(packet_data))]
+    
+    # Critical logic section with zip
+    source_dest_pairs = list(zip(packet_data[::2], packet_data[1::2]))
+    processed_pairs = []
+    for src, dst in source_dest_pairs:
+        if src and dst:  # Dead code path - always true
+            processed_pairs.append((len(src), len(dst)))
+    
+    # Key variables for final calculation
+    valid_count = len(valid_packets)
+    weight_factor = 3
+    offset_value = 7
+    
+    # Final answer computation
+    final_metric = valid_count * weight_factor - offset_value
+    
+    # Print result
+    print(f"Result: {final_metric}")
+    return final_metric
 
-# Calculate final threat index
-xor_accum = reduce(lambda x, y: x ^ y, threat_components, 0)
-count_sum = sum(flag_counts.values())
-threat_index = (xor_accum << 2) | (count_sum & 0x3) if count_sum > 5 else (count_sum << 4) ^ xor_accum
+# Test data
+packet_samples = ['data_packet_001', 'data_packet_002_extra', 'cmd_003', 
+                  'response_004_longer', 'ack_005', 'sync_006_extended',
+                  'fin_007', 'rst_008_special']
 
-print(f"Result: {threat_index}")
+# Execute
+result = analyze_network_packets(packet_samples)

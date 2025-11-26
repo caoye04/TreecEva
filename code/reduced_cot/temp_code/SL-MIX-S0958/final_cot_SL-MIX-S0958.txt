@@ -1,0 +1,28 @@
+Target: Find the value of variable final_count after [line 22] executes
+
+[line 2]  data_items = ['apple', 'PEAR', 'kiwi', 'ORANGE', 'fig', 'BANANA']
+Compute: ['apple', 'PEAR', 'kiwi', 'ORANGE', 'fig', 'BANANA'] = ['apple', 'PEAR', 'kiwi', 'ORANGE', 'fig', ...]
+[line 3]  processed_data = [item.upper() if len(item) > 3 else item.lower() for item in data_items]
+Compute: [item.upper() if len(item) > 3 else item.lower() for item in data_items], where item='apple' (an unknown source), data_items=['apple', 'PEAR', 'kiwi', 'ORANGE', 'fig', ...] (defined at [line 2]) = ?
+[line 11]  for item in processed_data:
+Loop Start: item takes its first value 'APPLE'
+[line 11]  for item in processed_data:
+Loop End: Iteration finished
+[line 11]  for item in processed_data:
+Loop End: Iteration finished
+[line 11]  for item in processed_data:
+Loop End: Iteration finished
+[line 11]  for item in processed_data:
+Loop End: Iteration finished
+[line 11]  for item in processed_data:
+Loop End: Iteration finished
+[line 11]  for item in processed_data:
+Loop End: Iteration finished
+[line 16]  filtered_items = [item for item in processed_data if item.startswith('A') or item.startswith('O')]
+Compute: [item for item in processed_data if item.startswith('A') or item.startswith('O')], where item='APPLE' (defined at [line 11]), processed_data=['APPLE', 'PEAR', 'KIWI', 'ORANGE', 'fig', ...] (defined at [line 3]) = ?
+[line 17]  intermediate_count = len(filtered_items)
+Call function len(filtered_items=['APPLE', 'ORANGE'] (defined at [line 16]))
+[line 22]  final_count = intermediate_count * 2 + len([item for item in processed_data if 'I' in item])
+Compute: intermediate_count * 2 + len([item for item in processed_data if 'I' in item]), where intermediate_count=2 (defined at [line 17]), item='APPLE' (defined at [line 11]), processed_data=['APPLE', 'PEAR', 'KIWI', 'ORANGE', 'fig', ...] (defined at [line 3]) = ?
+
+Answer: final_count = 5 (last updated on defined at [line 22])

@@ -1,45 +1,23 @@
-from itertools import permutations
-from collections import Counter
-from dataclasses import dataclass
+def analyze_climate_data(readings_dict, base_temp):
+    temp_deviations = [reading - base_temp for reading in readings_dict.values()]
+    seasonal_pattern = {city: temp * 1.05 for city, temp in readings_dict.items()}
+    deviation_sum = sum(temp_deviations)
+    count_dev = len(temp_deviations)
+    irrelevant_calc = deviation_sum * 0.1
+    filtered_deviations = [dev for dev in temp_deviations if dev > 0]
+    avg_deviation = sum(filtered_deviations) / len(filtered_deviations) if filtered_deviations else 0
+    seasonal_adjust = sum(seasonal_pattern.values()) / len(seasonal_pattern)
+    adjusted_trend = avg_deviation + (seasonal_adjust - base_temp) * 0.8
+    return round(adjusted_trend, 2)
 
-genomic_sequences = ['atgc', 'tgcA', 'GCAT', 'catg']
-base_weights = {'A': 2, 'T': 3, 'G': 5, 'C': 7}
+city_readings = {'Tokyo': 18.5, 'London': 12.3, 'Sydney': 22.1, 'Moscow': 8.7, 'Rio': 26.4}
+baseline_temp = 15.0
+climate_coefficient = 1.2
+redundant_metric = sum([temp * 0.5 for temp in city_readings.values()])
 
-# Define a decorator for logging function calls
-def log_calls(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result
-    return wrapper
+# Main execution point
+seasonal_factor = climate_coefficient * 0.9
+temperature_trend = analyze_climate_data(city_readings, baseline_temp)
+regional_variance = redundant_metric - baseline_temp
 
-@log_calls
-def compute_weighted_score(freq_dict):
-    score = 0
-    for base, count in freq_dict.items():
-        if base in base_weights:
-            score += count * base_weights[base]
-    return score
-
-# Process sequences
-processed_sequences = []
-for seq in genomic_sequences:
-    # Convert to uppercase
-    upper_seq = seq.upper()
-    # Replace 'A' with 'X' temporarily for pattern analysis
-    modified_seq = upper_seq.replace('A', 'X')
-    processed_sequences.append(modified_seq)
-
-# Count all characters in processed sequences
-all_chars = ''.join(processed_sequences)
-frequency_count = Counter(all_chars)
-
-# Apply combinatorics to generate possible base arrangements
-bases = list('XTGC')
-perm_count = len(list(permutations(bases, 2)))
-
-# Calculate final score using lambda closure
-adjustment_factor = perm_count
-scoring_func = lambda freq: compute_weighted_score(freq) * adjustment_factor
-final_score = scoring_func(frequency_count)
-
-print(f'Result: {final_score}')
+print(f"Target result: {temperature_trend}")

@@ -1,35 +1,38 @@
-import heapq
-from collections import deque
-
-def calculate_arbitrage_potential(rates, principal):
-    # Priority queue for best rates (max heap using negative values)
-    max_heap = []
-    for rate in rates:
-        heapq.heappush(max_heap, -rate)
+def analyze_network(nodes, connections):
+    # Red herring calculations
+    total_possible_edges = nodes * (nodes - 1) // 2
+    redundant_edges = connections * 2 - total_possible_edges
     
-    # Stack for transaction history
-    transaction_log = deque()
+    # Main logic with distractions
+    initial_capacity = nodes * 100
+    bandwidth_utilization = 0.85
     
-    # Greedy selection of top 3 rates
-    selected_rates = []
-    for _ in range(min(3, len(max_heap))):
-        selected_rates.append(-heapq.heappop(max_heap))
+    # Misleading intermediate result
+    theoretical_max = initial_capacity * 2
     
-    # Ternary-based validation and profit calculation
-    cumulative_gain = principal
-    for i, rate in enumerate(selected_rates):
-        is_valid = (rate > 1.0) and (i < 2 or (cumulative_gain > 1000))
-        cumulative_gain = cumulative_gain * rate if is_valid else cumulative_gain
-        transaction_log.append((rate, is_valid))
+    # Actual relevant calculations
+    import itertools
+    node_pairs = list(itertools.combinations(range(nodes), 2))
+    network_capacity = sum(min(connection[0], connection[1]) for connection in node_pairs[:connections]) * bandwidth_utilization
     
-    # Final adjustment using lambda for fee calculation
-    fee_deduction = (lambda amt: amt * 0.02 if amt > 1100 else amt * 0.01)(cumulative_gain)
-    return cumulative_gain - fee_deduction
-
-# Market data
-exchange_rates = [1.02, 1.05, 0.99, 1.08, 1.03]
-initial_capital = 1000
+    # More distractions
+    dead_code_path = theoretical_max - network_capacity
+    
+    # Key calculations
+    redundant_nodes = len(set(range(nodes)) - {0, nodes//2})
+    path_combinations = len(list(itertools.combinations(range(redundant_nodes), 2)))
+    optimized_paths = path_combinations // 3
+    
+    # Final answer computation
+    final_capacity = network_capacity - redundant_nodes + optimized_paths
+    
+    # Unused variable for interference
+    unused_calculation = redundant_edges * 10
+    
+    print(f"Result: {final_capacity}")
+    return final_capacity
 
 # Execution
-final_profit = calculate_arbitrage_potential(exchange_rates, initial_capital)
-print(f'Result: {final_profit}')
+nodes = 8
+connections = 12
+result = analyze_network(nodes, connections)

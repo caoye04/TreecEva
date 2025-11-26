@@ -1,37 +1,63 @@
-import heapq
+import collections
 
-def calculate_volatility_score(open_price, close_price, volume):
-    price_change = abs(close_price - open_price)
-    return price_change * (volume // 1000)
+def process_data_sources():
+    raw_data = [3, 7, 2, 8, 5, 3, 9, 2, 7, 8, 4, 6, 1, 5, 3]
+    irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+    data_counter = collections.Counter(raw_data)
+    
+    # Misleading intermediate calculations
+    temp_sum = sum(raw_data) + len(irrelevant_cache)
+    bogus_factor = temp_sum % 7
+    
+    most_common = data_counter.most_common(2)
+    if len(most_common) >= 2:
+        primary_freq = most_common[0][1]
+        secondary_freq = most_common[1][1]
+    else:
+        primary_freq = 0
+        secondary_freq = 0
+    
+    # Dead code path that looks important
+    if bogus_factor > 3:
+        quality_indicator = primary_freq * 10 - secondary_freq
+    else:
+        quality_indicator = primary_freq + secondary_freq * 5
+    
+    return quality_indicator, bogus_factor
 
-# Market data: (open_price, close_price, volume)
-market_events = [
-    (100.5, 105.2, 15000),
-    (98.3, 97.8, 12000),
-    (102.0, 101.5, 18000),
-    (99.8, 103.4, 21000)
-]
+def analyze_patterns():
+    sample_sequences = [(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+    pattern_metrics = []
+    
+    for seq in sample_sequences:
+        avg_val = sum(seq) / len(seq)
+        pattern_metrics.append(avg_val)
+    
+    # Misleading operation that gets ignored
+    pattern_sum = sum(pattern_metrics) * 3
+    variance_factor = max(pattern_metrics) - min(pattern_metrics)
+    
+    return variance_factor, pattern_sum
 
-# Priority queue to store transactions: (-urgency_score, adjustment_value)
-transaction_queue = []
-initial_portfolio_value = 50000
+def final_processing():
+    quality_indicator, bogus_factor = process_data_sources()
+    variance_factor, pattern_sum = analyze_patterns()
+    
+    # Key computation chain
+    base_score = quality_indicator + variance_factor
+    adjustment = (bogus_factor * 2) % 5
+    
+    # Multiple irrelevant operations
+    dummy_calc = (pattern_sum // 10) + 25
+    misleading_value = dummy_calc - adjustment
+    
+    # Critical calculation
+    data_quality_score = base_score - adjustment
+    
+    # Print the target variable
+    print(f"Target result: {data_quality_score}")
+    return data_quality_score
 
-for event in market_events:
-    open_price, close_price, volume = event
-    urgency_score = calculate_volatility_score(open_price, close_price, volume)
-    adjustment_value = (close_price - open_price) * (volume // 100)
-    heapq.heappush(transaction_queue, (-urgency_score, adjustment_value))
-
-processed_adjustments = []
-while transaction_queue:
-    _, adjustment = heapq.heappop(transaction_queue)
-    processed_adjustments.append(adjustment)
-
-# Dynamic programming approach to find optimal subset of adjustments
-n = len(processed_adjustments)
-dp = [0] * (n + 1)
-for i in range(1, n + 1):
-    dp[i] = max(dp[i-1], dp[i-1] + processed_adjustments[i-1])
-
-final_portfolio_value = initial_portfolio_value + dp[n]
-print(f"Result: {final_portfolio_value}")
+# Execute the main processing
+if __name__ == "__main__":
+    final_processing()

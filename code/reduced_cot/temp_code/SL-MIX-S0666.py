@@ -1,33 +1,21 @@
-import math
+inventory_items = ['apple', 'banana', 'orange', 'apple', 'grape', 'banana', 'apple', 'kiwi']
+item_categories = {'apple': 'fruit', 'banana': 'fruit', 'orange': 'fruit', 'grape': 'fruit', 'kiwi': 'fruit', 'carrot': 'vegetable'}
 
-class InterestNode:
-    def __init__(self, adjustment_factor, next_node=None):
-        self.factor = adjustment_factor
-        self.next = next_node
+fruit_count = {}
+for item in inventory_items:
+    if item in item_categories and item_categories[item] == 'fruit':
+        fruit_count[item] = fruit_count.get(item, 0) + 1
 
-# Build linked list with adjustment factors
-root = InterestNode(1.05)
-root.next = InterestNode(0.98)
-root.next.next = InterestNode(1.02)
-root.next.next.next = InterestNode(1.07)
+# Distractor operations
+category_sizes = {item: len(item) for item in set(inventory_items)}
+total_letters = sum(category_sizes.values())
 
-# Initial values
-principal = 10000.0
-scaling_base = 2.71828  # e
+primary_count = fruit_count.get('apple', 0) + fruit_count.get('orange', 0)
+secondary_count = fruit_count.get('banana', 0) + fruit_count.get('grape', 0)
 
-# Process adjustments using list comprehension and lambda
-adjustments = []
-node = root
-while node:
-    adjustments.append(node.factor)
-    node = node.next
+# More distractor calculations
+average_length = total_letters / len(set(inventory_items)) if inventory_items else 0
+unused_calculation = primary_count * secondary_count - total_letters
 
-# Apply compounded adjustments with logarithmic scaling
-log_sum = sum([math.log(factor) for factor in adjustments])
-compound_effect = math.exp(log_sum)
-
-# Calculate final yield with lambda transformation
-yield_transform = lambda p, effect: p * (effect + 0.01 * math.log(effect))
-final_yield = yield_transform(principal, compound_effect)
-
-print(f"Result: {final_yield}")
+final_result = primary_count - secondary_count
+print(f"Result: {final_result}")

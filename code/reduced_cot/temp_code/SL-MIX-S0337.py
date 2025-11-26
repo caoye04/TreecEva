@@ -1,37 +1,32 @@
-import math
-from collections import defaultdict
+def inventory_analysis():
+    raw_items = [45, 67, 23, 89, 12, 56, 34, 78, 91, 15]
+    threshold = 40
+    
+    # Process items above threshold
+    filtered_items = [item for item in raw_items if item > threshold]
+    
+    # Calculate some intermediate metrics (distractor operations)
+    total_sum = sum(raw_items)
+    average_value = total_sum / len(raw_items)
+    max_item = max(raw_items)
+    
+    # Process items with enumerate and slicing
+    processed_items = []
+    for idx, item in enumerate(filtered_items):
+        if idx % 2 == 0:
+            processed_items.append(item * 2)
+        else:
+            processed_items.append(item - 10)
+    
+    # More intermediate calculations (not used in final result)
+    temp_calc = (max_item * average_value) // 10
+    
+    # Final inventory calculation
+    remaining_stock = len([item for item in raw_items if item <= threshold])
+    final_inventory_count = processed_items[-1] + remaining_stock
+    
+    print(f"Result: {final_inventory_count}")
+    return final_inventory_count
 
-def encode_point(x, y):
-    return (x << 8) | y
-
-def decode_point(encoded):
-    x = encoded >> 8
-    y = encoded & 0xFF
-    return (x, y)
-
-def calculate_centroid(vertices):
-    cx = sum(v[0] for v in vertices) / len(vertices)
-    cy = sum(v[1] for v in vertices) / len(vertices)
-    return (cx, cy)
-
-# Encoded vertex data for a triangle
-encoded_vertices = [0x0A05, 0x1E0F, 0x1419]
-
-# Decode vertices
-vertices = [decode_point(e) for e in encoded_vertices]
-
-# Calculate centroid
-centroid = calculate_centroid(vertices)
-
-# Spatial adjustment based on quadrant
-if centroid[0] >= 0 and centroid[1] >= 0:
-    adjusted_x = int(centroid[0]) + 10
-    adjusted_y = int(centroid[1]) + 20
-else:
-    adjusted_x = int(centroid[0]) - 5
-    adjusted_y = int(centroid[1]) - 5
-
-# Encode the adjusted centroid
-encoded_result = encode_point(adjusted_x, adjusted_y)
-
-print(f"Result: {encoded_result}")
+# Execute the function
+final_result = inventory_analysis()

@@ -1,0 +1,27 @@
+44
+final_throughput
+---
+33 initial_load = 85
+33 ['initial_load'] ['85']
+34 adjustment_factor = 4
+34 ['initial_load', 'adjustment_factor'] ['85', '4']
+44 final_throughput = process_complex_data(initial_load, adjustment_factor)
+44 ['initial_load', 'adjustment_factor'] ['85', '4']
+PARAM_MAPPING {'base_load': {'actual_var': 'initial_load', 'value': 85}, 'adjustment': {'actual_var': 'adjustment_factor', 'value': 4}}
+FUNCTION_ENTER 1 process_complex_data def process_complex_data(base_load, adjustment):
+1 ['base_load', 'adjustment'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}]
+11 if base_load > 1000:
+11 ['base_load', 'adjustment'] ['85', '4']
+16 load_validator = lambda x: x > 0 and x < 500
+16 ['base_load', 'adjustment'] ['85', '4']
+17 processed_load = base_load + adjustment if load_validator(base_load) else base_load - adjustment
+17 ['base_load', 'adjustment'] ['85', '4']
+20 redundant_calc = (processed_load * 3) // 2
+20 ['adjustment', 'processed_load', 'redundant_calc'] ['4', '89', '133']
+21 misleading_buffer = redundant_calc + 25
+21 ['adjustment', 'processed_load', 'redundant_calc', 'misleading_buffer'] ['4', '89', '133', '158']
+24 throughput_calc = (processed_load * adjustment) - (misleading_buffer % 20)
+24 ['adjustment', 'processed_load', 'misleading_buffer', 'throughput_calc'] ['4', '89', '158', '338']
+30 return throughput_calc
+30 ['throughput_calc'] ['338']
+FUNCTION_RETURN 30 process_complex_data {'_type': 'int', '_value': 338}

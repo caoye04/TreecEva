@@ -1,29 +1,30 @@
-import heapq
-from functools import reduce
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
 
-def calculate_arbitrage_opportunities(rates):
-    # Preprocess rates using functional programming
-    normalized_rates = list(map(lambda x: round(x * 1000), rates))
-    
-    # Filter out unprofitable initial rates
-    profitable_rates = list(filter(lambda x: x > 1000, normalized_rates))
-    
-    # Use a heap to process smallest opportunities first
-    heapq.heapify(profitable_rates)
-    
-    # Divide and conquer aggregation of profits
-    def merge_profits(a, b):
-        return (a + b) // 2 if a and b else (a or b)
-    
-    total_profit = reduce(merge_profits, profitable_rates, 0)
-    
-    # Apply logical filters for final validation
-    isValid = total_profit > 5000 and not (total_profit % 100 == 0)
-    final_profit_margin = total_profit if isValid else 0
-    
-    return final_profit_margin
+# Process number range with slicing and itertools
+import itertools
 
-# Simulated currency rates (multiples for precision)
-exchange_rates = [1.005, 1.02, 0.99, 1.01, 1.03, 1.007, 0.98]
-final_profit_margin = calculate_arbitrage_opportunities(exchange_rates)
-print(f"Result: {final_profit_margin}")
+numbers = list(range(2, 50))
+prime_candidates = numbers[::2] + numbers[1::3]
+filtered_candidates = [x for x in prime_candidates if x % 3 != 0]
+
+# Distractor operations (not used in final result)
+prime_squares = [x**2 for x in filtered_candidates if x < 20]
+dummy_sum = sum(prime_squares)
+
+# Main logic with modular arithmetic
+valid_primes = []
+for num in filtered_candidates:
+    if is_prime(num) and num % 4 == 1:
+        valid_primes.append(num)
+
+# Another distractor operation
+prime_pairs = list(itertools.combinations(valid_primes, 2))
+
+final_output = sum(valid_primes)
+print(f"Result: {final_output}")

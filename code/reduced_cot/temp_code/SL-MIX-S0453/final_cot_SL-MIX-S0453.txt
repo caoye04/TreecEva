@@ -1,0 +1,14 @@
+Target: Find the value of variable final_metric after [line 19] executes
+
+[line 2]  raw_readings = [25, 32, 18, 29, 34, 22, 31, 27]
+Compute: [25, 32, 18, 29, 34, 22, 31, 27] = [25, 32, 18, 29, 34, ...]
+[line 3]  filtered_data = [temp for temp in raw_readings if temp > 20]
+Compute: [temp for temp in raw_readings if temp > 20], where temp=25 (an unknown source), raw_readings=[25, 32, 18, 29, 34, ...] (defined at [line 2]) = ?
+[line 11]  adjusted_data = [temp + 5 if temp < 25 else temp - 3 for temp in filtered_data]
+Compute: [temp + 5 if temp < 25 else temp - 3 for temp in filtered_data], where temp=25 (an unknown source), filtered_data=[25, 32, 29, 34, 22, ...] (defined at [line 3]) = ?
+[line 18]  scaling_factor = 4 if len(adjusted_data) > 5 else 2
+Compute: 4 if len(adjusted_data) > 5 else 2, where adjusted_data=[22, 29, 26, 31, 27, ...] (defined at [line 11]) = 4
+[line 19]  final_metric = adjusted_data[-1] // scaling_factor
+Compute: adjusted_data[-1] // scaling_factor, where adjusted_data=[22, 29, 26, 31, 27, ...] (defined at [line 11]), scaling_factor=4 (defined at [line 18]) = 6
+
+Answer: final_metric = 6 (last updated on defined at [line 19])

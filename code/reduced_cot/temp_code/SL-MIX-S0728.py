@@ -1,56 +1,64 @@
-import itertools
-from collections import deque
-
-def calculate_route_efficiency(route_data):
-    # Initialize queue with route segments
-    segment_queue = deque(route_data)
-    total_distance = 0
-    weight_multiplier = 1
+def analyze_data_patterns(dataset):
+    # Initialize tracking variables
+    pattern_sum = 0
+    irrelevant_counter = 17
+    temp_buffer = []
     
-    # Process each segment
-    while segment_queue:
-        segment = segment_queue.popleft()
-        distance, weight, time_deviation = segment
-        
-        # Calculate weighted distance
-        weighted_dist = distance * (1.5 if weight > 50 else 1.0)
-        total_distance += weighted_dist
-        
-        # Update weight multiplier using ternary logic
-        weight_multiplier = weight_multiplier * 2 if time_deviation > 0 else weight_multiplier
+    # Process dataset with multiple operations
+    for item in dataset:
+        # Main processing logic
+        if item % 2 == 0:
+            pattern_sum += item * 2
+            temp_buffer.append(item + 5)  # Irrelevant side effect
+        else:
+            pattern_sum -= item // 3
+            irrelevant_counter += item % 7  # Misleading calculation
     
-    # Apply penalty matrix based on total distance
-    penalty_matrix = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9]
-    ]
+    # Complex intermediate processing
+    intermediate = pattern_sum * 3
+    misleading_temp = intermediate // 2 + irrelevant_counter
     
-    row_index = min(2, int(total_distance // 100))
-    col_index = min(2, weight_multiplier - 1)
-    penalty_factor = penalty_matrix[row_index][col_index] if row_index < 3 and col_index < 3 else 1
+    # Dictionary operations for analysis
+    analysis_dict = {
+        'primary': pattern_sum,
+        'secondary': intermediate,
+        'distractor': misleading_temp,
+        'buffer_size': len(temp_buffer)
+    }
     
-    # Final efficiency calculation
-    base_score = 1000 - total_distance
-    efficiency_score = base_score - (penalty_factor * sum([x[2] for x in route_data]))
+    # Final computation with bitwise operations
+    result = (analysis_dict['primary'] ^ analysis_dict['secondary']) & 0xFF
+    result += analysis_dict['buffer_size'] * 8
     
-    return efficiency_score
+    return result
 
-# Route data: (distance_km, weight_kg, time_deviation_minutes)
-routes = [
-    (45, 30, 5),
-    (75, 65, -2),
-    (120, 45, 10),
-    (30, 75, 0)
-]
+def compute_final_value(input_data):
+    # Initial setup with distractors
+    base_value = 42
+    dummy_accumulator = 0
+    shadow_var = 127
+    
+    # Call main analysis function
+    analysis_result = analyze_data_patterns(input_data)
+    
+    # Complex conditional processing
+    if analysis_result > 100:
+        final = analysis_result - base_value + (shadow_var >> 3)
+        dummy_accumulator = final * 2  # Dead code path
+    else:
+        final = analysis_result + base_value - (shadow_var & 0x1F)
+    
+    # Additional misleading operations
+    temp_var = final ^ 0xAA
+    another_temp = temp_var // 4
+    
+    # Return the actual result
+    return final
 
-# Calculate using functional approach
-route_permutations = list(itertools.permutations(routes))
-best_score = float('-inf')
+# Main execution
+sample_data = [12, 7, 25, 18, 9, 31, 14]
+data_analysis = sample_data
+final_result = compute_final_value(data_analysis)
 
-for perm in route_permutations[:10]:  # Only check first 10 permutations for efficiency
-    score = calculate_route_efficiency(perm)
-    best_score = score if score > best_score else best_score
-
-final_efficiency_score = best_score
-print(f"Result: {int(final_efficiency_score)}")
+# Print the target variable
+print(f"Result: {final_result}")

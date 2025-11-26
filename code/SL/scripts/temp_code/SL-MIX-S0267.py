@@ -1,38 +1,44 @@
-import math
-from functools import reduce
-from collections import Counter
+def compute_final_value(data, transform):
+    # Initial processing with irrelevant computations
+    base_value = sum(data[:3]) * 2
+    temp_buffer = [x ^ 0b1010 for x in data[1:4]]  # Misleading XOR operation
+    
+    # Lambda function with slicing for actual transformation
+    transformation_fn = lambda arr: (arr[0] & 0b1111) + (arr[-1] >> 1)
+    
+    # Multiple irrelevant calculations
+    dummy_metric = base_value // 3
+    fake_result = (dummy_metric * 7) % 11
+    
+    # Dead code path that looks relevant
+    if fake_result > 5:
+        unused_value = fake_result * 2 - 1
+    else:
+        unused_value = fake_result + 10
+    
+    # The actual critical computation chain
+    processed_data = [x * 2 if x % 2 == 0 else x // 2 for x in data]
+    transformed_result = transform(processed_data)
+    
+    # More distractions
+    noise_factor = len([x for x in data if x > 10])
+    distraction_value = (noise_factor * transformed_result) ^ 0b1100
+    
+    # Final computation with bitwise operations
+    intermediate = (transformed_result & 0b0110) | (distraction_value >> 2)
+    target_result = intermediate + (base_value % 7)
+    
+    return target_result
 
-network_logs = [120, 256, 97, 512, 101, 79, 300, 1024, 103, 200, 400, 89, 150, 600, 750]
+# Main execution
+input_data = [8, 15, 22, 9, 17, 4, 11]
 
-# Helper function to check if a number is prime
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+# Misleading transformation that's never used
+redundant_transform = lambda x: sum(x[::2]) - min(x)
 
-# Calculate mean and standard deviation
-packet_count = len(network_logs)
-total_size = sum(network_logs)
-mean_size = total_size / packet_count
-variance = sum((x - mean_size) ** 2 for x in network_logs) / packet_count
-std_dev = math.sqrt(variance)
+# The actual transformation used
+actual_transform = lambda arr: (arr[1] | arr[3]) & (arr[2] ^ arr[4])
 
-# Threshold for anomaly detection
-threshold = mean_size + std_dev
-
-# Identify primes using list comprehension and filter
-prime_packets = [size for size in network_logs if is_prime(size)]
-
-# Count anomalies using short-circuit evaluation and ternary operator
-anomaly_count = sum(1 for p in prime_packets if p > threshold)
-
-print(f"Result: {anomaly_count}")
+# Compute the target value
+result = compute_final_value(input_data, actual_transform)
+print(f"Target result: {result}")

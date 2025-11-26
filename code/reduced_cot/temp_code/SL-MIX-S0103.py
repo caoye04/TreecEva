@@ -1,51 +1,34 @@
-from collections import defaultdict
+from collections import Counter
 
-class TreeNode:
-    def __init__(self, val=0, left=None, middle=None, right=None):
-        self.val = val
-        self.left = left
-        self.middle = middle
-        self.right = right
+def process_transactions():
+    transactions = [150, -45, 78, -120, 200, -30, 89, -15, 42, -68]
+    conversion_rate = 0.85
+    
+    # Distractor operations
+    transaction_count = len(transactions)
+    positive_txns = [txn for txn in transactions if txn > 0]
+    negative_txns = [txn for txn in transactions if txn < 0]
+    
+    # Counter analysis (distractor)
+    freq_analysis = Counter(transactions)
+    most_common_txn = freq_analysis.most_common(1)[0][0]
+    
+    # Main calculation
+    total_balance = sum(transactions)
+    adjustment_factor = 1.07  # Distractor
+    adjusted_total = total_balance * adjustment_factor
+    
+    # Unused intermediate
+    temp_calculation = adjusted_total * conversion_rate
+    
+    # Final processing
+    fee_deduction = 2.5  # Distractor
+    processed_total = adjusted_total - fee_deduction
+    
+    # Target variable
+    final_balance = round(processed_total / conversion_rate, 2)
+    
+    print(f"Result: {final_balance}")
+    return final_balance
 
-def build_tree():
-    # Build a ternary tree with 3 levels
-    # Leaves (level 3)
-    leaves = [TreeNode(val=i%2) for i in range(1, 10)]  # Values: [1,0,1,0,1,0,1,0,1]
-    
-    # Level 2 nodes
-    n2_1 = TreeNode(val=0, left=leaves[0], middle=leaves[1], right=leaves[2])
-    n2_2 = TreeNode(val=0, left=leaves[3], middle=leaves[4], right=leaves[5])
-    n2_3 = TreeNode(val=0, left=leaves[6], middle=leaves[7], right=leaves[8])
-    
-    # Root node (level 1)
-    root = TreeNode(val=0, left=n2_1, middle=n2_2, right=n2_3)
-    return root
-
-def simulate_circuit(node):
-    if not node:
-        return 0
-    if not node.left and not node.middle and not node.right:  # Leaf node
-        return node.val
-    
-    # Recursively get child outputs
-    left_out = simulate_circuit(node.left)
-    middle_out = simulate_circuit(node.middle)
-    right_out = simulate_circuit(node.right)
-    
-    # Count active signals
-    active_count = sum([left_out, middle_out, right_out])
-    
-    # State machine for gate logic
-    match active_count:
-        case 1:
-            return left_out ^ middle_out ^ right_out
-        case 2:
-            return left_out & middle_out & right_out
-        case 3:
-            return left_out | middle_out | right_out
-        case _:
-            return 0
-
-tree_root = build_tree()
-root_output = simulate_circuit(tree_root)
-print(f"Result: {root_output}")
+process_transactions()

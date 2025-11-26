@@ -1,36 +1,30 @@
 from collections import Counter
 
-def transform_token(token):
-    return ''.join(sorted(token.lower()))
+# Analyze student performance data across different subjects
+math_scores = [85, 92, 78, 96, 88, 91, 74]
+science_scores = [79, 85, 92, 88, 81, 95, 90]
+history_scores = [82, 88, 75, 91, 86, 89, 93]
 
-def aggregate_scores(scores):
-    if not scores:
-        return 0
-    n = len(scores)
-    if n == 1:
-        return scores[0]
-    mid = n // 2
-    left = aggregate_scores(scores[:mid])
-    right = aggregate_scores(scores[mid:])
-    return (left + right) / 2 + abs(left - right) * 0.1
+# Calculate average scores for each subject (distractor - not used in final result)
+math_avg = sum(math_scores) / len(math_scores)
+science_avg = sum(science_scores) / len(science_scores)
+history_avg = sum(history_scores) / len(history_scores)
 
-@staticmethod
-def calculate_base(token_count):
-    return sum(count ** 2 for count in token_count.values())
+# Combine all scores and count occurrences
+all_scores = math_scores + science_scores + history_scores
+score_counter = Counter(all_scores)
 
-class TextAnalyzer:
-    def __init__(self, text):
-        self.tokens = text.split()
-        self.transformed_tokens = [transform_token(t) for t in self.tokens]
-        self.token_counter = Counter(self.transformed_tokens)
-    
-    def compute_complexity(self):
-        base_score = calculate_base(self.token_counter)
-        frequency_list = list(self.token_counter.values())
-        aggregated = aggregate_scores(frequency_list)
-        return base_score * aggregated
+# Process scores by applying bonus and penalty (some operations are relevant, some are not)
+processed_data = {}
+for score, count in score_counter.items():
+    # This bonus calculation doesn't affect the final max value selection
+    bonus = 5 if score > 90 else 2
+    adjusted_count = count + (1 if score % 2 == 0 else 0)  # Slight adjustment
+    processed_data[score] = adjusted_count
 
-# Execution point Y
-analyzer = TextAnalyzer("Data data DATA dAtA structure Structure algorithm Algorithm")
-final_complexity_score = int(analyzer.compute_complexity())
-print(f"Result: {final_complexity_score}")
+# Calculate theoretical maximum (distractor - never used)
+theoretical_max = max(all_scores) * 1.1
+
+# The key statement - find the maximum processed value
+final_score = max(processed_data.values())
+print(f"Result: {final_score}")

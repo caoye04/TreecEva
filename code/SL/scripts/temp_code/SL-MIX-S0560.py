@@ -1,36 +1,26 @@
-from collections import deque
-import math
+student_scores = [85, 92, 78, 96, 88]
+student_levels = ('beginner', 'intermediate', 'advanced', 'intermediate', 'beginner')
 
-def biomass_redistribution(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        # Apply logarithmic redistribution
-        return math.log(result + 1) if result > 0 else 0
-    return wrapper
+# Calculate bonus points based on levels
+bonus_map = {'beginner': 5, 'intermediate': 3, 'advanced': 1}
+bonus_calculations = [score + bonus_map[level] for score, level in zip(student_scores, student_levels)]
 
-@biomass_redistribution
-def calculate_total_biomass(node_values):
-    return sum(node_values)
+# Intermediate calculations (some are distractions)
+score_sum = sum(student_scores)
+average_score = score_sum / len(student_scores)
+max_bonus = max(bonus_map.values())
 
-# Initialize binary tree simulation
-node_queue = deque([10.5])
-insertions = [3.2, 7.8, 2.1, 9.6, 4.4]
+# Apply bonus and adjust for grade boundaries
+adjusted_scores = {}
+for level in set(student_levels):
+    level_scores = [score for score, lvl in zip(bonus_calculations, student_levels) if lvl == level]
+    adjusted_scores[level] = sum(level_scores) // len(level_scores) if level_scores else 0
 
-# Process insertions with floating point arithmetic
-while insertions:
-    current = node_queue.popleft()
-    new_val = insertions.pop(0)
-    # Left child: 1.5x parent + new value
-    left_child = current * 1.5 + new_val
-    # Right child: parent squared / 2 minus new value
-    right_child = (current ** 2) / 2 - new_val
-    node_queue.append(left_child)
-    node_queue.append(right_child)
+# Additional distractor calculations
+preliminary_total = sum(adjusted_scores.values())
+scale_factor = 1.05
+scaled_total = preliminary_total * scale_factor
 
-# Convert deque to list for processing
-final_nodes = list(node_queue)
-
-# Apply biomass calculation with decorator
-final_biomass = calculate_total_biomass(final_nodes)
-
-print(f"Result: {final_biomass}")
+# Final target calculation
+final_score = adjusted_scores[student_levels[2]]
+print(f"Target result: {final_score}")

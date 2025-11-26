@@ -1,85 +1,47 @@
-from collections import defaultdict
-from functools import wraps
+def analyze_text_patterns(text_corpus):
+    word_lengths = [len(word) for word in text_corpus]
+    irrelevant_count = sum(1 for length in word_lengths if length > 8)
+    
+    char_frequencies = {}
+    for word in text_corpus:
+        for char in word:
+            char_frequencies[char] = char_frequencies.get(char, 0) + 1
+    
+    # Distractor operations
+    temp_sum = sum(word_lengths) * 3
+    unused_var = temp_sum // len(text_corpus) + 7
+    
+    # Main logic chain
+    max_length = max(word_lengths)
+    min_length = min(word_lengths)
+    length_difference = max_length - min_length
+    
+    # Bitwise operations for distraction
+    bit_shift = length_difference << 2
+    bit_mask = bit_shift & 0b1111
+    
+    # Enumerate and zip usage
+    indexed_lengths = list(enumerate(word_lengths))
+    paired_values = list(zip(word_lengths, [l*2 for l in word_lengths]))
+    
+    # Core computation path
+    product_pairs = [a * b for a, b in paired_values]
+    total_product = sum(product_pairs)
+    target_value = total_product // (length_difference + 1)
+    
+    # More distractors
+    misleading_calc = (target_value * 3) % 17
+    dead_branch = misleading_calc if misleading_calc > 10 else misleading_calc * 2
+    
+    modifier = len([pair for pair in paired_values if pair[0] > pair[1] // 2])
+    divisor = max(1, len(char_frequencies) - 12)
+    
+    final_product = target_value * modifier // divisor
+    
+    # Print result
+    print(f"Result: {final_product}")
+    return final_product
 
-class NucleotideNode:
-    def __init__(self, value):
-        self.value = value
-        self.prev = None
-        self.next = None
-
-def encode_nucleotide(nucleotide):
-    encoding_map = {'A': 10, 'T': 20, 'G': 30, 'C': 40}
-    return encoding_map.get(nucleotide, 0)
-
-def base_pair_transform(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        # Base pairing rule: A-T, G-C with score adjustment
-        if result == 30:  # A(10) + T(20)
-            return 100
-        elif result == 70:  # G(30) + C(40)
-            return 200
-        return result
-    return wrapper
-
-@base_pair_transform
-def calculate_pairing_score(node1, node2):
-    return node1.value + node2.value
-
-# Initialize doubly-linked list with encoded nucleotides
-sequence1 = ['A', 'T', 'G', 'C']
-sequence2 = ['T', 'A', 'C', 'G']
-
-head1 = None
-prev_node = None
-for nuc in sequence1:
-    node = NucleotideNode(encode_nucleotide(nuc))
-    if head1 is None:
-        head1 = node
-    else:
-        prev_node.next = node
-        node.prev = prev_node
-    prev_node = node
-
-tail1 = prev_node
-
-head2 = None
-prev_node = None
-for nuc in sequence2:
-    node = NucleotideNode(encode_nucleotide(nuc))
-    if head2 is None:
-        head2 = node
-    else:
-        prev_node.next = node
-        node.prev = prev_node
-    prev_node = node
-
-tail2 = prev_node
-
-# Traverse both lists forward and backward simultaneously
-forward_scores = []
-node1, node2 = head1, head2
-while node1 and node2:
-    score = calculate_pairing_score(node1, node2)
-    forward_scores.append(score)
-    node1 = node1.next
-    node2 = node2.next
-
-backward_scores = []
-node1, node2 = tail1, tail2
-while node1 and node2:
-    score = calculate_pairing_score(node1, node2)
-    backward_scores.append(score)
-    node1 = node1.prev
-    node2 = node2.prev
-
-# Perform set operations on scores
-fwd_set = frozenset(forward_scores)
-bwd_set = frozenset(backward_scores)
-common_scores = fwd_set & bwd_set
-unique_to_fwd = fwd_set - bwd_set
-
-# Calculate final pairing score
-final_pairing_score = sum(common_scores) + len(unique_to_fwd) * max(common_scores)
-print(f"Result: {final_pairing_score}")
+# Execute with sample data
+text_samples = ["python", "programming", "benchmark", "evaluation", "complexity", "reasoning", "algorithms"]
+analyze_text_patterns(text_samples)

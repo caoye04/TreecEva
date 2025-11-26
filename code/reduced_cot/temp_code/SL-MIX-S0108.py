@@ -1,59 +1,51 @@
-from collections import deque
-
-class WarehouseNode:
-    def __init__(self, energy_cost, left=None, right=None):
-        self.energy_cost = energy_cost
-        self.left = left
-        self.right = right
-
-def simulate_robot_navigation(root_node):
-    if not root_node:
-        return 0
+def compute_checksum(data_values, mask_pattern):
+    # Distractor: unused bit manipulation
+    bit_shift_temp = (mask_pattern << 3) & 0xFF
+    redundant_xor = bit_shift_temp ^ 0xAA
     
-    # Stack for DFS traversal
-    node_stack = [(root_node, 0)]  # (node, accumulated_cost)
-    max_threshold = 100
-    energy_readings = []
+    # Relevant processing with list comprehension
+    filtered_data = [x for x in data_values if x % 2 == 0]
     
-    while node_stack:
-        current_node, path_cost = node_stack.pop()
-        new_cost = path_cost + current_node.energy_cost
-        
-        # Early return condition
-        if new_cost > max_threshold:
-            energy_readings.append(new_cost)
-            continue
-            
-        # Leaf node check
-        if not current_node.left and not current_node.right:
-            energy_readings.append(new_cost)
+    # Misleading intermediate calculation
+    fake_sum = sum(data_values) * 2
+    unused_remainder = fake_sum % 7
+    
+    # Actual checksum logic
+    checksum = 0
+    for i, value in enumerate(filtered_data):
+        if mask_pattern & (1 << (i % 8)):
+            checksum ^= (value + i)
         else:
-            # Push children to stack
-            if current_node.right:
-                node_stack.append((current_node.right, new_cost))
-            if current_node.left:
-                node_stack.append((current_node.left, new_cost))
+            checksum |= (value - i)
     
-    # Calculate final balance using list comprehension and lambda
-    valid_readings = [x for x in energy_readings if x <= max_threshold]
-    adjustment_factor = (lambda vals: sum(vals) % 7 if vals else 0)(valid_readings)
+    # Dead code path that looks relevant
+    if len(filtered_data) > 10:
+        checksum += 1000
+    else:
+        checksum -= 50  # This path is never taken
     
-    # Final calculation with set operations
-    unique_costs = frozenset(energy_readings)
-    final_energy_balance = len(unique_costs) * 3 - adjustment_factor
+    # Redundant string operations (unused)
+    temp_str = ''.join(chr(65 + x % 26) for x in data_values[:3])
     
-    return final_energy_balance
+    return checksum
 
-# Build warehouse tree
-root = WarehouseNode(10)
-root.left = WarehouseNode(20)
-root.right = WarehouseNode(15)
-root.left.left = WarehouseNode(25)
-root.left.right = WarehouseNode(30)
-root.right.left = WarehouseNode(35)
-root.right.right = WarehouseNode(5)
-root.left.left.left = WarehouseNode(40)  # This path exceeds threshold
-root.left.left.right = WarehouseNode(45) # This path exceeds threshold
+def validate_data_structure(input_list):
+    # Distractor function that appears useful
+    sorted_copy = sorted(input_list)
+    median = sorted_copy[len(sorted_copy) // 2]
+    mean = sum(input_list) / len(input_list)
+    return abs(median - mean)  # Unused return value
 
-final_energy_balance = simulate_robot_navigation(root)
-print(f"Result: {final_energy_balance}")
+# Main execution
+primary_data = [15, 8, 23, 42, 7, 56, 31, 18, 9, 64]
+secondary_mask = 0b11010101
+
+# Distractor calculations
+unrelated_total = sum(primary_data) * 3 - 100
+redundant_list = [x * 2 for x in primary_data if x > 20]
+
+# Key function call
+final_output = compute_checksum(primary_data, secondary_mask)
+
+# Print the target variable
+print(f"Result: {final_output}")

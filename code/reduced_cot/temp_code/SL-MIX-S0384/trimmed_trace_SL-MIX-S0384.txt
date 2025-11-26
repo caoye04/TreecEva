@@ -1,0 +1,111 @@
+46
+target_value
+---
+33 mixed_values = [12, 7, 19, 25, 8, 14, 31, 42, 55, 68]
+33 ['mixed_values'] ['[12, 7, 19, 25, 8, ...]']
+40 target_value = process_data(mixed_values, filter_condition, transform_op)
+40 ['mixed_values'] ['[12, 7, 19, 25, 8, ...]']
+8 filtered = list(filter(filter_func, values))
+8 ['values'] ['[12, 7, 19, 25, 8, ...]']
+2 return x % 3 != 0
+2 ['x'] ['12']
+2 return x % 3 != 0
+2 ['x'] ['7']
+2 return x % 3 != 0
+2 ['x'] ['19']
+2 return x % 3 != 0
+2 ['x'] ['25']
+2 return x % 3 != 0
+2 ['x'] ['8']
+2 return x % 3 != 0
+2 ['x'] ['14']
+2 return x % 3 != 0
+2 ['x'] ['31']
+2 return x % 3 != 0
+2 ['x'] ['42']
+2 return x % 3 != 0
+2 ['x'] ['55']
+2 return x % 3 != 0
+2 ['x'] ['68']
+9 transformed = list(map(transform_func, filtered))
+9 ['filtered'] ['[7, 19, 25, 8, 14, ...]']
+5 return (x << 2) | (x & 0xF)
+5 ['x'] ['7']
+5 return (x << 2) | (x & 0xF)
+5 ['x'] ['19']
+5 return (x << 2) | (x & 0xF)
+5 ['x'] ['25']
+5 return (x << 2) | (x & 0xF)
+5 ['x'] ['8']
+5 return (x << 2) | (x & 0xF)
+5 ['x'] ['14']
+5 return (x << 2) | (x & 0xF)
+5 ['x'] ['31']
+5 return (x << 2) | (x & 0xF)
+5 ['x'] ['55']
+5 return (x << 2) | (x & 0xF)
+5 ['x'] ['68']
+12 irrelevant_mask = 0b10101010
+12 ['transformed', 'irrelevant_mask'] ['[31, 79, 109, 40, 62, ...]', '170']
+13 misleading_result = sum(x & irrelevant_mask for x in transformed)
+13 ['irrelevant_mask'] ['170']
+13 misleading_result = sum(x & irrelevant_mask for x in transformed)
+13 ['irrelevant_mask', 'x'] ['170', '31']
+13 misleading_result = sum(x & irrelevant_mask for x in transformed)
+13 ['irrelevant_mask', 'x'] ['170', '79']
+13 misleading_result = sum(x & irrelevant_mask for x in transformed)
+13 ['irrelevant_mask', 'x'] ['170', '109']
+13 misleading_result = sum(x & irrelevant_mask for x in transformed)
+13 ['irrelevant_mask', 'x'] ['170', '40']
+13 misleading_result = sum(x & irrelevant_mask for x in transformed)
+13 ['irrelevant_mask', 'x'] ['170', '62']
+13 misleading_result = sum(x & irrelevant_mask for x in transformed)
+13 ['irrelevant_mask', 'x'] ['170', '127']
+13 misleading_result = sum(x & irrelevant_mask for x in transformed)
+13 ['irrelevant_mask', 'x'] ['170', '223']
+13 misleading_result = sum(x & irrelevant_mask for x in transformed)
+13 ['irrelevant_mask', 'x'] ['170', '276']
+13 misleading_result = sum(x & irrelevant_mask for x in transformed)
+13 ['irrelevant_mask', 'x'] ['170', '276']
+16 if misleading_result > 1000:
+16 ['transformed', 'misleading_result'] ['[31, 79, 109, 40, 62, ...]', '322']
+22 accumulator = 0
+22 ['transformed', 'accumulator'] ['[31, 79, 109, 40, 62, ...]', '0']
+23 for val in transformed:
+23 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '0', '31']
+24 accumulator ^= val
+24 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '31', '31']
+23 for val in transformed:
+23 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '31', '79']
+24 accumulator ^= val
+24 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '80', '79']
+23 for val in transformed:
+23 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '80', '109']
+24 accumulator ^= val
+24 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '61', '109']
+23 for val in transformed:
+23 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '61', '40']
+24 accumulator ^= val
+24 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '21', '40']
+23 for val in transformed:
+23 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '21', '62']
+24 accumulator ^= val
+24 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '43', '62']
+23 for val in transformed:
+23 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '43', '127']
+24 accumulator ^= val
+24 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '84', '127']
+23 for val in transformed:
+23 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '84', '223']
+24 accumulator ^= val
+24 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '139', '223']
+23 for val in transformed:
+23 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '139', '276']
+24 accumulator ^= val
+24 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '415', '276']
+23 for val in transformed:
+23 ['transformed', 'accumulator', 'val'] ['[31, 79, 109, 40, 62, ...]', '415', '276']
+30 return accumulator
+30 ['accumulator'] ['415']
+46 print(f"Target result: {target_value}")
+46 ['target_value'] ['415']

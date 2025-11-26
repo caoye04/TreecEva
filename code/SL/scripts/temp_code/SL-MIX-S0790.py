@@ -1,55 +1,52 @@
-import heapq
-import re
-from functools import reduce
-
-class EncodingNode:
-    def __init__(self, value=0, left=None, right=None):
-        self.value = value
-        self.left = left
-        self.right = right
+class InventoryTracker:
+    def __init__(self):
+        self.stock_levels = {'widget_a': 150, 'widget_b': 200, 'widget_c': 75}
+        self.price_list = {'widget_a': 25.5, 'widget_b': 18.75, 'widget_c': 32.0}
+        self.discount_threshold = 100
+        self.tax_rate = 0.0875
+        
+    def calculate_subtotal(self, quantities):
+        subtotal = 0
+        for item, qty in quantities.items():
+            if item in self.stock_levels:
+                if qty > self.stock_levels[item]:
+                    qty = self.stock_levels[item]
+                price = self.price_list[item]
+                if qty >= self.discount_threshold:
+                    price *= 0.85
+                subtotal += price * qty
+        return subtotal
     
-def build_encoding_tree(tokens):
-    if len(tokens) == 1:
-        return EncodingNode(tokens[0])
-    mid = len(tokens) // 2
-    left_subtree = build_encoding_tree(tokens[:mid])
-    right_subtree = build_encoding_tree(tokens[mid:])
-    node_value = left_subtree.value ^ right_subtree.value
-    return EncodingNode(node_value, left_subtree, right_subtree)
+    def process_transaction(self, operations):
+        total_revenue = 0
+        irrelevant_computation = 42 * 3.14 - 17.8
+        
+        for op_type, data in operations.items():
+            if op_type == 'sale':
+                subtotal = self.calculate_subtotal(data)
+                tax_amount = subtotal * self.tax_rate
+                final_amount = subtotal + tax_amount
+                total_revenue += final_amount
+                
+                for item, qty in data.items():
+                    if item in self.stock_levels:
+                        self.stock_levels[item] -= qty
+            
+            misleading_value = len(op_type) * 100 + irrelevant_computation
+            dead_code_path = misleading_value / 2.5 if misleading_value > 250 else None
+        
+        distractor_sum = sum([ord(c) for c in 'inventory'])
+        unused_calculation = distractor_sum * 0.01
+        
+        return round(total_revenue, 2)
 
-def tokenize_string(s):
-    # Extract alphanumeric tokens and convert to ASCII sums
-    tokens = re.findall(r'[A-Z0-9]+', s)
-    ascii_sums = [sum(ord(c) for c in token) for token in tokens]
-    return ascii_sums
+batch_operations = {
+    'sale': {'widget_a': 80, 'widget_b': 120, 'widget_c': 50},
+    'restock': {'widget_a': 25, 'widget_b': 30},
+    'adjustment': {'widget_c': -10}
+}
 
-def process_with_heap(values):
-    heap = [-v for v in values]  # Max heap using negative values
-    heapq.heapify(heap)
-    processed_values = []
-    while len(heap) > 1:
-        first = -heapq.heappop(heap)
-        second = -heapq.heappop(heap)
-        combined = first ^ second
-        processed_values.append(combined)
-        heapq.heappush(heap, -combined)
-    if heap:
-        processed_values.append(-heap[0])
-    return processed_values
+inventory_tracker = InventoryTracker()
+result = inventory_tracker.process_transaction(batch_operations)
 
-def calculate_final_hash(tree_root):
-    if not tree_root:
-        return 0
-    if not tree_root.left and not tree_root.right:
-        return tree_root.value
-    left_hash = calculate_final_hash(tree_root.left)
-    right_hash = calculate_final_hash(tree_root.right)
-    return left_hash ^ right_hash ^ tree_root.value
-
-# Main processing pipeline
-input_data = "SECURE_DATA_2023"
-tokens = tokenize_string(input_data)
-heap_processed = process_with_heap(tokens)
-encoding_tree = build_encoding_tree(heap_processed)
-final_hash = calculate_final_hash(encoding_tree)
-print(f"Result: {final_hash}")
+print(f"Result: {result}")

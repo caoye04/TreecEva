@@ -1,0 +1,34 @@
+Target: Find the value of variable network_checksum after [line 12] executes
+
+[line 1]  packet_headers = [0x45, 0x00, 0x00, 0x3C, 0x1C, 0x46]
+Compute: [0x45, 0x00, 0x00, 0x3C, 0x1C, 0x46] = [69, 0, 0, 60, 28, ...]
+[line 2]  header_xor = 0
+Assign: header_xor = 0
+[line 3]  for i, header in enumerate(packet_headers):
+(Missing param: 'iter_var')
+[line 3]  for i, header in enumerate(packet_headers):
+(Missing param: 'iter_var')
+... [Line 3] repeats 3 more times ...
+... [Line 3] repeats 3 more times ...
+[line 3]  for i, header in enumerate(packet_headers):
+(Missing param: 'iter_var')
+[line 3]  for i, header in enumerate(packet_headers):
+Loop End: Iteration finished
+[line 6]  protocol_flags = [0x01, 0x80, 0x40]
+Compute: [0x01, 0x80, 0x40] = [1, 128, 64]
+[line 7]  flag_xor = 0
+Assign: flag_xor = 0
+[line 8]  for flag in protocol_flags:
+Loop Start: flag takes its first value 1
+[line 8]  for flag in protocol_flags:
+Loop Iteration: flag is now 128 (iteration 2)
+[line 8]  for flag in protocol_flags:
+Loop Iteration: flag is now 64 (iteration 3)
+[line 8]  for flag in protocol_flags:
+Loop End: Iteration finished
+[line 11]  final_xor_value = header_xor & flag_xor
+Compute: header_xor & flag_xor, where header_xor=35 (defined at [line 2]), flag_xor=193 (defined at [line 7]) = 1
+[line 12]  network_checksum = final_xor_value
+Compute: final_xor_value, where final_xor_value=1 (defined at [line 11]) = 1
+
+Answer: network_checksum = 1 (last updated on defined at [line 12])

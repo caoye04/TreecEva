@@ -1,0 +1,89 @@
+Target: Find the value of variable checksum_result after [line 63] executes
+
+[line 50]  data_stream = [42, 18, 73, 56, 29, 84, 11, 67, 92, 35]
+Compute: [42, 18, 73, 56, 29, 84, 11, 67, 92, 35] = [42, 18, 73, 56, 29, ...]
+[line 60]  checksum_result = compute_final_validation(data_stream)
+Call function compute_final_validation(data_stream=[42, 18, 73, 56, 29, ...] (defined at [line 50]))
+[line 3]  def compute_final_validation(data_stream):
+Enter function compute_final_validation: data_stream=[42, 18, 73, 56, 29, ...] (data_stream defined at [line 50])
+  [line 17]  numeric_values = [item for item in data_stream if isinstance(item, int)]
+  Compute: [item for item in data_stream if isinstance(item, int)], where item=42 (an unknown source), data_stream=[42, 18, 73, 56, 29, ...] (parameter data_stream defined at [line 50]) = ?
+  [line 18]  filtered_values = [x for x in numeric_values if x % 2 == 0]
+  Compute: [x for x in numeric_values if x % 2 == 0], where x=42 (an unknown source), numeric_values=[42, 18, 73, 56, 29, ...] (defined at [line 17]) = ?
+  [line 21]  bit_masks = [0xFF, 0x0F, 0x33]
+  Compute: [0xFF, 0x0F, 0x33] = [255, 15, 51]
+  [line 23]  for val in filtered_values:
+  Loop Start: val takes its first value 42
+  [line 25]  for mask in bit_masks:
+  Loop Start: mask takes its first value 255
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 23]  for val in filtered_values:
+  Loop Iteration: val is now 18 (iteration 2)
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 23]  for val in filtered_values:
+  Loop Iteration: val is now 56 (iteration 3)
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 23]  for val in filtered_values:
+  Loop Iteration: val is now 84 (iteration 4)
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 23]  for val in filtered_values:
+  Loop Iteration: val is now 92 (iteration 5)
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 25]  for mask in bit_masks:
+  Loop End: Iteration finished
+  [line 23]  for val in filtered_values:
+  Loop End: Iteration finished
+  [line 30]  if len(filtered_values) > 0:
+  Condition: True, entering 'if' block
+  [line 31]  sorted_values = sorted(filtered_values)
+  Call function sorted(filtered_values=[42, 18, 56, 84, 92] (defined at [line 18]))
+  [line 32]  middle_index = len(sorted_values) // 2
+  Compute: len(sorted_values) // 2, where sorted_values=[18, 42, 56, 84, 92] (defined at [line 31]) = 2
+  [line 33]  median_value = sorted_values[middle_index]
+  Compute: sorted_values[middle_index], where sorted_values=[18, 42, 56, 84, 92] (defined at [line 31]), middle_index=2 (defined at [line 32]) = 56
+  [line 34]  checksum = median_value * len(filtered_values)
+  Compute: median_value * len(filtered_values), where median_value=56 (defined at [line 33]), filtered_values=[42, 18, 56, 84, 92] (defined at [line 18]) = 280
+  [line 37]  adjustment = (checksum % 17) - 5
+  Compute: (checksum % 17) - 5, where checksum=280 (defined at [line 34]) = 3
+  [line 38]  final_result = checksum + adjustment
+  Compute: checksum + adjustment, where checksum=280 (defined at [line 34]), adjustment=3 (defined at [line 37]) = 283
+  [line 41]  if final_result > 1000:
+  Condition: True, entering 'if' block
+  [line 47]  return final_result
+  Return: final_result=283 (defined at [line 38])
+Function compute_final_validation returns 283
+[line 63]  print(f"Result: {checksum_result}")
+Output: f"Result: {checksum_result}"
+
+Answer: checksum_result = 283 (last updated on defined at [line 60])

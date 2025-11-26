@@ -1,40 +1,30 @@
-import math
-from itertools import combinations
+def analyze_data_patterns(data_points):
+    # Initialize processing variables
+    base_value = data_points[0]
+    processed_values = []
+    temp_aggregate = 0
+    
+    # Process each data point with some intermediate calculations
+    for point in data_points:
+        # Main processing: analyze growth patterns
+        growth_factor = point * 2 if point > base_value else point // 2
+        processed_values.append(growth_factor)
+        
+        # Some intermediate calculations (not directly used in final result)
+        temp_aggregate += point * 3
+        variance_check = point - base_value
+    
+    # Additional processing with list comprehensions
+    filtered_values = [x for x in processed_values if x > 10]
+    adjusted_values = [x * 1.5 if x % 2 == 0 else x * 0.8 for x in filtered_values]
+    
+    # Final result calculation with conditional expression
+    final_result = processed_values[-1] if len(processed_values) > 0 else 0
+    
+    # Print the target variable
+    print(f"Result: {final_result}")
+    return final_result
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-# Generate primes up to 100
-primes_list = [i for i in range(2, 101) if is_prime(i)]
-
-# Greedy selection: pick first 5 primes that are 1 mod 4
-mod_4_primes = []
-for p in primes_list:
-    if p % 4 == 1:
-        mod_4_primes.append(p)
-        if len(mod_4_primes) == 5:
-            break
-
-# Calculate base using combination sum
-combos = list(combinations(mod_4_primes[:3], 2))
-base_sum = sum([math.comb(a, b) if a > b else math.comb(b, a) for a, b in combos])
-
-# Modular exponentiation
-exp_result = pow(base_sum, 3, 997)
-
-# Derived key calculation
-factorial_digits = [math.factorial(int(d)) for d in str(exp_result)]
-derived_key = sum(factorial_digits) % 1000
-
-print(f"Result: {derived_key}")
+# Test data with mixed patterns
+test_data = [8, 15, 12, 20, 6, 25, 18]
+analyze_data_patterns(test_data)

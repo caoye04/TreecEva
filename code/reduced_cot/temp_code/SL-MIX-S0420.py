@@ -1,52 +1,35 @@
-from functools import reduce
-import math
+def calculate_quality_scores(samples):
+    base_scores = {}
+    for i, sample in enumerate(samples):
+        base_scores[f'sample_{i}'] = (sample * 2 + 5) % 15
+    
+    # Calculate adjustments (distractor operations)
+    adjustment_factor = len(base_scores) * 0.75
+    temp_sum = sum(base_scores.values()) * 1.2
+    
+    adjusted_scores = {}
+    for key, value in base_scores.items():
+        adjusted_value = value + (len(key) // 2)
+        if adjusted_value > 10:
+            adjusted_scores[key] = adjusted_value - 3
+        else:
+            adjusted_scores[key] = adjusted_value + 2
+    
+    # Find maximum scoring sample
+    max_key = max(adjusted_scores, key=adjusted_scores.get)
+    
+    # Calculate bonus points (relevant but computed separately)
+    bonus_calc = sum([v for v in base_scores.values() if v < 8])
+    bonus_points = bonus_calc // 2
+    
+    # Final rating calculation
+    final_rating = adjusted_scores.get(max_key, 0) + bonus_points
+    
+    # Distractor print statements
+    print(f"Base scores: {base_scores}")
+    print(f"Adjusted scores: {adjusted_scores}")
+    print(f"Target result: {final_rating}")
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    for i in range(2, int(math.sqrt(n)) + 1):
-        if n % i == 0:
-            return False
-    return True
-
-def gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
-
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
-
-# Stock performance returns over the last quarter (in percentages)
-stock_returns = [2.5, -1.2, 3.8, 0, -0.5, 4.1, -2.3, 1.9, 3.3, -1.1]
-
-# Step 1: Filter out non-positive returns and sort them
-positive_returns = sorted(filter(lambda x: x > 0, stock_returns))
-
-# Step 2: Apply a greedy selection of top performing stocks up to a limit
-max_stocks = 5
-selected_returns = []
-for r in reversed(positive_returns):  # Greedy: pick from highest
-    if len(selected_returns) < max_stocks and r > 1.0:
-        selected_returns.append(r)
-
-# Step 3: Compute mean and variance of selected returns
-if selected_returns:
-    mean_return = sum(selected_returns) / len(selected_returns)
-    variance = sum((x - mean_return) ** 2 for x in selected_returns) / len(selected_returns)
-else:
-    mean_return, variance = 0, 0
-
-# Step 4: Find prime numbers related to the length of selected returns
-length_related_number = len(selected_returns) * 10
-primes_in_range = [i for i in range(2, length_related_number + 1) if is_prime(i)]
-prime_count = len(primes_in_range)
-
-# Step 5: Calculate adjustment coefficient using number theory and statistics
-if prime_count > 0 and variance > 0:
-    lcm_value = reduce(lcm, primes_in_range[:min(3, len(primes_in_range))], 1)
-    adjustment_coefficient = (mean_return * prime_count) / math.sqrt(variance) + lcm_value
-else:
-    adjustment_coefficient = 0
-
-print(f"Result: {adjustment_coefficient}")
+# Sample data
+quality_samples = [4, 7, 12, 3, 9, 6]
+calculate_quality_scores(quality_samples)

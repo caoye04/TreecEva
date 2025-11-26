@@ -1,0 +1,105 @@
+52
+result
+---
+49 inventory_tracker = InventoryTracker()
+49 ['batch_operations'] ['{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}']
+3 self.stock_levels = {'widget_a': 150, 'widget_b': 200, 'widget_c': 75}
+3 ['self'] ['InventoryTracker(stock_levels={widget_a: 150, widget_b: 200, widget_c: 75})']
+4 self.price_list = {'widget_a': 25.5, 'widget_b': 18.75, 'widget_c': 32.0}
+4 ['self'] ['InventoryTracker(price_list={widget_a: 25.5, widget_b: 18.75, widget_c: 32.0})']
+5 self.discount_threshold = 100
+5 ['self'] ['InventoryTracker(discount_threshold=100)']
+6 self.tax_rate = 0.0875
+6 ['self'] ['InventoryTracker(tax_rate=0.0875)']
+50 result = inventory_tracker.process_transaction(batch_operations)
+50 ['batch_operations', 'inventory_tracker'] ['{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', 'InventoryTracker(...)']
+21 total_revenue = 0
+21 ['self', 'operations', 'total_revenue'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '0']
+24 for op_type, data in operations.items():
+24 ['self', 'operations', 'total_revenue', 'op_type', 'data'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '0', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}']
+25 if op_type == 'sale':
+25 ['self', 'operations', 'total_revenue', 'op_type', 'data'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '0', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}']
+26 subtotal = self.calculate_subtotal(data)
+26 ['self', 'operations', 'total_revenue', 'op_type', 'data'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '0', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}']
+9 subtotal = 0
+9 ['self', 'quantities', 'subtotal'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '0']
+10 for item, qty in quantities.items():
+10 ['self', 'quantities', 'subtotal', 'item', 'qty'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '0', "'widget_a'", '80']
+11 if item in self.stock_levels:
+11 ['self', 'quantities', 'subtotal', 'item', 'qty'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '0', "'widget_a'", '80']
+12 if qty > self.stock_levels[item]:
+12 ['self', 'quantities', 'subtotal', 'item', 'qty'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '0', "'widget_a'", '80']
+14 price = self.price_list[item]
+14 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(price_list={widget_a: 25.5, widget_b: 18.75, widget_c: 32.0})', '{widget_a: 80, widget_b: 120, widget_c: 50}', '0', "'widget_a'", '80', '25.5']
+15 if qty >= self.discount_threshold:
+15 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '0', "'widget_a'", '80', '25.5']
+17 subtotal += price * qty
+17 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '2040.0', "'widget_a'", '80', '25.5']
+10 for item, qty in quantities.items():
+10 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '2040.0', "'widget_b'", '120', '25.5']
+11 if item in self.stock_levels:
+11 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '2040.0', "'widget_b'", '120', '25.5']
+12 if qty > self.stock_levels[item]:
+12 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '2040.0', "'widget_b'", '120', '25.5']
+14 price = self.price_list[item]
+14 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(price_list={widget_a: 25.5, widget_b: 18.75, widget_c: 32.0})', '{widget_a: 80, widget_b: 120, widget_c: 50}', '2040.0', "'widget_b'", '120', '18.75']
+15 if qty >= self.discount_threshold:
+15 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '2040.0', "'widget_b'", '120', '18.75']
+16 price *= 0.85
+16 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '2040.0', "'widget_b'", '120', '15.9375']
+17 subtotal += price * qty
+17 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '3952.5', "'widget_b'", '120', '15.9375']
+10 for item, qty in quantities.items():
+10 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '3952.5', "'widget_c'", '50', '15.9375']
+11 if item in self.stock_levels:
+11 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '3952.5', "'widget_c'", '50', '15.9375']
+12 if qty > self.stock_levels[item]:
+12 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '3952.5', "'widget_c'", '50', '15.9375']
+14 price = self.price_list[item]
+14 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(price_list={widget_a: 25.5, widget_b: 18.75, widget_c: 32.0})', '{widget_a: 80, widget_b: 120, widget_c: 50}', '3952.5', "'widget_c'", '50', '32.0']
+15 if qty >= self.discount_threshold:
+15 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '3952.5', "'widget_c'", '50', '32.0']
+17 subtotal += price * qty
+17 ['self', 'quantities', 'subtotal', 'item', 'qty', 'price'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '5552.5', "'widget_c'", '50', '32.0']
+10 for item, qty in quantities.items():
+10 ['self', 'quantities', 'subtotal', 'item', 'qty'] ['InventoryTracker(...)', '{widget_a: 80, widget_b: 120, widget_c: 50}', '5552.5', "'widget_c'", '50']
+18 return subtotal
+18 ['self', 'subtotal', 'item', 'qty'] ['InventoryTracker(...)', '5552.5', "'widget_c'", '50']
+27 tax_amount = subtotal * self.tax_rate
+27 ['self', 'operations', 'total_revenue', 'op_type', 'data', 'subtotal', 'tax_amount'] ['InventoryTracker(tax_rate=0.0875)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '0', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', '5552.5', '485.84374999999994']
+28 final_amount = subtotal + tax_amount
+28 ['self', 'operations', 'total_revenue', 'op_type', 'data', 'subtotal', 'tax_amount', 'final_amount'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '0', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', '5552.5', '485.84374999999994', '6038.34375']
+29 total_revenue += final_amount
+29 ['self', 'operations', 'total_revenue', 'op_type', 'data', 'final_amount'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', '6038.34375']
+31 for item, qty in data.items():
+31 ['self', 'operations', 'total_revenue', 'op_type', 'data', 'item', 'qty'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', "'widget_a'", '80']
+32 if item in self.stock_levels:
+32 ['self', 'operations', 'total_revenue', 'op_type', 'data', 'item', 'qty'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', "'widget_a'", '80']
+33 self.stock_levels[item] -= qty
+33 ['self', 'operations', 'total_revenue', 'op_type', 'data', 'item', 'qty'] ['InventoryTracker(stock_levels={widget_a: 70, widget_b: 200, widget_c: 75})', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', "'widget_a'", '80']
+31 for item, qty in data.items():
+31 ['self', 'operations', 'total_revenue', 'op_type', 'data', 'item', 'qty'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', "'widget_b'", '120']
+32 if item in self.stock_levels:
+32 ['self', 'operations', 'total_revenue', 'op_type', 'data', 'item', 'qty'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', "'widget_b'", '120']
+33 self.stock_levels[item] -= qty
+33 ['self', 'operations', 'total_revenue', 'op_type', 'data', 'item', 'qty'] ['InventoryTracker(stock_levels={widget_a: 70, widget_b: 80, widget_c: 75})', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', "'widget_b'", '120']
+31 for item, qty in data.items():
+31 ['self', 'operations', 'total_revenue', 'op_type', 'data', 'item', 'qty'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', "'widget_c'", '50']
+32 if item in self.stock_levels:
+32 ['self', 'operations', 'total_revenue', 'op_type', 'data', 'item', 'qty'] ['InventoryTracker(...)', '{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', "'widget_c'", '50']
+31 for item, qty in data.items():
+31 ['operations', 'total_revenue', 'op_type', 'data', 'item', 'qty'] ['{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'sale'", '{widget_a: 80, widget_b: 120, widget_c: 50}', "'widget_c'", '50']
+24 for op_type, data in operations.items():
+24 ['operations', 'total_revenue', 'op_type', 'data'] ['{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'restock'", '{widget_a: 25, widget_b: 30}']
+25 if op_type == 'sale':
+25 ['operations', 'total_revenue', 'op_type', 'data'] ['{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'restock'", '{widget_a: 25, widget_b: 30}']
+24 for op_type, data in operations.items():
+24 ['operations', 'total_revenue', 'op_type', 'data'] ['{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'adjustment'", '{widget_c: -10}']
+25 if op_type == 'sale':
+25 ['operations', 'total_revenue', 'op_type', 'data'] ['{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'adjustment'", '{widget_c: -10}']
+24 for op_type, data in operations.items():
+24 ['operations', 'total_revenue', 'op_type', 'data'] ['{sale: {widget_a: 80, widget_b: 120, widget_c: 50}, restock: {widget_a: 25, widget_b: 30}, adjustment: {widget_c: -10}}', '6038.34375', "'adjustment'", '{widget_c: -10}']
+41 return round(total_revenue, 2)
+41 ['total_revenue'] ['6038.34375']
+52 print(f"Result: {result}")
+52 ['result'] ['6038.34']

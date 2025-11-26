@@ -1,11 +1,21 @@
-import itertools
+def calculate_performance(metrics):
+    base_scores = [x * 2 for x in metrics if x > 0]
+    temp_products = [score * 3 for score in base_scores]
+    
+    # Distractor calculations that don't affect final result
+    irrelevant_sum = sum([x % 5 for x in metrics])
+    bonus_pool = len([x for x in base_scores if x % 2 == 0])
+    
+    core_sum = sum(base_scores)
+    processed_sum = core_sum + (len(metrics) * 2)
+    
+    # More distraction operations
+    dummy_metric = processed_sum ^ 15
+    bonus_adj = 7 if len(metrics) > 3 else 10
+    
+    final_score = processed_sum - bonus_adj
+    print(f"Result: {final_score}")
 
-# Generate all 3-character permutations of lowercase letters
-lowercase_letters = 'abcdefghijklmnopqrstuvwxyz'
-password_permutations = list(itertools.permutations(lowercase_letters, 3))
-
-# Calculate memory estimate (each character is 1 byte, so 3 bytes per permutation)
-permutation_count = len(password_permutations)
-memory_estimate = permutation_count * 3
-
-print(f"Result: {memory_estimate}")
+# Main execution
+performance_metrics = [3, 7, 2, 5, 4]
+calculate_performance(performance_metrics)

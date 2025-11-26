@@ -1,0 +1,34 @@
+Target: Find the value of variable final_result after [line 28] executes
+
+[line 2]  temp_buffer = []
+Compute: [] = []
+[line 6]  for item in data_stream:
+Loop Start: item takes its first value 3
+[line 7]  if item % 2 == 0:
+Condition: True, entering 'if' block
+[line 6]  for item in data_stream:
+Loop Iteration: item is now 8 (iteration 2)
+[line 7]  if item % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 6] repeats 7 more times ...
+... [Line 6] repeats 7 more times ...
+[line 6]  for item in data_stream:
+Loop Iteration: item is now 10 (iteration 10)
+[line 7]  if item % 2 == 0:
+Condition: True, entering 'if' block
+[line 6]  for item in data_stream:
+Loop End: Iteration finished
+[line 19]  filter_func = lambda x: x > 10
+Compute: lambda x: x > 10 = ?
+[line 20]  filtered_data = list(filter(filter_func, temp_buffer))
+Call function list(filter(filter_func, temp_buffer))
+[line 21]  critical_section = filtered_data[1:4] if len(filtered_data) >= 4 else filtered_data
+Compute: filtered_data[1:4] if len(filtered_data) >= 4 else filtered_data, where filtered_data=[16, 24, 28, 12, 20] (defined at [line 20]) = [24, 28, 12]
+[line 24]  target_value = sum(critical_section) if critical_section else 0
+Compute: sum(critical_section) if critical_section else 0, where critical_section=[24, 28, 12] (defined at [line 21]) = 64
+[line 25]  adjustment_factor = len([x for x in critical_section if x % 3 == 0])
+Call function len([x for x in critical_section if x % 3 == 0])
+[line 28]  final_result = target_value * adjustment_factor
+Compute: target_value * adjustment_factor, where target_value=64 (defined at [line 24]), adjustment_factor=2 (defined at [line 25]) = 128
+
+Answer: final_result = 128 (last updated on defined at [line 28])

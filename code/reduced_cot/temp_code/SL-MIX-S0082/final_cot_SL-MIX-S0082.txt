@@ -1,24 +1,40 @@
-Target: Find the value of variable max_efficiency after [line 17] executes
+Target: Find the value of variable final_score after [line 33] executes
 
-[line 9]  channel_efficiencies = {ch['id']: ch['bandwidth'] / ch['latency'] for ch in channels}
-Compute: {ch['id']: ch['bandwidth'] / ch['latency'] for ch in channels}, where ch={id: 'CH_A', bandwidth: 120, latency: 15} (an unknown source), channels=[{id: 'CH_A', bandwidth: 120, latency: 15}, {id: 'CH_B', bandwidth: 90, latency: 10}, {id: 'CH_C', bandwidth: 200, latency: 25}, {id: 'CH_D', bandwidth: 150, latency: 20}] (an unknown source) = ?
-[line 11]  visited_channels = frozenset(['CH_B', 'CH_D'])
-Call function frozenset(['CH_B', 'CH_D'])
-[line 12]  valid_channels = {k: v for k, v in channel_efficiencies.items() if k not in visited_channels}
-Compute: {k: v for k, v in channel_efficiencies.items() if k not in visited_channels}, where k='CH_A' (an unknown source), v=8.0 (an unknown source), channel_efficiencies={CH_A: 8.0, CH_B: 9.0, CH_C: 8.0, ...} (defined at [line 9]), visited_channels=frozenset({'CH_B', 'CH_D'}) (defined at [line 11]) = ?
-[line 14]  max_efficiency = 0
-Assign: max_efficiency = 0
-[line 15]  for cid, eff in valid_channels.items():
-(Missing param: 'iter_var')
-[line 16]  if eff > max_efficiency:
-Condition: True, entering 'if' block
-[line 17]  max_efficiency = eff
-Compute: eff, where eff=8.0 (an unknown source) = 8.0
-[line 15]  for cid, eff in valid_channels.items():
-(Missing param: 'iter_var')
-[line 16]  if eff > max_efficiency:
-Condition: True, entering 'if' block
-[line 15]  for cid, eff in valid_channels.items():
+[line 26]  assessment_data = [85, 92, 78, 96, 88]
+Compute: [85, 92, 78, 96, 88] = [85, 92, 78, 96, 88]
+[line 27]  backup_value = 42
+Assign: backup_value = 42
+[line 30]  processed_data, unused_backup = process_assessments(assessment_data)
+(Missing param: 'func_name')
+[line 9]  for i in range(len(student_scores)):
+Loop Start: i takes its first value 0
+[line 9]  for i in range(len(student_scores)):
 Loop End: Iteration finished
+[line 9]  for i in range(len(student_scores)):
+Loop End: Iteration finished
+[line 9]  for i in range(len(student_scores)):
+Loop End: Iteration finished
+[line 9]  for i in range(len(student_scores)):
+Loop End: Iteration finished
+[line 9]  for i in range(len(student_scores)):
+Loop End: Iteration finished
+[line 14]  processed_data = []
+Compute: [] = []
+[line 15]  for score_pair in itertools.pairwise(student_scores):
+Loop Start: score_pair takes its first value (85, 92)
+[line 15]  for score_pair in itertools.pairwise(student_scores):
+Loop End: Iteration finished
+[line 15]  for score_pair in itertools.pairwise(student_scores):
+Loop End: Iteration finished
+[line 15]  for score_pair in itertools.pairwise(student_scores):
+Loop End: Iteration finished
+[line 15]  for score_pair in itertools.pairwise(student_scores):
+Loop End: Iteration finished
+[line 20]  backup_calc = sum(student_scores) * 0.1
+Compute: sum(student_scores) * 0.1, where student_scores=[85, 92, 78, 96, 88] (an unknown source) = 43.900000000000006
+[line 23]  return processed_data, backup_calc
+Return: processed_data, backup_calc
+[line 33]  final_score = processed_data[-1] if processed_data else backup_value
+Compute: processed_data[-1] if processed_data else backup_value, where processed_data=[7, -14, 18, -8] (defined at [line 14]), backup_value=42 (defined at [line 27]) = -8
 
-Answer: max_efficiency = 8.0 (last updated on defined at [line 17])
+Answer: final_score = -8 (last updated on defined at [line 33])

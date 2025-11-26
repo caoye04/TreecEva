@@ -1,0 +1,56 @@
+Target: Find the value of variable data_quality_score after [line 55] executes
+
+[line 43]  quality_indicator, bogus_factor = process_data_sources()
+(Missing param: 'func_name')
+[line 4]  raw_data = [3, 7, 2, 8, 5, 3, 9, 2, 7, 8, 4, 6, 1, 5, 3]
+Compute: [3, 7, 2, 8, 5, 3, 9, 2, 7, 8, 4, 6, 1, 5, 3] = [3, 7, 2, 8, 5, ...]
+[line 5]  irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+Compute: [x * 2 for x in raw_data if x > 4], where x=3 (an unknown source), raw_data=[3, 7, 2, 8, 5, ...] (defined at [line 4]) = ?
+[line 6]  data_counter = collections.Counter(raw_data)
+(Missing param: 'func_name')
+[line 9]  temp_sum = sum(raw_data) + len(irrelevant_cache)
+Compute: sum(raw_data) + len(irrelevant_cache), where raw_data=[3, 7, 2, 8, 5, ...] (defined at [line 4]), irrelevant_cache=[14, 16, 10, 18, 14, ...] (defined at [line 5]) = 81
+[line 10]  bogus_factor = temp_sum % 7
+Compute: temp_sum % 7, where temp_sum=81 (defined at [line 9]) = 4
+[line 12]  most_common = data_counter.most_common(2)
+(Missing param: 'func_name')
+[line 13]  if len(most_common) >= 2:
+Condition: True, entering 'if' block
+[line 14]  primary_freq = most_common[0][1]
+Compute: most_common[0][1], where most_common=[(3, 3), (7, 2)] (an unknown source) = 3
+[line 15]  secondary_freq = most_common[1][1]
+Compute: most_common[1][1], where most_common=[(3, 3), (7, 2)] (an unknown source) = 2
+[line 21]  if bogus_factor > 3:
+Condition: True, entering 'if' block
+[line 22]  quality_indicator = primary_freq * 10 - secondary_freq
+Compute: primary_freq * 10 - secondary_freq, where primary_freq=3 (defined at [line 14]), secondary_freq=2 (defined at [line 15]) = 28
+[line 26]  return quality_indicator, bogus_factor
+Return: quality_indicator, bogus_factor
+[line 44]  variance_factor, pattern_sum = analyze_patterns()
+(Missing param: 'func_name')
+[line 29]  sample_sequences = [(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+Compute: [(1, 4, 7), (2, 5, 8), (3, 6, 9)] = [(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+[line 30]  pattern_metrics = []
+Compute: [] = []
+[line 32]  for seq in sample_sequences:
+Loop Start: seq takes its first value (1, 4, 7)
+[line 32]  for seq in sample_sequences:
+Loop End: Iteration finished
+[line 32]  for seq in sample_sequences:
+Loop End: Iteration finished
+[line 32]  for seq in sample_sequences:
+Loop End: Iteration finished
+[line 37]  pattern_sum = sum(pattern_metrics) * 3
+Compute: sum(pattern_metrics) * 3, where pattern_metrics=[4.0, 5.0, 6.0] (defined at [line 30]) = 45.0
+[line 38]  variance_factor = max(pattern_metrics) - min(pattern_metrics)
+Compute: max(pattern_metrics) - min(pattern_metrics), where pattern_metrics=[4.0, 5.0, 6.0] (defined at [line 30]) = 2.0
+[line 40]  return variance_factor, pattern_sum
+Return: variance_factor, pattern_sum
+[line 47]  base_score = quality_indicator + variance_factor
+Compute: quality_indicator + variance_factor, where quality_indicator=28 (defined at [line 22]), variance_factor=2.0 (defined at [line 38]) = 30.0
+[line 48]  adjustment = (bogus_factor * 2) % 5
+Compute: (bogus_factor * 2) % 5, where bogus_factor=4 (defined at [line 10]) = 3
+[line 55]  data_quality_score = base_score - adjustment
+Compute: base_score - adjustment, where base_score=30.0 (defined at [line 47]), adjustment=3 (defined at [line 48]) = 27.0
+
+Answer: data_quality_score = 27.0 (last updated on defined at [line 55])

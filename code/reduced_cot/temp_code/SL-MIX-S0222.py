@@ -1,11 +1,47 @@
-monthly_celsius = [2.3, 4.1, 7.8, 12.5, 17.2, 21.0, 23.4, 22.1, 18.7, 13.3, 7.9, 3.6]
+def analyze_text_complexity(text_samples):
+    word_counts = {}
+    complexity_scores = {}
+    adjusted_ranks = {}
+    
+    for sample_id, text in enumerate(text_samples):
+        words = text.split()
+        word_counts[sample_id] = len(words)
+        
+        # Distractor calculation - not used in final result
+        avg_word_length = sum(len(word) for word in words) / len(words) if words else 0
+        
+        # Main logic - complexity based on word count
+        if len(words) > 15:
+            complexity_scores[sample_id] = len(words) * 2
+        elif len(words) > 8:
+            complexity_scores[sample_id] = len(words) + 5
+        else:
+            complexity_scores[sample_id] = max(len(words) - 2, 0)
+    
+    # Additional distractor processing
+    temp_analysis = [score * 1.5 for score in complexity_scores.values()]
+    
+    # Core ranking logic
+    sorted_samples = sorted(complexity_scores.items(), key=lambda x: x[1], reverse=True)
+    
+    for rank, (sample_id, score) in enumerate(sorted_samples, 1):
+        adjusted_ranks[sample_id] = rank * 3 if score > 20 else rank + 1
+    
+    # Final calculation
+    final_score = sum(adjusted_ranks.values())
+    
+    # More distractor operations
+    debug_check = len(word_counts) + len(complexity_scores)
+    
+    print(f"Result: {final_score}")
 
-celsius_to_fahrenheit = lambda c: c * 9/5 + 32
+# Test data
+text_samples = [
+    "The quick brown fox jumps over the lazy dog",
+    "Artificial intelligence systems demonstrate remarkable capabilities",
+    "Hello world",
+    "Machine learning models require extensive training data and computational resources",
+    "Python programming language"
+]
 
-monthly_fahrenheit = [celsius_to_fahrenheit(temp) for temp in monthly_celsius]
-
-sorted_fahrenheit = sorted(monthly_fahrenheit, reverse=True)
-
-average_top3_fahrenheit = sum(sorted_fahrenheit[:3]) / 3.0
-
-print(f"Result: {average_top3_fahrenheit}")
+analyze_text_complexity(text_samples)

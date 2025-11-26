@@ -1,47 +1,50 @@
-from functools import reduce
-from collections import namedtuple
-
-def compute_exchange_path(preferences, weights):
-    ExchangePath = namedtuple('ExchangePath', ['currencies', 'score'])
-    paths = []
+def analyze_text_statistics(text_data):
+    # Process character metrics with some unnecessary intermediate steps
+    char_counts = {}
+    temp_analysis = []
     
-    for base_currency in preferences:
-        path_currencies = {base_currency}
-        current_score = 0.0
-        
-        for target_currency in preferences:
-            if base_currency != target_currency:
-                weight_key = f"{base_currency}-{target_currency}"
-                if weight_key in weights:
-                    rate = weights[weight_key]
-                    # Greedy selection: only add if improves score
-                    temp_score = current_score + rate * 0.75
-                    if temp_score > current_score:
-                        path_currencies.add(target_currency)
-                        current_score = temp_score
-        
-        paths.append(ExchangePath(currencies=path_currencies, score=current_score))
+    for i, char in enumerate(text_data):
+        if char not in char_counts:
+            char_counts[char] = 0
+        char_counts[char] += 1
+        temp_analysis.append((i, char, ord(char)))
     
-    # Find path with maximum score
-    return max(paths, key=lambda p: p.score).score
+    # Distractor: process that doesn't affect final result
+    redundant_chars = [c for c in text_data if c in 'aeiou']
+    vowel_count = len(redundant_chars)
+    
+    # Calculate meaningful metrics
+    unique_chars = len(char_counts)
+    sorted_chars = sorted(char_counts.items(), key=lambda x: x[1], reverse=True)
+    
+    # More intermediate calculations (partially relevant)
+    ascii_sum = sum(ord(c) for c in text_data)
+    avg_ascii = ascii_sum / len(text_data) if text_data else 0
+    
+    # Key computation with slicing and enumerate
+    text_length = len(text_data)
+    positional_values = []
+    
+    for idx, char in enumerate(text_data):
+        if idx % 2 == 0:
+            positional_values.append(ord(char) * (idx + 1))
+        else:
+            positional_values.append(ord(char) // (idx + 1))
+    
+    # Final metrics calculation
+    unique_metrics = [
+        unique_chars,
+        len(sorted_chars[0][0]) if sorted_chars else 0,
+        sum(positional_values[:3]),
+        positional_values[-1] if positional_values else 0
+    ]
+    
+    # Distractor: unused computation
+    unused_calculation = vowel_count * avg_ascii
+    
+    final_result = unique_metrics[-1]
+    print(f"Target result: {final_result}")
 
-# Define currency preferences as frozenset for immutability
-preferred_currencies = frozenset(['USD', 'EUR', 'JPY', 'GBP'])
-
-# Transaction weights dictionary
-transaction_weights = {
-    'USD-EUR': 0.85,
-    'USD-JPY': 110.25,
-    'USD-GBP': 0.75,
-    'EUR-JPY': 125.50,
-    'EUR-GBP': 0.88,
-    'JPY-GBP': 0.0067,
-    'GBP-EUR': 1.18,
-    'GBP-USD': 1.33,
-    'JPY-USD': 0.0091,
-    'EUR-USD': 1.18
-}
-
-# Compute optimal conversion path score
-optimal_score = compute_exchange_path(preferred_currencies, transaction_weights)
-print(f"Result: {optimal_score}")
+# Execute the analysis
+sample_text = "python3"
+analyze_text_statistics(sample_text)

@@ -1,46 +1,31 @@
-import re
-from collections import defaultdict
-
-class PacketHeader:
-    def __init__(self, source_ip, dest_ip, flags):
-        self.source_ip = source_ip
-        self.dest_ip = dest_ip
-        self.flags = flags
-
-packet_data = [
-    "192.168.1.10:10.0.0.5:SYN",
-    "10.0.0.5:192.168.1.10:SYN-ACK",
-    "192.168.1.10:10.0.0.5:PSH-ACK|URG",  # Suspicious: URG flag
-    "192.168.1.15:10.0.0.5:FIN",           # Suspicious: unexpected FIN
-    "192.168.1.10:10.0.0.5:ACK"
-]
-
-flag_counter = defaultdict(int)
-suspicious_patterns = [r'URG', r'FIN']
-suspicious_score = 0
-
-for entry in packet_data:
-    parts = entry.split(':')
-    if len(parts) == 3:
-        src, dst, flag_str = parts
-        flags = flag_str.split('|')
-        header = PacketHeader(src, dst, flags)
+def analyze_text_patterns(text_segments):
+    vowel_counts = []
+    consonant_totals = []
+    irrelevant_sum = 0
+    
+    for i, segment in enumerate(text_segments):
+        vowels = sum(1 for char in segment if char.lower() in 'aeiou')
+        consonants = sum(1 for char in segment if char.isalpha() and char.lower() not in 'aeiou')
+        vowel_counts.append(vowels)
+        consonant_totals.append(consonants)
         
-        # Count flags
-        for f in header.flags:
-            flag_counter[f] += 1
-        
-        # Pattern check with short-circuit: only check if TCP handshake flags aren't dominant
-        is_not_handshake_dominant = not (flag_counter['SYN'] > 2 and flag_counter['ACK'] > 2)
-        has_suspicious_flag = any(re.search(pattern, flag_str) for pattern in suspicious_patterns)
-        
-        if is_not_handshake_dominant and has_suspicious_flag:
-            suspicious_score += 10
-        elif not is_not_handshake_dominant or not has_suspicious_flag:
-            suspicious_score -= 1  # Decrease score for normal traffic
+        # Distractor operation - doesn't affect final result
+        irrelevant_sum += len(segment) * 2
+    
+    # Main logic with conditional expressions
+    paired_data = list(zip(vowel_counts, consonant_totals))
+    processed_values = [vowels * 10 + consonants if vowels > consonants else consonants * 5 - vowels 
+                       for vowels, consonants in paired_data]
+    
+    # Additional intermediate step (not directly used)
+    temp_max = max(processed_values) if processed_values else 0
+    
+    # Final computation
+    final_count = sum(processed_values) // len(processed_values) if processed_values else 0
+    
+    result = final_count
+    print(f"Result: {result}")
 
-# Final adjustment based on flag distribution
-if flag_counter['RST'] > 0:
-    suspicious_score += 15
-
-print(f"Result: {suspicious_score}")
+# Execute with sample data
+text_samples = ["hello", "world", "python", "programming"]
+analyze_text_patterns(text_samples)

@@ -1,70 +1,14 @@
-Target: Find the value of variable transformed_longitude after [line 82] executes
+Target: Find the value of variable final_count after [line 5] executes
 
-[line 10]  return hash(f"{self.latitude:.6f},{self.longitude:.6f}")
-Return: hash(f"{self.latitude:.6f},{self.longitude:.6f}")
-[line 14]  scaled = int(abs(coord_value) * (10 ** precision))
-Call function int(abs(coord_value) * (10 ** precision))
-[line 15]  encoded = ""
-Assign: encoded = ''
-[line 16]  while scaled > 0:
-while Loop Start: Condition is true
-[line 17]  encoded = chr((scaled % 36) + 65 if scaled % 36 < 10 else (scaled % 36) + 55) + encoded
-Compute: chr((scaled % 36) + 65 if scaled % 36 < 10 else (scaled % 36) + 55) + encoded, where scaled=4071280 (defined at [line 14]), encoded='' (defined at [line 15]) = 'E'
-[line 16]  while scaled > 0:
-while Loop Iteration: Condition is still true
-[line 17]  encoded = chr((scaled % 36) + 65 if scaled % 36 < 10 else (scaled % 36) + 55) + encoded
-Compute: chr((scaled % 36) + 65 if scaled % 36 < 10 else (scaled % 36) + 55) + encoded, where scaled=113091 (defined at [line 14]), encoded='E' (defined at [line 17]) = 'FE'
-... [Line 16] repeats 32 more times ...
-... [Line 16] repeats 32 more times ...
-... [Line 16] repeats 32 more times ...
-[line 16]  while scaled > 0:
-while Loop Iteration: Condition is still true
-[line 17]  encoded = chr((scaled % 36) + 65 if scaled % 36 < 10 else (scaled % 36) + 55) + encoded
-Compute: chr((scaled % 36) + 65 if scaled % 36 < 10 else (scaled % 36) + 55) + encoded, where scaled=5 (defined at [line 14]), encoded='HTKE' (defined at [line 17]) = 'FHTKE'
-[line 16]  while scaled > 0:
-while Loop Iteration: Condition is still true
-[line 19]  return encoded if encoded else "A"
-Return: encoded if encoded else "A"
-[line 44]  selected_point = raw_coordinates[1]  # Los Angeles
-Compute: raw_coordinates[1]  # Los Angeles, where raw_coordinates=[GeoPoint(latitude=40.7128, longitude=-74.006), GeoPoint(latitude=34.0522, longitude=-118.2437), GeoPoint(latitude=41.8781, longitude=-87.6298)] (an unknown source) = GeoPoint(latitude=34.0522, longitude=-118.2437)
-[line 45]  selected_hash = hash(selected_point)
-Call function hash(selected_point=GeoPoint(...) (defined at [line 44]))
-[line 10]  return hash(f"{self.latitude:.6f},{self.longitude:.6f}")
-Return: hash(f"{self.latitude:.6f},{self.longitude:.6f}")
-[line 49]  wrapped_lon = selected_point.longitude % 360
-Compute: selected_point.longitude % 360, where selected_point=GeoPoint(longitude=-118.2437) (defined at [line 44]) = 241.7563
-[line 52]  if wrapped_lon > 180:
-Condition: True, entering 'if' block
-[line 70]  transformed_longitude = decode_coordinate(metadata_map[selected_hash]['encoded_lon'])
-Call function decode_coordinate(metadata_map[selected_hash]['encoded_lon'])
-[line 23]  value = 0
-Assign: value = 0
-[line 24]  for char in encoded_str:
-Loop Start: char takes its first value 'H'
-[line 25]  digit = ord(char) - 65 if char.isalpha() else ord(char) - 48
-Compute: ord(char) - 65 if char.isalpha() else ord(char) - 48, where char='H' (defined at [line 24]) = 7
-[line 26]  value = value * 36 + digit
-Compute: value * 36 + digit, where value=0 (defined at [line 23]), digit=7 (defined at [line 25]) = 7
-[line 24]  for char in encoded_str:
-Loop Iteration: char is now 'B' (iteration 2)
-[line 25]  digit = ord(char) - 65 if char.isalpha() else ord(char) - 48
-Compute: ord(char) - 65 if char.isalpha() else ord(char) - 48, where char='B' (defined at [line 24]) = 1
-[line 26]  value = value * 36 + digit
-Compute: value * 36 + digit, where value=7 (defined at [line 26]), digit=1 (defined at [line 25]) = 253
-... [Line 24] repeats 2 more times ...
-... [Line 24] repeats 2 more times ...
-... [Line 24] repeats 2 more times ...
-[line 24]  for char in encoded_str:
-Loop Iteration: char is now 'Q' (iteration 5)
-[line 25]  digit = ord(char) - 65 if char.isalpha() else ord(char) - 48
-Compute: ord(char) - 65 if char.isalpha() else ord(char) - 48, where char='Q' (defined at [line 24]) = 16
-[line 26]  value = value * 36 + digit
-Compute: value * 36 + digit, where value=328084 (defined at [line 26]), digit=16 (defined at [line 25]) = 11811040
-[line 24]  for char in encoded_str:
-Loop End: Iteration finished
-[line 27]  return value / (10 ** precision)
-Return: value / (10 ** precision)
-[line 80]  transformed_longitude = 180 + (transformed_longitude % 90)
-Compute: 180 + (transformed_longitude % 90) = 208.1104
+[line 1]  text_data = "The quick brown fox jumps over the lazy dog and runs through the forest"
+Assign: text_data = 'The quick brown fox jumps over the lazy dog and runs through the forest'
+[line 2]  word_list = text_data.split()
+(Missing param: 'func_name')
+[line 3]  filtered_words = [word for word in word_list if len(word) > 3]
+Compute: [word for word in word_list if len(word) > 3], where word='The' (an unknown source), word_list=['The', 'quick', 'brown', 'fox', 'jumps', ...] (an unknown source) = ?
+[line 4]  processed_words = len(filtered_words)
+Call function len(filtered_words=['quick', 'brown', 'jumps', 'over', 'lazy', ...] (defined at [line 3]))
+[line 5]  final_count = processed_words
+Compute: processed_words, where processed_words=8 (defined at [line 4]) = 8
 
-Answer: transformed_longitude = 208.1104 (last updated on defined at [line 80])
+Answer: final_count = 8 (last updated on defined at [line 5])

@@ -1,59 +1,42 @@
-import math
+def analyze_sales_data(sales_records):
+    # Distractor: irrelevant customer analysis
+    customer_ids = [1001, 1002, 1003, 1004, 1005]
+    customer_ratings = [4.2, 3.8, 4.5, 4.1, 3.9]
+    avg_rating = sum(customer_ratings) / len(customer_ratings)
+    
+    # Main logic with zip for pairing sales with regions
+    regions = ['north', 'south', 'east', 'west', 'central']
+    sales_figures = [12500, 9800, 14200, 7600, 11800]
+    
+    # Distractor: unused regional analysis
+    regional_weights = [1.1, 0.9, 1.2, 0.8, 1.0]
+    weighted_sales = [sales * weight for sales, weight in zip(sales_figures, regional_weights)]
+    
+    # Relevant processing with enumerate
+    processed_data = []
+    for idx, (region, sales) in enumerate(zip(regions, sales_figures)):
+        # Distractor: misleading seasonal adjustment
+        seasonal_factor = 1.05 if idx % 2 == 0 else 0.95
+        adjusted_sales = sales * seasonal_factor
+        
+        # Relevant logic: apply discount tier
+        if sales > 12000:
+            discount_tier = 0.85
+        elif sales > 10000:
+            discount_tier = 0.90
+        else:
+            discount_tier = 0.95
+        
+        final_amount = adjusted_sales * discount_tier
+        processed_data.append(final_amount)
+    
+    # More distractors: unnecessary calculations
+    total_weighted = sum(weighted_sales)
+    max_customer_rating = max(customer_ratings)
+    
+    # Key assignment
+    final_sales_total = processed_data[-1]
+    print(f"Result: {final_sales_total}")
 
-class SignalProcessor:
-    def __init__(self):
-        self.token_cache = {}
-    
-    def tokenize(self, descriptor):
-        if descriptor in self.token_cache:
-            return self.token_cache[descriptor]
-        tokens = [ord(c) for c in descriptor]
-        self.token_cache[descriptor] = tokens
-        return tokens
-    
-    def recursive_filter(self, signal, depth=3):
-        if depth == 0:
-            return signal
-        filtered = []
-        for i in range(len(signal)):
-            if i == 0:
-                filtered.append(signal[i] & signal[-1])
-            else:
-                filtered.append(signal[i] ^ filtered[i-1])
-        return self.recursive_filter(filtered, depth-1)
-
-def process_waveform():
-    processor = SignalProcessor()
-    descriptor = "AUDIO_WAVE_2023"
-    tokens = processor.tokenize(descriptor)
-    
-    # Convert tokens to matrix
-    size = int(math.sqrt(len(tokens)))
-    while size * size < len(tokens):
-        size += 1
-    matrix = [[0] * size for _ in range(size)]
-    
-    for i, token in enumerate(tokens):
-        matrix[i // size][i % size] = token
-    
-    # Flatten and filter
-    flattened = [item for row in matrix for item in row][:len(tokens)]
-    filtered = processor.recursive_filter(flattened)
-    
-    # Calculate power using list comprehension
-    power_components = [x**2 for x in filtered if x > 0]
-    filtered_signal_power = sum(power_components)
-    
-    return filtered_signal_power
-
-# Context manager for processing session
-class ProcessingSession:
-    def __enter__(self):
-        print("Signal processing session started")
-        return self
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        print("Session completed")
-
-with ProcessingSession():
-    result = process_waveform()
-    print(f"Target result: {result}")
+# Execute the analysis
+analyze_sales_data([])

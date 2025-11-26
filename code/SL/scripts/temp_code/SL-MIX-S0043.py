@@ -1,30 +1,54 @@
-from collections import deque
+import itertools
 
-def process_sensor_data(readings):
-    window = deque(maxlen=5)
-    peak_stack = []
-    peak_count = 0
+def process_data(data_stream):
+    # Distractor: complex bit manipulation that doesn't affect final result
+    mask_generator = 0b10101010
+    temp_shifter = data_stream[0] << 3
+    bit_accumulator = temp_shifter & mask_generator
     
-    for reading in readings:
-        window.append(reading)
+    # Main logic: pairwise combinations and sum filtering
+    valid_pairs = []
+    for a, b in itertools.combinations(data_stream, 2):
+        # Misleading intermediate calculation
+        product_distractor = a * b + (a ^ b)
         
-        if len(window) == 5:
-            window_avg = sum(window) / len(window)
-            
-            # Check if current reading is a significant peak
-            is_peak = reading > 2 * window_avg and reading == max(window)
-            
-            # Apply logical filtering for noise reduction
-            not_noise = reading % 3 != 0 or (reading & 7) == 0
-            
-            if is_peak and not_noise:
-                peak_stack.append(reading)
-                peak_count += 1
+        # Actual filtering condition
+        if (a + b) % 7 == 0:
+            valid_pairs.append((a, b))
     
-    return peak_count
+    # Dead code path - never executed
+    if len(valid_pairs) > 100:
+        unreachable_sum = sum(x * y for x, y in valid_pairs)
+        return unreachable_sum // 2
+    
+    # Real computation path
+    checksum = 0
+    for pair in valid_pairs:
+        # More distractions with bit operations
+        xor_mask = pair[0] ^ pair[1]
+        checksum += xor_mask
+        
+        # Irrelevant intermediate state
+        temp_state = (checksum * 3) % 256
+    
+    # Final transformation with distraction
+    final_shift = (checksum >> 2) | (checksum << 6)
+    return checksum  # The actual return value
 
-# Sensor readings from an environmental monitoring system
-sensor_readings = [12, 45, 23, 67, 34, 89, 56, 78, 91, 25, 64, 87, 42, 58, 73]
+# Initial data processing with distractions
+raw_data = [14, 8, 21, 35, 7, 42, 28, 13, 56, 19]
 
-peak_count = process_sensor_data(sensor_readings)
-print(f"Result: {peak_count}")
+# Irrelevant data transformation
+scaled_data = [x * 2 for x in raw_data]
+filtered_distractor = [x for x in scaled_data if x % 5 != 0]
+
+# Actual transformation
+processed_distractor = [x + 1 for x in raw_data]
+transformed = [x - 3 for x in processed_distractor]
+
+# Dead variable initialization
+backup_storage = sum(transformed) * 2
+
+# Critical execution point
+final_checksum = process_data(transformed)
+print(f"Result: {final_checksum}")

@@ -1,0 +1,33 @@
+Target: Find the value of variable final_score after [line 52] executes
+
+[line 46]  input_data = [12, 8, 15, 20, 6, 25, 18, 30]
+Compute: [12, 8, 15, 20, 6, 25, 18, 30] = [12, 8, 15, 20, 6, ...]
+[line 47]  threshold_value = 10
+Assign: threshold_value = 10
+[line 50]  final_score = process_results(input_data, threshold_value)
+Call function process_results(input_data=[12, 8, 15, 20, 6, ...] (defined at [line 46]), threshold_value=10 (defined at [line 47]))
+[line 29]  if validate_input(data_stream):
+Condition: True, entering 'if' block
+[line 4]  return len(raw_data) > 3
+Return: len(raw_data) > 3
+[line 30]  filtered_data = filter_valid_entries(data_stream, threshold)
+Call function filter_valid_entries(data_stream=[12, 8, 15, 20, 6, ...] (an unknown source), threshold=10 (an unknown source))
+[line 16]  valid_data = [x for x in data if x >= cutoff and x % 2 == 0]
+Compute: [x for x in data if x >= cutoff and x % 2 == 0], where x=12 (an unknown source), data=[12, 8, 15, 20, 6, ...] (an unknown source), cutoff=10 (an unknown source) = ?
+[line 21]  return valid_data
+Return: valid_data=[12, 20, 18, 30] (defined at [line 16])
+[line 33]  score = (sum(filtered_data) * 2) if len(filtered_data) > 1 else (filtered_data[0] * 3 if filtered_data else 0)
+Compute: (sum(filtered_data) * 2) if len(filtered_data) > 1 else (filtered_data[0] * 3 if filtered_data else 0), where filtered_data=[12, 20, 18, 30] (defined at [line 30]) = 160
+[line 6]  def calculate_bonus(scores):
+Enter function calculate_bonus: scores=[12, 20, 18, 30] (filtered_data defined at [line 30])
+  [line 9]  return max(scores) * 2  # Misleading calculation
+  Return: max(scores) * 2  # Misleading calculation
+Function calculate_bonus returns 60
+[line 39]  final_adjustment = score // len(filtered_data) if len(filtered_data) > 0 else score
+Compute: score // len(filtered_data) if len(filtered_data) > 0 else score, where score=160 (defined at [line 33]), filtered_data=[12, 20, 18, 30] (defined at [line 30]) = 40
+[line 40]  return final_adjustment
+Return: final_adjustment=40 (defined at [line 39])
+[line 52]  print(f"Target result: {final_score}")
+Output: f"Target result: {final_score}"
+
+Answer: final_score = 40 (last updated on defined at [line 50])

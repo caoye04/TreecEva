@@ -1,40 +1,48 @@
-from functools import reduce
-
-def analyze_packets(packet_signatures, attack_pattern):
-    pattern_set = frozenset(attack_pattern)
-    matched_sequence_length = 0
-    current_match_count = 0
+def process_inventory_data(items):
+    # Distractor: string manipulation that doesn't affect final result
+    temp_str = "INVENTORY_ANALYSIS_2024"
+    encoded_header = temp_str.lower().replace('_', '-')[:15]
     
-    for signature in packet_signatures:
-        # String transformation and hashing for normalization
-        normalized_sig = ''.join(sorted(signature.lower()))
-        sig_hash = hash(normalized_sig)
+    # Distractor: unnecessary dictionary operations
+    config_params = {'threshold': 50, 'max_items': 100, 'offset': 7}
+    dummy_calc = config_params['threshold'] * config_params['offset'] // 3
+    
+    # Relevant: actual processing with bitwise operations
+    checksum = 0
+    processed_count = 0
+    
+    for item in items:
+        # Distractor: misleading intermediate calculation
+        weight_factor = (item['id'] & 0xF) + (len(item['name']) % 8)
         
-        # Greedy matching with set operations
-        if sig_hash % 23 in {hash(p) % 23 for p in attack_pattern} and \
-           len(set(signature) & pattern_set) >= len(pattern_set) * 0.6:
-            current_match_count += 1
-            # Short-circuit evaluation for performance
-            if current_match_count > matched_sequence_length and \
-               any(c.isdigit() for c in signature) and \
-               not (len(signature) < 3 or len(signature) > 15):
-                matched_sequence_length = current_match_count
-        else:
-            current_match_count = 0
+        # Relevant: core checksum calculation
+        if item['status'] == 'active':
+            checksum ^= (item['quantity'] << 4) | (item['price'] & 0xFF)
+            processed_count += 1
+        
+        # Distractor: dead code path
+        if item['category'] == 'electronics':
+            dummy_multiplier = weight_factor * 3
+            
+    # Distractor: unused string operation
+    result_prefix = f"CS:{processed_count}-"
     
-    # Final validation with comparison operations
-    return matched_sequence_length if matched_sequence_length > 1 else 0
+    # Final relevant operation
+    checksum = (checksum + processed_count) & 0xFFFF
+    return checksum
 
-# Network packet signatures captured during monitoring
-network_traffic = [
-    "AB12CD", "EF34GH", "IJ56KL", "MN78OP",  # Attack pattern sequence
-    "QRSTU9", "VWXYZ0",                       # Part of sequence but failing criteria
-    "12AB34", "56CD78", "90EF12",            # Another potential sequence
-    "A1B2C3", "D4E5F6", "G7H8I9", "J0K1L2"   # Valid continuation
+# Main execution
+inventory_items = [
+    {'id': 101, 'name': 'laptop', 'quantity': 15, 'price': 42, 'status': 'active', 'category': 'electronics'},
+    {'id': 102, 'name': 'monitor', 'quantity': 8, 'price': 67, 'status': 'active', 'category': 'electronics'},
+    {'id': 103, 'name': 'keyboard', 'quantity': 25, 'price': 23, 'status': 'inactive', 'category': 'accessories'},
+    {'id': 104, 'name': 'mouse', 'quantity': 30, 'price': 18, 'status': 'active', 'category': 'accessories'}
 ]
 
-# Known attack pattern signatures
-intrusion_signatures = ["AB12CD", "EF34GH", "IJ56KL", "MN78OP", "12AB34", "56CD78"]
+# Distractor: unnecessary variable assignments
+analysis_mode = True
+verbose_logging = False
+backup_data = inventory_items.copy()
 
-matched_sequence_length = analyze_packets(network_traffic, intrusion_signatures)
-print(f"Result: {matched_sequence_length}")
+final_checksum = process_inventory_data(inventory_items)
+print(f"Result: {final_checksum}")

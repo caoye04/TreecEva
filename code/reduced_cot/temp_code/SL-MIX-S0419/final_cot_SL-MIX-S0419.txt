@@ -1,0 +1,48 @@
+Target: Find the value of variable final_solution after [line 50] executes
+
+[line 9]  input_values = [5, 12, 8, 3, 15, 7]
+Compute: [5, 12, 8, 3, 15, 7] = [5, 12, 8, 3, 15, ...]
+[line 25]  decoding_pairs = list(zip(input_values[::2], input_values[1::2]))  # [(5,12), (8,3), (15,7)]
+Call function list(zip(input_values[::2], input_values[1::2]))  # [(5, 12), (8, 3), (15, 7)
+[line 3]  temp_sum = 0
+Assign: temp_sum = 0
+[line 4]  for i, val in enumerate(data_sequence):
+(Missing param: 'iter_var')
+[line 5]  temp_sum += val * (i + 1)  # Red herring calculation
+Update: temp_sum changed from 0 (defined at defined at [line 3]) to 0+val * (i + 1)  # Red herring calculation = 1
+[line 4]  for i, val in enumerate(data_sequence):
+(Missing param: 'iter_var')
+[line 5]  temp_sum += val * (i + 1)  # Red herring calculation
+Update: temp_sum changed from 1 (defined at defined at [line 5]) to 1+val * (i + 1)  # Red herring calculation = 5
+[line 4]  for i, val in enumerate(data_sequence):
+(Missing param: 'iter_var')
+[line 5]  temp_sum += val * (i + 1)  # Red herring calculation
+Update: temp_sum changed from 5 (defined at defined at [line 5]) to 5+val * (i + 1)  # Red herring calculation = 14
+[line 4]  for i, val in enumerate(data_sequence):
+Loop End: Iteration finished
+[line 6]  return temp_sum  # Never used
+Return: temp_sum  # Never used
+[line 31]  processed_values = []
+Compute: [] = []
+[line 32]  for idx, (a, b) in enumerate(decoding_pairs):
+(Missing param: 'iter_var')
+[line 34]  if a > b:
+Condition: True, entering 'if' block
+[line 32]  for idx, (a, b) in enumerate(decoding_pairs):
+(Missing param: 'iter_var')
+[line 34]  if a > b:
+Condition: True, entering 'if' block
+[line 32]  for idx, (a, b) in enumerate(decoding_pairs):
+(Missing param: 'iter_var')
+[line 34]  if a > b:
+Condition: True, entering 'if' block
+[line 32]  for idx, (a, b) in enumerate(decoding_pairs):
+Loop End: Iteration finished
+[line 40]  decoded_value = sum(processed_values)  # Core value: 0 + 5 + 8 = 13
+Call function sum(processed_values=[0, 5, 16] (defined at [line 31]))
+[line 47]  correction_factor = (len(input_values) - 2)  # 4
+Compute: (len(input_values) - 2)  # 4, where input_values=[5, 12, 8, 3, 15, ...] (defined at [line 9]) = 4
+[line 50]  final_solution = decoded_value * correction_factor  # 13 * 4 = 52
+Compute: decoded_value * correction_factor  # 13 * 4 = 52, where decoded_value=21 (defined at [line 40]), correction_factor=4 (defined at [line 47]) = 84
+
+Answer: final_solution = 84 (last updated on defined at [line 50])

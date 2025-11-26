@@ -1,0 +1,63 @@
+50
+final_balance
+---
+39 account_data = [150, -25, 300, -100, -50, 200]
+39 ['account_data'] ['[150, -25, 300, -100, -50, ...]']
+40 fee_calculator = lambda amount: (amount // 100) * 10
+40 ['account_data'] ['[150, -25, 300, -100, -50, ...]']
+47 final_balance = process_transactions(account_data, fee_calculator)
+47 ['account_data'] ['[150, -25, 300, -100, -50, ...]']
+3 base_balance = 1000
+3 ['transactions', 'base_balance'] ['[150, -25, 300, -100, -50, ...]', '1000']
+5 bonus_amount = 50
+5 ['transactions', 'base_balance', 'bonus_amount'] ['[150, -25, 300, -100, -50, ...]', '1000', '50']
+13 total_credits = 0
+13 ['transactions', 'base_balance', 'bonus_amount', 'total_credits'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '0']
+14 total_debits = 0
+14 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '0', '0']
+16 for trans in transactions:
+16 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '0', '0', '150']
+17 if trans > 0:
+17 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '0', '0', '150']
+18 total_credits += trans
+18 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '150', '0', '150']
+16 for trans in transactions:
+16 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '150', '0', '-25']
+17 if trans > 0:
+17 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '150', '0', '-25']
+20 total_debits += abs(trans)
+20 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '150', '25', '-25']
+16 for trans in transactions:
+16 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '150', '25', '300']
+17 if trans > 0:
+17 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '150', '25', '300']
+18 total_credits += trans
+18 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '450', '25', '300']
+16 for trans in transactions:
+16 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '450', '25', '-100']
+17 if trans > 0:
+17 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '450', '25', '-100']
+20 total_debits += abs(trans)
+20 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '450', '125', '-100']
+16 for trans in transactions:
+16 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '450', '125', '-50']
+17 if trans > 0:
+17 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '450', '125', '-50']
+20 total_debits += abs(trans)
+20 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '450', '175', '-50']
+16 for trans in transactions:
+16 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '450', '175', '200']
+17 if trans > 0:
+17 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '450', '175', '200']
+18 total_credits += trans
+18 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '650', '175', '200']
+16 for trans in transactions:
+16 ['transactions', 'base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'trans'] ['[150, -25, 300, -100, -50, ...]', '1000', '50', '650', '175', '200']
+27 total_fees = fee_fn(total_credits + total_debits)
+27 ['base_balance', 'bonus_amount', 'total_credits', 'total_debits'] ['1000', '50', '650', '175']
+30 final_amount = base_balance + total_credits - total_debits - total_fees + bonus_amount
+30 ['base_balance', 'bonus_amount', 'total_credits', 'total_debits', 'total_fees', 'final_amount'] ['1000', '50', '650', '175', '80', '1445']
+36 return final_amount
+36 ['final_amount'] ['1445']
+50 print(f"Result: {final_balance}")
+50 ['final_balance'] ['1445']

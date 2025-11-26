@@ -1,0 +1,34 @@
+Target: Find the value of variable final_energy_balance after [line 27] executes
+
+[line 11]  base_load = 25
+Assign: base_load = 25
+[line 17]  energy_analysis = [calculate_energy_flow(base_load, i) for i in range(3)]
+Compute: [calculate_energy_flow(base_load, i) for i in range(3)], where base_load=25 (defined at [line 11]), i=0 (an unknown source) = ?
+[line 6]  energy_core = (base_load & 0xF) | (cycle << 4)
+Compute: (base_load & 0xF) | (cycle << 4), where base_load=25 (defined at [line 11]), cycle=0 (an unknown source) = 9
+[line 7]  power_factor = energy_core ^ 0b1010
+Compute: energy_core ^ 0b1010, where energy_core=9 (defined at [line 6]) = 3
+[line 8]  return power_factor
+Return: power_factor=3 (defined at [line 7])
+[line 6]  energy_core = (base_load & 0xF) | (cycle << 4)
+Compute: (base_load & 0xF) | (cycle << 4), where base_load=25 (defined at [line 11]), cycle=1 (an unknown source) = 25
+[line 7]  power_factor = energy_core ^ 0b1010
+Compute: energy_core ^ 0b1010, where energy_core=25 (defined at [line 6]) = 19
+[line 8]  return power_factor
+Return: power_factor=19 (defined at [line 7])
+[line 6]  energy_core = (base_load & 0xF) | (cycle << 4)
+Compute: (base_load & 0xF) | (cycle << 4), where base_load=25 (defined at [line 11]), cycle=2 (an unknown source) = 41
+[line 7]  power_factor = energy_core ^ 0b1010
+Compute: energy_core ^ 0b1010, where energy_core=41 (defined at [line 6]) = 35
+[line 8]  return power_factor
+Return: power_factor=35 (defined at [line 7])
+[line 20]  peak_loads = {i: val for i, val in enumerate(energy_analysis)}
+Compute: {i: val for i, val in enumerate(energy_analysis)}, where i=0 (an unknown source), val=3 (an unknown source), energy_analysis=[3, 19, 35] (defined at [line 17]) = ?
+[line 21]  min_power = min(peak_loads.values())
+Call function min(peak_loads.values())
+[line 22]  max_power = max(peak_loads.values())
+Call function max(peak_loads.values())
+[line 27]  final_energy_balance = sum(peak_loads.values()) - (max_power & min_power)
+Compute: sum(peak_loads.values()) - (max_power & min_power), where peak_loads={0: 3, 1: 19, 2: 35} (defined at [line 20]), max_power=35 (defined at [line 22]), min_power=3 (defined at [line 21]) = 54
+
+Answer: final_energy_balance = 54 (last updated on defined at [line 27])

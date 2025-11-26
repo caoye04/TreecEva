@@ -1,0 +1,24 @@
+Target: Find the value of variable final_output after [line 27] executes
+
+[line 4]  packet_sizes = [512, 1024, 768, 512, 1024, 512, 768, 1024, 512, 1536]
+Compute: [512, 1024, 768, 512, 1024, 512, 768, 1024, 512, 1536] = [512, 1024, 768, 512, 1024, ...]
+[line 5]  packet_counter = Counter(packet_sizes)
+Call function Counter(packet_sizes=[512, 1024, 768, 512, 1024, ...] (defined at [line 4]))
+[line 8]  total_bytes = sum(packet_sizes)
+Call function sum(packet_sizes=[512, 1024, 768, 512, 1024, ...] (defined at [line 4]))
+[line 9]  avg_packet_size = total_bytes // len(packet_sizes)
+Compute: total_bytes // len(packet_sizes), where total_bytes=8192 (defined at [line 8]), packet_sizes=[512, 1024, 768, 512, 1024, ...] (defined at [line 4]) = 819
+[line 13]  common_size_count = packet_counter.most_common(1)[0][1]
+Compute: packet_counter.most_common(1)[0][1], where packet_counter={512: 4, 1024: 3, 768: 2, ...} (defined at [line 5]) = 4
+[line 16]  processed_total = total_bytes - (avg_packet_size * 2)
+Compute: total_bytes - (avg_packet_size * 2), where total_bytes=8192 (defined at [line 8]), avg_packet_size=819 (defined at [line 9]) = 6554
+[line 17]  adjustment_factor = common_size_count * 10
+Compute: common_size_count * 10, where common_size_count=4 (defined at [line 13]) = 40
+[line 18]  modulus_base = 256
+Assign: modulus_base = 256
+[line 21]  result_modulus = (processed_total + adjustment_factor) % modulus_base
+Compute: (processed_total + adjustment_factor) % modulus_base, where processed_total=6554 (defined at [line 16]), adjustment_factor=40 (defined at [line 17]), modulus_base=256 (defined at [line 18]) = 194
+[line 27]  final_output = result_modulus
+Compute: result_modulus, where result_modulus=194 (defined at [line 21]) = 194
+
+Answer: final_output = 194 (last updated on defined at [line 27])

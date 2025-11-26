@@ -1,36 +1,52 @@
-from collections import deque
-from functools import reduce
-from operator import xor
+def validate_input(raw_data):
+    # Misleading validation that doesn't affect main logic
+    temp_check = sum(x % 2 for x in raw_data) if raw_data else 0
+    return len(raw_data) > 3
 
-def process_packets():
-    packet_headers = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
-    accepted_signatures = deque(maxlen=3)
-    validation_keys = {0x10, 0x20, 0x30}
-    mask = 0xF0
+def calculate_bonus(scores):
+    # Dead code path - never actually used
+    bonus = sum(scores) * 0.1 if len(scores) > 5 else 0
+    return max(scores) * 2  # Misleading calculation
+
+def filter_valid_entries(data, cutoff):
+    # Irrelevant intermediate variable
+    debug_counter = len([x for x in data if x > 100])
     
-    for header in packet_headers:
-        # Step 1: Bitwise filtering
-        if header & mask != 0:
-            # Step 2: Signature generation using XOR
-            signature = header ^ 0xAA
-            
-            # Step 3: Check if signature is in validation keys
-            if signature in validation_keys:
-                # Step 4: Add to sliding window (queue)
-                accepted_signatures.append(signature)
-            else:
-                # Step 5: Apply secondary filter using set operations
-                temp_set = frozenset([signature & 0x0F, (signature >> 4) & 0x0F])
-                if len(temp_set.intersection(validation_keys)) > 0:
-                    accepted_signatures.append(signature)
+    # Main filtering logic with list comprehension
+    valid_data = [x for x in data if x >= cutoff and x % 2 == 0]
     
-    # Step 6: Generate final verification code using reduce and XOR
-    if accepted_signatures:
-        final_verification_code = reduce(xor, accepted_signatures, 0)
+    # Misleading intermediate result
+    partial_sum = sum(valid_data) * 2 if len(valid_data) > 2 else 0
+    
+    return valid_data
+
+def process_results(data_stream, threshold):
+    # Multiple irrelevant operations
+    dummy_var = [x * 3 for x in data_stream[:2]] if len(data_stream) > 1 else []
+    temp_sum = sum(dummy_var) if dummy_var else 0
+    
+    # Core logic with nested calls
+    if validate_input(data_stream):
+        filtered_data = filter_valid_entries(data_stream, threshold)
+        
+        # Conditional expression for score calculation
+        score = (sum(filtered_data) * 2) if len(filtered_data) > 1 else (filtered_data[0] * 3 if filtered_data else 0)
+        
+        # Irrelevant operation that doesn't affect result
+        unused_bonus = calculate_bonus(filtered_data)
+        
+        # Final adjustment
+        final_adjustment = score // len(filtered_data) if len(filtered_data) > 0 else score
+        return final_adjustment
     else:
-        final_verification_code = 0
-    
-    return final_verification_code
+        # Unused dead code path
+        return sum(data_stream) * 10
 
-final_verification_code = process_packets()
-print(f"Result: {final_verification_code}")
+# Main execution
+input_data = [12, 8, 15, 20, 6, 25, 18, 30]
+threshold_value = 10
+
+# Key statement
+final_score = process_results(input_data, threshold_value)
+
+print(f"Target result: {final_score}")

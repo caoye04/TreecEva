@@ -1,0 +1,67 @@
+Target: Find the value of variable final_metric after [line 25] executes
+
+[line 3]  raw_readings = [15, 28, 33, 42, 51, 67, 74]
+Compute: [15, 28, 33, 42, 51, 67, 74] = [15, 28, 33, 42, 51, ...]
+[line 4]  calibration_offset = 5
+Assign: calibration_offset = 5
+[line 5]  threshold_map = {1: 25, 2: 40, 3: 60, 4: 75}
+Compute: {1: 25, 2: 40, 3: 60, 4: 75} = {1: 25, 2: 40, 3: 60, ...}
+[line 6]  metric_map = {25: 8, 40: 12, 60: 18, 75: 22}
+Compute: {25: 8, 40: 12, 60: 18, 75: 22} = {25: 8, 40: 12, 60: 18, ...}
+[line 9]  processed_data = []
+Compute: [] = []
+[line 11]  for reading in raw_readings:
+Loop Start: reading takes its first value 15
+[line 12]  calibrated = reading - calibration_offset
+Compute: reading - calibration_offset, where reading=15 (defined at [line 11]), calibration_offset=5 (defined at [line 4]) = 10
+[line 13]  if calibrated > 30:
+Condition: True, entering 'if' block
+[line 11]  for reading in raw_readings:
+Loop Iteration: reading is now 28 (iteration 2)
+[line 12]  calibrated = reading - calibration_offset
+Compute: reading - calibration_offset, where reading=28 (defined at [line 11]), calibration_offset=5 (defined at [line 4]) = 23
+[line 13]  if calibrated > 30:
+Condition: True, entering 'if' block
+... [Line 11] repeats 4 more times ...
+... [Line 11] repeats 4 more times ...
+... [Line 11] repeats 4 more times ...
+[line 15]  for threshold_key, threshold_val in threshold_map.items():
+(Missing param: 'iter_var')
+[line 16]  if calibrated <= threshold_val:
+Condition: True, entering 'if' block
+[line 15]  for threshold_key, threshold_val in threshold_map.items():
+(Missing param: 'iter_var')
+[line 16]  if calibrated <= threshold_val:
+Condition: True, entering 'if' block
+[line 17]  category_key = threshold_key
+Compute: threshold_key, where threshold_key=2 (an unknown source) = 2
+[line 19]  if category_key is not None:
+Condition: True, entering 'if' block
+[line 11]  for reading in raw_readings:
+Loop Iteration: reading is now 51 (iteration 5)
+[line 12]  calibrated = reading - calibration_offset
+Compute: reading - calibration_offset, where reading=51 (defined at [line 11]), calibration_offset=5 (defined at [line 4]) = 46
+[line 13]  if calibrated > 30:
+Condition: True, entering 'if' block
+[line 14]  category_key = None
+Assign: category_key = None
+... [Line 15] repeats 9 more times ...
+... [Line 15] repeats 9 more times ...
+[line 15]  for threshold_key, threshold_val in threshold_map.items():
+(Missing param: 'iter_var')
+[line 16]  if calibrated <= threshold_val:
+Condition: True, entering 'if' block
+[line 15]  for threshold_key, threshold_val in threshold_map.items():
+(Missing param: 'iter_var')
+[line 16]  if calibrated <= threshold_val:
+Condition: True, entering 'if' block
+[line 17]  category_key = threshold_key
+Compute: threshold_key, where threshold_key=4 (an unknown source) = 4
+[line 19]  if category_key is not None:
+Condition: True, entering 'if' block
+[line 11]  for reading in raw_readings:
+Loop End: Iteration finished
+[line 25]  final_metric = metric_map[processed_data[2]]
+Compute: metric_map[processed_data[2]], where metric_map={25: 8, 40: 12, 60: 18, ...} (defined at [line 6]), processed_data=[40, 60, 75, 75] (defined at [line 9]) = 22
+
+Answer: final_metric = 22 (last updated on defined at [line 25])

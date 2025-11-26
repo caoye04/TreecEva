@@ -1,0 +1,27 @@
+Target: Find the value of variable final_throughput after [line 44] executes
+
+[line 33]  initial_load = 85
+Assign: initial_load = 85
+[line 34]  adjustment_factor = 4
+Assign: adjustment_factor = 4
+[line 44]  final_throughput = process_complex_data(initial_load, adjustment_factor)
+Call function process_complex_data(initial_load=85 (defined at [line 33]), adjustment_factor=4 (defined at [line 34]))
+[line 1]  def process_complex_data(base_load, adjustment):
+Enter function process_complex_data: base_load=85 (initial_load defined at [line 33]), adjustment=4 (adjustment_factor defined at [line 34])
+  [line 11]  if base_load > 1000:
+  Condition: True, entering 'if' block
+  [line 16]  load_validator = lambda x: x > 0 and x < 500
+  Compute: lambda x: x > 0 and x < 500 = ?
+  [line 17]  processed_load = base_load + adjustment if load_validator(base_load) else base_load - adjustment
+  Compute: base_load + adjustment if load_validator(base_load) else base_load - adjustment, where base_load=85 (parameter base_load defined at [line 33]), adjustment=4 (parameter adjustment defined at [line 34]) = ?
+  [line 20]  redundant_calc = (processed_load * 3) // 2
+  Compute: (processed_load * 3) // 2, where processed_load=89 (defined at [line 17]) = 133
+  [line 21]  misleading_buffer = redundant_calc + 25
+  Compute: redundant_calc + 25, where redundant_calc=133 (defined at [line 20]) = 158
+  [line 24]  throughput_calc = (processed_load * adjustment) - (misleading_buffer % 20)
+  Compute: (processed_load * adjustment) - (misleading_buffer % 20), where processed_load=89 (defined at [line 17]), adjustment=4 (parameter adjustment defined at [line 34]), misleading_buffer=158 (defined at [line 21]) = 338
+  [line 30]  return throughput_calc
+  Return: throughput_calc=338 (defined at [line 24])
+Function process_complex_data returns 338
+
+Answer: final_throughput = 338 (last updated on defined at [line 44])

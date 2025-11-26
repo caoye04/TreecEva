@@ -1,0 +1,65 @@
+49
+final_computation
+---
+36 sample_points = [4, 7, 11, 3, 9]
+36 ['sample_points'] ['[4, 7, 11, 3, 9]']
+39 main_result = process_data_stream(sample_points)
+39 ['sample_points'] ['[4, 7, 11, 3, 9]']
+PARAM_MAPPING {'data_points': {'actual_var': 'sample_points', 'value': [4, 7, 11, 3, 9]}}
+FUNCTION_ENTER 1 process_data_stream def process_data_stream(data_points):
+1 ['data_points'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 11}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 9}], '_len': 5}]
+3 base_multiplier = 17
+3 ['data_points', 'base_multiplier'] ['[4, 7, 11, 3, 9]', '17']
+4 offset_correction = 8
+4 ['data_points', 'base_multiplier', 'offset_correction'] ['[4, 7, 11, 3, 9]', '17', '8']
+12 transform_func = lambda x: (x ** 2) % 37 + offset_correction
+12 ['data_points', 'base_multiplier', 'offset_correction'] ['[4, 7, 11, 3, 9]', '17', '8']
+13 processed_values = [transform_func(point) for point in data_points]
+13 ['data_points', 'base_multiplier', 'offset_correction', 'point'] ['[4, 7, 11, 3, 9]', '17', '8', '4']
+12 transform_func = lambda x: (x ** 2) % 37 + offset_correction
+12 ['x', 'offset_correction'] ['4', '8']
+13 processed_values = [transform_func(point) for point in data_points]
+13 ['data_points', 'base_multiplier', 'offset_correction', 'point'] ['[4, 7, 11, 3, 9]', '17', '8', '7']
+12 transform_func = lambda x: (x ** 2) % 37 + offset_correction
+12 ['x', 'offset_correction'] ['7', '8']
+13 processed_values = [transform_func(point) for point in data_points]
+13 ['data_points', 'base_multiplier', 'offset_correction', 'point'] ['[4, 7, 11, 3, 9]', '17', '8', '11']
+12 transform_func = lambda x: (x ** 2) % 37 + offset_correction
+12 ['x', 'offset_correction'] ['11', '8']
+13 processed_values = [transform_func(point) for point in data_points]
+13 ['data_points', 'base_multiplier', 'offset_correction', 'point'] ['[4, 7, 11, 3, 9]', '17', '8', '3']
+12 transform_func = lambda x: (x ** 2) % 37 + offset_correction
+12 ['x', 'offset_correction'] ['3', '8']
+13 processed_values = [transform_func(point) for point in data_points]
+13 ['data_points', 'base_multiplier', 'offset_correction', 'point'] ['[4, 7, 11, 3, 9]', '17', '8', '9']
+12 transform_func = lambda x: (x ** 2) % 37 + offset_correction
+12 ['x', 'offset_correction'] ['9', '8']
+13 processed_values = [transform_func(point) for point in data_points]
+13 ['data_points', 'base_multiplier', 'processed_values'] ['[4, 7, 11, 3, 9]', '17', '[24, 20, 18, 17, 15]']
+19 if len(data_points) > 10:
+19 ['data_points', 'base_multiplier', 'processed_values'] ['[4, 7, 11, 3, 9]', '17', '[24, 20, 18, 17, 15]']
+25 if len(processed_values) >= 3:
+25 ['base_multiplier', 'processed_values'] ['17', '[24, 20, 18, 17, 15]']
+26 core_result = (processed_values[0] * processed_values[2]) - processed_values[1]
+26 ['base_multiplier', 'processed_values', 'core_result'] ['17', '[24, 20, 18, 17, 15]', '412']
+27 if core_result > 100:
+27 ['base_multiplier', 'core_result'] ['17', '412']
+28 return core_result // base_multiplier
+28 ['base_multiplier', 'core_result'] ['17', '412']
+FUNCTION_RETURN 28 process_data_stream {'_type': 'int', '_value': 24}
+42 secondary_calc = sum([x % 5 for x in sample_points]) * 3
+42 ['sample_points', 'main_result', 'x'] ['[4, 7, 11, 3, 9]', '24', '4']
+42 secondary_calc = sum([x % 5 for x in sample_points]) * 3
+42 ['sample_points', 'main_result', 'x'] ['[4, 7, 11, 3, 9]', '24', '7']
+42 secondary_calc = sum([x % 5 for x in sample_points]) * 3
+42 ['sample_points', 'main_result', 'x'] ['[4, 7, 11, 3, 9]', '24', '11']
+42 secondary_calc = sum([x % 5 for x in sample_points]) * 3
+42 ['sample_points', 'main_result', 'x'] ['[4, 7, 11, 3, 9]', '24', '3']
+42 secondary_calc = sum([x % 5 for x in sample_points]) * 3
+42 ['sample_points', 'main_result', 'x'] ['[4, 7, 11, 3, 9]', '24', '9']
+42 secondary_calc = sum([x % 5 for x in sample_points]) * 3
+42 ['sample_points', 'main_result', 'secondary_calc'] ['[4, 7, 11, 3, 9]', '24', '42']
+46 bit_shift_value = (main_result << 2) & 0xFF
+46 ['main_result', 'secondary_calc', 'bit_shift_value'] ['24', '42', '96']
+49 final_computation = (bit_shift_value + main_result - secondary_calc) % 73
+49 ['main_result', 'secondary_calc', 'bit_shift_value', 'final_computation'] ['24', '42', '96', '5']

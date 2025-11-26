@@ -1,0 +1,57 @@
+34
+final_balance
+---
+32 transaction_log = "deposit:250,withdraw:100,deposit:75,withdraw:50"
+32 ['transaction_log'] ["'deposit:250,withdraw:100,deposit:75,withdraw:50'"]
+33 final_balance = process_transactions(transaction_log)
+33 ['transaction_log'] ["'deposit:250,withdraw:100,deposit:75,withdraw:50'"]
+5 initial_funds = 1000
+5 ['log_entries', 'initial_funds'] ["'deposit:250,withdraw:100,deposit:75,withdraw:50'", '1000']
+7 temp_log = log_entries.split(',')
+7 ['log_entries', 'initial_funds', 'temp_log'] ["'deposit:250,withdraw:100,deposit:75,withdraw:50'", '1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']"]
+10 balance_adjustment = 0
+10 ['initial_funds', 'temp_log', 'balance_adjustment'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '0']
+13 for entry in temp_log:
+13 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '0', "'deposit:250'"]
+14 if entry.startswith('deposit:'):
+14 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '0', "'deposit:250'"]
+15 amount = int(entry.split(':')[1])
+15 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '0', "'deposit:250'", '250']
+16 balance_adjustment += amount
+16 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '250', "'deposit:250'", '250']
+13 for entry in temp_log:
+13 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '250', "'withdraw:100'", '250']
+14 if entry.startswith('deposit:'):
+14 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '250', "'withdraw:100'", '250']
+18 elif entry.startswith('withdraw:'):
+18 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '250', "'withdraw:100'", '250']
+19 amount = int(entry.split(':')[1])
+19 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '250', "'withdraw:100'", '100']
+20 balance_adjustment -= amount
+20 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '150', "'withdraw:100'", '100']
+13 for entry in temp_log:
+13 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '150', "'deposit:75'", '100']
+14 if entry.startswith('deposit:'):
+14 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '150', "'deposit:75'", '100']
+15 amount = int(entry.split(':')[1])
+15 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '150', "'deposit:75'", '75']
+16 balance_adjustment += amount
+16 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '225', "'deposit:75'", '75']
+13 for entry in temp_log:
+13 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '225', "'withdraw:50'", '75']
+14 if entry.startswith('deposit:'):
+14 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '225', "'withdraw:50'", '75']
+18 elif entry.startswith('withdraw:'):
+18 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '225', "'withdraw:50'", '75']
+19 amount = int(entry.split(':')[1])
+19 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '225', "'withdraw:50'", '50']
+20 balance_adjustment -= amount
+20 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry', 'amount'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '175', "'withdraw:50'", '50']
+13 for entry in temp_log:
+13 ['initial_funds', 'temp_log', 'balance_adjustment', 'entry'] ['1000', "['deposit:250', 'withdraw:100', 'deposit:75', 'withdraw:50']", '175', "'withdraw:50'"]
+28 final_amount = initial_funds + balance_adjustment
+28 ['initial_funds', 'balance_adjustment', 'final_amount'] ['1000', '175', '1175']
+29 return final_amount
+29 ['final_amount'] ['1175']
+34 print(f"Result: {final_balance}")
+34 ['final_balance'] ['1175']

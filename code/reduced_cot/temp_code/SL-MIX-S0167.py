@@ -1,5 +1,16 @@
-temperature_readings = {'day1': 0.5, 'day2': -2.3, 'day3': 1.2, 'day4': -0.8, 'day5': 3.1, 'day6': -1.5, 'day7': 0.9}
-extreme_filter = lambda temp: abs(temp) > 1.0
-extreme_temperatures = {day: temp for day, temp in temperature_readings.items() if extreme_filter(temp)}
-sorted_extreme_temps = sorted(extreme_temperatures.values())
-print(f'Result: {sorted_extreme_temps}')
+def analyze_performance(metrics):
+    base_scores = [metric * 1.5 for metric in metrics]
+    temp_buffer = [score + 2 for score in base_scores]
+    
+    processed_data = []
+    for score in base_scores:
+        processed_data.append(round(score * 0.8, 2))
+    
+    adjustment_factor = len(metrics) * 1.25
+    intermediate_calc = sum(temp_buffer) / len(temp_buffer)
+    
+    final_score = processed_data[-1] - adjustment_factor
+    print(f"Target result: {final_score}")
+
+performance_data = [12, 18, 24, 30, 36]
+analyze_performance(performance_data)

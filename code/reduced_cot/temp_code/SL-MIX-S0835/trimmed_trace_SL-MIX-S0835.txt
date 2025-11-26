@@ -1,0 +1,41 @@
+12
+final_output
+---
+10 operation_map = {'shift_left': 3, 'rotate_mod': 5, 'scale_mod': 7}
+10 ['operation_map'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}']
+11 base_value = 28
+11 ['operation_map', 'base_value'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '28']
+12 final_output = transform_and_calculate(operation_map, base_value)
+12 ['operation_map', 'base_value'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '28']
+PARAM_MAPPING {'operations': {'actual_var': 'operation_map', 'value': {'shift_left': 3, 'rotate_mod': 5, 'scale_mod': 7}}, 'value': {'actual_var': 'base_value', 'value': 28}}
+FUNCTION_ENTER 1 transform_and_calculate def transform_and_calculate(operations, value):
+1 ['operations', 'value'] [{'_type': 'dict', '_items': {'shift_left': {'_type': 'int', '_value': 3}, 'rotate_mod': {'_type': 'int', '_value': 5}, 'scale_mod': {'_type': 'int', '_value': 7}}, '_len': 3}, {'_type': 'int', '_value': 28}]
+2 result = value
+2 ['operations', 'value', 'result'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '28', '28']
+3 for op_key, multiplier in operations.items():
+3 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '28', "'shift_left'", '3']
+4 if op_key.startswith('shift'):
+4 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '28', "'shift_left'", '3']
+5 result += multiplier * 2
+5 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '34', "'shift_left'", '3']
+3 for op_key, multiplier in operations.items():
+3 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '34', "'rotate_mod'", '5']
+4 if op_key.startswith('shift'):
+4 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '34', "'rotate_mod'", '5']
+6 elif op_key.endswith('mod'):
+6 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '34', "'rotate_mod'", '5']
+7 result %= multiplier
+7 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '4', "'rotate_mod'", '5']
+3 for op_key, multiplier in operations.items():
+3 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '4', "'scale_mod'", '7']
+4 if op_key.startswith('shift'):
+4 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '4', "'scale_mod'", '7']
+6 elif op_key.endswith('mod'):
+6 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '4', "'scale_mod'", '7']
+7 result %= multiplier
+7 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '4', "'scale_mod'", '7']
+3 for op_key, multiplier in operations.items():
+3 ['operations', 'result', 'op_key', 'multiplier'] ['{shift_left: 3, rotate_mod: 5, scale_mod: 7}', '4', "'scale_mod'", '7']
+8 return result
+8 ['result'] ['4']
+FUNCTION_RETURN 8 transform_and_calculate {'_type': 'int', '_value': 4}

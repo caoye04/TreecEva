@@ -1,24 +1,31 @@
-class SignalSimulator:
-    def __enter__(self):
-        return self
+def analyze_text_patterns(text_sequence):
+    vowels = 'aeiou'
+    consonants = 'bcdfghjklmnpqrstvwxyz'
     
-    def __exit__(self, exc_type, exc_value, traceback):
-        pass
-
-mask_pattern = 0b11001010
-input_signal = 0b10110110
-control_flag = True
-error_condition = False
-
-with SignalSimulator() as sim:
-    if control_flag and not error_condition:
-        intermediate_result = input_signal ^ mask_pattern
-    else:
-        intermediate_result = 0
+    # Primary analysis - count vowels and consonants
+    vowel_counts = [char.lower().count(vowel) for char in text_sequence for vowel in vowels]
+    consonant_counts = [sum(1 for c in char.lower() if c in consonants) for char in text_sequence]
     
-    if intermediate_result or error_condition:
-        validated_signal = intermediate_result & mask_pattern
-    else:
-        validated_signal = 0
+    # Distractor calculations that don't affect final result
+    total_chars = sum(len(char) for char in text_sequence)
+    char_ratio = total_chars / len(text_sequence) if text_sequence else 0
+    
+    # Intermediate processing with list comprehension
+    processed = [(x, y) for x, y in zip(vowel_counts, reversed(consonant_counts)) if x > 2]
+    
+    # Semi-relevant tuple operations
+    vowel_tuples = tuple(vowel_counts[:3])
+    consonant_tuples = tuple(consonant_counts[-3:])
+    
+    # Core logic that determines final answer
+    final_count = sum(x * y for x, y in processed) if processed else 0
+    
+    # Additional distractor operations
+    unused_sum = sum(vowel_tuples) + sum(consonant_tuples)
+    
+    print(f"Result: {final_count}")
+    return final_count
 
-print(f"Result: {validated_signal}")
+# Test execution
+text_samples = ['python', 'programming', 'evaluation', 'benchmark', 'reasoning']
+analyze_text_patterns(text_samples)

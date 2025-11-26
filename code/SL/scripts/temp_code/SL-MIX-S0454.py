@@ -1,39 +1,35 @@
-from collections import defaultdict
-import math
-
-document = "The quick brown fox jumps over the lazy dog. The dog was really lazy and very sleepy. The fox was quick and brown."
-
-# Tokenize into sentences
-sentences = [s.strip() for s in document.split('.') if s.strip()]
-
-# Initialize data structures
-word_freq = defaultdict(int)
-sentence_scores = []
-
-# Process each sentence
-for sentence in sentences:
-    words = sentence.lower().split()
-    # Update word frequencies
-    for word in words:
-        word_freq[word] += 1
+def process_data_points():
+    data_sources = [(3, 7), (1, 9), (5, 2), (8, 4)]
+    processed_values = []
+    temp_buffer = []
     
-    # Calculate sentence complexity: average word length * unique words
-    unique_words = len(set(words))
-    avg_length = sum(len(word) for word in words) / len(words) if words else 0
-    sentence_score = avg_length * unique_words
-    sentence_scores.append(sentence_score)
+    for idx, (x, y) in enumerate(data_sources):
+        product = x * y
+        processed_values.append(product)
+        # Distractor computation that doesn't affect final result
+        temp_buffer.append(idx + product % 3)
+    
+    # Distractor operation with zip that looks relevant but isn't used
+    zipped_pairs = list(zip(processed_values, temp_buffer))
+    
+    # Another distractor - tuple operations that don't contribute to answer
+    coordinate_tuples = [(val, idx) for idx, val in enumerate(processed_values)]
+    
+    enumerated_values = []
+    for index, value in enumerate(processed_values):
+        enumerated_values.append(value + index)
+    
+    # Distractor: calculate average but don't use it
+    avg_value = sum(enumerated_values) / len(enumerated_values)
+    
+    # The key computation that determines the answer
+    final_computation = max(enumerated_values) - min(enumerated_values)
+    
+    # Distractor: unused combination count
+    unused_count = len(set(enumerated_values))
+    
+    print(f"Target result: {final_computation}")
+    return final_computation
 
-# Compute aggregate score
-frequency_weights = {word: math.log(freq + 1) for word, freq in word_freq.items()}
-weighted_sentence_scores = []
-
-for i, sentence in enumerate(sentences):
-    words = sentence.lower().split()
-    weight_sum = sum(frequency_weights[word] for word in words)
-    weighted_score = sentence_scores[i] * weight_sum
-    weighted_sentence_scores.append(weighted_score)
-
-# Final aggregation using a polynomial combination
-aggregate_score = sum(weighted_sentence_scores) + math.sqrt(sum(sentence_scores))
-
-print(f"Result: {round(aggregate_score, 2)}")
+if __name__ == "__main__":
+    result = process_data_points()

@@ -1,31 +1,17 @@
-class EventLogger:
-    def __init__(self):
-        self.count = 0
+def score_calculator(grades):
+    weight_factor = 0.6
+    base_points = 50
     
-    def __enter__(self):
-        return self
+    weighted_grades = [grade * weight_factor for grade in grades]
+    total_weighted = sum(weighted_grades)
+    final_result = base_points + total_weighted
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.count += 1
-        return False
+    # Distractor variable (never used)
+    adjustment_factor = 1.25
+    bonus_points = 15
+    
+    return final_result
 
-def fibonacci_sequence(n):
-    seq = [0, 1]
-    for _ in range(2, n):
-        seq.append(seq[-1] + seq[-2])
-    return seq[:n]
-
-fib_nums = fibonacci_sequence(12)
-window_size = 4
-threshold = 15
-trigger_count = 0
-
-for i in range(len(fib_nums) - window_size + 1):
-    window = fib_nums[i:i+window_size]
-    weighted_sum = sum(val * (idx + 1) for idx, val in enumerate(window))
-    if weighted_sum > threshold:
-        with EventLogger() as logger:
-            pass
-        trigger_count += 1
-
-print(f"Result: {trigger_count}")
+student_grades = [85, 92, 78, 95, 88]
+final_score = score_calculator(student_grades)
+print(f"Result: {final_score}")

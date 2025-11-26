@@ -1,0 +1,18 @@
+Target: Find the value of variable final_output after [line 20] executes
+
+[line 1]  data_points = [12, 45, 78, 23, 56, 89, 34, 67, 90, 41]
+Compute: [12, 45, 78, 23, 56, 89, 34, 67, 90, 41] = [12, 45, 78, 23, 56, ...]
+[line 2]  data_mapping = {i: (x * 2 - 3) % 17 for i, x in enumerate(data_points)}
+Compute: {i: (x * 2 - 3) % 17 for i, x in enumerate(data_points)}, where i=0 (an unknown source), x=12 (an unknown source), data_points=[12, 45, 78, 23, 56, ...] (defined at [line 1]) = ?
+[line 8]  filter_keys = lambda x: x % 3 == 0
+Compute: lambda x: x % 3 == 0 = ?
+[line 9]  filtered_keys = list(filter(filter_keys, data_mapping.keys()))
+Call function list(filter(filter_keys, data_mapping.keys()))
+[line 14]  processed_data = data_mapping[filtered_keys[1]]
+Compute: data_mapping[filtered_keys[1]], where data_mapping={0: 4, 1: 2, 2: 0, ...} (defined at [line 2]), filtered_keys=[0, 3, 6, 9] (defined at [line 9]) = 9
+[line 17]  bitwise_check = processed_data & 0b1111
+Compute: processed_data & 0b1111, where processed_data=9 (defined at [line 14]) = 9
+[line 20]  final_output = processed_data + (bitwise_check // 4)
+Compute: processed_data + (bitwise_check // 4), where processed_data=9 (defined at [line 14]), bitwise_check=9 (defined at [line 17]) = 11
+
+Answer: final_output = 11 (last updated on defined at [line 20])

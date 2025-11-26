@@ -1,31 +1,28 @@
-def call_counter(func):
-    def wrapper(*args, **kwargs):
-        wrapper.calls += 1
-        return func(*args, **kwargs)
-    wrapper.calls = 0
-    return wrapper
+from collections import Counter
 
-def fibonacci(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
+# Inventory analysis for warehouse optimization
+inventory_counts = {'widgets': 45, 'gadgets': 78, 'tools': 23, 'parts': 56, 'supplies': 34}
+seasonal_adjustments = {'widgets': 1.2, 'gadgets': 0.8, 'tools': 1.5, 'parts': 1.1, 'supplies': 0.9}
 
-processor_load = lambda x, y: (x * 2 + y) % 7
+# Calculate weighted inventory values
+weighted_values = [inventory_counts[item] * seasonal_adjustments[item] for item in inventory_counts]
+base_total = sum(weighted_values)
 
-@call_counter
-def simulate_processor_signal(processor_id, load):
-    delay = (processor_id * 3 + load * 2) % 5
-    return delay
+# Distractor calculations that don't affect final result
+category_count = len(inventory_counts)
+average_inventory = sum(inventory_counts.values()) / category_count
+redundant_factor = (category_count * 3) - 7
 
-total_propagation_delay = 0
-network_size = 6
+# Primary processing chain
+processed_total = int(base_total * 0.75)
+correction_factor = 4
+adjustment_ratio = 2
 
-for i in range(1, network_size):
-    fib_index = fibonacci(i)
-    for j in range(fib_index % 4 + 1):  # Nested loop with dynamic bound
-        load = processor_load(i, j)
-        delay = simulate_processor_signal(i, load)
-        total_propagation_delay += delay
+# Final calculation
+final_summary = processed_total * correction_factor // adjustment_ratio
 
-print(f"Result: {total_propagation_delay}")
+# Additional unused operations
+unused_check = min(inventory_counts.values()) + max(inventory_counts.values())
+backup_calc = processed_total % 17
+
+print(f"Result: {final_summary}")

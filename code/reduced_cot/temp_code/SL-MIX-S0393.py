@@ -1,28 +1,19 @@
-from collections import defaultdict
+account_balances = {
+    'savings': 1500,
+    'checking': 800,
+    'investment': 2500
+}
 
-def calculate_portfolio_adjustments(daily_changes):
-    adjustments = defaultdict(int)
-    cumulative = 0
-    final_adjustment = 0
-    
-    for idx, change in enumerate(daily_changes):
-        if idx % 2 == 0:
-            adjustments[idx] = change * 2
-        else:
-            adjustments[idx] = change - 3
-            
-        cumulative += adjustments[idx]
-        
-        if cumulative > 100:
-            final_adjustment = cumulative // idx if idx != 0 else 0
-            break
-        elif idx == len(daily_changes) - 1:
-            final_adjustment = cumulative % 10
-            
-    return final_adjustment
+interest_rates = {
+    'savings': 0.02,
+    'checking': 0.01,
+    'investment': 0.035
+}
 
-# Daily changes in portfolio value
-market_data = [5, 12, 8, 20, 15, 25, 30, 18, 22, 35]
+# Find account with highest interest rate
+highest_interest_account = max(interest_rates, key=interest_rates.get)
 
-result = calculate_portfolio_adjustments(market_data)
-print(f"Result: {result}")
+# Calculate final balance after interest
+final_balance = account_balances[highest_interest_account] * (1 + interest_rates[highest_interest_account])
+
+print(f"Target result: {final_balance}")

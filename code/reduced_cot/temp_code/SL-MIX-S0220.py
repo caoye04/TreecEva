@@ -1,72 +1,63 @@
-import itertools
-
-def calculate_signal_strength(raw_data, modulation_factors):
-    strength = 0
-    for i, (data_point, factor) in enumerate(zip(raw_data, modulation_factors)):
-        if i % 2 == 0:
-            strength ^= (data_point << 1) & factor
-        else:
-            strength |= (data_point >> 1) | factor
-    return strength
-
-def optimize_routing_path(sensor_readings):
-    max_efficiency = -1
-    best_path = None
+def analyze_inventory_sets():
+    # Initial inventory data
+    warehouse_A = {15, 22, 37, 44, 58, 66, 73, 81, 99}
+    warehouse_B = {22, 37, 51, 66, 73, 88, 99, 105}
+    warehouse_C = {15, 37, 58, 73, 81, 99, 112, 125}
     
-    for path in itertools.permutations(sensor_readings.keys(), 3):
-        if path[0] > path[-1]:  # Early termination condition
-            continue
-            
-        path_efficiency = 0
-        valid_path = True
+    # Distractor sets and operations
+    temp_storage = {44, 51, 66, 88, 105, 112}
+    obsolete_items = {10, 20, 30, 40, 50}
+    pending_transfer = {22, 51, 81, 105, 125}
+    
+    # Misleading calculations (dead code paths)
+    total_capacity = len(warehouse_A) + len(warehouse_B) + len(warehouse_C)
+    average_stock = sum(warehouse_A | warehouse_B | warehouse_C) / 15.0
+    max_item_id = max(warehouse_A | warehouse_B | warehouse_C)
+    
+    # Core logic for common high-value items
+    high_value_items = warehouse_A & warehouse_B & warehouse_C
+    if len(high_value_items) > 2:
+        exclusive_A = warehouse_A - warehouse_B - warehouse_C
+        shared_AB = (warehouse_A & warehouse_B) - warehouse_C
         
-        for i in range(len(path)-1):
-            current_sensor = path[i]
-            next_sensor = path[i+1]
+        # Misleading intermediate result
+        inventory_overlap = len(exclusive_A) * len(shared_AB)
+        
+        # Actual target calculation
+        common_core = warehouse_A & warehouse_B & warehouse_C
+        if common_core:
+            target_metrics = []
+            for item in sorted(common_core):
+                if item > 50:
+                    target_metrics.append(item * 2 - 15)
+                else:
+                    target_metrics.append(item + 25)
             
-            # Greedy selection with early return
-            if sensor_readings[current_sensor] < 0 or sensor_readings[next_sensor] < 0:
-                valid_path = False
-                break
-                
-            link_quality = (sensor_readings[current_sensor] & sensor_readings[next_sensor])
-            if link_quality == 0:
-                valid_path = False
-                break
-                
-            path_efficiency += link_quality
+            # Distractor operations
+            temp_analysis = [x + 10 for x in target_metrics[:3]]
+            secondary_check = sum(temp_analysis) - 50
             
-        if not valid_path:
-            continue
+            # Final relevant calculation chain
+            target_set_metrics = []
+            for metric in target_metrics:
+                if metric > 80:
+                    adjusted = metric // 3 + 7
+                else:
+                    adjusted = metric - 12
+                target_set_metrics.append(adjusted)
             
-        if path_efficiency > max_efficiency:
-            max_efficiency = path_efficiency
-            best_path = path
+            final_output = target_set_metrics[-1]
+        else:
+            final_output = -999  # Fallback (never reached)
+    else:
+        final_output = -888  # Fallback (never reached)
     
-    return max_efficiency if max_efficiency != -1 else 0
+    # More distractor operations
+    unused_calc = len(warehouse_A | warehouse_B) * len(warehouse_C)
+    redundant_check = min(warehouse_A) + max(warehouse_B)
+    
+    print(f"Result: {final_output}")
+    return final_output
 
-# Sensor network configuration
-sensor_network = {
-    'alpha': 15,
-    'beta': 7,
-    'gamma': 12,
-    'delta': 9,
-    'epsilon': 6
-}
-
-raw_signal_data = [3, 5, 2, 8, 1]
-modulation_params = [4, 6, 1, 3, 7]
-
-# Calculate base signal strength
-base_strength = calculate_signal_strength(raw_signal_data, modulation_params)
-
-# Optimize routing path
-optimal_efficiency = optimize_routing_path(sensor_network)
-
-# Compute final transmission efficiency score
-if optimal_efficiency > 0 and base_strength > 0:
-    transmission_efficiency_score = (base_strength << 2) ^ optimal_efficiency
-else:
-    transmission_efficiency_score = base_strength | optimal_efficiency
-
-print(f"Result: {transmission_efficiency_score}")
+# Execute the analysis
+analyze_inventory_sets()

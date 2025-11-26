@@ -1,0 +1,55 @@
+35
+final_balance
+---
+27 initial_funds = [1000, 2500, 1800, 3200, 950, 2100, 2750]
+27 ['initial_funds'] ['[1000, 2500, 1800, 3200, 950, ...]']
+28 active_users = [0, 2, 3, 5]
+28 ['initial_funds', 'active_users'] ['[1000, 2500, 1800, 3200, 950, ...]', '[0, 2, 3, 5]']
+29 service_fee = 0.02
+29 ['initial_funds', 'active_users', 'service_fee'] ['[1000, 2500, 1800, 3200, 950, ...]', '[0, 2, 3, 5]', '0.02']
+34 final_balance = process_accounts(active_users, initial_funds, service_fee)
+34 ['initial_funds', 'active_users', 'service_fee'] ['[1000, 2500, 1800, 3200, 950, ...]', '[0, 2, 3, 5]', '0.02']
+PARAM_MAPPING {'user_indices': {'actual_var': 'active_users', 'value': [0, 2, 3, 5]}, 'account_funds': {'actual_var': 'initial_funds', 'value': [1000, 2500, 1800, 3200, 950, 2100, 2750]}, 'service_fee': {'actual_var': 'service_fee', 'value': 0.02}}
+FUNCTION_ENTER 14 process_accounts def process_accounts(user_indices, account_funds, service_fee):
+14 ['user_indices', 'account_funds', 'service_fee'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 5}], '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1000}, {'_type': 'int', '_value': 2500}, {'_type': 'int', '_value': 1800}, {'_type': 'int', '_value': 3200}, {'_type': 'int', '_value': 950}, {'_type': 'int', '_value': 2100}, {'_type': 'int', '_value': 2750}], '_len': 7}, {'_type': 'float', '_value': 0.02}]
+16 active_funds = filter_active_accounts(user_indices, account_funds)
+16 ['user_indices', 'account_funds', 'service_fee'] ['[0, 2, 3, 5]', '[1000, 2500, 1800, 3200, 950, ...]', '0.02']
+10 active_accounts = [funds[i] for i in users if i < len(funds)]
+10 ['users', 'funds', 'i'] ['[0, 2, 3, 5]', '[1000, 2500, 1800, 3200, 950, ...]', '0']
+10 active_accounts = [funds[i] for i in users if i < len(funds)]
+10 ['users', 'funds', 'i'] ['[0, 2, 3, 5]', '[1000, 2500, 1800, 3200, 950, ...]', '2']
+10 active_accounts = [funds[i] for i in users if i < len(funds)]
+10 ['users', 'funds', 'i'] ['[0, 2, 3, 5]', '[1000, 2500, 1800, 3200, 950, ...]', '3']
+10 active_accounts = [funds[i] for i in users if i < len(funds)]
+10 ['users', 'funds', 'i'] ['[0, 2, 3, 5]', '[1000, 2500, 1800, 3200, 950, ...]', '5']
+10 active_accounts = [funds[i] for i in users if i < len(funds)]
+10 ['users', 'funds', 'active_accounts'] ['[0, 2, 3, 5]', '[1000, 2500, 1800, 3200, 950, ...]', '[1000, 1800, 3200, 2100]']
+12 return active_accounts
+12 ['active_accounts'] ['[1000, 1800, 3200, 2100]']
+17 total_service_fee = calculate_service_charges(active_funds, service_fee)
+17 ['service_fee', 'active_funds'] ['0.02', '[1000, 1800, 3200, 2100]']
+PARAM_MAPPING {'amounts': {'actual_var': 'active_funds', 'value': [1000, 1800, 3200, 2100]}, 'fee_rate': {'actual_var': 'service_fee', 'value': 0.02}}
+FUNCTION_ENTER 1 calculate_service_charges def calculate_service_charges(amounts, fee_rate):
+1 ['amounts', 'fee_rate'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 1000}, {'_type': 'int', '_value': 1800}, {'_type': 'int', '_value': 3200}, {'_type': 'int', '_value': 2100}], '_len': 4}, {'_type': 'float', '_value': 0.02}]
+4 charges = [amt * fee_rate for amt in amounts]
+4 ['amounts', 'fee_rate', 'amt'] ['[1000, 1800, 3200, 2100]', '0.02', '1000']
+4 charges = [amt * fee_rate for amt in amounts]
+4 ['amounts', 'fee_rate', 'amt'] ['[1000, 1800, 3200, 2100]', '0.02', '1800']
+4 charges = [amt * fee_rate for amt in amounts]
+4 ['amounts', 'fee_rate', 'amt'] ['[1000, 1800, 3200, 2100]', '0.02', '3200']
+4 charges = [amt * fee_rate for amt in amounts]
+4 ['amounts', 'fee_rate', 'amt'] ['[1000, 1800, 3200, 2100]', '0.02', '2100']
+4 charges = [amt * fee_rate for amt in amounts]
+4 ['amounts', 'fee_rate', 'charges'] ['[1000, 1800, 3200, 2100]', '0.02', '[20.0, 36.0, 64.0, 42.0]']
+5 return sum(charges)
+5 ['charges'] ['[20.0, 36.0, 64.0, 42.0]']
+FUNCTION_RETURN 5 calculate_service_charges {'_type': 'float', '_value': 162.0}
+22 total_active_funds = sum(active_funds)
+22 ['active_funds', 'total_service_fee', 'total_active_funds'] ['[1000, 1800, 3200, 2100]', '162.0', '8100']
+23 final_amount = total_active_funds - total_service_fee
+23 ['total_service_fee', 'total_active_funds', 'final_amount'] ['162.0', '8100', '7938.0']
+25 return final_amount
+25 ['final_amount'] ['7938.0']
+FUNCTION_RETURN 25 process_accounts {'_type': 'float', '_value': 7938.0}
+35 print(f"Target result: {final_balance}")
+35 ['final_balance'] ['7938.0']

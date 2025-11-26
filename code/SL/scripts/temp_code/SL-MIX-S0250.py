@@ -1,24 +1,11 @@
-import heapq
-from dataclasses import dataclass
+data_records = ["user_001", "ADMIN_002", "user_003", "GUEST_004", "user_005"]
 
-@dataclass
-class SharkPosition:
-    name: str
-    longitude: float
-    latitude: float
+# Process user records
+lowercase_users = [record.lower() for record in data_records if record.startswith('user')]
+admin_users = [record for record in data_records if 'admin' in record.lower()]
 
-shark_data = [
-    SharkPosition("Alpha", -152.37, 37.42),
-    SharkPosition("Beta", -155.29, 36.81),
-    SharkPosition("Gamma", -150.85, 38.22)
-]
+# Count processed items
+processed_items = lowercase_users + admin_users
+final_count = len(processed_items)
 
-longitudes = [shark.longitude for shark in shark_data]
-heap = longitudes.copy()
-heapq.heapify(heap)
-
-smallest = heapq.heappop(heap)
-largest = heapq.heappop(heap)
-convergence_longitude = heapq.heappop(heap)
-
-print(f"Result: {convergence_longitude}")
+print(f"Result: {final_count}")

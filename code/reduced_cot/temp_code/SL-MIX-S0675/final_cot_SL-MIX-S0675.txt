@@ -1,0 +1,68 @@
+Target: Find the value of variable final_energy after [line 54] executes
+
+[line 38]  initial_readings = [15, 22, 8, 31, 12, 19]
+Compute: [15, 22, 8, 31, 12, 19] = [15, 22, 8, 31, 12, ...]
+[line 39]  backup_capacity = 11
+Assign: backup_capacity = 11
+[line 43]  for idx, val in enumerate(initial_readings):
+(Missing param: 'iter_var')
+[line 43]  for idx, val in enumerate(initial_readings):
+Loop End: Iteration finished
+[line 43]  for idx, val in enumerate(initial_readings):
+Loop End: Iteration finished
+[line 43]  for idx, val in enumerate(initial_readings):
+Loop End: Iteration finished
+[line 43]  for idx, val in enumerate(initial_readings):
+Loop End: Iteration finished
+[line 43]  for idx, val in enumerate(initial_readings):
+Loop End: Iteration finished
+[line 43]  for idx, val in enumerate(initial_readings):
+Loop End: Iteration finished
+[line 50]  energy_calculation = process_power_flow(initial_readings, backup_capacity)
+Call function process_power_flow(initial_readings=[15, 22, 8, 31, 12, ...] (defined at [line 38]), backup_capacity=11 (defined at [line 39]))
+[line 8]  base_power = 0
+Assign: base_power = 0
+[line 9]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 13]  if i % 3 == 0:
+Condition: True, entering 'if' block
+[line 14]  base_power += reading * 2
+Update: base_power changed from 0 (defined at defined at [line 8]) to 0+reading * 2 = 30
+[line 9]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 13]  if i % 3 == 0:
+Condition: True, entering 'if' block
+[line 15]  elif i % 3 == 1:
+'elif' Condition: True, entering block
+[line 16]  base_power += reading ^ 0b1010  # XOR operation
+Update: base_power changed from 30 (defined at defined at [line 14]) to 30+reading ^ 0b1010  # XOR operation = 58
+... [Line 9] repeats 3 more times ...
+... [Line 9] repeats 3 more times ...
+... [Line 9] repeats 3 more times ...
+... [Line 9] repeats 3 more times ...
+[line 9]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 13]  if i % 3 == 0:
+Condition: True, entering 'if' block
+[line 15]  elif i % 3 == 1:
+'elif' Condition: True, entering block
+[line 18]  base_power += reading | 0b0011  # OR operation
+Update: base_power changed from 137 (defined at defined at [line 16]) to 137+reading | 0b0011  # OR operation = 156
+[line 9]  for i, reading in enumerate(readings):
+Loop End: Iteration finished
+[line 24]  capacity_mask = capacity & 0b1111
+Compute: capacity & 0b1111, where capacity=11 (an unknown source) = 11
+[line 25]  adjusted_base = base_power - (base_power >> 1)
+Compute: base_power - (base_power >> 1), where base_power=156 (defined at [line 18]) = 78
+[line 30]  if capacity_mask > 7:
+Condition: True, entering 'if' block
+[line 31]  energy_result = adjusted_base + (capacity_mask * 10)
+Compute: adjusted_base + (capacity_mask * 10), where adjusted_base=78 (defined at [line 25]), capacity_mask=11 (defined at [line 24]) = 188
+[line 35]  return energy_result
+Return: energy_result=188 (defined at [line 31])
+[line 53]  voltage_offset = 7  # misleading variable
+Assign: voltage_offset = 7
+[line 54]  final_energy = energy_calculation - (voltage_offset & 0b0011)
+Compute: energy_calculation - (voltage_offset & 0b0011), where energy_calculation=188 (defined at [line 50]), voltage_offset=7 (defined at [line 53]) = 185
+
+Answer: final_energy = 185 (last updated on defined at [line 54])

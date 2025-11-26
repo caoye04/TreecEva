@@ -1,39 +1,57 @@
-import math
-from collections import defaultdict
-
-def process_cosmic_signal(frequency):
-    if frequency <= 0:
-        return 0
-    # Apply modular exponentiation with prime modulus
-    mod_exp_result = pow(frequency, 17, 31)
-    # Apply logarithmic transformation
-    log_scaled = int(math.log(mod_exp_result + 1) * 10)
-    return log_scaled % 23
-
-cosmic_ray_frequencies = [42, 18, 73, 29, 55, 36, 91]
-signal_categories = defaultdict(int)
-
-for idx, freq in enumerate(cosmic_ray_frequencies):
-    processed_value = process_cosmic_signal(freq)
-    category = processed_value % 5
+def process_data_chain(data_stream):
+    # Helper function for bitwise processing
+    def bitwise_transform(value):
+        # Distractor: unused operation path
+        temp = (value << 2) & 0xFF
+        irrelevant_mask = 0b10101010
+        misleading = (temp | irrelevant_mask) ^ 0b11110000
+        
+        # Actual transformation
+        transformed = (value & 0x0F) | ((value >> 4) << 4)
+        return transformed
     
-    match category:
-        case 0:
-            signal_categories['alpha'] += processed_value
-        case 1 | 2:
-            signal_categories['beta'] += processed_value * 2
-        case 3:
-            signal_categories['gamma'] += processed_value // 2
-        case 4:
-            signal_categories['delta'] += processed_value ** 2
-        case _:
-            signal_categories['unknown'] += 1
+    # Primary data processing with multiple steps
+    filtered_data = [x for x in data_stream if x % 3 != 0]
+    
+    # Distractor: misleading intermediate calculation
+    fake_sum = sum([x * 2 for x in data_stream if x > 10])
+    dead_code_path = [x for x in range(5) if x % 2 == 0]
+    
+    # Bitwise processing chain
+    processed = [bitwise_transform(x) for x in filtered_data]
+    
+    # Set operations for unique processing
+    unique_vals = set(processed)
+    complement_set = {x ^ 0xFF for x in unique_vals}
+    
+    # Distractor: unused complex calculation
+    complex_distractor = len([x for x in processed if (x & 1) == 0])
+    
+    # Final computation with enumerate
+    accumulator = 0
+    for idx, val in enumerate(processed):
+        if idx % 2 == 0:
+            accumulator += val
+        else:
+            accumulator -= val
+    
+    # Zip operation for coordinate processing
+    coords = list(zip(processed, [x * 2 for x in processed]))
+    final_value = sum([x + y for x, y in coords if x > y])
+    
+    # Return the actual target value
+    return accumulator + len(unique_vals)
 
-# Calculate final stellar classification index
-stellar_classification_index = (
-    (signal_categories['alpha'] * 3) ^ 
-    (signal_categories['beta'] // 4) ^ 
-    (signal_categories['gamma'] + signal_categories['delta'])
-) % 100
+# Main execution with mixed operations
+raw_inputs = [15, 22, 8, 31, 45, 12, 7, 18]
 
-print(f"Result: {stellar_classification_index}")
+# Distractor variables and operations
+misleading_result = sum([x | 0x0F for x in raw_inputs])
+unused_calculation = [x << 1 for x in raw_inputs if x < 20]
+dead_counter = len([x for x in raw_inputs if x % 5 == 0])
+
+# Target execution point
+final_signal = process_data_chain(raw_inputs)
+
+# Print the result
+print(f"Result: {final_signal}")

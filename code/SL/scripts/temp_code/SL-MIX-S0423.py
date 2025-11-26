@@ -1,46 +1,35 @@
-import heapq
-from collections import deque
+import itertools
 
-def process_vehicles():
-    # State machine for traffic signal
-    signal_states = {'RED': 0, 'YELLOW': 1, 'GREEN': 2}
-    current_state = 'RED'
+def calculate_final_score(text_input):
+    # Process character frequencies
+    char_count = {}
+    for char in text_input:
+        if char.isalpha():
+            char_count[char] = char_count.get(char, 0) + 1
     
-    # Queue for vehicle arrival order
-    vehicle_queue = deque([5, 5, 2, 8, 3])
+    # Calculate vowel bonus (distractor - not used in final score)
+    vowels = 'aeiouAEIOU'
+    vowel_bonus = sum(1 for char in text_input if char in vowels)
     
-    # Heap for earliest departure times
-    departure_heap = [12, 7, 9, 4, 15]
-    heapq.heapify(departure_heap)
+    # Process character pairs using itertools
+    pairs = list(itertools.combinations(char_count.keys(), 2))
+    pair_scores = []
+    for pair in pairs:
+        score = (char_count[pair[0]] + char_count[pair[1]]) * len(pair[0] + pair[1])
+        pair_scores.append(score)
     
-    # Lambda to calculate priority based on vehicle type and wait time
-    calc_priority = lambda v, t: (v * 2) + (t % 5)
+    # Calculate base score from unique characters
+    unique_chars = len(char_count)
+    base_score = unique_chars * 10
     
-    # Process vehicles using functional pipeline
-    waiting_vehicles = list(map(lambda v: calc_priority(v, heapq.heappop(departure_heap)), vehicle_queue))
+    # Apply multiplier based on text length (distractor - not used)
+    length_multiplier = len(text_input) // 5
     
-    # Stack for signal transition history
-    transition_stack = []
+    # Final calculation using only relevant components
+    final_score = base_score + (max(pair_scores) if pair_scores else 0)
     
-    # Simulate signal transitions
-    for i in range(len(waiting_vehicles)):
-        priority = waiting_vehicles[i]
-        
-        # Switch-like state transition logic
-        if current_state == 'RED' and priority > 10:
-            current_state = 'GREEN'
-            transition_stack.append(2)
-        elif current_state == 'GREEN' and priority <= 10:
-            current_state = 'YELLOW'
-            transition_stack.append(1)
-        elif current_state == 'YELLOW':
-            current_state = 'RED'
-            transition_stack.append(0)
-    
-    # Calculate final signal priority
-    signal_priority = sum(transition_stack) * len(heapq.nsmallest(3, departure_heap))
-    
-    return signal_priority
+    return final_score
 
-signal_priority = process_vehicles()
-print(f"Result: {signal_priority}")
+text_data = "programming assessment"
+result = calculate_final_score(text_data)
+print(f"Result: {result}")

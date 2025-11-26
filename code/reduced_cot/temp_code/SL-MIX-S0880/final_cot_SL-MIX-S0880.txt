@@ -1,0 +1,46 @@
+Target: Find the value of variable final_score after [line 24] executes
+
+[line 3]  data_mapping = {}
+Compute: {} = {}
+[line 6]  offset_calc = (len(data_points) * 3) - 7
+Compute: (len(data_points) * 3) - 7, where data_points=[8, 12, 5, 15, 9, ...] (an unknown source) = 11
+[line 7]  dummy_value = offset_calc % 5
+Compute: offset_calc % 5, where offset_calc=11 (defined at [line 6]) = 1
+[line 9]  for idx, value in enumerate(data_points):
+(Missing param: 'iter_var')
+[line 10]  if value >= min_threshold:
+Condition: True, entering 'if' block
+[line 11]  processed_val = value * 2 + dummy_value
+Compute: value * 2 + dummy_value, where value=8 (an unknown source), dummy_value=1 (defined at [line 7]) = 17
+[line 13]  data_mapping[idx] = processed_val
+(Missing param: 'result')
+[line 9]  for idx, value in enumerate(data_points):
+(Missing param: 'iter_var')
+[line 10]  if value >= min_threshold:
+Condition: True, entering 'if' block
+[line 11]  processed_val = value * 2 + dummy_value
+Compute: value * 2 + dummy_value, where value=12 (an unknown source), dummy_value=1 (defined at [line 7]) = 25
+[line 13]  data_mapping[idx] = processed_val
+(Missing param: 'result')
+... [Line 9] repeats 3 more times ...
+... [Line 9] repeats 3 more times ...
+[line 9]  for idx, value in enumerate(data_points):
+(Missing param: 'iter_var')
+[line 10]  if value >= min_threshold:
+Condition: True, entering 'if' block
+[line 9]  for idx, value in enumerate(data_points):
+Loop End: Iteration finished
+[line 23]  valid_entries = [data_mapping[i] for i in sorted(data_mapping.keys())]
+Compute: [data_mapping[i] for i in sorted(data_mapping.keys())], where data_mapping={0: 17, 1: 25, 3: 31, ...} (defined at [line 3]), i=0 (an unknown source) = ?
+[line 23]  valid_entries = [data_mapping[i] for i in sorted(data_mapping.keys())]
+Compute: [data_mapping[i] for i in sorted(data_mapping.keys())], where data_mapping={0: 17, 1: 25, 3: 31, ...} (defined at [line 3]), i=1 (an unknown source) = ?
+[line 23]  valid_entries = [data_mapping[i] for i in sorted(data_mapping.keys())]
+Compute: [data_mapping[i] for i in sorted(data_mapping.keys())], where data_mapping={0: 17, 1: 25, 3: 31, ...} (defined at [line 3]), i=3 (an unknown source) = ?
+[line 23]  valid_entries = [data_mapping[i] for i in sorted(data_mapping.keys())]
+Compute: [data_mapping[i] for i in sorted(data_mapping.keys())], where data_mapping={0: 17, 1: 25, 3: 31, ...} (defined at [line 3]), i=4 (an unknown source) = ?
+[line 23]  valid_entries = [data_mapping[i] for i in sorted(data_mapping.keys())]
+Compute: [data_mapping[i] for i in sorted(data_mapping.keys())], where data_mapping={0: 17, 1: 25, 3: 31, ...} (defined at [line 3]), i=4 (an unknown source) = [17, 25, 31, 19]
+[line 24]  final_score = sum(valid_entries) - (len(valid_entries) * dummy_value)
+Compute: sum(valid_entries) - (len(valid_entries) * dummy_value), where valid_entries=[17, 25, 31, 19] (defined at [line 23]), dummy_value=1 (defined at [line 7]) = 88
+
+Answer: final_score = 88 (last updated on defined at [line 24])

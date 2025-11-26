@@ -1,0 +1,28 @@
+Target: Find the value of variable final_metric after [line 25] executes
+
+[line 1]  data_samples = [12.5, 8.3, 15.7, 9.1, 11.4]
+Compute: [12.5, 8.3, 15.7, 9.1, 11.4] = [12.5, 8.3, 15.7, 9.1, 11.4]
+[line 5]  base_value = sum(data_samples) / len(data_samples)
+Compute: sum(data_samples) / len(data_samples), where data_samples=[12.5, 8.3, 15.7, 9.1, 11.4] (defined at [line 1]) = 11.4
+[line 6]  scaling_factor = 1.25 if base_value > 10 else 0.8
+Compute: 1.25 if base_value > 10 else 0.8, where base_value=11.4 (defined at [line 5]) = 1.25
+[line 7]  processed_mean = base_value * scaling_factor
+Compute: base_value * scaling_factor, where base_value=11.4 (defined at [line 5]), scaling_factor=1.25 (defined at [line 6]) = 14.25
+[line 10]  max_sample = max(data_samples)
+Call function max(data_samples=[12.5, 8.3, 15.7, 9.1, 11.4] (defined at [line 1]))
+[line 11]  min_sample = min(data_samples)
+Call function min(data_samples=[12.5, 8.3, 15.7, 9.1, 11.4] (defined at [line 1]))
+[line 12]  range_calc = max_sample - min_sample
+Compute: max_sample - min_sample, where max_sample=15.7 (defined at [line 10]), min_sample=8.3 (defined at [line 11]) = 7.399999999999999
+[line 13]  normalized_range = range_calc / 2.0
+Compute: range_calc / 2.0, where range_calc=7.399999999999999 (defined at [line 12]) = 3.6999999999999993
+[line 16]  validation_flag = processed_mean > 12.0
+Compute: processed_mean > 12.0, where processed_mean=14.25 (defined at [line 7]) = True
+[line 17]  primary_score = int(processed_mean * 100)
+Call function int(processed_mean * 100)
+[line 18]  secondary_score = int(normalized_range * 50)
+Call function int(normalized_range * 50)
+[line 25]  final_metric = primary_score if validation_flag else secondary_score
+Compute: primary_score if validation_flag else secondary_score, where primary_score=1425 (defined at [line 17]), validation_flag=True (defined at [line 16]), secondary_score=184 (defined at [line 18]) = 1425
+
+Answer: final_metric = 1425 (last updated on defined at [line 25])

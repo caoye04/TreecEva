@@ -1,0 +1,17 @@
+20
+final_result
+---
+4 segment_a = {12, 25, 38, 42, 55}
+4 ['segment_a'] ['{38, 55, 25, 42, 12}']
+5 segment_b = {25, 42, 67, 89, 91}
+5 ['segment_a', 'segment_b'] ['{38, 55, 25, 42, 12}', '{67, 89, 42, 91, 25}']
+6 segment_c = {38, 42, 55, 77, 89}
+6 ['segment_a', 'segment_b', 'segment_c'] ['{38, 55, 25, 42, 12}', '{67, 89, 42, 91, 25}', '{38, 55, 89, 42, 77}']
+14 unique_customers = segment_a | segment_b | segment_c
+14 ['segment_a', 'segment_b', 'segment_c', 'unique_customers'] ['{38, 55, 25, 42, 12}', '{67, 89, 42, 91, 25}', '{38, 55, 89, 42, 77}', '{89, 67, 38, 42, 12, ...}']
+15 unique_count = len(unique_customers)
+15 ['segment_a', 'segment_b', 'segment_c', 'unique_customers', 'unique_count'] ['{38, 55, 25, 42, 12}', '{67, 89, 42, 91, 25}', '{38, 55, 89, 42, 77}', '{89, 67, 38, 42, 12, ...}', '9']
+17 combined_sum = len(segment_a) + len(segment_b) + len(segment_c)
+17 ['segment_a', 'segment_b', 'segment_c', 'unique_count', 'combined_sum'] ['{38, 55, 25, 42, 12}', '{67, 89, 42, 91, 25}', '{38, 55, 89, 42, 77}', '9', '15']
+20 final_result = combined_sum - unique_count
+20 ['unique_count', 'combined_sum', 'final_result'] ['9', '15', '6']

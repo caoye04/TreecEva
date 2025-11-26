@@ -1,50 +1,40 @@
-from collections import deque
+def validate_pattern(sequence):
+    return len(sequence) > 3 and sequence[0] == sequence[-1]
 
-class PriorityProcessor:
-    def __init__(self):
-        self.memo = {}
-    
-    def compute_priority(self, weight, urgency):
-        if (weight, urgency) in self.memo:
-            return self.memo[(weight, urgency)]
-        if weight <= 1 or urgency <= 1:
-            result = weight | urgency
-        else:
-            result = (self.compute_priority(weight >> 1, urgency) ^ self.compute_priority(weight, urgency >> 1)) & 0xFF
-        self.memo[(weight, urgency)] = result
-        return result
+def calculate_offset(values):
+    temp_sum = sum(values) * 2
+    offset_factor = temp_sum // len(values) if values else 0
+    unused_var = offset_factor * 3.14
+    return offset_factor
 
-def process_warehouse_operations():
-    shipment_stack = []
-    delivery_queue = deque()
-    processor = PriorityProcessor()
+def process_sequence(data):
+    if not data:
+        return -1
     
-    # Incoming shipments (weight, urgency)
-    shipments = [(12, 5), (7, 3), (9, 6), (4, 2)]
+    filtered_data = [x for x in data if x % 2 == 0]
+    misleading_total = sum(filtered_data) * 10
     
-    # Process incoming shipments
-    for weight, urgency in shipments:
-        priority = processor.compute_priority(weight, urgency)
-        shipment_stack.append(priority)
+    if validate_pattern(filtered_data):
+        offset = calculate_offset(filtered_data)
+        result = misleading_total - offset
+        dead_branch = result * 2
+    else:
+        sorted_data = sorted(filtered_data)
+        midpoint = len(sorted_data) // 2
+        relevant_slice = sorted_data[midpoint-1:midpoint+2] if len(sorted_data) >= 3 else sorted_data
+        
+        offset = calculate_offset(relevant_slice)
+        result = sum(relevant_slice) * 3 - offset
+        misleading_intermediate = result + 1000
     
-    # Move to delivery queue with modified priorities
-    while shipment_stack:
-        priority = shipment_stack.pop()
-        adjusted_priority = priority if priority & 0x80 == 0 else (priority & 0x7F) | ((priority & 0x80) >> 1)
-        delivery_queue.append(adjusted_priority)
-    
-    # Calculate final score using greedy approach
-    final_priority_score = 0
-    mask = 0xF0
-    
-    while delivery_queue:
-        current = delivery_queue.popleft()
-        if (current & mask) != 0 and (final_priority_score & mask) == 0:
-            final_priority_score |= current
-        elif (current | final_priority_score) > final_priority_score:
-            final_priority_score ^= current
-    
-    return final_priority_score
+    unused_calc = (result * 1.5) // 2
+    return result
 
-final_priority_score = process_warehouse_operations()
-print(f"Result: {final_priority_score}")
+data_stream = [8, 3, 12, 7, 8, 15, 4, 9, 8]
+redundant_check = len(data_stream) * 2
+distraction_var = sum(data_stream) // redundant_check
+
+result = process_sequence(data_stream)
+final_output = result + 5
+
+print(f"Target result: {final_output}")

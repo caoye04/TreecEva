@@ -1,47 +1,40 @@
-from collections import defaultdict
-import itertools
-
-def calculate_max_packages(weights, capacity):
-    memo = {}
-    n = len(weights)
+def transform_value(x):
+    # Irrelevant bitwise operation that doesn't affect main logic
+    bit_shift = (x << 2) & 0xFF
     
-    def backtrack(index, current_weight, package_count, bitmask):
-        if current_weight > capacity:
-            return -1
-        
-        if index == n:
-            return package_count
-        
-        if (index, current_weight) in memo:
-            return memo[(index, current_weight)]
-        
-        # Skip current package (short-circuit if weight exceeds capacity)
-        skip = backtrack(index + 1, current_weight, package_count, bitmask)
-        
-        # Take current package (only if it doesn't exceed capacity)
-        take = -1 if current_weight + weights[index] > capacity else backtrack(index + 1, current_weight + weights[index], package_count + 1, bitmask | (1 << index))
-        
-        result = max(skip, take)
-        memo[(index, current_weight)] = result
-        return result
-    
-    return backtrack(0, 0, 0, 0)
+    # Main transformation - conditional expression with arithmetic
+    return x * 3 if x % 2 == 0 else x + 7
 
-# Package weights in kilograms
-package_weights = [3, 1, 4, 2, 2, 5, 1]
-truck_capacity = 10  # Maximum load capacity in kilograms
+def calculate_bonus(scores):
+    # Dead code path - never called
+    unused_computation = sum(scores) * 2
+    return max(scores) - min(scores)
 
-# Calculate optimized loading sequence
-optimized_load_count = calculate_max_packages(package_weights, truck_capacity)
+# Primary data structure - 3x3 matrix
+matrix = [[2, 5, 8], [3, 7, 1], [4, 6, 9]]
 
-# Adjust for special logistics rules
-heavy_items = sum(1 for w in package_weights if w > 3)
-fragile_items = sum(1 for w in package_weights if w < 2)
+# Distractor calculations
+row_sums = [sum(row) for row in matrix]
+total_sum = sum(row_sums)
+mean_value = total_sum / len(matrix) ** 2
 
-optimized_load_count = optimized_load_count + (1 if heavy_items > fragile_items else 0) - (1 if heavy_items < fragile_items else 0)
+# Misleading intermediate result
+intermediate = [x for row in matrix for x in row]
+filtered_values = [x for x in intermediate if x > 4]
 
-# Apply company policy modifier
-policy_modifier = 1 if (optimized_load_count & 1) == 0 else -1
-optimized_load_count += policy_modifier if optimized_load_count > 0 else 0
+# Irrelevant tuple operations
+coordinate_pairs = [(i, j) for i in range(len(matrix)) for j in range(len(matrix[0]))]
+distance_calc = sum(abs(a - b) for a, b in coordinate_pairs)
 
-print(f"Result: {optimized_load_count}")
+# Critical execution point - list comprehension with helper function
+result_matrix = [[transform_value(matrix[i][j]) for j in range(len(matrix[0]))] for i in range(len(matrix))]
+
+# Final computation with slicing
+flattened = [item for sublist in result_matrix for item in sublist]
+selected = flattened[2:7]  # Slice from index 2 to 6
+final_output = sum(selected)
+
+# Red herring - never used
+bonus_calc = calculate_bonus([x for row in matrix for x in row])
+
+print(f"Result: {final_output}")

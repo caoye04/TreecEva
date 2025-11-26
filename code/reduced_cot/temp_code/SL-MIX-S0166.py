@@ -1,57 +1,23 @@
-from collections import defaultdict
-import itertools
-
-# Packet header analysis for threat detection
-packet_headers = [
-    {'proto': 'TCP', 'flags': 0b00010010, 'size': 1420, 'ttl': 64},
-    {'proto': 'UDP', 'flags': 0b00000000, 'size': 512, 'ttl': 128},
-    {'proto': 'TCP', 'flags': 0b00010001, 'size': 890, 'ttl': 32},
-    {'proto': 'ICMP', 'flags': 0b00000000, 'size': 76, 'ttl': 255}
-]
-
-# Threat scoring rules
-threat_score = 0
-protocol_weights = {'TCP': 3, 'UDP': 1, 'ICMP': 2}
-flag_danger_bits = 0b00010010  # SYN and URG flags
-size_threshold = 1000
-
-# Process each packet
-for packet in packet_headers:
-    score = 0
-    # Protocol weight
-    score += protocol_weights.get(packet['proto'], 0)
+def analyze_financial_operations():
+    transaction_history = {45, 78, 23, 91, 67, 34}
+    audit_log = {23, 67, 12, 89, 45, 56}
     
-    # Flag analysis - check if any danger bits are set
-    if packet['flags'] & flag_danger_bits:
-        score += 5
+    # Process primary transactions
+    primary_set = transaction_history - audit_log
+    intermediate_calc = sum(transaction_history) * 2
     
-    # Size analysis
-    if packet['size'] > size_threshold:
-        score += 2
+    # Process secondary operations  
+    secondary_set = audit_log - transaction_history
+    temp_adjustment = len(transaction_history) * len(audit_log)
     
-    # TTL anomaly detection (suspicious if TTL is power of 2 minus 1, common in some scans)
-    if packet['ttl'] == 2**5 - 1 or packet['ttl'] == 2**7 - 1 or packet['ttl'] == 2**8 - 1:
-        score += 3
+    # Merge and finalize
+    merged_operations = primary_set | secondary_set
+    final_balance = len(merged_operations)
     
-    threat_score += score
+    # Distractor operations
+    verification_check = sum(primary_set) + sum(secondary_set)
+    unused_calculation = intermediate_calc % temp_adjustment
+    
+    print(f"Target result: {final_balance}")
 
-# Additional correlation analysis using itertools
-# Check all pairs of packets for suspicious protocol combinations
-suspicious_combinations = [('TCP', 'ICMP')]
-correlation_penalty = 0
-
-for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
-    combo = tuple(sorted([pkt1['proto'], pkt2['proto']]))
-    if combo in suspicious_combinations:
-        correlation_penalty += 7
-
-# Final aggregation with logical conditions
-aggregated_threat_score = 0
-if threat_score > 10 and correlation_penalty > 0:
-    aggregated_threat_score = threat_score + correlation_penalty
-elif threat_score <= 10:
-    aggregated_threat_score = threat_score - correlation_penalty
-else:
-    aggregated_threat_score = threat_score
-
-print(f"Result: {aggregated_threat_score}")
+analyze_financial_operations()

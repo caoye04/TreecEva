@@ -1,69 +1,60 @@
-import re
-from functools import reduce
-
-def process_batch_quality(base_scores, defect_log):
-    # Apply pattern matching to identify critical defects
-    critical_defects = len(re.findall(r'(MISS|TEAR|STAIN)', defect_log))
+def analyze_pattern(data):
+    irrelevant_sum = sum([x * 2 for x in range(10, 20)])  # Distractor computation
+    pattern_map = {}
+    count = 0
+    for i in range(len(data)):
+        if i % 2 == 0:
+            pattern_map[i] = data[i] * 3
+        else:
+            pattern_map[i] = data[i] + 5
+        count += i * 2  # Misleading accumulation
     
-    # Greedy optimization: subtract penalty for each critical defect
-    optimized_base = [score - (critical_defects * 2) for score in base_scores]
+    misleading_total = count * 3 - 50  # Dead calculation
+    return pattern_map
+
+def calculate_modifiers(base_values):
+    modifiers = {}
+    temp_sum = 0
+    for key, val in base_values.items():
+        if key % 3 == 0:
+            modifiers[key] = val // 2
+            temp_sum += val * 4  # Irrelevant operation
+        elif key % 3 == 1:
+            modifiers[key] = val + 8
+        else:
+            modifiers[key] = val - 3
     
-    # Filter out negative scores using functional approach
-    valid_scores = list(filter(lambda x: x > 0, optimized_base))
+    dead_result = temp_sum // 10 + 25  # Unused computation
+    return modifiers
+
+def process_sequence(input_data):
+    initial_analysis = analyze_pattern(input_data)
+    adjusted_values = calculate_modifiers(initial_analysis)
     
-    # If no valid scores remain, return zero
-    if not valid_scores:
-        return 0
+    # Main computation path
+    final_result = 0
+    processed_count = 0
+    for idx, value in adjusted_values.items():
+        if idx % 4 == 0:
+            final_result += value * 2
+            processed_count += 1
+        elif idx % 4 == 1:
+            final_result += value - 5
+        elif idx % 4 == 2:
+            final_result += value // 3
+        else:
+            final_result += value + 10
     
-    # Divide and conquer approach to calculate aggregate score
-    def divide_scores(scores):
-        if len(scores) <= 1:
-            return scores[0] if scores else 0
-        mid = len(scores) // 2
-        left = divide_scores(scores[:mid])
-        right = divide_scores(scores[mid:])
-        return left + right
-    
-    return divide_scores(valid_scores)
+    misleading_offset = processed_count * 15 - 7  # Distractor
+    return final_result
 
-def update_station_state(current_state, batch_result):
-    # State machine logic for station status
-    if batch_result >= 80:
-        return 'EXCELLENT'
-    elif batch_result >= 60:
-        return 'GOOD'
-    elif batch_result >= 40:
-        return 'FAIR'
-    else:
-        return 'POOR'
+# Main execution
+sequence_data = [12, 8, 15, 23, 7, 19, 4, 11, 6, 14]
+result = process_sequence(sequence_data)
+final_output = result + 3  # Final adjustment
 
-# Production line configuration
-fabric_batches = [
-    ([85, 90, 78], "NORMAL"),
-    ([92, 88, 84], "MISS DETECTED"),
-    ([76, 81, 73], "TEAR STAIN"),
-    ([95, 91, 89], "NORMAL")
-]
+# Distractor variables and operations
+side_calc = sum(sequence_data) * 2 - 45  # Irrelevant
+unused_var = [x ** 2 for x in sequence_data if x > 10]  # Dead code
 
-station_status = 'IDLE'
-accumulated_score = 0
-
-for scores, log in fabric_batches:
-    batch_quality = process_batch_quality(scores, log)
-    
-    # Conditional branching based on quality results
-    if batch_quality > 0:
-        accumulated_score += batch_quality
-        station_status = update_station_state(station_status, batch_quality)
-    else:
-        # In case of failed batch, apply penalty
-        accumulated_score -= 10
-        station_status = 'ERROR'
-
-# Final adjustment based on overall performance
-if station_status in ['EXCELLENT', 'GOOD']:
-    optimized_score = accumulated_score * 1.1
-else:
-    optimized_score = accumulated_score * 0.95
-
-print(f"Result: {int(optimized_score)}")
+print(f"Target result: {final_output}")

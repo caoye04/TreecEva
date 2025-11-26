@@ -1,0 +1,75 @@
+Target: Find the value of variable final_balance after [line 39] executes
+
+[line 1]  def portfolio_manager(transactions):
+Enter function portfolio_manager: transactions=[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]
+  [line 8]  stock_prices = {'AAPL': 150, 'GOOGL': 2800, 'MSFT': 330, 'TSLA': 220}
+  Compute: {'AAPL': 150, 'GOOGL': 2800, 'MSFT': 330, 'TSLA': 220} = {AAPL: 150, GOOGL: 2800, MSFT: 330, ...}
+  [line 9]  initial_positions = {'AAPL': 100, 'GOOGL': 50, 'MSFT': 75, 'TSLA': 200}
+  Compute: {'AAPL': 100, 'GOOGL': 50, 'MSFT': 75, 'TSLA': 200} = {AAPL: 100, GOOGL: 50, MSFT: 75, ...}
+  [line 16]  transaction_log = [('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]
+  Compute: [('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')] = [('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]
+  [line 17]  current_positions = initial_positions.copy()
+  (Missing param: 'func_name')
+  [line 18]  cash_balance = 100000  # Starting cash
+  Assign: cash_balance = 100000
+  [line 23]  for symbol, quantity, action in transaction_log:
+  (Missing param: 'iter_var')
+  [line 24]  price = stock_prices[symbol]
+  Compute: stock_prices[symbol], where stock_prices={AAPL: 150, GOOGL: 2800, MSFT: 330, ...} (defined at [line 8]), symbol='AAPL' (an unknown source) = 150
+  [line 25]  if action == 'BUY':
+  Condition: True, entering 'if' block
+  [line 26]  cost = quantity * price
+  Compute: quantity * price, where quantity=25 (an unknown source), price=150 (defined at [line 24]) = 3750
+  [line 27]  cash_balance -= cost
+  Update: cash_balance changed from 100000 (defined at defined at [line 18]) to 100000-cost = 96250
+  [line 30]  if cash_balance < 0:
+  Condition: True, entering 'if' block
+  [line 23]  for symbol, quantity, action in transaction_log:
+  (Missing param: 'iter_var')
+  [line 24]  price = stock_prices[symbol]
+  Compute: stock_prices[symbol], where stock_prices={AAPL: 150, GOOGL: 2800, MSFT: 330, ...} (defined at [line 8]), symbol='GOOGL' (an unknown source) = 2800
+  [line 25]  if action == 'BUY':
+  Condition: True, entering 'if' block
+  [line 32]  elif action == 'SELL':
+  'elif' Condition: True, entering block
+  [line 33]  proceeds = quantity * price
+  Compute: quantity * price, where quantity=10 (an unknown source), price=2800 (defined at [line 24]) = 28000
+  [line 34]  cash_balance += proceeds
+  Update: cash_balance changed from 96250 (defined at defined at [line 27]) to 96250+proceeds = 124250
+  [line 23]  for symbol, quantity, action in transaction_log:
+  (Missing param: 'iter_var')
+  [line 24]  price = stock_prices[symbol]
+  Compute: stock_prices[symbol], where stock_prices={AAPL: 150, GOOGL: 2800, MSFT: 330, ...} (defined at [line 8]), symbol='MSFT' (an unknown source) = 330
+  [line 25]  if action == 'BUY':
+  Condition: True, entering 'if' block
+  [line 26]  cost = quantity * price
+  Compute: quantity * price, where quantity=30 (an unknown source), price=330 (defined at [line 24]) = 9900
+  [line 27]  cash_balance -= cost
+  Update: cash_balance changed from 124250 (defined at defined at [line 34]) to 124250-cost = 114350
+  [line 30]  if cash_balance < 0:
+  Condition: True, entering 'if' block
+  [line 23]  for symbol, quantity, action in transaction_log:
+  (Missing param: 'iter_var')
+  [line 24]  price = stock_prices[symbol]
+  Compute: stock_prices[symbol], where stock_prices={AAPL: 150, GOOGL: 2800, MSFT: 330, ...} (defined at [line 8]), symbol='TSLA' (an unknown source) = 220
+  [line 25]  if action == 'BUY':
+  Condition: True, entering 'if' block
+  [line 32]  elif action == 'SELL':
+  'elif' Condition: True, entering block
+  [line 33]  proceeds = quantity * price
+  Compute: quantity * price, where quantity=50 (an unknown source), price=220 (defined at [line 24]) = 11000
+  [line 34]  cash_balance += proceeds
+  Update: cash_balance changed from 114350 (defined at defined at [line 27]) to 114350+proceeds = 125350
+  [line 23]  for symbol, quantity, action in transaction_log:
+  Loop End: Iteration finished
+  [line 38]  final_value = sum(stock_prices[sym] * qty for sym, qty in current_positions.items())
+  Call function sum(stock_prices[sym] * qty for sym, qty in current_positions.items())
+  [line 39]  final_balance = cash_balance + final_value
+  Compute: cash_balance + final_value, where cash_balance=125350 (defined at [line 34]), final_value=198400 (defined at [line 38]) = 323750
+  [line 45]  print(f"Result: {final_balance}")
+  Output: f"Result: {final_balance}"
+  [line 46]  return final_balance
+  Return: final_balance=323750 (defined at [line 39])
+Function portfolio_manager returns 323750
+
+Answer: final_balance = 323750 (last updated on defined at [line 39])

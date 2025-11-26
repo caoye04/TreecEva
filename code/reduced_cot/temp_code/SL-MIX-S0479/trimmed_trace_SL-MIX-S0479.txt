@@ -1,0 +1,39 @@
+45
+final_output
+---
+44 final_output = compute_final_result(inventory_data, processing_config)
+44 ['inventory_data', 'processing_config'] ["{item_A: {count: 8, weight: 2, status: 'active', ...}, item_B: {count: 5, weight: 3, status: 'inactive', ...}, item_C: {count: 12, weight: 1, status: 'active', ...}, ...}", "{target_category: 'electronics', multiplier: 2, adjustment: 10}"]
+PARAM_MAPPING {'inventory_data': {'actual_var': 'inventory_data', 'value': {'item_A': {'count': 8, 'weight': 2, 'status': 'active', 'category': 'electronics'}, 'item_B': {'count': 5, 'weight': 3, 'status': 'inactive', 'category': 'electronics'}, 'item_C': {'count': 12, 'weight': 1, 'status': 'active', 'category': 'furniture'}, 'item_D': {'count': 3, 'weight': 4, 'status': 'active', 'category': 'electronics'}}}, 'processing_config': {'actual_var': 'processing_config', 'value': {'target_category': 'electronics', 'multiplier': 2, 'adjustment': 10}}}
+FUNCTION_ENTER 1 compute_final_result def compute_final_result(inventory_data, processing_config):
+1 ['inventory_data', 'processing_config'] [{'_type': 'dict', '_items': {'item_A': {'_type': 'dict', '_items': {'count': {'_type': 'int', '_value': 8}, 'weight': {'_type': 'int', '_value': 2}, 'status': {'_type': 'str', '_value': 'active'}, 'category': {'_type': 'str', '_value': 'electronics'}}, '_len': 4}, 'item_B': {'_type': 'dict', '_items': {'count': {'_type': 'int', '_value': 5}, 'weight': {'_type': 'int', '_value': 3}, 'status': {'_type': 'str', '_value': 'inactive'}, 'category': {'_type': 'str', '_value': 'electronics'}}, '_len': 4}, 'item_C': {'_type': 'dict', '_items': {'count': {'_type': 'int', '_value': 12}, 'weight': {'_type': 'int', '_value': 1}, 'status': {'_type': 'str', '_value': 'active'}, 'category': {'_type': 'str', '_value': 'furniture'}}, '_len': 4}, 'item_D': {'_type': 'dict', '_items': {'count': {'_type': 'int', '_value': 3}, 'weight': {'_type': 'int', '_value': 4}, 'status': {'_type': 'str', '_value': 'active'}, 'category': {'_type': 'str', '_value': 'electronics'}}, '_len': 4}}, '_len': 4}, {'_type': 'dict', '_items': {'target_category': {'_type': 'str', '_value': 'electronics'}, 'multiplier': {'_type': 'int', '_value': 2}, 'adjustment': {'_type': 'int', '_value': 10}}, '_len': 3}]
+7 base_multiplier = processing_config.get('multiplier', 1)
+7 ['processing_config', 'base_multiplier'] ["{target_category: 'electronics', multiplier: 2, adjustment: 10}", '2']
+8 adjustment_factor = processing_config.get('adjustment', 0)
+8 ['processing_config', 'base_multiplier', 'adjustment_factor'] ["{target_category: 'electronics', multiplier: 2, adjustment: 10}", '2', '10']
+17 if item['category'] == processing_config['target_category']]
+17 ['processing_config', 'base_multiplier', 'adjustment_factor', 'item'] ["{target_category: 'electronics', multiplier: 2, adjustment: 10}", '2', '10', "{count: 8, weight: 2, status: 'active', ...}"]
+17 if item['category'] == processing_config['target_category']]
+17 ['processing_config', 'base_multiplier', 'adjustment_factor', 'item'] ["{target_category: 'electronics', multiplier: 2, adjustment: 10}", '2', '10', "{count: 5, weight: 3, status: 'inactive', ...}"]
+17 if item['category'] == processing_config['target_category']]
+17 ['processing_config', 'base_multiplier', 'adjustment_factor', 'item'] ["{target_category: 'electronics', multiplier: 2, adjustment: 10}", '2', '10', "{count: 12, weight: 1, status: 'active', ...}"]
+17 if item['category'] == processing_config['target_category']]
+17 ['processing_config', 'base_multiplier', 'adjustment_factor', 'item'] ["{target_category: 'electronics', multiplier: 2, adjustment: 10}", '2', '10', "{count: 3, weight: 4, status: 'active', ...}"]
+19 if not relevant_items:
+19 ['base_multiplier', 'adjustment_factor', 'relevant_items'] ['2', '10', "[{count: 8, weight: 2, status: 'active', ...}, {count: 5, weight: 3, status: 'inactive', ...}, {count: 3, weight: 4, status: 'active', ...}]"]
+22 weighted_total = sum(item['count'] * item['weight'] for item in relevant_items)
+22 [] []
+22 weighted_total = sum(item['count'] * item['weight'] for item in relevant_items)
+22 ['item'] ["{count: 8, weight: 2, status: 'active', ...}"]
+22 weighted_total = sum(item['count'] * item['weight'] for item in relevant_items)
+22 ['item'] ["{count: 5, weight: 3, status: 'inactive', ...}"]
+22 weighted_total = sum(item['count'] * item['weight'] for item in relevant_items)
+22 ['item'] ["{count: 3, weight: 4, status: 'active', ...}"]
+22 weighted_total = sum(item['count'] * item['weight'] for item in relevant_items)
+22 ['item'] ["{count: 3, weight: 4, status: 'active', ...}"]
+23 final_value = (weighted_total * base_multiplier) + adjustment_factor
+23 ['base_multiplier', 'adjustment_factor', 'weighted_total', 'final_value'] ['2', '10', '43', '96']
+28 return final_value
+28 ['final_value'] ['96']
+FUNCTION_RETURN 28 compute_final_result {'_type': 'int', '_value': 96}
+45 print(f"Result: {final_output}")
+45 ['final_output'] ['96']

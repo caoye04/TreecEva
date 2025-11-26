@@ -1,0 +1,22 @@
+Target: Find the value of variable final_quality_score after [line 25] executes
+
+[line 4]  processed_data = [sample // 2 if sample % 2 == 0 else sample * 3 + 1 for sample in samples]
+Compute: [sample // 2 if sample % 2 == 0 else sample * 3 + 1 for sample in samples], where sample=8 (an unknown source), samples=[8, 15, 22, 7, 19, ...] (an unknown source) = ?
+[line 7]  dummy_metrics = [x + 5 for x in processed_data]
+Compute: [x + 5 for x in processed_data], where x=4 (an unknown source), processed_data=[4, 46, 11, 22, 58, ...] (defined at [line 4]) = ?
+[line 8]  shadow_calc = sum(dummy_metrics) // len(dummy_metrics)
+Compute: sum(dummy_metrics) // len(dummy_metrics), where dummy_metrics=[9, 51, 16, 27, 63, ...] (defined at [line 7]) = 34
+[line 11]  quality_metrics = [sample * 2 - 3 for sample in processed_data]
+Compute: [sample * 2 - 3 for sample in processed_data], where sample=4 (an unknown source), processed_data=[4, 46, 11, 22, 58, ...] (defined at [line 4]) = ?
+[line 12]  processed_indices = [i for i in range(len(quality_metrics)) if quality_metrics[i] > 10]
+Compute: [i for i in range(len(quality_metrics)) if quality_metrics[i] > 10], where i=0 (an unknown source), quality_metrics=[5, 89, 19, 41, 113, ...] (defined at [line 11]) = ?
+[line 15]  if shadow_calc > 100:
+Condition: True, entering 'if' block
+[line 21]  relevant_slice = quality_metrics[:len(quality_metrics)//2]
+Compute: quality_metrics[:len(quality_metrics)//2], where quality_metrics=[5, 89, 19, 41, 113, ...] (defined at [line 11]) = [5, 89, 19]
+[line 22]  processed_indices = [i for i, val in enumerate(quality_metrics) if val in relevant_slice]
+Compute: [i for i, val in enumerate(quality_metrics) if val in relevant_slice], where i=0 (an unknown source), val=5 (an unknown source), quality_metrics=[5, 89, 19, 41, 113, ...] (defined at [line 11]), relevant_slice=[5, 89, 19] (defined at [line 21]) = [1, 2, 3, 4, 5]
+[line 25]  final_quality_score = quality_metrics[processed_indices[-1]]
+Compute: quality_metrics[processed_indices[-1]], where quality_metrics=[5, 89, 19, 41, 113, ...] (defined at [line 11]), processed_indices=[0, 1, 2] (defined at [line 22]) = 19
+
+Answer: final_quality_score = 19 (last updated on defined at [line 25])

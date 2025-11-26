@@ -1,37 +1,22 @@
-from collections import defaultdict
-
-def encrypt_phase(state, depth=0):
-    if depth == 4:
-        return state
-    # Bitwise transformation based on depth
-    next_state = (state << 1) ^ (state >> 2) & 0xFF
-    # Recursive call with modified state
-    return encrypt_phase(next_state, depth + 1)
-
-class EncryptionMachine:
-    def __init__(self):
-        self.phase = 0
-        self.state = 0b10101010
-        self.checksum = 0.0
+def calculate_performance(base_score, adjustments, bonus_multiplier):
+    temp_adjust = sum(x for x in adjustments if x > 0)
+    unused_calc = len(adjustments) * 2.5
     
-    def run(self):
-        while self.phase < 3:
-            match self.phase:
-                case 0:
-                    self.state = encrypt_phase(self.state)
-                    self.phase += 1
-                case 1:
-                    # Apply floating-point transformation
-                    self.state = int((self.state * 1.5) + 0.5) & 0xFF
-                    self.phase += 1
-                case 2:
-                    # Final checksum calculation
-                    self.checksum = float(self.state ^ 0b11110000)
-                    self.phase += 1
-                case _:
-                    break
+    processed_score = base_score + temp_adjust
+    intermediate = processed_score * 1.1
+    
+    threshold_check = (lambda x: 'high' if x > 100 else 'low')(intermediate)
+    bonus_points = 15 if threshold_check == 'high' else 5
+    
+    final_adjustment = bonus_points * bonus_multiplier
+    final_score = intermediate + final_adjustment
+    
+    dummy_operation = [x**2 for x in range(1, 4)]
+    result = final_score + bonus_points
+    
+    print(f"Target result: {final_score}")
 
-# Initialize and run encryption machine
-machine = EncryptionMachine()
-machine.run()
-print(f"Result: {int(machine.checksum)}")
+base_score = 85
+adjustments = [3, -2, 7, -1, 4]
+bonus_multiplier = 1.5
+calculate_performance(base_score, adjustments, bonus_multiplier)

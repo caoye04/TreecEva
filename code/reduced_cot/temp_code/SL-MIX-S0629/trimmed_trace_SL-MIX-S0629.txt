@@ -1,0 +1,35 @@
+13
+temperature_metric
+---
+8 temperature_data = [15.2, 18.7, 22.1, 19.8, 16.5, 14.9, 20.3]
+8 ['temperature_data'] ['[15.2, 18.7, 22.1, 19.8, 16.5, ...]']
+9 threshold_value = 16.0
+9 ['temperature_data', 'threshold_value'] ['[15.2, 18.7, 22.1, 19.8, 16.5, ...]', '16.0']
+13 temperature_metric = calculate_temperature_score(temperature_data, threshold_value)
+13 ['temperature_data', 'threshold_value'] ['[15.2, 18.7, 22.1, 19.8, 16.5, ...]', '16.0']
+PARAM_MAPPING {'temps': {'actual_var': 'temperature_data', 'value': [15.2, 18.7, 22.1, 19.8, 16.5, 14.9, 20.3]}, 'threshold': {'actual_var': 'threshold_value', 'value': 16.0}}
+FUNCTION_ENTER 1 calculate_temperature_score def calculate_temperature_score(temps, threshold):
+1 ['temps', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 15.2}, {'_type': 'float', '_value': 18.7}, {'_type': 'float', '_value': 22.1}, {'_type': 'float', '_value': 19.8}, {'_type': 'float', '_value': 16.5}, {'_type': 'float', '_value': 14.9}, {'_type': 'float', '_value': 20.3}], '_len': 7}, {'_type': 'float', '_value': 16.0}]
+2 valid_temps = [t for t in temps if t > threshold]
+2 ['temps', 'threshold', 't'] ['[15.2, 18.7, 22.1, 19.8, 16.5, ...]', '16.0', '15.2']
+2 valid_temps = [t for t in temps if t > threshold]
+2 ['temps', 'threshold', 't'] ['[15.2, 18.7, 22.1, 19.8, 16.5, ...]', '16.0', '18.7']
+2 valid_temps = [t for t in temps if t > threshold]
+2 ['temps', 'threshold', 't'] ['[15.2, 18.7, 22.1, 19.8, 16.5, ...]', '16.0', '22.1']
+2 valid_temps = [t for t in temps if t > threshold]
+2 ['temps', 'threshold', 't'] ['[15.2, 18.7, 22.1, 19.8, 16.5, ...]', '16.0', '19.8']
+2 valid_temps = [t for t in temps if t > threshold]
+2 ['temps', 'threshold', 't'] ['[15.2, 18.7, 22.1, 19.8, 16.5, ...]', '16.0', '16.5']
+2 valid_temps = [t for t in temps if t > threshold]
+2 ['temps', 'threshold', 't'] ['[15.2, 18.7, 22.1, 19.8, 16.5, ...]', '16.0', '14.9']
+2 valid_temps = [t for t in temps if t > threshold]
+2 ['temps', 'threshold', 't'] ['[15.2, 18.7, 22.1, 19.8, 16.5, ...]', '16.0', '20.3']
+2 valid_temps = [t for t in temps if t > threshold]
+2 ['temps', 'threshold', 'valid_temps'] ['[15.2, 18.7, 22.1, 19.8, 16.5, ...]', '16.0', '[18.7, 22.1, 19.8, 16.5, 20.3]']
+3 if not valid_temps:
+3 ['valid_temps'] ['[18.7, 22.1, 19.8, 16.5, 20.3]']
+5 avg_temp = sum(valid_temps) / len(valid_temps)
+5 ['valid_temps', 'avg_temp'] ['[18.7, 22.1, 19.8, 16.5, 20.3]', '19.48']
+6 return round(avg_temp * 1.5, 2)
+6 ['avg_temp'] ['19.48']
+FUNCTION_RETURN 6 calculate_temperature_score {'_type': 'float', '_value': 29.22}

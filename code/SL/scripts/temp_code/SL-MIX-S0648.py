@@ -1,21 +1,6 @@
-from functools import reduce
-
-# Base price per pastry
-base_price = 2.50
-
-# Lambda function to calculate discount based on quantity
-apply_discount = lambda quantity: (quantity // 5) * 1.00
-
-# Number of pastries purchased
-pastries_bought = 17
-
-# Calculate gross cost before discount
-gross_cost = pastries_bought * base_price
-
-# Calculate total discount
-total_discount = apply_discount(pastries_bought)
-
-# Calculate final total cost
-total_cost = gross_cost - total_discount
-
-print(f"Result: {total_cost}")
+score_ranges = {90: 'A', 80: 'B', 70: 'C', 60: 'D'}
+student_scores = [85, 92, 78, 88, 95]
+score_range = max(student_scores) // 10 * 10
+grade_mapping = {90: 4.0, 80: 3.0, 70: 2.0, 60: 1.0}
+final_grade = grade_mapping.get(score_range, 0)
+print(f"Result: {final_grade}")

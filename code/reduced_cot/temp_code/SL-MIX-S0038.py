@@ -1,18 +1,55 @@
-from functools import wraps
+from collections import defaultdict
 
-def price_tracker(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        base_price = func(*args, **kwargs)
-        return round(base_price * 1.2, 2)
-    return wrapper
+def portfolio_calculation(trades, capital):
+    # Irrelevant tracking variables
+    total_trades = len(trades)
+    trade_count = defaultdict(int)
+    
+    # Misleading intermediate calculations
+    volume_sum = sum(abs(amt) for _, amt in trades)
+    temp_multiplier = (volume_sum % 17) + 3
+    
+    # Dead code path
+    if volume_sum > 10000:
+        bonus = capital * 0.1  # Never executed
+    
+    # Main logic with distractions
+    balance = capital
+    for symbol, amount in trades:
+        trade_count[symbol] += 1
+        
+        # Distractor operations
+        symbol_hash = sum(ord(c) for c in symbol) % 13
+        
+        # Actual balance calculation
+        if amount > 0:
+            balance += amount * (1 - 0.02)  # 2% fee on buys
+        else:
+            balance += amount * (1 + 0.01)  # 1% fee on sells
+        
+        # More irrelevant computations
+        balance_check = balance * (symbol_hash / 100.0)
+    
+    # Final adjustments with red herrings
+    fee_adjustment = len([amt for _, amt in trades if amt > 0]) * 5
+    final_balance = balance - fee_adjustment + (temp_multiplier % 7)
+    
+    # Unused lambda function
+    calc_bonus = lambda x: x * 0.05
+    
+    # Print the target result
+    print(f"Result: {final_balance}")
+    return final_balance
 
-@price_tracker
-def compute_batch_expense(flour_kg, butter_kg, yeast_units):
-    flour_cost = flour_kg * 3.50
-    butter_cost = butter_kg * 7.80
-    yeast_cost = yeast_units * 0.15
-    return flour_cost + butter_cost + yeast_cost
+# Transaction data
+initial_capital = 10000
+transactions = [
+    ("AAPL", 1500),
+    ("MSFT", -800),
+    ("GOOGL", 1200),
+    ("AAPL", -600),
+    ("TSLA", 900)
+]
 
-final_batch_cost = compute_batch_expense(10.5, 5.2, 200)
-print(f'Result: {final_batch_cost}')
+# Execute the key statement
+final_balance = portfolio_calculation(transactions, initial_capital)

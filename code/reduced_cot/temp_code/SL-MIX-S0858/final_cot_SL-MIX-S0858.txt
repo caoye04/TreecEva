@@ -1,0 +1,82 @@
+Target: Find the value of variable final_result after [line 49] executes
+
+[line 37]  encrypted_data = [45, 78, 123, 67, 89, 234, 56, 189]
+Compute: [45, 78, 123, 67, 89, 234, 56, 189] = [45, 78, 123, 67, 89, ...]
+[line 38]  mask_pattern = 0x7F
+Assign: mask_pattern = 127
+[line 10]  masked_data = [(byte ^ bit_mask) for byte in data_stream]
+Compute: [(byte ^ bit_mask) for byte in data_stream], where byte=45 (an unknown source), bit_mask=63 (an unknown source), data_stream=[45, 78, 123, 67, 89, ...] (an unknown source) = ?
+[line 13]  for i in range(len(masked_data) // 2):
+Loop Start: i takes its first value 0
+[line 13]  for i in range(len(masked_data) // 2):
+Loop End: Iteration finished
+[line 13]  for i in range(len(masked_data) // 2):
+Loop End: Iteration finished
+[line 13]  for i in range(len(masked_data) // 2):
+Loop End: Iteration finished
+[line 13]  for i in range(len(masked_data) // 2):
+Loop End: Iteration finished
+[line 17]  filtered_data = [x for x in masked_data if x % 3 != 0]
+Compute: [x for x in masked_data if x % 3 != 0], where x=18 (an unknown source), masked_data=[18, 113, 68, 124, 102, ...] (defined at [line 10]) = ?
+[line 23]  xor_chain = 0
+Assign: xor_chain = 0
+[line 24]  mask_cycle = itertools.cycle([1, 3, 7, 15])
+(Missing param: 'func_name')
+[line 25]  for value in filtered_data:
+Loop Start: value takes its first value 113
+[line 25]  for value in filtered_data:
+Loop Iteration: value is now 68 (iteration 2)
+... [Line 25] repeats 10 more times ...
+... [Line 25] repeats 10 more times ...
+[line 29]  adjustments = (5, 3, 8, 2)
+Compute: (5, 3, 8, 2) = (5, 3, 8, 2)
+[line 30]  a, b, c, d = adjustments
+(Missing param: 'result')
+[line 31]  final_xor = xor_chain ^ ((a + c) - (b - d))
+Compute: xor_chain ^ ((a + c) - (b - d)), where xor_chain=2 (defined at [line 23]), a=5 (an unknown source), c=8 (an unknown source), b=3 (an unknown source), d=2 (an unknown source) = 14
+[line 34]  return final_xor
+Return: final_xor=14 (defined at [line 31])
+[line 46]  final_result = process_crypto_payload(encrypted_data, mask_pattern)
+Call function process_crypto_payload(encrypted_data=[45, 78, 123, 67, 89, ...] (defined at [line 37]), mask_pattern=127 (defined at [line 38]))
+[line 13]  for i in range(len(masked_data) // 2):
+Loop End: Iteration finished
+[line 13]  for i in range(len(masked_data) // 2):
+Loop End: Iteration finished
+[line 13]  for i in range(len(masked_data) // 2):
+Loop End: Iteration finished
+[line 13]  for i in range(len(masked_data) // 2):
+Loop End: Iteration finished
+[line 13]  for i in range(len(masked_data) // 2):
+Loop Iteration: i is now 3 (iteration 10)
+[line 23]  xor_chain = 0
+Assign: xor_chain = 0
+[line 24]  mask_cycle = itertools.cycle([1, 3, 7, 15])
+(Missing param: 'func_name')
+[line 25]  for value in filtered_data:
+Loop Iteration: value is now 82 (iteration 7)
+[line 25]  for value in filtered_data:
+Loop Iteration: value is now 49 (iteration 8)
+[line 25]  for value in filtered_data:
+Loop Iteration: value is now 4 (iteration 9)
+[line 25]  for value in filtered_data:
+Loop Iteration: value is now 38 (iteration 10)
+[line 25]  for value in filtered_data:
+Loop Iteration: value is now 149 (iteration 11)
+[line 25]  for value in filtered_data:
+Loop Iteration: value is now 71 (iteration 12)
+[line 25]  for value in filtered_data:
+Loop Iteration: value is now 194 (iteration 13)
+[line 25]  for value in filtered_data:
+Loop Iteration: value is now 194 (iteration 14)
+[line 29]  adjustments = (5, 3, 8, 2)
+Compute: (5, 3, 8, 2) = (5, 3, 8, 2)
+[line 30]  a, b, c, d = adjustments
+(Missing param: 'result')
+[line 31]  final_xor = xor_chain ^ ((a + c) - (b - d))
+Compute: xor_chain ^ ((a + c) - (b - d)), where xor_chain=3 (defined at [line 23]), a=5 (an unknown source), c=8 (an unknown source), b=3 (an unknown source), d=2 (an unknown source) = 15
+[line 34]  return final_xor
+Return: final_xor=15 (defined at [line 31])
+[line 49]  print(f"Target result: {final_result}")
+Output: f"Target result: {final_result}"
+
+Answer: final_result = 15 (last updated on defined at [line 46])

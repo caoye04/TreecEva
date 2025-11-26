@@ -1,0 +1,22 @@
+Target: Find the value of variable target_value after [line 24] executes
+
+[line 2]  base_multiplier = 2
+Assign: base_multiplier = 2
+[line 3]  processing_fee = 15
+Assign: processing_fee = 15
+[line 6]  base_score = sum(item * base_multiplier for item in items)
+Call function sum(item * base_multiplier for item in items)
+[line 9]  processing_bonus = processing_fee // 3
+Compute: processing_fee // 3, where processing_fee=15 (defined at [line 3]) = 5
+[line 13]  filtered_items = [item for item in items if item > 3]
+Compute: [item for item in items if item > 3], where item=2 (an unknown source), items=[2, 5, 3, 7, 4] (an unknown source) = ?
+[line 14]  bonus_score = len(filtered_items) * 5
+Compute: len(filtered_items) * 5, where filtered_items=[5, 7, 4] (defined at [line 13]) = 15
+[line 17]  final_operation = lambda x: x + processing_bonus
+Compute: lambda x: x + processing_bonus, where processing_bonus=5 (defined at [line 9]) = ?
+[line 18]  target_value = final_operation(base_score + bonus_score)
+Call function final_operation(base_score + bonus_score)
+[line 24]  print(f"Target result: {target_value}")
+Output: f"Target result: {target_value}"
+
+Answer: target_value = 62 (last updated on defined at [line 18])

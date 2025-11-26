@@ -1,57 +1,40 @@
-from functools import wraps
+import itertools
 
-def filter_signal(func):
-    cache = {}
+def analyze_team_performance(team_data):
+    irrelevant_counter = 0
+    misleading_total = 0
     
-    @wraps(func)
-    def wrapper(signal_segment):
-        segment_id = id(signal_segment)
-        if segment_id in cache:
-            return cache[segment_id]
-        result = func(signal_segment)
-        cache[segment_id] = result
-        return result
-    return wrapper
+    # Distractor: irrelevant team analysis
+    for i in range(len(team_data)):
+        misleading_total += team_data[i] * 2  # Misleading calculation
+        irrelevant_counter += i ** 2
+    
+    # Main logic: analyze performance patterns
+    performance_sets = set()
+    for combo in itertools.combinations(team_data, 3):
+        if sum(combo) > 15:  # Relevant threshold
+            performance_sets.add(tuple(sorted(combo)))
+    
+    # Dead code path (never executed)
+    unused_result = misleading_total - irrelevant_counter
+    if unused_result < -1000:
+        return -999  # Never reached
+    
+    # Core calculation
+    valid_patterns = len(performance_sets)
+    base_score = sum(team_data)
+    
+    # Distractor: misleading intermediate
+    temp_metric = base_score * 2 + irrelevant_counter
+    
+    # Final calculation chain
+    adjustment = valid_patterns * 3
+    final_metric = base_score + adjustment - (temp_metric % 7)
+    
+    result = final_metric
+    print(f"Target result: {result}")
+    return result
 
-@filter_signal
-def smooth_audio(samples):
-    n = len(samples)
-    if n <= 1:
-        return samples[:]
-    dp = [0] * n
-    dp[0] = samples[0]
-    dp[1] = max(samples[0], samples[1])
-    for i in range(2, n):
-        dp[i] = max(dp[i-1], dp[i-2] + samples[i])
-    return dp
-
-# Audio processing pipeline
-raw_samples = [3, 1, 4, 1, 5, 9, 2, 6]
-processed_segments = []
-
-for i in range(len(raw_samples)):
-    segment = raw_samples[:i+1]
-    smoothed = smooth_audio(segment)
-    processed_segments.append(smoothed[-1])
-
-# Apply boolean logic to select qualified outputs
-qualified_outputs = [
-    val for val in processed_segments 
-    if val > 5 and not (val % 2 == 0 and val < 10)
-]
-
-# Calculate final output using logical operations and aggregation
-final_output = 0
-if qualified_outputs:
-    max_val = max(qualified_outputs)
-    min_val = min(qualified_outputs)
-    condition_a = max_val > 10
-    condition_b = min_val >= 3
-    if condition_a or condition_b:
-        final_output = sum(qualified_outputs) if condition_a and condition_b else max_val ^ min_val
-    else:
-        final_output = max_val + min_val
-else:
-    final_output = -1
-
-print(f"Result: {final_output}")
+# Main execution
+team_performance = [4, 8, 6, 12, 3, 7]
+result = analyze_team_performance(team_performance)

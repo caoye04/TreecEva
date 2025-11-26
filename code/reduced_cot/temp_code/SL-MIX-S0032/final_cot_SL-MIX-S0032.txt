@@ -1,123 +1,84 @@
-Target: Find the value of variable final_checksum after [line 43] executes
+Target: Find the value of variable final_balance after [line 37] executes
 
-[line 41]  EncryptionSession = namedtuple('EncryptionSession', ['session_id', 'base_key'])
-Call function namedtuple('EncryptionSession', ['session_id', 'base_key'])
-[line 42]  session = EncryptionSession(session_id=12345, base_key=0x123456)
-Call function EncryptionSession(session_id=12345, base_key=0x123456)
-[line 43]  final_checksum = process_encryption_key(session.base_key)
-Call function process_encryption_key(session.base_key)
-[line 15]  def process_encryption_key(base_key):
-Enter function process_encryption_key: base_key=1193046
-  [line 16]  segments = [base_key >> i & 0xFF for i in range(0, 24, 8)]
-  Compute: [base_key >> i & 0xFF for i in range(0, 24, 8)], where base_key=1193046 (parameter base_key), i=0 (an unknown source) = ?
-  [line 17]  transformed = list(map(transform_key_stage, segments))
-  Call function list(map(transform_key_stage, segments))
-  [line 6]  return (key_segment << 2) ^ 0xF0
-  Return: (key_segment << 2) ^ 0xF0
-  [line 6]  return (key_segment << 2) ^ 0xF0
-  Return: (key_segment << 2) ^ 0xF0
-  [line 6]  return (key_segment << 2) ^ 0xF0
-  Return: (key_segment << 2) ^ 0xF0
-  [line 18]  aggregated = reduce(lambda x, y: x | y, transformed)
-  Call function reduce(lambda x, y: x | y, transformed)
-  [line 18]  aggregated = reduce(lambda x, y: x | y, transformed)
-  Call function reduce(lambda x, y: x | y, transformed)
-  [line 18]  aggregated = reduce(lambda x, y: x | y, transformed)
-  Call function reduce(lambda x, y: x | y, transformed)
-  [line 21]  checksum_component = 0
-  Assign: checksum_component = 0
-  [line 25]  checksum_component = int(exp(log2(aggregated)))
-  Call function int(exp(log2(aggregated)))
-  [line 33]  sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
-  Call function sorted([int(b) for b in bin(checksum_component)[2:]])
-  [line 34]  bit_sum = sum(sorted_bits)
-  Call function sum(sorted_bits=[0, 0, 0, 0, 1, ...] (defined at [line 33]))
-  [line 36]  if validate_checksum(checksum_component, bit_sum):
-  Condition: True, entering 'if' block
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 11]  if target < 0:
-  Condition: True, entering 'if' block
-  [line 13]  return validate_checksum(fragment >> 1, target - (fragment & 1))
-  Return: validate_checksum(fragment >> 1, target - (fragment & 1))
-  [line 9]  if fragment == 0:
-  Condition: True, entering 'if' block
-  [line 10]  return target == 0
-  Return: target == 0
-  [line 37]  return checksum_component
-  Return: checksum_component=6511 (defined at [line 25])
-Function process_encryption_key returns 6511
+[line 32]  transaction_log = [(200, 'transfer'), (150, 'purchase'), (75, 'transfer'), (300, 'purchase')]
+Compute: [(200, 'transfer'), (150, 'purchase'), (75, 'transfer'), (300, 'purchase')] = [(200, 'transfer'), (150, 'purchase'), (75, 'transfer'), (300, 'purchase')]
+[line 36]  final_balance = process_transactions(transaction_log)
+Call function process_transactions(transaction_log=[(200, 'transfer'), (150, 'purchase'), (75, 'transfer'), (300, 'purchase')] (defined at [line 32]))
+[line 8]  balance = 1000.0
+Assign: balance = 1000.0
+[line 12]  for idx, entry in enumerate(log_entries):
+(Missing param: 'iter_var')
+[line 13]  amount, trans_type = entry
+(Missing param: 'result')
+[line 14]  fee = calculate_fees(amount, trans_type)
+Call function calculate_fees(amount=200 (an unknown source), trans_type='transfer' (an unknown source))
+[line 1]  def calculate_fees(amount, transaction_type):
+Enter function calculate_fees: amount=200, transaction_type='transfer'
+  [line 2]  fee_multiplier = 0.02 if transaction_type == 'transfer' else 0.015
+  Compute: 0.02 if transaction_type == 'transfer' else 0.015, where transaction_type='transfer' (parameter transaction_type) = 0.02
+  [line 5]  return amount * fee_multiplier
+  Return: amount * fee_multiplier
+Function calculate_fees returns 4.0
+[line 20]  if trans_type == 'transfer':
+Condition: True, entering 'if' block
+[line 21]  balance -= (amount + fee)
+Update: balance changed from 1000.0 (defined at defined at [line 8]) to 1000.0-(amount + fee) = 796.0
+[line 12]  for idx, entry in enumerate(log_entries):
+(Missing param: 'iter_var')
+[line 13]  amount, trans_type = entry
+(Missing param: 'result')
+[line 14]  fee = calculate_fees(amount, trans_type)
+Call function calculate_fees(amount=150 (an unknown source), trans_type='purchase' (an unknown source))
+[line 1]  def calculate_fees(amount, transaction_type):
+Enter function calculate_fees: amount=150, transaction_type='purchase'
+  [line 2]  fee_multiplier = 0.02 if transaction_type == 'transfer' else 0.015
+  Compute: 0.02 if transaction_type == 'transfer' else 0.015, where transaction_type='purchase' (parameter transaction_type) = 0.015
+  [line 5]  return amount * fee_multiplier
+  Return: amount * fee_multiplier
+Function calculate_fees returns 2.25
+[line 20]  if trans_type == 'transfer':
+Condition: True, entering 'if' block
+[line 24]  balance -= (amount + fee)
+Update: balance changed from 796.0 (defined at defined at [line 21]) to 796.0-(amount + fee) = 643.75
+[line 12]  for idx, entry in enumerate(log_entries):
+(Missing param: 'iter_var')
+[line 13]  amount, trans_type = entry
+(Missing param: 'result')
+[line 14]  fee = calculate_fees(amount, trans_type)
+Call function calculate_fees(amount=75 (an unknown source), trans_type='transfer' (an unknown source))
+[line 1]  def calculate_fees(amount, transaction_type):
+Enter function calculate_fees: amount=75, transaction_type='transfer'
+  [line 2]  fee_multiplier = 0.02 if transaction_type == 'transfer' else 0.015
+  Compute: 0.02 if transaction_type == 'transfer' else 0.015, where transaction_type='transfer' (parameter transaction_type) = 0.02
+  [line 5]  return amount * fee_multiplier
+  Return: amount * fee_multiplier
+Function calculate_fees returns 1.5
+[line 20]  if trans_type == 'transfer':
+Condition: True, entering 'if' block
+[line 21]  balance -= (amount + fee)
+Update: balance changed from 643.75 (defined at defined at [line 24]) to 643.75-(amount + fee) = 567.25
+[line 12]  for idx, entry in enumerate(log_entries):
+(Missing param: 'iter_var')
+[line 13]  amount, trans_type = entry
+(Missing param: 'result')
+[line 14]  fee = calculate_fees(amount, trans_type)
+Call function calculate_fees(amount=300 (an unknown source), trans_type='purchase' (an unknown source))
+[line 1]  def calculate_fees(amount, transaction_type):
+Enter function calculate_fees: amount=300, transaction_type='purchase'
+  [line 2]  fee_multiplier = 0.02 if transaction_type == 'transfer' else 0.015
+  Compute: 0.02 if transaction_type == 'transfer' else 0.015, where transaction_type='purchase' (parameter transaction_type) = 0.015
+  [line 5]  return amount * fee_multiplier
+  Return: amount * fee_multiplier
+Function calculate_fees returns 4.5
+[line 20]  if trans_type == 'transfer':
+Condition: True, entering 'if' block
+[line 24]  balance -= (amount + fee)
+Update: balance changed from 567.25 (defined at defined at [line 21]) to 567.25-(amount + fee) = 262.75
+[line 12]  for idx, entry in enumerate(log_entries):
+Loop End: Iteration finished
+[line 30]  return round(balance, 2)
+Return: round(balance, 2)
+[line 37]  print(f"Result: {final_balance}")
+Output: f"Result: {final_balance}"
 
-Answer: final_checksum = ? (last updated on defined at [line 43])
+Answer: final_balance = 262.75 (last updated on defined at [line 36])

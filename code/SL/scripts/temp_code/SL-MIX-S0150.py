@@ -1,53 +1,30 @@
-from dataclasses import dataclass
-from typing import List
+def process_data(data_sequence):
+    # Initial processing with string operations
+    text_data = ''.join([str(x) for x in data_sequence if x % 2 == 0])
+    
+    # Intermediate calculations (some not directly used)
+    char_count = len(text_data)
+    digit_sum = sum(int(c) for c in text_data if c.isdigit())
+    
+    # Main logic with slicing and filtering
+    relevant_chars = text_data[1:-1] if len(text_data) > 2 else text_data
+    filtered_values = [ord(c) for c in relevant_chars if c.isalpha()]
+    
+    # Distractor: Unused intermediate calculation
+    avg_value = sum(filtered_values) / len(filtered_values) if filtered_values else 0
+    
+    # Core processing with modulo and arithmetic
+    processing_result = sum(filtered_values) % 100
+    
+    # Additional unused operation
+    backup_calc = (digit_sum + char_count) // 3
+    
+    return processing_result
 
-token_weights = {'N': 3, 'S': -3, 'E': 2, 'W': -2, 'NE': 5, 'NW': 1, 'SE': -1, 'SW': -5}
+# Data preparation with mixed operations
+raw_data = [8, 3, 12, 7, 16, 5, 4, 11]
+clean_data = [x * 2 for x in raw_data if x > 4]
 
-@dataclass
-class SensorData:
-    id: str
-    tokens: List[str]
-
-def process_sensor_data(sensor: SensorData) -> int:
-    cumulative = 0
-    max_cumulative = float('-inf')
-    for token in sensor.tokens:
-        if token in token_weights:
-            cumulative += token_weights[token]
-            if cumulative > max_cumulative:
-                max_cumulative = cumulative
-        else:
-            cumulative = 0
-    return max_cumulative
-
-def classify_zone(score: int) -> str:
-    match score:
-        case s if s >= 10:
-            return 'A'
-        case s if s >= 5:
-            return 'B'
-        case s if s >= 0:
-            return 'C'
-        case _:
-            return 'D'
-
-sensor_readings = [
-    SensorData('S1', ['N', 'NE', 'E', 'SE', 'S']),
-    SensorData('S2', ['W', 'NW', 'N', 'NE', 'E']),
-    SensorData('S3', ['SW', 'W', 'NW', 'N', 'NE'])
-]
-
-zone_classifications = []
-for sensor in sensor_readings:
-    score = process_sensor_data(sensor)
-    zone = classify_zone(score)
-    zone_classifications.append(zone)
-
-# Convert to frozenset for immutable set operations
-zones_set = frozenset(zone_classifications)
-target_zones = frozenset(['A', 'B'])
-
-# Greedy selection: count overlapping zones
-optimal_zone_score = len(zones_set.intersection(target_zones)) * 10 + sum(1 for z in zones_set if z in target_zones)
-
-print(f"Result: {optimal_zone_score}")
+# Function call and result storage
+final_analysis = process_data(clean_data)
+print(f"Target result: {final_analysis}")

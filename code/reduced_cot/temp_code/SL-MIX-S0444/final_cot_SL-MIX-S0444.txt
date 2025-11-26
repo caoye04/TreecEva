@@ -1,0 +1,24 @@
+Target: Find the value of variable final_metric after [line 30] executes
+
+[line 5]  sensor_calibration = 3.14159
+Assign: sensor_calibration = 3.14159
+[line 6]  redundant_factor = 42
+Assign: redundant_factor = 42
+[line 11]  filtered_readings = list(itertools.islice(raw_readings, 2, len(raw_readings) - 1))
+Call function list(itertools.islice(raw_readings, 2, len(raw_readings) - 1))
+[line 12]  processed_data = [reading * 2 - 1 for reading in filtered_readings]
+Compute: [reading * 2 - 1 for reading in filtered_readings], where reading=5 (an unknown source), filtered_readings=[5, 18, 7, 3, 15, ...] (defined at [line 11]) = ?
+[line 15]  temp_calculation = sensor_calibration * redundant_factor
+Compute: sensor_calibration * redundant_factor, where sensor_calibration=3.14159 (defined at [line 5]), redundant_factor=42 (defined at [line 6]) = 131.94678
+[line 19]  processed_total = sum(processed_data)
+Call function sum(processed_data=[9, 35, 13, 5, 29, ...] (defined at [line 12]))
+[line 20]  adjustment_factor = len(filtered_readings) / 4.0
+Compute: len(filtered_readings) / 4.0, where filtered_readings=[5, 18, 7, 3, 15, ...] (defined at [line 11]) = 1.75
+[line 21]  correction_offset = (processed_data[0] if processed_data else 0) + 15
+Compute: (processed_data[0] if processed_data else 0) + 15, where processed_data=[9, 35, 13, 5, 29, ...] (defined at [line 12]) = 24
+[line 24]  if temp_calculation > 1000:
+Condition: True, entering 'if' block
+[line 30]  final_metric = processed_total * adjustment_factor - correction_offset
+Compute: processed_total * adjustment_factor - correction_offset, where processed_total=129 (defined at [line 19]), adjustment_factor=1.75 (defined at [line 20]), correction_offset=24 (defined at [line 21]) = 201.75
+
+Answer: final_metric = 201.75 (last updated on defined at [line 30])

@@ -1,21 +1,44 @@
-Target: Find the value of variable final_checksum after [line 13] executes
+Target: Find the value of variable final_result after [line 18] executes
 
-[line 12]  packet_seed = 0b11001010
-Assign: packet_seed = 202
-[line 13]  final_checksum = transform_packet(packet_seed)
-Call function transform_packet(packet_seed=202 (defined at [line 12]))
-[line 1]  def transform_packet(seed):
-Enter function transform_packet: seed=202 (packet_seed defined at [line 12])
-  [line 3]  stage1 = (seed << 3) & 0xFF
-  Compute: (seed << 3) & 0xFF, where seed=202 (parameter seed defined at [line 12]) = 80
-  [line 5]  stage2 = stage1 ^ 0xAA
-  Compute: stage1 ^ 0xAA, where stage1=80 (defined at [line 3]) = 250
-  [line 7]  stage3 = (stage2 >> 2) & 0xFF
-  Compute: (stage2 >> 2) & 0xFF, where stage2=250 (defined at [line 5]) = 62
-  [line 9]  final_checksum = stage3 ^ seed
-  Compute: stage3 ^ seed, where stage3=62 (defined at [line 7]), seed=202 (parameter seed defined at [line 12]) = 244
-  [line 10]  return final_checksum
-  Return: final_checksum=244 (defined at [line 9])
-Function transform_packet returns 244
+[line 3]  data_stream = [42, 15, 87, 23, 56, 91, 34, 78, 12, 65]
+Compute: [42, 15, 87, 23, 56, 91, 34, 78, 12, 65] = [42, 15, 87, 23, 56, ...]
+[line 6]  is_even = lambda x: x % 2 == 0
+Compute: lambda x: x % 2 == 0 = ?
+[line 7]  transform_data = lambda x: x * 2 - 10
+Compute: lambda x: x * 2 - 10 = ?
+[line 15]  filtered_items = [transform_data(x) for x in data_stream if is_even(x)]
+Compute: [transform_data(x) for x in data_stream if is_even(x)], where x=42 (an unknown source), data_stream=[42, 15, 87, 23, 56, ...] (defined at [line 3]) = ?
+[line 6]  is_even = lambda x: x % 2 == 0
+Compute: lambda x: x % 2 == 0, where x=42 (an unknown source) = ?
+[line 7]  transform_data = lambda x: x * 2 - 10
+Compute: lambda x: x * 2 - 10, where x=42 (an unknown source) = ?
+[line 6]  is_even = lambda x: x % 2 == 0
+Compute: lambda x: x % 2 == 0, where x=15 (an unknown source) = ?
+[line 6]  is_even = lambda x: x % 2 == 0
+Compute: lambda x: x % 2 == 0, where x=87 (an unknown source) = ?
+[line 6]  is_even = lambda x: x % 2 == 0
+Compute: lambda x: x % 2 == 0, where x=23 (an unknown source) = ?
+[line 6]  is_even = lambda x: x % 2 == 0
+Compute: lambda x: x % 2 == 0, where x=56 (an unknown source) = ?
+[line 7]  transform_data = lambda x: x * 2 - 10
+Compute: lambda x: x * 2 - 10, where x=56 (an unknown source) = ?
+[line 6]  is_even = lambda x: x % 2 == 0
+Compute: lambda x: x % 2 == 0, where x=91 (an unknown source) = ?
+[line 6]  is_even = lambda x: x % 2 == 0
+Compute: lambda x: x % 2 == 0, where x=34 (an unknown source) = ?
+[line 7]  transform_data = lambda x: x * 2 - 10
+Compute: lambda x: x * 2 - 10, where x=34 (an unknown source) = ?
+[line 6]  is_even = lambda x: x % 2 == 0
+Compute: lambda x: x % 2 == 0, where x=78 (an unknown source) = ?
+[line 7]  transform_data = lambda x: x * 2 - 10
+Compute: lambda x: x * 2 - 10, where x=78 (an unknown source) = ?
+[line 6]  is_even = lambda x: x % 2 == 0
+Compute: lambda x: x % 2 == 0, where x=12 (an unknown source) = ?
+[line 7]  transform_data = lambda x: x * 2 - 10
+Compute: lambda x: x * 2 - 10, where x=12 (an unknown source) = ?
+[line 6]  is_even = lambda x: x % 2 == 0
+Compute: lambda x: x % 2 == 0, where x=65 (an unknown source) = ?
+[line 18]  final_result = sorted(filtered_items)[-1]
+Compute: sorted(filtered_items)[-1], where filtered_items=[74, 102, 58, 146, 14] (defined at [line 15]) = 146
 
-Answer: final_checksum = 244 (last updated on defined at [line 9])
+Answer: final_result = 146 (last updated on defined at [line 18])

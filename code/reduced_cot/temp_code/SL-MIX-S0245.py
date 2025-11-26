@@ -1,50 +1,49 @@
-class SensorNode:
-    def __init__(self, value, position):
-        self.value = value
-        self.position = position
-        self.next = None
+def process_inventory(items, threshold):
+    from collections import Counter
+    
+    # Distractor variables and operations
+    temp_count = len(items) * 2
+    adjustment_factor = 7.5
+    dummy_list = [x for x in range(10) if x % 3 == 0]
+    
+    # Main logic - filtering and processing
+    filtered_items = [item for item in items if item['quantity'] > threshold]
+    category_counts = Counter(item['category'] for item in filtered_items)
+    
+    # Misleading intermediate calculations
+    total_weight = sum(item.get('weight', 0) for item in items)
+    max_quantity = max(item['quantity'] for item in items) if items else 0
+    
+    # Unused dead code path
+    if len(items) > 100:
+        bonus_adjustment = 15
+    else:
+        bonus_adjustment = 5
+    
+    # Core analysis with slicing
+    sorted_categories = sorted(category_counts.items(), key=lambda x: x[1], reverse=True)
+    top_categories = sorted_categories[:2] if len(sorted_categories) >= 2 else sorted_categories
+    
+    # Final calculation with conditional expression
+    result = (sum(count for _, count in top_categories) * 3.5 + 
+             len(filtered_items) if filtered_items else 0)
+    
+    # More distractions
+    unused_calculation = total_weight * adjustment_factor
+    dummy_string = "analysis_complete"
+    
+    return result
 
-def build_sensor_list(readings):
-    head = None
-    current = None
-    for i, val in enumerate(readings):
-        node = SensorNode(val, i+1)
-        if head is None:
-            head = node
-            current = node
-        else:
-            current.next = node
-            current = node
-    return head
+# Main execution
+items_data = [
+    {'category': 'electronics', 'quantity': 15, 'weight': 2.5},
+    {'category': 'books', 'quantity': 8, 'weight': 0.8},
+    {'category': 'electronics', 'quantity': 12, 'weight': 1.8},
+    {'category': 'clothing', 'quantity': 5, 'weight': 0.5},
+    {'category': 'books', 'quantity': 20, 'weight': 1.2},
+    {'category': 'electronics', 'quantity': 3, 'weight': 3.1}
+]
 
-def decode_value(node):
-    key = (node.position << 2) & 0xFF
-    return node.value ^ key
-
-def compute_checksum_divide_conquer(nodes_list):
-    if not nodes_list:
-        return 0
-    if len(nodes_list) == 1:
-        return decode_value(nodes_list[0])
-    mid = len(nodes_list) // 2
-    left_checksum = compute_checksum_divide_conquer(nodes_list[:mid])
-    right_checksum = compute_checksum_divide_conquer(nodes_list[mid:])
-    return (left_checksum + right_checksum) & 0xFF
-
-def collect_nodes(head):
-    nodes = []
-    current = head
-    while current:
-        nodes.append(current)
-        current = current.next
-    return nodes
-
-def main():
-    sensor_readings = [0x3C, 0x7A, 0x5F, 0x1D, 0x9B]
-    sensor_head = build_sensor_list(sensor_readings)
-    node_collection = collect_nodes(sensor_head)
-    final_checksum = compute_checksum_divide_conquer(node_collection)
-    print(f"Result: {final_checksum}")
-
-if __name__ == "__main__":
-    main()
+threshold = 10
+final_analysis = process_inventory(items_data, threshold)
+print(f"Result: {final_analysis}")

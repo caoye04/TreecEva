@@ -1,21 +1,18 @@
 import itertools
-from functools import reduce
 
-def compute_custom_checksum(packet_ids):
-    if len(packet_ids) < 2:
-        return 0
+def process_numbers(values):
+    # Filter even numbers and apply transformation
+    filtered_data = list(filter(lambda x: x % 2 == 0, values))
     
-    # Generate all unique pairs
-    pairs = list(itertools.combinations(packet_ids, 2))
+    # Generate pairs and calculate products
+    pairs = itertools.combinations(filtered_data, 2)
+    products = list(map(lambda pair: pair[0] * pair[1], pairs))
     
-    # Compute XOR for each pair
-    xor_results = [a ^ b for a, b in pairs]
-    
-    # Reduce using bitwise AND
-    checksum = reduce(lambda x, y: x & y, xor_results)
-    return checksum
+    # Return the maximum product found
+    if products:
+        return max(products)
+    return 0
 
-# Packet identifiers in hexadecimal
-network_packets = [0x1F, 0x2C, 0x3A, 0x45]
-security_checksum = compute_custom_checksum(network_packets)
-print(f"Result: {security_checksum}")
+data_points = [3, 8, 5, 12, 7, 4]
+final_result = process_numbers(data_points)
+print(f"Result: {final_result}")

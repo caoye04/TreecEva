@@ -1,0 +1,43 @@
+Target: Find the value of variable final_output after [line 39] executes
+
+[line 29]  input_data = [8, 15, 22, 19, 11, 25]
+Compute: [8, 15, 22, 19, 11, 25] = [8, 15, 22, 19, 11, ...]
+[line 30]  config_flags = {'start': 12, 'enable_filter': True, 'adjustment': 7}
+Compute: {'start': 12, 'enable_filter': True, 'adjustment': 7} = {start: 12, enable_filter: True, adjustment: 7}
+[line 38]  data_analysis = data_analysis_phase(input_data)
+Call function data_analysis_phase(input_data=[8, 15, 22, 19, 11, ...] (defined at [line 29]))
+[line 19]  processed_values = [x * 2 if x > 10 else x + 5 for x in input_values]
+Compute: [x * 2 if x > 10 else x + 5 for x in input_values], where x=8 (an unknown source), input_values=[8, 15, 22, 19, 11, ...] (an unknown source) = ?
+[line 20]  slice_result = processed_values[1:4]
+Compute: processed_values[1:4], where processed_values=[13, 30, 44, 38, 22, ...] (defined at [line 19]) = [30, 44, 38]
+[line 21]  aggregation = sum(slice_result) if len(slice_result) == 3 else 0
+Compute: sum(slice_result) if len(slice_result) == 3 else 0, where slice_result=[30, 44, 38] (defined at [line 20]) = 112
+[line 23]  base_value = aggregation // 3
+Compute: aggregation // 3, where aggregation=112 (defined at [line 21]) = 37
+[line 24]  threshold_check = base_value if base_value % 2 == 0 else base_value + 1
+Compute: base_value if base_value % 2 == 0 else base_value + 1, where base_value=37 (defined at [line 23]) = 38
+[line 26]  return {'base': base_value, 'offset': aggregation, 'threshold': threshold_check}
+Return: {'base': base_value, 'offset': aggregation, 'threshold': threshold_check}
+[line 39]  final_output = processing_phase(data_analysis, config_flags)
+Call function processing_phase(data_analysis={base: 37, offset: 112, threshold: 38} (defined at [line 38]), config_flags={start: 12, enable_filter: True, adjustment: 7} (defined at [line 30]))
+[line 1]  def processing_phase(analysis_data, flags):
+Enter function processing_phase: analysis_data={base: 37, offset: 112, threshold: 38} (data_analysis defined at [line 38]), flags={start: 12, enable_filter: True, adjustment: 7} (config_flags defined at [line 30])
+  [line 2]  temp_calc = (flags['start'] + analysis_data['base']) * 3
+  Compute: (flags['start'] + analysis_data['base']) * 3, where flags={start: 12, enable_filter: True, adjustment: 7} (parameter flags defined at [line 30]), analysis_data={base: 37, offset: 112, threshold: 38} (parameter analysis_data defined at [line 38]) = 147
+  [line 3]  if flags['enable_filter']:
+  Condition: True, entering 'if' block
+  [line 4]  temp_calc -= analysis_data['offset'] // 2
+  Update: temp_calc changed from 147 (defined at defined at [line 2]) to 147-analysis_data['offset'] // 2 = 91
+  [line 8]  mask_ops = temp_calc & 0xFF
+  Compute: temp_calc & 0xFF, where temp_calc=91 (defined at [line 4]) = 91
+  [line 9]  step_result = mask_ops if analysis_data['threshold'] > 50 else mask_ops ^ 0x7F
+  Compute: mask_ops if analysis_data['threshold'] > 50 else mask_ops ^ 0x7F, where mask_ops=91 (defined at [line 8]), analysis_data={base: 37, offset: 112, threshold: 38} (parameter analysis_data defined at [line 38]) = 36
+  [line 11]  intermediate = step_result << 2
+  Compute: step_result << 2, where step_result=36 (defined at [line 9]) = 144
+  [line 13]  if validation_check == 0:
+  Condition: True, entering 'if' block
+  [line 16]  return intermediate - flags['adjustment'] * 2
+  Return: intermediate - flags['adjustment'] * 2
+Function processing_phase returns 130
+
+Answer: final_output = 130 (last updated on defined at [line 39])

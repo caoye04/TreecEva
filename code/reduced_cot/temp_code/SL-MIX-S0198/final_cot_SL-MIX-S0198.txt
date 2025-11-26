@@ -1,76 +1,243 @@
-Target: Find the value of variable final_checksum after [line 29] executes
+Target: Find the value of variable final_result after [line 52] executes
 
-[line 3]  raw_packets = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
-Compute: [0x1A, 0x2B, 0x3C, 0x4D, 0x5E] = [26, 43, 60, 77, 94]
-[line 7]  chained_values = []
-Compute: [] = []
-[line 8]  for i, packet in enumerate(raw_packets):
-(Missing param: 'iter_var')
-[line 8]  for i, packet in enumerate(raw_packets):
-Loop End: Iteration finished
-[line 8]  for i, packet in enumerate(raw_packets):
-Loop End: Iteration finished
-[line 8]  for i, packet in enumerate(raw_packets):
-Loop End: Iteration finished
-[line 8]  for i, packet in enumerate(raw_packets):
-Loop End: Iteration finished
-[line 8]  for i, packet in enumerate(raw_packets):
-Loop End: Iteration finished
-[line 14]  unique_packets = list(set(chained_values))
-Call function list(set(chained_values))
-[line 17]  transform = lambda x: (x * 3 + 7) % 256
-Compute: lambda x: (x * 3 + 7) % 256 = ?
-[line 18]  transformed_packets = [transform(p) for p in unique_packets]
-Compute: [transform(p) for p in unique_packets], where p=193 (an unknown source), unique_packets=[193, 101, 169, 213, 182] (defined at [line 14]) = ?
-[line 17]  transform = lambda x: (x * 3 + 7) % 256
-Compute: lambda x: (x * 3 + 7) % 256, where x=193 (an unknown source) = ?
-[line 17]  transform = lambda x: (x * 3 + 7) % 256
-Compute: lambda x: (x * 3 + 7) % 256, where x=101 (an unknown source) = ?
-[line 17]  transform = lambda x: (x * 3 + 7) % 256
-Compute: lambda x: (x * 3 + 7) % 256, where x=169 (an unknown source) = ?
-[line 17]  transform = lambda x: (x * 3 + 7) % 256
-Compute: lambda x: (x * 3 + 7) % 256, where x=213 (an unknown source) = ?
-[line 17]  transform = lambda x: (x * 3 + 7) % 256
-Compute: lambda x: (x * 3 + 7) % 256, where x=182 (an unknown source) = ?
-[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-(Missing param: 'func_name')
-[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-(Missing param: 'func_name')
-[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-(Missing param: 'func_name')
-[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-(Missing param: 'func_name')
-[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-(Missing param: 'func_name')
-[line 21]  packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-(Missing param: 'func_name')
-[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
-Compute: sum(ord(c) for c in packet_string) & 0xFF, where packet_string='4a3628629' (an unknown source) = ?
-[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
-Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='4' (an unknown source) = ?
-[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
-Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='a' (an unknown source) = ?
-[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
-Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='3' (an unknown source) = ?
-[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
-Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='6' (an unknown source) = ?
-[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
-Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='2' (an unknown source) = ?
-[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
-Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='8' (an unknown source) = ?
-[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
-Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='6' (an unknown source) = ?
-[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
-Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='2' (an unknown source) = ?
-[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
-Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='9' (an unknown source) = ?
-[line 22]  hash_id = sum(ord(c) for c in packet_string) & 0xFF
-Compute: sum(ord(c) for c in packet_string) & 0xFF, where c='9' (an unknown source) = ?
-[line 25]  checksum_components = [p ^ hash_id for p in transformed_packets]
-Compute: [p ^ hash_id for p in transformed_packets], where p=74 (an unknown source), hash_id=9 (defined at [line 22]), transformed_packets=[74, 54, 2, 134, 41] (defined at [line 18]) = ?
-[line 26]  intermediate_sum = sum(checksum_components) & 0xFFFF
-Compute: sum(checksum_components) & 0xFFFF, where checksum_components=[67, 63, 11, 143, 32] (defined at [line 25]) = 316
-[line 29]  final_checksum = ((intermediate_sum >> 8) & 0xFF) | ((intermediate_sum & 0xFF) << 8)
-Compute: ((intermediate_sum >> 8) & 0xFF) | ((intermediate_sum & 0xFF) << 8), where intermediate_sum=316 (defined at [line 26]) = 15361
+[line 43]  initial_data = [17, 23, 29, 31, 37, 41, 43, 47, 53]
+Compute: [17, 23, 29, 31, 37, 41, 43, 47, 53] = [17, 23, 29, 31, 37, ...]
+[line 51]  final_result = process_checksum(initial_data)
+Call function process_checksum(initial_data=[17, 23, 29, 31, 37, ...] (defined at [line 43]))
+[line 16]  prime_filter = lambda x: x % 2 != 0 and x % 3 != 0  # Relevant lambda
+Compute: lambda x: x % 2 != 0 and x % 3 != 0  # Relevant lambda = ?
+[line 17]  filtered_primes = list(filter(prime_filter, data_sequence))
+Call function list(filter(prime_filter, data_sequence))
+[line 24]  parity_results = [compute_parity_mask(x) for x in filtered_primes]
+Compute: [compute_parity_mask(x) for x in filtered_primes], where x=17 (an unknown source), filtered_primes=[17, 23, 29, 31, 37, ...] (defined at [line 17]) = ?
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 6]  return temp_sum % 2
+Return: temp_sum % 2
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 6]  return temp_sum % 2
+Return: temp_sum % 2
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 6]  return temp_sum % 2
+Return: temp_sum % 2
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 6]  return temp_sum % 2
+Return: temp_sum % 2
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 6]  return temp_sum % 2
+Return: temp_sum % 2
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 6]  return temp_sum % 2
+Return: temp_sum % 2
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 6]  return temp_sum % 2
+Return: temp_sum % 2
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 6]  return temp_sum % 2
+Return: temp_sum % 2
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 5]  temp_sum = sum((bits >> i) & 1 for i in range(8))
+Call function sum((bits >> i) & 1 for i in range(8))
+[line 6]  return temp_sum % 2
+Return: temp_sum % 2
+[line 25]  offset_value = calculate_data_offset(filtered_primes)
+Call function calculate_data_offset(filtered_primes=[17, 23, 29, 31, 37, ...] (defined at [line 17]))
+[line 8]  def calculate_data_offset(values):
+Enter function calculate_data_offset: values=[17, 23, 29, 31, 37, ...] (filtered_primes defined at [line 17])
+  [line 9]  offset_accumulator = 0
+  Assign: offset_accumulator = 0
+  [line 10]  for i, val in enumerate(values):
+  (Missing param: 'iter_var')
+  [line 10]  for i, val in enumerate(values):
+  (Missing param: 'iter_var')
+... [Line 10] repeats 6 more times ...
+... [Line 10] repeats 6 more times ...
+  [line 10]  for i, val in enumerate(values):
+  (Missing param: 'iter_var')
+  [line 10]  for i, val in enumerate(values):
+  Loop End: Iteration finished
+  [line 12]  return offset_accumulator % 16
+  Return: offset_accumulator % 16
+Function calculate_data_offset returns 5
+[line 28]  misleading_sum = sum(parity_results) * 2 + offset_value
+Compute: sum(parity_results) * 2 + offset_value, where parity_results=[0, 0, 0, 1, 1, ...] (defined at [line 24]), offset_value=5 (defined at [line 25]) = 13
+[line 31]  checksum_base = sum(filtered_primes) & 0xFF
+Compute: sum(filtered_primes) & 0xFF, where filtered_primes=[17, 23, 29, 31, 37, ...] (defined at [line 17]) = 65
+[line 32]  final_checksum = (checksum_base ^ offset_value) | (misleading_sum & 0x0F)
+Compute: (checksum_base ^ offset_value) | (misleading_sum & 0x0F), where checksum_base=65 (defined at [line 31]), offset_value=5 (defined at [line 25]), misleading_sum=13 (defined at [line 28]) = 77
+[line 35]  if misleading_sum > 100:
+Condition: True, entering 'if' block
+[line 40]  return final_checksum
+Return: final_checksum=77 (defined at [line 32])
+[line 52]  print(f"Result: {final_result}")
+Output: f"Result: {final_result}"
 
-Answer: final_checksum = 15361 (last updated on defined at [line 29])
+Answer: final_result = 77 (last updated on defined at [line 51])

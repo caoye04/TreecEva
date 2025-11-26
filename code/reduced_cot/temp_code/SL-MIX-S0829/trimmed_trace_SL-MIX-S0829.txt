@@ -1,0 +1,39 @@
+45
+final_throughput
+---
+35 bandwidth_capacity = 100  # Mbps
+35 ['data_packets', 'bandwidth_capacity'] ["[{size: 1500, status: 'delivered', timestamp: 100}, {size: 800, status: 'dropped', timestamp: 200}, {size: 1200, status: 'delivered', timestamp: 50}, {size: 950, status: 'delivered', timestamp: 300}, {size: 1800, status: 'queued', timestamp: 150}]", '100']
+39 throughput_analysis = analyze_network_throughput(data_packets, bandwidth_capacity)
+39 ['data_packets', 'bandwidth_capacity'] ["[{size: 1500, status: 'delivered', timestamp: 100}, {size: 800, status: 'dropped', timestamp: 200}, {size: 1200, status: 'delivered', timestamp: 50}, {size: 950, status: 'delivered', timestamp: 300}, {size: 1800, status: 'queued', timestamp: 150}]", '100']
+10 successful_packets = [p for p in packets if p['status'] == 'delivered']
+10 ['packets', 'p'] ["[{size: 1500, status: 'delivered', timestamp: 100}, {size: 800, status: 'dropped', timestamp: 200}, {size: 1200, status: 'delivered', timestamp: 50}, {size: 950, status: 'delivered', timestamp: 300}, {size: 1800, status: 'queued', timestamp: 150}]", "{size: 1500, status: 'delivered', timestamp: 100}"]
+10 successful_packets = [p for p in packets if p['status'] == 'delivered']
+10 ['packets', 'p'] ["[{size: 1500, status: 'delivered', timestamp: 100}, {size: 800, status: 'dropped', timestamp: 200}, {size: 1200, status: 'delivered', timestamp: 50}, {size: 950, status: 'delivered', timestamp: 300}, {size: 1800, status: 'queued', timestamp: 150}]", "{size: 800, status: 'dropped', timestamp: 200}"]
+10 successful_packets = [p for p in packets if p['status'] == 'delivered']
+10 ['packets', 'p'] ["[{size: 1500, status: 'delivered', timestamp: 100}, {size: 800, status: 'dropped', timestamp: 200}, {size: 1200, status: 'delivered', timestamp: 50}, {size: 950, status: 'delivered', timestamp: 300}, {size: 1800, status: 'queued', timestamp: 150}]", "{size: 1200, status: 'delivered', timestamp: 50}"]
+10 successful_packets = [p for p in packets if p['status'] == 'delivered']
+10 ['packets', 'p'] ["[{size: 1500, status: 'delivered', timestamp: 100}, {size: 800, status: 'dropped', timestamp: 200}, {size: 1200, status: 'delivered', timestamp: 50}, {size: 950, status: 'delivered', timestamp: 300}, {size: 1800, status: 'queued', timestamp: 150}]", "{size: 950, status: 'delivered', timestamp: 300}"]
+10 successful_packets = [p for p in packets if p['status'] == 'delivered']
+10 ['packets', 'p'] ["[{size: 1500, status: 'delivered', timestamp: 100}, {size: 800, status: 'dropped', timestamp: 200}, {size: 1200, status: 'delivered', timestamp: 50}, {size: 950, status: 'delivered', timestamp: 300}, {size: 1800, status: 'queued', timestamp: 150}]", "{size: 1800, status: 'queued', timestamp: 150}"]
+10 successful_packets = [p for p in packets if p['status'] == 'delivered']
+10 ['packets', 'successful_packets'] ["[{size: 1500, status: 'delivered', timestamp: 100}, {size: 800, status: 'dropped', timestamp: 200}, {size: 1200, status: 'delivered', timestamp: 50}, {size: 950, status: 'delivered', timestamp: 300}, {size: 1800, status: 'queued', timestamp: 150}]", "[{size: 1500, status: 'delivered', timestamp: 100}, {size: 1200, status: 'delivered', timestamp: 50}, {size: 950, status: 'delivered', timestamp: 300}]"]
+11 total_delivered = sum(p['size'] for p in successful_packets)
+11 [] []
+11 total_delivered = sum(p['size'] for p in successful_packets)
+11 ['p'] ["{size: 1500, status: 'delivered', timestamp: 100}"]
+11 total_delivered = sum(p['size'] for p in successful_packets)
+11 ['p'] ["{size: 1200, status: 'delivered', timestamp: 50}"]
+11 total_delivered = sum(p['size'] for p in successful_packets)
+11 ['p'] ["{size: 950, status: 'delivered', timestamp: 300}"]
+11 total_delivered = sum(p['size'] for p in successful_packets)
+11 ['p'] ["{size: 950, status: 'delivered', timestamp: 300}"]
+14 if theoretical_max & 0xFF == 0:
+14 ['total_delivered'] ['3650']
+18 time_window = 60  # seconds
+18 ['total_delivered', 'time_window'] ['3650', '60']
+19 actual_throughput = total_delivered / time_window
+19 ['total_delivered', 'time_window', 'actual_throughput'] ['3650', '60', '60.833333333333336']
+24 return actual_throughput
+24 ['actual_throughput'] ['60.833333333333336']
+45 final_throughput = int(throughput_analysis)
+45 ['throughput_analysis', 'final_throughput'] ['60.833333333333336', '60']

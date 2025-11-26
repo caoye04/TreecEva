@@ -1,50 +1,54 @@
-import statistics
+def process_data_quality(data_list, quality_thresholds):
+    # Initialize tracking variables
+    valid_count = 0
+    total_processed = 0
+    temp_buffer = []
+    dummy_calc = 42  # Irrelevant computation
+    
+    # Process each item with zip and enumerate
+    for idx, (item, threshold) in enumerate(zip(data_list, quality_thresholds)):
+        # Dead code path - never executed due to condition
+        if idx < -5:
+            misleading_value = item * 3.14
+        
+        # Main processing logic
+        item_quality = len(str(item)) if item > 0 else abs(item) % 7
+        validation_flag = item_quality >= threshold
+        
+        # Conditional expression for processing
+        processed_value = item * 2 if validation_flag else item // 3
+        temp_buffer.append(processed_value)
+        
+        # Update counters based on validation
+        valid_count += 1 if validation_flag else 0
+        total_processed += 1
+        
+        # Misleading intermediate calculation
+        fake_metric = (idx * processed_value) % 11
+    
+    # Unused operation - distractor
+    unused_set = set(range(5, 15))
+    
+    # Calculate final metric with complex logic
+    if valid_count > 0:
+        base_value = sum(temp_buffer[:valid_count])
+        adjustment = (base_value % 13) - (len(temp_buffer) % 5)
+        final_result = base_value // valid_count + adjustment
+    else:
+        final_result = -1
+    
+    # More irrelevant computations
+    red_herring = (dummy_calc * len(data_list)) // 2
+    another_distractor = sum(quality_thresholds) * 3.14159
+    
+    return final_result
 
-def call_tracker(func):
-    def wrapper(*args, **kwargs):
-        wrapper.call_count += 1
-        return func(*args, **kwargs)
-    wrapper.call_count = 0
-    return wrapper
+# Test data
+items_data = [24, 17, 35, 42, 8, 51, 63]
+thresholds = [2, 3, 2, 1, 1, 2, 2]
 
-def process_ancient_text():
-    # Ancient text word frequencies
-    word_frequencies = [12, 8, 15, 22, 9, 18, 9, 11, 14, 16, 7, 20, 13, 10, 17]
-    
-    # Filter out low frequency words
-    significant_words = [freq for freq in word_frequencies if freq > 10]
-    
-    # Apply transformations using set operations
-    unique_freq_set = frozenset(significant_words)
-    transformed_freqs = []
-    
-    # Process each frequency with potential multiple transformations
-    for freq in unique_freq_set:
-        # Short-circuit evaluation pattern
-        if freq > 15 and (freq % 2 == 0 or freq > 18):
-            transformed_freqs.append(freq * 2)
-        elif freq <= 15 or freq < 12:
-            transformed_freqs.append(freq + 5)
-        else:
-            transformed_freqs.append(freq)
-    
-    # Calculate statistical measures
-    mean_freq = statistics.mean(transformed_freqs)
-    variance_freq = statistics.variance(transformed_freqs) if len(transformed_freqs) > 1 else 0
-    
-    # Apply final scoring algorithm
-    @call_tracker
-    def calculate_score(base_value, modifier):
-        return base_value * modifier + len(transformed_freqs)
-    
-    # Multiple function calls to test decorator
-    score1 = calculate_score(mean_freq, 1.5)
-    score2 = calculate_score(variance_freq, 0.75)
-    
-    # Final calculation combining all factors
-    final_score = int(score1 + score2 + calculate_score.call_count)
-    
-    return final_score
+# Execute the key statement
+final_metric = process_data_quality(items_data, thresholds)
 
-final_score = process_ancient_text()
-print(f"Result: {final_score}")
+# Print result
+print(f"Target result: {final_metric}")

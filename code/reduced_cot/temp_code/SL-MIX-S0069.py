@@ -1,33 +1,40 @@
-from functools import reduce
-import itertools
+def analyze_sensor_data(sensor_readings):
+    # Process sensor data with filtering and compression
+    valid_readings = [reading for reading in sensor_readings if reading > 10]
+    
+    # Calculate average of valid readings
+    reading_sum = sum(valid_readings)
+    count_valid = len(valid_readings)
+    raw_average = reading_sum / count_valid if count_valid > 0 else 0
+    
+    # Distractor: calculate median (not used in final result)
+    sorted_readings = sorted(valid_readings)
+    mid = len(sorted_readings) // 2
+    median_value = (sorted_readings[mid] + sorted_readings[~mid]) / 2 if sorted_readings else 0
+    
+    # Apply filtering threshold
+    threshold = 25
+    filtered_readings = [reading for reading in valid_readings if reading > threshold]
+    
+    # Calculate filtered average
+    filtered_sum = sum(filtered_readings)
+    filtered_count = len(filtered_readings)
+    filtered_avg = filtered_sum / filtered_count if filtered_count > 0 else 0
+    
+    # Compression ratio calculation
+    total_readings = len(sensor_readings)
+    compressed_ratio = filtered_count / total_readings if total_readings > 0 else 0
+    
+    # Final result calculation
+    compression_ratio = 1.5 if compressed_ratio > 0.3 else 2.0
+    final_result = filtered_avg * compression_ratio
+    
+    # Distractor: unused optimization factor
+    optimization_factor = (raw_average + median_value) / 2
+    
+    print(f"Result: {final_result}")
+    return final_result
 
-def fibonacci_sequence(n):
-    a, b = 0, 1
-    for _ in range(n):
-        yield a
-        a, b = b, a + b
-
-def apply_fibonacci_filter(signals):
-    fib_weights = list(fibonacci_sequence(len(signals)))
-    weighted_signals = [s * w for s, w in zip(signals, fib_weights)]
-    return reduce(lambda x, y: x + y, weighted_signals)
-
-def normalize_signal(signal_value, normalization_factor=10):
-    return signal_value / normalization_factor if normalization_factor != 0 else 0
-
-# Deep space signal measurements (arbitrary units)
-space_signals = [5, 8, 13, 21, 34]
-
-# Apply transformation process
-weighted_sum = apply_fibonacci_filter(space_signals)
-filtered_signal_strength = normalize_signal(weighted_sum)
-
-# Additional processing step
-if filtered_signal_strength > 10:
-    adjustment_factor = len(list(itertools.combinations(range(3), 2)))
-    filtered_signal_strength += adjustment_factor
-else:
-    adjustment_factor = len(set(space_signals)) - len(frozenset(space_signals))
-    filtered_signal_strength -= adjustment_factor
-
-print(f"Result: {filtered_signal_strength}")
+# Sensor data simulation
+sensor_data = [8, 15, 22, 45, 18, 60, 12, 33, 28, 9, 51, 24]
+analyze_sensor_data(sensor_data)

@@ -1,35 +1,56 @@
-import heapq
-from collections import defaultdict
+def analyze_network_traffic(packets):
+    # Distractor variables
+    total_bytes = 0
+    filtered_count = 0
+    protocol_stats = {}
+    redundant_check = False
+    
+    # Main analysis with enumerate
+    for i, packet in enumerate(packets):
+        # Irrelevant computation
+        total_bytes += len(packet) * 2 - len(packet)  # Pointless arithmetic
+        
+        # Distractor condition
+        if i % 3 == 0:
+            filtered_count += 1
+            redundant_check = not redundant_check  # Dead state
+        
+        # Relevant logic
+        if packet['size'] > 150 and packet['protocol'] == 'TCP':
+            protocol_stats['tcp_large'] = protocol_stats.get('tcp_large', 0) + 1
+        elif packet['size'] < 50:
+            protocol_stats['small_packets'] = protocol_stats.get('small_packets', 0) + 1
+    
+    # Misleading intermediate calculation
+    avg_size = total_bytes / len(packets) if packets else 0
+    
+    # Another distractor
+    compression_ratio = (filtered_count * 1.5) / (len(packets) if packets else 1)
+    
+    # Key computation with bitwise operations
+    base_count = protocol_stats.get('tcp_large', 0)
+    small_count = protocol_stats.get('small_packets', 0)
+    
+    # Bit manipulation for final result
+    result_mask = (base_count << 2) | (small_count & 0x0F)
+    final_result = result_mask ^ 0b1010
+    
+    # Dead code path that looks important
+    if compression_ratio > 2.0:
+        final_result += 100  # Never executed
+    
+    print(f"Target result: {final_result}")
+    return final_result
 
-def calculate_route_efficiency(urgencies):
-    dp = [0] * (len(urgencies) + 1)
-    for i in range(1, len(urgencies) + 1):
-        dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
-    return dp[len(urgencies)]
-
-# Shipment data: (origin, urgency)
-shipments = [
-    ('NYC', 10),
-    ('LA', 15),
-    ('CHI', 7),
-    ('SEA', 20),
-    ('BOS', 5)
+# Test data
+packet_data = [
+    {'size': 200, 'protocol': 'TCP'},
+    {'size': 45, 'protocol': 'UDP'},
+    {'size': 180, 'protocol': 'TCP'},
+    {'size': 30, 'protocol': 'TCP'},
+    {'size': 160, 'protocol': 'TCP'},
+    {'size': 25, 'protocol': 'UDP'},
+    {'size': 190, 'protocol': 'TCP'}
 ]
 
-# Track unique origins
-origins = frozenset(origin for origin, _ in shipments)
-
-# Process urgencies with min-heap
-urgency_heap = [u for _, u in shipments]
-heapq.heapify(urgency_heap)
-
-processed_urgencies = []
-while urgency_heap:
-    processed_urgencies.append(heapq.heappop(urgency_heap))
-
-# Calculate efficiency score using dynamic programming
-route_efficiency = calculate_route_efficiency(processed_urgencies)
-
-# Final score combines route efficiency with origin count
-final_score = route_efficiency + len(origins)
-print(f'Result: {final_score}')
+analyze_network_traffic(packet_data)

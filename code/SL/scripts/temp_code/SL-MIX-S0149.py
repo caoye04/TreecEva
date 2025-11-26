@@ -1,59 +1,30 @@
-from contextlib import contextmanager
-from dataclasses import dataclass
-from typing import List
+from collections import Counter
 
-def fibonacci_sequence(n: int) -> List[int]:
-    if n <= 0:
-        return []
-    elif n == 1:
-        return [0]
-    elif n == 2:
-        return [0, 1]
-    
-    seq = [0, 1]
-    for i in range(2, n):
-        seq.append(seq[i-1] + seq[i-2])
-    return seq
+# Analyze student performance data across different subjects
+math_scores = [85, 92, 78, 96, 88, 91, 74]
+science_scores = [79, 85, 92, 88, 81, 95, 90]
+history_scores = [82, 88, 75, 91, 86, 89, 93]
 
-@contextmanager
-def crypto_context(start_value: int):
-    state = {'value': start_value, 'modifications': 0}
-    try:
-        yield state
-    finally:
-        state['value'] = 0
-        state['modifications'] = 0
+# Calculate average scores for each subject (distractor - not used in final result)
+math_avg = sum(math_scores) / len(math_scores)
+science_avg = sum(science_scores) / len(science_scores)
+history_avg = sum(history_scores) / len(history_scores)
 
-@dataclass
-class CryptoTracker:
-    prices: List[int]
-    index: int = 0
-    
-    def get_current_price(self) -> int:
-        if self.index < len(self.prices):
-            val = self.prices[self.index]
-            self.index += 1
-            return val
-        return 0
+# Combine all scores and count occurrences
+all_scores = math_scores + science_scores + history_scores
+score_counter = Counter(all_scores)
 
-# Initialize components
-prices_fib = fibonacci_sequence(12)[2:]  # Skip first two elements
-tracker = CryptoTracker(prices_fib)
-security_checksum = 0
+# Process scores by applying bonus and penalty (some operations are relevant, some are not)
+processed_data = {}
+for score, count in score_counter.items():
+    # This bonus calculation doesn't affect the final max value selection
+    bonus = 5 if score > 90 else 2
+    adjusted_count = count + (1 if score % 2 == 0 else 0)  # Slight adjustment
+    processed_data[score] = adjusted_count
 
-with crypto_context(100) as ctx:
-    for i in range(5):
-        price = tracker.get_current_price()
-        adjusted_price = price << 1  # Bitwise left shift
-        
-        if i % 2 == 0:
-            ctx['value'] = (ctx['value'] ^ adjusted_price) & 0xFF  # XOR and mask
-        else:
-            ctx['value'] = (ctx['value'] + adjusted_price) & 0xFF  # Add and mask
-        
-        ctx['modifications'] += 1
-    
-    # Final checksum computation
-    security_checksum = ctx['value'] ^ (ctx['modifications'] << 2)
+# Calculate theoretical maximum (distractor - never used)
+theoretical_max = max(all_scores) * 1.1
 
-print(f"Result: {security_checksum}")
+# The key statement - find the maximum processed value
+final_score = max(processed_data.values())
+print(f"Result: {final_score}")

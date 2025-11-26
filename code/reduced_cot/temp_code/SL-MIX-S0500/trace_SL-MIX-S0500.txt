@@ -1,0 +1,52 @@
+35 cipher_key = 0b01101001  # 105 in decimal
+35 ['cipher_key'] [{'_type': 'int', '_value': 105}]
+36 mask_bits = 0b00110100   # 52 in decimal
+36 ['cipher_key', 'mask_bits'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}]
+39 offset_calc = (cipher_key >> 2) + mask_bits
+39 ['cipher_key', 'mask_bits', 'offset_calc'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 78}]
+42 final_key = compute_final_key(cipher_key, mask_bits)
+42 ['cipher_key', 'mask_bits', 'offset_calc'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 78}]
+PARAM_MAPPING compute_final_key {'initial_key': {'actual_var': 'cipher_key', 'value': 105}, 'bit_mask': {'actual_var': 'mask_bits', 'value': 52}}
+FUNCTION_ENTER 1 compute_final_key def compute_final_key(initial_key, bit_mask):
+1 ['initial_key', 'bit_mask'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}]
+DEPTH_2 3     temp_shift = 3
+3 ['initial_key', 'bit_mask', 'temp_shift'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}]
+DEPTH_2 6     key_xor = initial_key ^ bit_mask
+6 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}]
+DEPTH_2 9     fake_rotation = (key_xor << 2) & 0xFF
+9 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}]
+DEPTH_2 18     rotated = rotate_bits(key_xor, 1)
+18 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}]
+PARAM_MAPPING rotate_bits {'value': {'actual_var': 'key_xor', 'value': 93}, 'shift': {'actual_var': '1', 'value': '1'}}
+FUNCTION_ENTER 12 rotate_bits     def rotate_bits(value, shift):
+12 ['value', 'shift'] [{'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 1}]
+DEPTH_3 14         shift = shift % 8 + 1
+14 ['value', 'shift'] [{'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 2}]
+DEPTH_3 15         return ((value << shift) | (value >> (8 - shift))) & 0xFF
+15 ['value', 'shift'] [{'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 2}]
+FUNCTION_RETURN 15 rotate_bits {'_type': 'int', '_value': 117}
+DEPTH_2 21     if rotated > 200:
+21 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation', 'rotated'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}, {'_type': 'int', '_value': 117}]
+DEPTH_2 24         backup_calc = rotated + 100
+24 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation', 'rotated', 'backup_calc'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}, {'_type': 'int', '_value': 117}, {'_type': 'int', '_value': 217}]
+DEPTH_2 27     final_key = (rotated | 0x0F) & 0x7F
+27 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation', 'rotated', 'backup_calc', 'final_key'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}, {'_type': 'int', '_value': 117}, {'_type': 'int', '_value': 217}, {'_type': 'int', '_value': 127}]
+DEPTH_2 30     checksum_values = [x for x in range(final_key, final_key + 5)]
+30 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation', 'rotated', 'backup_calc', 'final_key', 'x'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}, {'_type': 'int', '_value': 117}, {'_type': 'int', '_value': 217}, {'_type': 'int', '_value': 127}, {'_type': 'int', '_value': 127}]
+DEPTH_2 30     checksum_values = [x for x in range(final_key, final_key + 5)]
+30 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation', 'rotated', 'backup_calc', 'final_key', 'x'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}, {'_type': 'int', '_value': 117}, {'_type': 'int', '_value': 217}, {'_type': 'int', '_value': 127}, {'_type': 'int', '_value': 128}]
+DEPTH_2 30     checksum_values = [x for x in range(final_key, final_key + 5)]
+30 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation', 'rotated', 'backup_calc', 'final_key', 'x'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}, {'_type': 'int', '_value': 117}, {'_type': 'int', '_value': 217}, {'_type': 'int', '_value': 127}, {'_type': 'int', '_value': 129}]
+DEPTH_2 30     checksum_values = [x for x in range(final_key, final_key + 5)]
+30 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation', 'rotated', 'backup_calc', 'final_key', 'x'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}, {'_type': 'int', '_value': 117}, {'_type': 'int', '_value': 217}, {'_type': 'int', '_value': 127}, {'_type': 'int', '_value': 130}]
+DEPTH_2 30     checksum_values = [x for x in range(final_key, final_key + 5)]
+30 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation', 'rotated', 'backup_calc', 'final_key', 'x'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}, {'_type': 'int', '_value': 117}, {'_type': 'int', '_value': 217}, {'_type': 'int', '_value': 127}, {'_type': 'int', '_value': 131}]
+DEPTH_2 30     checksum_values = [x for x in range(final_key, final_key + 5)]
+30 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation', 'rotated', 'backup_calc', 'final_key', 'checksum_values'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}, {'_type': 'int', '_value': 117}, {'_type': 'int', '_value': 217}, {'_type': 'int', '_value': 127}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 127}, {'_type': 'int', '_value': 128}, {'_type': 'int', '_value': 129}, {'_type': 'int', '_value': 130}, {'_type': 'int', '_value': 131}], '_len': 5}]
+DEPTH_2 32     return final_key
+32 ['initial_key', 'bit_mask', 'temp_shift', 'key_xor', 'fake_rotation', 'rotated', 'backup_calc', 'final_key', 'checksum_values'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 116}, {'_type': 'int', '_value': 117}, {'_type': 'int', '_value': 217}, {'_type': 'int', '_value': 127}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 127}, {'_type': 'int', '_value': 128}, {'_type': 'int', '_value': 129}, {'_type': 'int', '_value': 130}, {'_type': 'int', '_value': 131}], '_len': 5}]
+FUNCTION_RETURN 32 compute_final_key {'_type': 'int', '_value': 127}
+45 cipher_key = (final_key * 3) % 256
+45 ['cipher_key', 'mask_bits', 'offset_calc', 'final_key'] [{'_type': 'int', '_value': 125}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 127}]
+47 print(f"Result: {cipher_key}")
+47 ['cipher_key', 'mask_bits', 'offset_calc', 'final_key'] [{'_type': 'int', '_value': 125}, {'_type': 'int', '_value': 52}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 127}]

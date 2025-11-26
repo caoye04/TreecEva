@@ -1,0 +1,113 @@
+45
+final_balance
+---
+6 processed_log = log_data.upper()
+6 ['log_data', 'processed_log'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'"]
+9 transaction_set = set()
+9 ['processed_log', 'transaction_set'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", 'set()']
+10 balance = 1000
+10 ['processed_log', 'transaction_set', 'balance'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", 'set()', '1000']
+12 for line in processed_log.split(';'):
+12 ['processed_log', 'transaction_set', 'balance', 'line'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", 'set()', '1000', "'DEPOSIT:500'"]
+13 if line.strip():
+13 ['processed_log', 'transaction_set', 'balance', 'line'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", 'set()', '1000', "'DEPOSIT:500'"]
+14 parts = line.split(':')
+14 ['processed_log', 'transaction_set', 'balance', 'line', 'parts'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", 'set()', '1000', "'DEPOSIT:500'", "['DEPOSIT', '500']"]
+15 if len(parts) == 2:
+15 ['processed_log', 'transaction_set', 'balance', 'line', 'parts'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", 'set()', '1000', "'DEPOSIT:500'", "['DEPOSIT', '500']"]
+16 operation, amount_str = parts
+16 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", 'set()', '1000', "'DEPOSIT:500'", "['DEPOSIT', '500']", "'500'"]
+17 try:
+17 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", 'set()', '1000', "'DEPOSIT:500'", "['DEPOSIT', '500']", "'500'"]
+18 amount = int(amount_str.strip())
+18 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", 'set()', '1000', "'DEPOSIT:500'", "['DEPOSIT', '500']", "'500'", '500']
+22 if operation.strip() == 'DEPOSIT':
+22 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT'}", '1000', "'DEPOSIT:500'", "['DEPOSIT', '500']", "'500'", '500']
+23 balance += amount
+23 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT'}", '1500', "'DEPOSIT:500'", "['DEPOSIT', '500']", "'500'", '500']
+12 for line in processed_log.split(';'):
+12 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT'}", '1500', "'WITHDRAW:200'", "['DEPOSIT', '500']", "'500'", '500']
+13 if line.strip():
+13 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT'}", '1500', "'WITHDRAW:200'", "['DEPOSIT', '500']", "'500'", '500']
+14 parts = line.split(':')
+14 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT'}", '1500', "'WITHDRAW:200'", "['WITHDRAW', '200']", "'500'", '500']
+15 if len(parts) == 2:
+15 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT'}", '1500', "'WITHDRAW:200'", "['WITHDRAW', '200']", "'500'", '500']
+16 operation, amount_str = parts
+16 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT'}", '1500', "'WITHDRAW:200'", "['WITHDRAW', '200']", "'200'", '500']
+17 try:
+17 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT'}", '1500', "'WITHDRAW:200'", "['WITHDRAW', '200']", "'200'", '500']
+18 amount = int(amount_str.strip())
+18 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT'}", '1500', "'WITHDRAW:200'", "['WITHDRAW', '200']", "'200'", '200']
+22 if operation.strip() == 'DEPOSIT':
+22 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT', 'WITHDRAW'}", '1500', "'WITHDRAW:200'", "['WITHDRAW', '200']", "'200'", '200']
+26 elif operation.strip() == 'WITHDRAW':
+26 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT', 'WITHDRAW'}", '1500', "'WITHDRAW:200'", "['WITHDRAW', '200']", "'200'", '200']
+27 balance -= amount
+27 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT', 'WITHDRAW'}", '1300', "'WITHDRAW:200'", "['WITHDRAW', '200']", "'200'", '200']
+12 for line in processed_log.split(';'):
+12 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT', 'WITHDRAW'}", '1300', "'FEE:50'", "['WITHDRAW', '200']", "'200'", '200']
+13 if line.strip():
+13 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT', 'WITHDRAW'}", '1300', "'FEE:50'", "['WITHDRAW', '200']", "'200'", '200']
+14 parts = line.split(':')
+14 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT', 'WITHDRAW'}", '1300', "'FEE:50'", "['FEE', '50']", "'200'", '200']
+15 if len(parts) == 2:
+15 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT', 'WITHDRAW'}", '1300', "'FEE:50'", "['FEE', '50']", "'200'", '200']
+16 operation, amount_str = parts
+16 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT', 'WITHDRAW'}", '1300', "'FEE:50'", "['FEE', '50']", "'50'", '200']
+17 try:
+17 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT', 'WITHDRAW'}", '1300', "'FEE:50'", "['FEE', '50']", "'50'", '200']
+18 amount = int(amount_str.strip())
+18 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'DEPOSIT', 'WITHDRAW'}", '1300', "'FEE:50'", "['FEE', '50']", "'50'", '50']
+22 if operation.strip() == 'DEPOSIT':
+22 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1300', "'FEE:50'", "['FEE', '50']", "'50'", '50']
+26 elif operation.strip() == 'WITHDRAW':
+26 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1300', "'FEE:50'", "['FEE', '50']", "'50'", '50']
+30 elif operation.strip() == 'FEE':
+30 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1300', "'FEE:50'", "['FEE', '50']", "'50'", '50']
+31 balance = max(balance - amount, 0)
+31 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1250', "'FEE:50'", "['FEE', '50']", "'50'", '50']
+12 for line in processed_log.split(';'):
+12 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1250', "'DEPOSIT:300'", "['FEE', '50']", "'50'", '50']
+13 if line.strip():
+13 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1250', "'DEPOSIT:300'", "['FEE', '50']", "'50'", '50']
+14 parts = line.split(':')
+14 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1250', "'DEPOSIT:300'", "['DEPOSIT', '300']", "'50'", '50']
+15 if len(parts) == 2:
+15 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1250', "'DEPOSIT:300'", "['DEPOSIT', '300']", "'50'", '50']
+16 operation, amount_str = parts
+16 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1250', "'DEPOSIT:300'", "['DEPOSIT', '300']", "'300'", '50']
+17 try:
+17 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1250', "'DEPOSIT:300'", "['DEPOSIT', '300']", "'300'", '50']
+18 amount = int(amount_str.strip())
+18 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1250', "'DEPOSIT:300'", "['DEPOSIT', '300']", "'300'", '300']
+22 if operation.strip() == 'DEPOSIT':
+22 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1250', "'DEPOSIT:300'", "['DEPOSIT', '300']", "'300'", '300']
+23 balance += amount
+23 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1550', "'DEPOSIT:300'", "['DEPOSIT', '300']", "'300'", '300']
+12 for line in processed_log.split(';'):
+12 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1550', "'WITHDRAW:150'", "['DEPOSIT', '300']", "'300'", '300']
+13 if line.strip():
+13 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1550', "'WITHDRAW:150'", "['DEPOSIT', '300']", "'300'", '300']
+14 parts = line.split(':')
+14 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1550', "'WITHDRAW:150'", "['WITHDRAW', '150']", "'300'", '300']
+15 if len(parts) == 2:
+15 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1550', "'WITHDRAW:150'", "['WITHDRAW', '150']", "'300'", '300']
+16 operation, amount_str = parts
+16 ['processed_log', 'transaction_set', 'balance', 'line', 'parts', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1550', "'WITHDRAW:150'", "['WITHDRAW', '150']", "'150'", '300']
+17 try:
+17 ['processed_log', 'transaction_set', 'balance', 'line', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1550', "'WITHDRAW:150'", "'150'", '300']
+18 amount = int(amount_str.strip())
+18 ['processed_log', 'transaction_set', 'balance', 'line', 'amount_str', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1550', "'WITHDRAW:150'", "'150'", '150']
+22 if operation.strip() == 'DEPOSIT':
+22 ['processed_log', 'transaction_set', 'balance', 'line', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1550', "'WITHDRAW:150'", '150']
+26 elif operation.strip() == 'WITHDRAW':
+26 ['processed_log', 'transaction_set', 'balance', 'line', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1550', "'WITHDRAW:150'", '150']
+27 balance -= amount
+27 ['processed_log', 'transaction_set', 'balance', 'line', 'amount'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1400', "'WITHDRAW:150'", '150']
+12 for line in processed_log.split(';'):
+12 ['processed_log', 'transaction_set', 'balance', 'line'] ["'DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150'", "{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1400', "'WITHDRAW:150'"]
+42 final_adjust = len(transaction_set) * 5
+42 ['transaction_set', 'balance', 'final_adjust'] ["{'FEE', 'DEPOSIT', 'WITHDRAW'}", '1400', '15']
+45 final_balance = balance + final_adjust
+45 ['balance', 'final_adjust', 'final_balance'] ['1400', '15', '1415']

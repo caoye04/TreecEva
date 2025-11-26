@@ -1,67 +1,56 @@
-import math
-from collections import defaultdict
+def process_data_stream(input_data):
+    # Irrelevant helper function with misleading computations
+    dummy_values = [x * 2 for x in range(10)]
+    temp_sum = sum(dummy_values)
+    unused_result = temp_sum // 3  # Dead code path
+    
+    # Actual processing with set operations
+    data_set = set(input_data)
+    filtered_data = {x for x in data_set if x % 2 == 0}
+    
+    # Misleading intermediate calculation
+    misleading_total = len(data_set) * 100
+    
+    # Lambda function for transformation
+    transform_fn = lambda x: (x ** 2) - (x % 7)
+    transformed_data = list(map(transform_fn, filtered_data))
+    
+    return sum(transformed_data) - len(transformed_data)
 
-class SensorNode:
-    def __init__(self, x, y, next_node=None):
-        self.x = x
-        self.y = y
-        self.next = next_node
+def compute_final_value(data_sequence):
+    # Multiple irrelevant variables and computations
+    base_value = 42
+    offset_calc = (base_value << 2) + 15  # Bit shift distraction
+    
+    # Dead code path that looks important
+    if offset_calc > 200:
+        unused_branch = offset_calc // 10
+    else:
+        unused_branch = offset_calc * 5
+    
+    # Core logic with complex interdependencies
+    stage1_result = process_data_stream(data_sequence)
+    
+    # More misleading calculations
+    distraction_factor = len(data_sequence) * 3.14159
+    
+    # Final computation with actual answer
+    actual_result = stage1_result - (len(data_sequence) % 11) + 7
+    
+    # Another irrelevant calculation that looks similar
+    similar_calc = actual_result + distraction_factor
+    
+    return actual_result
 
-def compute_spatial_hash(x, y, grid_size=10):
-    """Hash function for spatial coordinates"""
-    return (int(x) // grid_size, int(y) // grid_size)
+# Main execution with data stream
+input_stream = [3, 8, 12, 5, 8, 17, 12, 20, 3, 25]
 
-def distance(p1, p2):
-    """Calculate Euclidean distance between two points"""
-    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
+# Multiple irrelevant intermediate variables
+preliminary_check = sum(input_stream) % 9
+secondary_analysis = [x for x in input_stream if x > 10]
 
-# Sensor data as linked lists
-sensor_a = SensorNode(15.2, 22.7, SensorNode(16.8, 23.1, SensorNode(25.3, 30.5)))
-sensor_b = SensorNode(14.9, 22.3, SensorNode(35.2, 40.1))
-sensor_c = SensorNode(16.1, 23.5, SensorNode(24.8, 31.2, SensorNode(34.7, 39.8)))
+# The critical execution point
+final_result = compute_final_value(input_stream)
 
-# Group sensors
-sensors = [sensor_a, sensor_b, sensor_c]
-
-# Spatial clustering using hash maps
-cluster_map = defaultdict(list)
-proximity_threshold = 3.0
-
-for i, sensor_head in enumerate(sensors):
-    current = sensor_head
-    while current:
-        hash_key = compute_spatial_hash(current.x, current.y)
-        point = (current.x, current.y, i)  # Include sensor ID
-        
-        # Check if any existing point in cluster is within proximity
-        merged = False
-        for existing_hash, points in cluster_map.items():
-            for existing_point in points:
-                if (distance((point[0], point[1]), (existing_point[0], existing_point[1])) < proximity_threshold and
-                    existing_hash == hash_key):
-                    cluster_map[existing_hash].append(point)
-                    merged = True
-                    break
-            if merged:
-                break
-        
-        if not merged:
-            cluster_map[hash_key].append(point)
-            
-        current = current.next
-
-# Count clusters with points from multiple sensors
-cluster_count = 0
-for points in cluster_map.values():
-    sensor_ids = set(p[2] for p in points)
-    if len(sensor_ids) > 1:
-        cluster_count += 1
-        
-# Apply geometric correction factor
-if cluster_count > 0:
-    correction_factor = math.ceil(math.sqrt(cluster_count))
-    cluster_count = cluster_count * correction_factor
-else:
-    cluster_count = -1
-
-print(f"Result: {cluster_count}")
+# Print the target result
+print(f"Result: {final_result}")

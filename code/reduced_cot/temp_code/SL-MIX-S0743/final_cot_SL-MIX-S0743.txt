@@ -1,0 +1,48 @@
+Target: Find the value of variable final_validation_score after [line 36] executes
+
+[line 4]  misleading_max = -1000
+Compute: -1000 = -1000
+[line 7]  for i in range(len(samples)):
+Loop Start: i takes its first value 0
+[line 9]  if i % 3 == 0:
+Condition: True, entering 'if' block
+[line 10]  misleading_max = max(misleading_max, samples[i] * 2)
+Call function max(misleading_max=24 (defined at [line 4]), samples[i] * 2)
+[line 7]  for i in range(len(samples)):
+Loop Iteration: i is now 1 (iteration 2)
+[line 9]  if i % 3 == 0:
+Condition: True, entering 'if' block
+... [Line 7] repeats 7 more times ...
+... [Line 7] repeats 7 more times ...
+[line 7]  for i in range(len(samples)):
+Loop Iteration: i is now 9 (iteration 10)
+[line 9]  if i % 3 == 0:
+Condition: True, entering 'if' block
+[line 10]  misleading_max = max(misleading_max, samples[i] * 2)
+Call function max(misleading_max=66 (defined at [line 10]), samples[i] * 2)
+[line 7]  for i in range(len(samples)):
+Loop End: Iteration finished
+[line 13]  if misleading_max > 100:
+Condition: True, entering 'if' block
+[line 19]  quality_values = [s for s in samples if s > 15]
+Compute: [s for s in samples if s > 15], where s=12 (an unknown source), samples=[12, 25, 8, 31, 19, ...] (an unknown source) = ?
+[line 20]  if not quality_values:
+Condition: True, entering 'if' block
+[line 23]  avg_quality = sum(quality_values) // len(quality_values)
+Compute: sum(quality_values) // len(quality_values), where quality_values=[25, 31, 19, 42, 28, ...] (defined at [line 19]) = 29
+[line 26]  bitwise_distractor = avg_quality & 0b1111
+Compute: avg_quality & 0b1111, where avg_quality=29 (defined at [line 23]) = 13
+[line 27]  string_check = "validation_phase_" + str(avg_quality)
+Compute: "validation_phase_" + str(avg_quality), where avg_quality=29 (defined at [line 23]) = 'validation_phase_29'
+[line 30]  quality_factor = len(string_check) % 8
+Compute: len(string_check) % 8, where string_check='validation_phase_29' (defined at [line 27]) = 3
+[line 31]  adjustment_value = (bitwise_distractor | 0b1010) ^ 0b1100
+Compute: (bitwise_distractor | 0b1010) ^ 0b1100, where bitwise_distractor=13 (defined at [line 26]) = 3
+[line 32]  scale_divisor = max(1, avg_quality % 7)
+Call function max(1, avg_quality % 7)
+[line 33]  bitwise_check = avg_quality ^ 0b0101
+Compute: avg_quality ^ 0b0101, where avg_quality=29 (defined at [line 23]) = 24
+[line 36]  final_validation_score = quality_factor * (bitwise_check ^ adjustment_value) // scale_divisor
+Compute: quality_factor * (bitwise_check ^ adjustment_value) // scale_divisor, where quality_factor=3 (defined at [line 30]), bitwise_check=24 (defined at [line 33]), adjustment_value=3 (defined at [line 31]), scale_divisor=1 (defined at [line 32]) = 81
+
+Answer: final_validation_score = 81 (last updated on defined at [line 36])

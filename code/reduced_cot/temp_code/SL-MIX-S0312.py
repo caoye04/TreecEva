@@ -1,19 +1,36 @@
-def encode_token(token):
-    return sum(ord(c) << (i*3) for i, c in enumerate(token))
+def analyze_text_metrics(text_data):
+    # Distractor variables that don't affect final result
+    char_count = len(text_data)
+    word_list = text_data.split()
+    total_words = len(word_list)
+    
+    # Relevant processing
+    vowel_count = sum(1 for char in text_data.lower() if char in 'aeiou')
+    consonant_count = sum(1 for char in text_data.lower() if char.isalpha() and char not in 'aeiou')
+    
+    # Intermediate calculation (not used in final result)
+    ratio_attempt = vowel_count / consonant_count if consonant_count > 0 else 0
+    
+    # Key calculation chain
+    vowel_score = vowel_count * 2
+    consonant_penalty = consonant_count // 3
+    base_score = vowel_score - consonant_penalty
+    
+    # Final adjustment with string method
+    if text_data.endswith('!'):
+        emphasis_bonus = 5
+    elif text_data.endswith('?'):
+        emphasis_bonus = 3
+    else:
+        emphasis_bonus = 1
+    
+    analysis_result = base_score + emphasis_bonus
+    
+    # Unused intermediate variable
+    alternative_calc = (vowel_count * 3) - (consonant_count // 2)
+    
+    return analysis_result
 
-def decode_token(encoded):
-    token = ''
-    while encoded > 0:
-        token += chr(encoded & 0xFF)
-        encoded >>= 3
-    return token
-
-token_set_a = {'knowledge', 'wisdom', 'understanding'}
-token_set_b = {'wisdom', 'insight', 'comprehension'}
-encoded_tokens_a = {encode_token(t) for t in token_set_a}
-encoded_tokens_b = {encode_token(t) for t in token_set_b}
-common_encoded = encoded_tokens_a & encoded_tokens_b
-transform_map = {k: decode_token(k).upper() for k in common_encoded}
-base_score = len(transform_map) if transform_map else 0
-semantic_overlap_score = base_score + (10 if any('WISDOM' in v for v in transform_map.values()) else 0) and base_score * 2
-print(f'Result: {semantic_overlap_score}')
+sample_data = "Hello world! This is a test sentence for analysis."
+final_processing = analyze_text_metrics(sample_data)
+print(f"Result: {final_processing}")

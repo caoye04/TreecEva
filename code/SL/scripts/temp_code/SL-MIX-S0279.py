@@ -1,54 +1,62 @@
-import itertools
-
-def custom_hash(s):
-    hash_val = 0
-    for char in s:
-        hash_val = (hash_val * 31 + ord(char)) & 0xFFFFFFFF
-    return hash_val
-
-def transform_fragment(fragment):
-    transformed = ''
-    for i, char in enumerate(fragment):
-        if i % 2 == 0:
-            transformed += char.upper()
-        else:
-            transformed += char.lower()
-    return transformed[::-1]  # Reverse the string
-
-def get_protein_marker(fragment):
-    transformed = transform_fragment(fragment)
-    hash_val = custom_hash(transformed)
+def network_analysis(nodes, routing, connections):
+    # Irrelevant network simulation variables
+    packet_loss = 0.15
+    bandwidth = 1000
+    latency = 45
+    throughput = bandwidth * (1 - packet_loss)  # Dead computation
     
-    # Protein marker mapping
-    if hash_val % 7 == 0:
-        return 1000 + (hash_val % 100)
-    elif hash_val % 5 == 0:
-        return 2000 + (hash_val % 100)
-    elif hash_val % 3 == 0:
-        return 3000 + (hash_val % 100)
+    # Core logic with misleading intermediate
+    node_set = set(nodes)
+    routing_keys = set(routing.keys())
+    connection_set = set(connections)
+    
+    # Distractor operations
+    available_nodes = node_set - routing_keys  # Misleading subtraction
+    potential_links = node_set | routing_keys  # Unused union
+    
+    # Actual computation path
+    active_nodes = node_set & connection_set
+    routing_matches = routing_keys & connection_set
+    
+    # More distractions
+    unused_bandwidth = bandwidth - sum(connections)  # Dead variable
+    theoretical_max = len(nodes) * bandwidth  # Irrelevant calculation
+    
+    # Key logic with complex dependencies
+    if len(active_nodes) > 2:
+        base_value = sum(active_nodes)
+        routing_factor = sum(routing_matches)
+        scaling_factor = len(routing) / len(nodes) if nodes else 1
+        result = base_value + routing_factor * scaling_factor
     else:
-        return 4000 + (hash_val % 100)
+        # Dead branch with misleading computation
+        result = sum(nodes) - sum(connections) + latency
+    
+    return int(result)
 
-# DNA fragment analysis
-fragments = ['atgctag', 'ccggaatt', 'ggccttaa', 'ttaaccgg']
-marker_id = 0
+def simulate_network():
+    # Primary data structures
+    data_nodes = [15, 22, 8, 31, 19]
+    routing_table = {22: 5, 31: 8, 15: 3}
+    active_connections = [22, 31, 15]
+    
+    # Irrelevant network parameters
+    max_capacity = 500  # Unused constant
+    retry_count = 3  # Dead variable
+    protocol_version = 2  # Misleading metadata
+    
+    # Distractor computations
+    total_nodes = len(data_nodes) + len(routing_table)  # Incorrect logic
+    connection_pool = set(data_nodes) | set(active_connections)  # Unused set
+    
+    # Critical execution point
+    final_computation = network_analysis(data_nodes, routing_table, active_connections)
+    
+    # More irrelevant operations
+    theoretical_load = sum(data_nodes) * protocol_version  # Dead calculation
+    efficiency_ratio = len(active_connections) / len(data_nodes)  # Unused result
+    
+    print(f"Target result: {final_computation}")
 
-for fragment in fragments:
-    if len(fragment) > 7:
-        # Process only longer fragments
-        sub_fragments = [fragment[i:i+6] for i in range(len(fragment)-5)]
-        for sub in sub_fragments:
-            if 'GG' in sub.upper():
-                marker_id += get_protein_marker(sub)
-                break  # Early return to avoid double counting
-    else:
-        # For shorter fragments, combine with others
-        combinations = itertools.combinations(fragments, 2)
-        for combo in combinations:
-            if fragment in combo:
-                combined = ''.join(combo)
-                if len(set(combined)) <= 6:  # If 6 or fewer unique nucleotides
-                    marker_id += get_protein_marker(combined)
-                    break  # Early return
-
-print(f'Result: {marker_id}')
+# Execute the simulation
+simulate_network()

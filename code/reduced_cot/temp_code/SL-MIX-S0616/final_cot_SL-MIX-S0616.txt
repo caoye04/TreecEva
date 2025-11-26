@@ -1,0 +1,30 @@
+Target: Find the value of variable final_balance after [line 45] executes
+
+[line 27]  initial_deposit = 5000
+Assign: initial_deposit = 5000
+[line 31]  monthly_withdrawals = defaultdict(int)
+Call function defaultdict(int)
+[line 32]  monthly_withdrawals['january'] = 850
+(Missing param: 'var')
+[line 33]  monthly_withdrawals['february'] = 320
+(Missing param: 'var')
+[line 34]  monthly_withdrawals['march'] = 610
+(Missing param: 'var')
+[line 35]  monthly_withdrawals['april'] = 280  # This key is never accessed
+(Missing param: 'var')
+[line 42]  final_balance = account_processor(initial_deposit, monthly_withdrawals)
+Call function account_processor(initial_deposit=5000 (defined at [line 27]), monthly_withdrawals={january: 850, february: 320, march: 610, ...} (defined at [line 31]))
+[line 9]  total_withdrawn = sum(withdrawals.values())
+Call function sum(withdrawals.values())
+[line 10]  remaining = principal - total_withdrawn
+Compute: principal - total_withdrawn, where principal=5000 (an unknown source), total_withdrawn=2060 (defined at [line 9]) = 2940
+[line 17]  if remaining < -10000:
+Condition: True, entering 'if' block
+[line 22]  adjusted_balance = remaining * 0.99  # Actually used
+Compute: remaining * 0.99  # Actually used, where remaining=2940 (defined at [line 10]) = 2910.6
+[line 24]  return int(adjusted_balance)
+Return: int(adjusted_balance)
+[line 45]  print(f"Result: {final_balance}")
+Output: f"Result: {final_balance}"
+
+Answer: final_balance = 2910 (last updated on defined at [line 42])

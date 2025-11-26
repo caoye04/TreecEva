@@ -1,39 +1,39 @@
-import math
-from functools import lru_cache
+def process_items(item_list):
+    # Distractor: Unused lambda for formatting (never called)
+    format_data = lambda x: f"Item_{x}"
+    
+    # Misleading intermediate variable
+    temp_sum = sum(len(str(item)) for item in item_list if item > 0)
+    
+    # Dead code path - unused filtering logic
+    filtered_items = [item * 2 for item in item_list if item % 3 == 0]
+    
+    # Relevant processing with lambda
+    count_valid = lambda items: sum(1 for item in items if 10 <= item <= 99)
+    
+    # More distraction - complex but irrelevant calculation
+    bit_ops = [item & 0xF for item in item_list]
+    xor_total = sum(bit_ops) ^ 0xFF
+    
+    # Another dead variable
+    string_ops = ''.join(chr(65 + (item % 26)) for item in item_list[:5])
+    
+    # Actual logic path
+    valid_count = count_valid(item_list)
+    
+    # Final misleading operation that doesn't affect result
+    adjusted = valid_count + (xor_total % 10)
+    
+    return valid_count
 
-def calculate_sharpe(returns, volatility):
-    return returns / volatility if volatility != 0 else 0
+# Main execution with distractor setup
+items_data = [15, 42, 87, 105, 3, 56, 200, 71, 8, 99]
 
-class Portfolio:
-    def __init__(self, assets):
-        self.assets = assets
-        
-    @lru_cache(maxsize=None)
-    def get_optimal_weight(self, index, remaining_budget):
-        if index >= len(self.assets) or remaining_budget <= 0:
-            return 0.0
-        
-        asset_return, asset_risk = self.assets[index]
-        max_sharpe = 0.0
-        
-        for weight in range(0, int(remaining_budget) + 1):
-            allocated = weight * 0.1
-            current_sharpe = calculate_sharpe(asset_return * allocated, asset_risk * allocated)
-            future_sharpe = self.get_optimal_weight(index + 1, remaining_budget - weight)
-            total_sharpe = current_sharpe + future_sharpe * 0.95  # Discount factor
-            max_sharpe = max(max_sharpe, total_sharpe)
-            
-        return max_sharpe
+# Distractor variables that look important
+initial_count = len(items_data)
+processed_data = [x // 2 for x in items_data]
+bitwise_check = items_data[0] | items_data[1]
 
-# Asset tuples: (expected_return, risk)
-financial_assets = [
-    (0.08, 0.12),
-    (0.15, 0.25),
-    (0.12, 0.18),
-    (0.06, 0.09),
-    (0.20, 0.30)
-]
+final_count = process_items(items_data)
 
-portfolio_optimizer = Portfolio(financial_assets)
-optimal_sharpe_ratio = portfolio_optimizer.get_optimal_weight(0, 10)
-print(f"Result: {round(optimal_sharpe_ratio, 6)}")
+print(f"Result: {final_count}")

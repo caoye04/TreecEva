@@ -1,77 +1,36 @@
-from functools import reduce
+def analyze_sensor_data(sensor_readings):
+    # Process multiple sensor readings using zip and enumerate
+    processed_values = []
+    adjustment_factors = [0.8, 1.2, 0.9, 1.1, 1.0]
+    
+    # Main processing loop with zip
+    for index, (reading, factor) in enumerate(zip(sensor_readings, adjustment_factors)):
+        adjusted_value = reading * factor
+        processed_values.append(adjusted_value)
+    
+    # Calculate statistics (some are distractors)
+    max_reading = max(sensor_readings)
+    min_reading = min(sensor_readings)
+    total_sum = sum(sensor_readings)
+    
+    # Calculate weighted average using processed values
+    weighted_avg = sum(processed_values) / len(processed_values)
+    
+    # Intermediate calculations (distractors)
+    range_difference = max_reading - min_reading
+    normalization_factor = total_sum / 100
+    
+    # Key calculation with processing
+    base_value = weighted_avg * 2.5
+    adjustment_offset = base_value % 10
+    processing_result = int(weighted_avg) + len(processed_values)
+    
+    # Final statement
+    final_calculation = processing_result + adjustment_offset
+    
+    print(f"Target result: {processing_result}")
+    return processing_result
 
-def calculate_shipping_cost(weight, distance):
-    base_rate = 2.5
-    return base_rate * weight * (distance / 100)
-
-def apply_divide_and_conquer_discount(weights, costs):
-    if len(weights) <= 1:
-        return costs
-    mid = len(weights) // 2
-    left_weights, right_weights = weights[:mid], weights[mid:]
-    left_costs, right_costs = costs[:mid], costs[mid:]
-    return apply_divide_and_conquer_discount(left_weights, left_costs) + apply_divide_and_conquer_discount(right_weights, right_costs)
-
-def process_shipments():
-    # State machine for package routing
-    states = {'A': ['B', 'C'], 'B': ['C', 'D'], 'C': ['D'], 'D': []}
-    current_city = 'A'
-    
-    # Shipment data: (weight, destination)
-    shipments = [(15, 'D'), (8, 'C'), (22, 'D'), (5, 'B'), (12, 'D')]
-    distances = {'A': {'B': 120, 'C': 200}, 'B': {'C': 80, 'D': 150}, 'C': {'D': 70}}
-    
-    total_cost = 0
-    shipment_weights = []
-    shipment_costs = []
-    
-    for weight, destination in shipments:
-        if weight > 25:
-            return 0  # Early return for overweight packages
-        
-        path_cost = 0
-        temp_city = current_city
-        
-        # Route package through cities using state machine
-        while temp_city != destination:
-            if not states[temp_city]:
-                break
-            next_cities = states[temp_city]
-            if destination in next_cities:
-                path_cost += calculate_shipping_cost(weight, distances[temp_city][destination])
-                break
-            else:
-                # Move to first available city
-                next_city = next_cities[0]
-                if temp_city in distances and next_city in distances[temp_city]:
-                    path_cost += calculate_shipping_cost(weight, distances[temp_city][next_city])
-                temp_city = next_city
-                
-                if temp_city == destination:
-                    break
-        
-        shipment_weights.append(weight)
-        shipment_costs.append(path_cost)
-        total_cost += path_cost
-    
-    # Sort weights for divide and conquer discount application
-    sorted_indices = sorted(range(len(shipment_weights)), key=lambda i: shipment_weights[i])
-    sorted_weights = [shipment_weights[i] for i in sorted_indices]
-    sorted_costs = [shipment_costs[i] for i in sorted_indices]
-    
-    # Apply discount: 10% off for shipments >= 10 weight units
-    discounted_costs = [
-        cost * 0.9 if weight >= 10 else cost 
-        for weight, cost in zip(sorted_weights, sorted_costs)
-    ]
-    
-    # Use divide and conquer to finalize costs
-    final_costs = apply_divide_and_conquer_discount(sorted_weights, discounted_costs)
-    
-    # Sum all discounted costs
-    total_discounted_cost = reduce(lambda x, y: x + y, final_costs, 0)
-    
-    return total_discounted_cost
-
-result = process_shipments()
-print(f"Result: {result}")
+# Sensor readings from environmental monitoring system
+sensor_data = [45, 38, 52, 41, 49]
+result = analyze_sensor_data(sensor_data)

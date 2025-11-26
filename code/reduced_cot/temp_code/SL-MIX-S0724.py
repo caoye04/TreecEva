@@ -1,29 +1,46 @@
-import math
+def analyze_sequence_pattern(text_corpus, pattern_key):
+    # Distractor: multiple irrelevant variables
+    initial_offset = 15
+    temp_buffer = [0] * 20
+    dummy_sum = sum(range(10))
+    
+    # Relevant: string slicing and pattern analysis
+    core_segment = text_corpus[3:15]
+    pattern_matches = 0
+    
+    # Misleading intermediate computation
+    fake_count = len(core_segment) * 2 + initial_offset
+    
+    # Dead code path
+    if fake_count > 100:
+        unused_result = fake_count // 2
+    else:
+        unused_result = fake_count * 3
+    
+    # Actual pattern analysis
+    for i in range(len(core_segment) - len(pattern_key) + 1):
+        window = core_segment[i:i+len(pattern_key)]
+        if window == pattern_key:
+            pattern_matches += 1
+    
+    # More distractors
+    intermediate_value = pattern_matches * 7
+    redundant_calc = (intermediate_value + 5) % 13
+    
+    # Key computation with bitwise operations
+    pattern_factor = (pattern_matches << 2) | 1
+    
+    # Final relevant calculation
+    valid_sequences = pattern_matches * 3 - 1
+    final_count = valid_sequences * pattern_factor
+    
+    # Unused computation
+    misleading_total = final_count + dummy_sum + redundant_calc
+    
+    print(f"Result: {final_count}")
+    return final_count
 
-def signal_processing_pipeline():
-    # Frequency bins with initial amplitude values
-    freq_bins = {f'bin_{i}': i*2.5 for i in range(1, 9)}
-    
-    # Apply logarithmic scaling to each bin
-    log_scaled = {k: math.log(v) if v > 0 else 0 for k, v in freq_bins.items()}
-    
-    # Exponentially adjust high-frequency components
-    exp_adjusted = {k: v * math.exp(0.1) if 'bin_' in k and int(k.split('_')[1]) > 4 else v 
-                   for k, v in log_scaled.items()}
-    
-    # Bitwise masking operation using lambda for odd-positioned bins
-    mask_operation = lambda x, mask: int(x) & mask
-    masked_values = {k: mask_operation(v, 0xF) for k, v in exp_adjusted.items()}
-    
-    # Calculate weighted sum with floating point precision
-    weights = [math.sqrt(i) for i in range(1, len(masked_values)+1)]
-    weighted_products = [v * w for v, w in zip(masked_values.values(), weights)]
-    
-    # Final accumulation with precision rounding
-    final_amplitude_sum = round(sum(weighted_products), 4)
-    
-    return final_amplitude_sum
-
-# Execute the pipeline
-final_amplitude_sum = signal_processing_pipeline()
-print(f'Result: {final_amplitude_sum}')
+# Main execution with realistic scenario
+text_data = "abxypatternqrwpatternzvpatternmnopattern"
+target_pattern = "pattern"
+result = analyze_sequence_pattern(text_data, target_pattern)

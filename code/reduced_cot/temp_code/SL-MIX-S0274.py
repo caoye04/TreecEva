@@ -1,14 +1,36 @@
-from itertools import permutations
+def analyze_text_patterns(text_data):
+    # Process character frequencies
+    char_counter = {}
+    for char in text_data:
+        char_counter[char] = char_counter.get(char, 0) + 1
+    
+    # Calculate vowel distribution (distractor - not used in final result)
+    vowels = 'aeiouAEIOU'
+    vowel_count = sum(1 for char in text_data if char in vowels)
+    
+    # Main word processing logic
+    words = text_data.lower().split()
+    word_count = len(words)
+    
+    # Filter short words (distractor - not used in final result)
+    short_words = [word for word in words if len(word) < 4]
+    
+    # Calculate adjustment based on unique characters
+    unique_chars = len(set(text_data.replace(' ', '')))
+    adjustment_factor = unique_chars // 2
+    
+    # Bonus calculation based on word patterns
+    bonus_credit = 0
+    for word in words:
+        if word.endswith('ing'):
+            bonus_credit += 2
+        elif word.startswith('pre'):
+            bonus_credit += 1
+    
+    # Final computation (answer target)
+    final_count = word_count - adjustment_factor + bonus_credit
+    print(f"Result: {final_count}")
 
-# Define cookie types
-cookies = ['chocolate_chip', 'oatmeal_raisin', 'sugar']
-
-# Calculate all possible permutations of 2 cookies from the available types
-cookie_permutations = list(permutations(cookies, 2))
-
-# Using list comprehension to count the valid arrangements where no two same cookies are adjacent
-valid_arrangements = [p for p in cookie_permutations if p[0] != p[1]]
-
-total_arrangements = len(valid_arrangements)
-
-print(f"Result: {total_arrangements}")
+# Execute the analysis
+text_sample = "Programming is preparing for complex problem solving and creating innovative solutions"
+analyze_text_patterns(text_sample)

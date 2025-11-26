@@ -1,46 +1,52 @@
-from collections import defaultdict
+def validate_data_quality(raw_values):
+    temp_sum = sum(raw_values)
+    irrelevant_counter = len(raw_values) * 3 - 5  # Dead code path
+    quality_score = temp_sum // len(raw_values) if raw_values else 0
+    
+    # Misleading intermediate calculation
+    misleading_avg = (sum(raw_values) + 15) / (len(raw_values) + 1)
+    
+    if quality_score > 50:
+        adjusted_score = quality_score - (quality_score % 7)
+    else:
+        adjusted_score = quality_score + (8 - quality_score % 8)
+    
+    # Distractor operations
+    unused_metric = adjusted_score * 2 + 17
+    validation_flag = adjusted_score % 3 == 0
+    
+    return adjusted_score
 
-def process_textile_inspections():
-    batch_rolls = ['F201', 'G405', 'H709', 'J113']
-    weight_scores = {'F201': 85, 'G405': 92, 'H709': 78, 'J113': 88}
-    dimension_scores = {'F201': 90, 'G405': 87, 'H709': 95, 'J113': 82}
-    defect_counts = {'F201': 3, 'G405': 1, 'H709': 5, 'J113': 2}
+def process_quality_check(input_data):
+    # Irrelevant string operations (dead code)
+    data_strings = [str(x) for x in input_data]
+    string_lengths = [len(s) for s in data_strings]
     
-    # Initialize state machine for tracking inspection phases
-    inspection_phases = defaultdict(str)
-    cumulative_ratings = defaultdict(int)
-    verified_score_count = 0
+    primary_score = validate_data_quality(input_data)
     
-    # Phase 1: Weight validation
-    for roll_id in batch_rolls:
-        if weight_scores[roll_id] >= 80:
-            inspection_phases[roll_id] = 'WEIGHT_PASS'
-            cumulative_ratings[roll_id] += weight_scores[roll_id] % 17
-        else:
-            inspection_phases[roll_id] = 'WEIGHT_FAIL'
+    # Misleading conditional with dead branch
+    if primary_score > 100:
+        secondary_adjustment = primary_score // 4
+    else:
+        secondary_adjustment = primary_score // 3
     
-    # Phase 2: Dimension assessment
-    for roll_id in batch_rolls:
-        if inspection_phases[roll_id].endswith('PASS'):
-            adjusted_dimension = (dimension_scores[roll_id] * 2) % 19
-            cumulative_ratings[roll_id] += adjusted_dimension
-            inspection_phases[roll_id] += '_DIM_PASS'
-        else:
-            inspection_phases[roll_id] += '_DIM_SKIP'
+    # Actual relevant computation
+    data_range = max(input_data) - min(input_data) if input_data else 0
+    composite_metric = (primary_score * 2 + data_range) // 2
     
-    # Phase 3: Defect analysis
-    for roll_id in batch_rolls:
-        if 'DIM_PASS' in inspection_phases[roll_id]:
-            defect_penalty = defect_counts[roll_id] * 3
-            cumulative_ratings[roll_id] = (cumulative_ratings[roll_id] - defect_penalty) % 13
-            inspection_phases[roll_id] += '_DEFECT_ANALYZED'
-        
-        # Verification hash check
-        verification_hash = hash(roll_id) % 7
-        if cumulative_ratings[roll_id] > verification_hash:
-            verified_score_count += 1
+    # More distractions
+    unused_variance = sum((x - primary_score) ** 2 for x in input_data) if input_data else 0
     
-    return verified_score_count
+    # Final calculation with bitwise distraction
+    bitwise_distraction = composite_metric & 0xFF
+    final_result = composite_metric - (bitwise_distraction % 5)
+    
+    return final_result
 
-verified_score_count = process_textile_inspections()
-print(f"Result: {verified_score_count}")
+# Main execution
+sample_data = [45, 67, 89, 23, 56, 78, 34]
+data_validation_results = sample_data
+final_metrics = process_quality_check(data_validation_results)
+
+# Print the target result
+print(f"Result: {final_metrics}")

@@ -1,0 +1,41 @@
+26
+final_balance
+---
+PARAM_MAPPING {'transactions': {'actual_var': 'transactions', 'value': [{'type': 'credit', 'amount': 25}, {'type': 'debit', 'amount': 40}, {'type': 'credit', 'amount': 15}, {'type': 'debit', 'amount': 30}]}, 'initial_amount': {'actual_var': 'base_funds', 'value': 100}}
+FUNCTION_ENTER 1 process_accounts def process_accounts(transactions, initial_amount):
+1 ['transactions', 'initial_amount'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'type': {'_type': 'str', '_value': 'credit'}, 'amount': {'_type': 'int', '_value': 25}}, '_len': 2}, {'_type': 'dict', '_items': {'type': {'_type': 'str', '_value': 'debit'}, 'amount': {'_type': 'int', '_value': 40}}, '_len': 2}, {'_type': 'dict', '_items': {'type': {'_type': 'str', '_value': 'credit'}, 'amount': {'_type': 'int', '_value': 15}}, '_len': 2}, {'_type': 'dict', '_items': {'type': {'_type': 'str', '_value': 'debit'}, 'amount': {'_type': 'int', '_value': 30}}, '_len': 2}], '_len': 4}, {'_type': 'int', '_value': 100}]
+3 service_fee = 2.5
+3 ['transactions', 'initial_amount', 'service_fee'] ["[{type: 'credit', amount: 25}, {type: 'debit', amount: 40}, {type: 'credit', amount: 15}, {type: 'debit', amount: 30}]", '100', '2.5']
+9 processed = []
+9 ['transactions', 'initial_amount', 'service_fee', 'processed'] ["[{type: 'credit', amount: 25}, {type: 'debit', amount: 40}, {type: 'credit', amount: 15}, {type: 'debit', amount: 30}]", '100', '2.5', '[]']
+10 for t in transactions:
+10 ['transactions', 'initial_amount', 'service_fee', 'processed', 't'] ["[{type: 'credit', amount: 25}, {type: 'debit', amount: 40}, {type: 'credit', amount: 15}, {type: 'debit', amount: 30}]", '100', '2.5', '[]', "{type: 'credit', amount: 25}"]
+12 if t['type'] == 'credit':
+12 ['transactions', 'initial_amount', 'service_fee', 'processed', 't'] ["[{type: 'credit', amount: 25}, {type: 'debit', amount: 40}, {type: 'credit', amount: 15}, {type: 'debit', amount: 30}]", '100', '2.5', '[]', "{type: 'credit', amount: 25}"]
+10 for t in transactions:
+10 ['transactions', 'initial_amount', 'service_fee', 'processed', 't'] ["[{type: 'credit', amount: 25}, {type: 'debit', amount: 40}, {type: 'credit', amount: 15}, {type: 'debit', amount: 30}]", '100', '2.5', '[27.500000000000004]', "{type: 'debit', amount: 40}"]
+12 if t['type'] == 'credit':
+12 ['transactions', 'initial_amount', 'service_fee', 'processed', 't'] ["[{type: 'credit', amount: 25}, {type: 'debit', amount: 40}, {type: 'credit', amount: 15}, {type: 'debit', amount: 30}]", '100', '2.5', '[27.500000000000004]', "{type: 'debit', amount: 40}"]
+10 for t in transactions:
+10 ['transactions', 'initial_amount', 'service_fee', 'processed', 't'] ["[{type: 'credit', amount: 25}, {type: 'debit', amount: 40}, {type: 'credit', amount: 15}, {type: 'debit', amount: 30}]", '100', '2.5', '[27.500000000000004, 36.0]', "{type: 'credit', amount: 15}"]
+12 if t['type'] == 'credit':
+12 ['transactions', 'initial_amount', 'service_fee', 'processed', 't'] ["[{type: 'credit', amount: 25}, {type: 'debit', amount: 40}, {type: 'credit', amount: 15}, {type: 'debit', amount: 30}]", '100', '2.5', '[27.500000000000004, 36.0]', "{type: 'credit', amount: 15}"]
+10 for t in transactions:
+10 ['transactions', 'initial_amount', 'service_fee', 'processed', 't'] ["[{type: 'credit', amount: 25}, {type: 'debit', amount: 40}, {type: 'credit', amount: 15}, {type: 'debit', amount: 30}]", '100', '2.5', '[27.500000000000004, 36.0, 16.5]', "{type: 'debit', amount: 30}"]
+12 if t['type'] == 'credit':
+12 ['transactions', 'initial_amount', 'service_fee', 'processed', 't'] ["[{type: 'credit', amount: 25}, {type: 'debit', amount: 40}, {type: 'credit', amount: 15}, {type: 'debit', amount: 30}]", '100', '2.5', '[27.500000000000004, 36.0, 16.5]', "{type: 'debit', amount: 30}"]
+10 for t in transactions:
+10 ['transactions', 'initial_amount', 'service_fee', 'processed', 't'] ["[{type: 'credit', amount: 25}, {type: 'debit', amount: 40}, {type: 'credit', amount: 15}, {type: 'debit', amount: 30}]", '100', '2.5', '[27.500000000000004, 36.0, 16.5, 27.0]', "{type: 'debit', amount: 30}"]
+22 net_change = sum(processed)
+22 ['initial_amount', 'service_fee', 'processed', 'net_change'] ['100', '2.5', '[27.500000000000004, 36.0, 16.5, 27.0]', '107.0']
+23 balance = initial_amount + net_change
+23 ['initial_amount', 'service_fee', 'net_change', 'balance'] ['100', '2.5', '107.0', '207.0']
+26 final_balance = balance - service_fee if balance > 50 else balance + service_fee
+26 ['service_fee', 'balance', 'final_balance'] ['2.5', '207.0', '204.5']
+29 if balance > 1000:
+29 ['balance', 'final_balance'] ['207.0', '204.5']
+34 print(f"Target result: {final_balance}")
+34 ['final_balance'] ['204.5']
+35 return final_balance
+35 ['final_balance'] ['204.5']
+FUNCTION_RETURN 35 process_accounts {'_type': 'float', '_value': 204.5}

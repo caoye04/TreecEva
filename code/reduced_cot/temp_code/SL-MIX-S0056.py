@@ -1,16 +1,24 @@
-def fibonacci(n):
-    a, b = 0, 1
-    for _ in range(n):
-        yield a
-        a, b = b, a + b
+def process_coordinates(coords):
+    valid_count = 0
+    temp_sum = 0
+    processed = []
+    
+    for i, (x, y) in enumerate(coords):
+        if x > 0 and y > 0:
+            valid_count += 1
+            processed.append((x * 2, y // 2))
+        temp_sum += x + y  # Distractor: not used in final result
+    
+    quadrant_analysis = {}
+    for idx, (a, b) in enumerate(processed):
+        if a + b > 10:
+            quadrant_analysis[idx] = 'high'
+        else:
+            quadrant_analysis[idx] = 'low'
+    
+    final_count = sum(1 for val in quadrant_analysis.values() if val == 'high')
+    print(f"Result: {final_count}")
+    return final_count
 
-# Generate first 10 Fibonacci numbers
-fib_sequence = list(fibonacci(10))
-
-# Dictionary comprehension to map Fibonacci numbers to their indices
-fib_dict = {value: index for index, value in enumerate(fib_sequence)}
-
-# Calculate the sum of Fibonacci numbers that are keys in the dictionary
-fibonacci_sum = sum(fib_dict.keys())
-
-print(f'Result: {fibonacci_sum}')
+coord_pairs = [(3, 8), (5, 12), (2, 4), (7, 9), (1, 2)]
+result_analysis = process_coordinates(coord_pairs)

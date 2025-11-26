@@ -1,36 +1,34 @@
-from collections import deque
-from functools import reduce
-from operator import xor
+def validate_data_entries():
+    data_stream = {'A': 15, 'B': 8, 'C': 22, 'D': 17, 'E': 9}
+    validation_rules = {'min_threshold': 10, 'max_threshold': 20}
+    
+    # Primary validation processing
+    valid_count = 0
+    temp_sum = 0
+    
+    for key, value in data_stream.items():
+        if value >= validation_rules['min_threshold'] and value <= validation_rules['max_threshold']:
+            valid_count += 1
+            temp_sum += value
+        
+        # Distractor calculation - doesn't affect final result
+        redundant_check = value * 3 // 2
+    
+    # Intermediate processing with some distraction
+    average_valid = temp_sum // valid_count if valid_count > 0 else 0
+    deviation_calc = (temp_sum - average_valid * valid_count) ** 2
+    
+    # Main logic chain
+    base_score = valid_count * 7
+    adjustment_factor = (base_score % 13) + 3
+    
+    # Final computation
+    total_validation = base_score + adjustment_factor
+    
+    # Final statement
+    final_result = total_validation * 2 - 10
+    
+    print(f"Result: {total_validation}")
+    return total_validation
 
-def process_packets():
-    packet_headers = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
-    accepted_signatures = deque(maxlen=3)
-    validation_keys = {0x10, 0x20, 0x30}
-    mask = 0xF0
-    
-    for header in packet_headers:
-        # Step 1: Bitwise filtering
-        if header & mask != 0:
-            # Step 2: Signature generation using XOR
-            signature = header ^ 0xAA
-            
-            # Step 3: Check if signature is in validation keys
-            if signature in validation_keys:
-                # Step 4: Add to sliding window (queue)
-                accepted_signatures.append(signature)
-            else:
-                # Step 5: Apply secondary filter using set operations
-                temp_set = frozenset([signature & 0x0F, (signature >> 4) & 0x0F])
-                if len(temp_set.intersection(validation_keys)) > 0:
-                    accepted_signatures.append(signature)
-    
-    # Step 6: Generate final verification code using reduce and XOR
-    if accepted_signatures:
-        final_verification_code = reduce(xor, accepted_signatures, 0)
-    else:
-        final_verification_code = 0
-    
-    return final_verification_code
-
-final_verification_code = process_packets()
-print(f"Result: {final_verification_code}")
+validate_data_entries()

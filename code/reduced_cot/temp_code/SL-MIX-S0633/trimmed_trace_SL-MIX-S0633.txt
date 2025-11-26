@@ -1,0 +1,35 @@
+46
+network_throughput
+---
+33 primary_nodes = 7
+33 ['primary_nodes'] ['7']
+34 backup_nodes = 5
+34 ['primary_nodes', 'backup_nodes'] ['7', '5']
+39 node_list = [primary_nodes, backup_nodes]
+39 ['primary_nodes', 'backup_nodes', 'node_list'] ['7', '5', '[7, 5]']
+PARAM_MAPPING {'node_list': {'actual_var': 'node_list', 'value': [7, 5]}}
+FUNCTION_ENTER 8 validate_nodes def validate_nodes(node_list):
+8 ['node_list'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 5}], '_len': 2}]
+10 if len(node_list) > 10:
+10 ['node_list'] ['[7, 5]']
+12 return sum(node_list) % 2 == 0
+12 ['node_list'] ['[7, 5]']
+FUNCTION_RETURN 12 validate_nodes {'_type': 'bool', '_value': True}
+43 network_throughput = final_calculation(primary_nodes, backup_nodes)
+43 ['primary_nodes', 'backup_nodes'] ['7', '5']
+16 base_capacity = calculate_capacity(primary)
+16 ['primary', 'backup'] ['7', '5']
+PARAM_MAPPING {'active_nodes': {'actual_var': 'primary', 'value': 7}}
+FUNCTION_ENTER 3 calculate_capacity def calculate_capacity(active_nodes, max_bandwidth=100):
+3 ['active_nodes', 'max_bandwidth'] [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 100}]
+6 return active_nodes * max_bandwidth
+6 ['active_nodes', 'max_bandwidth'] ['7', '100']
+FUNCTION_RETURN 6 calculate_capacity {'_type': 'int', '_value': 700}
+22 adjusted_capacity = (base_capacity // 2) if primary > backup else (base_capacity * 3 // 4)
+22 ['primary', 'backup', 'base_capacity', 'adjusted_capacity'] ['7', '5', '700', '350']
+29 final_value = adjusted_capacity ^ (backup & 0xFF)
+29 ['backup', 'adjusted_capacity', 'final_value'] ['5', '350', '347']
+30 return final_value
+30 ['final_value'] ['347']
+46 print(f"Target result: {network_throughput}")
+46 ['network_throughput'] ['347']

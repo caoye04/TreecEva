@@ -1,36 +1,22 @@
-Target: Find the value of variable max_profit after [line 30] executes
+Target: Find the value of variable final_count after [line 19] executes
 
-[line 14]  display_capacity = 7
-Assign: display_capacity = 7
-[line 17]  pie_densities = [(pie.profit / pie.size, pie) for pie in available_pies]
-Compute: [(pie.profit / pie.size, pie) for pie in available_pies], where pie=Pie(name='Apple', profit=12, size=3) (an unknown source), available_pies=[Pie(name='Apple', profit=12, size=3), Pie(name='Blueberry', profit=15, size=5), Pie(name='Cherry', profit=10, size=2), Pie(name='Pumpkin', profit=8, size=4)] (an unknown source) = ?
-[line 21]  selected_pies = []
-Compute: [] = []
-[line 22]  remaining_capacity = display_capacity
-Compute: display_capacity, where display_capacity=7 (defined at [line 14]) = 7
-[line 24]  for density, pie in pie_densities:
-(Missing param: 'iter_var')
-[line 25]  if pie.size <= remaining_capacity:
+[line 2]  packet_sizes = [entry.get('size', 0) for entry in log_entries if entry.get('protocol') == 'TCP']
+Compute: [entry.get('size', 0) for entry in log_entries if entry.get('protocol') == 'TCP'], where entry={protocol: 'TCP', size: 1500, type: 'incoming'} (an unknown source), log_entries=[{protocol: 'TCP', size: 1500, type: 'incoming'}, {protocol: 'TCP', size: 800, type: 'outgoing'}, {protocol: 'UDP', size: 512, type: 'incoming'}, {protocol: 'TCP', size: 1200, type: 'incoming'}, {protocol: 'TCP', size: 900, type: 'outgoing'}] (an unknown source) = ?
+[line 3]  processed_data = {}
+Compute: {} = {}
+[line 6]  total_packets = len(packet_sizes)
+Call function len(packet_sizes=[1500, 800, 1200, 900] (defined at [line 2]))
+[line 7]  if total_packets > 0:
 Condition: True, entering 'if' block
-[line 27]  remaining_capacity -= pie.size
-Update: remaining_capacity changed from 7 (defined at defined at [line 22]) to 7-pie.size = 5
-[line 24]  for density, pie in pie_densities:
-(Missing param: 'iter_var')
-[line 25]  if pie.size <= remaining_capacity:
-Condition: True, entering 'if' block
-[line 27]  remaining_capacity -= pie.size
-Update: remaining_capacity changed from 5 (defined at defined at [line 27]) to 5-pie.size = 2
-[line 24]  for density, pie in pie_densities:
-(Missing param: 'iter_var')
-[line 25]  if pie.size <= remaining_capacity:
-Condition: True, entering 'if' block
-[line 24]  for density, pie in pie_densities:
-(Missing param: 'iter_var')
-[line 25]  if pie.size <= remaining_capacity:
-Condition: True, entering 'if' block
-[line 24]  for density, pie in pie_densities:
-Loop End: Iteration finished
-[line 30]  max_profit = sum(pie.profit for pie in selected_pies)
-Call function sum(pie.profit for pie in selected_pies)
+[line 8]  total_size = sum(packet_sizes)
+Call function sum(packet_sizes=[1500, 800, 1200, 900] (defined at [line 2]))
+[line 9]  average_size = total_size / total_packets
+Compute: total_size / total_packets, where total_size=4400 (defined at [line 8]), total_packets=4 (defined at [line 6]) = 1100.0
+[line 10]  processed_data['total'] = total_size
+(Missing param: 'result')
+[line 11]  processed_data['average'] = average_size
+(Missing param: 'result')
+[line 19]  final_count = processed_data.get('total', 0)
+(Missing param: 'func_name')
 
-Answer: max_profit = ? (last updated on defined at [line 30])
+Answer: final_count = 4400 (last updated on an unknown source)

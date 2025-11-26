@@ -1,0 +1,22 @@
+Target: Find the value of variable final_quantity after [line 32] executes
+
+[line 6]  valid_items = [item for item in items_list if item > 0 and item % 3 != 0]
+Compute: [item for item in items_list if item > 0 and item % 3 != 0], where item=8 (an unknown source), items_list=[8, -2, 15, 22, 3, ...] (an unknown source) = ?
+[line 7]  processed_count = len(valid_items) * 2
+Compute: len(valid_items) * 2, where valid_items=[8, 22, 7, 14] (defined at [line 6]) = 8
+[line 14]  filtered_sequence = list(itertools.islice(valid_items, 0, min(4, len(valid_items))))
+Call function list(itertools.islice(valid_items, 0, min(4, len(valid_items))))
+[line 15]  scale_factor = 3 if len(filtered_sequence) > 2 else 5
+Compute: 3 if len(filtered_sequence) > 2 else 5, where filtered_sequence=[8, 22, 7, 14] (defined at [line 14]) = 3
+[line 22]  if len(items_list) > 20:
+Condition: True, entering 'if' block
+[line 27]  adjustment_map = {2: 7, 3: 4, 4: 1}
+Compute: {2: 7, 3: 4, 4: 1} = {2: 7, 3: 4, 4: 1}
+[line 28]  adjustment_value = adjustment_map.get(len(filtered_sequence), 0)
+(Missing param: 'func_name')
+[line 29]  excess_count = len([x for x in items_list if x < 0]) + 2
+Compute: len([x for x in items_list if x < 0]) + 2, where x=8 (an unknown source), items_list=[8, -2, 15, 22, 3, ...] (an unknown source) = ?
+[line 32]  final_quantity = (processed_count - excess_count) * scale_factor + adjustment_value
+Compute: (processed_count - excess_count) * scale_factor + adjustment_value, where processed_count=8 (defined at [line 7]), excess_count=4 (defined at [line 29]), scale_factor=3 (defined at [line 15]), adjustment_value=1 (an unknown source) = 13
+
+Answer: final_quantity = 13 (last updated on defined at [line 32])

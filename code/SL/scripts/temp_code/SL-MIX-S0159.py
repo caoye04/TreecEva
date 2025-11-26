@@ -1,37 +1,25 @@
-import re
-
-def hex_to_int(hex_str):
-    return int(hex_str, 16)
-
-def elevation_filter(elevations, threshold=1000):
-    return [e for e in elevations if e > threshold]
-
-def calculate_volume(elevation_map, base_level=500):
-    volume = 0
-    for row in elevation_map:
-        for elevation in row:
-            if elevation > base_level:
-                volume += elevation - base_level
-    return volume
-
-def process_terrain_data(terrain_hex_strings):
-    # Convert hex strings to integers
-    elevation_data = [[hex_to_int(cell) for cell in row.split()] for row in terrain_hex_strings]
+def calculate_text_analysis(text_samples):
+    character_counts = {}
     
-    # Filter high elevation points
-    filtered_elevation_data = [elevation_filter(row) for row in elevation_data]
+    for sample in text_samples:
+        for char in sample:
+            if char.isalpha():
+                character_counts[char.lower()] = character_counts.get(char.lower(), 0) + 1
     
-    # Calculate required volume for site preparation
-    total_volume = calculate_volume(filtered_elevation_data)
-    return total_volume
+    total_chars = sum(character_counts.values())
+    unique_chars = len(character_counts)
+    
+    base_score = total_chars * unique_chars
+    
+    adjustment_factor = 2
+    adjusted_sum = base_score + adjustment_factor
+    
+    normalization_factor = 3
+    final_score = adjusted_sum // normalization_factor
+    
+    print(f"Result: {final_score}")
+    return final_score
 
-# Terrain data in hexadecimal representation
-raw_terrain_data = [
-    "3E8 4B0 5DC 7D0 9C4",
-    "1F4 2BC 3E8 4B0 5DC",
-    "FA 1F4 2BC 3E8 4B0",
-    "7D 1F4 2BC 3E8 5DC"
-]
-
-total_volume = process_terrain_data(raw_terrain_data)
-print(f"Result: {total_volume}")
+# Sample text data for analysis
+text_data = ["Hello", "World", "Python", "Programming"]
+calculate_text_analysis(text_data)

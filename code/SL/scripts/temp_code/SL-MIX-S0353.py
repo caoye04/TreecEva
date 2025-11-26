@@ -1,35 +1,44 @@
-import itertools
+from collections import Counter
 
-def process_neuronal_signals(signals):
-    # Apply combinatorial pairing and calculate XOR metrics
-    paired_metrics = [
-        a ^ b for a, b in itertools.combinations(signals, 2)
-        if (a + b) % 3 == 0
-    ]
+def analyze_text_patterns(text_data):
+    # Distractor: String processing that doesn't affect final result
+    words = text_data.split()
+    word_counts = Counter(words)
+    most_common = word_counts.most_common(3)
     
-    # Sort metrics in descending order
-    sorted_metrics = sorted(paired_metrics, reverse=True)
+    # Misleading intermediate calculations
+    temp_sum = sum(len(word) for word in words)
+    avg_length = temp_sum / len(words) if words else 0
     
-    # Compute adaptive threshold using ternary logic
-    threshold = sum(sorted_metrics[:3]) // len(sorted_metrics[:3]) if sorted_metrics else 0
+    # Dead code path - never executed
+    if avg_length > 10:
+        unused_var = "long_words"
+    else:
+        unused_var = "short_words"
     
-    # Filter metrics above threshold
-    filtered_metrics = [m for m in sorted_metrics if m > threshold]
+    # Relevant numeric processing
+    numeric_values = [ord(char) for char in text_data if char.isalpha()]
     
-    # Calculate final metric as alternating sum of top 4 values
-    sign = 1
-    aggregate = 0
-    for i, val in enumerate(filtered_metrics[:4]):
-        aggregate += sign * val
-        sign *= -1
+    # Key statement with bitwise operations and lambda
+    processed_data = list(map(lambda x: (x[0] ^ x[1]) & 0xFF, zip(numeric_values, reversed(numeric_values))))
     
-    # Normalize using ternary operator based on list length
-    final_metric = aggregate // 2 if len(filtered_metrics) >= 4 else aggregate * 2
-    return final_metric
+    # More distractor operations
+    max_val = max(processed_data) if processed_data else 0
+    min_val = min(processed_data) if processed_data else 0
+    range_val = max_val - min_val
+    
+    # Actual target calculation
+    final_result = sum(processed_data) % 256
+    
+    # Print irrelevant values for distraction
+    print(f"Word analysis: {most_common}")
+    print(f"Average length: {avg_length:.2f}")
+    print(f"Range of processed data: {range_val}")
+    
+    # Final answer
+    print(f"Result: {final_result}")
+    return final_result
 
-# Neuronal signal dataset
-signals_data = [13, 22, 35, 46, 57, 68, 79, 81, 92, 103]
-
-# Process the signals
-final_metric = process_neuronal_signals(signals_data)
-print(f"Result: {final_metric}")
+# Main execution with realistic data
+sample_text = "Programming evaluation benchmark for LLM reasoning capabilities"
+analyze_text_patterns(sample_text)

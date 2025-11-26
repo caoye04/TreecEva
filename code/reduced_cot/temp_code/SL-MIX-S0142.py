@@ -1,28 +1,31 @@
-from functools import wraps
-from itertools import permutations
+def process_inventory(items):
+    # Process warehouse inventory with various calculations
+    item_codes = [item * 2 for item in items if item % 3 != 0]
+    
+    # Intermediate calculations (some not directly used)
+    temp_sum = sum(item_codes)
+    alternate_calc = len(item_codes) * 5.5
+    unused_metric = temp_sum / max(1, len(item_codes))
+    
+    # Create mapping with lambda for processing
+    result_mapping = {code: (lambda x: x ** 1.5)(code) for code in item_codes}
+    
+    # Filter and process with enumerate
+    filtered_value = None
+    for idx, code in enumerate(item_codes):
+        if idx % 2 == 0:
+            filtered_value = code
+            break
+    
+    # Additional unused operations
+    potential_result = sum(result_mapping.values()) / 10
+    fallback_calc = (temp_sum - alternate_calc) if temp_sum > 100 else temp_sum
+    
+    # Final calculation with intervention
+    final_output = result_mapping.get(filtered_value, fallback_calc)
+    
+    print(f"Result: {final_output}")
 
-def step_counter(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        wrapper.steps += 1
-        return result
-    wrapper.steps = 0
-    return wrapper
-
-@step_counter
-def calculate_bonding_arrangements(ring_atoms):
-    # Generate all possible permutations of atom positions
-    all_perms = list(permutations(ring_atoms))
-    # Use set to eliminate duplicates considering rotational symmetry
-    unique_configs = set()
-    for perm in all_perms:
-        # Normalize by rotating to start with the smallest element
-        min_rotation = min([perm[i:] + perm[:i] for i in range(len(perm))])
-        unique_configs.add(min_rotation)
-    return len(unique_configs)
-
-# Carbon atoms in a hexagonal ring
-carbon_ring = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6']
-total_arrangements = calculate_bonding_arrangements(carbon_ring)
-print(f'Result: {total_arrangements}')
+# Execute with sample inventory
+inventory_items = [8, 12, 15, 20, 25, 30]
+process_inventory(inventory_items)

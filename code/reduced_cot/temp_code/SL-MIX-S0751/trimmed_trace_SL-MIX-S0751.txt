@@ -1,0 +1,47 @@
+48
+final_computation
+---
+41 inventory_data = {'A': 12, 'B': 25, 'C': 18, 'D': 30, 'E': 8}
+41 ['inventory_data'] ['{A: 12, B: 25, C: 18, ...}']
+42 adjustment_factor = 7
+42 ['inventory_data', 'adjustment_factor'] ['{A: 12, B: 25, C: 18, ...}', '7']
+48 final_computation = process_inventory(inventory_data, adjustment_factor)
+48 ['inventory_data', 'adjustment_factor'] ['{A: 12, B: 25, C: 18, ...}', '7']
+PARAM_MAPPING {'items': {'actual_var': 'inventory_data', 'value': {'A': 12, 'B': 25, 'C': 18, 'D': 30, 'E': 8}}, 'modifier': {'actual_var': 'adjustment_factor', 'value': 7}}
+FUNCTION_ENTER 1 process_inventory def process_inventory(items, modifier):
+1 ['items', 'modifier'] [{'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 12}, 'B': {'_type': 'int', '_value': 25}, 'C': {'_type': 'int', '_value': 18}, 'D': {'_type': 'int', '_value': 30}, 'E': {'_type': 'int', '_value': 8}}, '_len': 5}, {'_type': 'int', '_value': 7}]
+10 filtered_items = {k: v for k, v in items.items() if v > 15}
+10 ['items', 'modifier', 'k', 'v'] ['{A: 12, B: 25, C: 18, ...}', '7', "'A'", '12']
+10 filtered_items = {k: v for k, v in items.items() if v > 15}
+10 ['items', 'modifier', 'k', 'v'] ['{A: 12, B: 25, C: 18, ...}', '7', "'B'", '25']
+10 filtered_items = {k: v for k, v in items.items() if v > 15}
+10 ['items', 'modifier', 'k', 'v'] ['{A: 12, B: 25, C: 18, ...}', '7', "'C'", '18']
+10 filtered_items = {k: v for k, v in items.items() if v > 15}
+10 ['items', 'modifier', 'k', 'v'] ['{A: 12, B: 25, C: 18, ...}', '7', "'D'", '30']
+10 filtered_items = {k: v for k, v in items.items() if v > 15}
+10 ['items', 'modifier', 'k', 'v'] ['{A: 12, B: 25, C: 18, ...}', '7', "'E'", '8']
+10 filtered_items = {k: v for k, v in items.items() if v > 15}
+10 ['items', 'modifier', 'filtered_items'] ['{A: 12, B: 25, C: 18, ...}', '7', '{B: 25, C: 18, D: 30}']
+13 if len(filtered_items) > 5:
+13 ['modifier', 'filtered_items'] ['7', '{B: 25, C: 18, D: 30}']
+26 processed_values = []
+26 ['modifier', 'filtered_items', 'value_map', 'processed_values'] ['7', '{B: 25, C: 18, D: 30}', '{A: function(...), B: function(...), C: function(...), ...}', '[]']
+27 for item_code, quantity in filtered_items.items():
+27 ['modifier', 'filtered_items', 'value_map', 'processed_values', 'item_code', 'quantity'] ['7', '{B: 25, C: 18, D: 30}', '{A: function(...), B: function(...), C: function(...), ...}', '[]', "'B'", '25']
+28 if item_code in value_map:
+28 ['modifier', 'filtered_items', 'value_map', 'processed_values', 'item_code', 'quantity'] ['7', '{B: 25, C: 18, D: 30}', '{A: function(...), B: function(...), C: function(...), ...}', '[]', "'B'", '25']
+27 for item_code, quantity in filtered_items.items():
+27 ['modifier', 'filtered_items', 'value_map', 'processed_values', 'item_code', 'quantity'] ['7', '{B: 25, C: 18, D: 30}', '{A: function(...), B: function(...), C: function(...), ...}', '[33]', "'C'", '18']
+28 if item_code in value_map:
+28 ['modifier', 'filtered_items', 'value_map', 'processed_values', 'item_code', 'quantity'] ['7', '{B: 25, C: 18, D: 30}', '{A: function(...), B: function(...), C: function(...), ...}', '[33]', "'C'", '18']
+27 for item_code, quantity in filtered_items.items():
+27 ['modifier', 'filtered_items', 'value_map', 'processed_values', 'item_code', 'quantity'] ['7', '{B: 25, C: 18, D: 30}', '{A: function(...), B: function(...), C: function(...), ...}', '[33, 9]', "'D'", '30']
+28 if item_code in value_map:
+28 ['modifier', 'filtered_items', 'value_map', 'processed_values', 'item_code', 'quantity'] ['7', '{B: 25, C: 18, D: 30}', '{A: function(...), B: function(...), C: function(...), ...}', '[33, 9]', "'D'", '30']
+27 for item_code, quantity in filtered_items.items():
+27 ['modifier', 'filtered_items', 'processed_values', 'item_code', 'quantity'] ['7', '{B: 25, C: 18, D: 30}', '[33, 9, 29]', "'D'", '30']
+37 final_result = sum(processed_values) - modifier
+37 ['modifier', 'processed_values', 'final_result'] ['7', '[33, 9, 29]', '64']
+38 return final_result
+38 ['final_result'] ['64']
+FUNCTION_RETURN 38 process_inventory {'_type': 'int', '_value': 64}

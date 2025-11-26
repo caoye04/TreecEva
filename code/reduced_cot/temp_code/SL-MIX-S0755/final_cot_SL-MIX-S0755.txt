@@ -1,0 +1,35 @@
+Target: Find the value of variable cipher_key after [line 37] executes
+
+[line 11]  initial_seed = 0xAB
+Assign: initial_seed = 171
+[line 12]  key_base = 42
+Assign: key_base = 42
+[line 13]  padding_mask = 0xF0
+Assign: padding_mask = 240
+[line 14]  bit_filter = 0x3C
+Assign: bit_filter = 60
+[line 15]  rotation_count = 3
+Assign: rotation_count = 3
+[line 18]  redundant_counter = 0
+Assign: redundant_counter = 0
+[line 23]  rotated_seed = rotate_bits(initial_seed, rotation_count)
+Call function rotate_bits(initial_seed=171 (defined at [line 11]), rotation_count=3 (defined at [line 15]))
+[line 1]  def rotate_bits(value, shift):
+Enter function rotate_bits: value=171 (initial_seed defined at [line 11]), shift=3 (rotation_count defined at [line 15])
+  [line 2]  return ((value << shift) | (value >> (8 - shift))) & 0xFF
+  Return: ((value << shift) | (value >> (8 - shift))) & 0xFF
+Function rotate_bits returns 93
+[line 24]  intermediate_value = (rotated_seed + key_base) % 128
+Compute: (rotated_seed + key_base) % 128, where rotated_seed=93 (defined at [line 23]), key_base=42 (defined at [line 12]) = 7
+[line 25]  masked_value = intermediate_value | padding_mask
+Compute: intermediate_value | padding_mask, where intermediate_value=7 (defined at [line 24]), padding_mask=240 (defined at [line 13]) = 247
+[line 28]  if redundant_counter > 10:
+Condition: True, entering 'if' block
+[line 33]  distractor_value = (initial_seed ^ key_base) & 0x55
+Compute: (initial_seed ^ key_base) & 0x55, where initial_seed=171 (defined at [line 11]), key_base=42 (defined at [line 12]) = 1
+[line 36]  final_transform = (masked_value ^ padding_mask) & bit_filter
+Compute: (masked_value ^ padding_mask) & bit_filter, where masked_value=247 (defined at [line 25]), padding_mask=240 (defined at [line 13]), bit_filter=60 (defined at [line 14]) = 4
+[line 37]  cipher_key = final_transform + distractor_value
+Compute: final_transform + distractor_value, where final_transform=4 (defined at [line 36]), distractor_value=1 (defined at [line 33]) = 5
+
+Answer: cipher_key = 5 (last updated on defined at [line 37])

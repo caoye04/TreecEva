@@ -1,12 +1,40 @@
-Target: Find the value of variable total_unique_items after [line 4] executes
+Target: Find the value of variable data_quality_score after [line 27] executes
 
-[line 1]  monday_sales = {'croissants', 'bagels', 'muffins'}
-Compute: {'croissants', 'bagels', 'muffins'} = {'muffins', 'bagels', 'croissants'}
-[line 2]  tuesday_sales = {'muffins', 'scones', 'donuts'}
-Compute: {'muffins', 'scones', 'donuts'} = {'muffins', 'scones', 'donuts'}
-[line 3]  combined_sales = monday_sales.union(tuesday_sales)
+[line 2]  total_samples = len(dataset)
+Call function len(dataset=['apple', 'banana123', 'cherry', 'date', '', ...] (an unknown source))
+[line 3]  valid_entries = []
+Compute: [] = []
+[line 7]  for data_point in dataset:
+Loop Start: data_point takes its first value 'apple'
+[line 8]  if isinstance(data_point, str) and data_point.strip():
+Condition: True, entering 'if' block
+[line 9]  clean_point = data_point.strip().lower()
 (Missing param: 'func_name')
-[line 4]  total_unique_items = len(combined_sales)
-Call function len(combined_sales={'donuts', 'muffins', 'bagels', 'scones', 'croissants'} (an unknown source))
+[line 10]  if clean_point.isalpha():
+Condition: True, entering 'if' block
+[line 7]  for data_point in dataset:
+Loop Iteration: data_point is now 'banana123' (iteration 2)
+[line 8]  if isinstance(data_point, str) and data_point.strip():
+Condition: True, entering 'if' block
+[line 9]  clean_point = data_point.strip().lower()
+(Missing param: 'func_name')
+[line 10]  if clean_point.isalpha():
+Condition: True, entering 'if' block
+... [Line 7] repeats 7 more times ...
+... [Line 7] repeats 7 more times ...
+... [Line 7] repeats 7 more times ...
+... [Line 7] repeats 7 more times ...
+[line 7]  for data_point in dataset:
+Loop Iteration: data_point is now 'kiwi' (iteration 10)
+[line 8]  if isinstance(data_point, str) and data_point.strip():
+Condition: True, entering 'if' block
+[line 9]  clean_point = data_point.strip().lower()
+(Missing param: 'func_name')
+[line 10]  if clean_point.isalpha():
+Condition: True, entering 'if' block
+[line 7]  for data_point in dataset:
+Loop End: Iteration finished
+[line 27]  data_quality_score = (len(valid_entries) / total_samples) * 100
+Compute: (len(valid_entries) / total_samples) * 100, where valid_entries=['apple', 'cherry', 'date', 'elderberry', 'fig', ...] (defined at [line 3]), total_samples=10 (defined at [line 2]) = 70.0
 
-Answer: total_unique_items = 5 (last updated on defined at [line 4])
+Answer: data_quality_score = 70.0 (last updated on defined at [line 27])

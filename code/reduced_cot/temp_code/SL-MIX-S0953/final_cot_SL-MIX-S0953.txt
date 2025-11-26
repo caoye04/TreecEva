@@ -1,0 +1,44 @@
+Target: Find the value of variable final_score after [line 51] executes
+
+[line 41]  sensor_data = [45, 78, 92, 33, 67, 84, 29, 51, 76, 88]
+Compute: [45, 78, 92, 33, 67, 84, 29, 51, 76, 88] = [45, 78, 92, 33, 67, ...]
+[line 42]  quality_metrics = {'precision': 85, 'accuracy': 92, 'reliability': 78}  # reliability unused
+Compute: {'precision': 85, 'accuracy': 92, 'reliability': 78}  # reliability unused = {precision: 85, accuracy: 92, reliability: 78}
+[line 8]  def process_sensor_readings(readings):
+Enter function process_sensor_readings: readings=[45, 78, 92, 33, 67, ...] (sensor_data defined at [line 41])
+  [line 10]  filtered = [r for r in readings if r % 3 == 0]  # Irrelevant filtering
+  Compute: [r for r in readings if r % 3 == 0]  # Irrelevant filtering, where r=45 (an unknown source), readings=[45, 78, 92, 33, 67, ...] (parameter readings defined at [line 41]) = ?
+  [line 12]  return sum(filtered) * 1.25  # Misleading intermediate result
+  Return: sum(filtered) * 1.25  # Misleading intermediate result
+Function process_sensor_readings returns 363.75
+[line 3]  def calculate_data_quality(data_points, threshold=75):
+Enter function calculate_data_quality: data_points=[45, 78, 92, 33, 67, ...] (sensor_data defined at [line 41]), threshold=75
+  [line 5]  valid_count = sum(1 for x in data_points if x > threshold)
+  Call function sum(1 for x in data_points if x > threshold)
+  [line 6]  return valid_count * 2.5  # Misleading calculation
+  Return: valid_count * 2.5  # Misleading calculation
+Function calculate_data_quality returns 12.5
+[line 49]  final_score = calculate_final_score(sensor_data, quality_metrics)
+Call function calculate_final_score(sensor_data=[45, 78, 92, 33, 67, ...] (defined at [line 41]), quality_metrics={precision: 85, accuracy: 92, reliability: 78} (defined at [line 42]))
+[line 16]  base_score = sum(data_values) // len(data_values)
+Compute: sum(data_values) // len(data_values), where data_values=[45, 78, 92, 33, 67, ...] (an unknown source) = 64
+[line 19]  bit_mask = 0b10101010
+Assign: bit_mask = 170
+[line 20]  processed_bits = base_score & bit_mask | 0b01010101
+Compute: base_score & bit_mask | 0b01010101, where base_score=64 (defined at [line 16]), bit_mask=170 (defined at [line 19]) = 85
+[line 23]  adjust_quality = lambda x, y: (x * y) % 100 + min(x, y)
+Compute: lambda x, y: (x * y) % 100 + min(x, y) = ?
+[line 26]  quality_adjustment = adjust_quality(quality_factors['precision'], quality_factors['accuracy'])
+Call function adjust_quality(quality_factors['precision'], quality_factors['accuracy'])
+[line 29]  data_slice = data_values[2:7]  # Fixed slice
+Compute: data_values[2:7]  # Fixed slice, where data_values=[45, 78, 92, 33, 67, ...] (an unknown source) = [92, 33, 67, 84, 29]
+[line 30]  slice_sum = sum(data_slice) * quality_adjustment // 10
+Compute: sum(data_slice) * quality_adjustment // 10, where data_slice=[92, 33, 67, 84, 29] (defined at [line 29]), quality_adjustment=105 (defined at [line 26]) = 3202
+[line 33]  final_result = (base_score ^ processed_bits) + slice_sum - quality_adjustment
+Compute: (base_score ^ processed_bits) + slice_sum - quality_adjustment, where base_score=64 (defined at [line 16]), processed_bits=85 (defined at [line 20]), slice_sum=3202 (defined at [line 30]), quality_adjustment=105 (defined at [line 26]) = 3118
+[line 38]  return final_result
+Return: final_result=3118 (defined at [line 33])
+[line 51]  print(f"Result: {final_score}")
+Output: f"Result: {final_score}"
+
+Answer: final_score = 3118 (last updated on defined at [line 49])

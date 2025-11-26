@@ -1,8 +1,28 @@
-Target: Find the value of variable planned_croissants after [line 8] executes
+Target: Find the value of variable final_throughput after [line 21] executes
 
-[line 3]  today_sales = Counter({'croissants': 45, 'muffins': 20, 'danish': 30})
-Call function Counter({'croissants': 45, 'muffins': 20, 'danish': 30})
-[line 8]  planned_croissants = today_sales['croissants']
-Compute: today_sales['croissants'], where today_sales={croissants: 45, muffins: 20, danish: 30} (defined at [line 3]) = 45
+[line 2]  packet_sizes = [512, 1024, 768, 2048, 1536, 512, 2560, 1024]
+Compute: [512, 1024, 768, 2048, 1536, 512, 2560, 1024] = [512, 1024, 768, 2048, 1536, ...]
+[line 3]  bandwidth_limit = 1500
+Assign: bandwidth_limit = 1500
+[line 6]  filtered_packets = [size for size in packet_sizes if size <= bandwidth_limit]
+Compute: [size for size in packet_sizes if size <= bandwidth_limit], where size=512 (an unknown source), packet_sizes=[512, 1024, 768, 2048, 1536, ...] (defined at [line 2]), bandwidth_limit=1500 (defined at [line 3]) = ?
+[line 13]  processed_packets = []
+Compute: [] = []
+[line 14]  for packet in filtered_packets:
+Loop Start: packet takes its first value 512
+[line 14]  for packet in filtered_packets:
+Loop End: Iteration finished
+[line 14]  for packet in filtered_packets:
+Loop End: Iteration finished
+[line 14]  for packet in filtered_packets:
+Loop End: Iteration finished
+[line 14]  for packet in filtered_packets:
+Loop End: Iteration finished
+[line 14]  for packet in filtered_packets:
+Loop End: Iteration finished
+[line 20]  if len(processed_packets) > 0:
+Condition: True, entering 'if' block
+[line 21]  final_throughput = processed_packets[-1]
+Compute: processed_packets[-1], where processed_packets=[544, 1056, 800, 544, 1056] (defined at [line 13]) = 1056
 
-Answer: planned_croissants = 45 (last updated on defined at [line 8])
+Answer: final_throughput = 1056 (last updated on defined at [line 21])

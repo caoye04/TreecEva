@@ -1,46 +1,55 @@
-import math
-from functools import reduce
+def encrypt_transform(text, shift):
+    result = ''
+    for char in text:
+        if char.isalpha():
+            base = ord('a') if char.islower() else ord('A')
+            result += chr((ord(char) - base + shift) % 26 + base)
+        else:
+            result += char
+    return result
 
-def build_tree(values):
-    if not values:
-        return None
-    nodes = [TreeNode(val) for val in values]
-    while len(nodes) > 1:
-        new_level = []
-        for i in range(0, len(nodes), 2):
-            if i + 1 < len(nodes):
-                parent_val = nodes[i].val ^ nodes[i+1].val
-                parent = TreeNode(parent_val)
-                parent.left = nodes[i]
-                parent.right = nodes[i+1]
-                new_level.append(parent)
-            else:
-                new_level.append(nodes[i])
-        nodes = new_level
-    return nodes[0] if nodes else None
+def analyze_frequency(data):
+    freq_map = {}
+    for item in data:
+        freq_map[item] = freq_map.get(item, 0) + 1
+    return freq_map
 
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+def process_security_data(messages, key_factor):
+    temp_sum = 0
+    irrelevant_computation = 42 * 3.14159
+    
+    for idx, msg in enumerate(messages):
+        transformed = encrypt_transform(msg, key_factor)
+        char_count = len([c for c in transformed if c.isalpha()])
+        
+        if idx % 2 == 0:
+            temp_sum += char_count * (idx + 1)
+        else:
+            temp_sum -= char_count // 2
+    
+    # Misleading intermediate calculation
+    decoy_value = temp_sum * 2 - irrelevant_computation
+    
+    frequency_data = analyze_frequency([''.join(sorted(msg)) for msg in messages])
+    pattern_weight = sum(frequency_data.values()) // len(messages)
+    
+    # Dead code path that doesn't affect result
+    if pattern_weight > 10:
+        unused_value = pattern_weight * 3
+    else:
+        unused_value = pattern_weight // 2
+    
+    # Final computation with bit operations
+    crypto_key = (temp_sum ^ pattern_weight) & 0xFF
+    
+    # Additional misleading operations
+    distraction = crypto_key << 2
+    another_distraction = crypto_key | 0xAA
+    
+    return crypto_key
 
-# Satellite image data represented as a 2D matrix
-satellite_image = [
-    [15, 23, 37, 42],
-    [58, 64, 71, 89],
-    [92, 106, 113, 127],
-    [134, 145, 159, 168]
-]
+encoded_messages = ['hello', 'world', 'python', 'secure', 'data']
+result = process_security_data(encoded_messages, 5)
+crypto_key = result + 0
 
-# Flatten the matrix and apply transformations
-pixel_values = [item for sublist in satellite_image for item in sublist]
-transformed_pixels = list(map(lambda x: (x << 2) & 255, pixel_values))
-filtered_pixels = list(filter(lambda x: x % 7 != 0, transformed_pixels))
-statistical_modifier = int(math.sqrt(reduce(lambda a, b: a + b, filtered_pixels)) % 16)
-adjusted_pixels = [(p ^ statistical_modifier) for p in filtered_pixels]
-
-# Build binary tree from adjusted pixel values
-root_node = build_tree(adjusted_pixels)
-
-print(f"Result: {root_node.val}")
+print(f"Target result: {crypto_key}")

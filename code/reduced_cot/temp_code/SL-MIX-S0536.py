@@ -1,56 +1,55 @@
-import math
+import itertools
 
-def signal_decorator(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return round(result, 4)
-    return wrapper
-
-class FilterOptimizer:
-    def __init__(self):
-        self.coefficients = {}
+def analyze_data_patterns(data_stream):
+    # Distractor: Complex data processing that's mostly irrelevant
+    temp_sum = sum(x * 2 for x in data_stream if x % 3 == 0)
+    redundant_metric = temp_sum // len(data_stream) if data_stream else 0
     
-    def __call__(self, signals):
-        # Dictionary comprehension with merging
-        base_coeffs = {i: math.log(i+1) for i in range(1, len(signals)+1)}
-        adjustment = {i: math.sin(i * 0.1) for i in range(1, len(signals)+1)}
-        self.coefficients = base_coeffs | {k: base_coeffs[k] + adjustment[k] for k in base_coeffs}
-        return self.compute_optimal_gain(signals)
+    # More distractor calculations
+    permutations_count = len(list(itertools.combinations(data_stream[:4], 2)))
+    misleading_total = temp_sum + permutations_count * 10
     
-    @signal_decorator
-    def compute_optimal_gain(self, signals):
-        n = len(signals)
-        dp_table = [0] * (n + 1)
-        
-        # Dynamic programming approach
-        for i in range(1, n + 1):
-            # Short-circuit evaluation
-            if i >= 2 and (signals[i-1] > 0 or signals[i-2] > 0):
-                dp_table[i] = max(dp_table[i-1], dp_table[i-2] + signals[i-1] * self.coefficients.get(i, 0))
-            else:
-                dp_table[i] = dp_table[i-1]
-        
-        # Switch-case equivalent using dictionary
-        gain_strategy = {
-            'low': lambda x: x * 0.5,
-            'medium': lambda x: x * 1.0,
-            'high': lambda x: x * 1.5
-        }
-        
-        avg_signal = sum(signals) / len(signals) if len(signals) > 0 else 0
-        
-        # Determine strategy based on average signal strength
-        if avg_signal < 0.3:
-            strategy = 'low'
-        elif avg_signal < 0.7 and avg_signal >= 0.3:
-            strategy = 'medium'
-        else:
-            strategy = 'high'
-        
-        return gain_strategy[strategy](dp_table[n])
+    # Actual relevant path (well hidden)
+    relevant_values = [x for x in data_stream if x > 15 and x < 45]
+    if len(relevant_values) >= 2:
+        sorted_relevant = sorted(relevant_values)
+        # Key computation
+        core_metric = (sorted_relevant[-1] - sorted_relevant[0]) * 3
+        return core_metric
+    return misleading_total  # Dead code path for this input
 
-# Execution
-sensor_readings = [0.1, 0.4, 0.8, 0.2, 0.9, 0.3]
-optimizer = FilterOptimizer()
-optimal_gain = optimizer(sensor_readings)
-print(f"Result: {optimal_gain}")
+def calculate_scaling(offset_values):
+    # More distractors
+    avg_offset = sum(offset_values) / len(offset_values) if offset_values else 1
+    normalized_range = max(offset_values) - min(offset_values) if len(offset_values) > 1 else 2
+    
+    # Irrelevant bitwise operations
+    bit_mask = 0b10101010
+    masked_result = int(avg_offset) & bit_mask
+    
+    # Actual scaling factor
+    if len(offset_values) > 3:
+        scaling = (offset_values[1] + offset_values[3]) // 2
+        return scaling
+    return normalized_range  # Another dead path
+
+# Main execution with heavy interference
+input_data = [25, 18, 42, 7, 33, 29, 56, 11]
+offset_sequence = [8, 15, 22, 9, 14]
+
+# Multiple irrelevant variables
+preliminary_analysis = sum(x ** 2 for x in input_data[:3])
+secondary_metric = preliminary_analysis % 17
+misleading_buffer = [x + 5 for x in input_data if x < 20]
+
+# Core computations (well hidden among distractors)
+processed_data = analyze_data_patterns(input_data)
+scaling_factor = calculate_scaling(offset_sequence)
+
+# Final answer computation
+final_composite = processed_data * scaling_factor
+
+# Print irrelevant results first
+print(f"Preliminary: {preliminary_analysis}")
+print(f"Secondary: {secondary_metric}")
+print(f"Target result: {final_composite}")

@@ -1,77 +1,11 @@
-35
-anomaly_score
+18
+final_count
 ---
-17 encoded_packets = [encode_header(header) for header in packet_headers]
-17 ['packet_headers', 'header'] ["['SRC:192.168.1.1|DST:10.0.0.1|PORT:8080', 'SRC:192.168.1.2|DST:10.0.0.2|PORT:80', 'SRC:192.168.1.3|DST:10.0.0.3|PORT:443', 'SRC:192.168.1.4|DST:10.0.0.4|PORT:22']", "'SRC:192.168.1.1|DST:10.0.0.1|PORT:8080'"]
-5 return hashlib.sha256(header_str.encode()).hexdigest()[:8]
-5 ['header_str'] ["'SRC:192.168.1.1|DST:10.0.0.1|PORT:8080'"]
-17 encoded_packets = [encode_header(header) for header in packet_headers]
-17 ['packet_headers', 'header'] ["['SRC:192.168.1.1|DST:10.0.0.1|PORT:8080', 'SRC:192.168.1.2|DST:10.0.0.2|PORT:80', 'SRC:192.168.1.3|DST:10.0.0.3|PORT:443', 'SRC:192.168.1.4|DST:10.0.0.4|PORT:22']", "'SRC:192.168.1.2|DST:10.0.0.2|PORT:80'"]
-5 return hashlib.sha256(header_str.encode()).hexdigest()[:8]
-5 ['header_str'] ["'SRC:192.168.1.2|DST:10.0.0.2|PORT:80'"]
-17 encoded_packets = [encode_header(header) for header in packet_headers]
-17 ['packet_headers', 'header'] ["['SRC:192.168.1.1|DST:10.0.0.1|PORT:8080', 'SRC:192.168.1.2|DST:10.0.0.2|PORT:80', 'SRC:192.168.1.3|DST:10.0.0.3|PORT:443', 'SRC:192.168.1.4|DST:10.0.0.4|PORT:22']", "'SRC:192.168.1.3|DST:10.0.0.3|PORT:443'"]
-5 return hashlib.sha256(header_str.encode()).hexdigest()[:8]
-5 ['header_str'] ["'SRC:192.168.1.3|DST:10.0.0.3|PORT:443'"]
-17 encoded_packets = [encode_header(header) for header in packet_headers]
-17 ['packet_headers', 'header'] ["['SRC:192.168.1.1|DST:10.0.0.1|PORT:8080', 'SRC:192.168.1.2|DST:10.0.0.2|PORT:80', 'SRC:192.168.1.3|DST:10.0.0.3|PORT:443', 'SRC:192.168.1.4|DST:10.0.0.4|PORT:22']", "'SRC:192.168.1.4|DST:10.0.0.4|PORT:22'"]
-5 return hashlib.sha256(header_str.encode()).hexdigest()[:8]
-5 ['header_str'] ["'SRC:192.168.1.4|DST:10.0.0.4|PORT:22'"]
-17 encoded_packets = [encode_header(header) for header in packet_headers]
-17 ['packet_headers', 'encoded_packets'] ["['SRC:192.168.1.1|DST:10.0.0.1|PORT:8080', 'SRC:192.168.1.2|DST:10.0.0.2|PORT:80', 'SRC:192.168.1.3|DST:10.0.0.3|PORT:443', 'SRC:192.168.1.4|DST:10.0.0.4|PORT:22']", "['a5668418', 'd2cfded5', 'e1f940dd', 'a2eedd3d']"]
-19 decoded_values = [decode_header(packet) for packet in encoded_packets]
-19 ['encoded_packets', 'packet'] ["['a5668418', 'd2cfded5', 'e1f940dd', 'a2eedd3d']", "'a5668418'"]
-8 return int(encoded_str, 16)
-8 ['encoded_str'] ["'a5668418'"]
-19 decoded_values = [decode_header(packet) for packet in encoded_packets]
-19 ['encoded_packets', 'packet'] ["['a5668418', 'd2cfded5', 'e1f940dd', 'a2eedd3d']", "'d2cfded5'"]
-8 return int(encoded_str, 16)
-8 ['encoded_str'] ["'d2cfded5'"]
-19 decoded_values = [decode_header(packet) for packet in encoded_packets]
-19 ['encoded_packets', 'packet'] ["['a5668418', 'd2cfded5', 'e1f940dd', 'a2eedd3d']", "'e1f940dd'"]
-8 return int(encoded_str, 16)
-8 ['encoded_str'] ["'e1f940dd'"]
-19 decoded_values = [decode_header(packet) for packet in encoded_packets]
-19 ['encoded_packets', 'packet'] ["['a5668418', 'd2cfded5', 'e1f940dd', 'a2eedd3d']", "'a2eedd3d'"]
-8 return int(encoded_str, 16)
-8 ['encoded_str'] ["'a2eedd3d'"]
-19 decoded_values = [decode_header(packet) for packet in encoded_packets]
-19 ['encoded_packets', 'decoded_values'] ["['a5668418', 'd2cfded5', 'e1f940dd', 'a2eedd3d']", '[2774959128, 3536838357, 3791208669, 2733563197]']
-25 anomaly_score = 0
-25 ['decoded_values', 'anomaly_score'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '0']
-26 for value in decoded_values:
-26 ['decoded_values', 'anomaly_score', 'value'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '0', '2774959128']
-30 is_suspicious = (value & 0xF0000000) != 0
-30 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '0', '2774959128', "'high_risk'", 'True']
-31 weight = 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1)
-31 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '0', '2774959128', "'high_risk'", 'True', '3']
-33 anomaly_score += weight if is_suspicious else 0
-33 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '3', '2774959128', "'high_risk'", 'True', '3']
-26 for value in decoded_values:
-26 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '3', '3536838357', "'high_risk'", 'True', '3']
-30 is_suspicious = (value & 0xF0000000) != 0
-30 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '3', '3536838357', "'high_risk'", 'True', '3']
-31 weight = 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1)
-31 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '3', '3536838357', "'high_risk'", 'True', '3']
-33 anomaly_score += weight if is_suspicious else 0
-33 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '6', '3536838357', "'high_risk'", 'True', '3']
-26 for value in decoded_values:
-26 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '6', '3791208669', "'high_risk'", 'True', '3']
-30 is_suspicious = (value & 0xF0000000) != 0
-30 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '6', '3791208669', "'high_risk'", 'True', '3']
-31 weight = 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1)
-31 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '6', '3791208669', "'high_risk'", 'True', '3']
-33 anomaly_score += weight if is_suspicious else 0
-33 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '9', '3791208669', "'high_risk'", 'True', '3']
-26 for value in decoded_values:
-26 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '9', '2733563197', "'high_risk'", 'True', '3']
-30 is_suspicious = (value & 0xF0000000) != 0
-30 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '9', '2733563197', "'high_risk'", 'True', '3']
-31 weight = 3 if risk_level == 'high_risk' else (2 if risk_level == 'medium_risk' else 1)
-31 ['decoded_values', 'anomaly_score', 'value', 'risk_level', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '9', '2733563197', "'high_risk'", 'True', '3']
-33 anomaly_score += weight if is_suspicious else 0
-33 ['decoded_values', 'anomaly_score', 'value', 'is_suspicious', 'weight'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '12', '2733563197', 'True', '3']
-26 for value in decoded_values:
-26 ['decoded_values', 'anomaly_score', 'value'] ['[2774959128, 3536838357, 3791208669, 2733563197]', '12', '2733563197']
-35 anomaly_score = anomaly_score if anomaly_score > 0 else -1
-35 ['anomaly_score'] ['12']
+2 research_group_a = {'bioinformatics', 'computational_biology', 'machine_learning', 'data_science'}
+2 ['research_group_a'] ["{'bioinformatics', 'computational_biology', 'data_science', 'machine_learning'}"]
+3 research_group_b = {'computational_biology', 'genomics', 'machine_learning', 'statistics'}
+3 ['research_group_a', 'research_group_b'] ["{'bioinformatics', 'computational_biology', 'data_science', 'machine_learning'}", "{'computational_biology', 'genomics', 'statistics', 'machine_learning'}"]
+17 remaining_items = research_group_a.symmetric_difference(research_group_b)
+17 ['research_group_a', 'research_group_b', 'remaining_items'] ["{'bioinformatics', 'computational_biology', 'data_science', 'machine_learning'}", "{'computational_biology', 'genomics', 'statistics', 'machine_learning'}", "{'bioinformatics', 'genomics', 'statistics', 'data_science'}"]
+18 final_count = len(remaining_items)
+18 ['remaining_items', 'final_count'] ["{'bioinformatics', 'genomics', 'statistics', 'data_science'}", '4']

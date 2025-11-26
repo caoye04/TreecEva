@@ -32,7 +32,6 @@ def renumber_dataset(input_file, output_file):
     counter = 1
     for item in data:
         if 'id' in item:
-            # 生成新的ID，保持三位数格式
             new_id = f"{prefix}{counter:04d}"
             item['id'] = new_id
             counter += 1

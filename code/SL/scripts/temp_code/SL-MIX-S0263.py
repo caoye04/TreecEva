@@ -1,27 +1,12 @@
-import math
+# Data processing pipeline for quality control metrics
+raw_measurements = [12, 18, 7, 25, 14, 31, 9, 22]
 
-def prime_factors_sum(n):
-    i = 2
-    factors_sum = 0
-    temp_n = n
-    while i * i <= temp_n:
-        while temp_n % i == 0:
-            factors_sum += i
-            temp_n //= i
-        i += 1
-    if temp_n > 1:
-        factors_sum += temp_n
-    return factors_sum
+# Filter and process valid measurements
+threshold_check = lambda x: x % 2 == 0
+filtered_data = [x for x in raw_measurements if threshold_check(x)]
 
-def hex_weighted_gcd_checksum(hex_sequence):
-    weights = [prime_factors_sum(int(h, 16)) for h in hex_sequence]
-    current_gcd = weights[0]
-    for w in weights[1:]:
-        current_gcd = math.gcd(current_gcd, w)
-    return current_gcd * sum(weights)
+# Apply transformation and calculate final metric
+processed_data = [x * 1.5 for x in filtered_data]
+final_metric = max(filter(lambda x: x > 15, processed_data))
 
-# Cryptographic checksum calculation
-hex_values = ['1A', '2F', '3B', '4C']
-checksum_components = [hex_weighted_gcd_checksum(hex_values[i:i+3]) for i in range(len(hex_values)-2)]
-final_checksum = math.gcd(checksum_components[0], checksum_components[1])
-print(f"Result: {final_checksum}")
+print(f"Target result: {final_metric}")

@@ -1,30 +1,34 @@
-from collections import deque
+from collections import Counter
 
-def process_sensor_data(readings):
-    window = deque(maxlen=5)
-    peak_stack = []
-    peak_count = 0
+def analyze_text_patterns(text_samples):
+    char_frequencies = Counter()
+    processed_total = 0
+    temp_storage = []
     
-    for reading in readings:
-        window.append(reading)
-        
-        if len(window) == 5:
-            window_avg = sum(window) / len(window)
-            
-            # Check if current reading is a significant peak
-            is_peak = reading > 2 * window_avg and reading == max(window)
-            
-            # Apply logical filtering for noise reduction
-            not_noise = reading % 3 != 0 or (reading & 7) == 0
-            
-            if is_peak and not_noise:
-                peak_stack.append(reading)
-                peak_count += 1
+    for sample in text_samples:
+        char_frequencies.update(sample)
+        temp_storage.extend([ord(c) for c in sample if c.isalpha()])
     
-    return peak_count
+    # Distractor: Calculate but don't use
+    max_freq_char = char_frequencies.most_common(1)[0] if char_frequencies else ('', 0)
+    
+    # Relevant processing
+    vowel_counts = sum(1 for char, count in char_frequencies.items() 
+                      if char.lower() in 'aeiou')
+    consonant_counts = sum(1 for char, count in char_frequencies.items() 
+                          if char.isalpha() and char.lower() not in 'aeiou')
+    
+    # Distractor: Intermediate calculation that's not used in final result
+    ratio_calc = vowel_counts * 3 if consonant_counts > 0 else 0
+    
+    processed_total = vowel_counts + consonant_counts
+    
+    # Final relevant computation
+    final_count = processed_total // 2
+    
+    print(f"Result: {final_count}")
+    return final_count
 
-# Sensor readings from an environmental monitoring system
-sensor_readings = [12, 45, 23, 67, 34, 89, 56, 78, 91, 25, 64, 87, 42, 58, 73]
-
-peak_count = process_sensor_data(sensor_readings)
-print(f"Result: {peak_count}")
+# Test data
+text_data = ["programming", "benchmark", "evaluation", "reasoning"]
+analyze_text_patterns(text_data)

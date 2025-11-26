@@ -1,29 +1,51 @@
-from collections import namedtuple
+from collections import Counter
 
-# Define a Point for spatial calculations
-Point = namedtuple('Point', ['x', 'y'])
+def compute_checksum(data, mask):
+    # Helper function to process data chunks
+    process_chunk = lambda x: (x ^ 0xFF) & 0x7F
+    
+    # Main processing logic
+    checksum = 0
+    temp_buffer = []
+    
+    # Distractor: unused mask application (dead code path)
+    masked_data = [d & mask for d in data]
+    
+    # Relevant processing
+    for value in data:
+        processed = process_chunk(value)
+        temp_buffer.append(processed)
+        checksum = (checksum + processed) % 256
+    
+    # Misleading intermediate computation
+    fake_sum = sum(masked_data)  # Uses dead code result
+    
+    # Distractor: unused counter analysis
+    freq_count = Counter(temp_buffer)
+    most_common_val = freq_count.most_common(1)[0][0] if freq_count else 0
+    
+    # Key computation with bitwise operations
+    hash_val = checksum ^ mask
+    
+    # Final adjustment with modular arithmetic
+    final_result = (hash_val * 3 - 17) % 1000
+    
+    # More distractors: unused transformations
+    backup_check = final_result | 0x80
+    secondary_hash = backup_check ^ 0x55
+    
+    return final_result
 
-# Initial RGB values
-red_channel, green_channel, blue_channel = 142, 68, 233
+# Main execution
+mask_pattern = 0x3A
+data_buffer = [45, 128, 77, 201, 92, 156]
 
-# Step 1: Apply bitwise transformations
-transformed_red = (red_channel << 2) & 255
-transformed_green = (green_channel >> 1) | 64
-transformed_blue = blue_channel ^ 170
+# Distractor: alternative computation path (never used)
+alt_buffer = [d + 10 for d in data_buffer]
+alt_sum = sum(alt_buffer) % 500
 
-# Step 2: Calculate spatial distance from origin
-pixel_point = Point(transformed_red % 256, transformed_green % 256)
-distance_from_origin = int((pixel_point.x ** 2 + pixel_point.y ** 2) ** 0.5)
+# Core computation
+final_hash = compute_checksum(data_buffer, mask_pattern)
 
-# Step 3: Logical adjustments based on distance and blue channel
-if distance_from_origin > 128 and not (transformed_blue < 100):
-    adjusted_blue = transformed_blue & 240
-else:
-    adjusted_blue = transformed_blue | 15
-
-# Step 4: Compute weighted luminance with bitwise masking
-luminance_base = (transformed_red * 0.299) + (transformed_green * 0.587) + (adjusted_blue * 0.114)
-mask = 0b11111100  # Mask to preserve higher bits
-final_luminance = int(luminance_base) & mask
-
-print(f"Result: {final_luminance}")
+# Print the target result
+print(f"Result: {final_hash}")

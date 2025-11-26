@@ -1,0 +1,45 @@
+Target: Find the value of variable result after [line 26] executes
+
+[line 1]  data_stream = ['item1', 'item2', 'item3', 'item4', 'item5', 'item6']
+Compute: ['item1', 'item2', 'item3', 'item4', 'item5', 'item6'] = ['item1', 'item2', 'item3', 'item4', 'item5', ...]
+[line 2]  filter_mask = [True, False, True, False, True, True]
+Compute: [True, False, True, False, True, True] = [True, False, True, False, True, ...]
+[line 3]  processed_items = []
+Compute: [] = []
+[line 4]  valid_entries = 0
+Assign: valid_entries = 0
+[line 8]  for idx, (item, mask) in enumerate(zip(data_stream, filter_mask)):
+(Missing param: 'iter_var')
+[line 9]  if mask:
+Condition: True, entering 'if' block
+[line 11]  valid_entries += 1
+Update: valid_entries changed from 0 (defined at defined at [line 4]) to 0+1 = 1
+[line 8]  for idx, (item, mask) in enumerate(zip(data_stream, filter_mask)):
+(Missing param: 'iter_var')
+[line 9]  if mask:
+Condition: True, entering 'if' block
+... [Line 8] repeats 3 more times ...
+... [Line 8] repeats 3 more times ...
+... [Line 8] repeats 3 more times ...
+[line 8]  for idx, (item, mask) in enumerate(zip(data_stream, filter_mask)):
+(Missing param: 'iter_var')
+[line 9]  if mask:
+Condition: True, entering 'if' block
+[line 11]  valid_entries += 1
+Update: valid_entries changed from 3 (defined at defined at [line 11]) to 3+1 = 4
+[line 8]  for idx, (item, mask) in enumerate(zip(data_stream, filter_mask)):
+Loop End: Iteration finished
+[line 17]  middle_section = processed_items[1:3]
+Compute: processed_items[1:3], where processed_items=['ITEM1', 'ITEM3', 'ITEM5', 'ITEM6'] (defined at [line 3]) = ['ITEM3', 'ITEM5']
+[line 18]  section_length = len(middle_section)
+Call function len(middle_section=['ITEM3', 'ITEM5'] (defined at [line 17]))
+[line 21]  base_offset = 3
+Assign: base_offset = 3
+[line 22]  offset_adjustment = section_length * 2
+Compute: section_length * 2, where section_length=2 (defined at [line 18]) = 4
+[line 23]  offset_correction = base_offset + offset_adjustment
+Compute: base_offset + offset_adjustment, where base_offset=3 (defined at [line 21]), offset_adjustment=4 (defined at [line 22]) = 7
+[line 26]  result = valid_entries + offset_correction
+Compute: valid_entries + offset_correction, where valid_entries=4 (defined at [line 11]), offset_correction=7 (defined at [line 23]) = 11
+
+Answer: result = 11 (last updated on defined at [line 26])

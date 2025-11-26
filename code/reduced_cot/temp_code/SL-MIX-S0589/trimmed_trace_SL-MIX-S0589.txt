@@ -1,0 +1,27 @@
+18
+final_adjustment
+---
+2 base_stock = 42
+2 ['base_stock'] ['42']
+3 temp_buffer = 15
+3 ['base_stock', 'temp_buffer'] ['42', '15']
+4 seasonal_factor = 3
+4 ['base_stock', 'temp_buffer', 'seasonal_factor'] ['42', '15', '3']
+12 base_value = base_stock - temp_buffer
+12 ['base_stock', 'temp_buffer', 'seasonal_factor', 'base_value'] ['42', '15', '3', '27']
+13 offset_multiplier = lambda x: x * 2
+13 ['seasonal_factor', 'base_value'] ['3', '27']
+14 offset_calc = offset_multiplier(seasonal_factor)
+14 ['seasonal_factor', 'base_value'] ['3', '27']
+15 temporary_adjustment = sum([ord(c) for c in 'test']) % 10
+15 ['base_value', 'offset_calc', 'c'] ['27', '6', "'t'"]
+15 temporary_adjustment = sum([ord(c) for c in 'test']) % 10
+15 ['base_value', 'offset_calc', 'c'] ['27', '6', "'e'"]
+15 temporary_adjustment = sum([ord(c) for c in 'test']) % 10
+15 ['base_value', 'offset_calc', 'c'] ['27', '6', "'s'"]
+15 temporary_adjustment = sum([ord(c) for c in 'test']) % 10
+15 ['base_value', 'offset_calc', 'c'] ['27', '6', "'t'"]
+15 temporary_adjustment = sum([ord(c) for c in 'test']) % 10
+15 ['base_value', 'offset_calc', 'temporary_adjustment'] ['27', '6', '8']
+18 final_adjustment = base_value + offset_calc - temporary_adjustment
+18 ['base_value', 'offset_calc', 'temporary_adjustment', 'final_adjustment'] ['27', '6', '8', '25']

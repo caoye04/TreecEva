@@ -1,31 +1,57 @@
-24 input_signal = 0b11010110
-24 ['input_signal'] [{'_type': 'int', '_value': 214}]
-25 final_signal = simulate_circuit(input_signal)
-25 ['input_signal'] [{'_type': 'int', '_value': 214}]
-PARAM_MAPPING simulate_circuit {'input_signal': {'actual_var': 'input_signal', 'value': 214}}
-FUNCTION_ENTER 1 simulate_circuit def simulate_circuit(input_signal):
-1 ['input_signal'] [{'_type': 'int', '_value': 214}]
-DEPTH_2 3     stage1 = (input_signal << 2) & 0xFF  # Shift left by 2, mask to 8 bits
-3 ['input_signal', 'stage1'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}]
-DEPTH_2 6     if (stage1 > 100) and not (stage1 & 0x0F == 0):  # Check if greater than 100 and lower nibble is non-zero
-6 ['input_signal', 'stage1'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}]
-DEPTH_2 9         stage2 = stage1 | 0xAA  # OR with 0xAA
-9 ['input_signal', 'stage1', 'stage2'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}]
-DEPTH_2 12     if (bin(stage2).count('1') % 2) == 0:  # Check if even parity
-12 ['input_signal', 'stage1', 'stage2'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}]
-DEPTH_2 13         stage3 = stage2 & 0xF0  # Mask upper nibble
-13 ['input_signal', 'stage1', 'stage2', 'stage3'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 240}]
-DEPTH_2 18     adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
-18 ['input_signal', 'stage1', 'stage2', 'stage3'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 240}]
-DEPTH_2 19     final_signal = adjust(stage3)
-19 ['input_signal', 'stage1', 'stage2', 'stage3'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 240}]
-FUNCTION_ENTER 18 <lambda>     adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
-18 ['x'] [{'_type': 'int', '_value': 240}]
-DEPTH_3 18     adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
-18 ['x'] [{'_type': 'int', '_value': 240}]
-FUNCTION_RETURN 18 <lambda> {'_type': 'int', '_value': 120}
-DEPTH_2 21     return final_signal
-21 ['input_signal', 'stage1', 'stage2', 'stage3', 'final_signal'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 240}, {'_type': 'int', '_value': 120}]
-FUNCTION_RETURN 21 simulate_circuit {'_type': 'int', '_value': 120}
-26 print(f'Result: {final_signal}')
-26 ['input_signal', 'final_signal'] [{'_type': 'int', '_value': 214}, {'_type': 'int', '_value': 120}]
+12 data_points = [7, 14, 21, 28, 35]
+12 ['data_points'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}]
+13 rounding_threshold = 60
+13 ['data_points', 'rounding_threshold'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}]
+14 final_computation = process_data(data_points, rounding_threshold)
+14 ['data_points', 'rounding_threshold'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}]
+PARAM_MAPPING process_data {'values': {'actual_var': 'data_points', 'value': [7, 14, 21, 28, 35]}, 'threshold': {'actual_var': 'rounding_threshold', 'value': 60}}
+FUNCTION_ENTER 1 process_data def process_data(values, threshold):
+1 ['values', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}]
+DEPTH_2 2     filter_func = lambda x: x if x % 2 == 0 else x // 2
+2 ['values', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}]
+DEPTH_2 3     processed = [filter_func(val) for val in values]
+3 ['values', 'threshold', 'val'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}, {'_type': 'int', '_value': 7}]
+FUNCTION_ENTER 2 <lambda>     filter_func = lambda x: x if x % 2 == 0 else x // 2
+2 ['x'] [{'_type': 'int', '_value': 7}]
+DEPTH_3 2     filter_func = lambda x: x if x % 2 == 0 else x // 2
+2 ['x'] [{'_type': 'int', '_value': 7}]
+FUNCTION_RETURN 2 <lambda> {'_type': 'int', '_value': 3}
+DEPTH_2 3     processed = [filter_func(val) for val in values]
+3 ['values', 'threshold', 'val'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}, {'_type': 'int', '_value': 14}]
+FUNCTION_ENTER 2 <lambda>     filter_func = lambda x: x if x % 2 == 0 else x // 2
+2 ['x'] [{'_type': 'int', '_value': 14}]
+DEPTH_3 2     filter_func = lambda x: x if x % 2 == 0 else x // 2
+2 ['x'] [{'_type': 'int', '_value': 14}]
+FUNCTION_RETURN 2 <lambda> {'_type': 'int', '_value': 14}
+DEPTH_2 3     processed = [filter_func(val) for val in values]
+3 ['values', 'threshold', 'val'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}, {'_type': 'int', '_value': 21}]
+FUNCTION_ENTER 2 <lambda>     filter_func = lambda x: x if x % 2 == 0 else x // 2
+2 ['x'] [{'_type': 'int', '_value': 21}]
+DEPTH_3 2     filter_func = lambda x: x if x % 2 == 0 else x // 2
+2 ['x'] [{'_type': 'int', '_value': 21}]
+FUNCTION_RETURN 2 <lambda> {'_type': 'int', '_value': 10}
+DEPTH_2 3     processed = [filter_func(val) for val in values]
+3 ['values', 'threshold', 'val'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}, {'_type': 'int', '_value': 28}]
+FUNCTION_ENTER 2 <lambda>     filter_func = lambda x: x if x % 2 == 0 else x // 2
+2 ['x'] [{'_type': 'int', '_value': 28}]
+DEPTH_3 2     filter_func = lambda x: x if x % 2 == 0 else x // 2
+2 ['x'] [{'_type': 'int', '_value': 28}]
+FUNCTION_RETURN 2 <lambda> {'_type': 'int', '_value': 28}
+DEPTH_2 3     processed = [filter_func(val) for val in values]
+3 ['values', 'threshold', 'val'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}, {'_type': 'int', '_value': 35}]
+FUNCTION_ENTER 2 <lambda>     filter_func = lambda x: x if x % 2 == 0 else x // 2
+2 ['x'] [{'_type': 'int', '_value': 35}]
+DEPTH_3 2     filter_func = lambda x: x if x % 2 == 0 else x // 2
+2 ['x'] [{'_type': 'int', '_value': 35}]
+FUNCTION_RETURN 2 <lambda> {'_type': 'int', '_value': 17}
+DEPTH_2 3     processed = [filter_func(val) for val in values]
+3 ['values', 'threshold', 'processed'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 17}], '_len': 5}]
+DEPTH_2 4     total = sum(processed)
+4 ['values', 'threshold', 'processed', 'total'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 17}], '_len': 5}, {'_type': 'int', '_value': 72}]
+DEPTH_2 7     if total > threshold:
+7 ['values', 'threshold', 'processed', 'total'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 17}], '_len': 5}, {'_type': 'int', '_value': 72}]
+DEPTH_2 8         return total // 10 * 10
+8 ['values', 'threshold', 'processed', 'total'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 17}], '_len': 5}, {'_type': 'int', '_value': 72}]
+FUNCTION_RETURN 8 process_data {'_type': 'int', '_value': 70}
+16 print(f"Result: {final_computation}")
+16 ['data_points', 'rounding_threshold', 'final_computation'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 35}], '_len': 5}, {'_type': 'int', '_value': 60}, {'_type': 'int', '_value': 70}]

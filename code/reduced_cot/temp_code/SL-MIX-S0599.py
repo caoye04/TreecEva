@@ -1,23 +1,30 @@
-from collections import defaultdict
+from collections import Counter
 
-def update_prices_based_on_sales(prices, counts):
-    new_prices = prices.copy()
-    for item in prices:
-        if counts[item] > 10:
-            new_prices[item] += 0.25
-    return new_prices
+def analyze_storage_utilization():
+    storage_volumes = [45, 23, 67, 45, 89, 23, 45, 12]
+    capacity_threshold = 50
+    
+    volume_counter = Counter(storage_volumes)
+    frequent_volumes = [vol for vol, count in volume_counter.items() if count >= 2]
+    
+    # Distractor: Calculate total but don't use it
+    total_storage = sum(storage_volumes)
+    
+    # Relevant: Filter volumes above threshold
+    high_volumes = [vol for vol in frequent_volumes if vol > capacity_threshold]
+    
+    # Distractor: Calculate average but don't use it
+    avg_volume = total_storage / len(storage_volumes) if storage_volumes else 0
+    
+    # Relevant: Process high volumes
+    capacity_adjustments = []
+    for idx, vol in enumerate(high_volumes):
+        adjustment = vol * 0.8 if idx % 2 == 0 else vol * 0.9
+        capacity_adjustments.append(adjustment)
+    
+    # Final calculation
+    final_capacity = sum(capacity_adjustments) if capacity_adjustments else 0
+    
+    print("Result:", final_capacity)
 
-# Initial data
-items = ['croissant', 'muffin', 'scone']
-initial_prices = {'croissant': 3.00, 'muffin': 2.50, 'scone': 2.75}
-sales_counts = defaultdict(int, {'croissant': 8, 'muffin': 12, 'scone': 15})
-
-total_revenue = 0.0
-prices = initial_prices.copy()
-
-for day in range(5):
-    daily_revenue = sum(prices[item] * sales_counts[item] for item in items)
-    total_revenue += daily_revenue
-    prices = update_prices_based_on_sales(prices, sales_counts)
-
-print(f"Result: {total_revenue}")
+analyze_storage_utilization()

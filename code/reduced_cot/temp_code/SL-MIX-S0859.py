@@ -1,46 +1,35 @@
-from collections import deque
+def analyze_text_patterns(text_data):
+    vowels = 'aeiou'
+    consonant_count = 0
+    vowel_count = 0
+    temp_analysis = []
+    
+    for char in text_data:
+        if char.isalpha():
+            if char.lower() in vowels:
+                vowel_count += 1
+            else:
+                consonant_count += 1
+    
+    # Distractor calculations (not used in final result)
+    char_frequency = {}
+    for char in text_data:
+        char_frequency[char] = char_frequency.get(char, 0) + 1
+    
+    text_pairs = list(zip(text_data, text_data[1:]))
+    pair_analysis = [(a, b) for a, b in text_pairs if a.isalpha() and b.isalpha()]
+    
+    # Core logic
+    processing_result = vowel_count * 3 - consonant_count * 2
+    adjustment_factor = len(pair_analysis) // 2
+    
+    # More distractors
+    unused_calculation = sum(ord(c) for c in text_data if c.isalpha())
+    extra_variable = processing_result * adjustment_factor
+    
+    final_result = processing_result + adjustment_factor
+    print(f"Target result: {final_result}")
 
-class VehicleNode:
-    def __init__(self, fuel_efficiency, next_vehicle=None):
-        self.fuel_efficiency = fuel_efficiency
-        self.next_vehicle = next_vehicle
-
-def process_vehicles_at_intersection(incoming_stack, passed_queue):
-    total_efficiency = 0.0
-    while incoming_stack:
-        vehicle = incoming_stack.pop()
-        if vehicle.fuel_efficiency > 25.0:
-            passed_queue.append(vehicle)
-            total_efficiency += vehicle.fuel_efficiency * 1.1
-        else:
-            total_efficiency += vehicle.fuel_efficiency * 0.95
-    return total_efficiency
-
-# Initialize vehicle linked list
-vehicle_a = VehicleNode(30.5)
-vehicle_b = VehicleNode(22.0)
-vehicle_c = VehicleNode(35.8)
-vehicle_d = VehicleNode(18.2)
-vehicle_e = VehicleNode(28.7)
-
-vehicle_d.next_vehicle = vehicle_c
-vehicle_c.next_vehicle = vehicle_b
-vehicle_b.next_vehicle = vehicle_e
-vehicle_e.next_vehicle = vehicle_a
-
-# Build stack from linked list (head is vehicle_d)
-current = vehicle_d
-incoming_vehicles = []
-while current:
-    incoming_vehicles.append(current)
-    current = current.next_vehicle
-
-# Process vehicles
-passed_vehicles_queue = deque()
-total_fuel_efficiency_after_processing = process_vehicles_at_intersection(incoming_vehicles, passed_vehicles_queue)
-
-# Apply bonus efficiency for vehicles that passed
-bonus_count = len(passed_vehicles_queue)
-total_fuel_efficiency_after_processing += bonus_count * 2.5
-
-print(f"Result: {total_fuel_efficiency_after_processing}")
+# Execute the analysis
+sample_text = "programming evaluation benchmark"
+analyze_text_patterns(sample_text)

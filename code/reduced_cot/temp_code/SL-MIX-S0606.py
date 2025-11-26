@@ -1,49 +1,51 @@
-from itertools import product
-from functools import reduce
-
-def simulate_circuit():
-    # Lambda functions modeling gate delays (in nanoseconds)
-    and_delay = lambda x, y: 2 if x and y else 1
-    or_delay = lambda x, y: 1 if x or y else 0
-    not_delay = lambda x: 1 if not x else 0
+def compute_validation_result(data_array, pattern_mask):
+    # Initialize tracking variables (some are distractors)
+    accumulator = 0
+    temp_buffer = []
+    validation_flag = False
     
-    # Generate all possible 4-bit input combinations
-    inputs = list(product([0, 1], repeat=4))
-    valid_combinations = []
+    # Distractor computation - unused in final result
+    noise_data = [x * 2 for x in data_array if x % 3 == 0]
     
-    # Process each input combination through the circuit logic
-    for a, b, c, d in inputs:
-        # First layer: AND gates
-        ab_and = a and b
-        cd_and = c and d
+    # Main processing logic
+    for idx, value in enumerate(data_array):
+        # Apply pattern mask using string operations
+        pattern_char = pattern_mask[idx % len(pattern_mask)]
         
-        # Second layer: OR gate with one inverted input
-        inverted_cd = not cd_and
-        or_result = ab_and or inverted_cd
+        # Misleading intermediate operation (distractor)
+        if pattern_char.isdigit():
+            processed_val = value + int(pattern_char) * 5
+        else:
+            processed_val = value + ord(pattern_char) % 10
         
-        # Final output check
-        if or_result:
-            # Calculate propagation delay for this path
-            delay_path = [
-                and_delay(a, b),
-                and_delay(c, d),
-                not_delay(cd_and),
-                or_delay(ab_and, inverted_cd)
-            ]
-            valid_combinations.append((a, b, c, d, sum(delay_path)))
+        # Actual logic - only certain conditions contribute
+        if (value % 2 == 0 and pattern_char.isalpha()) or (value % 3 == 0 and pattern_char.isdigit()):
+            accumulator += processed_val
+            temp_buffer.append(processed_val)
     
-    # Early return if no valid combinations found
-    if not valid_combinations:
-        return 0
+    # Dead code path - never executed but looks relevant
+    if len(noise_data) > 5:
+        validation_flag = True
+        
+    # Final computation with string operations
+    mask_sum = sum(ord(c) for c in pattern_mask if c.isalpha())
+    buffer_avg = sum(temp_buffer) // max(len(temp_buffer), 1) if temp_buffer else 0
     
-    # Extract delay values from valid combinations
-    delays = [combo[4] for combo in valid_combinations]
-    
-    # Apply functional programming to compute total delay
-    total_delay = reduce(lambda acc, x: acc + (x * 2 if x > 2 else x), delays, 0)
-    
-    return total_delay
+    return accumulator - mask_sum + buffer_avg
 
-# Execute simulation
-final_delay = simulate_circuit()
-print(f"Result: {final_delay}")
+# Main execution with mixed data structures
+extracted_data = [12, 7, 25, 18, 9, 31, 42]
+mask_pattern = "V3R1Fy9X"
+
+# Distractor variables and operations
+aux_data = [x - 5 for x in extracted_data if x > 15]
+pattern_variations = [mask_pattern[i:] + mask_pattern[:i] for i in range(3)]
+
+# Key computation
+final_processed_value = compute_validation_result(extracted_data, mask_pattern)
+
+# More distractor operations (unused in output)
+validation_metric = sum(aux_data) * len(pattern_variations)
+status_check = "VALID" if final_processed_value > 50 else "INVALID"
+
+print(f"Result: {final_processed_value}")

@@ -1,28 +1,46 @@
-from collections import defaultdict
+def analyze_text_patterns(text_samples):
+    word_frequencies = {}
+    processed_items = []
+    
+    # Distractor: Analyze word frequencies (not used in final result)
+    for sample in text_samples:
+        words = sample.lower().split()
+        for word in words:
+            word_frequencies[word] = word_frequencies.get(word, 0) + 1
+    
+    # Main processing with enumerate
+    for idx, sample in enumerate(text_samples):
+        cleaned_sample = sample.strip().upper()
+        words = cleaned_sample.split()
+        
+        # Distractor: Calculate word count variance (not used)
+        word_count = len(words)
+        variance = word_count * 2 - 3
+        
+        # Relevant: Process first letter of each word
+        first_letters = ''.join(word[0] if word else '' for word in words)
+        processed_items.append(len(first_letters))
+    
+    # Set operations for offset calculation
+    unique_lengths = set(processed_items)
+    base_offset = sum(unique_lengths)
+    
+    # Conditional offset adjustment
+    offset_correction = base_offset - 5 if base_offset > 10 else base_offset + 2
+    
+    # Distractor: Unused intermediate calculation
+    temp_sum = sum(word_frequencies.values())
+    
+    # Final result calculation
+    final_result = processed_items[2] + offset_correction
+    print(f"Target result: {final_result}")
 
-def calculate_batch_score(batch_id):
-    hash_val = hash(batch_id) % 100
-    if hash_val < 25:
-        return hash_val * 2 + 5
-    elif hash_val < 50:
-        return hash_val + 15
-    elif hash_val < 75:
-        return hash_val // 2 + 30
-    else:
-        return hash_val - 10
+# Test data
+text_data = [
+    "Quick brown fox jumps",
+    "Over the lazy dog",
+    "Programming benchmark evaluation",
+    "Complex reasoning chains"
+]
 
-batches = ['FAB2023A', 'TEX99B', 'MATX456C', 'YARN78D']
-scores = defaultdict(int)
-
-for batch in batches:
-    base_score = calculate_batch_score(batch)
-    adjustment = len(batch) * 3
-    scores[batch] = base_score + adjustment
-
-final_score = sum(scores.values())
-if final_score > 200:
-    final_score -= 10
-else:
-    final_score += 5
-
-print(f'Result: {final_score}')
+analyze_text_patterns(text_data)

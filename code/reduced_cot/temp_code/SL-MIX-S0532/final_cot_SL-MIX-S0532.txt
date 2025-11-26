@@ -1,0 +1,52 @@
+Target: Find the value of variable final_checksum after [line 54] executes
+
+[line 48]  raw_packets = [45, 128, 77, 200, 33, 150]
+Compute: [45, 128, 77, 200, 33, 150] = [45, 128, 77, 200, 33, ...]
+[line 49]  final_checksum = data_validator(data_processor(raw_packets))
+Call function data_validator(data_processor(raw_packets))
+[line 3]  processed_segments = []
+Compute: [] = []
+[line 6]  for packet in packets:
+Loop Start: packet takes its first value 45
+[line 12]  if packet % 2 == 0:
+Condition: True, entering 'if' block
+[line 6]  for packet in packets:
+Loop Iteration: packet is now 128 (iteration 2)
+[line 12]  if packet % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 6] repeats 3 more times ...
+... [Line 6] repeats 3 more times ...
+[line 6]  for packet in packets:
+Loop Iteration: packet is now 150 (iteration 6)
+[line 12]  if packet % 2 == 0:
+Condition: True, entering 'if' block
+[line 6]  for packet in packets:
+Loop End: Iteration finished
+[line 20]  return processed_segments
+Return: processed_segments=[13, 127, 13, 55, 1, ...] (defined at [line 3])
+[line 30]  validated_data = []
+Compute: [] = []
+[line 31]  for segment in segments:
+Loop Start: segment takes its first value 13
+[line 31]  for segment in segments:
+Loop End: Iteration finished
+[line 31]  for segment in segments:
+Loop End: Iteration finished
+[line 31]  for segment in segments:
+Loop End: Iteration finished
+[line 31]  for segment in segments:
+Loop End: Iteration finished
+[line 31]  for segment in segments:
+Loop End: Iteration finished
+[line 31]  for segment in segments:
+Loop End: Iteration finished
+[line 42]  data_set = set(validated_data)
+Call function set(validated_data=[164, 42, 164, 146, 168, ...] (defined at [line 30]))
+[line 43]  final_result = sum(data_set) % 256
+Compute: sum(data_set) % 256, where data_set={192, 164, 168, 42, 146} (defined at [line 42]) = 200
+[line 45]  return final_result
+Return: final_result=200 (defined at [line 43])
+[line 54]  print(f"Result: {final_checksum}")
+Output: f"Result: {final_checksum}"
+
+Answer: final_checksum = 200 (last updated on defined at [line 49])

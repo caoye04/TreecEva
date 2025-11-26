@@ -1,40 +1,24 @@
-from itertools import compress
+def analyze_sensor_data(readings):
+    calibration_factor = 2.5
+    noise_threshold = 15
+    
+    # Distractor: complex computation that doesn't affect final result
+    temp_calc = sum([r * 1.1 for r in readings if r > 10])
+    temp_offset = temp_calc * 0.8 - 25
+    
+    # Relevant processing with list comprehension
+    filtered_readings = [r * calibration_factor for r in readings if r < noise_threshold]
+    
+    # Conditional expression with moderate nesting
+    processing_result = (sum(filtered_readings) * 1.2 if len(filtered_readings) > 2 
+                       else sum(filtered_readings) * 0.8)
+    
+    # Final computation - this is the key statement
+    final_computation = processing_result - temp_offset + temp_offset
+    
+    print(f"Target result: {final_computation}")
+    return final_computation
 
-class NucleotideEncoder:
-    def __init__(self):
-        self.mapping = {'A': 1, 'T': 2, 'G': 3, 'C': 4}
-    
-    def encode(self, sequence):
-        return [self.mapping[nuc] for nuc in sequence]
-
-def analyze_marker(seq_values):
-    # Apply bitwise transformations
-    transformed = []
-    for i, val in enumerate(seq_values):
-        if i % 2 == 0:
-            transformed.append(val << 1)  # Left shift even indices
-        else:
-            transformed.append(val & 3)   # Bitwise AND with 3 for odd indices
-    
-    # Apply logical filtering using short-circuit evaluation
-    valid_positions = [
-        (t > 2) and (t < 10) or (t == 1) 
-        for t in transformed
-    ]
-    
-    # Extract values where valid_positions is True
-    filtered_values = list(compress(transformed, valid_positions))
-    
-    # Calculate marker code using XOR
-    marker_code = 0
-    for val in filtered_values:
-        marker_code ^= val
-    
-    return marker_code
-
-# Main processing
-encoder = NucleotideEncoder()
-sequence = "ATGCAT"
-encoded_sequence = encoder.encode(sequence)
-marker_code = analyze_marker(encoded_sequence)
-print(f"Result: {marker_code}")
+# Main execution
+sensor_data = [8, 12, 5, 18, 3, 25, 9, 14]
+result = analyze_sensor_data(sensor_data)

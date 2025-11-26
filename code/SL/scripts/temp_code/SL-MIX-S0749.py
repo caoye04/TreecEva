@@ -1,27 +1,36 @@
-import re
-from functools import reduce
+import itertools
 
-def threat_calculator(entries):
-    scores = []
-    for entry in entries:
-        base_score = len(entry) if 'ALERT' in entry else 0
-        ip_match = re.search(r'\d+\.\d+\.\d+\.\d+', entry)
-        ip_segments = ip_match.group().split('.') if ip_match else []
-        segment_sum = sum(int(seg) for seg in ip_segments) if ip_segments else 0
-        adjusted_score = base_score + (segment_sum // 10)
-        scores.append(adjusted_score)
-    return scores
+def calculate_inventory_value():
+    # Core inventory data
+    item_quantities = [8, 12, 5, 9, 7]
+    item_values = [25, 18, 42, 31, 29]
+    
+    # Calculate total inventory value
+    inventory_total = sum(qty * val for qty, val in zip(item_quantities, item_values))
+    
+    # Distraction: Process combinations that won't affect final result
+    combination_data = list(itertools.combinations(item_quantities, 2))
+    combination_sum = sum(min(pair) for pair in combination_data)
+    
+    # Distraction: Additional processing that's ultimately unused
+    processed_values = [val * 1.1 for val in item_values if val > 20]
+    value_adjustment = len(processed_values) * 5
+    
+    # Core calculation
+    base_calculation = inventory_total // 10
+    adjustment_factor = len([qty for qty in item_quantities if qty > 7]) * 3
+    
+    # Final result computation
+    primary_sum = base_calculation + adjustment_factor
+    adjustment = (sum(item_quantities[:3]) - 10) * 2
+    final_result = primary_sum + adjustment
+    
+    # Distraction: Final calculations that don't impact result
+    dummy_metric = combination_sum % 50
+    verification_check = dummy_metric + value_adjustment
+    
+    print(f"Result: {final_result}")
+    return final_result
 
-def aggregate_threat(scores):
-    return reduce(lambda x, y: x ^ y, scores, 0)
-
-log_entries = [
-    "INFO 192.168.1.10 Normal system operation",
-    "ALERT 10.0.0.23 Suspicious login attempt",
-    "DEBUG 172.16.254.1 Process started",
-    "ALERT 10.0.0.45 Multiple failed authentications"
-]
-
-processed_scores = threat_calculator(log_entries)
-final_threat_level = aggregate_threat(processed_scores)
-print(f'Result: {final_threat_level}')
+if __name__ == "__main__":
+    calculate_inventory_value()

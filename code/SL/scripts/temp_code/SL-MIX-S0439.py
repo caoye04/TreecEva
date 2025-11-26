@@ -1,58 +1,25 @@
-from collections import defaultdict
-
-class ScopeStack:
-    def __init__(self):
-        self.stack = []
+def calculate_metric(data, weights):
+    temp_data = [x.upper() for x in data if len(x) > 2]
+    processed = [ord(ch) - 64 for s in temp_data for ch in s]
     
-    def __enter__(self):
-        self.stack.append(defaultdict(int))
-        return self.stack[-1]
+    # Distractor calculations that don't affect final result
+    intermediate_sum = sum(processed) * 2
+    normalized = [x / max(processed) for x in processed]
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        if self.stack:
-            self.stack.pop()
+    # Actual relevant computation
+    weighted_values = []
+    for i, val in enumerate(processed):
+        if i < len(weights):
+            weighted_values.append(val * weights[i])
     
-    def current_scope(self):
-        return self.stack[-1] if self.stack else None
+    final_score = sum(weighted_values[-5:])
+    return final_score
 
-scopes = ScopeStack()
-active_scope_count = 0
-token_hashes = {
-    'BEGIN': hash('BEGIN'),
-    'END': hash('END'),
-    'VAR': hash('VAR'),
-    'ASSIGN': hash('ASSIGN')
-}
+data = ['cat', 'dog', 'fish', 'bird']
+weights = [1.5, 2.0, 0.5, 1.0, 0.8, 1.2]
 
-# Token stream: BEGIN VAR x ASSIGN 5 END BEGIN VAR y ASSIGN 10 END
-stream = [
-    token_hashes['BEGIN'],
-    token_hashes['VAR'], hash('x'),
-    token_hashes['ASSIGN'], hash('5'),
-    token_hashes['END'],
-    token_hashes['BEGIN'],
-    token_hashes['VAR'], hash('y'),
-    token_hashes['ASSIGN'], hash('10'),
-    token_hashes['END']
-]
+# Unused distractor variable
+unused_calc = len(data) * sum(weights)
 
-i = 0
-while i < len(stream):
-    if stream[i] == token_hashes['BEGIN']:
-        with scopes as scope:
-            active_scope_count += 1
-            j = i + 1
-            # Process until END or end of stream
-            while j < len(stream) and stream[j] != token_hashes['END']:
-                if stream[j] == token_hashes['VAR'] and j + 2 < len(stream) and stream[j+2] == token_hashes['ASSIGN']:
-                    var_name_hash = stream[j+1]
-                    value_hash = stream[j+3]
-                    scope[var_name_hash] = value_hash
-                    j += 4
-                else:
-                    j += 1
-            i = j + 1 if j < len(stream) and stream[j] == token_hashes['END'] else j
-    else:
-        i += 1
-
-print(f"Result: {active_scope_count}")
+result = calculate_metric(data, weights)
+print(f"Result: {result}")

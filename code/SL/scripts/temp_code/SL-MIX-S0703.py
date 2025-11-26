@@ -1,18 +1,20 @@
-from itertools import permutations
-
-class Dispenser:
-    def __init__(self):
-        self.state = 'IDLE'
-        self.flavors = ['orange', 'lemon', 'berry']
-        self.permutation_count = 0
+def process_account_transactions(transactions):
+    balances = []
+    current_balance = 1000
+    temp_holder = 0
     
-    def dispense(self):
-        if self.state == 'IDLE':
-            self.state = 'ACTIVE'
-            perms = list(permutations(self.flavors, 2))
-            self.permutation_count = len(perms)
-        return self.permutation_count
+    for idx, (deposit, withdrawal) in enumerate(zip(transactions[::2], transactions[1::2])):
+        temp_holder = deposit - withdrawal
+        current_balance += temp_holder
+        balances.append(current_balance)
+        
+    # Distractor calculation that doesn't affect final result
+    unused_sum = sum(balances[::2]) + len(transactions)
+    
+    account_totals = [balance * 1.05 for balance in balances]
+    final_balance = account_totals[-1]
+    print(f"Target result: {final_balance}")
 
-dispenser = Dispenser()
-final_combinations = dispenser.dispense()
-print(f'Result: {final_combinations}')
+# Main execution
+transactions = [500, 200, 300, 150, 700, 400, 100, 50]
+process_account_transactions(transactions)

@@ -1,58 +1,35 @@
-from dataclasses import dataclass
-from typing import Dict, Tuple
-import math
+def calculate_service_charges(amounts, fee_rate):
+    irrelevant_data = [x * 2 for x in amounts if x > 50]
+    misleading_total = sum(irrelevant_data) * 0.15
+    charges = [amt * fee_rate for amt in amounts]
+    return sum(charges)
 
-class RobotState:
-    IDLE = 'IDLE'
-    MOVING = 'MOVING'
-    OBSTACLE = 'OBSTACLE'
+def filter_active_accounts(users, funds):
+    dummy_set = set(range(1, 20))
+    temp_result = len(dummy_set.intersection(set(users)))
+    active_accounts = [funds[i] for i in users if i < len(funds)]
+    dead_code_check = sum(funds) * 0.33
+    return active_accounts
 
-@dataclass
-class Position:
-    x: int
-    y: int
+def process_accounts(user_indices, account_funds, service_fee):
+    base_calculation = sum(account_funds) // len(account_funds)
+    active_funds = filter_active_accounts(user_indices, account_funds)
+    total_service_fee = calculate_service_charges(active_funds, service_fee)
     
-def manhattan_distance(pos: Position) -> int:
-    return abs(pos.x) + abs(pos.y)
+    misleading_intermediate = base_calculation * 1.25
+    irrelevant_operation = (misleading_intermediate + total_service_fee) * 0.8
+    
+    total_active_funds = sum(active_funds)
+    final_amount = total_active_funds - total_service_fee
+    
+    return final_amount
 
-# Initial robot configuration
-robot_position = Position(0, 0)
-current_state = RobotState.IDLE
+initial_funds = [1000, 2500, 1800, 3200, 950, 2100, 2750]
+active_users = [0, 2, 3, 5]
+service_fee = 0.02
 
-# Movement vectors for N, E, S, W
-movements = {'N': (0, 1), 'E': (1, 0), 'S': (0, -1), 'W': (-1, 0)}
+unused_variable = [x * 3 for x in initial_funds if x < 2000]
+distraction_calc = sum(unused_variable) * 0.07
 
-# Obstacles in the warehouse (x, y) -> penalty
-obstacles_map = {(2, 2): 1, (3, 1): 2, (0, 1): 1}
-
-# Command sequence with state transitions
-command_sequence = [
-    ('MOVE', 'N', 3),
-    ('CHECK', (0, 1)),
-    ('MOVE', 'E', 2),
-    ('CHECK', (2, 2)),
-    ('MOVE', 'S', 1),
-    ('CHECK', (3, 1))
-]
-
-for cmd in command_sequence:
-    if cmd[0] == 'MOVE' and current_state != RobotState.OBSTACLE:
-        direction, steps = cmd[1], cmd[2]
-        dx, dy = movements[direction]
-        robot_position.x += dx * steps
-        robot_position.y += dy * steps
-        current_state = RobotState.MOVING
-    elif cmd[0] == 'CHECK':
-        check_pos = cmd[1]
-        if check_pos in obstacles_map:
-            # Apply penalty and transition to obstacle state
-            penalty = obstacles_map[check_pos]
-            robot_position.x -= penalty
-            robot_position.y -= penalty
-            current_state = RobotState.OBSTACLE
-            break  # Stop execution on obstacle
-        else:
-            current_state = RobotState.IDLE
-
-final_distance = manhattan_distance(robot_position)
-print(f'Result: {final_distance}')
+final_balance = process_accounts(active_users, initial_funds, service_fee)
+print(f"Target result: {final_balance}")

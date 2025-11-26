@@ -1,0 +1,15 @@
+31
+final_calibration
+---
+9 raw_sum = sum(sensor_readings)
+9 ['sensor_readings', 'raw_sum'] ['[45, 52, 48, 55, 50]', '250']
+10 avg_reading = raw_sum / len(sensor_readings)
+10 ['sensor_readings', 'raw_sum', 'avg_reading'] ['[45, 52, 48, 55, 50]', '250', '50.0']
+17 if avg_reading > 50:
+17 ['sensor_readings', 'avg_reading'] ['[45, 52, 48, 55, 50]', '50.0']
+27 quality_adjustment = max(sensor_readings) - min(sensor_readings)
+27 ['sensor_readings', 'avg_reading', 'quality_adjustment'] ['[45, 52, 48, 55, 50]', '50.0', '10']
+28 normalized_range = quality_adjustment / 10
+28 ['avg_reading', 'quality_adjustment', 'normalized_range'] ['50.0', '10', '1.0']
+31 final_calibration = int((avg_reading + normalized_range) * 10)
+31 ['avg_reading', 'normalized_range', 'final_calibration'] ['50.0', '1.0', '510']

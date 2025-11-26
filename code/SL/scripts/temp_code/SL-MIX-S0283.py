@@ -1,47 +1,32 @@
-import itertools
+def process_inventory_counts(items, prices):
+    total_count = sum(items.values())
+    max_price = max(prices.values())  # Distractor - not used in final calculation
+    
+    # Distractor operations that don't affect final result
+    avg_price = sum(prices.values()) / len(prices)
+    price_variance = [(p - avg_price) ** 2 for p in prices.values()]
+    
+    # Core logic
+    inventory_value = 0
+    for item, count in items.items():
+        if item in prices:
+            inventory_value += count * prices[item]
+    
+    # More distractor calculations
+    item_ratio = len(items) / len(prices)
+    adjusted_count = total_count * 0.8  # Unused variable
+    
+    return inventory_value
 
-def reverse_complement(seq):
-    complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
-    return ''.join(complement[base] for base in reversed(seq))
+# Main execution
+item_counts = {'widget_a': 15, 'widget_b': 8, 'widget_c': 12, 'widget_d': 5}
+price_mapping = {'widget_a': 25.5, 'widget_b': 18.0, 'widget_c': 32.75, 'widget_d': 9.5}
 
-def tokenize_dna(dna_seq, k):
-    return [dna_seq[i:i+k] for i in range(len(dna_seq) - k + 1)]
+inventory_analysis = process_inventory_counts(item_counts, price_mapping)
+final_inventory_value = inventory_analysis
 
-def compute_binding_scores(kmers):
-    dp = {}
-    for kmer in kmers:
-        rc_kmer = reverse_complement(kmer)
-        if kmer in dp:
-            dp[kmer] += 1
-        elif rc_kmer in dp:
-            dp[rc_kmer] += 1
-        else:
-            dp[kmer] = 1
-    return dp
+# Additional distractor operations
+temp_adjustment = final_inventory_value * 0.1  # Never used
+count_sum = sum(item_counts.values())  # Redundant calculation
 
-def calculate_motif_score(binding_scores_dict):
-    total_score = 0
-    for kmer, count in binding_scores_dict.items():
-        # Apply a transformation: score = count * (sum of ASCII values of kmer)
-        ascii_sum = sum(ord(c) for c in kmer)
-        total_score += count * ascii_sum
-    return total_score
-
-# Main processing pipeline
-dna_sequence = "ATCGATCGATCG"
-kmer_length = 4
-
-# Step 1: Tokenize
-kmer_list = tokenize_dna(dna_sequence, kmer_length)
-
-# Step 2: Compute binding scores using dynamic programming approach
-binding_scores = compute_binding_scores(kmer_list)
-
-# Step 3: Calculate motif score
-intermediate_score = calculate_motif_score(binding_scores)
-
-# Step 4: Apply final transformation using lambda
-transform = lambda x: (x // 10) * 7 - (x % 10)
-final_motif_score = transform(intermediate_score)
-
-print(f"Result: {final_motif_score}")
+print(f"Result: {final_inventory_value}")

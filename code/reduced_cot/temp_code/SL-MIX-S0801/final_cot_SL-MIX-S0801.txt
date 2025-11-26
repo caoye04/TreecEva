@@ -1,0 +1,44 @@
+Target: Find the value of variable final_score after [line 46] executes
+
+[line 3]  words = text_data.lower().split()
+(Missing param: 'func_name')
+[line 12]  vowel_counts = []
+Compute: [] = []
+[line 14]  for word in words[:8]:  # Only process first 8 words
+Loop Start: word takes its first value 'programming'
+[line 15]  if len(word) > 3:
+Condition: True, entering 'if' block
+[line 14]  for word in words[:8]:  # Only process first 8 words
+Loop Iteration: word is now 'languages' (iteration 2)
+[line 15]  if len(word) > 3:
+Condition: True, entering 'if' block
+... [Line 14] repeats 5 more times ...
+... [Line 14] repeats 5 more times ...
+[line 14]  for word in words[:8]:  # Only process first 8 words
+Loop Iteration: word is now 'analysis' (iteration 8)
+[line 15]  if len(word) > 3:
+Condition: True, entering 'if' block
+[line 14]  for word in words[:8]:  # Only process first 8 words
+Loop End: Iteration finished
+[line 26]  relevant_data = vowel_counts[1:4]
+Compute: vowel_counts[1:4], where vowel_counts=[36, 57, 36, 45, 27, ...] (defined at [line 12]) = [57, 36, 45]
+[line 27]  adjustment_set = {x % 5 for x in vowel_counts}
+Compute: {x % 5 for x in vowel_counts}, where x=36 (an unknown source), vowel_counts=[36, 57, 36, 45, 27, ...] (defined at [line 12]) = ?
+[line 28]  adjustment_factor = len(adjustment_set) * 8
+Compute: len(adjustment_set) * 8, where adjustment_set={0, 1, 2} (defined at [line 27]) = 24
+[line 35]  data_pairs = list(itertools.combinations(relevant_data, 2))
+Call function list(itertools.combinations(relevant_data, 2))
+[line 36]  pair_sums = [sum(pair) for pair in data_pairs]
+Compute: [sum(pair) for pair in data_pairs], where pair=(57, 36) (an unknown source), data_pairs=[(57, 36), (57, 45), (36, 45)] (defined at [line 35]) = ?
+[line 39]  base_value = max(pair_sums) if pair_sums else 0
+Compute: max(pair_sums) if pair_sums else 0, where pair_sums=[93, 102, 81] (defined at [line 36]) = 102
+[line 40]  processed_data = [base_value + adj for adj in range(adjustment_factor, adjustment_factor + 4)]
+Compute: [base_value + adj for adj in range(adjustment_factor, adjustment_factor + 4)], where base_value=102 (defined at [line 39]), adj=24 (an unknown source), adjustment_factor=24 (defined at [line 28]) = ?
+[line 43]  valid_indices = [i for i, val in enumerate(processed_data) if val % 3 == 1]
+Compute: [i for i, val in enumerate(processed_data) if val % 3 == 1], where i=0 (an unknown source), val=126 (an unknown source), processed_data=[126, 127, 128, 129] (defined at [line 40]) = ?
+[line 45]  if valid_indices:
+Condition: True, entering 'if' block
+[line 46]  final_score = processed_data[valid_indices[-1]]
+Compute: processed_data[valid_indices[-1]], where processed_data=[126, 127, 128, 129] (defined at [line 40]), valid_indices=[1] (defined at [line 43]) = 127
+
+Answer: final_score = 127 (last updated on defined at [line 46])

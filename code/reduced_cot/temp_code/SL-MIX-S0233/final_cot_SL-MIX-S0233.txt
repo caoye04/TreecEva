@@ -1,87 +1,58 @@
-Target: Find the value of variable circuit_output after [line 55] executes
+Target: Find the value of variable final_capacity after [line 44] executes
 
-[line 8]  return wrapper
-Return: wrapper
-[line 42]  signals = [3, -1, 5, 0, 2, -3]
-Compute: [3, -1, 5, 0, 2, -3] = [3, -1, 5, 0, 2, ...]
-[line 43]  circuit_output = 0
-Assign: circuit_output = 0
-[line 46]  for i, sig in enumerate(signals):
-(Missing param: 'iter_var')
-[line 47]  intermediate = machine.process(sig)
-(Missing param: 'func_name')
-[line 6]  result = func(*args, **kwargs)
-Call function func(*args, **kwargs)
-[line 16]  if self.state == 'IDLE' and input_signal > 0:
+[line 31]  initial_capacity = 15
+Assign: initial_capacity = 15
+[line 32]  items_set = {3, 7, 12, 5, 8}
+Compute: {3, 7, 12, 5, 8} = {3, 5, 7, 8, 12}
+[line 38]  final_capacity = optimize_storage(initial_capacity, items_set)
+Call function optimize_storage(initial_capacity=15 (defined at [line 31]), items_set={3, 5, 7, 8, 12} (defined at [line 32]))
+[line 3]  base_efficiency = len(items) * 2 if capacity > 10 else len(items)
+Compute: len(items) * 2 if capacity > 10 else len(items), where items={3, 5, 7, 8, 12} (an unknown source), capacity=15 (an unknown source) = 10
+[line 9]  adjusted_efficiency = base_efficiency + 5 if capacity % 2 == 0 else base_efficiency - 3
+Compute: base_efficiency + 5 if capacity % 2 == 0 else base_efficiency - 3, where base_efficiency=10 (defined at [line 3]), capacity=15 (an unknown source) = 7
+[line 20]  final_utilization = calculate_utilization(capacity, items)
+Call function calculate_utilization(capacity=15 (an unknown source), items={3, 5, 7, 8, 12} (an unknown source))
+[line 13]  if current_cap <= 0 or not item_set:
 Condition: True, entering 'if' block
-[line 18]  return 1
-Return: 1
-[line 7]  return result
-Return: result=1 (defined at [line 6])
-[line 48]  if i % 2 == 0:
+[line 16]  remaining_items = item_set - {min(item_set)}
+Compute: item_set - {min(item_set)}, where item_set={3, 5, 7, 8, 12} (an unknown source) = {8, 12, 5, 7}
+[line 17]  return calculate_utilization(current_cap - 1, remaining_items)
+Return: calculate_utilization(current_cap - 1, remaining_items)
+[line 13]  if current_cap <= 0 or not item_set:
 Condition: True, entering 'if' block
-[line 49]  circuit_output = circuit_output | intermediate
-Compute: circuit_output | intermediate, where circuit_output=0 (defined at [line 43]), intermediate=1 (an unknown source) = 1
-[line 54]  if circuit_output > 10 or (circuit_output < 0 and machine.state != 'ERROR'):
+[line 16]  remaining_items = item_set - {min(item_set)}
+Compute: item_set - {min(item_set)}, where item_set={8, 12, 5, 7} (an unknown source) = {8, 12, 7}
+[line 17]  return calculate_utilization(current_cap - 1, remaining_items)
+Return: calculate_utilization(current_cap - 1, remaining_items)
+[line 13]  if current_cap <= 0 or not item_set:
 Condition: True, entering 'if' block
-[line 46]  for i, sig in enumerate(signals):
-(Missing param: 'iter_var')
-[line 47]  intermediate = machine.process(sig)
-(Missing param: 'func_name')
-[line 6]  result = func(*args, **kwargs)
-Call function func(*args, **kwargs)
-[line 16]  if self.state == 'IDLE' and input_signal > 0:
+[line 16]  remaining_items = item_set - {min(item_set)}
+Compute: item_set - {min(item_set)}, where item_set={8, 12, 7} (an unknown source) = {8, 12}
+[line 17]  return calculate_utilization(current_cap - 1, remaining_items)
+Return: calculate_utilization(current_cap - 1, remaining_items)
+[line 13]  if current_cap <= 0 or not item_set:
 Condition: True, entering 'if' block
-[line 19]  elif self.state == 'ACTIVE':
-'elif' Condition: True, entering block
-[line 20]  if input_signal == 0:
+[line 16]  remaining_items = item_set - {min(item_set)}
+Compute: item_set - {min(item_set)}, where item_set={8, 12} (an unknown source) = {12}
+[line 17]  return calculate_utilization(current_cap - 1, remaining_items)
+Return: calculate_utilization(current_cap - 1, remaining_items)
+[line 13]  if current_cap <= 0 or not item_set:
 Condition: True, entering 'if' block
-[line 24]  return (input_signal ** 2) % 7
-Return: (input_signal ** 2) % 7
-[line 7]  return result
-Return: result=1 (defined at [line 6])
-[line 48]  if i % 2 == 0:
+[line 16]  remaining_items = item_set - {min(item_set)}
+Compute: item_set - {min(item_set)}, where item_set={12} (an unknown source) = set()
+[line 17]  return calculate_utilization(current_cap - 1, remaining_items)
+Return: calculate_utilization(current_cap - 1, remaining_items)
+[line 13]  if current_cap <= 0 or not item_set:
 Condition: True, entering 'if' block
-[line 51]  circuit_output = circuit_output & (intermediate ^ ((sig * 3) % 5))
-Compute: circuit_output & (intermediate ^ ((sig * 3) % 5)), where circuit_output=1 (defined at [line 49]), intermediate=1 (an unknown source), sig=-1 (an unknown source) = 1
-[line 54]  if circuit_output > 10 or (circuit_output < 0 and machine.state != 'ERROR'):
-Condition: True, entering 'if' block
-... [Line 46] repeats 3 more times ...
-... [Line 46] repeats 3 more times ...
-... [Line 46] repeats 3 more times ...
-... [Line 46] repeats 3 more times ...
-... [Line 46] repeats 3 more times ...
-... [Line 46] repeats 3 more times ...
-... [Line 46] repeats 3 more times ...
-... [Line 46] repeats 3 more times ...
-... [Line 46] repeats 3 more times ...
-... [Line 46] repeats 3 more times ...
-... [Line 46] repeats 3 more times ...
-[line 46]  for i, sig in enumerate(signals):
-(Missing param: 'iter_var')
-[line 47]  intermediate = machine.process(sig)
-(Missing param: 'func_name')
-[line 6]  result = func(*args, **kwargs)
-Call function func(*args, **kwargs)
-[line 16]  if self.state == 'IDLE' and input_signal > 0:
-Condition: True, entering 'if' block
-[line 19]  elif self.state == 'ACTIVE':
-'elif' Condition: True, entering block
-[line 25]  elif self.state == 'LATCHED':
-'elif' Condition: True, entering block
-[line 26]  if input_signal < 0:
-Condition: True, entering 'if' block
-[line 28]  return -1
-Return: -1
-[line 7]  return result
-Return: result=-1 (defined at [line 6])
-[line 48]  if i % 2 == 0:
-Condition: True, entering 'if' block
-[line 51]  circuit_output = circuit_output & (intermediate ^ ((sig * 3) % 5))
-Compute: circuit_output & (intermediate ^ ((sig * 3) % 5)), where circuit_output=1 (defined at [line 51]), intermediate=-1 (an unknown source), sig=-3 (an unknown source) = 0
-[line 54]  if circuit_output > 10 or (circuit_output < 0 and machine.state != 'ERROR'):
-Condition: True, entering 'if' block
-[line 46]  for i, sig in enumerate(signals):
-Loop End: Iteration finished
+[line 14]  return current_cap
+Return: current_cap=10 (an unknown source)
+[line 23]  result = final_utilization + adjusted_efficiency if final_utilization > 0 else adjusted_efficiency
+Compute: final_utilization + adjusted_efficiency if final_utilization > 0 else adjusted_efficiency, where final_utilization=10 (defined at [line 20]), adjusted_efficiency=7 (defined at [line 9]) = 17
+[line 28]  return result
+Return: result=17 (defined at [line 23])
+[line 41]  print(f"Analysis complete: {preliminary_analysis}")
+Output: f"Analysis complete: {preliminary_analysis}"
+[line 44]  print(f"Target result: {final_capacity}")
+Output: f"Target result: {final_capacity}"
 
-Answer: circuit_output = 0 (last updated on defined at [line 51])
+Answer: final_capacity = 17 (last updated on defined at [line 38])

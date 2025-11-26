@@ -1,0 +1,26 @@
+Target: Find the value of variable final_throughput after [line 32] executes
+
+[line 4]  processed_count = 0
+Assign: processed_count = 0
+[line 5]  discarded_count = 0
+Assign: discarded_count = 0
+[line 6]  quality_modifier = 17
+Assign: quality_modifier = 17
+[line 11]  compression_ratio = 3.2
+Assign: compression_ratio = 3.2
+[line 14]  valid_chunks = [chunk for chunk in data_chunks if len(chunk) > 5]
+Compute: [chunk for chunk in data_chunks if len(chunk) > 5], where chunk='data_packet_1' (an unknown source), data_chunks=['data_packet_1', 'error_data', 'valid_stream_3', 'corrupt_4', 'good_packet_5', ...] (an unknown source) = ?
+[line 15]  processed_count = len(valid_chunks)
+Call function len(valid_chunks=['data_packet_1', 'error_data', 'valid_stream_3', 'corrupt_4', 'good_packet_5', ...] (defined at [line 14]))
+[line 21]  quality_scores = [8 if 'error' not in chunk else 2 for chunk in valid_chunks]
+Compute: [8 if 'error' not in chunk else 2 for chunk in valid_chunks], where chunk='data_packet_1' (an unknown source), valid_chunks=['data_packet_1', 'error_data', 'valid_stream_3', 'corrupt_4', 'good_packet_5', ...] (defined at [line 14]) = ?
+[line 22]  high_quality_count = sum(1 for score in quality_scores if score > 5)
+Call function sum(1 for score in quality_scores if score > 5)
+[line 23]  discarded_count = processed_count - high_quality_count
+Compute: processed_count - high_quality_count, where processed_count=6 (defined at [line 15]), high_quality_count=5 (defined at [line 22]) = 1
+[line 26]  if compression_ratio > 10:
+Condition: True, entering 'if' block
+[line 32]  final_throughput = (processed_count * 2 - discarded_count) % quality_modifier
+Compute: (processed_count * 2 - discarded_count) % quality_modifier, where processed_count=6 (defined at [line 15]), discarded_count=1 (defined at [line 23]), quality_modifier=17 (defined at [line 6]) = 11
+
+Answer: final_throughput = 11 (last updated on defined at [line 32])

@@ -1,54 +1,39 @@
-import math
+def analyze_quality(text_segment):
+    irrelevant_count = len([c for c in text_segment if c in 'aeiouAEIOU'])
+    misleading_total = sum(ord(c) for c in text_segment if c.isalpha())
+    return len(text_segment.replace(' ', '').strip())
 
-class TransactionTracker:
-    def __init__(self):
-        self.high_value_logs = []
+def validate_pattern(input_str, pattern_flag):
+    dummy_check = input_str.count('x') * 3
+    unused_result = input_str.upper().startswith('TEST')
+    return len(input_str) % 2 == pattern_flag
+
+def process_data(samples, threshold, flags):
+    processed_total = 0
+    temp_accumulator = 17
     
-    def __enter__(self):
-        return self
-    
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
-    
-    def log_if_significant(self, amount):
-        if amount > 1000:
-            self.high_value_logs.append(amount)
-
-def audit_call(func):
-    calls = []
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        calls.append((args, result))
-        return result
-    wrapper.calls = calls
-    return wrapper
-
-@audit_call
-def calculate_compound(principal, rate, time):
-    return principal * (math.exp(rate * time))
-
-# Initial financial data
-portfolio = {
-    'account_A': 1500,
-    'account_B': 800,
-    'account_C': 2000
-}
-
-rate_schedule = { acc: 0.05 if acc == 'account_A' else 0.03 for acc in portfolio }
-bonus_rate = 0.02 if any(v > 1000 for v in portfolio.values()) else 0
-
-final_yield = 0
-with TransactionTracker() as tracker:
-    for account, initial_amount in portfolio.items():
-        current_rate = rate_schedule[account]
-        if initial_amount > 1000:
-            adjusted_rate = current_rate + bonus_rate
-        else:
-            adjusted_rate = current_rate
+    for sample in samples:
+        quality_score = analyze_quality(sample)
+        is_valid = validate_pattern(sample, flags & 1)
         
-        compounded = calculate_compound(initial_amount, adjusted_rate, 2)
-        tracker.log_if_significant(compounded)
-        final_yield += compounded
+        if quality_score >= threshold:
+            base_value = quality_score * 2
+            if is_valid:
+                adjustment = (flags >> 1) & 3
+                processed_total += base_value - adjustment
+                temp_accumulator = (temp_accumulator ^ adjustment) + 5
+            else:
+                processed_total -= quality_score // 2
+        else:
+            dummy_operation = temp_accumulator * 3
+            processed_total += quality_score % 7
+    
+    dead_code_path = temp_accumulator * 2
+    final_processing = (processed_total | 15) & 255
+    return final_processing
 
-final_yield = round(final_yield)
-print(f"Result: {final_yield}")
+text_samples = ['hello world', 'test data', 'sample text', 'code evaluation']
+quality_threshold = 8
+modifier_flags = 6
+final_output = process_data(text_samples, quality_threshold, modifier_flags)
+print(f"Result: {final_output}")

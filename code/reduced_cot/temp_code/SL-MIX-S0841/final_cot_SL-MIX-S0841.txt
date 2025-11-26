@@ -1,0 +1,40 @@
+Target: Find the value of variable final_score after [line 49] executes
+
+[line 37]  student_scores = {"math": 85, "science": 92, "history": 45, "english": 78, "art": 67}
+Compute: {"math": 85, "science": 92, "history": 45, "english": 78, "art": 67} = {math: 85, science: 92, history: 45, ...}
+[line 45]  backup_score = 75.0  # Red herring value
+Assign: backup_score = 75.0
+[line 46]  processed_data = {"final_value": calculate_weighted_scores(student_scores)}
+Compute: {"final_value": calculate_weighted_scores(student_scores)}, where student_scores={math: 85, science: 92, history: 45, ...} (defined at [line 37]) = ?
+[line 7]  valid_scores = {k: v for k, v in scores_dict.items() if v > 50}
+Compute: {k: v for k, v in scores_dict.items() if v > 50}, where k='math' (an unknown source), v=85 (an unknown source), scores_dict={math: 85, science: 92, history: 45, ...} (an unknown source) = ?
+[line 8]  if not valid_scores:
+Condition: True, entering 'if' block
+[line 12]  avg_temp = sum(valid_scores.values()) / len(valid_scores)
+Compute: sum(valid_scores.values()) / len(valid_scores), where valid_scores={math: 85, science: 92, english: 78, ...} (defined at [line 7]) = 80.5
+[line 16]  if avg_temp > 1000:
+Condition: True, entering 'if' block
+[line 22]  weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+Call function sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+[line 22]  weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+Call function sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+[line 22]  weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+Call function sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+[line 22]  weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+Call function sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+[line 22]  weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+Call function sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+[line 22]  weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+Call function sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+[line 23]  total_weights = sum(range(1, len(valid_scores) + 1))
+Call function sum(range(1, len(valid_scores) + 1))
+[line 29]  if total_weights > 0:
+Condition: True, entering 'if' block
+[line 30]  processed_value = weighted_sum / total_weights
+Compute: weighted_sum / total_weights, where weighted_sum=771 (defined at [line 22]), total_weights=10 (defined at [line 23]) = 77.1
+[line 34]  return processed_value
+Return: processed_value=77.1 (defined at [line 30])
+[line 49]  final_score = processed_data.get("final_value", backup_score)
+(Missing param: 'func_name')
+
+Answer: final_score = 77.1 (last updated on an unknown source)

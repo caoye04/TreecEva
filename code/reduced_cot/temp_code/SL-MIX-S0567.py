@@ -1,57 +1,57 @@
-from collections import defaultdict
+from collections import Counter
 
-class VendingMachine:
-    def __init__(self):
-        self.inventory = defaultdict(int)
-        self.coin_denominations = [25, 10, 5, 1]  # quarters, dimes, nickels, pennies
-        self.state = 'READY'
-        self.total_coins_dispensed = 0
-    
-    def process_purchase(self, item_price, payment):
-        if self.state != 'READY':
-            return False
-        
-        self.state = 'PROCESSING'
-        change_due = payment - item_price
-        
-        if change_due < 0:
-            self.state = 'ERROR'
-            return False
-        
-        # Dynamic programming approach to minimize coins for change
-        dp = [float('inf')] * (change_due + 1)
-        dp[0] = 0
-        coin_used = [0] * (change_due + 1)
-        
-        for i in range(1, change_due + 1):
-            for coin in self.coin_denominations:
-                if coin <= i and dp[i - coin] + 1 < dp[i]:
-                    dp[i] = dp[i - coin] + 1
-                    coin_used[i] = coin
-        
-        # Count coins dispensed
-        amount = change_due
-        while amount > 0:
-            coin = coin_used[amount]
-            self.total_coins_dispensed += 1
-            amount -= coin
-        
-        self.state = 'READY'
-        return True
-
-# Initialize vending machine
-vm = VendingMachine()
-
-# Process transactions
-transactions = [
-    (125, 150),  # item price: $1.25, paid: $1.50
-    (90, 100),   # item price: $0.90, paid: $1.00
-    (75, 100),   # item price: $0.75, paid: $1.00
-    (45, 50),    # item price: $0.45, paid: $0.50
-    (190, 200)   # item price: $1.90, paid: $2.00
+# Analyze inventory discrepancies across warehouses
+warehouse_data = [
+    {'items': ['A', 'B', 'C', 'A', 'D'], 'id': 1},
+    {'items': ['B', 'C', 'E', 'F', 'B'], 'id': 2},
+    {'items': ['A', 'D', 'F', 'G', 'A'], 'id': 3}
 ]
 
-for price, paid in transactions:
-    vm.process_purchase(price, paid)
+# Intermediate computations (some distractor operations)
+all_items = []
+warehouse_counts = []
 
-print(f"Result: {vm.total_coins_dispensed}")
+for wh in warehouse_data:
+    item_count = Counter(wh['items'])
+    warehouse_counts.append(item_count)
+    all_items.extend(wh['items'])
+    
+# Distractor operation - not used in final result
+unique_items = set(all_items)
+total_unique = len(unique_items)
+
+# Main analysis
+overall_counter = Counter(all_items)
+common_items = [item for item, count in overall_counter.items() if count >= 2]
+
+# More intermediate steps
+item_positions = {}
+for idx, item in enumerate(common_items):
+    item_positions[item] = idx
+
+# Calculate inventory ratios (distractor)
+ratios = []
+for wh_count in warehouse_counts:
+    ratio = sum(wh_count.values()) / len(wh_count) if wh_count else 0
+    ratios.append(ratio)
+
+# Core logic for finding target warehouses
+valid_warehouses = []
+for i, wh in enumerate(warehouse_data):
+    common_in_wh = [item for item in common_items if item in wh['items']]
+    if len(common_in_wh) >= 2:
+        valid_warehouses.append(i)
+
+# Final result calculation
+final_results = []
+for idx in valid_warehouses:
+    wh_items = warehouse_data[idx]['items']
+    item_freq = Counter(wh_items)
+    max_freq = max(item_freq.values()) if item_freq else 0
+    final_results.append(max_freq * len(wh_items))
+
+# Target operation
+valid_indices = [i for i, val in enumerate(final_results) if val > 0]
+target_value = final_results[valid_indices[-1]]
+
+print(f"Target result: {target_value}")

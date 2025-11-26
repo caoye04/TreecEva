@@ -1,0 +1,39 @@
+30
+final_throughput
+---
+3 data_streams = [120, 85, 200, 150, 90]
+3 ['data_streams'] ['[120, 85, 200, 150, 90]']
+4 compression_ratios = [0.8, 1.2, 0.95, 1.1, 0.75]
+4 ['data_streams', 'compression_ratios'] ['[120, 85, 200, 150, 90]', '[0.8, 1.2, 0.95, 1.1, 0.75]']
+12 batch_processor = itertools.combinations(data_streams, 2)
+12 ['data_streams', 'compression_ratios', 'batch_processor'] ['[120, 85, 200, 150, 90]', '[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>']
+13 processed_sizes = []
+13 ['compression_ratios', 'batch_processor', 'processed_sizes'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[]']
+15 for batch in batch_processor:
+15 ['compression_ratios', 'batch_processor', 'processed_sizes', 'batch'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[]', '(120, 85)']
+15 for batch in batch_processor:
+15 ['compression_ratios', 'batch_processor', 'processed_sizes', 'batch'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[194.75]', '(120, 200)']
+15 for batch in batch_processor:
+15 ['compression_ratios', 'batch_processor', 'processed_sizes', 'batch'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[194.75, 304.0]', '(120, 150)']
+15 for batch in batch_processor:
+15 ['compression_ratios', 'batch_processor', 'processed_sizes', 'batch'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[194.75, 304.0, 256.5]', '(120, 90)']
+15 for batch in batch_processor:
+15 ['compression_ratios', 'batch_processor', 'processed_sizes', 'batch'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[194.75, 304.0, 256.5, 199.5]', '(85, 200)']
+15 for batch in batch_processor:
+15 ['compression_ratios', 'batch_processor', 'processed_sizes', 'batch'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[194.75, 304.0, 256.5, 199.5, 270.75]', '(85, 150)']
+15 for batch in batch_processor:
+15 ['compression_ratios', 'batch_processor', 'processed_sizes', 'batch'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[194.75, 304.0, 256.5, 199.5, 270.75, ...]', '(85, 90)']
+15 for batch in batch_processor:
+15 ['compression_ratios', 'batch_processor', 'processed_sizes', 'batch'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[194.75, 304.0, 256.5, 199.5, 270.75, ...]', '(200, 150)']
+15 for batch in batch_processor:
+15 ['compression_ratios', 'batch_processor', 'processed_sizes', 'batch'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[194.75, 304.0, 256.5, 199.5, 270.75, ...]', '(200, 90)']
+15 for batch in batch_processor:
+15 ['compression_ratios', 'batch_processor', 'processed_sizes', 'batch'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[194.75, 304.0, 256.5, 199.5, 270.75, ...]', '(150, 90)']
+15 for batch in batch_processor:
+15 ['compression_ratios', 'batch_processor', 'processed_sizes', 'batch'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '<itertools.combinations object at 0x00000237B47F65C0>', '[194.75, 304.0, 256.5, 199.5, 270.75, ...]', '(150, 90)']
+24 processed_batches = len(processed_sizes[:3])
+24 ['compression_ratios', 'processed_sizes', 'processed_batches'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '[194.75, 304.0, 256.5, 199.5, 270.75, ...]', '3']
+27 data_multiplier = sum(compression_ratios[:3]) / 3
+27 ['compression_ratios', 'processed_batches', 'data_multiplier'] ['[0.8, 1.2, 0.95, 1.1, 0.75]', '3', '0.9833333333333334']
+30 final_throughput = processed_batches * data_multiplier
+30 ['processed_batches', 'data_multiplier', 'final_throughput'] ['3', '0.9833333333333334', '2.95']

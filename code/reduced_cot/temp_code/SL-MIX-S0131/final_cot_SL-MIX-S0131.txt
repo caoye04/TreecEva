@@ -1,6 +1,28 @@
-Target: Find the value of variable warehouse_zones after [line 6] executes
+Target: Find the value of variable final_analysis after [line 37] executes
 
-[line 6]  warehouse_zones = [[0 for _ in range(3)] for _ in range(3)]
-Compute: [[0 for _ in range(3)] for _ in range(3)], where _=0 (an unknown source) = ?
+[line 36]  final_analysis = process_network_data(network_nodes)
+Call function process_network_data(network_nodes=[{status: 'active', capacity: 25, connections: 8}, {status: 'inactive', capacity: 40, connections: 12}, {status: 'active', capacity: 18, connections: 5}, {status: 'active', capacity: 32, connections: 9}, {status: 'maintenance', capacity: 28, connections: 7}] (an unknown source))
+[line 2]  active_nodes = [node for node in nodes if node['status'] == 'active']
+Compute: [node for node in nodes if node['status'] == 'active'], where node={status: 'active', capacity: 25, connections: 8} (an unknown source), nodes=[{status: 'active', capacity: 25, connections: 8}, {status: 'inactive', capacity: 40, connections: 12}, {status: 'active', capacity: 18, connections: 5}, {status: 'active', capacity: 32, connections: 9}, {status: 'maintenance', capacity: 28, connections: 7}] (an unknown source) = ?
+[line 3]  total_capacity = sum(node['capacity'] for node in active_nodes)
+Call function sum(node['capacity'] for node in active_nodes)
+[line 9]  connectivity_scores = list(map(lambda x: x['connections'] % 7, active_nodes))
+Call function list(map(lambda x: x['connections'] % 7, active_nodes))
+[line 9]  connectivity_scores = list(map(lambda x: x['connections'] % 7, active_nodes))
+Call function list(map(lambda x: x['connections'] % 7, active_nodes))
+[line 9]  connectivity_scores = list(map(lambda x: x['connections'] % 7, active_nodes))
+Call function list(map(lambda x: x['connections'] % 7, active_nodes))
+[line 9]  connectivity_scores = list(map(lambda x: x['connections'] % 7, active_nodes))
+Call function list(map(lambda x: x['connections'] % 7, active_nodes))
+[line 10]  connectivity_sum = sum(connectivity_scores)
+Call function sum(connectivity_scores=[1, 5, 2] (defined at [line 9]))
+[line 13]  processed_value = (total_capacity * 3) % 17
+Compute: (total_capacity * 3) % 17, where total_capacity=75 (defined at [line 3]) = 4
+[line 14]  processed_value += connectivity_sum if connectivity_sum % 2 == 0 else 0
+Update: processed_value changed from 4 (defined at defined at [line 13]) to 4+connectivity_sum if connectivity_sum % 2 == 0 else 0 = 12
+[line 24]  return processed_value
+Return: processed_value=12 (defined at [line 14])
+[line 37]  print(f"Result: {final_analysis}")
+Output: f"Result: {final_analysis}"
 
-Answer: warehouse_zones = [[0, 0, 0], [0, 0, 0], [0, 0, 0]] (last updated on defined at [line 6])
+Answer: final_analysis = 12 (last updated on defined at [line 36])

@@ -1,7 +1,8 @@
-library_catalog = {'Python Tricks', 'Effective Java', 'Clean Code', 'Design Patterns', 'Refactoring'}
-borrowed_books = {'Python Tricks', 'Clean Code'}
+from collections import Counter
 
-available_books = library_catalog - borrowed_books
-book_count = len(available_books) if available_books else 0
-
-print(f'Result: {book_count}')
+names = ['alice', 'bob', 'charlie', 'diana', 'alice', 'bob', 'eve', 'frank']
+name_counts = Counter(names)
+threshold = 2
+filtered_names = [name for name in names if name_counts[name] >= threshold]
+final_count = len(filtered_names)
+print(f"Result: {final_count}")

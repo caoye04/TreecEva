@@ -1,0 +1,90 @@
+Target: Find the value of variable final_energy after [line 43] executes
+
+[line 35]  core_temp = 325
+Assign: core_temp = 325
+[line 36]  sensor_readings = [78.5, 82.3, 89.7, 91.2, 86.8, 83.1]
+Compute: [78.5, 82.3, 89.7, 91.2, 86.8, 83.1] = [78.5, 82.3, 89.7, 91.2, 86.8, ...]
+[line 37]  pressure_data, unused_calibration = monitor_pressure_fluctuations(sensor_readings)
+(Missing param: 'func_name')
+[line 8]  pressure_data = [p * 1.2 for p in pressure_readings]
+Compute: [p * 1.2 for p in pressure_readings], where p=78.5 (an unknown source), pressure_readings=[78.5, 82.3, 89.7, 91.2, 86.8, ...] (an unknown source) = ?
+[line 9]  irrelevant_calibration = sum(p * 0.1 for p in pressure_data) - len(pressure_data)
+Compute: sum(p * 0.1 for p in pressure_data) - len(pressure_data), where pressure_data=[94.2, 98.75999999999999, 107.64, 109.44, 104.16, ...] (defined at [line 8]) = ?
+[line 10]  return pressure_data, irrelevant_calibration
+Return: pressure_data, irrelevant_calibration
+[line 42]  final_energy = transform_power(core_temp, pressure_data)
+Call function transform_power(core_temp=325 (defined at [line 35]), pressure_data=[94.2, 98.75999999999999, 107.64, 109.44, 104.16, ...] (defined at [line 8]))
+[line 15]  turbine_configs = [(1200, 45), (1400, 60), (1600, 75), (1800, 90)]
+Compute: [(1200, 45), (1400, 60), (1600, 75), (1800, 90)] = [(1200, 45), (1400, 60), (1600, 75), (1800, 90)]
+[line 18]  thermal_modifier = lambda t: 0.98 if t < 300 else 1.02
+Compute: lambda t: 0.98 if t < 300 else 1.02 = ?
+[line 19]  pressure_stability = len([p for p in pressure_array if p > 85]) / len(pressure_array)
+Compute: len([p for p in pressure_array if p > 85]) / len(pressure_array), where p=94.2 (an unknown source), pressure_array=[94.2, 98.75999999999999, 107.64, 109.44, 104.16, ...] (an unknown source) = ?
+[line 21]  efficiency_values = []
+Compute: [] = []
+[line 22]  for speed, angle in turbine_configs:
+(Missing param: 'iter_var')
+[line 1]  def calculate_turbine_efficiency(rotor_speed, blade_angle):
+Enter function calculate_turbine_efficiency: rotor_speed=1200, blade_angle=45
+  [line 2]  efficiency_map = {45: 0.87, 60: 0.92, 75: 0.89, 90: 0.85}
+  Compute: {45: 0.87, 60: 0.92, 75: 0.89, 90: 0.85} = {45: 0.87, 60: 0.92, 75: 0.89, ...}
+  [line 3]  base_efficiency = efficiency_map.get(blade_angle, 0.80)
+  (Missing param: 'func_name')
+  [line 4]  speed_factor = 1.0 if rotor_speed <= 1500 else 0.95
+  Compute: 1.0 if rotor_speed <= 1500 else 0.95, where rotor_speed=1200 (parameter rotor_speed) = 1.0
+  [line 5]  return base_efficiency * speed_factor
+  Return: base_efficiency * speed_factor
+Function calculate_turbine_efficiency returns 0.87
+[line 22]  for speed, angle in turbine_configs:
+Loop End: Iteration finished
+[line 1]  def calculate_turbine_efficiency(rotor_speed, blade_angle):
+Enter function calculate_turbine_efficiency: rotor_speed=1400, blade_angle=60
+  [line 2]  efficiency_map = {45: 0.87, 60: 0.92, 75: 0.89, 90: 0.85}
+  Compute: {45: 0.87, 60: 0.92, 75: 0.89, 90: 0.85} = {45: 0.87, 60: 0.92, 75: 0.89, ...}
+  [line 3]  base_efficiency = efficiency_map.get(blade_angle, 0.80)
+  (Missing param: 'func_name')
+  [line 4]  speed_factor = 1.0 if rotor_speed <= 1500 else 0.95
+  Compute: 1.0 if rotor_speed <= 1500 else 0.95, where rotor_speed=1400 (parameter rotor_speed) = 1.0
+  [line 5]  return base_efficiency * speed_factor
+  Return: base_efficiency * speed_factor
+Function calculate_turbine_efficiency returns 0.92
+[line 22]  for speed, angle in turbine_configs:
+Loop End: Iteration finished
+[line 1]  def calculate_turbine_efficiency(rotor_speed, blade_angle):
+Enter function calculate_turbine_efficiency: rotor_speed=1600, blade_angle=75
+  [line 2]  efficiency_map = {45: 0.87, 60: 0.92, 75: 0.89, 90: 0.85}
+  Compute: {45: 0.87, 60: 0.92, 75: 0.89, 90: 0.85} = {45: 0.87, 60: 0.92, 75: 0.89, ...}
+  [line 3]  base_efficiency = efficiency_map.get(blade_angle, 0.80)
+  (Missing param: 'func_name')
+  [line 4]  speed_factor = 1.0 if rotor_speed <= 1500 else 0.95
+  Compute: 1.0 if rotor_speed <= 1500 else 0.95, where rotor_speed=1600 (parameter rotor_speed) = 0.95
+  [line 5]  return base_efficiency * speed_factor
+  Return: base_efficiency * speed_factor
+Function calculate_turbine_efficiency returns 0.8454999999999999
+[line 22]  for speed, angle in turbine_configs:
+Loop End: Iteration finished
+[line 1]  def calculate_turbine_efficiency(rotor_speed, blade_angle):
+Enter function calculate_turbine_efficiency: rotor_speed=1800, blade_angle=90
+  [line 2]  efficiency_map = {45: 0.87, 60: 0.92, 75: 0.89, 90: 0.85}
+  Compute: {45: 0.87, 60: 0.92, 75: 0.89, 90: 0.85} = {45: 0.87, 60: 0.92, 75: 0.89, ...}
+  [line 3]  base_efficiency = efficiency_map.get(blade_angle, 0.80)
+  (Missing param: 'func_name')
+  [line 4]  speed_factor = 1.0 if rotor_speed <= 1500 else 0.95
+  Compute: 1.0 if rotor_speed <= 1500 else 0.95, where rotor_speed=1800 (parameter rotor_speed) = 0.95
+  [line 5]  return base_efficiency * speed_factor
+  Return: base_efficiency * speed_factor
+Function calculate_turbine_efficiency returns 0.8075
+[line 22]  for speed, angle in turbine_configs:
+Loop End: Iteration finished
+[line 26]  avg_efficiency = sum(efficiency_values) / len(efficiency_values)
+Compute: sum(efficiency_values) / len(efficiency_values), where efficiency_values=[0.87, 0.92, 0.8454999999999999, 0.8075] (defined at [line 21]) = 0.86075
+[line 29]  pressure_sum = sum(pressure_array)
+Call function sum(pressure_array=[94.2, 98.75999999999999, 107.64, 109.44, 104.16, ...] (an unknown source))
+[line 31]  power_output = avg_efficiency * thermal_modifier(temperature) * pressure_stability * pressure_sum
+Compute: avg_efficiency * thermal_modifier(temperature) * pressure_stability * pressure_sum, where avg_efficiency=0.86075 (defined at [line 26]), temperature=325 (an unknown source), pressure_stability=1.0 (defined at [line 19]), pressure_sum=613.92 (defined at [line 29]) = ?
+[line 33]  return round(power_output, 2)
+Return: round(power_output, 2)
+[line 43]  print(f"Result: {final_energy}")
+Output: f"Result: {final_energy}"
+
+Answer: final_energy = 539.0 (last updated on defined at [line 42])

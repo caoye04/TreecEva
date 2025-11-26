@@ -1,0 +1,56 @@
+Target: Find the value of variable final_count after [line 29] executes
+
+[line 2]  primary_values = [12, 7, 19, 4, 25, 8, 15]
+Compute: [12, 7, 19, 4, 25, 8, 15] = [12, 7, 19, 4, 25, ...]
+[line 3]  secondary_markers = [True, False, True, True, False, True, False]
+Compute: [True, False, True, True, False, True, False] = [True, False, True, True, False, ...]
+[line 8]  valid_pairs_count = 0
+Assign: valid_pairs_count = 0
+[line 12]  for index, (value, marker) in enumerate(zip(primary_values, secondary_markers)):
+(Missing param: 'iter_var')
+[line 14]  if value > 10 and marker:
+Condition: True, entering 'if' block
+[line 15]  valid_pairs_count += 1
+Update: valid_pairs_count changed from 0 (defined at defined at [line 8]) to 0+1 = 1
+[line 12]  for index, (value, marker) in enumerate(zip(primary_values, secondary_markers)):
+(Missing param: 'iter_var')
+[line 14]  if value > 10 and marker:
+Condition: True, entering 'if' block
+... [Line 12] repeats 4 more times ...
+... [Line 12] repeats 4 more times ...
+... [Line 12] repeats 4 more times ...
+[line 12]  for index, (value, marker) in enumerate(zip(primary_values, secondary_markers)):
+(Missing param: 'iter_var')
+[line 14]  if value > 10 and marker:
+Condition: True, entering 'if' block
+[line 12]  for index, (value, marker) in enumerate(zip(primary_values, secondary_markers)):
+Loop End: Iteration finished
+[line 21]  adjustment = 0
+Assign: adjustment = 0
+[line 22]  for i in range(len(primary_values) - 1):
+Loop Start: i takes its first value 0
+[line 23]  if primary_values[i] < primary_values[i + 1]:
+Condition: True, entering 'if' block
+[line 26]  adjustment -= 1  # Never triggers with current data
+Update: adjustment changed from 0 (defined at defined at [line 21]) to 0-1  # Never triggers with current data = -1
+[line 22]  for i in range(len(primary_values) - 1):
+Loop Iteration: i is now 1 (iteration 2)
+[line 23]  if primary_values[i] < primary_values[i + 1]:
+Condition: True, entering 'if' block
+[line 24]  adjustment += 2  # Actually used in final calculation
+Update: adjustment changed from -1 (defined at defined at [line 26]) to -1+2  # Actually used in final calculation = 1
+... [Line 22] repeats 3 more times ...
+... [Line 22] repeats 3 more times ...
+... [Line 22] repeats 3 more times ...
+[line 22]  for i in range(len(primary_values) - 1):
+Loop Iteration: i is now 5 (iteration 6)
+[line 23]  if primary_values[i] < primary_values[i + 1]:
+Condition: True, entering 'if' block
+[line 24]  adjustment += 2  # Actually used in final calculation
+Update: adjustment changed from 1 (defined at defined at [line 24]) to 1+2  # Actually used in final calculation = 3
+[line 22]  for i in range(len(primary_values) - 1):
+Loop End: Iteration finished
+[line 29]  final_count = valid_pairs_count + adjustment
+Compute: valid_pairs_count + adjustment, where valid_pairs_count=2 (defined at [line 15]), adjustment=3 (defined at [line 24]) = 5
+
+Answer: final_count = 5 (last updated on defined at [line 29])

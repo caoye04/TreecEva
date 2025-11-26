@@ -1,14 +1,19 @@
-def transform_packet(seed):
-    # Apply left shift by 3 and mask to 8 bits
-    stage1 = (seed << 3) & 0xFF
-    # XOR with 0b10101010
-    stage2 = stage1 ^ 0xAA
-    # Right shift by 2 and mask again
-    stage3 = (stage2 >> 2) & 0xFF
-    # Final XOR with original seed
-    final_checksum = stage3 ^ seed
-    return final_checksum
+from itertools import islice
 
-packet_seed = 0b11001010
-final_checksum = transform_packet(packet_seed)
-print(f'Result: {final_checksum}')
+data_stream = [42, 15, 87, 23, 56, 91, 34, 78, 12, 65]
+
+# Process data with lambda functions and itertools
+is_even = lambda x: x % 2 == 0
+transform_data = lambda x: x * 2 - 10
+
+# Create some intermediate computations
+processed_chunk = list(islice(data_stream, 5))
+temp_sum = sum(processed_chunk)
+scaling_factor = temp_sum // 10  # This value isn't used in final calculation
+
+# Main logic chain
+filtered_items = [transform_data(x) for x in data_stream if is_even(x)]
+redundant_calc = len(data_stream) * scaling_factor  # Distractor computation
+
+final_result = sorted(filtered_items)[-1]
+print(f"Result: {final_result}")

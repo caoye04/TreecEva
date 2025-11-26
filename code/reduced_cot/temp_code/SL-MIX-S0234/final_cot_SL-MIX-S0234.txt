@@ -1,52 +1,14 @@
-Target: Find the value of variable peak_energy_ratio after [line 24] executes
+Target: Find the value of variable result after [line 10] executes
 
-[line 10]  test_signal = [3.5, -2.1, 4.8, -1.9, 0.7, -3.3, 2.2, -0.4]
-Compute: [3.5, -2.1, 4.8, -1.9, 0.7, -3.3, 2.2, -0.4] = [3.5, -2.1, 4.8, -1.9, 0.7, ...]
-[line 11]  normalized_signal = normalize_waveform(test_signal)
-Call function normalize_waveform(test_signal=[3.5, -2.1, 4.8, -1.9, 0.7, ...] (defined at [line 10]))
-[line 7]  max_amplitude = max(abs(sample) for sample in waveform)
-Call function max(abs(sample) for sample in waveform)
-[line 7]  max_amplitude = max(abs(sample) for sample in waveform)
-Call function max(abs(sample) for sample in waveform)
-[line 7]  max_amplitude = max(abs(sample) for sample in waveform)
-Call function max(abs(sample) for sample in waveform)
-[line 7]  max_amplitude = max(abs(sample) for sample in waveform)
-Call function max(abs(sample) for sample in waveform)
-[line 7]  max_amplitude = max(abs(sample) for sample in waveform)
-Call function max(abs(sample) for sample in waveform)
-[line 7]  max_amplitude = max(abs(sample) for sample in waveform)
-Call function max(abs(sample) for sample in waveform)
-[line 7]  max_amplitude = max(abs(sample) for sample in waveform)
-Call function max(abs(sample) for sample in waveform)
-[line 7]  max_amplitude = max(abs(sample) for sample in waveform)
-Call function max(abs(sample) for sample in waveform)
-[line 7]  max_amplitude = max(abs(sample) for sample in waveform)
-Call function max(abs(sample) for sample in waveform)
-[line 7]  max_amplitude = max(abs(sample) for sample in waveform)
-Call function max(abs(sample) for sample in waveform)
-[line 8]  return [sample/max_amplitude for sample in waveform] if max_amplitude != 0 else waveform
-Return: [sample/max_amplitude for sample in waveform] if max_amplitude != 0 else waveform
-[line 12]  segment_size = 3
-Assign: segment_size = 3
-[line 16]  for i in range(0, len(normalized_signal), segment_size)
-(Missing param: 'iter_var')
-[line 16]  for i in range(0, len(normalized_signal), segment_size)
-Loop End: Iteration finished
-[line 4]  return sum(sample**2 for sample in samples)
-Return: sum(sample**2 for sample in samples)
-[line 16]  for i in range(0, len(normalized_signal), segment_size)
-Loop End: Iteration finished
-[line 16]  for i in range(0, len(normalized_signal), segment_size)
-Loop End: Iteration finished
-[line 16]  for i in range(0, len(normalized_signal), segment_size)
-Loop End: Iteration finished
-[line 19]  peak_energy = max(energy_segments)
-Call function max(energy_segments=[1.723090277777778, 0.6506076388888888, 0.21701388888888892] (an unknown source))
-[line 20]  total_energy = sum(energy_segments)
-Call function sum(energy_segments=[1.723090277777778, 0.6506076388888888, 0.21701388888888892] (an unknown source))
-[line 21]  peak_energy_ratio = peak_energy / total_energy if total_energy != 0 else 0
-Compute: peak_energy / total_energy if total_energy != 0 else 0, where peak_energy=1.723090277777778 (defined at [line 19]), total_energy=2.590711805555556 (defined at [line 20]) = 0.6651030323337243
-[line 24]  peak_energy_ratio = round(peak_energy_ratio, 6)
-Call function round(peak_energy_ratio=0.665103 (defined at [line 21]), 6)
+[line 4]  precinct_votes = [3, 7, 5, 3, 2, 5, 7, 3, 5, 7, 2, 3, 5, 7, 3]
+Compute: [3, 7, 5, 3, 2, 5, 7, 3, 5, 7, 2, 3, 5, 7, 3] = [3, 7, 5, 3, 2, ...]
+[line 5]  frequency_counter = Counter(precinct_votes)
+Call function Counter(precinct_votes=[3, 7, 5, 3, 2, ...] (defined at [line 4]))
+[line 8]  total_votes = sum(frequency_counter.values())
+Call function sum(frequency_counter.values())
+[line 9]  candidate_5_votes = frequency_counter[5]
+Compute: frequency_counter[5], where frequency_counter={3: 5, 7: 4, 5: 4, ...} (defined at [line 5]) = 4
+[line 10]  result = total_votes - candidate_5_votes
+Compute: total_votes - candidate_5_votes, where total_votes=15 (defined at [line 8]), candidate_5_votes=4 (defined at [line 9]) = 11
 
-Answer: peak_energy_ratio = 0.665103 (last updated on defined at [line 24])
+Answer: result = 11 (last updated on defined at [line 10])

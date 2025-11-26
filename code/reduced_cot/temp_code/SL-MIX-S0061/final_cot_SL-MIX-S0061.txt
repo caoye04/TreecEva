@@ -1,18 +1,52 @@
-Target: Find the value of variable total_revenue after [line 7] executes
+Target: Find the value of variable final_hash after [line 51] executes
 
-[line 3]  daily_quantities = [8, 17, 12]
-Compute: [8, 17, 12] = [8, 17, 12]
-[line 4]  prices = [2, 3, 4]
-Compute: [2, 3, 4] = [2, 3, 4]
-[line 5]  discount_applied = daily_quantities[0] < 10 and daily_quantities[1] > 15
-Compute: daily_quantities[0] < 10 and daily_quantities[1] > 15, where daily_quantities=[8, 17, 12] (defined at [line 3]) = True
-[line 7]  total_revenue = reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0)
-Compute: reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0), where daily_quantities=[8, 17, 12] (defined at [line 3]), prices=[2, 3, 4] (defined at [line 4]), discount_applied=True (defined at [line 5]) = ?
-[line 7]  total_revenue = reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0)
-Compute: reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0), where acc=0 (an unknown source), pair=(8, 2) (an unknown source), daily_quantities=[8, 17, 12] (defined at [line 3]), prices=[2, 3, 4] (defined at [line 4]), discount_applied=True (defined at [line 5]) = ?
-[line 7]  total_revenue = reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0)
-Compute: reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0), where acc=16 (an unknown source), pair=(17, 3) (an unknown source) = ?
-[line 7]  total_revenue = reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0)
-Compute: reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0), where acc=67 (an unknown source), pair=(12, 4) (an unknown source) = ?
+[line 39]  sample_items = [42, 17, 42, 89, 17, 23, 42, 89, 17, 42]
+Compute: [42, 17, 42, 89, 17, 23, 42, 89, 17, 42] = [42, 17, 42, 89, 17, ...]
+[line 40]  processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+Compute: [x * 2 if x % 2 == 0 else x + 1 for x in sample_items], where x=42 (an unknown source), sample_items=[42, 17, 42, 89, 17, ...] (defined at [line 39]) = ?
+[line 47]  final_hash = compute_data_integrity(processed_items)
+Call function compute_data_integrity(processed_items=[84, 18, 84, 90, 18, ...] (defined at [line 40]))
+[line 9]  frequency_map = Counter(data_entries)
+Call function Counter(data_entries=[84, 18, 84, 90, 18, ...] (an unknown source))
+[line 15]  unique_values = sorted(set(data_entries))
+Call function sorted(set(data_entries))
+[line 16]  hash_base = 0
+Assign: hash_base = 0
+[line 18]  for idx, value in enumerate(unique_values):
+(Missing param: 'iter_var')
+[line 20]  if value > 1000:
+Condition: True, entering 'if' block
+[line 24]  hash_base = (hash_base * 31 + value) % 1000000
+Compute: (hash_base * 31 + value) % 1000000, where hash_base=0 (defined at [line 16]), value=18 (an unknown source) = 18
+[line 18]  for idx, value in enumerate(unique_values):
+(Missing param: 'iter_var')
+[line 20]  if value > 1000:
+Condition: True, entering 'if' block
+[line 24]  hash_base = (hash_base * 31 + value) % 1000000
+Compute: (hash_base * 31 + value) % 1000000, where hash_base=18 (defined at [line 24]), value=24 (an unknown source) = 582
+[line 18]  for idx, value in enumerate(unique_values):
+(Missing param: 'iter_var')
+[line 20]  if value > 1000:
+Condition: True, entering 'if' block
+[line 24]  hash_base = (hash_base * 31 + value) % 1000000
+Compute: (hash_base * 31 + value) % 1000000, where hash_base=582 (defined at [line 24]), value=84 (an unknown source) = 18126
+[line 18]  for idx, value in enumerate(unique_values):
+(Missing param: 'iter_var')
+[line 20]  if value > 1000:
+Condition: True, entering 'if' block
+[line 24]  hash_base = (hash_base * 31 + value) % 1000000
+Compute: (hash_base * 31 + value) % 1000000, where hash_base=18126 (defined at [line 24]), value=90 (an unknown source) = 561996
+[line 18]  for idx, value in enumerate(unique_values):
+Loop End: Iteration finished
+[line 30]  frequency_factor = sum(freq ** 2 for freq in frequency_map.values())
+Call function sum(freq ** 2 for freq in frequency_map.values())
+[line 31]  integrity_hash = (hash_base ^ frequency_factor) % 10000
+Compute: (hash_base ^ frequency_factor) % 10000, where hash_base=561996 (defined at [line 24]), frequency_factor=30 (defined at [line 30]) = 2002
+[line 36]  return integrity_hash
+Return: integrity_hash=2002 (defined at [line 31])
+[line 50]  print(f"Secondary analysis sum: {shadow_total}")
+Output: f"Secondary analysis sum: {shadow_total}"
+[line 51]  print(f"Target result: {final_hash}")
+Output: f"Target result: {final_hash}"
 
-Answer: total_revenue = ? (last updated on defined at [line 7])
+Answer: final_hash = 2002 (last updated on defined at [line 47])

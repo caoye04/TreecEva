@@ -1,95 +1,289 @@
-29
-final_checksum
+52
+final_result
 ---
-3 raw_packets = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
-3 ['raw_packets'] ['[26, 43, 60, 77, 94]']
-7 chained_values = []
-7 ['raw_packets', 'chained_values'] ['[26, 43, 60, 77, 94]', '[]']
-8 for i, packet in enumerate(raw_packets):
-8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[]', '0', '26']
-8 for i, packet in enumerate(raw_packets):
-8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[101]', '1', '43']
-8 for i, packet in enumerate(raw_packets):
-8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[101, 213]', '2', '60']
-8 for i, packet in enumerate(raw_packets):
-8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[101, 213, 193]', '3', '77']
-8 for i, packet in enumerate(raw_packets):
-8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[101, 213, 193, 182]', '4', '94']
-8 for i, packet in enumerate(raw_packets):
-8 ['raw_packets', 'chained_values', 'i', 'packet'] ['[26, 43, 60, 77, 94]', '[101, 213, 193, 182, 169]', '4', '94']
-14 unique_packets = list(set(chained_values))
-14 ['chained_values', 'unique_packets'] ['[101, 213, 193, 182, 169]', '[193, 101, 169, 213, 182]']
-17 transform = lambda x: (x * 3 + 7) % 256
-17 ['unique_packets'] ['[193, 101, 169, 213, 182]']
-18 transformed_packets = [transform(p) for p in unique_packets]
-18 ['unique_packets', 'p'] ['[193, 101, 169, 213, 182]', '193']
-17 transform = lambda x: (x * 3 + 7) % 256
-17 ['x'] ['193']
-18 transformed_packets = [transform(p) for p in unique_packets]
-18 ['unique_packets', 'p'] ['[193, 101, 169, 213, 182]', '101']
-17 transform = lambda x: (x * 3 + 7) % 256
-17 ['x'] ['101']
-18 transformed_packets = [transform(p) for p in unique_packets]
-18 ['unique_packets', 'p'] ['[193, 101, 169, 213, 182]', '169']
-17 transform = lambda x: (x * 3 + 7) % 256
-17 ['x'] ['169']
-18 transformed_packets = [transform(p) for p in unique_packets]
-18 ['unique_packets', 'p'] ['[193, 101, 169, 213, 182]', '213']
-17 transform = lambda x: (x * 3 + 7) % 256
-17 ['x'] ['213']
-18 transformed_packets = [transform(p) for p in unique_packets]
-18 ['unique_packets', 'p'] ['[193, 101, 169, 213, 182]', '182']
-17 transform = lambda x: (x * 3 + 7) % 256
-17 ['x'] ['182']
-18 transformed_packets = [transform(p) for p in unique_packets]
-18 ['unique_packets', 'transformed_packets'] ['[193, 101, 169, 213, 182]', '[74, 54, 2, 134, 41]']
-21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-21 ['transformed_packets', 'p'] ['[74, 54, 2, 134, 41]', '74']
-21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-21 ['transformed_packets', 'p'] ['[74, 54, 2, 134, 41]', '54']
-21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-21 ['transformed_packets', 'p'] ['[74, 54, 2, 134, 41]', '2']
-21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-21 ['transformed_packets', 'p'] ['[74, 54, 2, 134, 41]', '134']
-21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-21 ['transformed_packets', 'p'] ['[74, 54, 2, 134, 41]', '41']
-21 packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-21 ['transformed_packets', 'packet_string'] ['[74, 54, 2, 134, 41]', "'4a3628629'"]
-22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
-22 [] []
-22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
-22 ['c'] ["'4'"]
-22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
-22 ['c'] ["'a'"]
-22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
-22 ['c'] ["'3'"]
-22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
-22 ['c'] ["'6'"]
-22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
-22 ['c'] ["'2'"]
-22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
-22 ['c'] ["'8'"]
-22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
-22 ['c'] ["'6'"]
-22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
-22 ['c'] ["'2'"]
-22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
-22 ['c'] ["'9'"]
-22 hash_id = sum(ord(c) for c in packet_string) & 0xFF
-22 ['c'] ["'9'"]
-25 checksum_components = [p ^ hash_id for p in transformed_packets]
-25 ['transformed_packets', 'hash_id', 'p'] ['[74, 54, 2, 134, 41]', '9', '74']
-25 checksum_components = [p ^ hash_id for p in transformed_packets]
-25 ['transformed_packets', 'hash_id', 'p'] ['[74, 54, 2, 134, 41]', '9', '54']
-25 checksum_components = [p ^ hash_id for p in transformed_packets]
-25 ['transformed_packets', 'hash_id', 'p'] ['[74, 54, 2, 134, 41]', '9', '2']
-25 checksum_components = [p ^ hash_id for p in transformed_packets]
-25 ['transformed_packets', 'hash_id', 'p'] ['[74, 54, 2, 134, 41]', '9', '134']
-25 checksum_components = [p ^ hash_id for p in transformed_packets]
-25 ['transformed_packets', 'hash_id', 'p'] ['[74, 54, 2, 134, 41]', '9', '41']
-25 checksum_components = [p ^ hash_id for p in transformed_packets]
-25 ['transformed_packets', 'hash_id', 'checksum_components'] ['[74, 54, 2, 134, 41]', '9', '[67, 63, 11, 143, 32]']
-26 intermediate_sum = sum(checksum_components) & 0xFFFF
-26 ['checksum_components', 'intermediate_sum'] ['[67, 63, 11, 143, 32]', '316']
-29 final_checksum = ((intermediate_sum >> 8) & 0xFF) | ((intermediate_sum & 0xFF) << 8)
-29 ['intermediate_sum', 'final_checksum'] ['316', '15361']
+43 initial_data = [17, 23, 29, 31, 37, 41, 43, 47, 53]
+43 ['initial_data'] ['[17, 23, 29, 31, 37, ...]']
+51 final_result = process_checksum(initial_data)
+51 ['initial_data'] ['[17, 23, 29, 31, 37, ...]']
+16 prime_filter = lambda x: x % 2 != 0 and x % 3 != 0  # Relevant lambda
+16 ['data_sequence'] ['[17, 23, 29, 31, 37, ...]']
+17 filtered_primes = list(filter(prime_filter, data_sequence))
+17 ['data_sequence'] ['[17, 23, 29, 31, 37, ...]']
+24 parity_results = [compute_parity_mask(x) for x in filtered_primes]
+24 ['filtered_primes', 'x'] ['[17, 23, 29, 31, 37, ...]', '17']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits'] ['17']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['17', '0']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['17', '1']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['17', '2']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['17', '3']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['17', '4']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['17', '5']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['17', '6']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['17', '7']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['17', '7']
+6 return temp_sum % 2
+6 ['bits', 'temp_sum'] ['17', '2']
+24 parity_results = [compute_parity_mask(x) for x in filtered_primes]
+24 ['filtered_primes', 'x'] ['[17, 23, 29, 31, 37, ...]', '23']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits'] ['23']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['23', '0']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['23', '1']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['23', '2']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['23', '3']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['23', '4']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['23', '5']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['23', '6']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['23', '7']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['23', '7']
+6 return temp_sum % 2
+6 ['bits', 'temp_sum'] ['23', '4']
+24 parity_results = [compute_parity_mask(x) for x in filtered_primes]
+24 ['filtered_primes', 'x'] ['[17, 23, 29, 31, 37, ...]', '29']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits'] ['29']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['29', '0']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['29', '1']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['29', '2']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['29', '3']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['29', '4']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['29', '5']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['29', '6']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['29', '7']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['29', '7']
+6 return temp_sum % 2
+6 ['bits', 'temp_sum'] ['29', '4']
+24 parity_results = [compute_parity_mask(x) for x in filtered_primes]
+24 ['filtered_primes', 'x'] ['[17, 23, 29, 31, 37, ...]', '31']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits'] ['31']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['31', '0']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['31', '1']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['31', '2']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['31', '3']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['31', '4']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['31', '5']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['31', '6']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['31', '7']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['31', '7']
+6 return temp_sum % 2
+6 ['bits', 'temp_sum'] ['31', '5']
+24 parity_results = [compute_parity_mask(x) for x in filtered_primes]
+24 ['filtered_primes', 'x'] ['[17, 23, 29, 31, 37, ...]', '37']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits'] ['37']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['37', '0']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['37', '1']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['37', '2']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['37', '3']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['37', '4']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['37', '5']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['37', '6']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['37', '7']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['37', '7']
+6 return temp_sum % 2
+6 ['bits', 'temp_sum'] ['37', '3']
+24 parity_results = [compute_parity_mask(x) for x in filtered_primes]
+24 ['filtered_primes', 'x'] ['[17, 23, 29, 31, 37, ...]', '41']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits'] ['41']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['41', '0']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['41', '1']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['41', '2']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['41', '3']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['41', '4']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['41', '5']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['41', '6']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['41', '7']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['41', '7']
+6 return temp_sum % 2
+6 ['bits', 'temp_sum'] ['41', '3']
+24 parity_results = [compute_parity_mask(x) for x in filtered_primes]
+24 ['filtered_primes', 'x'] ['[17, 23, 29, 31, 37, ...]', '43']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits'] ['43']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['43', '0']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['43', '1']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['43', '2']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['43', '3']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['43', '4']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['43', '5']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['43', '6']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['43', '7']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['43', '7']
+6 return temp_sum % 2
+6 ['bits', 'temp_sum'] ['43', '4']
+24 parity_results = [compute_parity_mask(x) for x in filtered_primes]
+24 ['filtered_primes', 'x'] ['[17, 23, 29, 31, 37, ...]', '47']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits'] ['47']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['47', '0']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['47', '1']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['47', '2']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['47', '3']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['47', '4']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['47', '5']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['47', '6']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['47', '7']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['47', '7']
+6 return temp_sum % 2
+6 ['bits', 'temp_sum'] ['47', '5']
+24 parity_results = [compute_parity_mask(x) for x in filtered_primes]
+24 ['filtered_primes', 'x'] ['[17, 23, 29, 31, 37, ...]', '53']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits'] ['53']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['53', '0']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['53', '1']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['53', '2']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['53', '3']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['53', '4']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['53', '5']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['53', '6']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['53', '7']
+5 temp_sum = sum((bits >> i) & 1 for i in range(8))
+5 ['bits', 'i'] ['53', '7']
+6 return temp_sum % 2
+6 ['temp_sum'] ['4']
+24 parity_results = [compute_parity_mask(x) for x in filtered_primes]
+24 ['filtered_primes', 'parity_results'] ['[17, 23, 29, 31, 37, ...]', '[0, 0, 0, 1, 1, ...]']
+25 offset_value = calculate_data_offset(filtered_primes)
+25 ['filtered_primes', 'parity_results'] ['[17, 23, 29, 31, 37, ...]', '[0, 0, 0, 1, 1, ...]']
+PARAM_MAPPING {'values': {'actual_var': 'filtered_primes', 'value': [17, 23, 29, 31, 37, 41, 43, 47, 53]}}
+FUNCTION_ENTER 8 calculate_data_offset def calculate_data_offset(values):
+8 ['values'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 17}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 29}, {'_type': 'int', '_value': 31}, {'_type': 'int', '_value': 37}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 43}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 53}], '_len': 9}]
+9 offset_accumulator = 0
+9 ['values', 'offset_accumulator'] ['[17, 23, 29, 31, 37, ...]', '0']
+10 for i, val in enumerate(values):
+10 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '0', '0', '17']
+11 offset_accumulator ^= (val << (i % 4))  # Misleading computation
+11 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '17', '0', '17']
+10 for i, val in enumerate(values):
+10 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '17', '1', '23']
+11 offset_accumulator ^= (val << (i % 4))  # Misleading computation
+11 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '63', '1', '23']
+10 for i, val in enumerate(values):
+10 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '63', '2', '29']
+11 offset_accumulator ^= (val << (i % 4))  # Misleading computation
+11 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '75', '2', '29']
+10 for i, val in enumerate(values):
+10 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '75', '3', '31']
+11 offset_accumulator ^= (val << (i % 4))  # Misleading computation
+11 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '179', '3', '31']
+10 for i, val in enumerate(values):
+10 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '179', '4', '37']
+11 offset_accumulator ^= (val << (i % 4))  # Misleading computation
+11 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '150', '4', '37']
+10 for i, val in enumerate(values):
+10 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '150', '5', '41']
+11 offset_accumulator ^= (val << (i % 4))  # Misleading computation
+11 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '196', '5', '41']
+10 for i, val in enumerate(values):
+10 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '196', '6', '43']
+11 offset_accumulator ^= (val << (i % 4))  # Misleading computation
+11 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '104', '6', '43']
+10 for i, val in enumerate(values):
+10 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '104', '7', '47']
+11 offset_accumulator ^= (val << (i % 4))  # Misleading computation
+11 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '272', '7', '47']
+10 for i, val in enumerate(values):
+10 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '272', '8', '53']
+11 offset_accumulator ^= (val << (i % 4))  # Misleading computation
+11 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '293', '8', '53']
+10 for i, val in enumerate(values):
+10 ['values', 'offset_accumulator', 'i', 'val'] ['[17, 23, 29, 31, 37, ...]', '293', '8', '53']
+12 return offset_accumulator % 16
+12 ['offset_accumulator'] ['293']
+FUNCTION_RETURN 12 calculate_data_offset {'_type': 'int', '_value': 5}
+28 misleading_sum = sum(parity_results) * 2 + offset_value
+28 ['filtered_primes', 'parity_results', 'offset_value', 'misleading_sum'] ['[17, 23, 29, 31, 37, ...]', '[0, 0, 0, 1, 1, ...]', '5', '13']
+31 checksum_base = sum(filtered_primes) & 0xFF
+31 ['filtered_primes', 'offset_value', 'misleading_sum', 'checksum_base'] ['[17, 23, 29, 31, 37, ...]', '5', '13', '65']
+32 final_checksum = (checksum_base ^ offset_value) | (misleading_sum & 0x0F)
+32 ['offset_value', 'misleading_sum', 'checksum_base', 'final_checksum'] ['5', '13', '65', '77']
+35 if misleading_sum > 100:
+35 ['misleading_sum', 'final_checksum'] ['13', '77']
+40 return final_checksum
+40 ['final_checksum'] ['77']
+52 print(f"Result: {final_result}")
+52 ['final_result'] ['77']

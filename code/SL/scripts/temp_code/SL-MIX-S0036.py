@@ -1,19 +1,22 @@
-import math
+def analyze_manufacturing_batch():
+    raw_readings = [84, 92, 78, 95, 88, 76, 91, 83, 89, 94]
+    quality_metrics = [reading * 0.1 for reading in raw_readings[:5]]
+    
+    temperature_adjustments = [2.5, -1.8, 3.2, -0.9, 1.7]
+    pressure_corrections = [x * 0.5 for x in temperature_adjustments]
+    
+    processed_values = []
+    for i in range(min(len(quality_metrics), len(pressure_corrections))):
+        temp_calc = quality_metrics[i] + temperature_adjustments[i]
+        adjusted_value = temp_calc * 0.8 + pressure_corrections[i]
+        processed_values.append(adjusted_value)
+    
+    redundant_check = sum(raw_readings[5:]) / len(raw_readings[5:])
+    unused_validation = max(raw_readings) - min(raw_readings)
+    
+    quality_metrics[-1] = max(processed_values[-2:])
+    final_quality_score = round(quality_metrics[-1] * 10)
+    
+    print(f"Target result: {final_quality_score}")
 
-def modified_fibonacci_sequence(seed_a, seed_b, count):
-    seq = [seed_a, seed_b]
-    for i in range(2, count):
-        next_val = math.sqrt(seq[i-1]**2 + seq[i-2]**2)
-        seq.append(next_val)
-    return seq
-
-# Generate sequence
-portfolio_volatility_series = modified_fibonacci_sequence(1.5, 2.3, 12)
-
-# Calculate product of even-indexed terms (0-based indexing: indices 2,4,6,8,10)
-even_index_terms = [portfolio_volatility_series[i] for i in range(2, len(portfolio_volatility_series), 2)]
-product_of_evens = math.prod(even_index_terms)
-
-# Compute log adjustment
-log_adjustment = math.log10(product_of_evens)
-print(f'Result: {log_adjustment}')
+analyze_manufacturing_batch()

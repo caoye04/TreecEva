@@ -1,0 +1,57 @@
+33 initial_load = 85
+33 ['initial_load'] [{'_type': 'int', '_value': 85}]
+34 adjustment_factor = 4
+34 ['initial_load', 'adjustment_factor'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}]
+35 cache_size = 1024  # Irrelevant variable
+35 ['initial_load', 'adjustment_factor', 'cache_size'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 1024}]
+36 buffer_threshold = 200  # Misleading constant
+36 ['initial_load', 'adjustment_factor', 'cache_size', 'buffer_threshold'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 1024}, {'_type': 'int', '_value': 200}]
+39 preliminary_load = initial_load * 2
+39 ['initial_load', 'adjustment_factor', 'cache_size', 'buffer_threshold', 'preliminary_load'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 1024}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 170}]
+40 preliminary_adjustment = adjustment_factor + 1
+40 ['initial_load', 'adjustment_factor', 'cache_size', 'buffer_threshold', 'preliminary_load', 'preliminary_adjustment'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 1024}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 5}]
+41 unused_precalc = preliminary_load + preliminary_adjustment
+41 ['initial_load', 'adjustment_factor', 'cache_size', 'buffer_threshold', 'preliminary_load', 'preliminary_adjustment', 'unused_precalc'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 1024}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 175}]
+44 final_throughput = process_complex_data(initial_load, adjustment_factor)
+44 ['initial_load', 'adjustment_factor', 'cache_size', 'buffer_threshold', 'preliminary_load', 'preliminary_adjustment', 'unused_precalc'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 1024}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 175}]
+PARAM_MAPPING process_complex_data {'base_load': {'actual_var': 'initial_load', 'value': 85}, 'adjustment': {'actual_var': 'adjustment_factor', 'value': 4}}
+FUNCTION_ENTER 1 process_complex_data def process_complex_data(base_load, adjustment):
+1 ['base_load', 'adjustment'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}]
+DEPTH_2 3     network_latency = base_load * 2.5 - 150
+3 ['base_load', 'adjustment', 'network_latency'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}]
+DEPTH_2 4     packet_loss = (network_latency % 50) / 100.0
+4 ['base_load', 'adjustment', 'network_latency', 'packet_loss'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}]
+DEPTH_2 7     temp_throughput = base_load * adjustment
+7 ['base_load', 'adjustment', 'network_latency', 'packet_loss', 'temp_throughput'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}, {'_type': 'int', '_value': 340}]
+DEPTH_2 8     cached_throughput = temp_throughput - (base_load // 3)
+8 ['base_load', 'adjustment', 'network_latency', 'packet_loss', 'temp_throughput', 'cached_throughput'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}, {'_type': 'int', '_value': 340}, {'_type': 'int', '_value': 312}]
+DEPTH_2 11     if base_load > 1000:
+11 ['base_load', 'adjustment', 'network_latency', 'packet_loss', 'temp_throughput', 'cached_throughput'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}, {'_type': 'int', '_value': 340}, {'_type': 'int', '_value': 312}]
+DEPTH_2 16     load_validator = lambda x: x > 0 and x < 500
+16 ['base_load', 'adjustment', 'network_latency', 'packet_loss', 'temp_throughput', 'cached_throughput'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}, {'_type': 'int', '_value': 340}, {'_type': 'int', '_value': 312}]
+DEPTH_2 17     processed_load = base_load + adjustment if load_validator(base_load) else base_load - adjustment
+17 ['base_load', 'adjustment', 'network_latency', 'packet_loss', 'temp_throughput', 'cached_throughput'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}, {'_type': 'int', '_value': 340}, {'_type': 'int', '_value': 312}]
+FUNCTION_ENTER 16 <lambda>     load_validator = lambda x: x > 0 and x < 500
+16 ['x'] [{'_type': 'int', '_value': 85}]
+DEPTH_3 16     load_validator = lambda x: x > 0 and x < 500
+16 ['x'] [{'_type': 'int', '_value': 85}]
+FUNCTION_RETURN 16 <lambda> {'_type': 'bool', '_value': True}
+DEPTH_2 20     redundant_calc = (processed_load * 3) // 2
+20 ['base_load', 'adjustment', 'network_latency', 'packet_loss', 'temp_throughput', 'cached_throughput', 'processed_load', 'redundant_calc'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}, {'_type': 'int', '_value': 340}, {'_type': 'int', '_value': 312}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 133}]
+DEPTH_2 21     misleading_buffer = redundant_calc + 25
+21 ['base_load', 'adjustment', 'network_latency', 'packet_loss', 'temp_throughput', 'cached_throughput', 'processed_load', 'redundant_calc', 'misleading_buffer'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}, {'_type': 'int', '_value': 340}, {'_type': 'int', '_value': 312}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 133}, {'_type': 'int', '_value': 158}]
+DEPTH_2 24     throughput_calc = (processed_load * adjustment) - (misleading_buffer % 20)
+24 ['base_load', 'adjustment', 'network_latency', 'packet_loss', 'temp_throughput', 'cached_throughput', 'processed_load', 'redundant_calc', 'misleading_buffer', 'throughput_calc'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}, {'_type': 'int', '_value': 340}, {'_type': 'int', '_value': 312}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 133}, {'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 338}]
+DEPTH_2 27     bandwidth_estimate = throughput_calc * 1.2
+27 ['base_load', 'adjustment', 'network_latency', 'packet_loss', 'temp_throughput', 'cached_throughput', 'processed_load', 'redundant_calc', 'misleading_buffer', 'throughput_calc', 'bandwidth_estimate'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}, {'_type': 'int', '_value': 340}, {'_type': 'int', '_value': 312}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 133}, {'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 338}, {'_type': 'float', '_value': 405.59999999999997}]
+DEPTH_2 28     compression_ratio = (bandwidth_estimate / base_load) if base_load != 0 else 1.0
+28 ['base_load', 'adjustment', 'network_latency', 'packet_loss', 'temp_throughput', 'cached_throughput', 'processed_load', 'redundant_calc', 'misleading_buffer', 'throughput_calc', 'bandwidth_estimate', 'compression_ratio'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}, {'_type': 'int', '_value': 340}, {'_type': 'int', '_value': 312}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 133}, {'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 338}, {'_type': 'float', '_value': 405.59999999999997}, {'_type': 'float', '_value': 4.771764705882353}]
+DEPTH_2 30     return throughput_calc
+30 ['base_load', 'adjustment', 'network_latency', 'packet_loss', 'temp_throughput', 'cached_throughput', 'processed_load', 'redundant_calc', 'misleading_buffer', 'throughput_calc', 'bandwidth_estimate', 'compression_ratio'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 62.5}, {'_type': 'float', '_value': 0.125}, {'_type': 'int', '_value': 340}, {'_type': 'int', '_value': 312}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 133}, {'_type': 'int', '_value': 158}, {'_type': 'int', '_value': 338}, {'_type': 'float', '_value': 405.59999999999997}, {'_type': 'float', '_value': 4.771764705882353}]
+FUNCTION_RETURN 30 process_complex_data {'_type': 'int', '_value': 338}
+47 final_buffer = final_throughput + 50
+47 ['initial_load', 'adjustment_factor', 'cache_size', 'buffer_threshold', 'preliminary_load', 'preliminary_adjustment', 'unused_precalc', 'final_throughput', 'final_buffer'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 1024}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 175}, {'_type': 'int', '_value': 338}, {'_type': 'int', '_value': 388}]
+48 network_efficiency = (final_buffer / cache_size) * 100 if cache_size != 0 else 0
+48 ['initial_load', 'adjustment_factor', 'cache_size', 'buffer_threshold', 'preliminary_load', 'preliminary_adjustment', 'unused_precalc', 'final_throughput', 'final_buffer', 'network_efficiency'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 1024}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 175}, {'_type': 'int', '_value': 338}, {'_type': 'int', '_value': 388}, {'_type': 'float', '_value': 37.890625}]
+50 print(f"Target result: {final_throughput}")
+50 ['initial_load', 'adjustment_factor', 'cache_size', 'buffer_threshold', 'preliminary_load', 'preliminary_adjustment', 'unused_precalc', 'final_throughput', 'final_buffer', 'network_efficiency'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 1024}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 175}, {'_type': 'int', '_value': 338}, {'_type': 'int', '_value': 388}, {'_type': 'float', '_value': 37.890625}]

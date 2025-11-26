@@ -1,127 +1,40 @@
-Target: Find the value of variable sync_metric after [line 35] executes
+Target: Find the value of variable final_solution after [line 51] executes
 
-[line 19]  harmonic_series = [1, 2, 3, 5, 8, 13, 21]
-Compute: [1, 2, 3, 5, 8, 13, 21] = [1, 2, 3, 5, 8, ...]
-[line 20]  fundamental_frequency = 440.0
-Assign: fundamental_frequency = 440.0
-[line 23]  processed_bins = process_frequency_bins(fundamental_frequency, harmonic_series)
-Call function process_frequency_bins(fundamental_frequency=440.0 (defined at [line 20]), harmonic_series=[1, 2, 3, 5, 8, ...] (defined at [line 19]))
-[line 8]  bins = [base_freq * h for h in harmonics]
-Compute: [base_freq * h for h in harmonics], where base_freq=440.0 (an unknown source), h=1 (an unknown source), harmonics=[1, 2, 3, 5, 8, ...] (an unknown source) = ?
-[line 9]  windowed = [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))]
-Compute: [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))], where bins=[440.0, 880.0, 1320.0, 2200.0, 3520.0, ...] (defined at [line 8]), i=0 (an unknown source) = ?
-[line 9]  windowed = [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))]
-Compute: [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))], where bins=[440.0, 880.0, 1320.0, 2200.0, 3520.0, ...] (defined at [line 8]), i=1 (an unknown source) = ?
-[line 9]  windowed = [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))]
-Compute: [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))], where bins=[440.0, 880.0, 1320.0, 2200.0, 3520.0, ...] (defined at [line 8]), i=2 (an unknown source) = ?
-[line 9]  windowed = [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))]
-Compute: [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))], where bins=[440.0, 880.0, 1320.0, 2200.0, 3520.0, ...] (defined at [line 8]), i=3 (an unknown source) = ?
-[line 9]  windowed = [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))]
-Compute: [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))], where bins=[440.0, 880.0, 1320.0, 2200.0, 3520.0, ...] (defined at [line 8]), i=4 (an unknown source) = ?
-[line 9]  windowed = [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))]
-Compute: [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))], where bins=[440.0, 880.0, 1320.0, 2200.0, 3520.0, ...] (defined at [line 8]), i=5 (an unknown source) = ?
-[line 9]  windowed = [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))]
-Compute: [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))], where bins=[440.0, 880.0, 1320.0, 2200.0, 3520.0, ...] (defined at [line 8]), i=6 (an unknown source) = ?
-[line 9]  windowed = [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))]
-Compute: [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))], where bins=[440.0, 880.0, 1320.0, 2200.0, 3520.0, ...] (defined at [line 8]), i=6 (an unknown source) = [35.20000000000001, 272.79999999999995, 1016.3999999999999, 2200.0, 2710.400000000001, ...]
-[line 10]  normalized = [int(w) % 1000 for w in windowed]
-Compute: [int(w) % 1000 for w in windowed], where w=35.20000000000001 (an unknown source), windowed=[35.20000000000001, 272.79999999999995, 1016.3999999999999, 2200.0, 2710.400000000001, ...] (defined at [line 9]) = ?
-[line 11]  return normalized
-Return: normalized=[35, 272, 16, 200, 710, ...] (defined at [line 10])
-[line 26]  transformed_values = [modular_sqrt_sum([x], 97) for x in processed_bins]
-Compute: [modular_sqrt_sum([x], 97) for x in processed_bins], where x=35 (an unknown source), processed_bins=[35, 272, 16, 200, 710, ...] (defined at [line 23]) = ?
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 26]  transformed_values = [modular_sqrt_sum([x], 97) for x in processed_bins]
-Compute: [modular_sqrt_sum([x], 97) for x in processed_bins], where x=272 (an unknown source), processed_bins=[35, 272, 16, 200, 710, ...] (defined at [line 23]) = ?
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 26]  transformed_values = [modular_sqrt_sum([x], 97) for x in processed_bins]
-Compute: [modular_sqrt_sum([x], 97) for x in processed_bins], where x=16 (an unknown source), processed_bins=[35, 272, 16, 200, 710, ...] (defined at [line 23]) = ?
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 26]  transformed_values = [modular_sqrt_sum([x], 97) for x in processed_bins]
-Compute: [modular_sqrt_sum([x], 97) for x in processed_bins], where x=200 (an unknown source), processed_bins=[35, 272, 16, 200, 710, ...] (defined at [line 23]) = ?
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 26]  transformed_values = [modular_sqrt_sum([x], 97) for x in processed_bins]
-Compute: [modular_sqrt_sum([x], 97) for x in processed_bins], where x=710 (an unknown source), processed_bins=[35, 272, 16, 200, 710, ...] (defined at [line 23]) = ?
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 26]  transformed_values = [modular_sqrt_sum([x], 97) for x in processed_bins]
-Compute: [modular_sqrt_sum([x], 97) for x in processed_bins], where x=773 (an unknown source), processed_bins=[35, 272, 16, 200, 710, ...] (defined at [line 23]) = ?
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 26]  transformed_values = [modular_sqrt_sum([x], 97) for x in processed_bins]
-Compute: [modular_sqrt_sum([x], 97) for x in processed_bins], where x=739 (an unknown source), processed_bins=[35, 272, 16, 200, 710, ...] (defined at [line 23]) = ?
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 5]  return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-Return: sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
-[line 26]  transformed_values = [modular_sqrt_sum([x], 97) for x in processed_bins]
-Compute: [modular_sqrt_sum([x], 97) for x in processed_bins], where x=739 (an unknown source), processed_bins=[35, 272, 16, 200, 710, ...] (defined at [line 23]) = [5, 16, 4, 14, 26, ...]
-[line 29]  unique_signals = frozenset(filter(lambda x: x > 0, transformed_values))
-Call function frozenset(filter(lambda x: x > 0, transformed_values))
-[line 29]  unique_signals = frozenset(filter(lambda x: x > 0, transformed_values))
-Call function frozenset(filter(lambda x: x > 0, transformed_values))
-[line 29]  unique_signals = frozenset(filter(lambda x: x > 0, transformed_values))
-Call function frozenset(filter(lambda x: x > 0, transformed_values))
-[line 29]  unique_signals = frozenset(filter(lambda x: x > 0, transformed_values))
-Call function frozenset(filter(lambda x: x > 0, transformed_values))
-[line 29]  unique_signals = frozenset(filter(lambda x: x > 0, transformed_values))
-Call function frozenset(filter(lambda x: x > 0, transformed_values))
-[line 29]  unique_signals = frozenset(filter(lambda x: x > 0, transformed_values))
-Call function frozenset(filter(lambda x: x > 0, transformed_values))
-[line 29]  unique_signals = frozenset(filter(lambda x: x > 0, transformed_values))
-Call function frozenset(filter(lambda x: x > 0, transformed_values))
-[line 29]  unique_signals = frozenset(filter(lambda x: x > 0, transformed_values))
-Call function frozenset(filter(lambda x: x > 0, transformed_values))
-[line 32]  signal_list = sorted(list(unique_signals))
-Call function sorted(list(unique_signals))
-[line 35]  sync_metric = aggregate_chunks(signal_list, 3)
-Call function aggregate_chunks(signal_list=[4, 5, 14, 16, 26, ...] (defined at [line 32]), 3)
-[line 13]  def aggregate_chunks(data, chunk_size):
-Enter function aggregate_chunks: data=[4, 5, 14, 16, 26, ...] (signal_list defined at [line 32]), chunk_size=3
-  [line 14]  chunks = [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)]
-  Compute: [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)], where data=[4, 5, 14, 16, 26, ...] (parameter data defined at [line 32]), i=0 (an unknown source), chunk_size=3 (parameter chunk_size) = ?
-  [line 14]  chunks = [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)]
-  Compute: [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)], where data=[4, 5, 14, 16, 26, ...] (parameter data defined at [line 32]), i=3 (an unknown source), chunk_size=3 (parameter chunk_size) = ?
-  [line 14]  chunks = [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)]
-  Compute: [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)], where data=[4, 5, 14, 16, 26, ...] (parameter data defined at [line 32]), i=3 (an unknown source), chunk_size=3 (parameter chunk_size) = [[4, 5, 14], [16, 26, 27]]
-  [line 15]  sums = [reduce(lambda a, b: a + b, chunk, 0) for chunk in chunks]
-  Compute: [reduce(lambda a, b: a + b, chunk, 0) for chunk in chunks], where chunk=[4, 5, 14] (an unknown source), chunks=[[4, 5, 14], [16, 26, 27]] (defined at [line 14]) = ?
-  [line 16]  return reduce(lambda a, b: a + b, sums, 0)
-  Return: reduce(lambda a, b: a + b, sums, 0)
-  [line 16]  return reduce(lambda a, b: a + b, sums, 0)
-  Return: reduce(lambda a, b: a + b, sums, 0)
-  [line 16]  return reduce(lambda a, b: a + b, sums, 0)
-  Return: reduce(lambda a, b: a + b, sums, 0)
-Function aggregate_chunks returns 92
+[line 8]  stock_levels = [45, 78, 92, 63, 21, 87, 34, 56, 79, 41]
+Compute: [45, 78, 92, 63, 21, 87, 34, 56, 79, 41] = [45, 78, 92, 63, 21, ...]
+[line 9]  reorder_thresholds = [30, 25, 40, 35, 20, 45, 25, 30, 40, 30]
+Compute: [30, 25, 40, 35, 20, 45, 25, 30, 40, 30] = [30, 25, 40, 35, 20, ...]
+[line 12]  total_stock = sum(stock_levels)
+Call function sum(stock_levels=[45, 78, 92, 63, 21, ...] (defined at [line 8]))
+[line 17]  if total_stock > 1000:
+Condition: True, entering 'if' block
+[line 21]  low_stock_items = []
+Compute: [] = []
+[line 22]  for idx, (current_stock, threshold) in enumerate(zip(stock_levels, reorder_thresholds)):
+(Missing param: 'iter_var')
+[line 23]  if current_stock <= threshold:
+Condition: True, entering 'if' block
+[line 22]  for idx, (current_stock, threshold) in enumerate(zip(stock_levels, reorder_thresholds)):
+(Missing param: 'iter_var')
+[line 23]  if current_stock <= threshold:
+Condition: True, entering 'if' block
+... [Line 22] repeats 7 more times ...
+... [Line 22] repeats 7 more times ...
+[line 22]  for idx, (current_stock, threshold) in enumerate(zip(stock_levels, reorder_thresholds)):
+(Missing param: 'iter_var')
+[line 23]  if current_stock <= threshold:
+Condition: True, entering 'if' block
+[line 22]  for idx, (current_stock, threshold) in enumerate(zip(stock_levels, reorder_thresholds)):
+Loop End: Iteration finished
+[line 31]  processed_data = []
+Compute: [] = []
+[line 32]  for item_idx, stock, reorder in low_stock_items:
+(Missing param: 'iter_var')
+[line 44]  if len(processed_data) > 0:
+Condition: True, entering 'if' block
+[line 48]  final_solution = -1
+Compute: -1 = -1
+[line 51]  print(f"Target result: {final_solution}")
+Output: f"Target result: {final_solution}"
 
-Answer: sync_metric = 92 (last updated on defined at [line 35])
+Answer: final_solution = -1 (last updated on defined at [line 48])

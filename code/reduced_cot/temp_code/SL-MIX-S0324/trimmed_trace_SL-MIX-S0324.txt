@@ -1,0 +1,55 @@
+12
+network_checksum
+---
+1 packet_headers = [0x45, 0x00, 0x00, 0x3C, 0x1C, 0x46]
+1 ['packet_headers'] ['[69, 0, 0, 60, 28, ...]']
+2 header_xor = 0
+2 ['packet_headers', 'header_xor'] ['[69, 0, 0, 60, 28, ...]', '0']
+3 for i, header in enumerate(packet_headers):
+3 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '0', '0', '69']
+4 header_xor ^= header
+4 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '69', '0', '69']
+3 for i, header in enumerate(packet_headers):
+3 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '69', '1', '0']
+4 header_xor ^= header
+4 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '69', '1', '0']
+3 for i, header in enumerate(packet_headers):
+3 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '69', '2', '0']
+4 header_xor ^= header
+4 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '69', '2', '0']
+3 for i, header in enumerate(packet_headers):
+3 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '69', '3', '60']
+4 header_xor ^= header
+4 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '121', '3', '60']
+3 for i, header in enumerate(packet_headers):
+3 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '121', '4', '28']
+4 header_xor ^= header
+4 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '101', '4', '28']
+3 for i, header in enumerate(packet_headers):
+3 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '101', '5', '70']
+4 header_xor ^= header
+4 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '35', '5', '70']
+3 for i, header in enumerate(packet_headers):
+3 ['packet_headers', 'header_xor', 'i', 'header'] ['[69, 0, 0, 60, 28, ...]', '35', '5', '70']
+6 protocol_flags = [0x01, 0x80, 0x40]
+6 ['header_xor', 'protocol_flags'] ['35', '[1, 128, 64]']
+7 flag_xor = 0
+7 ['header_xor', 'protocol_flags', 'flag_xor'] ['35', '[1, 128, 64]', '0']
+8 for flag in protocol_flags:
+8 ['header_xor', 'protocol_flags', 'flag_xor', 'flag'] ['35', '[1, 128, 64]', '0', '1']
+9 flag_xor |= flag
+9 ['header_xor', 'protocol_flags', 'flag_xor', 'flag'] ['35', '[1, 128, 64]', '1', '1']
+8 for flag in protocol_flags:
+8 ['header_xor', 'protocol_flags', 'flag_xor', 'flag'] ['35', '[1, 128, 64]', '1', '128']
+9 flag_xor |= flag
+9 ['header_xor', 'protocol_flags', 'flag_xor', 'flag'] ['35', '[1, 128, 64]', '129', '128']
+8 for flag in protocol_flags:
+8 ['header_xor', 'protocol_flags', 'flag_xor', 'flag'] ['35', '[1, 128, 64]', '129', '64']
+9 flag_xor |= flag
+9 ['header_xor', 'protocol_flags', 'flag_xor', 'flag'] ['35', '[1, 128, 64]', '193', '64']
+8 for flag in protocol_flags:
+8 ['header_xor', 'protocol_flags', 'flag_xor', 'flag'] ['35', '[1, 128, 64]', '193', '64']
+11 final_xor_value = header_xor & flag_xor
+11 ['header_xor', 'flag_xor', 'final_xor_value'] ['35', '193', '1']
+12 network_checksum = final_xor_value
+12 ['final_xor_value', 'network_checksum'] ['1', '1']

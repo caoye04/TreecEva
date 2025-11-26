@@ -1,45 +1,37 @@
-from functools import reduce
+from collections import Counter
 
-def tokenize_hex_stream(hex_string):
-    return [int(hex_string[i:i+2], 16) for i in range(0, len(hex_string), 2)]
+# Simulate inventory tracking with intervention level 7
+initial_stock = [5, 12, 8, 15, 3, 9, 7, 11]
+restock_items = [2, 4, 6, 8, 10]
 
-def apply_transformations(tokens):
-    stack = []
-    ops = [
-        lambda x: x << 1,
-        lambda x: x ^ 0xFF,
-        lambda x: (x + 17) % 256
-    ]
-    
-    for token in tokens:
-        transformed = reduce(lambda acc, op: op(acc), ops, token)
-        stack.append(transformed)
-    
-    return stack
+# Primary calculation path with relevant operations
+stock_counter = Counter(initial_stock)
+restock_counter = Counter(restock_items)
 
-class ChecksumCalculator:
-    def __init__(self):
-        self.checksum = 0
-    
-    def update(self, value):
-        self.checksum = (self.checksum + value) & 0xFFFF
-    
-    def get_checksum(self):
-        return self.checksum
+# Combined inventory after restocking
+combined_inventory = stock_counter + restock_counter
 
-def process_data_stream(data_stream):
-    tokens = tokenize_hex_stream(data_stream)
-    transformed_stack = apply_transformations(tokens)
-    
-    calculator = ChecksumCalculator()
-    
-    while transformed_stack:
-        value = transformed_stack.pop()
-        calculator.update(value)
-    
-    return calculator.get_checksum()
+# Calculate total items (this affects final result)
+base_total = sum(combined_inventory.values())
 
-# Main execution
-hex_data = "4A6B2C8D"
-final_checksum = process_data_stream(hex_data)
-print(f"Result: {final_checksum}")
+# Distractor operations that don't affect final result
+partial_sum = sum(item for item in initial_stock if item % 2 == 0)
+weight_factor = len(restock_items) * 1.5
+
+# Key calculations with moderate nesting
+processing_adjustment = 0
+for item, count in combined_inventory.items():
+    if count > 1:
+        processing_adjustment += item * (count - 1)
+
+# Intermediate variable not used in final answer
+intermediate_value = processing_adjustment // len(initial_stock)
+
+# Final computation chain
+final_adjustment = base_total - processing_adjustment
+offset_correction = (final_adjustment % 3) * 2
+
+# Target variable and execution point
+processed_total = final_adjustment * 2 - offset_correction
+
+print(f"Result: {processed_total}")

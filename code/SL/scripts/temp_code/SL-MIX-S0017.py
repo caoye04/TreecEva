@@ -1,43 +1,41 @@
-import re
-from functools import reduce
-from collections import namedtuple
+def analyze_performance(data_points):
+    # Distractor: Complex but irrelevant calculation
+    temp_sum = sum([x * 2 for x in data_points if x > 5])
+    offset = len(data_points) * 3.14
+    adjusted = temp_sum - offset
+    return adjusted
 
-def decode_token_segment(segment):
-    if len(segment) <= 2:
-        return sum(ord(c) for c in segment)
-    mid = len(segment) // 2
-    left_result = decode_token_segment(segment[:mid])
-    right_result = decode_token_segment(segment[mid:])
-    return left_result ^ right_result
+def calculate_metrics(values):
+    # Main logic path
+    processed = [v ** 2 if v % 2 == 0 else v * 3 for v in values]
+    weighted_sum = sum([p * (i + 1) for i, p in enumerate(processed)])
+    return weighted_sum
 
-class EncodingProcessor:
-    def __init__(self):
-        self.transform_rules = [
-            lambda x: x >> 1,
-            lambda x: x ^ 0xFF,
-            lambda x: (x * 3) & 0xFF
-        ]
+def process_results(input_data):
+    # Multiple nested function calls with interference
+    analysis_result = analyze_performance(input_data)  # Distractor
     
-    def process_sequence(self, tokens):
-        processed = []
-        for token in tokens:
-            if re.match(r'^[A-Z]{2,}$', token):
-                value = decode_token_segment(token)
-                for rule in self.transform_rules:
-                    value = rule(value)
-                processed.append(value)
-            else:
-                processed.append(0)
-        return processed
+    # Critical path - actual calculation
+    metrics_value = calculate_metrics(input_data)
+    
+    # More interference
+    noise_factor = (len(input_data) * 2.5) - 7
+    interference = metrics_value + noise_factor
+    
+    # Final result after removing interference
+    actual_result = interference - noise_factor
+    return actual_result
 
-TokenSequence = namedtuple('TokenSequence', ['primary', 'secondary'])
-token_data = TokenSequence(['ABCD', 'EFGH'], ['XYZ', 'ABC123'])
+# Main execution
+metrics_data = [2, 5, 3, 8, 4]
 
-processor = EncodingProcessor()
-primary_results = processor.process_sequence(token_data.primary)
-secondary_results = processor.process_sequence(token_data.secondary)
+# Distractor variables and operations
+preliminary_analysis = sum([x * x for x in metrics_data if x < 6])
+secondary_check = preliminary_analysis * 0.75  # Dead code path
+validation_score = len(metrics_data) ** 2 + 10
 
-combined_results = [a | b for a, b in zip(primary_results, secondary_results)]
-decoded_value = reduce(lambda x, y: (x + y) & 0xFF, combined_results, 0)
+# Target calculation
+final_score = process_results(metrics_data)
 
-print(f"Result: {decoded_value}")
+# Print result
+print(f"Result: {final_score}")

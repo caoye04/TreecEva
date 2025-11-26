@@ -1,57 +1,60 @@
-import itertools
-import math
-
-class DataBuffer:
-    def __init__(self, size):
-        self.size = size
-        self.data = []
+def analyze_network(nodes, connections):
+    # Distractor: irrelevant set operations for filtering
+    active_nodes = {node for node in nodes if node % 2 == 0}
+    redundant_nodes = {node for node in nodes if node > 50}
     
-    def __enter__(self):
-        return self
+    # Misleading intermediate calculations
+    total_potential = sum(nodes) * len(connections)
+    avg_connection = total_potential / max(len(connections), 1)
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.data.clear()
+    # Dead code path - never executed
+    if len(nodes) > 100:
+        backup_connections = connections.copy()
+        backup_connections.add(999)
     
-    def add(self, value):
-        if len(self.data) < self.size:
-            self.data.append(value)
-        return len(self.data)
+    # Core logic with set operations
+    connected_nodes = set()
+    for connection in connections:
+        if connection[0] in nodes and connection[1] in nodes:
+            connected_nodes.update(connection)
+    
+    # Misleading variable - not used in final result
+    isolated_count = len(nodes - connected_nodes)
+    
+    # Actual calculation with conditional expressions
+    primary_nodes = {n for n in nodes if n % 3 == 0}
+    critical_connections = {c for c in connections if c[0] in primary_nodes or c[1] in primary_nodes}
+    
+    # Early return condition
+    if len(critical_connections) == 0:
+        return isolated_count * 2  # This path is never taken in our data
+    
+    # Final computation - the actual answer
+    valid_pairs = {(a, b) for a, b in connections if a in connected_nodes and b in connected_nodes}
+    network_efficiency = len(valid_pairs) * (len(primary_nodes & connected_nodes) + 1)
+    
+    # More distractions
+    optimization_factor = len(redundant_nodes) * 3
+    
+    return network_efficiency
 
-# Sensor readings
-sensor_readings = [
-    [1.2, 2.3, 3.4],
-    [4.5, 5.6, 6.7],
-    [7.8, 8.9, 9.0],
-    [2.1, 3.2, 4.3]
-]
+# Main execution
+nodes = {12, 15, 18, 21, 24, 27, 30, 33}
+connections = {(12, 15), (18, 21), (24, 27), (30, 33), (12, 18), (21, 24)}
+backup_nodes = {40, 45, 50}  # Unused variable
 
-# Initialize counters and matrices
-processed_signals_count = 0
-signal_matrix = [[0 for _ in range(3)] for _ in range(4)]
+# Misleading intermediate assignment
+preliminary_analysis = len(nodes) * len(connections)
 
-# Process sensor data
-with DataBuffer(10) as buffer:
-    for i, readings in enumerate(sensor_readings):
-        valid_readings = [r for r in readings if r > 2.0]
-        if len(valid_readings) >= 2:
-            combinations = list(itertools.combinations(valid_readings, 2))
-            for j, (a, b) in enumerate(combinations):
-                if j < 3:  # Only process first 3 combinations
-                    signal_matrix[i][j] = math.floor(a * b)
-                    buffer.add(signal_matrix[i][j])
-            
-            # Apply conditional logic based on buffer state
-            if buffer.add(0) > 5:  # Add a marker and check buffer size
-                processed_signals_count += len(combinations)
-            else:
-                processed_signals_count += 1
-        else:
-            # Handle cases with insufficient valid readings
-            signal_matrix[i] = [math.ceil(r) for r in readings]
-            processed_signals_count -= 1
+# The key statement
+result = analyze_network(nodes, connections)
 
-# Final adjustment based on matrix properties
-if any(sum(row) > 10 for row in signal_matrix):
-    processed_signals_count *= 2
+# Final assignment with distractions
+network_size = len(nodes)
+connection_density = len(connections) / max(network_size, 1)
+final_result = result + int(connection_density * 10)
 
-print(f"Result: {processed_signals_count}")
+# More unused computations
+performance_metric = preliminary_analysis - final_result
+
+print(f"Target result: {final_result}")

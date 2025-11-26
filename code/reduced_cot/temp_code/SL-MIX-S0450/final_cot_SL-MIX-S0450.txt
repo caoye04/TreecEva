@@ -1,0 +1,63 @@
+Target: Find the value of variable final_metric after [line 32] executes
+
+[line 4]  irrelevant_counter = 0
+Assign: irrelevant_counter = 0
+[line 5]  misleading_total = 0
+Assign: misleading_total = 0
+[line 8]  for i in range(len(team_data)):
+Loop Start: i takes its first value 0
+[line 9]  misleading_total += team_data[i] * 2  # Misleading calculation
+Update: misleading_total changed from 0 (defined at defined at [line 5]) to 0+team_data[i] * 2  # Misleading calculation = 8
+[line 10]  irrelevant_counter += i ** 2
+Update: irrelevant_counter changed from 0 (defined at defined at [line 4]) to 0+i ** 2 = 0
+[line 8]  for i in range(len(team_data)):
+Loop Iteration: i is now 1 (iteration 2)
+[line 9]  misleading_total += team_data[i] * 2  # Misleading calculation
+Update: misleading_total changed from 8 (defined at defined at [line 9]) to 8+team_data[i] * 2  # Misleading calculation = 24
+[line 10]  irrelevant_counter += i ** 2
+Update: irrelevant_counter changed from 0 (defined at defined at [line 10]) to 0+i ** 2 = 1
+... [Line 8] repeats 3 more times ...
+... [Line 8] repeats 3 more times ...
+... [Line 8] repeats 3 more times ...
+[line 8]  for i in range(len(team_data)):
+Loop Iteration: i is now 5 (iteration 6)
+[line 9]  misleading_total += team_data[i] * 2  # Misleading calculation
+Update: misleading_total changed from 66 (defined at defined at [line 9]) to 66+team_data[i] * 2  # Misleading calculation = 80
+[line 10]  irrelevant_counter += i ** 2
+Update: irrelevant_counter changed from 30 (defined at defined at [line 10]) to 30+i ** 2 = 55
+[line 8]  for i in range(len(team_data)):
+Loop End: Iteration finished
+[line 13]  performance_sets = set()
+Call function set()
+[line 14]  for combo in itertools.combinations(team_data, 3):
+Loop Start: combo takes its first value (4, 8, 6)
+[line 15]  if sum(combo) > 15:  # Relevant threshold
+Condition: True, entering 'if' block
+[line 14]  for combo in itertools.combinations(team_data, 3):
+Loop Iteration: combo is now (4, 8, 12) (iteration 2)
+[line 15]  if sum(combo) > 15:  # Relevant threshold
+Condition: True, entering 'if' block
+... [Line 14] repeats 17 more times ...
+... [Line 14] repeats 17 more times ...
+[line 14]  for combo in itertools.combinations(team_data, 3):
+Loop Iteration: combo is now (12, 3, 7) (iteration 20)
+[line 15]  if sum(combo) > 15:  # Relevant threshold
+Condition: True, entering 'if' block
+[line 14]  for combo in itertools.combinations(team_data, 3):
+Loop End: Iteration finished
+[line 19]  unused_result = misleading_total - irrelevant_counter
+Compute: misleading_total - irrelevant_counter, where misleading_total=80 (defined at [line 9]), irrelevant_counter=55 (defined at [line 10]) = 25
+[line 20]  if unused_result < -1000:
+Condition: True, entering 'if' block
+[line 24]  valid_patterns = len(performance_sets)
+Call function len(performance_sets)
+[line 25]  base_score = sum(team_data)
+Call function sum(team_data=[4, 8, 6, 12, 3, ...] (an unknown source))
+[line 28]  temp_metric = base_score * 2 + irrelevant_counter
+Compute: base_score * 2 + irrelevant_counter, where base_score=40 (defined at [line 25]), irrelevant_counter=55 (defined at [line 10]) = 135
+[line 31]  adjustment = valid_patterns * 3
+Compute: valid_patterns * 3, where valid_patterns=17 (defined at [line 24]) = 51
+[line 32]  final_metric = base_score + adjustment - (temp_metric % 7)
+Compute: base_score + adjustment - (temp_metric % 7), where base_score=40 (defined at [line 25]), adjustment=51 (defined at [line 31]), temp_metric=135 (defined at [line 28]) = 89
+
+Answer: final_metric = 89 (last updated on defined at [line 32])

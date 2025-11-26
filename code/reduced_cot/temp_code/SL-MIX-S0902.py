@@ -1,11 +1,9 @@
-import heapq
+def calculate_data_points():
+    raw_data = [12, 8, 15, 6, 20, 3, 18]
+    filtered_points = [x for x in raw_data if x > 10]
+    result = sum(filtered_points) // len(filtered_points)
+    adjustment = min(raw_data) + 2
+    final_value = result * 2 - adjustment
+    print(f"Target result: {final_value}")
 
-fresh_bakery_orders = []
-heapq.heappush(fresh_bakery_orders, -85)  # Sourdough popularity
-heapq.heappush(fresh_bakery_orders, -92)  # Baguette popularity
-heapq.heappush(fresh_bakery_orders, -78)  # Ciabatta popularity
-
-heapq.heappop(fresh_bakery_orders)  # Remove most popular
-
-most_popular_remaining = -fresh_bakery_orders[0]
-print(f'Result: {most_popular_remaining}')
+calculate_data_points()

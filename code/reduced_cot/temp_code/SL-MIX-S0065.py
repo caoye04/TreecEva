@@ -1,55 +1,31 @@
-from collections import deque
-import math
+def analyze_data_sets():
+    data_sets = [
+        {'values': [4, 7, 2, 9], 'weights': [1, 2, 1, 3]},
+        {'values': [8, 3, 6, 1], 'weights': [2, 1, 2, 1]},
+        {'values': [5, 2, 8, 4], 'weights': [1, 3, 1, 2]}
+    ]
+    
+    processed_values = []
+    intermediate_calc = []
+    
+    for idx, dataset in enumerate(data_sets):
+        weighted_sum = sum(v * w for v, w in zip(dataset['values'], dataset['weights']))
+        processed_values.append(weighted_sum)
+        
+        # Distractor calculations that don't affect final result
+        dataset_max = max(dataset['values'])
+        dataset_min = min(dataset['values'])
+        intermediate_calc.append(dataset_max - dataset_min)
+    
+    # Core processing logic
+    final_processing = sum(processed_values)
+    processed_total = final_processing - min(processed_values)
+    
+    # More distractor operations
+    temp_calc = sum(intermediate_calc)
+    adjusted_temp = temp_calc // 2
+    
+    print(f"Result: {processed_total}")
+    return processed_total
 
-def encode_char(c):
-    ascii_val = ord(c)
-    return float(ascii_val) * 0.75 + 12.5
-
-def process_signal(signal_chars):
-    # Encode characters
-    encoded_values = [encode_char(c) for c in signal_chars]
-    
-    # Initialize data structures
-    buffer_queue = deque()
-    reversal_stack = []
-    
-    # Distribute values between queue and stack
-    for i, val in enumerate(encoded_values):
-        if i % 2 == 0:
-            buffer_queue.append(val)
-        else:
-            reversal_stack.append(val)
-    
-    # Perform stack reversal
-    reversed_values = []
-    while reversal_stack:
-        reversed_values.append(reversal_stack.pop())
-    
-    # Process buffered values with reversed values
-    processed_results = []
-    while buffer_queue:
-        buf_val = buffer_queue.popleft()
-        if reversed_values:
-            rev_val = reversed_values.pop(0)
-            # Arithmetic computation combining values
-            combined = (buf_val * 1.5 - rev_val) / 2.0
-            processed_results.append(combined)
-        else:
-            processed_results.append(buf_val * 0.5)
-    
-    # Final aggregation using floating point operations
-    aggregated_sum = sum(processed_results)
-    normalized_value = aggregated_sum / len(processed_results)
-    
-    # Apply logarithmic scaling
-    if normalized_value > 0:
-        final_signal_strength = math.log(normalized_value) * 10
-    else:
-        final_signal_strength = 0.0
-    
-    return final_signal_strength
-
-# Signal processing
-input_signal = "PYTH"
-final_signal_strength = process_signal(input_signal)
-print(f"Result: {final_signal_strength}")
+analyze_data_sets()

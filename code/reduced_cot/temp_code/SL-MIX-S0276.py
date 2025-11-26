@@ -1,53 +1,50 @@
-from functools import reduce
-
-def calculate_portfolio_index():
-    # Transaction records: [timestamp, amount, type]
-    transactions = [
-        [1001, 5000, 'DEPOSIT'],
-        [1002, -1200, 'WITHDRAWAL'],
-        [1003, 800, 'DEPOSIT'],
-        [1004, -300, 'FEE'],
-        [1005, 1500, 'DEPOSIT']
-    ]
+def process_data(data_list):
+    # Distractor: misleading counter that doesn't affect result
+    counter = 0
     
-    # Step 1: Categorize transactions using switch-like dictionary
-    category_map = {
-        'DEPOSIT': lambda x: x * 1.02,  # 2% bonus on deposits
-        'WITHDRAWAL': lambda x: x * 1.01,  # 1% processing fee
-        'FEE': lambda x: x * 1.05  # 5% fee surcharge
-    }
+    # Distractor: irrelevant transformation
+    temp_values = [x * 2 if x % 2 == 0 else x - 1 for x in data_list]
     
-    # Step 2: Apply category adjustments
-    adjusted_amounts = list(map(lambda t: category_map[t[2]](t[1]), transactions))
-    
-    # Step 3: Create hash table for cumulative tracking
-    cumulative_tracker = {}
-    running_sum = 0
-    for i, amount in enumerate(adjusted_amounts):
-        running_sum += amount
-        cumulative_tracker[i] = running_sum
-    
-    # Step 4: Apply divide and conquer to find median adjustment
-    def find_median(lst):
-        n = len(lst)
-        if n <= 1:
-            return lst[0] if lst else 0
-        mid = n // 2
-        if n % 2 == 1:
-            return sorted(lst)[mid]
+    # Relevant processing with enumerate
+    processed = []
+    for idx, val in enumerate(data_list):
+        # Distractor: unused conditional path
+        if idx > len(data_list) // 2:
+            counter += val  # Dead code path
+        
+        # Actual processing logic
+        if val % 3 == 0:
+            processed.append(val * 2)
+        elif val % 5 == 0:
+            processed.append(val // 2)
         else:
-            return (sorted(lst)[mid-1] + sorted(lst)[mid]) / 2
+            processed.append(val + 1)
     
-    median_adjustment = find_median(adjusted_amounts)
+    # Distractor: misleading intermediate calculation
+    intermediate_sum = sum(temp_values) + counter
     
-    # Step 5: Calculate performance weights using functional reduction
-    weights = list(map(lambda x: x / median_adjustment if median_adjustment != 0 else 0, adjusted_amounts))
-    weight_product = reduce(lambda a, b: a * b, weights, 1)
+    # Relevant: zip operation with conditional expressions
+    result = 0
+    pairs = list(zip(data_list, processed))
+    for orig, proc in pairs:
+        # Conditional expression for compact logic
+        multiplier = 3 if orig > proc else 2
+        result += (orig + proc) * multiplier
     
-    # Step 6: Compute final index
-    final_index = int(sum(cumulative_tracker.values()) * weight_product)
+    # Distractor: unused bitwise operation
+    bit_check = result & 0xFF
     
-    return final_index
+    return result
 
-final_index = calculate_portfolio_index()
-print(f"Result: {final_index}")
+# Main execution
+values = [12, 8, 15, 7, 20, 9, 11]
+
+# Distractor: irrelevant variable tracking
+phase_tracker = [0] * len(values)
+
+# Distractor: misleading state updates
+for i in range(len(values)):
+    phase_tracker[i] = values[i] % 4  # Unused
+
+final_output = process_data(values)
+print(f"Result: {final_output}")

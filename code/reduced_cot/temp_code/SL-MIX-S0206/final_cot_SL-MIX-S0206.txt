@@ -1,38 +1,44 @@
-Target: Find the value of variable final_adjustment after [line 14] executes
+Target: Find the value of variable final_result after [line 42] executes
 
-[line 4]  sensor_readings = [23, -15, 42, -8, 37]
-Compute: [23, -15, 42, -8, 37] = [23, -15, 42, -8, 37]
-[line 5]  adjustment_log = defaultdict(int)
-Call function defaultdict(int)
-[line 6]  base_offset = 100
-Assign: base_offset = 100
-[line 8]  for idx, reading in enumerate(sensor_readings):
-(Missing param: 'iter_var')
-[line 9]  temp_factor = (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13
-Compute: (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13, where reading=23 (an unknown source) = 1
-[line 10]  correction = (temp_factor + idx) % 7
-Compute: (temp_factor + idx) % 7, where temp_factor=1 (defined at [line 9]), idx=0 (an unknown source) = 1
-[line 8]  for idx, reading in enumerate(sensor_readings):
-(Missing param: 'iter_var')
-[line 9]  temp_factor = (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13
-Compute: (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13, where reading=-15 (an unknown source) = 4
-[line 10]  correction = (temp_factor + idx) % 7
-Compute: (temp_factor + idx) % 7, where temp_factor=4 (defined at [line 9]), idx=1 (an unknown source) = 5
-... [Line 8] repeats 2 more times ...
-... [Line 8] repeats 2 more times ...
-... [Line 8] repeats 2 more times ...
-... [Line 8] repeats 2 more times ...
-[line 8]  for idx, reading in enumerate(sensor_readings):
-(Missing param: 'iter_var')
-[line 9]  temp_factor = (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13
-Compute: (reading * 3) % 17 if reading > 0 else (-reading * 2) % 13, where reading=37 (an unknown source) = 9
-[line 10]  correction = (temp_factor + idx) % 7
-Compute: (temp_factor + idx) % 7, where temp_factor=9 (defined at [line 9]), idx=4 (an unknown source) = 6
-[line 8]  for idx, reading in enumerate(sensor_readings):
+[line 33]  base_value = process_data_sequence()
+Call function process_data_sequence()
+[line 4]  data_stream = [3, 7, 2, 9, 5, 1, 8, 4]
+Compute: [3, 7, 2, 9, 5, 1, 8, 4] = [3, 7, 2, 9, 5, ...]
+[line 12]  filtered_data = [x for x in data_stream if x % 2 == 1]
+Compute: [x for x in data_stream if x % 2 == 1], where x=3 (an unknown source), data_stream=[3, 7, 2, 9, 5, ...] (defined at [line 4]) = ?
+[line 14]  for num in filtered_data[:3]:
+Loop Start: num takes its first value 3
+[line 14]  for num in filtered_data[:3]:
 Loop End: Iteration finished
-[line 13]  aggregate_shift = sum(adjustment_log.values())
-Call function sum(adjustment_log.values())
-[line 14]  final_adjustment = (base_offset + aggregate_shift) % 20 if aggregate_shift > 10 else (base_offset - aggregate_shift) % 20
-Compute: (base_offset + aggregate_shift) % 20 if aggregate_shift > 10 else (base_offset - aggregate_shift) % 20, where base_offset=100 (defined at [line 6]), aggregate_shift=20 (defined at [line 13]) = 0
+[line 14]  for num in filtered_data[:3]:
+Loop End: Iteration finished
+[line 14]  for num in filtered_data[:3]:
+Loop End: Iteration finished
+[line 21]  target_numbers = [x for x in data_stream if x > 3 and x < 8]
+Compute: [x for x in data_stream if x > 3 and x < 8], where x=3 (an unknown source), data_stream=[3, 7, 2, 9, 5, ...] (defined at [line 4]) = ?
+[line 22]  final_product = 1
+Assign: final_product = 1
+[line 23]  for num in target_numbers:
+Loop Start: num takes its first value 7
+[line 24]  final_product *= num
+Update: final_product changed from 1 (defined at defined at [line 22]) to 1*num = 7
+[line 23]  for num in target_numbers:
+Loop Iteration: num is now 5 (iteration 2)
+[line 24]  final_product *= num
+Update: final_product changed from 7 (defined at defined at [line 24]) to 7*num = 35
+[line 23]  for num in target_numbers:
+Loop Iteration: num is now 4 (iteration 3)
+[line 24]  final_product *= num
+Update: final_product changed from 35 (defined at defined at [line 24]) to 35*num = 140
+[line 23]  for num in target_numbers:
+Loop End: Iteration finished
+[line 30]  return final_product
+Return: final_product=140 (defined at [line 24])
+[line 36]  offset_calc = (base_value % 10) * 2
+Compute: (base_value % 10) * 2, where base_value=140 (defined at [line 33]) = 0
+[line 37]  adjustment = offset_calc - 3
+Compute: offset_calc - 3, where offset_calc=0 (defined at [line 36]) = -3
+[line 42]  final_result = base_value + adjustment
+Compute: base_value + adjustment, where base_value=140 (defined at [line 33]), adjustment=-3 (defined at [line 37]) = 137
 
-Answer: final_adjustment = 0 (last updated on defined at [line 14])
+Answer: final_result = 137 (last updated on defined at [line 42])

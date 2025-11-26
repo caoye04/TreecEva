@@ -1,40 +1,43 @@
-from itertools import compress
+def data_processor(dataset, criteria):
+    # Distractor variables and computations
+    temp_buffer = [x * 2 for x in range(10)]
+    redundant_calc = sum(temp_buffer[:5]) - min(temp_buffer[3:7])
+    
+    # Misleading intermediate processing
+    processed_set = {x % 7 for x in dataset}
+    filtered_data = [x for x in dataset if criteria(x)]
+    
+    # Irrelevant string operations
+    text_data = ['alpha', 'beta', 'gamma', 'delta']
+    char_counts = [len(s) for s in text_data]
+    max_chars = max(char_counts)
+    
+    # Dead code path
+    if max_chars > 10:
+        unused_var = sum(char_counts) * 2
+    else:
+        unused_var = len(text_data) ** 3
+    
+    # Actual relevant computation
+    valid_entries = [x for x in filtered_data if x in processed_set]
+    sorted_metrics = sorted(valid_entries, reverse=True)
+    
+    # Key slicing operation with conditional expression
+    core_values = sorted_metrics[:3] if len(sorted_metrics) >= 3 else sorted_metrics
+    result = sum(core_values) * len(processed_set)
+    
+    return result
 
-class NucleotideEncoder:
-    def __init__(self):
-        self.mapping = {'A': 1, 'T': 2, 'G': 3, 'C': 4}
-    
-    def encode(self, sequence):
-        return [self.mapping[nuc] for nuc in sequence]
+# Main execution
+metrics_data = [15, 8, 22, 5, 17, 9, 31, 12, 6, 19]
+validation_criteria = lambda x: x > 10 and x % 2 != 0
 
-def analyze_marker(seq_values):
-    # Apply bitwise transformations
-    transformed = []
-    for i, val in enumerate(seq_values):
-        if i % 2 == 0:
-            transformed.append(val << 1)  # Left shift even indices
-        else:
-            transformed.append(val & 3)   # Bitwise AND with 3 for odd indices
-    
-    # Apply logical filtering using short-circuit evaluation
-    valid_positions = [
-        (t > 2) and (t < 10) or (t == 1) 
-        for t in transformed
-    ]
-    
-    # Extract values where valid_positions is True
-    filtered_values = list(compress(transformed, valid_positions))
-    
-    # Calculate marker code using XOR
-    marker_code = 0
-    for val in filtered_values:
-        marker_code ^= val
-    
-    return marker_code
+# Misleading intermediate assignments
+preliminary_score = sum(metrics_data[::2]) - min(metrics_data)
+secondary_metric = (max(metrics_data) + min(metrics_data)) // 2
 
-# Main processing
-encoder = NucleotideEncoder()
-sequence = "ATGCAT"
-encoded_sequence = encoder.encode(sequence)
-marker_code = analyze_marker(encoded_sequence)
-print(f"Result: {marker_code}")
+# The key execution point
+final_metric = data_processor(metrics_data, validation_criteria)
+
+# Final output
+print(f"Result: {final_metric}")

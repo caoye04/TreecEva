@@ -1,48 +1,24 @@
-class AudioNode:
-    def __init__(self, sample=0, next_node=None):
-        self.sample = sample
-        self.next = next_node
+def process_inventory(items):
+    # Calculate total items for reference (distractor)
+    total_items = len(items)
+    
+    # Filter items that contain numeric characters
+    filtered_items = [item for item in items if any(char.isdigit() for char in item)]
+    
+    # Calculate average length (distractor calculation)
+    avg_length = sum(len(item) for item in items) / len(items) if items else 0
+    
+    # Count items with vowels (distractor)
+    vowel_count = len([item for item in items if any(c in 'aeiouAEIOU' for c in item)])
+    
+    # Filter items with exactly 2 digits
+    target_items = [item for item in filtered_items 
+                   if sum(char.isdigit() for char in item) == 2]
+    
+    # Final count of items meeting criteria
+    final_count = len(target_items)
+    print(f"Result: {final_count}")
 
-def create_signal_chain(samples):
-    head = None
-    for sample in reversed(samples):
-        head = AudioNode(sample, head)
-    return head
-
-def process_audio_chain(chain_head, key):
-    current = chain_head
-    processed_samples = []
-    while current:
-        # Apply XOR encryption with key
-        encrypted = current.sample ^ key
-        # Right shift by 2 bits
-        shifted = encrypted >> 2
-        # Multiply by 3 and add 5
-        transformed = shifted * 3 + 5
-        processed_samples.append(transformed)
-        current = current.next
-    return processed_samples
-
-def calculate_final_output(processed_samples):
-    # Calculate sum using list comprehension
-    squared_values = [x**2 for x in processed_samples]
-    # Sum all squared values
-    total = sum(squared_values)
-    # Bitwise AND with mask 0xFF
-    masked = total & 0xFF
-    # Final calculation
-    return (masked << 1) + 0b101010
-
-# Initialize audio samples as array
-audio_samples = [100, 150, 200, 250]
-
-# Create linked list from array
-signal_chain = create_signal_chain(audio_samples)
-
-# Process with encryption key
-encryption_key = 0b11001100
-processed_data = process_audio_chain(signal_chain, encryption_key)
-
-# Calculate final output
-final_output = calculate_final_output(processed_data)
-print(f"Result: {final_output}")
+# Sample inventory data
+inventory = ["item123", "widget45", "tool7", "gadget", "part99", "device1", "component888", "machine"]
+process_inventory(inventory)

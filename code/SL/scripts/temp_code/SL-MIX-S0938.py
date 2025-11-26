@@ -1,43 +1,43 @@
-from collections import defaultdict
-from itertools import combinations
+def process_data_segments(raw_input):
+    data_chunks = raw_input.split('|')
+    validation_sum = 0
+    data_verifier = 0
+    temp_buffer = []
+    checksum_cache = []
+    
+    # Distractor: unused calculations
+    segment_count = len(data_chunks)
+    max_length = max(len(chunk) for chunk in data_chunks) if data_chunks else 0
+    
+    for idx, chunk in enumerate(data_chunks):
+        if chunk:
+            # Main processing with bitwise operations
+            chunk_value = sum(ord(c) for c in chunk)
+            temp_buffer.append(chunk_value)
+            
+            # Relevant: XOR-based validation
+            if idx % 2 == 0:
+                validation_sum ^= chunk_value
+            else:
+                validation_sum |= (chunk_value & 0xFF)
+            
+            # Distractor: misleading intermediate
+            data_verifier = (data_verifier * 3 + len(chunk)) % 256
+            
+            # Unused path: checksum calculation that's never used
+            checksum_cache.append(sum(temp_buffer[-3:]) if len(temp_buffer) >= 3 else 0)
+    
+    # Dead code path: lambda that's defined but not meaningfully used
+    validator_lambda = lambda x: (x << 1) | (x >> 7)
+    dummy_verification = validator_lambda(data_verifier)
+    
+    # Critical execution point
+    final_checksum = validation_sum + (data_verifier << 2)
+    
+    # Distractor: post-processing that doesn't affect result
+    normalized_sum = (final_checksum * 17) % 1000
+    
+    print(f"Target result: {final_checksum}")
 
-def encode_nucleotide(nucleotide_map, seq):
-    return [nucleotide_map[nuc] for nuc in seq]
-
-def transform_kmer(kmer):
-    # Apply a bitwise transformation: shift left by 1 and XOR with 0b101
-    transformed = []
-    for val in kmer:
-        transformed.append((val << 1) ^ 0b101)
-    return tuple(transformed)
-
-def analyze_motifs(encoded_seq, k):
-    kmer_counts = defaultdict(int)
-    n = len(encoded_seq)
-    
-    # Generate all k-mers
-    for i in range(n - k + 1):
-        kmer = tuple(encoded_seq[i:i+k])
-        transformed_kmer = transform_kmer(kmer)
-        kmer_counts[transformed_kmer] += 1
-    
-    # Count combinations of k-mers that sum to a specific target
-    target_sum = 18
-    target_count = 0
-    
-    # Short-circuit evaluation in condition check
-    for kmer1, kmer2 in combinations(kmer_counts.keys(), 2):
-        if kmer_counts[kmer1] > 0 and kmer_counts[kmer2] > 0 and sum(kmer1 + kmer2) == target_sum:
-            target_count += kmer_counts[kmer1] * kmer_counts[kmer2]
-    
-    return target_count
-
-# Main execution
-if __name__ == "__main__":
-    nucleotide_mapping = {'A': 1, 'T': 3, 'G': 2, 'C': 1}
-    dna_fragment = "ATGATGA"
-    encoded_sequence = encode_nucleotide(nucleotide_mapping, dna_fragment)
-    k_value = 3
-    
-    target_count = analyze_motifs(encoded_sequence, k_value)
-    print(f"Result: {target_count}")
+# Execute with test data
+process_data_segments("ABC|DEF|GHI|JKL|MNO")

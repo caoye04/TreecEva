@@ -1,0 +1,39 @@
+Target: Find the value of variable final_computation after [line 45] executes
+
+[line 32]  sensor_data = [8, 12, 6, 18, 9, 21]
+Compute: [8, 12, 6, 18, 9, 21] = [8, 12, 6, 18, 9, ...]
+[line 3]  def analyze_sensor_readings(readings):
+Enter function analyze_sensor_readings: readings=[8, 12, 6, 18, 9, ...] (sensor_data defined at [line 32])
+  [line 5]  temp_variance = sum([(r - sum(readings)/len(readings))**2 for r in readings]) / len(readings)
+  Compute: sum([(r - sum(readings)/len(readings))**2 for r in readings]) / len(readings), where r=8 (an unknown source), readings=[8, 12, 6, 18, 9, ...] (parameter readings defined at [line 32]) = ?
+  [line 6]  max_reading = max(readings)
+  Call function max(readings=[8, 12, 6, 18, 9, ...] (parameter readings defined at [line 32]))
+  [line 7]  min_reading = min(readings)
+  Call function min(readings=[8, 12, 6, 18, 9, ...] (parameter readings defined at [line 32]))
+  [line 8]  return temp_variance + max_reading - min_reading  # Unused calculation
+  Return: temp_variance + max_reading - min_reading  # Unused calculation
+Function analyze_sensor_readings returns 44.55555555555556
+[line 39]  processed_readings = [x + 3 if x % 2 == 0 else x - 2 for x in sensor_data]
+Compute: [x + 3 if x % 2 == 0 else x - 2 for x in sensor_data], where x=8 (an unknown source), sensor_data=[8, 12, 6, 18, 9, ...] (defined at [line 32]) = ?
+[line 40]  analyzed_results = [x for x in processed_readings if x % 3 != 0]
+Compute: [x for x in processed_readings if x % 3 != 0], where x=11 (an unknown source), processed_readings=[11, 15, 9, 21, 7, ...] (defined at [line 39]) = ?
+[line 43]  final_computation = process_data_point(analyzed_results)
+Call function process_data_point(analyzed_results=[11, 7, 19] (defined at [line 40]))
+[line 12]  processed_values = [x * 2 if x % 3 == 0 else x + 5 for x in data]
+Compute: [x * 2 if x % 3 == 0 else x + 5 for x in data], where x=11 (an unknown source), data=[11, 7, 19] (an unknown source) = ?
+[line 16]  filtered_data = [x for x in processed_values if x > 15]
+Compute: [x for x in processed_values if x > 15], where x=16 (an unknown source), processed_values=[16, 12, 24] (defined at [line 12]) = ?
+[line 19]  if len(filtered_data) > 100:
+Condition: True, entering 'if' block
+[line 23]  bitwise_result = (processed_values[0] & 0b1111) | (processed_values[1] << 2)
+Compute: (processed_values[0] & 0b1111) | (processed_values[1] << 2), where processed_values=[16, 12, 24] (defined at [line 12]) = 48
+[line 26]  counter_data = Counter(filtered_data)
+Call function Counter(filtered_data=[16, 24] (defined at [line 16]))
+[line 27]  final_value = sum([k * v for k, v in counter_data.items()]) + bitwise_result
+Compute: sum([k * v for k, v in counter_data.items()]) + bitwise_result, where k=16 (an unknown source), v=1 (an unknown source), counter_data={16: 1, 24: 1} (defined at [line 26]), bitwise_result=48 (defined at [line 23]) = ?
+[line 29]  return final_value
+Return: final_value=88 (defined at [line 27])
+[line 45]  print(f"Target result: {final_computation}")
+Output: f"Target result: {final_computation}"
+
+Answer: final_computation = 88 (last updated on defined at [line 43])

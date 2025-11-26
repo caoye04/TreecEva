@@ -1,35 +1,43 @@
-import re
-from functools import reduce
-from collections import defaultdict
+from collections import Counter
 
-def haversine_distance(p1, p2):
-    # Simplified distance calculation returning integer meters
-    return int(abs(p1[0] - p2[0]) * 100000 + abs(p1[1] - p2[1]) * 100000)
+# Data processing simulation with bitwise operations
+data_stream = [15, 22, 37, 22, 15, 48, 15, 22, 73, 48]
+processed_data = []
 
-def extract_coordinates(log_line):
-    match = re.search(r'\(([-+]?\d*\.\d+),\s*([-+]?\d*\.\d+)\)', log_line)
-    if match:
-        return (float(match.group(1)), float(match.group(2)))
-    return None
+# Initial processing with misleading intermediate calculations
+for value in data_stream:
+    temp_mask = value & 0x0F  # Irrelevant bitmask operation
+    shifted = value << 2  # Misleading shift operation
+    if value % 3 == 0:  # Dead condition path
+        processed_data.append(value * 2)  # Never executed
+    elif value > 20:
+        processed_data.append(value ^ 0x1F)  # XOR operation
+    else:
+        processed_data.append(value + 10)  # Additive transformation
 
-tracking_logs = [
-    "Device_001: (34.0522, -118.2437)",
-    "Device_001: (34.0530, -118.2440)",
-    "Device_001: (34.0545, -118.2455)",
-    "Device_001: (34.0560, -118.2470)",
-    "Device_001: (34.0575, -118.2485)"
-]
+# Counter analysis with distractor operations
+frequency_counter = Counter(processed_data)
+redundant_sum = sum(processed_data)  # Unused calculation
 
-coordinates_list = list(filter(None, map(extract_coordinates, tracking_logs)))
-dp_min_deviation = defaultdict(lambda: float('inf'))
-dp_min_deviation[0] = 0
+# Complex mapping logic with nested conditions
+result_mapping = {}
+error_flag = -999  # Misleading error value
 
-for i in range(1, len(coordinates_list)):
-    for j in range(i):
-        segment_distance = haversine_distance(coordinates_list[j], coordinates_list[i])
-        dp_min_deviation[i] = min(dp_min_deviation[i], dp_min_deviation[j] + segment_distance)
+for item, count in frequency_counter.items():
+    if count >= 2:
+        bit_check = item & 0x07  # Distractor bit operation
+        if item % 4 == 0:
+            result_mapping[item] = count * 3  # Relevant mapping
+        else:
+            result_mapping[item] = count * 2  # Alternative path
+    else:
+        result_mapping[item] = count + 5  # Unused branch
 
-straight_line_distance = haversine_distance(coordinates_list[0], coordinates_list[-1])
-migration_efficiency_index = dp_min_deviation[len(coordinates_list)-1] - straight_line_distance
+# Key processing with multiple transformations
+base_key = max(frequency_counter.keys()) if frequency_counter else 0
+processed_key = (base_key >> 1) | 0x08  # Complex bit manipulation
 
-print(f"Result: {migration_efficiency_index}")
+# Final assignment with the target variable
+final_count = result_mapping.get(processed_key, error_flag)
+
+print(f"Target result: {final_count}")

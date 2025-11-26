@@ -1,0 +1,43 @@
+Target: Find the value of variable final_value after [line 41] executes
+
+[line 41]  final_value = process_data(data_pool)
+Call function process_data(data_pool={data_alpha: 12, data_beta: 8, data_gamma: 15, ...} (an unknown source))
+[line 1]  def process_data(input_data):
+Enter function process_data: input_data={data_alpha: 12, data_beta: 8, data_gamma: 15, ...}
+  [line 10]  filtered = {k: v for k, v in input_data.items() if v > 8}
+  Compute: {k: v for k, v in input_data.items() if v > 8}, where k='data_alpha' (an unknown source), v=12 (an unknown source), input_data={data_alpha: 12, data_beta: 8, data_gamma: 15, ...} (parameter input_data) = ?
+  [line 17]  result = 0
+  Assign: result = 0
+  [line 18]  for key, value in filtered.items():
+  (Missing param: 'iter_var')
+  [line 19]  if key.startswith('data_'):
+  Condition: True, entering 'if' block
+  [line 20]  result += value
+  Update: result changed from 0 (defined at defined at [line 17]) to 0+value = 12
+  [line 18]  for key, value in filtered.items():
+  (Missing param: 'iter_var')
+  [line 19]  if key.startswith('data_'):
+  Condition: True, entering 'if' block
+  [line 20]  result += value
+  Update: result changed from 12 (defined at defined at [line 20]) to 12+value = 27
+  [line 18]  for key, value in filtered.items():
+  (Missing param: 'iter_var')
+  [line 19]  if key.startswith('data_'):
+  Condition: True, entering 'if' block
+  [line 22]  result -= value // 2
+  Update: result changed from 27 (defined at defined at [line 20]) to 27-value // 2 = 17
+  [line 18]  for key, value in filtered.items():
+  (Missing param: 'iter_var')
+  [line 19]  if key.startswith('data_'):
+  Condition: True, entering 'if' block
+  [line 20]  result += value
+  Update: result changed from 17 (defined at defined at [line 22]) to 17+value = 26
+  [line 18]  for key, value in filtered.items():
+  Loop End: Iteration finished
+  [line 25]  adjustment = (result & 0b1111) | ((result >> 4) & 0b1111)
+  Compute: (result & 0b1111) | ((result >> 4) & 0b1111), where result=26 (defined at [line 20]) = 11
+  [line 26]  return result + adjustment
+  Return: result + adjustment
+Function process_data returns 37
+
+Answer: final_value = 37 (last updated on defined at [line 41])

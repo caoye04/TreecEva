@@ -1,0 +1,19 @@
+17
+final_score
+---
+2 base_score = accuracy * 100
+2 ['accuracy', 'reaction_time', 'combo_count', 'base_score'] ['0.85', '420', '12', '85.0']
+3 time_bonus = 500 - reaction_time if reaction_time < 500 else 0
+3 ['accuracy', 'reaction_time', 'combo_count', 'base_score', 'time_bonus'] ['0.85', '420', '12', '85.0', '80']
+4 combo_multiplier = combo_count // 5 + 1
+4 ['accuracy', 'combo_count', 'base_score', 'time_bonus', 'combo_multiplier'] ['0.85', '12', '85.0', '80', '3']
+10 raw_total = base_score + time_bonus
+10 ['accuracy', 'combo_count', 'base_score', 'time_bonus', 'combo_multiplier', 'raw_total'] ['0.85', '12', '85.0', '80', '3', '165.0']
+11 adjusted_total = raw_total * combo_multiplier
+11 ['accuracy', 'combo_count', 'combo_multiplier', 'raw_total', 'adjusted_total'] ['0.85', '12', '3', '165.0', '495.0']
+14 multiplier = 1.5 if accuracy > 0.8 else 1.2 if accuracy > 0.6 else 1.0
+14 ['accuracy', 'combo_count', 'adjusted_total', 'multiplier'] ['0.85', '12', '495.0', '1.5']
+15 bonus_points = 50 if combo_count > 10 else 25 if combo_count > 5 else 0
+15 ['combo_count', 'adjusted_total', 'multiplier', 'bonus_points'] ['12', '495.0', '1.5', '50']
+17 final_score = adjusted_total * multiplier + bonus_points
+17 ['adjusted_total', 'multiplier', 'bonus_points', 'final_score'] ['495.0', '1.5', '50', '792.5']

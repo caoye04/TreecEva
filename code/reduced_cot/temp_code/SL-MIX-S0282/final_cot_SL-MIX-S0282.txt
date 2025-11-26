@@ -1,0 +1,28 @@
+Target: Find the value of variable final_score after [line 27] executes
+
+[line 3]  raw_scores = [85, 92, 78, 96, 88, 74, 91, 83, 95, 79]
+Compute: [85, 92, 78, 96, 88, 74, 91, 83, 95, 79] = [85, 92, 78, 96, 88, ...]
+[line 6]  threshold = 80
+Assign: threshold = 80
+[line 7]  filtered_scores = [score for score in raw_scores if score >= threshold]
+Compute: [score for score in raw_scores if score >= threshold], where score=85 (an unknown source), raw_scores=[85, 92, 78, 96, 88, ...] (defined at [line 3]), threshold=80 (defined at [line 6]) = ?
+[line 10]  temp_max = max(filtered_scores)
+Call function max(filtered_scores=[85, 92, 96, 88, 91, ...] (defined at [line 7]))
+[line 11]  temp_min = min(filtered_scores)
+Call function min(filtered_scores=[85, 92, 96, 88, 91, ...] (defined at [line 7]))
+[line 12]  temp_range = temp_max - temp_min
+Compute: temp_max - temp_min, where temp_max=96 (defined at [line 10]), temp_min=83 (defined at [line 11]) = 13
+[line 15]  sorted_scores = sorted(filtered_scores)
+Call function sorted(filtered_scores=[85, 92, 96, 88, 91, ...] (defined at [line 7]))
+[line 16]  critical_index = len(sorted_scores) // 2 - 1
+Compute: len(sorted_scores) // 2 - 1, where sorted_scores=[83, 85, 88, 91, 92, ...] (defined at [line 15]) = 2
+[line 19]  base_adjustment = 5
+Assign: base_adjustment = 5
+[line 20]  score_variance = temp_range // 4
+Compute: temp_range // 4, where temp_range=13 (defined at [line 12]) = 3
+[line 21]  adjustment_factor = base_adjustment - score_variance
+Compute: base_adjustment - score_variance, where base_adjustment=5 (defined at [line 19]), score_variance=3 (defined at [line 20]) = 2
+[line 27]  final_score = sorted_scores[critical_index] + adjustment_factor
+Compute: sorted_scores[critical_index] + adjustment_factor, where sorted_scores=[83, 85, 88, 91, 92, ...] (defined at [line 15]), critical_index=2 (defined at [line 16]), adjustment_factor=2 (defined at [line 21]) = 90
+
+Answer: final_score = 90 (last updated on defined at [line 27])

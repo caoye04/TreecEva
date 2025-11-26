@@ -1,40 +1,34 @@
-from collections import defaultdict
-import math
+def analyze_data(values, threshold):
+    # Calculate statistics
+    total_sum = sum(values)
+    max_val = max(values)
+    min_val = min(values)
+    
+    # Filter values above threshold
+    filtered = [x for x in values if x > threshold]
+    filtered_count = len(filtered)
+    
+    # Calculate weighted score (distractor - not used in final result)
+    weight_factor = max_val - min_val
+    weighted_score = total_sum * weight_factor
+    
+    # Set operations to find unique patterns
+    unique_values = set(values)
+    pattern_count = len(unique_values)
+    
+    # Final calculation (this is the actual logic)
+    if filtered_count > 0:
+        avg_filtered = sum(filtered) / filtered_count
+        final_score = avg_filtered * pattern_count
+    else:
+        final_score = pattern_count * 2.5
+    
+    # Distractor operation that doesn't affect result
+    temp_adjustment = final_score + weight_factor
+    
+    return final_score
 
-def simulate_crypto_protocol():
-    # Initialize session tracker
-    active_sessions = defaultdict(int)
-    
-    # Base keys for different node types
-    node_keys = [12, 18, 24, 30]
-    
-    # Simulate session creation
-    for i, key in enumerate(node_keys):
-        encoded_key = key.encode('utf-8') if isinstance(key, str) else str(key).encode('utf-8')
-        decoded_key = int(encoded_key.decode('utf-8'))
-        scaled_key = int(math.log(decoded_key) * 100)  # Logarithmic scaling
-        active_sessions[f'node_{i}'] = scaled_key
-    
-    # Apply exponential key strengthening
-    for node_id in list(active_sessions.keys()):
-        base_value = active_sessions[node_id]
-        strengthened_key = int(math.exp(base_value / 100))  # Exponential transformation
-        active_sessions[node_id] = strengthened_key
-    
-    # Calculate aggregated security metric
-    security_sum = sum(active_sessions.values())
-    
-    # Apply set-based filtering for compromised nodes
-    all_nodes = {f'node_{i}' for i in range(len(node_keys))}
-    compromised_nodes = frozenset(['node_1'])
-    valid_nodes = all_nodes - compromised_nodes
-    
-    # Compute final key strength from valid nodes only
-    valid_strengths = [active_sessions[node] for node in valid_nodes]
-    final_key_strength = sum(valid_strengths) // len(valid_strengths)  # Integer division for stability metric
-    
-    return final_key_strength
-
-# Execute simulation
-final_key_strength = simulate_crypto_protocol()
-print(f'Result: {final_key_strength}')
+data_values = [15, 30, 45, 20, 35, 25, 40]
+result = analyze_data(data_values, threshold=25)
+final_score = result
+print(f"Result: {final_score}")

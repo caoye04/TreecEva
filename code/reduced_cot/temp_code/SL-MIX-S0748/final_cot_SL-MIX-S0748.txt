@@ -1,0 +1,44 @@
+Target: Find the value of variable final_result after [line 43] executes
+
+[line 35]  mask_pattern = 0x3A
+Assign: mask_pattern = 58
+[line 36]  data_stream = "K8P2Q9R"
+Assign: data_stream = 'K8P2Q9R'
+[line 42]  final_result = compute_checksum(data_stream, mask_pattern)
+Call function compute_checksum(data_stream='K8P2Q9R' (defined at [line 36]), mask_pattern=58 (defined at [line 35]))
+[line 1]  def compute_checksum(data_stream, mask_pattern):
+Enter function compute_checksum: data_stream='K8P2Q9R' (data_stream defined at [line 36]), mask_pattern=58 (mask_pattern defined at [line 35])
+  [line 6]  checksum = 0
+  Assign: checksum = 0
+  [line 7]  data_bytes = [ord(c) if isinstance(c, str) else c for c in data_stream]
+  Compute: [ord(c) if isinstance(c, str) else c for c in data_stream], where c='K' (an unknown source), data_stream='K8P2Q9R' (parameter data_stream defined at [line 36]) = ?
+  [line 14]  if len(data_bytes) > 100:
+  Condition: True, entering 'if' block
+  [line 19]  for i, byte_val in enumerate(data_bytes):
+  (Missing param: 'iter_var')
+  [line 20]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 19]  for i, byte_val in enumerate(data_bytes):
+  (Missing param: 'iter_var')
+  [line 20]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+... [Line 19] repeats 4 more times ...
+... [Line 19] repeats 4 more times ...
+... [Line 19] repeats 4 more times ...
+  [line 19]  for i, byte_val in enumerate(data_bytes):
+  (Missing param: 'iter_var')
+  [line 20]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 19]  for i, byte_val in enumerate(data_bytes):
+  Loop End: Iteration finished
+  [line 29]  checksum_str = str(checksum)
+  Call function str(checksum=35 (defined at [line 6]))
+  [line 30]  checksum = int(checksum_str.zfill(4)[-3:]) | (mask_pattern & 0x0F)
+  Compute: int(checksum_str.zfill(4)[-3:]) | (mask_pattern & 0x0F), where checksum_str='35' (defined at [line 29]), mask_pattern=58 (parameter mask_pattern defined at [line 35]) = 43
+  [line 32]  return checksum
+  Return: checksum=43 (defined at [line 30])
+Function compute_checksum returns 43
+[line 43]  print(f"Result: {final_result}")
+Output: f"Result: {final_result}"
+
+Answer: final_result = 43 (last updated on defined at [line 42])

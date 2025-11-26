@@ -1,65 +1,47 @@
-import re
-import heapq
+def calculate_weighted_average(scores, weights):
+    weighted_sum = 0
+    total_weight = 0
+    for i in range(len(scores)):
+        weighted_sum += scores[i] * weights[i]
+        total_weight += weights[i]
+    return weighted_sum / total_weight if total_weight != 0 else 0
 
-class Node:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-def tokenize_hex_data(hex_string):
-    pattern = r'[0-9a-fA-F]+'
-    tokens = re.findall(pattern, hex_string)
-    return [int(token, 16) for token in tokens]
-
-def compute_bitwise_transform(values):
-    transformed = []
-    for i, val in enumerate(values):
-        if i % 3 == 0:
-            transformed.append(val << 2)
-        elif i % 3 == 1:
-            transformed.append(val >> 1)
-        else:
-            transformed.append(val ^ 0xFF)
-    return transformed
-
-def build_linked_heap_structure(data_list):
-    heap = []
-    head = None
-    tail = None
-    for item in data_list:
-        heapq.heappush(heap, item)
-        node = Node(item)
-        if not head:
-            head = node
-            tail = node
-        else:
-            tail.next = node
-            tail = node
-    return heap, head
-
-def calculate_final_checksum(linked_head, heap_data):
-    checksum = 0.0
-    current = linked_head
-    while current:
-        if current.val & 0x1:
-            checksum += float(current.val) * 1.5
-        else:
-            checksum -= float(current.val) / 2.0
-        current = current.next
+def process_review_data():
+    raw_reviews = [85, 92, 78, 96, 88, 67, 91, 84, 79, 95]
+    review_weights = [1, 2, 1, 3, 2, 1, 2, 1, 1, 3]
     
-    while heap_data:
-        val = heapq.heappop(heap_data)
-        if val > 100:
-            checksum *= 0.95
-        else:
-            checksum += val * 0.1
+    # Irrelevant processing for distraction
+    temp_scores = [score * 1.1 for score in raw_reviews[:5]]
+    dummy_avg = sum(temp_scores) / len(temp_scores)
     
-    return int(checksum) & 0xFFFF
+    # Main calculation
+    weighted_avg = calculate_weighted_average(raw_reviews, review_weights)
+    
+    # More distractions
+    review_dict = {i: score for i, score in enumerate(raw_reviews)}
+    irrelevant_max = max(review_dict.values())
+    
+    # Key processing steps
+    filtered_scores = [score for score in raw_reviews if score >= 80]
+    filtered_weights = [review_weights[i] for i, score in enumerate(raw_reviews) if score >= 80]
+    
+    if len(filtered_scores) > 0:
+        filtered_avg = calculate_weighted_average(filtered_scores, filtered_weights)
+    else:
+        filtered_avg = 0
+    
+    # Final aggregation with slicing operations
+    aggregated_scores = [weighted_avg, filtered_avg, irrelevant_max]
+    processed_indices = [0, 2, 1]
+    
+    # Dead code path
+    if dummy_avg > 100:
+        aggregated_scores[1] = 42
+    
+    # Target statement
+    final_rating = aggregated_scores[processed_indices[1]]
+    
+    print(f"Result: {final_rating}")
+    return final_rating
 
-# Main processing pipeline
-raw_input = "a1b2c3d4e5f6"
-tokens = tokenize_hex_data(raw_input)
-transformed_values = compute_bitwise_transform(tokens)
-heap_structure, linked_list_head = build_linked_heap_structure(transformed_values)
-final_checksum = calculate_final_checksum(linked_list_head, heap_structure)
-print(f"Result: {final_checksum}")
+process_review_data()

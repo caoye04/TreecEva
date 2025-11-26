@@ -1,22 +1,32 @@
-from math import floor
+def process_inventory():
+    inventory_data = {
+        'item_a': {'quantity': 15, 'price': 24.5},
+        'item_b': {'quantity': 8, 'price': 32.0},
+        'item_c': {'quantity': 12, 'price': 18.75},
+        'item_d': {'quantity': 6, 'price': 45.25}
+    }
+    
+    processed_items = []
+    total_items = 0
+    price_summary = 0
+    irrelevant_counter = 0
+    
+    for item_name, item_info in inventory_data.items():
+        quantity = item_info['quantity']
+        price = item_info['price']
+        calculated_value = quantity * price
+        
+        # This intermediate calculation doesn't affect final result
+        irrelevant_counter += quantity - 2
+        
+        if quantity > 7:
+            processed_items.append(calculated_value)
+            total_items += quantity
+            
+    # Distractor operation that seems relevant but isn't used
+    temp_adjustment = total_items * 1.1
+    
+    final_result = sum(processed_items)
+    print(f"Target result: {final_result}")
 
-def get_optimal_position(scores):
-    n = len(scores)
-    if n == 0:
-        return 0
-    target_score = 75
-    low, high = 0, n - 1
-    while low <= high:
-        mid = floor((low + high) / 2)
-        match (scores[mid] - target_score):
-            case x if x < 0:
-                low = mid + 1
-            case x if x > 0:
-                high = mid - 1
-            case _:
-                return mid
-    return low
-
-spice_popularity_scores = [20, 40, 60, 80, 100]
-optimal_position = get_optimal_position(spice_popularity_scores)
-print(f'Result: {optimal_position}')
+process_inventory()

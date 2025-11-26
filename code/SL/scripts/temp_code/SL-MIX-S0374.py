@@ -1,78 +1,67 @@
-import re
-from itertools import combinations
-
-def is_palindrome(s):
-    return s == s[::-1]
-
-def calculate_composition(dna_segment):
-    comp = {'A': 0, 'T': 0, 'G': 0, 'C': 0}
-    for nuc in dna_segment:
-        if nuc in comp:
-            comp[nuc] += 1
-    return comp
-
-def score_segment(segment, pwm):
-    score = 0
-    for i, nucleotide in enumerate(segment):
-        if nucleotide in pwm[i]:
-            score += pwm[i][nucleotide]
-    return score
-
-def find_optimal_palindrome(dna_sequence, length, min_gc_content, pwm):
-    max_score = -float('inf')
-    optimal_segment = None
+def process_data_stream(stream, mask):
+    # Distractor: unused lambda function
+    filter_condition = lambda x: x > 0
     
-    # Generate all possible substrings of specified length
-    for i in range(len(dna_sequence) - length + 1):
-        substring = dna_sequence[i:i+length]
-        
-        # Check if it's a palindrome and meets GC content requirement
-        if is_palindrome(substring) and len(re.findall(r'[GC]', substring))/length >= min_gc_content:
-            composition = calculate_composition(substring)
+    # Main processing logic
+    processed_values = []
+    temp_sum = 0
+    count_valid = 0
+    
+    # Misleading intermediate variable
+    accumulator = 100
+    
+    for idx, (data, is_valid) in enumerate(zip(stream, mask)):
+        if is_valid:
+            # Relevant computation
+            temp_sum += data * (idx + 1)
+            count_valid += 1
+            processed_values.append(data)
             
-            # Apply additional filtering using combinatorial checks
-            valid_combinations = 0
-            for combo in combinations(substring, 3):
-                if combo[0] != combo[1] and combo[1] != combo[2]:
-                    valid_combinations += 1
+            # Distractor: dead code path
+            if idx > len(stream) + 5:
+                accumulator -= data
+        else:
+            # Misleading computation
+            temp_sum -= idx * 2
             
-            # Only consider segments with sufficient diversity
-            if valid_combinations > 2:
-                segment_score = score_segment(substring, pwm)
-                if segment_score > max_score:
-                    max_score = segment_score
-                    optimal_segment = substring
+            # Distractor: unused operation
+            processed_values.append(-1)
     
-    return max_score if optimal_segment else 0
+    # More distractions
+    average_check = sum(processed_values) / len(processed_values) if processed_values else 0
+    
+    # Key computation
+    weighted_average = temp_sum / count_valid if count_valid else 0
+    
+    # Final transformation with modular arithmetic
+    result = int((weighted_average * 7) % 256)
+    
+    # Distractor: unused variable
+    verification_flag = result > 128
+    
+    return result
 
-def main():
-    # Position Weight Matrix for preferred nucleotides at each position
-    pwm = [
-        {'A': 2, 'T': -1, 'G': 1, 'C': 0},
-        {'A': -2, 'T': -1, 'G': 3, 'C': 2},
-        {'A': 0, 'T': 0, 'G': 2, 'C': 3},
-        {'A': -1, 'T': -1, 'G': 1, 'C': 4},
-        {'A': 3, 'T': -2, 'G': 0, 'C': 1},
-        {'A': 4, 'T': -3, 'G': -1, 'C': 0}
-    ]
-    
-    # DNA sequence under analysis
-    genome_fragment = "ATGCCGTAATGCCGTACGTA"
-    
-    # Analysis parameters
-    target_length = 6
-    minimum_gc = 0.5
-    
-    # Perform the analysis
-    max_score = find_optimal_palindrome(genome_fragment, target_length, minimum_gc, pwm)
-    
-    # Adjust score based on special conditions
-    if max_score > 10 and 'CCG' in genome_fragment:
-        max_score += 5
-    elif max_score <= 10 or ('GCC' not in genome_fragment and len(genome_fragment) > 15):
-        max_score -= 2
-    
-    print(f"Result: {max_score}")
+# Main execution
+base_sequence = [15, 22, 8, 34, 12, 19, 27]
+validation_flags = [True, False, True, True, False, True, True]
 
-if __name__ == "__main__":
-    main()
+# Distractor: misleading intermediate computation
+preliminary_result = sum(base_sequence) // len(base_sequence)
+
+# Irrelevant dictionary operations
+coordinate_mapping = dict(enumerate(base_sequence))
+max_coordinate = max(coordinate_mapping.values()) if coordinate_mapping else 0
+
+# Key function call
+result_aggregator = process_data_stream(base_sequence, validation_flags)
+
+# Final computation with bitwise operations
+final_output = (result_aggregator ^ 0b10101010) & 0xFF
+
+# Distractor: dead code
+if final_output > 200:
+    print("High value detected")
+elif final_output < 50:
+    print("Low value range")
+
+print(f"Target result: {final_output}")

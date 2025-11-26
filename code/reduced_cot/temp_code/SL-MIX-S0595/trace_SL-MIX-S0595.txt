@@ -1,0 +1,72 @@
+37 active_nodes = 12
+37 ['active_nodes'] [{'_type': 'int', '_value': 12}]
+38 processed_packets = 96
+38 ['active_nodes', 'processed_packets'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}]
+39 error_flags = 2
+39 ['active_nodes', 'processed_packets', 'error_flags'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}]
+42 network_latency = active_nodes * 3
+42 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 36}]
+43 packet_overflow = processed_packets % 7
+43 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency', 'packet_overflow'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 36}, {'_type': 'int', '_value': 5}]
+44 protocol_overhead = network_latency + packet_overflow
+44 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency', 'packet_overflow', 'protocol_overhead'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 36}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 41}]
+47 if protocol_overhead > 20:
+47 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency', 'packet_overflow', 'protocol_overhead'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 36}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 41}]
+48     optimization_factor = protocol_overhead // 2
+48 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency', 'packet_overflow', 'protocol_overhead', 'optimization_factor'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 36}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 20}]
+52 network_efficiency = final_computation(active_nodes, processed_packets, error_flags)
+52 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency', 'packet_overflow', 'protocol_overhead', 'optimization_factor'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 36}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 20}]
+PARAM_MAPPING final_computation {'nodes': {'actual_var': 'active_nodes', 'value': 12}, 'packets': {'actual_var': 'processed_packets', 'value': 96}, 'errors': {'actual_var': 'error_flags', 'value': 2}}
+FUNCTION_ENTER 15 final_computation def final_computation(nodes, packets, errors):
+15 ['nodes', 'packets', 'errors'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}]
+DEPTH_2 16     throughput_result = calculate_throughput(nodes, packets)
+16 ['nodes', 'packets', 'errors'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}]
+PARAM_MAPPING calculate_throughput {'nodes': {'actual_var': 'nodes', 'value': 12}, 'packets': {'actual_var': 'packets', 'value': 96}}
+FUNCTION_ENTER 1 calculate_throughput def calculate_throughput(nodes, packets):
+1 ['nodes', 'packets'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}]
+DEPTH_3 2     throughput = (packets * 8) // nodes
+2 ['nodes', 'packets', 'throughput'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 64}]
+DEPTH_3 3     redundancy_factor = nodes % 3
+3 ['nodes', 'packets', 'throughput', 'redundancy_factor'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 64}, {'_type': 'int', '_value': 0}]
+DEPTH_3 4     return throughput - redundancy_factor
+4 ['nodes', 'packets', 'throughput', 'redundancy_factor'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 64}, {'_type': 'int', '_value': 0}]
+FUNCTION_RETURN 4 calculate_throughput {'_type': 'int', '_value': 64}
+DEPTH_2 17     connectivity_result = analyze_connectivity(nodes, errors)
+17 ['nodes', 'packets', 'errors', 'throughput_result'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 64}]
+PARAM_MAPPING analyze_connectivity {'active_nodes': {'actual_var': 'nodes', 'value': 12}, 'error_count': {'actual_var': 'errors', 'value': 2}}
+FUNCTION_ENTER 6 analyze_connectivity def analyze_connectivity(active_nodes, error_count):
+6 ['active_nodes', 'error_count'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}]
+DEPTH_3 7     connectivity_score = active_nodes * 10
+7 ['active_nodes', 'error_count', 'connectivity_score'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 120}]
+DEPTH_3 8     if error_count > 0:
+8 ['active_nodes', 'error_count', 'connectivity_score'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 120}]
+DEPTH_3 9         penalty = error_count * 15
+9 ['active_nodes', 'error_count', 'connectivity_score', 'penalty'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 30}]
+DEPTH_3 10         connectivity_score -= penalty
+10 ['active_nodes', 'error_count', 'connectivity_score', 'penalty'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 30}]
+DEPTH_3 13     return connectivity_score
+13 ['active_nodes', 'error_count', 'connectivity_score', 'penalty'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 30}]
+FUNCTION_RETURN 13 analyze_connectivity {'_type': 'int', '_value': 90}
+DEPTH_2 20     packet_loss = (errors * 100) // packets if packets > 0 else 0
+20 ['nodes', 'packets', 'errors', 'throughput_result', 'connectivity_result', 'packet_loss'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 64}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 2}]
+DEPTH_2 21     node_utilization = (packets * 10) // nodes if nodes > 0 else 0
+21 ['nodes', 'packets', 'errors', 'throughput_result', 'connectivity_result', 'packet_loss', 'node_utilization'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 64}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 80}]
+DEPTH_2 24     if errors == 0:
+24 ['nodes', 'packets', 'errors', 'throughput_result', 'connectivity_result', 'packet_loss', 'node_utilization'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 64}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 80}]
+DEPTH_2 27         error_penalty = errors * 8
+27 ['nodes', 'packets', 'errors', 'throughput_result', 'connectivity_result', 'packet_loss', 'node_utilization', 'error_penalty'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 64}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 16}]
+DEPTH_2 28         efficiency = (throughput_result * connectivity_result) // 100 - error_penalty
+28 ['nodes', 'packets', 'errors', 'throughput_result', 'connectivity_result', 'packet_loss', 'node_utilization', 'error_penalty', 'efficiency'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 64}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 16}, {'_type': 'int', '_value': 41}]
+DEPTH_2 31     theoretical_max = nodes * 100
+31 ['nodes', 'packets', 'errors', 'throughput_result', 'connectivity_result', 'packet_loss', 'node_utilization', 'error_penalty', 'efficiency', 'theoretical_max'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 64}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 16}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 1200}]
+DEPTH_2 32     optimization_factor = theoretical_max // 4
+32 ['nodes', 'packets', 'errors', 'throughput_result', 'connectivity_result', 'packet_loss', 'node_utilization', 'error_penalty', 'efficiency', 'theoretical_max', 'optimization_factor'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 64}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 16}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 1200}, {'_type': 'int', '_value': 300}]
+DEPTH_2 34     return efficiency
+34 ['nodes', 'packets', 'errors', 'throughput_result', 'connectivity_result', 'packet_loss', 'node_utilization', 'error_penalty', 'efficiency', 'theoretical_max', 'optimization_factor'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 64}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 16}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 1200}, {'_type': 'int', '_value': 300}]
+FUNCTION_RETURN 34 final_computation {'_type': 'int', '_value': 41}
+55 bandwidth_utilization = (processed_packets * 10) // active_nodes
+55 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency', 'packet_overflow', 'protocol_overhead', 'optimization_factor', 'network_efficiency', 'bandwidth_utilization'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 36}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 80}]
+56 quality_score = bandwidth_utilization - error_flags
+56 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency', 'packet_overflow', 'protocol_overhead', 'optimization_factor', 'network_efficiency', 'bandwidth_utilization', 'quality_score'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 36}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 78}]
+58 print(f"Result: {network_efficiency}")
+58 ['active_nodes', 'processed_packets', 'error_flags', 'network_latency', 'packet_overflow', 'protocol_overhead', 'optimization_factor', 'network_efficiency', 'bandwidth_utilization', 'quality_score'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 96}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 36}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 78}]

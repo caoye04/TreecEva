@@ -1,58 +1,46 @@
-from functools import reduce
-
-def validate_tokens(token_stream):
-    # State definitions
-    STATE_IDLE = 0
-    STATE_PROCESSING = 1
-    STATE_VALIDATED = 2
+def compute_final_value(data_points):
+    # Initial processing with set operations
+    unique_values = set(data_points)
+    processed_set = {x * 2 if x % 3 == 0 else x // 2 for x in unique_values}
     
-    # System registers
-    authCounter = 0
-    currentState = STATE_IDLE
-    validationKey = 0b11010111
+    # Misleading intermediate calculations
+    temp_sum = sum(data_points) * 2  # Dead code - never used
+    alternative_result = len(unique_values) ** 3  # Distractor
     
-    # Token registry
-    validTokens = {}
-    
-    for idx, encryptedToken in enumerate(token_stream):
-        if currentState == STATE_IDLE:
-            # Transition to processing if token passes initial check
-            if encryptedToken & 0xFF != 0 and (encryptedToken >> 4) > 0:
-                currentState = STATE_PROCESSING
-        
-        if currentState == STATE_PROCESSING:
-            # Decrypt token using XOR with rotating key
-            decrypted = encryptedToken ^ (validationKey << (idx % 3))
-            
-            # Check if decrypted token meets validation criteria
-            isValid = (decrypted & 0xF0) != 0 and bool(decrypted & 0x0F)
-            
-            if isValid and not (len(validTokens) >= 10 and idx > 5):  # Short-circuit
-                # Register valid token
-                tokenId = f"TKN{idx:02d}"
-                validTokens[tokenId] = decrypted
-                
-                # Update counter with bitwise manipulation
-                authCounter = (authCounter + 1) | (decrypted & 0x07)
-                currentState = STATE_VALIDATED
+    # Main logic with nested conditions
+    result_list = []
+    for value in processed_set:
+        if value > 10:
+            if value % 2 == 0:
+                result_list.append(value + 5)
             else:
-                # Reset state if invalid
-                currentState = STATE_IDLE
-        
-        if currentState == STATE_VALIDATED:
-            # Merge with system metrics
-            metrics = {f"metric_{k}": v & 0xFF for k, v in validTokens.items()}
-            enhancedMetrics = {**metrics, f"aggregate_{idx}": reduce(lambda x, y: x ^ y, validTokens.values(), 0)}
-            
-            # Update counter based on aggregated metrics
-            authCounter ^= enhancedMetrics[f"aggregate_{idx}"]
-            currentState = STATE_IDLE
+                result_list.append(value - 3)
+        else:
+            # Misleading branch that doesn't affect final result
+            dummy_var = value * 10 + 7  # Dead code
+            result_list.append(value * 2)
     
-    return authCounter
+    # Final computation with early return check
+    if len(result_list) == 0:
+        return -1  # Never happens with our data
+    
+    final_calc = sum(result_list)
+    
+    # More distractions
+    unused_set = processed_set.union({15, 25, 35})
+    redundant_multiplier = final_calc * 0 + 1  # Always 1
+    
+    return final_calc
 
-# Encrypted token stream
-tokenStream = [0x4A, 0x73, 0x9C, 0x2F, 0xE8, 0x1D, 0xB6, 0x89, 0x55, 0xAC]
+# Main execution
+initial_data = [12, 8, 15, 12, 20, 8, 25]
+data_copy = initial_data[:]  # Unnecessary copy
 
-# Process tokens and get result
-finalCount = validate_tokens(tokenStream)
-print(f"Result: {finalCount}")
+# Distractor operations that don't affect result
+manipulated_data = [x + 100 for x in initial_data]  # Dead manipulation
+preliminary_sum = sum(manipulated_data)  # Unused
+
+final_result = compute_final_value(initial_data)
+
+# Final output
+print(f"Target result: {final_result}")

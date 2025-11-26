@@ -1,0 +1,32 @@
+Target: Find the value of variable final_analysis after [line 55] executes
+
+[line 45]  input_sequence = [2, 5, 8, 3, 7]
+Compute: [2, 5, 8, 3, 7] = [2, 5, 8, 3, 7]
+[line 52]  final_analysis = processing_pipeline(input_sequence, 3, True)
+Call function processing_pipeline(input_sequence=[2, 5, 8, 3, 7] (defined at [line 45]), 3, True)
+[line 3]  base_value = 42
+Assign: base_value = 42
+[line 11]  if optimize_flag:
+Condition: True, entering 'if' block
+[line 12]  step_multiplier = 3
+Assign: step_multiplier = 3
+[line 13]  phase_adjustment = 7
+Assign: phase_adjustment = 7
+[line 19]  data_stream = [x * step_multiplier for x in input_data]
+Compute: [x * step_multiplier for x in input_data], where x=2 (an unknown source), step_multiplier=3 (defined at [line 12]), input_data=[2, 5, 8, 3, 7] (an unknown source) = ?
+[line 25]  window_size = min(phase_count, len(data_stream))
+Call function min(phase_count=3 (an unknown source), len(data_stream))
+[line 26]  active_window = data_stream[-window_size:]
+Compute: data_stream[-window_size:], where data_stream=[6, 15, 24, 9, 21] (defined at [line 19]), window_size=3 (defined at [line 25]) = [24, 9, 21]
+[line 29]  if phase_count > 10:
+Condition: True, entering 'if' block
+[line 33]  intermediate = sum(active_window) + phase_adjustment
+Compute: sum(active_window) + phase_adjustment, where active_window=[24, 9, 21] (defined at [line 26]), phase_adjustment=7 (defined at [line 13]) = 61
+[line 40]  final_result = (intermediate * base_value) // (phase_count + 1)
+Compute: (intermediate * base_value) // (phase_count + 1), where intermediate=61 (defined at [line 33]), base_value=42 (defined at [line 3]), phase_count=3 (an unknown source) = 640
+[line 42]  return final_result
+Return: final_result=640 (defined at [line 40])
+[line 55]  print(f"Result: {final_analysis}")
+Output: f"Result: {final_analysis}"
+
+Answer: final_analysis = 640 (last updated on defined at [line 52])

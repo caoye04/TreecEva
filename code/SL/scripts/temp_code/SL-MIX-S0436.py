@@ -1,16 +1,13 @@
-from functools import reduce
-from bisect import bisect_left
-def binary_search(arr, x):
-    i = bisect_left(arr, x)
-    return i != len(arr) and arr[i] == x
-
-tags_collection = frozenset(['alpha', 'beta', 'gamma', 'delta', 'epsilon'])
-transformed_tags = list(map(lambda s: len(s), tags_collection))
-transformed_tags.sort()
-filtered_lengths = list(filter(lambda n: n > 4, transformed_tags))
-checksum = reduce(lambda a, b: a ^ b, filtered_lengths, 0)
-reference_values = [3, 5, 7, 9, 11]
-matches = sum(1 for val in filtered_lengths if binary_search(reference_values, val))
-validation_flags = [len(filtered_lengths) > 2, checksum != 0, matches >= 1]
-final_validation_score = sum(1 << i for i, flag in enumerate(validation_flags) if flag)
-print(f'Result: {final_validation_score}')
+student_grades = [85, 92, 78, 96, 88, 74, 91, 83, 79, 95]
+threshold = 80
+preliminary_count = len(student_grades)
+filtered_scores = []
+for grade in student_grades:
+    if grade >= threshold:
+        filtered_scores.append(grade)
+intermediate_sum = sum(filtered_scores)
+temp_calc = intermediate_sum * 0.1
+processed_data = filtered_scores[2:7:2]
+final_score = sum(processed_data) // len(processed_data) if processed_data else 0
+redundant_check = len(student_grades) - len(filtered_scores)
+print(f"Target result: {final_score}")

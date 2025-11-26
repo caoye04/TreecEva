@@ -1,0 +1,28 @@
+Target: Find the value of variable processed_sum after [line 33] executes
+
+[line 16]  sensor_readings = [5, 8, 12, 3, 15, 9, 6, 11, 7, 14]
+Compute: [5, 8, 12, 3, 15, 9, 6, 11, 7, 14] = [5, 8, 12, 3, 15, ...]
+[line 20]  validation_offset = 25
+Assign: validation_offset = 25
+[line 24]  odd_readings = filter_odd_values(sensor_readings)
+Call function filter_odd_values(sensor_readings=[5, 8, 12, 3, 15, ...] (defined at [line 16]))
+[line 3]  temp_cache = [x for x in data if x % 2 == 1]
+Compute: [x for x in data if x % 2 == 1], where x=5 (an unknown source), data=[5, 8, 12, 3, 15, ...] (an unknown source) = ?
+[line 5]  return temp_cache
+Return: temp_cache=[5, 3, 15, 9, 11, ...] (defined at [line 3])
+[line 25]  core_sum = process_core_data(odd_readings)
+Call function process_core_data(odd_readings=[5, 3, 15, 9, 11, ...] (defined at [line 24]))
+[line 8]  threshold = 7
+Assign: threshold = 7
+[line 10]  filtered = [v for v in values if v > threshold]
+Compute: [v for v in values if v > threshold], where v=5 (an unknown source), values=[5, 3, 15, 9, 11, ...] (an unknown source), threshold=7 (defined at [line 8]) = ?
+[line 11]  sliced_data = filtered[1:-1]  # Remove first and last
+Compute: filtered[1:-1]  # Remove first and last, where filtered=[15, 9, 11] (defined at [line 10]) = [9]
+[line 12]  return sum(sliced_data)
+Return: sum(sliced_data)
+[line 32]  final_filter_sum = core_sum + validation_offset
+Compute: core_sum + validation_offset, where core_sum=9 (defined at [line 25]), validation_offset=25 (defined at [line 20]) = 34
+[line 33]  processed_sum = final_filter_sum
+Compute: final_filter_sum, where final_filter_sum=34 (defined at [line 32]) = 34
+
+Answer: processed_sum = 34 (last updated on defined at [line 33])

@@ -1,42 +1,31 @@
-from collections import defaultdict
-
-class FractalPlant:
-    def __init__(self):
-        self.tree = {}
-        self.flowering_leaves = 0
+def initialize_sensor_data():
+    # Initialize base sensor readings with some noise
+    raw_readings = [i * 7 + 3 for i in range(15)]
+    calibration_offset = 12
+    temperature_adjustment = 8
     
-    def hash_path(self, path):
-        return hash(''.join(map(str, path))) % 1000
+    # Apply calibration adjustments (distractor)
+    calibrated_data = [reading - calibration_offset for reading in raw_readings]
+    adjusted_temps = [temp + temperature_adjustment for temp in calibrated_data]
     
-    def build_tree(self, node_id, depth, max_depth, path):
-        if depth == max_depth:
-            # Terminal node (leaf)
-            node_hash = self.hash_path(path)
-            self.tree[node_id] = {'hash': node_hash, 'children': {}, 'is_leaf': True}
-            if node_hash % 2 == 0:  # Even hash indicates flowering
-                self.flowering_leaves += 1
-            return
-        
-        # Internal node
-        node_hash = self.hash_path(path)
-        self.tree[node_id] = {'hash': node_hash, 'children': {}, 'is_leaf': False}
-        
-        # Binary branching
-        left_child = f"{node_id}L"
-        right_child = f"{node_id}R"
-        
-        self.tree[node_id]['children']['left'] = left_child
-        self.tree[node_id]['children']['right'] = right_child
-        
-        # Recursive construction
-        self.build_tree(left_child, depth+1, max_depth, path + [0])
-        self.build_tree(right_child, depth+1, max_depth, path + [1])
+    # Dead code path - never used
+    redundant_calc = sum(adjusted_temps) // len(adjusted_temps)
+    
+    # Main data processing
+    quality_threshold = 5
+    sensor_fault_mask = [x % 3 == 0 for x in raw_readings]
+    
+    # Misleading intermediate calculation
+    filtered_faulty = [raw_readings[i] for i in range(len(raw_readings)) if not sensor_fault_mask[i]]
+    
+    # Core logic - data points meeting quality criteria
+    data_points = [x for x in raw_readings if x % 2 == 1]
+    valid_data_count = len([x for x in data_points if x > 20])
+    
+    # Critical execution point
+    final_analysis_result = [x for x in data_points if x % quality_threshold == 0]
+    
+    # Print the target result
+    print(f"Target result: {final_analysis_result}")
 
-def simulate_growth():
-    plant = FractalPlant()
-    plant.build_tree('ROOT', 0, 3, [])
-    return plant.flowering_leaves
-
-# Execute simulation
-final_count = simulate_growth()
-print(f"Result: {final_count}")
+initialize_sensor_data()

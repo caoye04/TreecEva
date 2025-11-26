@@ -1,0 +1,19 @@
+42
+final_result
+---
+9 counter = Counter(data_sequence)
+9 ['data_sequence', 'counter'] ['[8, 12, 8, 15, 12, ...]', '{8: 4, 12: 3, 15: 1, ...}']
+10 most_common = counter.most_common(2)
+10 ['counter', 'most_common'] ['{8: 4, 12: 3, 15: 1, ...}', '[(8, 4), (12, 3)]']
+16 if len(most_common) >= 2:
+16 ['most_common'] ['[(8, 4), (12, 3)]']
+17 primary, secondary = most_common[0], most_common[1]
+17 ['most_common', 'primary', 'secondary'] ['[(8, 4), (12, 3)]', '(8, 4)', '(12, 3)']
+19 xor_result = primary[0] ^ secondary[0]
+19 ['primary', 'secondary', 'xor_result'] ['(8, 4)', '(12, 3)', '4']
+20 shift_value = xor_result << 2
+20 ['xor_result', 'shift_value'] ['4', '16']
+27 checksum = (shift_value & 0b1111) | ((xor_result >> 2) & 0b1111)
+27 ['xor_result', 'shift_value', 'checksum'] ['4', '16', '1']
+42 final_result = result_mapper.get(checksum, -1)
+42 ['checksum', 'result_mapper', 'final_result'] ['1', '{5: 42, 9: 78, 12: 156, ...}', '-1']

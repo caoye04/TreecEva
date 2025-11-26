@@ -1,66 +1,53 @@
-from collections import defaultdict, deque
+def analyze_data_patterns(data_sequence):
+    # Irrelevant analysis function that doesn't affect final result
+    temp_sum = 0
+    for i, val in enumerate(data_sequence):
+        temp_sum += val * (i + 1)  # Red herring calculation
+    return temp_sum  # Never used
 
-class FunctionNode:
-    def __init__(self, node_id, cost):
-        self.node_id = node_id
-        self.cost = cost
-        self.children = []
+# Main processing
+input_values = [5, 12, 8, 3, 15, 7]
 
-def build_tree():
-    # Create nodes
-    nodes = {i: FunctionNode(i, cost) for i, cost in enumerate([12, -5, 7, 20, -3, 15, 8, -10, 9, 11])}
-    # Define tree structure (parent: [children])
-    edges = {
-        0: [1, 2],
-        1: [3, 4],
-        2: [5, 6],
-        3: [7, 8],
-        5: [9]
-    }
-    for parent, children in edges.items():
-        nodes[parent].children = [nodes[child] for child in children]
-    return nodes[0]  # Return root
+# Misleading computations that look relevant
+computed_total = sum(input_values)  # Distraction: 50
+shifted_values = [x << 2 for x in input_values]  # Irrelevant bit operations
 
-def prune_and_calculate_max_cost(root):
-    # Prune nodes with cost < 0
-    def prune(node):
-        if not node:
-            return None
-        if node.cost < 0:
-            return None
-        node.children = [prune(child) for child in node.children]
-        node.children = [child for child in node.children if child is not None]
-        return node
-    
-    root = prune(root)
-    if not root:
-        return 0
-    
-    # Dynamic programming to find max path cost
-    memo = {}
-    def dp(node):
-        if not node:
-            return 0
-        if node.node_id in memo:
-            return memo[node.node_id]
-        if not node.children:
-            memo[node.node_id] = node.cost
-            return node.cost
-        
-        max_child_cost = float('-inf')
-        for child in node.children:
-            child_cost = dp(child)
-            if child_cost > max_child_cost:
-                max_child_cost = child_cost
-            if child_cost < 0:  # Early termination logic
-                break
-        
-        result = node.cost + max_child_cost
-        memo[node.node_id] = result
-        return result
-    
-    return dp(root)
+# Actual relevant processing starts here
+encoded_key = 42
+mod_value = 17
 
-tree_root = build_tree()
-max_path_cost = prune_and_calculate_max_cost(tree_root)
-print(f"Result: {max_path_cost}")
+# Multiple intermediate steps with distractions
+phase_shift = (encoded_key % mod_value) * 3  # Distraction: 24
+cipher_base = (encoded_key ^ 0b101010) + phase_shift  # More distraction: 32 + 24 = 56
+
+# Core calculation with zip and string operations
+char_mapping = {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E'}
+decoding_pairs = list(zip(input_values[::2], input_values[1::2]))  # [(5,12), (8,3), (15,7)]
+
+# Dead code path - unused function call
+useless_result = analyze_data_patterns([1, 2, 3])  # Returns 14 but never used
+
+# Key computation
+processed_values = []
+for idx, (a, b) in enumerate(decoding_pairs):
+    # Conditional logic with nesting
+    if a > b:
+        processed_values.append((a - b) * idx)
+    else:
+        processed_values.append((b - a) * idx)
+
+# processed_values = [0, 5, 8]
+decoded_value = sum(processed_values)  # Core value: 0 + 5 + 8 = 13
+
+# More distractions
+correction_mask = 0b1101  # 13 - misleading coincidence
+adjustment_factor = correction_mask ^ 0b0110  # 11 - irrelevant
+
+# Final correction (actual relevant factor)
+correction_factor = (len(input_values) - 2)  # 4
+
+# Target statement
+final_solution = decoded_value * correction_factor  # 13 * 4 = 52
+
+# Print result
+print(f"Result: {final_solution}")

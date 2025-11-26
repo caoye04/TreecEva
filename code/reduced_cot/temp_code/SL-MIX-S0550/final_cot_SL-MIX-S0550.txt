@@ -1,0 +1,58 @@
+Target: Find the value of variable final_score after [line 51] executes
+
+[line 49]  performance_data = [15, 28, 42, 56, 31, 49, 23, 67, 38, 52]
+Compute: [15, 28, 42, 56, 31, 49, 23, 67, 38, 52] = [15, 28, 42, 56, 31, ...]
+[line 50]  final_score = compute_final_result(performance_data)
+Call function compute_final_result(performance_data)
+[line 26]  data_slice = input_data[2:6]
+Compute: input_data[2:6], where input_data=[15, 28, 42, 56, 31, ...] (an unknown source) = [42, 56, 31, 49]
+[line 27]  reversed_segment = data_slice[::-1]
+Compute: data_slice[::-1], where data_slice=[42, 56, 31, 49] (defined at [line 26]) = [49, 31, 56, 42]
+[line 30]  if len(reversed_segment) > 2:
+Condition: True, entering 'if' block
+[line 31]  core_component = sum(reversed_segment) - min(reversed_segment)
+Compute: sum(reversed_segment) - min(reversed_segment), where reversed_segment=[49, 31, 56, 42] (defined at [line 27]) = 147
+[line 39]  quality_result = calculate_quality_scores(input_data)
+Call function calculate_quality_scores(input_data=[15, 28, 42, 56, 31, ...] (an unknown source))
+[line 1]  def calculate_quality_scores(data_points):
+Enter function calculate_quality_scores: data_points=[15, 28, 42, 56, 31, ...]
+  [line 2]  base_scores = [85, 92, 78, 96, 88, 74, 91, 83]
+  Compute: [85, 92, 78, 96, 88, 74, 91, 83] = [85, 92, 78, 96, 88, ...]
+  [line 10]  quality_sum = 0
+  Assign: quality_sum = 0
+  [line 11]  for i, score in enumerate(base_scores):
+  (Missing param: 'iter_var')
+  [line 12]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 13]  quality_sum += score * (i + 1)
+  Update: quality_sum changed from 0 (defined at defined at [line 10]) to 0+score * (i + 1) = 85
+  [line 11]  for i, score in enumerate(base_scores):
+  (Missing param: 'iter_var')
+  [line 12]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 15]  quality_sum += score // 2
+  Update: quality_sum changed from 85 (defined at defined at [line 13]) to 85+score // 2 = 131
+... [Line 11] repeats 5 more times ...
+... [Line 11] repeats 5 more times ...
+... [Line 11] repeats 5 more times ...
+  [line 11]  for i, score in enumerate(base_scores):
+  (Missing param: 'iter_var')
+  [line 12]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 15]  quality_sum += score // 2
+  Update: quality_sum changed from 1527 (defined at defined at [line 15]) to 1527+score // 2 = 1568
+  [line 11]  for i, score in enumerate(base_scores):
+  Loop End: Iteration finished
+  [line 17]  return quality_sum
+  Return: quality_sum=1568 (defined at [line 15])
+Function calculate_quality_scores returns 1568
+[line 40]  final_value = (quality_result + core_component) // len(input_data)
+Compute: (quality_result + core_component) // len(input_data), where quality_result=1568 (defined at [line 39]), core_component=147 (defined at [line 31]), input_data=[15, 28, 42, 56, 31, ...] (an unknown source) = 171
+[line 43]  if final_value > 100:
+Condition: True, entering 'if' block
+[line 46]  return final_value
+Return: final_value=171 (defined at [line 40])
+[line 51]  print(f"Result: {final_score}")
+Output: f"Result: {final_score}"
+
+Answer: final_score = 171 (last updated on defined at [line 50])

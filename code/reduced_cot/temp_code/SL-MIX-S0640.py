@@ -1,43 +1,48 @@
-import itertools
-import math
-from contextlib import contextmanager
-
-data_matrix = [
-    [2.5, 3.7, 1.2],
-    [4.1, 0.9, 2.8],
-    [3.3, 2.2, 5.0]
-]
-
-@contextmanager
-def signal_logger():
-    log_entries = []
-    try:
-        yield log_entries
-    finally:
-        pass
-
-transformation_map = {
-    'amp': lambda x: round(x * 1.5, 2),
-    'att': lambda x: round(x * 0.7, 2),
-    'boost': lambda x: round(x ** 1.2, 2)
-}
-
-with signal_logger() as log:
-    adjusted_values = []
-    for row in data_matrix:
-        transformed_row = []
-        for val in row:
-            ops = list(itertools.combinations(transformation_map.keys(), 2))
-            interim_results = []
-            for op1, op2 in ops:
-                res = transformation_map[op2](transformation_map[op1](val))
-                interim_results.append(res)
-            max_transformed = max(interim_results)
-            transformed_row.append(max_transformed)
-            log.append(f"Processed {val} -> {max_transformed}")
-        adjusted_values.append(transformed_row)
+def analyze_text_patterns(text_samples):
+    vowels = {'a', 'e', 'i', 'o', 'u'}
+    consonant_count = 0
+    irrelevant_counter = 0
     
-    aggregate_sums = [sum(row) for row in adjusted_values]
-    peak_aggregate = max(aggregate_sums)
+    for char in text_samples.lower():
+        if char.isalpha():
+            irrelevant_counter += 1 if char in {'x', 'y', 'z'} else 0
+            consonant_count += 1 if char not in vowels else 0
+    
+    # Misleading intermediate calculation
+    temp_value = consonant_count * 3 + irrelevant_counter
+    return consonant_count if consonant_count > 5 else consonant_count + 2
 
-print(f"Result: {peak_aggregate}")
+def process_numerical_data(base_value, modifier):
+    bit_operations = base_value & 15 | (modifier << 2)
+    intermediate_result = bit_operations ^ 7
+    
+    # Distractor operations that don't affect final result
+    dead_calc = (intermediate_result * 2) // 3
+    misleading_var = dead_calc + 10
+    
+    return intermediate_result if intermediate_result % 2 == 0 else intermediate_result - 1
+
+def compute_final_value(data_source):
+    text_analysis = analyze_text_patterns(data_source)
+    numerical_processing = process_numerical_data(text_analysis, 3)
+    
+    # Key conditional expression using python feature
+    adjustment = 5 if text_analysis > numerical_processing else 8
+    
+    # More irrelevant computations
+    unused_var = (numerical_processing * adjustment) // 2
+    red_herring = unused_var + 100
+    
+    final_result = (text_analysis + numerical_processing) * adjustment
+    return final_result
+
+# Main execution
+sample_text = "ProgrammingEvaluationBenchmark"
+processed_data = sample_text
+final_output = compute_final_value(processed_data)
+
+# Additional distracting operations that don't affect the answer
+distraction_1 = len(sample_text) * 2
+distraction_2 = distraction_1 - 15
+
+print(f"Target result: {final_output}")

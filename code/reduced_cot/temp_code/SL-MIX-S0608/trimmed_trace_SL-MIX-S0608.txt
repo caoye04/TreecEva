@@ -1,0 +1,31 @@
+8
+network_load
+---
+3 packet_sizes = [128, 256, 512, 1024, 2048, 512, 256, 128]
+3 ['packet_sizes'] ['[128, 256, 512, 1024, 2048, ...]']
+4 processed_packets = [size // 8 for size in packet_sizes]
+4 ['packet_sizes', 'size'] ['[128, 256, 512, 1024, 2048, ...]', '128']
+4 processed_packets = [size // 8 for size in packet_sizes]
+4 ['packet_sizes', 'size'] ['[128, 256, 512, 1024, 2048, ...]', '256']
+4 processed_packets = [size // 8 for size in packet_sizes]
+4 ['packet_sizes', 'size'] ['[128, 256, 512, 1024, 2048, ...]', '512']
+4 processed_packets = [size // 8 for size in packet_sizes]
+4 ['packet_sizes', 'size'] ['[128, 256, 512, 1024, 2048, ...]', '1024']
+4 processed_packets = [size // 8 for size in packet_sizes]
+4 ['packet_sizes', 'size'] ['[128, 256, 512, 1024, 2048, ...]', '2048']
+4 processed_packets = [size // 8 for size in packet_sizes]
+4 ['packet_sizes', 'size'] ['[128, 256, 512, 1024, 2048, ...]', '512']
+4 processed_packets = [size // 8 for size in packet_sizes]
+4 ['packet_sizes', 'size'] ['[128, 256, 512, 1024, 2048, ...]', '256']
+4 processed_packets = [size // 8 for size in packet_sizes]
+4 ['packet_sizes', 'size'] ['[128, 256, 512, 1024, 2048, ...]', '128']
+4 processed_packets = [size // 8 for size in packet_sizes]
+4 ['packet_sizes', 'processed_packets'] ['[128, 256, 512, 1024, 2048, ...]', '[16, 32, 64, 128, 256, ...]']
+5 size_counts = Counter(packet_sizes)
+5 ['packet_sizes', 'processed_packets', 'size_counts'] ['[128, 256, 512, 1024, 2048, ...]', '[16, 32, 64, 128, 256, ...]', '{128: 2, 256: 2, 512: 2, ...}']
+6 common_size = size_counts.most_common(1)[0][0]
+6 ['processed_packets', 'size_counts', 'common_size'] ['[16, 32, 64, 128, 256, ...]', '{128: 2, 256: 2, 512: 2, ...}', '128']
+7 transmission_overhead = common_size // 64
+7 ['processed_packets', 'common_size', 'transmission_overhead'] ['[16, 32, 64, 128, 256, ...]', '128', '2']
+8 network_load = processed_packets[-1] + transmission_overhead
+8 ['processed_packets', 'transmission_overhead', 'network_load'] ['[16, 32, 64, 128, 256, ...]', '2', '18']

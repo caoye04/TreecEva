@@ -1,27 +1,35 @@
-12
-final_revenue
+20
+final_rating
 ---
-3 daily_sales = Counter({'bread': 45, 'croissant': 30, 'muffin': 25, 'cookie': 15})
-3 ['daily_sales'] ['{bread: 45, croissant: 30, muffin: 25, ...}']
-4 prices = {'bread': 2.50, 'croissant': 3.00, 'muffin': 2.00, 'cookie': 1.50}
-4 ['daily_sales', 'prices'] ['{bread: 45, croissant: 30, muffin: 25, ...}', '{bread: 2.5, croissant: 3.0, muffin: 2.0, ...}']
-6 total_items = sum(daily_sales.values())
-6 ['daily_sales', 'prices', 'total_items'] ['{bread: 45, croissant: 30, muffin: 25, ...}', '{bread: 2.5, croissant: 3.0, muffin: 2.0, ...}', '115']
-7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
-7 [] []
-7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
-7 ['item'] ["'bread'"]
-7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
-7 ['item'] ["'croissant'"]
-7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
-7 ['item'] ["'muffin'"]
-7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
-7 ['item'] ["'cookie'"]
-7 total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
-7 ['item'] ["'cookie'"]
-9 if total_items > 100:
-9 ['total_items', 'total_revenue'] ['115', '275.0']
-10 total_revenue *= 0.9
-10 ['total_revenue'] ['247.5']
-12 final_revenue = int(total_revenue * 100)  # Convert to cents for precise integer handling
-12 ['total_revenue', 'final_revenue'] ['247.5', '24750']
+3 review_scores = [85, 92, 78, 96, 88, 74, 95, 81, 90, 77]
+3 ['review_scores'] ['[85, 92, 78, 96, 88, ...]']
+4 threshold = 80
+4 ['review_scores', 'threshold'] ['[85, 92, 78, 96, 88, ...]', '80']
+10 ratings_filtered = [score for score in review_scores if score >= threshold]
+10 ['review_scores', 'threshold', 'score'] ['[85, 92, 78, 96, 88, ...]', '80', '85']
+10 ratings_filtered = [score for score in review_scores if score >= threshold]
+10 ['review_scores', 'threshold', 'score'] ['[85, 92, 78, 96, 88, ...]', '80', '92']
+10 ratings_filtered = [score for score in review_scores if score >= threshold]
+10 ['review_scores', 'threshold', 'score'] ['[85, 92, 78, 96, 88, ...]', '80', '78']
+10 ratings_filtered = [score for score in review_scores if score >= threshold]
+10 ['review_scores', 'threshold', 'score'] ['[85, 92, 78, 96, 88, ...]', '80', '96']
+10 ratings_filtered = [score for score in review_scores if score >= threshold]
+10 ['review_scores', 'threshold', 'score'] ['[85, 92, 78, 96, 88, ...]', '80', '88']
+10 ratings_filtered = [score for score in review_scores if score >= threshold]
+10 ['review_scores', 'threshold', 'score'] ['[85, 92, 78, 96, 88, ...]', '80', '74']
+10 ratings_filtered = [score for score in review_scores if score >= threshold]
+10 ['review_scores', 'threshold', 'score'] ['[85, 92, 78, 96, 88, ...]', '80', '95']
+10 ratings_filtered = [score for score in review_scores if score >= threshold]
+10 ['review_scores', 'threshold', 'score'] ['[85, 92, 78, 96, 88, ...]', '80', '81']
+10 ratings_filtered = [score for score in review_scores if score >= threshold]
+10 ['review_scores', 'threshold', 'score'] ['[85, 92, 78, 96, 88, ...]', '80', '90']
+10 ratings_filtered = [score for score in review_scores if score >= threshold]
+10 ['review_scores', 'threshold', 'score'] ['[85, 92, 78, 96, 88, ...]', '80', '77']
+10 ratings_filtered = [score for score in review_scores if score >= threshold]
+10 ['review_scores', 'threshold', 'ratings_filtered'] ['[85, 92, 78, 96, 88, ...]', '80', '[85, 92, 96, 88, 95, ...]']
+13 rating_range = max(ratings_filtered) - min(ratings_filtered)
+13 ['ratings_filtered', 'rating_range'] ['[85, 92, 96, 88, 95, ...]', '15']
+14 adjustment_factor = rating_range // 5  # This is relevant
+14 ['ratings_filtered', 'rating_range', 'adjustment_factor'] ['[85, 92, 96, 88, 95, ...]', '15', '3']
+20 final_rating = max(ratings_filtered) - adjustment_factor
+20 ['ratings_filtered', 'adjustment_factor', 'final_rating'] ['[85, 92, 96, 88, 95, ...]', '3', '93']

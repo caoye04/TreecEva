@@ -1,0 +1,47 @@
+12
+total_profit
+---
+1 product_costs = {'A': 150, 'B': 200, 'C': 75, 'D': 120}
+1 ['product_costs'] ['{A: 150, B: 200, C: 75, ...}']
+2 profit_margins = {'A': 0.25, 'B': 0.30, 'C': 0.40, 'D': 0.20}
+2 ['product_costs', 'profit_margins'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}']
+4 selling_prices = {}
+4 ['product_costs', 'profit_margins', 'selling_prices'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{}']
+5 for product, cost in product_costs.items():
+5 ['product_costs', 'profit_margins', 'selling_prices', 'product', 'cost'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{}', "'A'", '150']
+6 margin = profit_margins[product]
+6 ['product_costs', 'profit_margins', 'selling_prices', 'product', 'cost', 'margin'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{}', "'A'", '150', '0.25']
+7 selling_prices[product] = cost * (1 + margin)
+7 ['product_costs', 'profit_margins', 'selling_prices', 'product', 'cost', 'margin'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{A: 187.5}', "'A'", '150', '0.25']
+5 for product, cost in product_costs.items():
+5 ['product_costs', 'profit_margins', 'selling_prices', 'product', 'cost', 'margin'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{A: 187.5}', "'B'", '200', '0.25']
+6 margin = profit_margins[product]
+6 ['product_costs', 'profit_margins', 'selling_prices', 'product', 'cost', 'margin'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{A: 187.5}', "'B'", '200', '0.3']
+7 selling_prices[product] = cost * (1 + margin)
+7 ['product_costs', 'profit_margins', 'selling_prices', 'product', 'cost', 'margin'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{A: 187.5, B: 260.0}', "'B'", '200', '0.3']
+5 for product, cost in product_costs.items():
+5 ['product_costs', 'profit_margins', 'selling_prices', 'product', 'cost', 'margin'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{A: 187.5, B: 260.0}', "'C'", '75', '0.3']
+6 margin = profit_margins[product]
+6 ['product_costs', 'profit_margins', 'selling_prices', 'product', 'cost', 'margin'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{A: 187.5, B: 260.0}', "'C'", '75', '0.4']
+7 selling_prices[product] = cost * (1 + margin)
+7 ['product_costs', 'profit_margins', 'selling_prices', 'product', 'cost', 'margin'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{A: 187.5, B: 260.0, C: 105.0}', "'C'", '75', '0.4']
+5 for product, cost in product_costs.items():
+5 ['product_costs', 'profit_margins', 'selling_prices', 'product', 'cost', 'margin'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{A: 187.5, B: 260.0, C: 105.0}', "'D'", '120', '0.4']
+6 margin = profit_margins[product]
+6 ['product_costs', 'profit_margins', 'selling_prices', 'product', 'cost', 'margin'] ['{A: 150, B: 200, C: 75, ...}', '{A: 0.25, B: 0.3, C: 0.4, ...}', '{A: 187.5, B: 260.0, C: 105.0}', "'D'", '120', '0.2']
+7 selling_prices[product] = cost * (1 + margin)
+7 ['product_costs', 'selling_prices', 'product', 'cost', 'margin'] ['{A: 150, B: 200, C: 75, ...}', '{A: 187.5, B: 260.0, C: 105.0, ...}', "'D'", '120', '0.2']
+5 for product, cost in product_costs.items():
+5 ['product_costs', 'selling_prices', 'product', 'cost'] ['{A: 150, B: 200, C: 75, ...}', '{A: 187.5, B: 260.0, C: 105.0, ...}', "'D'", '120']
+9 final_prices = {k: round(v) for k, v in selling_prices.items()}
+9 ['selling_prices', 'k', 'v'] ['{A: 187.5, B: 260.0, C: 105.0, ...}', "'A'", '187.5']
+9 final_prices = {k: round(v) for k, v in selling_prices.items()}
+9 ['selling_prices', 'k', 'v'] ['{A: 187.5, B: 260.0, C: 105.0, ...}', "'B'", '260.0']
+9 final_prices = {k: round(v) for k, v in selling_prices.items()}
+9 ['selling_prices', 'k', 'v'] ['{A: 187.5, B: 260.0, C: 105.0, ...}', "'C'", '105.0']
+9 final_prices = {k: round(v) for k, v in selling_prices.items()}
+9 ['selling_prices', 'k', 'v'] ['{A: 187.5, B: 260.0, C: 105.0, ...}', "'D'", '144.0']
+9 final_prices = {k: round(v) for k, v in selling_prices.items()}
+9 ['selling_prices', 'final_prices'] ['{A: 187.5, B: 260.0, C: 105.0, ...}', '{A: 188, B: 260, C: 105, ...}']
+12 total_profit = sum(final_prices.values())
+12 ['final_prices', 'total_profit'] ['{A: 188, B: 260, C: 105, ...}', '697']

@@ -1,0 +1,18 @@
+Target: Find the value of variable final_count after [line 12] executes
+
+[line 1]  user_roles = {'admin', 'moderator', 'editor', 'viewer'}
+Compute: {'admin', 'moderator', 'editor', 'viewer'} = {'viewer', 'admin', 'editor', 'moderator'}
+[line 3]  verified_users = {'admin', 'editor'}
+Compute: {'admin', 'editor'} = {'admin', 'editor'}
+[line 5]  eligible_roles = user_roles - {'viewer'}
+Compute: user_roles - {'viewer'}, where user_roles={'viewer', 'admin', 'editor', 'moderator'} (defined at [line 1]) = {'admin', 'editor', 'moderator'}
+[line 7]  is_verified = len(verified_users & eligible_roles) > 0
+Compute: len(verified_users & eligible_roles) > 0, where verified_users={'admin', 'editor'} (defined at [line 3]), eligible_roles={'admin', 'editor', 'moderator'} (defined at [line 5]) = True
+[line 9]  approved_members = len(eligible_roles) * 3
+Compute: len(eligible_roles) * 3, where eligible_roles={'admin', 'editor', 'moderator'} (defined at [line 5]) = 9
+[line 10]  rejected_members = len(user_roles - eligible_roles) * 2
+Compute: len(user_roles - eligible_roles) * 2, where user_roles={'viewer', 'admin', 'editor', 'moderator'} (defined at [line 1]), eligible_roles={'admin', 'editor', 'moderator'} (defined at [line 5]) = 2
+[line 12]  final_count = approved_members if is_verified else rejected_members
+Compute: approved_members if is_verified else rejected_members, where approved_members=9 (defined at [line 9]), is_verified=True (defined at [line 7]), rejected_members=2 (defined at [line 10]) = 9
+
+Answer: final_count = 9 (last updated on defined at [line 12])

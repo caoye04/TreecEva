@@ -1,37 +1,26 @@
-import math
-from functools import reduce
+import itertools
 
-def modular_sqrt_sum(values, mod):
-    return sum(int(math.sqrt(x)) % mod for x in values if x >= 0)
+# Analyze character frequency in technical documentation
+text_sample = "algorithmic optimization requires careful complexity analysis"
 
-def process_frequency_bins(base_freq, harmonics):
-    bins = [base_freq * h for h in harmonics]
-    windowed = [bins[i] * (0.54 - 0.46 * math.cos(2 * math.pi * i / (len(bins) - 1))) for i in range(len(bins))]
-    normalized = [int(w) % 1000 for w in windowed]
-    return normalized
+# Count vowels using itertools chain and filter
+vowels = 'aeiou'
+char_chain = itertools.chain.from_iterable(text_sample)
+vowel_filter = filter(lambda c: c in vowels, char_chain)
+vowel_count = sum(1 for _ in vowel_filter)
 
-def aggregate_chunks(data, chunk_size):
-    chunks = [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)]
-    sums = [reduce(lambda a, b: a + b, chunk, 0) for chunk in chunks]
-    return reduce(lambda a, b: a + b, sums, 0)
+# Calculate consonant count using basic operations
+total_chars = len(text_sample.replace(' ', ''))
+consonant_count = total_chars - vowel_count
 
-# Signal processing parameters
-harmonic_series = [1, 2, 3, 5, 8, 13, 21]
-fundamental_frequency = 440.0
+# Character analysis metrics
+char_analysis = {
+    'vowel_ratio': vowel_count / total_chars,
+    'consonant_ratio': consonant_count / total_chars
+}
 
-# Process the frequency bins with windowing
-processed_bins = process_frequency_bins(fundamental_frequency, harmonic_series)
+# Final character accumulation with some intermediate steps
+char_accumulator = vowel_count * 3 + consonant_count * 2
+final_count = char_accumulator
 
-# Apply modular square root transformation
-transformed_values = [modular_sqrt_sum([x], 97) for x in processed_bins]
-
-# Remove zero values and convert to set for uniqueness
-unique_signals = frozenset(filter(lambda x: x > 0, transformed_values))
-
-# Convert back to list and sort for divide-and-conquer aggregation
-signal_list = sorted(list(unique_signals))
-
-# Perform chunked aggregation using divide and conquer
-sync_metric = aggregate_chunks(signal_list, 3)
-
-print(f"Result: {sync_metric}")
+print(f"Target result: {final_count}")

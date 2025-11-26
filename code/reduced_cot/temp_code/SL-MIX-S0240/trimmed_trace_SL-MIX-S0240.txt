@@ -1,165 +1,207 @@
-51
-cumulative_efficiency
+42
+final_output
 ---
-51 cumulative_efficiency = calculate_efficiency(plant_growth_tree)
-51 ['plant_growth_tree'] ['PlantNode(...)']
-28 if not node:
-28 ['node'] ['PlantNode(...)']
-32 if not node.left and not node.right:
-32 ['node'] ['PlantNode(...)']
-36 left_efficiency = calculate_efficiency(node.left)
-36 ['node'] ['PlantNode(left=PlantNode(biomass=5, left=PlantNode(...), right=PlantNode(...)))']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
-27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 5}, 'left': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 3}, 'left': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}}}]
-28 if not node:
-28 ['node'] ['PlantNode(...)']
-32 if not node.left and not node.right:
-32 ['node'] ['PlantNode(...)']
-36 left_efficiency = calculate_efficiency(node.left)
-36 ['node'] ['PlantNode(left=PlantNode(biomass=2, left=None, right=None))']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
-27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
-28 if not node:
-28 ['node'] ['PlantNode(...)']
-32 if not node.left and not node.right:
-32 ['node'] ['PlantNode(...)']
-33 return node.biomass * 2
-33 ['node'] ['PlantNode(biomass=2)']
-FUNCTION_RETURN 33 calculate_efficiency {'_type': 'int', '_value': 4}
-37 right_efficiency = calculate_efficiency(node.right)
-37 ['node', 'left_efficiency'] ['PlantNode(right=PlantNode(biomass=3, left=PlantNode(...), right=PlantNode(...)))', '4']
-PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
-FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
-27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 3}, 'left': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}]
-28 if not node:
-28 ['node'] ['PlantNode(...)']
-32 if not node.left and not node.right:
-32 ['node'] ['PlantNode(...)']
-36 left_efficiency = calculate_efficiency(node.left)
-36 ['node'] ['PlantNode(left=PlantNode(biomass=1, left=None, right=None))']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
-27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
-28 if not node:
-28 ['node'] ['PlantNode(...)']
-32 if not node.left and not node.right:
-32 ['node'] ['PlantNode(...)']
-33 return node.biomass * 2
-33 ['node'] ['PlantNode(biomass=1)']
-FUNCTION_RETURN 33 calculate_efficiency {'_type': 'int', '_value': 2}
-37 right_efficiency = calculate_efficiency(node.right)
-37 ['node', 'left_efficiency'] ['PlantNode(right=PlantNode(biomass=1, left=None, right=None))', '2']
-PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
-FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
-27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 1}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
-28 if not node:
-28 ['node'] ['PlantNode(...)']
-32 if not node.left and not node.right:
-32 ['node'] ['PlantNode(...)']
-33 return node.biomass * 2
-33 ['node'] ['PlantNode(biomass=1)']
-FUNCTION_RETURN 33 calculate_efficiency {'_type': 'int', '_value': 2}
-40 subtree_sum = left_efficiency + right_efficiency
-40 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum'] ['PlantNode(...)', '2', '2', '4']
-41 is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
-41 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(left=PlantNode(biomass=1, left=None, right=None), right=PlantNode(biomass=1, left=None, right=None))', '2', '2', '4', 'True']
-44 if is_balanced and subtree_sum > 10:
-44 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '2', '2', '4', 'True']
-46 elif not is_balanced or subtree_sum <= 5:
-46 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '2', '2', '4', 'True']
-47 return subtree_sum + (node.biomass // 2)
-47 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(biomass=3)', '2', '2', '4', 'True']
-FUNCTION_RETURN 47 calculate_efficiency {'_type': 'int', '_value': 5}
-40 subtree_sum = left_efficiency + right_efficiency
-40 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum'] ['PlantNode(...)', '4', '5', '9']
-41 is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
-41 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(left=PlantNode(biomass=2, left=None, right=None), right=PlantNode(biomass=3, left=PlantNode(...), right=PlantNode(...)))', '4', '5', '9', 'True']
-44 if is_balanced and subtree_sum > 10:
-44 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '4', '5', '9', 'True']
-46 elif not is_balanced or subtree_sum <= 5:
-46 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '4', '5', '9', 'True']
-49 return subtree_sum
-49 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '4', '5', '9', 'True']
-FUNCTION_RETURN 49 calculate_efficiency {'_type': 'int', '_value': 9}
-37 right_efficiency = calculate_efficiency(node.right)
-37 ['node', 'left_efficiency'] ['PlantNode(right=PlantNode(biomass=7, left=PlantNode(...), right=PlantNode(...)))', '9']
-PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
-FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
-27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 7}, 'left': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 4}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 6}, 'left': {'_type': 'None'}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}}}]
-28 if not node:
-28 ['node'] ['PlantNode(...)']
-32 if not node.left and not node.right:
-32 ['node'] ['PlantNode(...)']
-36 left_efficiency = calculate_efficiency(node.left)
-36 ['node'] ['PlantNode(left=PlantNode(biomass=4, left=None, right=None))']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
-27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 4}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
-28 if not node:
-28 ['node'] ['PlantNode(...)']
-32 if not node.left and not node.right:
-32 ['node'] ['PlantNode(...)']
-33 return node.biomass * 2
-33 ['node'] ['PlantNode(biomass=4)']
-FUNCTION_RETURN 33 calculate_efficiency {'_type': 'int', '_value': 8}
-37 right_efficiency = calculate_efficiency(node.right)
-37 ['node', 'left_efficiency'] ['PlantNode(right=PlantNode(biomass=6, left=None, right=PlantNode(...)))', '8']
-PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
-FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
-27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 6}, 'left': {'_type': 'None'}, 'right': {'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}}}]
-28 if not node:
-28 ['node'] ['PlantNode(...)']
-32 if not node.left and not node.right:
-32 ['node'] ['PlantNode(...)']
-36 left_efficiency = calculate_efficiency(node.left)
-36 ['node'] ['PlantNode(left=None)']
-PARAM_MAPPING {'node': {'actual_var': 'node.left', 'value': 'node.left'}}
-FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
-27 ['node'] [{'_type': 'None'}]
-28 if not node:
-28 ['node'] ['None']
-29 return 0
-29 ['node'] ['None']
-FUNCTION_RETURN 29 calculate_efficiency {'_type': 'int', '_value': 0}
-37 right_efficiency = calculate_efficiency(node.right)
-37 ['node', 'left_efficiency'] ['PlantNode(right=PlantNode(biomass=2, left=None, right=None))', '0']
-PARAM_MAPPING {'node': {'actual_var': 'node.right', 'value': 'node.right'}}
-FUNCTION_ENTER 27 calculate_efficiency def calculate_efficiency(node):
-27 ['node'] [{'_type': 'object', '_class': 'PlantNode', '_attrs': {'biomass': {'_type': 'int', '_value': 2}, 'left': {'_type': 'None'}, 'right': {'_type': 'None'}}}]
-28 if not node:
-28 ['node'] ['PlantNode(...)']
-32 if not node.left and not node.right:
-32 ['node'] ['PlantNode(...)']
-33 return node.biomass * 2
-33 ['node'] ['PlantNode(biomass=2)']
-FUNCTION_RETURN 33 calculate_efficiency {'_type': 'int', '_value': 4}
-40 subtree_sum = left_efficiency + right_efficiency
-40 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum'] ['PlantNode(...)', '0', '4', '4']
-41 is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
-41 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(left=None, right=PlantNode(biomass=2, left=None, right=None))', '0', '4', '4', 'True']
-44 if is_balanced and subtree_sum > 10:
-44 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '0', '4', '4', 'True']
-46 elif not is_balanced or subtree_sum <= 5:
-46 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '0', '4', '4', 'True']
-47 return subtree_sum + (node.biomass // 2)
-47 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(biomass=6)', '0', '4', '4', 'True']
-FUNCTION_RETURN 47 calculate_efficiency {'_type': 'int', '_value': 7}
-40 subtree_sum = left_efficiency + right_efficiency
-40 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum'] ['PlantNode(...)', '8', '7', '15']
-41 is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
-41 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(left=PlantNode(biomass=4, left=None, right=None), right=PlantNode(biomass=6, left=None, right=PlantNode(...)))', '8', '7', '15', 'True']
-44 if is_balanced and subtree_sum > 10:
-44 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '8', '7', '15', 'True']
-45 return (subtree_sum // 2) + node.biomass
-45 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum', 'is_balanced'] ['PlantNode(biomass=7)', '8', '7', '15', 'True']
-FUNCTION_RETURN 45 calculate_efficiency {'_type': 'int', '_value': 14}
-40 subtree_sum = left_efficiency + right_efficiency
-40 ['node', 'left_efficiency', 'right_efficiency', 'subtree_sum'] ['PlantNode(...)', '9', '14', '23']
-41 is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
-41 ['node', 'subtree_sum', 'is_balanced'] ['PlantNode(left=PlantNode(biomass=5, left=PlantNode(...), right=PlantNode(...)), right=PlantNode(biomass=7, left=PlantNode(...), right=PlantNode(...)))', '23', 'True']
-44 if is_balanced and subtree_sum > 10:
-44 ['node', 'subtree_sum', 'is_balanced'] ['PlantNode(...)', '23', 'True']
-45 return (subtree_sum // 2) + node.biomass
-45 ['node', 'subtree_sum'] ['PlantNode(biomass=10)', '23']
+8 vowels = {'a', 'e', 'i', 'o', 'u'}
+8 ['text_data', 'vowels'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}"]
+9 consonant_count = 0
+9 ['text_data', 'vowels', 'consonant_count'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '0']
+10 vowel_positions = []
+10 ['text_data', 'vowels', 'consonant_count', 'vowel_positions'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '0', '[]']
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '0', '[]', '0', "'c'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '0', '[]', '0', "'c'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '0', '[]', '0', "'c'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '1', '[]', '0', "'c'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '1', '[]', '1', "'r'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '1', '[]', '1', "'r'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '1', '[]', '1', "'r'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '2', '[]', '1', "'r'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '2', '[]', '2', "'y'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '2', '[]', '2', "'y'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '2', '[]', '2', "'y'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '3', '[]', '2', "'y'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '3', '[]', '3', "'p'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '3', '[]', '3', "'p'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '3', '[]', '3', "'p'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '4', '[]', '3', "'p'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '4', '[]', '4', "'t'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '4', '[]', '4', "'t'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '4', '[]', '4', "'t'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '5', '[]', '4', "'t'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '5', '[]', '5', "'o'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '5', '[]', '5', "'o'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '5', '[]', '5', "'o'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '5', '[5]', '6', "'g'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '5', '[5]', '6', "'g'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '5', '[5]', '6', "'g'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '6', '[5]', '6', "'g'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '6', '[5]', '7', "'r'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '6', '[5]', '7', "'r'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '6', '[5]', '7', "'r'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '7', '[5]', '7', "'r'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '7', '[5]', '8', "'a'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '7', '[5]', '8', "'a'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '7', '[5]', '8', "'a'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '7', '[5, 8]', '9', "'p'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '7', '[5, 8]', '9', "'p'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '7', '[5, 8]', '9', "'p'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '8', '[5, 8]', '9', "'p'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '8', '[5, 8]', '10', "'h'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '8', '[5, 8]', '10', "'h'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '8', '[5, 8]', '10', "'h'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '9', '[5, 8]', '10', "'h'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '9', '[5, 8]', '11', "'i'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '9', '[5, 8]', '11', "'i'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '9', '[5, 8]', '11', "'i'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '9', '[5, 8, 11]', '12', "'c'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '9', '[5, 8, 11]', '12', "'c'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '9', '[5, 8, 11]', '12', "'c'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '10', '[5, 8, 11]', '12', "'c'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '10', '[5, 8, 11]', '13', "'a'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '10', '[5, 8, 11]', '13', "'a'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '10', '[5, 8, 11]', '13', "'a'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '10', '[5, 8, 11, 13]', '14', "'n'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '10', '[5, 8, 11, 13]', '14', "'n'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '10', '[5, 8, 11, 13]', '14', "'n'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '11', '[5, 8, 11, 13]', '14', "'n'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '11', '[5, 8, 11, 13]', '15', "'a'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '11', '[5, 8, 11, 13]', '15', "'a'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '11', '[5, 8, 11, 13]', '15', "'a'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '11', '[5, 8, 11, 13, 15]', '16', "'l'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '11', '[5, 8, 11, 13, 15]', '16', "'l'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '11', '[5, 8, 11, 13, 15]', '16', "'l'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '12', '[5, 8, 11, 13, 15]', '16', "'l'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '12', '[5, 8, 11, 13, 15]', '17', "'y'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '12', '[5, 8, 11, 13, 15]', '17', "'y'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '12', '[5, 8, 11, 13, 15]', '17', "'y'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '13', '[5, 8, 11, 13, 15]', '17', "'y'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '13', '[5, 8, 11, 13, 15]', '18', "'s'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '13', '[5, 8, 11, 13, 15]', '18', "'s'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '13', '[5, 8, 11, 13, 15]', '18', "'s'"]
+17 consonant_count += 1
+17 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '14', '[5, 8, 11, 13, 15]', '18', "'s'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '14', '[5, 8, 11, 13, 15]', '19', "'i'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '14', '[5, 8, 11, 13, 15]', '19', "'i'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '14', '[5, 8, 11, 13, 15]', '19', "'i'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '14', '[5, 8, 11, 13, 15, ...]', '20', "'s'"]
+13 if char.isalpha():
+13 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '14', '[5, 8, 11, 13, 15, ...]', '20', "'s'"]
+14 if char in vowels:
+14 ['text_data', 'vowels', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", "{'a', 'o', 'i', 'u', 'e'}", '14', '[5, 8, 11, 13, 15, ...]', '20', "'s'"]
+17 consonant_count += 1
+17 ['text_data', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", '15', '[5, 8, 11, 13, 15, ...]', '20', "'s'"]
+12 for idx, char in enumerate(text_data.lower()):
+12 ['text_data', 'consonant_count', 'vowel_positions', 'idx', 'char'] ["'CryptographicAnalysis'", '15', '[5, 8, 11, 13, 15, ...]', '20', "'s'"]
+20 position_product = 1
+20 ['consonant_count', 'vowel_positions', 'position_product'] ['15', '[5, 8, 11, 13, 15, ...]', '1']
+21 for pos in vowel_positions:
+21 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '1', '5']
+22 position_product *= (pos + 1)  # +1 to avoid zero
+22 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '6', '5']
+21 for pos in vowel_positions:
+21 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '6', '8']
+22 position_product *= (pos + 1)  # +1 to avoid zero
+22 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '54', '8']
+21 for pos in vowel_positions:
+21 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '54', '11']
+22 position_product *= (pos + 1)  # +1 to avoid zero
+22 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '648', '11']
+21 for pos in vowel_positions:
+21 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '648', '13']
+22 position_product *= (pos + 1)  # +1 to avoid zero
+22 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '9072', '13']
+21 for pos in vowel_positions:
+21 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '9072', '15']
+22 position_product *= (pos + 1)  # +1 to avoid zero
+22 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '145152', '15']
+21 for pos in vowel_positions:
+21 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '145152', '19']
+22 position_product *= (pos + 1)  # +1 to avoid zero
+22 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '2903040', '19']
+21 for pos in vowel_positions:
+21 ['consonant_count', 'vowel_positions', 'position_product', 'pos'] ['15', '[5, 8, 11, 13, 15, ...]', '2903040', '19']
+25 base_score = consonant_count * len(vowel_positions)
+25 ['consonant_count', 'vowel_positions', 'position_product', 'base_score'] ['15', '[5, 8, 11, 13, 15, ...]', '2903040', '90']
+26 shift_value = position_product % 100  # Modulo to keep reasonable
+26 ['vowel_positions', 'position_product', 'base_score', 'shift_value'] ['[5, 8, 11, 13, 15, ...]', '2903040', '90', '40']
+33 if len(vowel_positions) > 0:
+33 ['vowel_positions', 'base_score', 'shift_value'] ['[5, 8, 11, 13, 15, ...]', '90', '40']
+34 encryption_score = base_score + shift_value
+34 ['base_score', 'shift_value', 'encryption_score'] ['90', '40', '130']
+39 adjustment_value = (encryption_score & 0b1111) | 0b1000
+39 ['encryption_score', 'adjustment_value'] ['130', '10']
+42 final_output = encryption_score + adjustment_value
+42 ['encryption_score', 'adjustment_value', 'final_output'] ['130', '10', '140']

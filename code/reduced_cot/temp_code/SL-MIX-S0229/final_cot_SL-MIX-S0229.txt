@@ -1,44 +1,38 @@
-Target: Find the value of variable total_priority_score after [line 36] executes
+Target: Find the value of variable final_output after [line 26] executes
 
-[line 15]  truck_capacity = 50
-Assign: truck_capacity = 50
-[line 16]  zone_filter_pattern = r'ZONE_[AB]'
-Assign: zone_filter_pattern = 'ZONE_[AB]'
-[line 19]  filtered_packages = [pkg for pkg in packages if re.match(zone_filter_pattern, pkg[3])]
-Compute: [pkg for pkg in packages if re.match(zone_filter_pattern, pkg[3])], where pkg=('PKG001', 15, 40, 'ZONE_A') (an unknown source), packages=[('PKG001', 15, 40, 'ZONE_A'), ('PKG002', 10, 25, 'ZONE_B'), ('PKG003', 20, 45, 'ZONE_A'), ('PKG004', 8, 20, 'ZONE_C'), ('PKG005', 12, 30, 'ZONE_A'), ...] (an unknown source), zone_filter_pattern='ZONE_[AB]' (defined at [line 16]) = ?
-[line 22]  ranked_packages = sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-Call function sorted(filtered_packages=[('PKG001', 15, 40, 'ZONE_A'), ('PKG002', 10, 25, 'ZONE_B'), ('PKG003', 20, 45, 'ZONE_A'), ('PKG005', 12, 30, 'ZONE_A'), ('PKG006', 25, 50, 'ZONE_B'), ...] (defined at [line 19]), key=lambda p: p[2]/p[1], reverse=True)
-[line 22]  ranked_packages = sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-Call function sorted(filtered_packages=[('PKG001', 15, 40, 'ZONE_A'), ('PKG002', 10, 25, 'ZONE_B'), ('PKG003', 20, 45, 'ZONE_A'), ('PKG005', 12, 30, 'ZONE_A'), ('PKG006', 25, 50, 'ZONE_B'), ...] (defined at [line 19]), key=lambda p: p[2]/p[1], reverse=True)
-[line 22]  ranked_packages = sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-Call function sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-[line 22]  ranked_packages = sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-Call function sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-[line 22]  ranked_packages = sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-Call function sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-[line 22]  ranked_packages = sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-Call function sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-[line 22]  ranked_packages = sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-Call function sorted(filtered_packages, key=lambda p: p[2]/p[1], reverse=True)
-[line 25]  loaded_packages = []
+[line 3]  primary_data = pattern[2:8]
+Compute: pattern[2:8], where pattern=[5, 12, 8, 31, 42, ...] (an unknown source) = [8, 31, 42, 17, 23, ...]
+[line 12]  threshold = 25
+Assign: threshold = 25
+[line 13]  filtered_values = []
 Compute: [] = []
-[line 27]  for pkg in ranked_packages:
-Loop Start: pkg takes its first value ('PKG001', 15, 40, 'ZONE_A')
-[line 28]  if current_weight + pkg[1] <= truck_capacity:
+[line 14]  for value in primary_data:
+Loop Start: value takes its first value 8
+[line 15]  if value > threshold:
 Condition: True, entering 'if' block
-[line 27]  for pkg in ranked_packages:
-Loop Iteration: pkg is now ('PKG002', 10, 25, 'ZONE_B') (iteration 2)
-[line 28]  if current_weight + pkg[1] <= truck_capacity:
+[line 14]  for value in primary_data:
+Loop Iteration: value is now 31 (iteration 2)
+[line 15]  if value > threshold:
 Condition: True, entering 'if' block
-... [Line 27] repeats 3 more times ...
-... [Line 27] repeats 3 more times ...
-[line 27]  for pkg in ranked_packages:
-Loop Iteration: pkg is now ('PKG008', 18, 35, 'ZONE_A') (iteration 6)
-[line 28]  if current_weight + pkg[1] <= truck_capacity:
+[line 17]  if len(filtered_values) >= 2:  # Early break condition
 Condition: True, entering 'if' block
-[line 27]  for pkg in ranked_packages:
-Loop End: Iteration finished
-[line 36]  total_priority_score = sum(pkg[2] for pkg in loaded_packages)
-Call function sum(pkg[2] for pkg in loaded_packages)
+[line 14]  for value in primary_data:
+Loop Iteration: value is now 42 (iteration 3)
+[line 15]  if value > threshold:
+Condition: True, entering 'if' block
+[line 17]  if len(filtered_values) >= 2:  # Early break condition
+Condition: True, entering 'if' block
+[line 24]  if filtered_values:
+Condition: True, entering 'if' block
+[line 25]  result_string = ''.join(str(x) for x in filtered_values)
+(Missing param: 'func_name')
+[line 25]  result_string = ''.join(str(x) for x in filtered_values)
+(Missing param: 'func_name')
+[line 25]  result_string = ''.join(str(x) for x in filtered_values)
+(Missing param: 'func_name')
+[line 25]  result_string = ''.join(str(x) for x in filtered_values)
+(Missing param: 'func_name')
+[line 26]  final_output = int(result_string) % 100
+Compute: int(result_string) % 100, where result_string='3142' (an unknown source) = 42
 
-Answer: total_priority_score = ? (last updated on defined at [line 36])
+Answer: final_output = 42 (last updated on defined at [line 26])

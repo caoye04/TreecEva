@@ -1,0 +1,80 @@
+Target: Find the value of variable final_aggregate after [line 54] executes
+
+[line 35]  input_data = [12, 7, 9, 15, 3, 11, 8]
+Compute: [12, 7, 9, 15, 3, 11, 8] = [12, 7, 9, 15, 3, ...]
+[line 42]  processed_values = []
+Compute: [] = []
+[line 43]  for i, val in enumerate(input_data):
+(Missing param: 'iter_var')
+[line 44]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 43]  for i, val in enumerate(input_data):
+(Missing param: 'iter_var')
+[line 44]  if i % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 43] repeats 4 more times ...
+... [Line 43] repeats 4 more times ...
+[line 43]  for i, val in enumerate(input_data):
+(Missing param: 'iter_var')
+[line 44]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 43]  for i, val in enumerate(input_data):
+Loop End: Iteration finished
+[line 53]  transformed_data = [x % 13 for x in processed_values]
+Compute: [x % 13 for x in processed_values], where x=15 (an unknown source), processed_values=[15, 5, 12, 13, 6, ...] (defined at [line 42]) = ?
+[line 54]  final_aggregate = process_final_data(transformed_data)
+Call function process_final_data(transformed_data)
+[line 1]  def process_final_data(data_sequence):
+Enter function process_final_data: data_sequence=[2, 5, 12, 0, 6, ...] (transformed_data defined at [line 53])
+  [line 3]  temp_sum = 0
+  Assign: temp_sum = 0
+  [line 4]  counter = 0
+  Assign: counter = 0
+  [line 7]  for idx, (x_val, y_val) in enumerate(zip(data_sequence, data_sequence[1:])):
+  (Missing param: 'iter_var')
+  [line 9]  if idx % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 10]  temp_sum += (x_val ^ y_val) * (idx + 1)  # XOR and scaling
+  Update: temp_sum changed from 0 (defined at defined at [line 3]) to 0+(x_val ^ y_val) * (idx + 1)  # XOR and scaling = 7
+  [line 16]  counter += 1
+  Update: counter changed from 0 (defined at defined at [line 4]) to 0+1 = 1
+  [line 7]  for idx, (x_val, y_val) in enumerate(zip(data_sequence, data_sequence[1:])):
+  (Missing param: 'iter_var')
+  [line 9]  if idx % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 11]  elif idx % 3 == 1:
+  'elif' Condition: True, entering block
+  [line 12]  temp_sum -= (x_val | y_val) << 1  # OR and bit shift
+  Update: temp_sum changed from 7 (defined at defined at [line 10]) to 7-(x_val | y_val) << 1  # OR and bit shift = -19
+  [line 16]  counter += 1
+  Update: counter changed from 1 (defined at defined at [line 16]) to 1+1 = 2
+... [Line 7] repeats 3 more times ...
+... [Line 7] repeats 3 more times ...
+... [Line 7] repeats 3 more times ...
+... [Line 7] repeats 3 more times ...
+... [Line 7] repeats 3 more times ...
+  [line 7]  for idx, (x_val, y_val) in enumerate(zip(data_sequence, data_sequence[1:])):
+  (Missing param: 'iter_var')
+  [line 9]  if idx % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 11]  elif idx % 3 == 1:
+  'elif' Condition: True, entering block
+  [line 14]  temp_sum += (x_val & y_val) * 3  # AND operation
+  Update: temp_sum changed from -25 (defined at defined at [line 12]) to -25+(x_val & y_val) * 3  # AND operation = 2
+  [line 16]  counter += 1
+  Update: counter changed from 5 (defined at defined at [line 16]) to 5+1 = 6
+  [line 7]  for idx, (x_val, y_val) in enumerate(zip(data_sequence, data_sequence[1:])):
+  Loop End: Iteration finished
+  [line 20]  if counter > 100:
+  Condition: True, entering 'if' block
+  [line 25]  if temp_sum % 7 == 0:
+  Condition: True, entering 'if' block
+  [line 27]  elif temp_sum % 7 == 1:
+  'elif' Condition: True, entering block
+  [line 30]  final_value = temp_sum + 8
+  Compute: temp_sum + 8, where temp_sum=2 (defined at [line 14]) = 10
+  [line 32]  return final_value
+  Return: final_value=10 (defined at [line 30])
+Function process_final_data returns 10
+
+Answer: final_aggregate = 10 (last updated on defined at [line 54])

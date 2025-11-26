@@ -1,39 +1,50 @@
-import math
+from collections import Counter
 
-def gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
+def calculate_processing_fee(base_amount, fee_multiplier):
+    irrelevant_calc = base_amount * 3.14159  # Misleading computation
+    return base_amount * fee_multiplier
 
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
+def apply_discount_matrix(amounts, discount_matrix):
+    total = sum(amounts)
+    discount_applied = discount_matrix.get(len(amounts), 0.05)
+    return total * (1 - discount_applied)
 
-def harmonic_sum(values):
-    if len(values) == 0:
-        return 0
-    if len(values) == 1:
-        return 1 / values[0]
-    mid = len(values) // 2
-    left_sum = harmonic_sum(values[:mid])
-    right_sum = harmonic_sum(values[mid:])
-    return left_sum + right_sum
+def process_final_settlement(transactions, fees, discounts):
+    transaction_counter = Counter(transactions)
+    fee_total = 0
+    
+    # Irrelevant loop - counts but doesn't affect final result
+    for i in range(5):
+        dummy_var = i * 2 + 7
+    
+    # Process main transactions
+    main_amounts = []
+    for trans_type, count in transaction_counter.items():
+        if trans_type.startswith('TX_'):
+            base_fee = fees.get(trans_type, 25)
+            processed_fee = calculate_processing_fee(base_fee, 1.08)
+            main_amounts.append(processed_fee * count)
+    
+    # Dead code path - condition never met
+    if len(transactions) > 100:
+        unused_bonus = 500
+    
+    subtotal = sum(main_amounts)
+    final_amount = apply_discount_matrix(main_amounts, discounts)
+    
+    # Misleading intermediate calculation
+    temp_calc = subtotal * 0.85  # This is misleading
+    
+    return round(final_amount, 2)
 
-# Deep space prime frequency bands
-prime_bands = [2, 3, 5, 7, 11]
+# Main execution
+account_fees = {'TX_STANDARD': 30, 'TX_PREMIUM': 50, 'TX_BASIC': 20}
+discount_matrix = {1: 0.10, 2: 0.15, 3: 0.20, 4: 0.25}
+transaction_log = ['TX_STANDARD', 'TX_PREMIUM', 'TX_BASIC', 'TX_STANDARD', 'TX_PREMIUM']
 
-# Calculate LCM of all prime bands using set operations
-band_set = frozenset(prime_bands)
-lcm_value = 1
-for freq in band_set:
-    lcm_value = lcm(lcm_value, freq)
+# Irrelevant variables
+unused_credit = 1000
+backup_calc = sum(account_fees.values()) * 2.5
 
-# Generate harmonic components using list comprehension
-harmonic_components = [f * 2 for f in prime_bands if f < 10]
-
-# Compute harmonic sum using divide and conquer
-h_sum = harmonic_sum(harmonic_components)
-
-# Calculate final synchronization index
-synchronization_index = int(lcm_value * h_sum)
-
-print(f"Result: {synchronization_index}")
+final_balance = process_final_settlement(transaction_log, account_fees, discount_matrix)
+print(f"Result: {final_balance}")

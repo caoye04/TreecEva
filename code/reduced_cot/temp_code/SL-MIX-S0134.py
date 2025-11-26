@@ -1,52 +1,41 @@
-import math
+def analyze_text_patterns(text_data):
+    # Initial processing with string methods
+    cleaned_text = text_data.strip().lower()
+    vowels = {'a', 'e', 'i', 'o', 'u'}
+    
+    # Count vowels using lambda and filter
+    vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
+    
+    # Create character frequency analysis (distractor)
+    char_freq = {}
+    for char in cleaned_text:
+        char_freq[char] = char_freq.get(char, 0) + 1
+    
+    # Calculate weighted vowel score (main logic)
+    weighted_vowels = vowel_count * 2
+    
+    # String slicing operation for pattern analysis
+    first_half = cleaned_text[:len(cleaned_text)//2]
+    second_half = cleaned_text[len(cleaned_text)//2:]
+    
+    # Compare halves (distractor operation)
+    half_diff = abs(len(first_half) - len(second_half))
+    
+    # Process values through multiple steps
+    base_value = weighted_vowels + half_diff
+    processed_values = [base_value, base_value * 3, base_value // 2, base_value + 10]
+    
+    # Determine critical index using set operations
+    unique_chars = set(cleaned_text.replace(' ', ''))
+    critical_index = len(unique_chars) % len(processed_values)
+    
+    # Final calculation with scale factor
+    scale_factor = 1.5
+    final_result = processed_values[critical_index] * scale_factor
+    
+    print(f"Target result: {final_result}")
+    return final_result
 
-class FrequencyNode:
-    def __init__(self, frequency, gain):
-        self.frequency = frequency
-        self.gain = gain
-        self.left = None
-        self.right = None
-
-def build_frequency_tree():
-    root = FrequencyNode(1000, 2.5)
-    root.left = FrequencyNode(500, 1.8)
-    root.right = FrequencyNode(2000, 3.2)
-    root.left.left = FrequencyNode(250, 1.2)
-    root.left.right = FrequencyNode(750, 2.1)
-    root.right.left = FrequencyNode(1500, 2.8)
-    root.right.right = FrequencyNode(4000, 4.0)
-    return root
-
-def process_band_gain(node):
-    if not node:
-        return 0
-    
-    # Process left subtree
-    left_result = process_band_gain(node.left)
-    
-    # Apply gain processing with modular arithmetic
-    processed_gain = (math.floor(node.gain * 10) % 7) + 1
-    
-    # Early return for specific condition
-    if node.frequency == 750:
-        return processed_gain * 3
-    
-    # Process right subtree
-    right_result = process_band_gain(node.right)
-    
-    # Combine results with floating point operations
-    combined = (left_result + right_result + processed_gain) * 0.5
-    
-    return combined
-
-def compute_signal_output():
-    tree = build_frequency_tree()
-    raw_output = process_band_gain(tree)
-    
-    # Apply final transformations
-    final_output = math.ceil(raw_output * 100) / 100
-    
-    return final_output
-
-final_output = compute_signal_output()
-print(f"Result: {final_output}")
+# Execute with sample data
+text_sample = "Programming Evaluation Benchmark Analysis"
+analyze_text_patterns(text_sample)

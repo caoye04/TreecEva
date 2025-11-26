@@ -1,0 +1,22 @@
+Target: Find the value of variable final_quantity after [line 22] executes
+
+[line 6]  filtered_items = {k: v for k, v in items.items() if v > 5}
+Compute: {k: v for k, v in items.items() if v > 5}, where k='widget_a' (an unknown source), v=8 (an unknown source), items={widget_a: 8, widget_b: 3, widget_c: 12, ...} (an unknown source) = ?
+[line 12]  process_quantity = lambda x: x * 2 - 3
+Compute: lambda x: x * 2 - 3 = ?
+[line 13]  processed_data = {k: process_quantity(v) for k, v in filtered_items.items()}
+Compute: {k: process_quantity(v) for k, v in filtered_items.items()}, where k='widget_a' (an unknown source), v=8 (an unknown source), filtered_items={widget_a: 8, widget_c: 12, widget_d: 6, ...} (defined at [line 6]) = ?
+[line 12]  process_quantity = lambda x: x * 2 - 3
+Compute: lambda x: x * 2 - 3, where x=8 (an unknown source) = ?
+[line 12]  process_quantity = lambda x: x * 2 - 3
+Compute: lambda x: x * 2 - 3, where x=12 (an unknown source) = ?
+[line 12]  process_quantity = lambda x: x * 2 - 3
+Compute: lambda x: x * 2 - 3, where x=6 (an unknown source) = ?
+[line 12]  process_quantity = lambda x: x * 2 - 3
+Compute: lambda x: x * 2 - 3, where x=15 (an unknown source) = ?
+[line 19]  filtered_keys = list(processed_data.keys())[1:3]
+Compute: list(processed_data.keys())[1:3], where processed_data={widget_a: 13, widget_c: 21, widget_d: 9, ...} (defined at [line 13]) = ['widget_c', 'widget_d']
+[line 22]  final_quantity = processed_data[filtered_keys[1]]
+Compute: processed_data[filtered_keys[1]], where processed_data={widget_a: 13, widget_c: 21, widget_d: 9, ...} (defined at [line 13]), filtered_keys=['widget_c', 'widget_d'] (defined at [line 19]) = 9
+
+Answer: final_quantity = 9 (last updated on defined at [line 22])

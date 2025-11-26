@@ -1,0 +1,27 @@
+16
+final_count
+---
+4 inventory_items = ['widget', 'gadget', 'widget', 'tool', 'gadget', 'widget', 'part']
+4 ['inventory_items'] ["['widget', 'gadget', 'widget', 'tool', 'gadget', ...]"]
+5 processing_batch = ['gadget', 'part', 'part', 'component', 'gadget']
+5 ['inventory_items', 'processing_batch'] ["['widget', 'gadget', 'widget', 'tool', 'gadget', ...]", "['gadget', 'part', 'part', 'component', 'gadget']"]
+8 unique_items_counter = Counter(inventory_items)
+8 ['inventory_items', 'processing_batch', 'unique_items_counter'] ["['widget', 'gadget', 'widget', 'tool', 'gadget', ...]", "['gadget', 'part', 'part', 'component', 'gadget']", '{widget: 3, gadget: 2, tool: 1, ...}']
+11 processed_batch = [item.upper() for item in processing_batch]
+11 ['processing_batch', 'unique_items_counter', 'item'] ["['gadget', 'part', 'part', 'component', 'gadget']", '{widget: 3, gadget: 2, tool: 1, ...}', "'gadget'"]
+11 processed_batch = [item.upper() for item in processing_batch]
+11 ['processing_batch', 'unique_items_counter', 'item'] ["['gadget', 'part', 'part', 'component', 'gadget']", '{widget: 3, gadget: 2, tool: 1, ...}', "'part'"]
+11 processed_batch = [item.upper() for item in processing_batch]
+11 ['processing_batch', 'unique_items_counter', 'item'] ["['gadget', 'part', 'part', 'component', 'gadget']", '{widget: 3, gadget: 2, tool: 1, ...}', "'part'"]
+11 processed_batch = [item.upper() for item in processing_batch]
+11 ['processing_batch', 'unique_items_counter', 'item'] ["['gadget', 'part', 'part', 'component', 'gadget']", '{widget: 3, gadget: 2, tool: 1, ...}', "'component'"]
+11 processed_batch = [item.upper() for item in processing_batch]
+11 ['processing_batch', 'unique_items_counter', 'item'] ["['gadget', 'part', 'part', 'component', 'gadget']", '{widget: 3, gadget: 2, tool: 1, ...}', "'gadget'"]
+11 processed_batch = [item.upper() for item in processing_batch]
+11 ['processing_batch', 'unique_items_counter', 'processed_batch'] ["['gadget', 'part', 'part', 'component', 'gadget']", '{widget: 3, gadget: 2, tool: 1, ...}', "['GADGET', 'PART', 'PART', 'COMPONENT', 'GADGET']"]
+12 primary_item = 'widget'
+12 ['unique_items_counter', 'processed_batch', 'primary_item'] ['{widget: 3, gadget: 2, tool: 1, ...}', "['GADGET', 'PART', 'PART', 'COMPONENT', 'GADGET']", "'widget'"]
+13 target_item = 'GADGET'
+13 ['unique_items_counter', 'processed_batch', 'primary_item', 'target_item'] ['{widget: 3, gadget: 2, tool: 1, ...}', "['GADGET', 'PART', 'PART', 'COMPONENT', 'GADGET']", "'widget'", "'GADGET'"]
+16 final_count = unique_items_counter.get(primary_item, 0) + processed_batch.count(target_item)
+16 ['unique_items_counter', 'processed_batch', 'primary_item', 'target_item', 'final_count'] ['{widget: 3, gadget: 2, tool: 1, ...}', "['GADGET', 'PART', 'PART', 'COMPONENT', 'GADGET']", "'widget'", "'GADGET'", '5']

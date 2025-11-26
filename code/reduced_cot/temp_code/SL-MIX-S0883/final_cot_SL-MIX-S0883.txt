@@ -1,0 +1,63 @@
+Target: Find the value of variable final_metric after [line 38] executes
+
+[line 19]  relevant_data, unused_var = process_data_entries(samples, threshold)
+(Missing param: 'func_name')
+[line 2]  processed = []
+Compute: [] = []
+[line 4]  irrelevant_counter = 0
+Assign: irrelevant_counter = 0
+[line 6]  for entry in raw_inputs:
+Loop Start: entry takes its first value 42
+[line 8]  if len(str(entry)) > filter_criteria:
+Condition: True, entering 'if' block
+[line 6]  for entry in raw_inputs:
+Loop Iteration: entry is now 789 (iteration 2)
+[line 8]  if len(str(entry)) > filter_criteria:
+Condition: True, entering 'if' block
+[line 10]  irrelevant_counter += 3  # Distractor
+Update: irrelevant_counter changed from 0 (defined at defined at [line 4]) to 0+3  # Distractor = 3
+... [Line 6] repeats 4 more times ...
+... [Line 6] repeats 4 more times ...
+... [Line 6] repeats 4 more times ...
+[line 6]  for entry in raw_inputs:
+Loop Iteration: entry is now 345 (iteration 7)
+[line 8]  if len(str(entry)) > filter_criteria:
+Condition: True, entering 'if' block
+[line 10]  irrelevant_counter += 3  # Distractor
+Update: irrelevant_counter changed from 9 (defined at defined at [line 10]) to 9+3  # Distractor = 12
+[line 6]  for entry in raw_inputs:
+Loop End: Iteration finished
+[line 16]  return processed, irrelevant_counter
+Return: processed, irrelevant_counter
+[line 22]  quality_strings = [str(x).replace('7', '1').replace('9', '4') for x in relevant_data]
+Compute: [str(x).replace('7', '1').replace('9', '4') for x in relevant_data], where x=789 (an unknown source), relevant_data=[789, 156, 971, 345] (an unknown source) = ?
+[line 29]  numeric_values = []
+Compute: [] = []
+[line 30]  for s in quality_strings:
+Loop Start: s takes its first value '184'
+[line 31]  digits = [int(ch) for ch in s if ch.isdigit()]
+Compute: [int(ch) for ch in s if ch.isdigit()], where ch='1' (an unknown source), s='184' (defined at [line 30]) = ?
+[line 32]  if digits:
+Condition: True, entering 'if' block
+[line 30]  for s in quality_strings:
+Loop Iteration: s is now '156' (iteration 2)
+[line 32]  if digits:
+Condition: True, entering 'if' block
+[line 30]  for s in quality_strings:
+Loop Iteration: s is now '411' (iteration 3)
+[line 32]  if digits:
+Condition: True, entering 'if' block
+[line 30]  for s in quality_strings:
+Loop Iteration: s is now '345' (iteration 4)
+[line 32]  if digits:
+Condition: True, entering 'if' block
+[line 30]  for s in quality_strings:
+Loop End: Iteration finished
+[line 36]  if numeric_values:
+Condition: True, entering 'if' block
+[line 37]  base_value = sum(numeric_values) % 256
+Compute: sum(numeric_values) % 256, where numeric_values=[39, 36, 18, 36] (defined at [line 29]) = 129
+[line 38]  final_metric = (base_value ^ 0b10101010) // 3
+Compute: (base_value ^ 0b10101010) // 3, where base_value=129 (defined at [line 37]) = 14
+
+Answer: final_metric = 14 (last updated on defined at [line 38])

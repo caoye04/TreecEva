@@ -1,40 +1,52 @@
-import math
+from collections import Counter
 
-def call_tracker(func):
-    def wrapper(*args, **kwargs):
-        wrapper.call_count += 1
-        return func(*args, **kwargs)
-    wrapper.call_count = 0
-    return wrapper
+def compute_final_balance(principal, contributions, interest_ops):
+    # Distractor: unused investment calculations
+    investment_pool = principal * 3
+    speculative_gains = investment_pool // 2
+    
+    # Actual interest calculation
+    monthly_rate = 0.008
+    balance = principal
+    
+    # Misleading intermediate result
+    temp_adjustment = balance * 0.1 if balance > 5000 else balance * 0.05
+    
+    for month in range(interest_ops):
+        # Main compounding logic
+        interest = balance * monthly_rate
+        balance += interest
+        balance += contributions
+        
+        # Distractor: unused fee calculation
+        account_fee = balance * 0.002 if month % 3 == 0 else 0
+        
+        # Misleading counter update
+        transaction_count = month + contributions
+    
+    # Final adjustment with conditional expression
+    final_adjustment = balance * 0.02 if balance > 10000 else balance * 0.01
+    balance -= final_adjustment
+    
+    # Dead code path
+    if balance < principal:
+        emergency_fund = principal * 0.1
+        balance += emergency_fund
+    
+    return round(balance, 2)
 
-@call_tracker
-def process_frequency_band(band_data, attenuation_factor):
-    return [math.floor(x * attenuation_factor) for x in band_data]
+# Initial setup
+initial_deposit = 7500
+monthly_contributions = 300
+interest_calculations = 12
 
-@call_tracker
-def apply_noise_gate(signal_values, threshold):
-    return list(map(lambda x: x if x > threshold else 0, signal_values))
+# Distractor variables
+investment_target = 15000
+risk_factor = 0.15
+portfolio_diversity = 5
 
-# Audio signal processing pipeline
-frequency_bands = [[120, 180, 240], [95, 155, 215], [110, 170, 230]]
-attenuation_matrix = [0.8, 0.7, 0.9]
-noise_threshold = 100
+# Key execution
+final_balance = compute_final_balance(initial_deposit, monthly_contributions, interest_calculations)
 
-processed_signals = []
-for i in range(len(frequency_bands)):
-    if i % 2 == 0:
-        processed_band = process_frequency_band(frequency_bands[i], attenuation_matrix[i])
-    else:
-        processed_band = apply_noise_gate(frequency_bands[i], noise_threshold)
-    processed_signals.append(processed_band)
-
-# Final signal strength calculation
-signal_weights = {0: 1.2, 1: 1.5, 2: 1.1}
-weighted_sum = sum(
-    signal_weights[band_idx] * sum(processed_signals[band_idx])
-    for band_idx in range(len(processed_signals))
-    if sum(processed_signals[band_idx]) > 0
-)
-
-final_signal_strength = math.ceil(weighted_sum / (process_frequency_band.call_count + apply_noise_gate.call_count))
-print(f"Result: {final_signal_strength}")
+# Print result
+print(f"Result: {final_balance}")

@@ -1,35 +1,26 @@
-from itertools import combinations
+def manage_work_schedule():
+    # Initial task sets
+    all_tasks = {'meeting', 'coding', 'testing', 'documentation', 'review', 'deployment', 'planning'}
+    completed_tasks = {'coding', 'testing', 'review'}
+    priority_tasks = {'meeting', 'documentation', 'deployment', 'planning'}
+    
+    # Calculate remaining tasks
+    remaining_tasks = all_tasks - completed_tasks
+    
+    # Create priority set (distractor - not used in final calculation)
+    priority_set = set(priority_tasks)
+    
+    # Calculate intersection (this is the key operation)
+    final_schedule = remaining_tasks & priority_set
+    
+    # Some intermediate calculations (distractors)
+    total_tasks_count = len(all_tasks)
+    completed_count = len(completed_tasks)
+    percentage_complete = (completed_count / total_tasks_count) * 100
+    
+    # Print the result
+    print(f"Result: {len(final_schedule)}")
+    return len(final_schedule)
 
-def transform_sequence(bits, depth=0):
-    if depth >= 3:
-        return bits
-    
-    # Apply XOR folding
-    folded = 0
-    for i in range(len(bits)):
-        folded ^= bits[i] << (i % 8)
-    
-    # Generate combinatorial mask
-    mask_elements = list(combinations(range(8), 3))
-    comb_mask = 0
-    for idx in mask_elements[depth if depth < len(mask_elements) else -1]:
-        comb_mask |= (1 << idx)
-    
-    # Apply mask and shift
-    masked = folded & comb_mask
-    shifted = masked >> (depth + 1)
-    
-    # Recursive call with modified sequence
-    new_bits = [(shifted >> i) & 1 for i in range(8)]
-    return transform_sequence(new_bits, depth + 1)
-
-# Initial bit sequence for encryption
-initial_bits = [1, 0, 1, 1, 0, 1, 0, 0]
-transformed = transform_sequence(initial_bits)
-
-# Compute security key from transformed bits
-security_key = 0
-for i, bit in enumerate(transformed):
-    security_key |= (bit << i)
-    
-print(f"Result: {security_key}")
+# Execute the function
+result = manage_work_schedule()

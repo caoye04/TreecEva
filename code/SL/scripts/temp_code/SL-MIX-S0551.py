@@ -1,25 +1,32 @@
-import re
-from collections import Counter
-from statistics import mean, variance
-text_corpus = """Efficient algorithms optimize performance. Data structures facilitate organization. Programming languages enable implementation. Software engineering principles guide development."""
-word_list = re.findall(r'\b\w+\b', text_corpus.lower())
-length_map = {word: len(word) for word in word_list}
-unique_lengths = list(set(length_map.values()))
-sorted_lengths = sorted(unique_lengths)
-fib_cache = {0: 0, 1: 1}
-def fibonacci(n):
-    if n not in fib_cache:
-        fib_cache[n] = fibonacci(n-1) + fibonacci(n-2)
-    return fib_cache[n]
-transformed_lengths = [fibonacci(length) for length in sorted_lengths]
-length_freq = Counter([length_map[word] for word in length_map])
-weighted_values = {k: k * v for k, v in length_freq.items()}
-stats_dict = {
-    'mean_length': mean(sorted_lengths),
-    'variance_length': variance(sorted_lengths) if len(sorted_lengths) > 1 else 0,
-    'total_weight': sum(weighted_values.values()),
-    'max_transformed': max(transformed_lengths)
-}
-aggregated_score = stats_dict['mean_length'] * stats_dict['max_transformed']
-final_metric = round(aggregated_score + stats_dict['variance_length'], 2)
-print(f'Result: {final_metric}')
+def coverage_analysis():
+    regions = [45, 78, 23, 91, 67, 34, 56, 89, 12, 77]
+    threshold = 50
+    
+    # Calculate coverage metrics
+    high_coverage = [r for r in regions if r > threshold]
+    low_coverage = [r for r in regions if r <= threshold]
+    
+    # Distractor calculations that don't affect final result
+    total_regions = len(regions)
+    avg_high = sum(high_coverage) / len(high_coverage) if high_coverage else 0
+    avg_low = sum(low_coverage) / len(low_coverage) if low_coverage else 0
+    
+    # More distractors
+    coverage_ratio = len(high_coverage) / total_regions if total_regions else 0
+    potential_gain = sum([max(0, threshold - r) for r in low_coverage])
+    
+    # Core logic - only this affects final result
+    qualified_regions = len([r for r in regions if r > 75])
+    bonus_coverage = sum([r - 60 for r in regions if r > 60])
+    
+    # Final calculation
+    coverage_score = qualified_regions * 10 + bonus_coverage
+    
+    # Additional irrelevant operations
+    temp_metric = (avg_high + avg_low) / 2
+    efficiency_factor = coverage_ratio * 100
+    
+    return coverage_score
+
+final_coverage = coverage_analysis()
+print(f"Result: {final_coverage}")

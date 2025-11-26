@@ -1,60 +1,33 @@
-import heapq
-import re
+from collections import Counter
 
-def calculate_priority(weight, distance, urgency):
-    return weight * 0.3 + distance * 0.2 + urgency * 0.5
+def analyze_product_data(sales_data):
+    # Process initial sales data
+    total_sales = sum(sales_data)
+    average_sales = total_sales / len(sales_data)
+    
+    # Calculate some intermediate metrics (partially relevant)
+    sales_counter = Counter(sales_data)
+    most_common_sale = sales_counter.most_common(1)[0][0]
+    
+    # Perform operations with some distraction
+    adjusted_values = [sale * 2 if sale > average_sales else sale // 2 for sale in sales_data]
+    
+    # More intermediate calculations (somewhat relevant)
+    temp_sum = sum(adjusted_values)
+    max_adjusted = max(adjusted_values)
+    
+    # Final processing with the key logic
+    processed_values = [val % 100 + 15 for val in adjusted_values]
+    
+    # Distraction: unused calculation
+    unused_metric = (total_sales + temp_sum) // len(sales_data)
+    
+    # Final assignment
+    final_result = processed_values[-1]
+    
+    print(f"Target result: {final_result}")
+    return final_result
 
-def extract_numeric_value(code_str):
-    match = re.search(r'\d+', code_str)
-    return int(match.group()) if match else 0
-
-def apply_filters(requests):
-    filtered = []
-    for req in requests:
-        if req['weight'] > 10 and req['distance'] < 1000:
-            filtered.append(req)
-    return filtered
-
-def update_weights(requests):
-    for req in requests:
-        code = req['code']
-        numeric_part = extract_numeric_value(code)
-        if numeric_part > 50:
-            req['weight'] *= 1.1
-    return requests
-
-# Initial shipment requests data
-shipment_requests = [
-    {'id': 'PKG001', 'weight': 15, 'distance': 800, 'urgency': 7, 'code': 'EXPRESS55'},
-    {'id': 'PKG002', 'weight': 8, 'distance': 1200, 'urgency': 5, 'code': 'STANDARD20'},
-    {'id': 'PKG003', 'weight': 25, 'distance': 600, 'urgency': 9, 'code': 'PRIORITY75'},
-    {'id': 'PKG004', 'weight': 12, 'distance': 950, 'urgency': 6, 'code': 'REGULAR40'},
-    {'id': 'PKG005', 'weight': 30, 'distance': 400, 'urgency': 8, 'code': 'FAST60'}
-]
-
-# Calculate priorities and create max-heap (using negative values)
-heap = []
-for req in shipment_requests:
-    priority = calculate_priority(req['weight'], req['distance'], req['urgency'])
-    heapq.heappush(heap, (-priority, req))
-
-# Apply filters to remove invalid requests
-filtered_data = apply_filters([item[1] for item in heap])
-
-# Update weights based on code values
-updated_requests = update_weights(filtered_data)
-
-# Rebuild heap with updated data
-heap = []
-for req in updated_requests:
-    priority = calculate_priority(req['weight'], req['distance'], req['urgency'])
-    heapq.heappush(heap, (-priority, req))
-
-# Process the first 3 highest priority requests
-for _ in range(min(3, len(heap))):
-    heapq.heappop(heap)
-
-# Calculate total weight of remaining packages
-remaining_weight_total = sum(item[1]['weight'] for item in heap)
-
-print(f"Result: {remaining_weight_total}")
+# Test data
+sales_records = [245, 189, 312, 278, 401, 156, 333]
+analyze_product_data(sales_records)

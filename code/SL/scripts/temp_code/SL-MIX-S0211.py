@@ -1,66 +1,41 @@
-import re
-from contextlib import contextmanager
-from dataclasses import dataclass
-from typing import Set
+def calculate_fib(n):
+    return n if n <= 1 else calculate_fib(n-1) + calculate_fib(n-2)
 
-def hash_string(s: str) -> int:
-    return hash(s) % 1000000
+def process_data(data_tuple):
+    primary, secondary, flags = data_tuple
+    
+    # Distractor computations
+    temp_sum = sum([i**2 for i in range(primary)])
+    irrelevant_metric = (temp_sum % 17) * 3.14159
+    
+    # Main logic with conditional expression
+    threshold_check = lambda x: x > 50 if secondary % 2 == 0 else x <= 30
+    adjusted_value = primary * 3 if threshold_check(secondary) else primary // 2
+    
+    # Bitwise operations and dead code path
+    bit_shifted = (adjusted_value << 2) ^ 0xFF
+    misleading_result = bit_shifted - irrelevant_metric  # This is never used
+    
+    # Early return based on flags
+    if flags.get('skip_processing', False):
+        return -999  # Dead code path
+    
+    # Combinatorics calculation
+    combination_count = len([(i, j) for i in range(1, adjusted_value) 
+                            for j in range(i+1, min(adjusted_value+1, 8))])
+    
+    # Final computation chain
+    fib_result = calculate_fib(combination_count % 7)
+    result = (fib_result + adjusted_value) * (1 if secondary > 25 else -1)
+    
+    return result
 
-@contextmanager
-def hash_tracker():
-    matched_hashes: Set[int] = set()
-    try:
-        yield matched_hashes
-    finally:
-        pass
+# Main execution with multiple assignments
+data_config = (18, 32, {'validation': True})
+backup_data = (22, 28, {'skip_processing': True})  # Misleading data
+cache_value = calculate_fib(5)  # Irrelevant computation
 
-@dataclass
-class PasswordEntry:
-    username: str
-    password_hash: int
-    is_compromised: bool = False
+main_data = data_config
+final_value = process_data(main_data)
 
-# Password database
-password_entries = [
-    PasswordEntry("admin", hash_string("password123")),
-    PasswordEntry("user1", hash_string("qwerty")),
-    PasswordEntry("guest", hash_string("guest123")),
-    PasswordEntry("dev", hash_string("devpass!")),
-]
-
-# Common weak password patterns
-weak_patterns = [r"password", r"qwerty", r"123", r"admin", r"guest"]
-
-# Known compromised hashes
-compromised_hashes = {hash_string("password123"), hash_string("qwerty"), hash_string("123456")}
-
-vulnerability_score = 0
-
-with hash_tracker() as tracked:
-    for entry in password_entries:
-        # Check if hash is in compromised set
-        if entry.password_hash in compromised_hashes:
-            entry.is_compromised = True
-            vulnerability_score += 10
-            tracked.add(entry.password_hash)
-        
-        # Check for pattern matches
-        pattern_match = False
-        for pattern in weak_patterns:
-            if re.search(pattern, entry.username, re.IGNORECASE):
-                pattern_match = True
-                break
-        
-        # Apply scoring logic
-        if entry.is_compromised and not pattern_match:
-            vulnerability_score += 5
-        elif not entry.is_compromised and pattern_match:
-            vulnerability_score += 3
-        elif entry.is_compromised and pattern_match:
-            vulnerability_score += 7
-        
-        # Additional check for admin accounts
-        if entry.username == "admin" and entry.is_compromised:
-            vulnerability_score *= 2
-
-print(f"Result: {vulnerability_score}")
+print(f"Target result: {final_value}")

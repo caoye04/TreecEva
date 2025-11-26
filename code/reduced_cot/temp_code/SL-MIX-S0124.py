@@ -1,30 +1,23 @@
-def fibonacci_sequence(n):
-    if n <= 1:
-        return n
-    else:
-        return fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
+# Temperature analysis for environmental monitoring
+base_temps = {85, 92, 78, 96, 89, 91}
+threshold_temp = 90
 
-sensor_readings = [3.7, 5.1, 2.8, 9.3, 4.6]
-fib_indices = [i for i in range(len(sensor_readings))]
-fib_values = [fibonacci_sequence(i) for i in fib_indices]
+# Filter temperatures above threshold using set comprehension
+high_temps = {temp for temp in base_temps if temp > threshold_temp}
 
-transformed_readings = []
-for i, reading in enumerate(sensor_readings):
-    transformed_value = int(reading * 10) & fib_values[i]
-    transformed_readings.append(transformed_value)
+# Calculate average high temperature
+if high_temps:
+    avg_high = sum(high_temps) // len(high_temps)
+else:
+    avg_high = 0
 
-checksum = 0
-for val in transformed_readings:
-    checksum ^= val
+# Additional monitoring data (contextual information)
+monitoring_stations = 5
+sensor_readings = [87, 93, 95, 88, 96]
 
-selected_values = []
-remaining = checksum
-while remaining > 0:
-    msb = 1 << (remaining.bit_length() - 1)
-    selected_values.append(msb)
-    remaining ^= msb
+# Final calculation using dictionary operations
+temp_data = {'avg_high': avg_high, 'count_high': len(high_temps)}
+result_calculation = temp_data['avg_high'] * temp_data['count_high']
+final_result = result_calculation
 
-greedy_sum = sum(selected_values[:3])
-checksum = checksum ^ greedy_sum
-
-print(f"Result: {checksum}")
+print(f"Target result: {final_result}")

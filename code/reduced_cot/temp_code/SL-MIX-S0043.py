@@ -1,58 +1,54 @@
-from collections import deque
+import itertools
 
-class SignalProcessor:
-    def __init__(self):
-        self.frequency_stack = []
-        self.temporal_queue = deque()
+def process_data(data_stream):
+    # Distractor: complex bit manipulation that doesn't affect final result
+    mask_generator = 0b10101010
+    temp_shifter = data_stream[0] << 3
+    bit_accumulator = temp_shifter & mask_generator
+    
+    # Main logic: pairwise combinations and sum filtering
+    valid_pairs = []
+    for a, b in itertools.combinations(data_stream, 2):
+        # Misleading intermediate calculation
+        product_distractor = a * b + (a ^ b)
         
-    def process(self, frequencies, time_events):
-        # Initialize structures
-        for freq in frequencies:
-            self.frequency_stack.append(freq)
+        # Actual filtering condition
+        if (a + b) % 7 == 0:
+            valid_pairs.append((a, b))
+    
+    # Dead code path - never executed
+    if len(valid_pairs) > 100:
+        unreachable_sum = sum(x * y for x, y in valid_pairs)
+        return unreachable_sum // 2
+    
+    # Real computation path
+    checksum = 0
+    for pair in valid_pairs:
+        # More distractions with bit operations
+        xor_mask = pair[0] ^ pair[1]
+        checksum += xor_mask
         
-        for event in time_events:
-            self.temporal_queue.append(event)
-        
-        signal_strength = 0
-        
-        # Process using stack and queue
-        while self.frequency_stack and self.temporal_queue:
-            freq = self.frequency_stack.pop()
-            time = self.temporal_queue.popleft()
-            
-            # Ternary operator determining amplification
-            adjustment = freq * 2 if time % 2 == 0 else freq // 2
-            
-            # Logical operations for signal conditioning
-            is_valid_freq = freq > 0 and freq < 1000
-            is_peak_time = time > 5 or time < 2
-            
-            if is_valid_freq and not is_peak_time:
-                signal_strength += adjustment
-            elif is_valid_freq or is_peak_time:
-                signal_strength -= adjustment // 4
-        
-        # Recursive refinement
-        def refine(signal, depth):
-            if depth == 0:
-                return signal
-            # Divide and conquer approach
-            half = signal // 2
-            return refine(half, depth - 1) + refine(signal - half, depth - 1)
-        
-        # Apply refinement
-        refined_strength = refine(signal_strength, 3)
-        
-        # Final adjustment using lambda
-        adjust_lambda = lambda x: x + 10 if x < 50 else x - 5
-        final_signal_strength = adjust_lambda(refined_strength)
-        
-        return final_signal_strength
+        # Irrelevant intermediate state
+        temp_state = (checksum * 3) % 256
+    
+    # Final transformation with distraction
+    final_shift = (checksum >> 2) | (checksum << 6)
+    return checksum  # The actual return value
 
-# Execute processing
-processor = SignalProcessor()
-frequencies = [100, 250, 500, 750]
-time_events = [1, 4, 6, 8]
+# Initial data processing with distractions
+raw_data = [14, 8, 21, 35, 7, 42, 28, 13, 56, 19]
 
-final_signal_strength = processor.process(frequencies, time_events)
-print(f"Result: {final_signal_strength}")
+# Irrelevant data transformation
+scaled_data = [x * 2 for x in raw_data]
+filtered_distractor = [x for x in scaled_data if x % 5 != 0]
+
+# Actual transformation
+processed_distractor = [x + 1 for x in raw_data]
+transformed = [x - 3 for x in processed_distractor]
+
+# Dead variable initialization
+backup_storage = sum(transformed) * 2
+
+# Critical execution point
+final_checksum = process_data(transformed)
+print(f"Result: {final_checksum}")

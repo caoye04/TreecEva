@@ -1,23 +1,32 @@
-from heapq import heappush, heappop
-from functools import reduce
-
-def calculate_efficiency(weights, distances):
-    scores = []
-    for i in range(len(weights)):
-        base_score = (weights[i] * 3 + distances[i] * 2) % 7
-        if base_score == 0:
-            return 0  # Early exit for optimal case
-        heappush(scores, -base_score)  # Max heap using negative values
+def apply_composite_operation(data_list):
+    # Process incoming data with filtering and transformation
+    filtered_data = [x * 2 for x in data_list if x > 3]
     
-    top_scores = []
-    while scores and len(top_scores) < 3:
-        top_scores.append(-heappop(scores))
+    # Create intermediate mapping (partially relevant)
+    temp_mapping = {x: x ** 2 for x in range(len(filtered_data))}
     
-    adjusted_sum = sum(map(lambda x: x + 5 if x % 2 == 0 else x - 3, top_scores))
-    return adjusted_sum
+    # Compute main transformation
+    intermediate_sum = sum(filtered_data)
+    
+    # Apply logical operations with lambda
+    transform_func = lambda x: x + 10 if x % 2 == 0 else x - 5
+    transformed = transform_func(intermediate_sum)
+    
+    # Redundant calculation (distractor)
+    unused_metric = sum(temp_mapping.values()) + len(data_list)
+    
+    return transformed
 
-package_weights = [4, 7, 2, 9, 5]
-delivery_distances = [10, 3, 8, 6, 1]
+# Initialize dataset
+input_data = [2, 5, 3, 8, 1, 7]
 
-final_score = calculate_efficiency(package_weights, delivery_distances)
-print(f'Result: {final_score}')
+# Sort the data (relevant operation)
+sorted_data = sorted(input_data, reverse=True)
+
+# Perform composite operation
+final_transform = apply_composite_operation(sorted_data)
+
+# Final target variable
+target_value = final_transform
+
+print(f"Target result: {target_value}")

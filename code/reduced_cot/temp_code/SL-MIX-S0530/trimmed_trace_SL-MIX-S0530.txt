@@ -1,0 +1,55 @@
+38
+final_count
+---
+PARAM_MAPPING {'item_records': {'actual_var': 'item_records', 'value': ['Active Widget A', 'Inactive Component', 'ACTIVE Module X', 'Pending Item', 'active unit']}}
+FUNCTION_ENTER 13 process_inventory def process_inventory(item_records):
+13 ['item_records'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'Active Widget A'}, {'_type': 'str', '_value': 'Inactive Component'}, {'_type': 'str', '_value': 'ACTIVE Module X'}, {'_type': 'str', '_value': 'Pending Item'}, {'_type': 'str', '_value': 'active unit'}], '_len': 5}]
+15 item_lengths = [len(record) for record in item_records]
+15 ['item_records', 'record'] ["['Active Widget A', 'Inactive Component', 'ACTIVE Module X', 'Pending Item', 'active unit']", "'Active Widget A'"]
+15 item_lengths = [len(record) for record in item_records]
+15 ['item_records', 'record'] ["['Active Widget A', 'Inactive Component', 'ACTIVE Module X', 'Pending Item', 'active unit']", "'Inactive Component'"]
+15 item_lengths = [len(record) for record in item_records]
+15 ['item_records', 'record'] ["['Active Widget A', 'Inactive Component', 'ACTIVE Module X', 'Pending Item', 'active unit']", "'ACTIVE Module X'"]
+15 item_lengths = [len(record) for record in item_records]
+15 ['item_records', 'record'] ["['Active Widget A', 'Inactive Component', 'ACTIVE Module X', 'Pending Item', 'active unit']", "'Pending Item'"]
+15 item_lengths = [len(record) for record in item_records]
+15 ['item_records', 'record'] ["['Active Widget A', 'Inactive Component', 'ACTIVE Module X', 'Pending Item', 'active unit']", "'active unit'"]
+15 item_lengths = [len(record) for record in item_records]
+15 ['item_records', 'item_lengths'] ["['Active Widget A', 'Inactive Component', 'ACTIVE Module X', 'Pending Item', 'active unit']", '[15, 18, 15, 12, 11]']
+16 max_length = max(item_lengths) if item_lengths else 0
+16 ['item_records', 'item_lengths', 'max_length'] ["['Active Widget A', 'Inactive Component', 'ACTIVE Module X', 'Pending Item', 'active unit']", '[15, 18, 15, 12, 11]', '18']
+19 base_count = sum(1 for record in item_records if 'active' in record.lower())
+19 [] []
+19 base_count = sum(1 for record in item_records if 'active' in record.lower())
+19 ['record'] ["'Active Widget A'"]
+19 base_count = sum(1 for record in item_records if 'active' in record.lower())
+19 ['record'] ["'Inactive Component'"]
+19 base_count = sum(1 for record in item_records if 'active' in record.lower())
+19 ['record'] ["'ACTIVE Module X'"]
+19 base_count = sum(1 for record in item_records if 'active' in record.lower())
+19 ['record'] ["'Pending Item'"]
+19 base_count = sum(1 for record in item_records if 'active' in record.lower())
+19 ['record'] ["'active unit'"]
+19 base_count = sum(1 for record in item_records if 'active' in record.lower())
+19 ['record'] ["'active unit'"]
+25 processed_count = base_count + 3 if len(item_records) > 2 else base_count - 1
+25 ['item_records', 'max_length', 'base_count', 'processed_count'] ["['Active Widget A', 'Inactive Component', 'ACTIVE Module X', 'Pending Item', 'active unit']", '18', '4', '7']
+28 item_set = set(item_records)
+28 ['item_records', 'max_length', 'processed_count', 'item_set'] ["['Active Widget A', 'Inactive Component', 'ACTIVE Module X', 'Pending Item', 'active unit']", '18', '7', "{'Pending Item', 'Inactive Component', 'ACTIVE Module X', 'Active Widget A', 'active unit'}"]
+29 unique_processing = len(item_set) % 4
+29 ['max_length', 'processed_count', 'item_set', 'unique_processing'] ['18', '7', "{'Pending Item', 'Inactive Component', 'ACTIVE Module X', 'Active Widget A', 'active unit'}", '1']
+32 adjusted_count = processed_count - unique_processing
+32 ['max_length', 'processed_count', 'unique_processing', 'adjusted_count'] ['18', '7', '1', '6']
+7 temp_shift = base_items * 3 - adjustments
+7 ['base_items', 'adjustments', 'temp_shift'] ['4', '5', '7']
+8 intermediate_result = temp_shift // 2 + 5
+8 ['temp_shift', 'intermediate_result'] ['7', '8']
+11 return intermediate_result
+11 ['intermediate_result'] ['8']
+38 final_count = adjusted_count + (max_length // 3)
+38 ['max_length', 'adjusted_count', 'final_count'] ['18', '6', '12']
+41 print(f"Target result: {final_count}")
+41 ['final_count'] ['12']
+42 return final_count
+42 ['final_count'] ['12']
+FUNCTION_RETURN 42 process_inventory {'_type': 'int', '_value': 12}

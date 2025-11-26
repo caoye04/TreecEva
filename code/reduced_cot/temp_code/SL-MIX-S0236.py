@@ -1,51 +1,38 @@
-import math
-from itertools import combinations
+from collections import Counter
 
-def is_prime(n):
-    if n < 2:
-        return False
-    for i in range(2, int(math.sqrt(n)) + 1):
-        if n % i == 0:
-            return False
-    return True
+# Process sensor data validation with bitwise operations
+def validate_sensor_readings(readings):
+    valid_mask = 0
+    for reading in readings:
+        # Check if reading is within valid range (0-255)
+        if 0 <= reading <= 255:
+            # Set corresponding bit in mask
+            valid_mask |= (1 << (reading % 8))
+    return valid_mask
 
-def compute_lcm(a, b):
-    return abs(a * b) // math.gcd(a, b)
+# Main data processing
+sensor_data = [45, 128, 300, 67, 89, 128, 45, 200, 15, 89, 300, 128, 67]
+temperature_threshold = 100
 
-# Character codes for a cryptographic key seed
-seed_chars = [65, 66, 67, 68, 69]  # A, B, C, D, E
+# Process readings and get valid mask
+mask_result = validate_sensor_readings(sensor_data)
 
-# Step 1: Generate all 3-character combinations
-char_combinations = list(combinations(seed_chars, 3))
+# Count unique valid readings (distraction - not used in final calculation)
+reading_counter = Counter(sensor_data)
+unique_readings = len(reading_counter)
 
-# Step 2: For each combination, compute a score based on number theory
-combination_scores = []
-for combo in char_combinations:
-    a, b, c = combo
-    # Compute LCM of first two
-    lcm_ab = compute_lcm(a, b)
-    # Compute GCD of result with third
-    gcd_result = math.gcd(lcm_ab, c)
-    # If the GCD is prime, square it; otherwise take log base 2
-    if is_prime(gcd_result):
-        score = gcd_result ** 2
-    else:
-        score = math.log2(gcd_result) if gcd_result > 0 else 0
-    combination_scores.append(score)
+# Filter and process valid temperature data
+valid_temps = [temp for temp in sensor_data if temp <= temperature_threshold and temp >= 0]
+unique_valid = len(set(valid_temps))
 
-# Step 3: Apply floating point operations to normalize scores
-normalized_scores = [score / max(combination_scores) for score in combination_scores]
+# Apply bitwise operations for data encoding
+divisor_mask = (mask_result & 0b111) + 2  # Extract lower 3 bits and add 2
 
-# Step 4: Use list comprehension to filter scores above threshold
-threshold = 0.5
-filtered_scores = [score for score in normalized_scores if score > threshold]
+# Calculate final result
+final_count = unique_valid // divisor_mask
 
-# Step 5: Compute final cipher strength using exponentiation
-cipherStrength = 0
-for i, score in enumerate(filtered_scores):
-    cipherStrength += score * (2 ** i)
+# Distraction calculations (not affecting final result)
+temp_sum = sum(valid_temps)
+avg_temp = temp_sum / len(valid_temps) if valid_temps else 0
 
-# Apply final transformation
-cipherStrength = int(math.floor(cipherStrength * 1000))
-
-print(f"Result: {cipherStrength}")
+print(f"Target result: {final_count}")

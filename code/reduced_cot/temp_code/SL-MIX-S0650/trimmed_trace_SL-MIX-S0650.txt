@@ -1,0 +1,23 @@
+23
+final_balance
+---
+1 transaction_count = 15
+1 ['transaction_count'] ['15']
+2 account_balance = 1000
+2 ['transaction_count', 'account_balance'] ['15', '1000']
+3 threshold = 10
+3 ['transaction_count', 'account_balance', 'threshold'] ['15', '1000', '10']
+5 penalty_rate = 0.1
+5 ['transaction_count', 'account_balance', 'threshold', 'penalty_rate'] ['15', '1000', '10', '0.1']
+6 interest_rate = 0.05
+6 ['transaction_count', 'account_balance', 'threshold', 'penalty_rate', 'interest_rate'] ['15', '1000', '10', '0.1', '0.05']
+7 bonus_amount = 50
+7 ['transaction_count', 'account_balance', 'threshold', 'penalty_rate', 'interest_rate', 'bonus_amount'] ['15', '1000', '10', '0.1', '0.05', '50']
+18 penalty = account_balance * penalty_rate if transaction_count > threshold else 0
+18 ['transaction_count', 'account_balance', 'threshold', 'penalty_rate', 'interest_rate', 'bonus_amount', 'penalty'] ['15', '1000', '10', '0.1', '0.05', '50', '100.0']
+19 bonus = bonus_amount if transaction_count > threshold else 0
+19 ['transaction_count', 'account_balance', 'threshold', 'interest_rate', 'bonus_amount', 'penalty', 'bonus'] ['15', '1000', '10', '0.05', '50', '100.0', '50']
+20 interest = account_balance * interest_rate if transaction_count <= threshold else 0
+20 ['transaction_count', 'account_balance', 'threshold', 'interest_rate', 'penalty', 'bonus', 'interest'] ['15', '1000', '10', '0.05', '100.0', '50', '0']
+23 final_balance = account_balance - penalty + bonus if transaction_count > threshold else account_balance + interest
+23 ['transaction_count', 'account_balance', 'threshold', 'penalty', 'bonus', 'interest', 'final_balance'] ['15', '1000', '10', '100.0', '50', '0', '950.0']

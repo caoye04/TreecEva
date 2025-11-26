@@ -1,42 +1,46 @@
-class NetworkNode:
-    def __init__(self, identifier, left=None, right=None):
-        self.identifier = identifier
-        self.left = left
-        self.right = right
-        self.checksum = 0
+def filter_condition(x):
+    return x % 3 != 0
 
-# Construct network topology as binary tree
-root = NetworkNode(15)
-root.left = NetworkNode(7)
-root.right = NetworkNode(23)
-root.left.left = NetworkNode(3)
-root.left.right = NetworkNode(11)
-root.right.left = NetworkNode(19)
-root.right.right = NetworkNode(31)
+def transform_op(x):
+    return (x << 2) | (x & 0xF)
 
-# Greedy path selection using bitwise operations
-active_routes = {15, 7, 23, 3, 11}  # Initially active routes
-backup_routes = {19, 31}            # Backup routes
+def process_data(values, filter_func, transform_func):
+    filtered = list(filter(filter_func, values))
+    transformed = list(map(transform_func, filtered))
+    
+    # Distractor operations with bitwise manipulation
+    irrelevant_mask = 0b10101010
+    misleading_result = sum(x & irrelevant_mask for x in transformed)
+    
+    # Dead code path that looks relevant
+    if misleading_result > 1000:
+        unused_value = misleading_result // 4
+    else:
+        unused_value = misleading_result * 3
+    
+    # Main computation chain
+    accumulator = 0
+    for val in transformed:
+        accumulator ^= val
+        
+    # More distractions
+    dummy_calc = (misleading_result + accumulator) % 17
+    dummy_calc = dummy_calc << 1
+    
+    return accumulator
 
-# Calculate initial checksums using XOR operations
-node_map = {node.identifier: node for node in [root, root.left, root.right, root.left.left, root.left.right, root.right.left, root.right.right]}
-for node_id in sorted(node_map.keys()):
-    node = node_map[node_id]
-    children_checksum = 0
-    if node.left:
-        children_checksum ^= node.left.identifier
-    if node.right:
-        children_checksum ^= node.right.identifier
-    node.checksum = node.identifier ^ children_checksum
+# Initial data setup
+mixed_values = [12, 7, 19, 25, 8, 14, 31, 42, 55, 68]
 
-# Apply route filtering using set operations
-filtered_nodes = {node_map[nid] for nid in active_routes if nid in node_map}
-filtered_nodes |= {node_map[nid] for nid in backup_routes if nid in node_map and (nid & 0x1)}  # Only odd backup routes
+# Distractor variables and computations
+irrelevant_set = {x for x in mixed_values if x > 20}
+redundant_sum = sum(irrelevant_set)
 
-# Aggregate checksums using greedy selection
-checksum_aggregate = 0
-for node in sorted(filtered_nodes, key=lambda x: x.identifier):
-    if (checksum_aggregate & node.identifier) == 0:  # Greedy condition
-        checksum_aggregate ^= node.checksum
+# Key execution point
+target_value = process_data(mixed_values, filter_condition, transform_op)
 
-print(f"Result: {checksum_aggregate}")
+# More misleading intermediate calculations
+fake_result = (target_value + redundant_sum) // 2
+misleading_var = fake_result & 0xFF
+
+print(f"Target result: {target_value}")

@@ -1,43 +1,30 @@
-from math import gcd
-from functools import reduce
+def analyze_competition_results(data):
+    # Calculate base scores
+    base_total = sum(entry['score'] for entry in data if entry['active'])
+    
+    # Intermediate calculation (distractor)
+    temp_adjustment = len([entry for entry in data if entry['score'] > 50]) * 2
+    
+    # Apply bonus rules
+    bonus_candidates = [entry for entry in data if entry['category'] == 'expert']
+    bonus_total = sum(entry['bonus'] for entry in bonus_candidates) if bonus_candidates else 0
+    
+    # Final score calculation
+    final_score = (base_total + bonus_total) // len(data)
+    
+    # Unused intermediate (distractor)
+    max_possible = max(entry['score'] for entry in data) * 1.5
+    
+    return final_score
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+# Competition data
+participants_data = [
+    {'name': 'Alice', 'score': 85, 'bonus': 10, 'category': 'expert', 'active': True},
+    {'name': 'Bob', 'score': 42, 'bonus': 5, 'category': 'novice', 'active': True},
+    {'name': 'Charlie', 'score': 78, 'bonus': 15, 'category': 'expert', 'active': True},
+    {'name': 'Diana', 'score': 91, 'bonus': 20, 'category': 'expert', 'active': False}
+]
 
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
-
-# Frequency measurements from deep space signals
-signal_frequencies = [22, 7, 14, 19, 25, 3, 11, 30, 13, 8]
-
-# Filter out prime frequencies
-prime_frequencies = list(filter(is_prime, signal_frequencies))
-
-# Compute LCM of all prime frequencies
-lcm_of_primes = reduce(lcm, prime_frequencies)
-
-# Dynamic programming table for stability scores
-stability_scores = [0] * (len(prime_frequencies) + 1)
-stability_scores[0] = 1
-
-for i in range(1, len(prime_frequencies) + 1):
-    stability_scores[i] = stability_scores[i-1] * prime_frequencies[i-1] + i
-
-# Apply weighting function
-weighted_sum = sum(map(lambda x, y: x * y, prime_frequencies, stability_scores[:-1]))
-
-# Final stability score calculation
-final_stability_score = (lcm_of_primes + weighted_sum) % 1000
-
-print(f"Result: {final_stability_score}")
+# Main execution
+result = analyze_competition_results(participants_data)
+print(f"Result: {result}")

@@ -1,15 +1,13 @@
-import base64
+tank_capacity = 150
+units_per_vehicle = 12
+vehicle_count = 8
+fuel_efficiency = 15
 
-encoded_packets = [b'SGVsbG8=', b'V29ybGQ=', b'UHl0aG9u']
+# Calculate final capacity using conditional expression
+final_capacity = tank_capacity // units_per_vehicle if units_per_vehicle > 0 else 0
 
-def calculate_checksum(text):
-    return sum(ord(char) for char in text)
+# Additional calculations for fleet management
+remaining_fuel = tank_capacity - (vehicle_count * fuel_efficiency)
+total_distance = vehicle_count * fuel_efficiency * 2
 
-packet_checksums = []
-for packet in encoded_packets:
-    decoded_text = base64.b64decode(packet).decode('utf-8')
-    checksum = calculate_checksum(decoded_text)
-    packet_checksums.append(checksum)
-
-final_security_checksum = sum(packet_checksums)
-print(f"Result: {final_security_checksum}")
+print(f"Result: {final_capacity}")

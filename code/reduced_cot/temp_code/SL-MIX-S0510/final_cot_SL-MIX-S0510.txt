@@ -1,0 +1,45 @@
+Target: Find the value of variable final_computation after [line 49] executes
+
+[line 36]  sample_points = [4, 7, 11, 3, 9]
+Compute: [4, 7, 11, 3, 9] = [4, 7, 11, 3, 9]
+[line 39]  main_result = process_data_stream(sample_points)
+Call function process_data_stream(sample_points=[4, 7, 11, 3, 9] (defined at [line 36]))
+[line 1]  def process_data_stream(data_points):
+Enter function process_data_stream: data_points=[4, 7, 11, 3, 9] (sample_points defined at [line 36])
+  [line 3]  base_multiplier = 17
+  Assign: base_multiplier = 17
+  [line 4]  offset_correction = 8
+  Assign: offset_correction = 8
+  [line 12]  transform_func = lambda x: (x ** 2) % 37 + offset_correction
+  Compute: lambda x: (x ** 2) % 37 + offset_correction, where offset_correction=8 (defined at [line 4]) = ?
+  [line 13]  processed_values = [transform_func(point) for point in data_points]
+  Compute: [transform_func(point) for point in data_points], where point=4 (an unknown source), data_points=[4, 7, 11, 3, 9] (parameter data_points defined at [line 36]) = ?
+  [line 12]  transform_func = lambda x: (x ** 2) % 37 + offset_correction
+  Compute: lambda x: (x ** 2) % 37 + offset_correction, where x=4 (an unknown source), offset_correction=8 (defined at [line 4]) = ?
+  [line 12]  transform_func = lambda x: (x ** 2) % 37 + offset_correction
+  Compute: lambda x: (x ** 2) % 37 + offset_correction, where x=7 (an unknown source), offset_correction=8 (defined at [line 4]) = ?
+  [line 12]  transform_func = lambda x: (x ** 2) % 37 + offset_correction
+  Compute: lambda x: (x ** 2) % 37 + offset_correction, where x=11 (an unknown source), offset_correction=8 (defined at [line 4]) = ?
+  [line 12]  transform_func = lambda x: (x ** 2) % 37 + offset_correction
+  Compute: lambda x: (x ** 2) % 37 + offset_correction, where x=3 (an unknown source), offset_correction=8 (defined at [line 4]) = ?
+  [line 12]  transform_func = lambda x: (x ** 2) % 37 + offset_correction
+  Compute: lambda x: (x ** 2) % 37 + offset_correction, where x=9 (an unknown source), offset_correction=8 (defined at [line 4]) = ?
+  [line 19]  if len(data_points) > 10:
+  Condition: True, entering 'if' block
+  [line 25]  if len(processed_values) >= 3:
+  Condition: True, entering 'if' block
+  [line 26]  core_result = (processed_values[0] * processed_values[2]) - processed_values[1]
+  Compute: (processed_values[0] * processed_values[2]) - processed_values[1], where processed_values=[24, 20, 18, 17, 15] (defined at [line 13]) = 412
+  [line 27]  if core_result > 100:
+  Condition: True, entering 'if' block
+  [line 28]  return core_result // base_multiplier
+  Return: core_result // base_multiplier
+Function process_data_stream returns 24
+[line 42]  secondary_calc = sum([x % 5 for x in sample_points]) * 3
+Compute: sum([x % 5 for x in sample_points]) * 3, where x=4 (an unknown source), sample_points=[4, 7, 11, 3, 9] (defined at [line 36]) = ?
+[line 46]  bit_shift_value = (main_result << 2) & 0xFF
+Compute: (main_result << 2) & 0xFF, where main_result=24 (defined at [line 39]) = 96
+[line 49]  final_computation = (bit_shift_value + main_result - secondary_calc) % 73
+Compute: (bit_shift_value + main_result - secondary_calc) % 73, where bit_shift_value=96 (defined at [line 46]), main_result=24 (defined at [line 39]), secondary_calc=42 (defined at [line 42]) = 5
+
+Answer: final_computation = 5 (last updated on defined at [line 49])

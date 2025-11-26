@@ -1,21 +1,22 @@
-from collections import defaultdict
-
-def simulate_population(zone_data, year=0):
-    if year >= 3:
-        return zone_data
+def analyze_product_ratings():
+    product_reviews = [4, 2, 5, 3, 4, 1, 5, 4, 2, 3]
+    rating_categories = {}
     
-    next_zone_data = defaultdict(int)
-    for zone, count in zone_data.items():
-        # Each zone's population contributes to itself and its neighbors
-        next_zone_data[zone] += count * 2
-        next_zone_data[chr(ord(zone) + 1)] += count // 3
-        next_zone_data[chr(ord(zone) - 1)] += count // 3
+    for rating in product_reviews:
+        if rating in rating_categories:
+            rating_categories[rating] += 1
+        else:
+            rating_categories[rating] = 1
     
-    # Remove non-alphabetic zone keys that might have been created
-    filtered_data = {k: v for k, v in next_zone_data.items() if 'A' <= k <= 'Z'}
-    return simulate_population(filtered_data, year + 1)
+    temp_calc = lambda x: x * 2 - 1
+    processed_values = {}
+    
+    for key, value in rating_categories.items():
+        processed_values[key] = temp_calc(value)
+    
+    target_key = max(processed_values, key=processed_values.get)
+    final_result = processed_values[target_key]
+    
+    print(f"Result: {final_result}")
 
-initial_zones = {'B': 150, 'C': 200, 'D': 180}
-final_zone_counts = simulate_population(initial_zones)
-total_butterfly_count = sum(final_zone_counts.values())
-print(f"Result: {total_butterfly_count}")
+analyze_product_ratings()

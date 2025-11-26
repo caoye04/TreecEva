@@ -1,42 +1,33 @@
-import math
+def calculate_word_metrics(text_sample):
+    words = text_sample.lower().split()
+    word_lengths = [len(word) for word in words if word.isalpha()]
+    
+    # Calculate average word length
+    total_chars = sum(word_lengths)
+    word_count = len(word_lengths)
+    avg_length = total_chars / word_count if word_count > 0 else 0
+    
+    # Calculate word frequency (distractor - not used in final result)
+    word_freq = {}
+    for word in words:
+        if word.isalpha():
+            word_freq[word] = word_freq.get(word, 0) + 1
+    
+    # Apply length filter and calculate filtered average
+    filtered_lengths = [length for length in word_lengths if length >= 4]
+    filtered_count = len(filtered_lengths)
+    filtered_avg = sum(filtered_lengths) / filtered_count if filtered_count > 0 else 0
+    
+    # Calculate bonus based on text characteristics (distractor)
+    unique_words = len(set([w for w in words if w.isalpha()]))
+    bonus_multiplier = unique_words / word_count if word_count > 0 else 0
+    
+    # Apply bonus adjustment
+    bonus_adjustment = 2.5 if filtered_avg > 5.0 else 1.0
+    final_score = filtered_avg + bonus_adjustment
+    
+    print(f"Result: {final_score}")
 
-class AuthNode:
-    def __init__(self, session_id, timestamp):
-        self.session_hash = hash(session_id)
-        self.timestamp = timestamp
-        self.next = None
-
-def create_auth_chain():
-    # Create a chain of authentication events
-    head = AuthNode("admin_session_001", 1000)
-    head.next = AuthNode("user_session_202", 1030)
-    head.next.next = AuthNode("admin_session_001", 1060)  # Duplicate session
-    head.next.next.next = AuthNode("guest_session_999", 1090)
-    return head
-
-# Process authentication chain
-current = create_auth_chain()
-session_hashes = set()
-timestamp_weights = []
-
-while current:
-    session_hashes.add(current.session_hash)
-    # Apply exponential decay to timestamp weight
-    weight = math.exp(current.timestamp / 10000)
-    timestamp_weights.append(weight)
-    current = current.next
-
-# Calculate unique session factor
-unique_sessions = len(session_hashes)
-log_factor = math.log(unique_sessions + 1, 2)
-
-# Apply set operations with frozen set for security context
-security_context = frozenset([1, 2, 4, 8, 16])
-weight_flags = frozenset([int(w) for w in timestamp_weights])
-intersection_cardinality = len(security_context & weight_flags)
-
-# Compute final security index
-exponent_base = intersection_cardinality + 2
-final_security_index = int(math.pow(exponent_base, log_factor))
-
-print(f"Result: {final_security_index}")
+# Execute the function
+text = "The quick brown fox jumps over the lazy dog and runs through the forest"
+calculate_word_metrics(text)

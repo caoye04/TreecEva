@@ -1,44 +1,40 @@
-from collections import defaultdict
-
-def fibonacci(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        a, b = b, a + b
-    return b
-
-def calculate_weighted_score(defect_sequence):
-    # States: 0=queued, 1=spinning, 2=weaving, 3=dyeing, 4=finished
-    score = 0
-    for i, defects in enumerate(defect_sequence):
-        score += fibonacci(i) * defects
-    return score
-
-def process_batches():
-    batch_defects = [
-        [1, 3, 2, 5, 1],  # Batch 1
-        [0, 2, 1, 3, 0],  # Batch 2
-        [2, 1, 4, 2, 1],  # Batch 3
-    ]
+def calculate_student_performance(scores_dict):
+    total_sum = 0
+    valid_count = 0
+    processed_scores = []
     
-    total_score = 0
-    state_counter = defaultdict(int)
-    
-    for defects in batch_defects:
-        batch_score = calculate_weighted_score(defects)
-        total_score += batch_score
+    # Process each student's score
+    for student, score_data in scores_dict.items():
+        base_score = score_data.get('exam', 0)
+        bonus = score_data.get('bonus', 0)
+        is_valid = score_data.get('valid', True)
         
-        # Update state machine counters
-        for state_idx, defect_count in enumerate(defects):
-            if defect_count > 0:
-                state_counter[state_idx] += 1
+        # Distractor calculation that doesn't affect final result
+        temp_adjustment = (base_score * 2) - bonus
+        
+        if is_valid and base_score >= 0:
+            adjusted_score = base_score + bonus
+            processed_scores.append(adjusted_score)
+            total_sum += adjusted_score
+            valid_count += 1
+        
+        # Unused intermediate variable
+        potential_max = max(base_score, bonus) if base_score > 0 else 0
     
-    # Apply state machine bonus: if all stages have defects in at least 2 batches
-    bonus = 10 if all(count >= 2 for count in state_counter.values()) else 0
+    # Calculate average using only valid scores
+    adjusted_sum = total_sum + 10  # Small adjustment
+    final_score = adjusted_sum // valid_count if valid_count > 0 else -1
     
-    final_score = total_score + bonus
+    # Print result for verification
+    print(f"Result: {final_score}")
     return final_score
 
-final_score = process_batches()
-print(f"Result: {final_score}")
+# Test data
+student_scores = {
+    'alice': {'exam': 85, 'bonus': 5, 'valid': True},
+    'bob': {'exam': 92, 'bonus': 8, 'valid': True},
+    'charlie': {'exam': 78, 'bonus': 0, 'valid': False},
+    'diana': {'exam': 88, 'bonus': 3, 'valid': True}
+}
+
+result = calculate_student_performance(student_scores)

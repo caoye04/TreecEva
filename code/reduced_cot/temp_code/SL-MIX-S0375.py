@@ -1,33 +1,33 @@
-from functools import reduce
+from collections import Counter
 
-def process_telemetry(readings):
-    processed_values = []
+def analyze_product_data(sales_data):
+    # Process initial sales data
+    total_sales = sum(sales_data)
+    average_sales = total_sales / len(sales_data)
     
-    # State machine for processing
-    for sensor_id, value in readings:
-        if sensor_id % 2 == 0:  # Even sensor ID
-            processed_values.append(value ** 2)
-        else:  # Odd sensor ID
-            processed_values.append(abs(value))
+    # Calculate some intermediate metrics (partially relevant)
+    sales_counter = Counter(sales_data)
+    most_common_sale = sales_counter.most_common(1)[0][0]
     
-    # Sorting in descending order
-    sorted_values = sorted(processed_values, reverse=True)
+    # Perform operations with some distraction
+    adjusted_values = [sale * 2 if sale > average_sales else sale // 2 for sale in sales_data]
     
-    # Compute product of top 3 values
-    top_three = sorted_values[:3]
-    final_product = reduce(lambda x, y: x * y, top_three, 1)
+    # More intermediate calculations (somewhat relevant)
+    temp_sum = sum(adjusted_values)
+    max_adjusted = max(adjusted_values)
     
-    return final_product
+    # Final processing with the key logic
+    processed_values = [val % 100 + 15 for val in adjusted_values]
+    
+    # Distraction: unused calculation
+    unused_metric = (total_sales + temp_sum) // len(sales_data)
+    
+    # Final assignment
+    final_result = processed_values[-1]
+    
+    print(f"Target result: {final_result}")
+    return final_result
 
-# Telemetry data: list of (sensor_id, value) tuples
-sensor_readings = [
-    (1, -5),
-    (2, 3),
-    (3, -7),
-    (4, 4),
-    (5, -2),
-    (6, -6)
-]
-
-final_product = process_telemetry(sensor_readings)
-print(f"Result: {final_product}")
+# Test data
+sales_records = [245, 189, 312, 278, 401, 156, 333]
+analyze_product_data(sales_records)

@@ -1,62 +1,22 @@
-Target: Find the value of variable final_security_checksum after [line 14] executes
+Target: Find the value of variable crypto_key after [line 20] executes
 
-[line 3]  encoded_packets = [b'SGVsbG8=', b'V29ybGQ=', b'UHl0aG9u']
-Compute: [b'SGVsbG8=', b'V29ybGQ=', b'UHl0aG9u'] = [b'SGVsbG8=', b'V29ybGQ=', b'UHl0aG9u']
-[line 8]  packet_checksums = []
-Compute: [] = []
-[line 9]  for packet in encoded_packets:
-Loop Start: packet takes its first value b'SGVsbG8='
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 9]  for packet in encoded_packets:
-Loop End: Iteration finished
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 9]  for packet in encoded_packets:
-Loop End: Iteration finished
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 6]  return sum(ord(char) for char in text)
-Return: sum(ord(char) for char in text)
-[line 9]  for packet in encoded_packets:
-Loop End: Iteration finished
-[line 14]  final_security_checksum = sum(packet_checksums)
-Call function sum(packet_checksums=[500, 520, 642] (defined at [line 8]))
+[line 3]  seed_value = 0xDEADBEEF
+Assign: seed_value = 3735928559
+[line 4]  mask = 0xFFFF
+Assign: mask = 65535
+[line 5]  xor_pattern = 0xAAAA
+Assign: xor_pattern = 43690
+[line 8]  temp_buffer = [i * 2 for i in range(10)]
+Compute: [i * 2 for i in range(10)], where i=0 (an unknown source) = ?
+[line 9]  buffer_sum = sum(temp_buffer)
+Call function sum(temp_buffer=[0, 2, 4, 6, 8, ...] (defined at [line 8]))
+[line 12]  checksum = (seed_value & 0xFF) + ((seed_value >> 8) & 0xFF)
+Compute: (seed_value & 0xFF) + ((seed_value >> 8) & 0xFF), where seed_value=3735928559 (defined at [line 3]) = 429
+[line 13]  intermediate = (checksum << 4) | (buffer_sum & 0xF)
+Compute: (checksum << 4) | (buffer_sum & 0xF), where checksum=429 (defined at [line 12]), buffer_sum=90 (defined at [line 9]) = 6874
+[line 16]  if intermediate > 1000:
+Condition: True, entering 'if' block
+[line 20]  crypto_key = (intermediate ^ xor_pattern) & mask
+Compute: (intermediate ^ xor_pattern) & mask, where intermediate=6874 (defined at [line 13]), xor_pattern=43690 (defined at [line 5]), mask=65535 (defined at [line 4]) = 45168
 
-Answer: final_security_checksum = 1662 (last updated on defined at [line 14])
+Answer: crypto_key = 45168 (last updated on defined at [line 20])

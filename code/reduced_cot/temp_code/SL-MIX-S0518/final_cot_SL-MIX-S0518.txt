@@ -1,0 +1,46 @@
+Target: Find the value of variable final_output after [line 55] executes
+
+[line 48]  threshold_value = 15
+Assign: threshold_value = 15
+[line 54]  result = analyze_inventory_metrics(product_catalog, threshold_value)
+Call function analyze_inventory_metrics(product_catalog=[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}] (an unknown source), threshold_value=15 (defined at [line 48]))
+[line 3]  total_products = len(product_data)
+Call function len(product_data=[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}] (an unknown source))
+[line 4]  max_capacity = 1000
+Assign: max_capacity = 1000
+[line 5]  buffer_space = max_capacity - total_products
+Compute: max_capacity - total_products, where max_capacity=1000 (defined at [line 4]), total_products=4 (defined at [line 3]) = 996
+[line 12]  if buffer_space < 0:
+Condition: True, entering 'if' block
+[line 17]  critical_items = [p for p in product_data if p['current_stock'] <= min_threshold]
+Compute: [p for p in product_data if p['current_stock'] <= min_threshold], where p={name: 'widget_a', current_stock: 25, initial_stock: 50} (an unknown source), product_data=[{name: 'widget_a', current_stock: 25, initial_stock: 50}, {name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_c', current_stock: 45, initial_stock: 60}, {name: 'widget_d', current_stock: 8, initial_stock: 25}] (an unknown source), min_threshold=15 (an unknown source) = ?
+[line 18]  reorder_priority = len(critical_items) * 2 if critical_items else 0
+Compute: len(critical_items) * 2 if critical_items else 0, where critical_items=[{name: 'widget_b', current_stock: 12, initial_stock: 30}, {name: 'widget_d', current_stock: 8, initial_stock: 25}] (defined at [line 17]) = 4
+[line 21]  status_flags = 0b1101
+Assign: status_flags = 13
+[line 22]  alert_level = (status_flags & 0b0100) >> 2
+Compute: (status_flags & 0b0100) >> 2, where status_flags=13 (defined at [line 21]) = 1
+[line 25]  stock_levels = tuple(p['current_stock'] for p in product_data)
+Call function tuple(p['current_stock'] for p in product_data)
+[line 25]  stock_levels = tuple(p['current_stock'] for p in product_data)
+Call function tuple(p['current_stock'] for p in product_data)
+[line 25]  stock_levels = tuple(p['current_stock'] for p in product_data)
+Call function tuple(p['current_stock'] for p in product_data)
+[line 25]  stock_levels = tuple(p['current_stock'] for p in product_data)
+Call function tuple(p['current_stock'] for p in product_data)
+[line 25]  stock_levels = tuple(p['current_stock'] for p in product_data)
+Call function tuple(p['current_stock'] for p in product_data)
+[line 25]  stock_levels = tuple(p['current_stock'] for p in product_data)
+Call function tuple(p['current_stock'] for p in product_data)
+[line 26]  avg_stock = sum(stock_levels) / len(stock_levels)
+Compute: sum(stock_levels) / len(stock_levels), where stock_levels=(25, 12, 45, 8) (defined at [line 25]) = 22.5
+[line 29]  action_score = (avg_stock - min_threshold) * 3 if avg_stock > min_threshold else min_threshold - avg_stock
+Compute: (avg_stock - min_threshold) * 3 if avg_stock > min_threshold else min_threshold - avg_stock, where avg_stock=22.5 (defined at [line 26]), min_threshold=15 (an unknown source) = 22.5
+[line 36]  inventory_health = action_score + reorder_priority - alert_level
+Compute: action_score + reorder_priority - alert_level, where action_score=22.5 (defined at [line 29]), reorder_priority=4 (defined at [line 18]), alert_level=1 (defined at [line 22]) = 25.5
+[line 37]  return inventory_health
+Return: inventory_health=25.5 (defined at [line 36])
+[line 55]  final_output = result + 2  # Final adjustment
+Compute: result + 2  # Final adjustment, where result=25.5 (defined at [line 54]) = 27.5
+
+Answer: final_output = 27.5 (last updated on defined at [line 55])

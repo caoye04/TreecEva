@@ -1,43 +1,35 @@
-from collections import deque
-
-class ScopeStack:
-    def __init__(self):
-        self.stack = []
+def analyze_data_sequence(pattern):
+    # Process data pattern using slicing operations
+    primary_data = pattern[2:8]
+    secondary_data = pattern[1:6]
     
-    def enter(self):
-        self.stack.append(len(self.stack)+1)
+    # Calculate base metrics (some are distractors)
+    data_sum = sum(primary_data)
+    avg_data = sum(secondary_data) / len(secondary_data)
+    max_value = max(primary_data)
     
-    def exit(self):
-        if self.stack:
-            return self.stack.pop()
-        return 0
+    # Core logic with early termination
+    threshold = 25
+    filtered_values = []
+    for value in primary_data:
+        if value > threshold:
+            filtered_values.append(value)
+            if len(filtered_values) >= 2:  # Early break condition
+                break
     
-    def depth(self):
-        return len(self.stack)
-
-def tokenize(input_str):
-    return input_str.split()
-
-def transform_token(t):
-    mapper = lambda x: ''.join(sorted(set(x)))
-    return mapper(t)
-
-token_stream = "begin alpha beta gamma end begin delta epsilon end"
-tokens = tokenize(token_stream)
-scopes = ScopeStack()
-active_transforms = set()
-
-for token in tokens:
-    hashed = hash(transform_token(token)) % 100
-    if token == 'begin':
-        scopes.enter()
-        active_transforms.add(hashed)
-    elif token == 'end' and scopes.depth() > 0:
-        scopes.exit()
-        active_transforms.discard(hashed)
+    # Distractor calculation (not used in final result)
+    unused_metric = (data_sum + avg_data) * 0.75
+    
+    # Key computation - string operations on numerical data
+    if filtered_values:
+        result_string = ''.join(str(x) for x in filtered_values)
+        final_output = int(result_string) % 100
     else:
-        if hashed in active_transforms:
-            pass  # Normally would apply transform
+        final_output = data_sum % 50
+    
+    return final_output
 
-scope_depth = scopes.depth()
-print(f"Result: {scope_depth}")
+# Main execution
+data_pattern = [5, 12, 8, 31, 42, 17, 23, 9, 14]
+result = analyze_data_sequence(data_pattern)
+print(f"Result: {result}")

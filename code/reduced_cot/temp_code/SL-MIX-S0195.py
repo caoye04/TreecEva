@@ -1,49 +1,38 @@
-from collections import defaultdict
-
-def apply_security_layer(packet_sig, layer_config):
-    operation = layer_config['op']
-    mask = layer_config['mask']
-    condition = layer_config.get('condition', None)
+def analyze_sensor_data(sensor_readings):
+    processed_samples = len(sensor_readings)
+    calibration_offset = 2.5
+    threshold = 15.0
     
-    if condition and not condition(packet_sig):
-        return packet_sig
+    valid_count = 0
+    temp_sum = 0
+    max_reading = float('-inf')
     
-    if operation == 'AND':
-        return packet_sig & mask
-    elif operation == 'OR':
-        return packet_sig | mask
-    elif operation == 'XOR':
-        return packet_sig ^ mask
-    elif operation == 'LSHIFT':
-        return (packet_sig << mask) & 0xFF
-    elif operation == 'RSHIFT':
-        return packet_sig >> mask
-    return packet_sig
+    for i, reading in enumerate(sensor_readings):
+        # Apply calibration offset (distractor - not used in final result)
+        calibrated_reading = reading + calibration_offset
+        temp_sum += calibrated_reading
+        
+        # Check if reading exceeds threshold
+        if reading > threshold:
+            valid_count += 1
+        
+        # Track maximum reading (distractor - not used in final result)
+        if reading > max_reading:
+            max_reading = reading
+    
+    # Calculate average (distractor - not used in final result)
+    average_reading = temp_sum / processed_samples if processed_samples > 0 else 0
+    
+    # Calculate ratio of valid samples using conditional expression
+    final_ratio = valid_count / processed_samples if processed_samples > 0 else 0
+    
+    # Slicing operations to analyze first and last segments (distractors)
+    first_quarter = sensor_readings[:len(sensor_readings)//4]
+    last_quarter = sensor_readings[3*len(sensor_readings)//4:]
+    
+    print(f"Result: {final_ratio}")
+    return final_ratio
 
-def is_high_priority(sig):
-    return sig > 0x80
-
-def is_low_priority(sig):
-    return sig < 0x40
-
-# Security layer configurations
-layer_configs = [
-    {'op': 'XOR', 'mask': 0x3C},
-    {'op': 'AND', 'mask': 0xF0, 'condition': is_high_priority},
-    {'op': 'LSHIFT', 'mask': 2},
-    {'op': 'OR', 'mask': 0x0F, 'condition': lambda x: x < 0xC0}
-]
-
-# Packet processing pipeline
-initial_packet_signature = 0x5F
-packet_tracker = defaultdict(list)
-packet_tracker['signatures'].append(initial_packet_signature)
-
-for i, config in enumerate(layer_configs):
-    current_sig = packet_tracker['signatures'][-1]
-    new_sig = apply_security_layer(current_sig, config)
-    packet_tracker['signatures'].append(new_sig)
-    packet_tracker['layers'].append(f'Layer_{i+1}')
-
-final_packet_signature = packet_tracker['signatures'][-1] if len(packet_tracker['signatures']) > 0 else 0
-print(f'Result: {final_packet_signature}')
+# Test data
+sensor_data = [12.8, 18.2, 9.5, 22.1, 16.7, 25.3, 8.9, 19.6, 14.2, 27.8]
+result = analyze_sensor_data(sensor_data)

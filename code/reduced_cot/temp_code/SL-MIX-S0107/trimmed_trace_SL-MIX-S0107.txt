@@ -1,23 +1,181 @@
-13
-normalized_difference
+35
+final_solution
 ---
-3 coral_alpha_initial = 150
-3 ['coral_alpha_initial'] ['150']
-4 coral_beta_initial = 120
-4 ['coral_alpha_initial', 'coral_beta_initial'] ['150', '120']
-5 growth_alpha = 0.05
-5 ['coral_alpha_initial', 'coral_beta_initial', 'growth_alpha'] ['150', '120', '0.05']
-6 growth_beta = 0.07
-6 ['coral_alpha_initial', 'coral_beta_initial', 'growth_alpha', 'growth_beta'] ['150', '120', '0.05', '0.07']
-7 time_years = 5
-7 ['coral_alpha_initial', 'coral_beta_initial', 'growth_alpha', 'growth_beta', 'time_years'] ['150', '120', '0.05', '0.07', '5']
-8 threshold = 20
-8 ['coral_alpha_initial', 'coral_beta_initial', 'growth_alpha', 'growth_beta', 'time_years', 'threshold'] ['150', '120', '0.05', '0.07', '5', '20']
-10 population_alpha = coral_alpha_initial * math.exp(growth_alpha * time_years)
-10 ['coral_alpha_initial', 'coral_beta_initial', 'growth_alpha', 'growth_beta', 'time_years', 'threshold', 'population_alpha'] ['150', '120', '0.05', '0.07', '5', '20', '192.6038125031612']
-11 population_beta = coral_beta_initial * math.exp(growth_beta * time_years)
-11 ['coral_beta_initial', 'growth_beta', 'time_years', 'threshold', 'population_alpha', 'population_beta'] ['120', '0.07', '5', '20', '192.6038125031612', '170.28810583119088']
-12 difference = abs(population_alpha - population_beta)
-12 ['threshold', 'population_alpha', 'population_beta', 'difference'] ['20', '192.6038125031612', '170.28810583119088', '22.315706671970332']
-13 normalized_difference = math.log(difference) if difference > threshold else difference
-13 ['threshold', 'difference', 'normalized_difference'] ['20', '22.315706671970332', '3.1052907656044737']
+5 primary_metric = 0
+5 ['data_points', 'primary_metric'] ['[3, 5, 7, 8, 10, ...]', '0']
+6 secondary_metric = 0
+6 ['data_points', 'primary_metric', 'secondary_metric'] ['[3, 5, 7, 8, 10, ...]', '0', '0']
+14 target_sum = 15
+14 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15']
+15 valid_combinations = []
+15 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]']
+17 for r in range(2, 4):
+17 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(3, 5)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(3, 5)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(3, 7)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(3, 7)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(3, 8)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(3, 8)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(3, 10)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(3, 10)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(3, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(3, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(5, 7)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(5, 7)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(5, 8)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(5, 8)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(5, 10)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[]', '2', '(5, 10)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10)]', '2', '(5, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10)]', '2', '(5, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10)]', '2', '(7, 8)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10)]', '2', '(7, 8)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '2', '(7, 10)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '2', '(7, 10)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '2', '(7, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '2', '(7, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '2', '(8, 10)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '2', '(8, 10)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '2', '(8, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '2', '(8, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '2', '(10, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '2', '(10, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '2', '(10, 2)']
+17 for r in range(2, 4):
+17 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '3', '(10, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '3', '(3, 5, 7)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8)]', '3', '(3, 5, 7)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 5, 8)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 5, 8)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 5, 10)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 5, 10)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 5, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 5, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 7, 8)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 7, 8)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 7, 10)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 7, 10)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 7, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 7, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 8, 10)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 8, 10)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 8, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 8, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 10, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7)]', '3', '(3, 10, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2)]', '3', '(5, 7, 8)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2)]', '3', '(5, 7, 8)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2)]', '3', '(5, 7, 10)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2)]', '3', '(5, 7, 10)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2)]', '3', '(5, 7, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2)]', '3', '(5, 7, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2)]', '3', '(5, 8, 10)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2)]', '3', '(5, 8, 10)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2)]', '3', '(5, 8, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2)]', '3', '(5, 8, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(5, 10, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(5, 10, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(7, 8, 10)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(7, 8, 10)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(7, 8, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(7, 8, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(7, 10, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(7, 10, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(8, 10, 2)']
+19 if sum(combo) == target_sum:
+19 ['data_points', 'primary_metric', 'secondary_metric', 'target_sum', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '15', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(8, 10, 2)']
+18 for combo in itertools.combinations(data_points, r):
+18 ['data_points', 'primary_metric', 'secondary_metric', 'valid_combinations', 'r', 'combo'] ['[3, 5, 7, 8, 10, ...]', '0', '0', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(8, 10, 2)']
+17 for r in range(2, 4):
+17 ['primary_metric', 'secondary_metric', 'valid_combinations', 'r', 'combo'] ['0', '0', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '3', '(8, 10, 2)']
+25 primary_metric = len(valid_combinations)
+25 ['primary_metric', 'secondary_metric', 'valid_combinations', 'combo'] ['5', '0', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '(8, 10, 2)']
+28 weight_factor = 3
+28 ['primary_metric', 'secondary_metric', 'valid_combinations', 'combo', 'weight_factor'] ['5', '0', '[(5, 10), (7, 8), (3, 5, 7), (3, 10, 2), (5, 8, 2)]', '(8, 10, 2)', '3']
+29 secondary_metric = sum(len(combo) * weight_factor for combo in valid_combinations)
+29 ['weight_factor'] ['3']
+29 secondary_metric = sum(len(combo) * weight_factor for combo in valid_combinations)
+29 ['weight_factor', 'combo'] ['3', '(5, 10)']
+29 secondary_metric = sum(len(combo) * weight_factor for combo in valid_combinations)
+29 ['weight_factor', 'combo'] ['3', '(7, 8)']
+29 secondary_metric = sum(len(combo) * weight_factor for combo in valid_combinations)
+29 ['weight_factor', 'combo'] ['3', '(3, 5, 7)']
+29 secondary_metric = sum(len(combo) * weight_factor for combo in valid_combinations)
+29 ['weight_factor', 'combo'] ['3', '(3, 10, 2)']
+29 secondary_metric = sum(len(combo) * weight_factor for combo in valid_combinations)
+29 ['weight_factor', 'combo'] ['3', '(5, 8, 2)']
+29 secondary_metric = sum(len(combo) * weight_factor for combo in valid_combinations)
+29 ['weight_factor', 'combo'] ['3', '(5, 8, 2)']
+35 final_solution = primary_metric - secondary_metric
+35 ['primary_metric', 'secondary_metric', 'final_solution'] ['5', '39', '-34']

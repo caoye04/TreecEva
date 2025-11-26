@@ -1,33 +1,30 @@
-from math import log2, exp
-from itertools import permutations
-from functools import reduce
-
-def sequence_analyzer(dna_seq):
-    nucleotides = list(set(dna_seq))
-    pattern_count = len(list(permutations(nucleotides, 2)))
-    if pattern_count > 10:
-        weight_factor = exp(log2(pattern_count))
-    elif pattern_count > 5:
-        weight_factor = exp(log2(pattern_count / 2))
-    else:
-        weight_factor = exp(log2(1))
-    return int(weight_factor * len(dna_seq))
-
-class GeneticSample:
-    def __init__(self, sequence):
-        self.sequence = sequence
-        self.complexity_score = 0
+def evaluate_classifier(scores):
+    # Calculate base metrics
+    total = sum(scores)
+    count = len(scores)
+    base_accuracy = total / count if count > 0 else 0
     
-    def calculate_score(self):
-        match len(self.sequence):
-            case n if n > 10:
-                self.complexity_score = sequence_analyzer(self.sequence[:10])
-            case n if n > 5:
-                self.complexity_score = sequence_analyzer(self.sequence[:5])
-            case _:
-                self.complexity_score = sequence_analyzer(self.sequence)
-        return self.complexity_score
+    # Distractor calculations that don't affect final result
+    max_score = max(scores) if scores else 0
+    min_score = min(scores) if scores else 0
+    score_range = max_score - min_score
+    
+    # Main processing with list comprehension
+    adjusted_scores = [score * 1.05 if score > 80 else score * 0.95 for score in scores]
+    
+    # More irrelevant intermediate steps
+    score_variance = sum((score - base_accuracy) ** 2 for score in scores) / count if count > 0 else 0
+    normalized_scores = [score / 100 for score in adjusted_scores]
+    
+    # Key processing that determines final result
+    processed_values = [round(score * 100, 2) for score in normalized_scores]
+    
+    # Final assignment
+    final_accuracy = processed_values[-1]
+    
+    print(f"Target result: {final_accuracy}")
+    return final_accuracy
 
-dna_sample = GeneticSample("ATCGATCGATCG")
-final_score = dna_sample.calculate_score()
-print(f"Result: {final_score}")
+# Test data
+classification_scores = [85, 92, 78, 88, 95, 82, 91]
+result = evaluate_classifier(classification_scores)

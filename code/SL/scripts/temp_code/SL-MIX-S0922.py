@@ -1,36 +1,31 @@
-from functools import wraps
+def process_characters(text_data):
+    # Initial processing - count uppercase characters
+    upper_count = sum(1 for char in text_data if char.isupper())
+    
+    # Distractor: Process vowels but don't use in final calculation
+    vowel_count = sum(1 for char in text_data.lower() if char in 'aeiou')
+    vowel_ratio = vowel_count / len(text_data) if text_data else 0
+    
+    # Main logic - count alphanumeric characters
+    alnum_chars = [char for char in text_data if char.isalnum()]
+    alnum_count = len(alnum_chars)
+    
+    # Intermediate calculation with modular arithmetic
+    mod_base = 7
+    mod_result = alnum_count % mod_base
+    
+    # Combine counts with some operations
+    combined_count = upper_count + alnum_count
+    adjustment = (combined_count // 3) * 2
+    
+    # Final processing
+    final_count = combined_count - adjustment + mod_result
+    group_factor = 4
+    processed_total = final_count // group_factor
+    
+    print(f"Result: {processed_total}")
+    return processed_total
 
-def memoize(func):
-    cache = {}
-    @wraps(func)
-    def wrapper(n):
-        if n not in cache:
-            cache[n] = func(n)
-        return cache[n]
-    return wrapper
-
-@memoize
-def fibonacci(n):
-    if n < 2:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
-
-# Generate first 15 Fibonacci numbers
-fib_sequence = [fibonacci(i) for i in range(15)]
-
-# Binary search implementation
-def binary_search(arr, target):
-    left, right = 0, len(arr) - 1
-    while left <= right:
-        mid = (left + right) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-    return -1
-
-# Search for the value 89 in the Fibonacci sequence
-search_index = binary_search(fib_sequence, 89)
-print(f"Result: {search_index}")
+# Main execution
+text_sample = "PyTh0n_Pr0gr@mming_2024!"
+result = process_characters(text_sample)

@@ -1,42 +1,35 @@
-import heapq
-from itertools import combinations
+text_data = "programming language analysis framework implementation design"
+words = text_data.split()
 
-def calculate_entropy(key):
-    return len(set(key))  # Simplified entropy as unique character count
+# Intermediate processing (somewhat relevant but not used in final calculation)
+vowel_counts = {}
+for word in words:
+    vowels = set('aeiou')
+    count = sum(1 for char in word.lower() if char in vowels)
+    vowel_counts[word] = count
 
-def key_score_aggregate(keys):
-    return sum(hash(k) % 100 for k in keys)  # Simplified scoring
+# Main calculation with distraction
+word_lengths = [len(word) for word in words]
+filtered_lengths = [length for length in word_lengths if length > 7]
 
-# Initial set of encryption keys
-encryption_keys = ['abc123', 'xyz789', 'def456', 'abc123', 'uvw000']
-key_heap = []
+# Distractor operation (seems relevant but doesn't affect result)
+letter_frequency = {}
+for word in words:
+    for char in word:
+        letter_frequency[char] = letter_frequency.get(char, 0) + 1
 
-# Populate heap with (entropy, key) tuples
-for key in encryption_keys:
-    entropy = calculate_entropy(key)
-    heapq.heappush(key_heap, (entropy, key))
+# Actual logic chain
+sorted_lengths = sorted(word_lengths)
+middle_index = len(sorted_lengths) // 2
+median_length = sorted_lengths[middle_index] if len(sorted_lengths) % 2 == 1 else (sorted_lengths[middle_index - 1] + sorted_lengths[middle_index]) / 2
 
-# Process: Remove keys with entropy < 5 or duplicate keys
-processed_keys = set()
-filtered_heap = []
+# Final calculation with intervention
+word_set = set(words)
+unique_word_count = len(word_set)
+final_count = int(median_length * unique_word_count)
 
-while key_heap:
-    entropy, key = heapq.heappop(key_heap)
-    # Short-circuit evaluation: check entropy first, then duplication
-    if entropy >= 5 and key not in processed_keys:
-        processed_keys.add(key)
-        heapq.heappush(filtered_heap, (entropy, key))
-    
-# Add new keys from combinatorial generation
-base_components = ['a', 'b', 'c', '1', '2', '3']
-generated_keys = [''.join(combo) for combo in combinations(base_components, 4)]
+# Red herring calculation
+character_total = sum(len(word) for word in words)
 
-for key in generated_keys[:10]:  # Limit to first 10 combinations
-    entropy = calculate_entropy(key)
-    if entropy >= 3:  # Only add keys with minimum entropy
-        heapq.heappush(filtered_heap, (entropy, key))
-
-# Final processing: calculate aggregate score of remaining keys
-final_key_score = key_score_aggregate([key for _, key in filtered_heap])
-
-print(f"Result: {final_key_score}")
+result = final_count
+print(f"Result: {result}")

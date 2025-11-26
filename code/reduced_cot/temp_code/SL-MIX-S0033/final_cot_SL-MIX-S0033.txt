@@ -1,53 +1,47 @@
-Target: Find the value of variable delimiter_count after [line 25] executes
+Target: Find the value of variable target_value after [line 41] executes
 
-[line 24]  token_stream = [':', 'data', ';', '\x02', '\x1f', '\x02', '\x03', '\x1e', '\x02', '\x1f', ',', ':', ';']
-Compute: [':', 'data', ';', '\x02', '\x1f', '\x02', '\x03', '\x1e', '\x02', '\x1f', ',', ':', ';'] = [':', 'data', ';', '', '', ...]
-[line 25]  delimiter_count, control_char_freq = analyze_protocol_stream(token_stream)
-(Missing param: 'func_name')
-[line 5]  delimiter_count = 0
-Assign: delimiter_count = 0
-[line 6]  control_char_freq = {'\x02': 0, '\x03': 0, '\x1e': 0}
-Compute: {'\x02': 0, '\x03': 0, '\x1e': 0} = {: 0, : 0, : 0}
-[line 7]  header_delimiters = {':', ';', ','}
-Compute: {':', ';', ','} = {',', ':', ';'}
-[line 9]  for token in token_stream:
-Loop Start: token takes its first value ':'
-[line 10]  if state == 'header' and token == '\x1f':
-Condition: True, entering 'if' block
-[line 13]  elif state == 'body' and token == '\x1f':
-'elif' Condition: True, entering block
-[line 17]  if state == 'header' and token in header_delimiters:
-Condition: True, entering 'if' block
-[line 18]  delimiter_count += 1
-Update: delimiter_count changed from 0 (defined at defined at [line 5]) to 0+1 = 1
-[line 9]  for token in token_stream:
-Loop Iteration: token is now 'data' (iteration 2)
-[line 10]  if state == 'header' and token == '\x1f':
-Condition: True, entering 'if' block
-[line 13]  elif state == 'body' and token == '\x1f':
-'elif' Condition: True, entering block
-[line 17]  if state == 'header' and token in header_delimiters:
-Condition: True, entering 'if' block
-[line 19]  elif state == 'body' and token in control_char_freq:
-'elif' Condition: True, entering block
-... [Line 9] repeats 10 more times ...
-... [Line 9] repeats 10 more times ...
-... [Line 9] repeats 10 more times ...
-... [Line 9] repeats 10 more times ...
-... [Line 9] repeats 10 more times ...
-[line 9]  for token in token_stream:
-Loop Iteration: token is now ';' (iteration 13)
-[line 10]  if state == 'header' and token == '\x1f':
-Condition: True, entering 'if' block
-[line 13]  elif state == 'body' and token == '\x1f':
-'elif' Condition: True, entering block
-[line 17]  if state == 'header' and token in header_delimiters:
-Condition: True, entering 'if' block
-[line 18]  delimiter_count += 1
-Update: delimiter_count changed from 4 (defined at defined at [line 18]) to 4+1 = 5
-[line 9]  for token in token_stream:
+[line 12]  adjusted_temps = [temp + 5 for temp in measurements]
+Compute: [temp + 5 for temp in measurements], where temp=15 (an unknown source), measurements=[15, 22, 18, 25, 20, ...] (an unknown source) = ?
+[line 13]  filtered_temps = [temp for temp in adjusted_temps if temp > 20]
+Compute: [temp for temp in adjusted_temps if temp > 20], where temp=20 (an unknown source), adjusted_temps=[20, 27, 23, 30, 25, ...] (defined at [line 12]) = ?
+[line 17]  for temp in measurements:
+Loop Start: temp takes its first value 15
+[line 17]  for temp in measurements:
 Loop End: Iteration finished
-[line 22]  return delimiter_count, control_char_freq
-Return: delimiter_count, control_char_freq
+[line 17]  for temp in measurements:
+Loop End: Iteration finished
+[line 17]  for temp in measurements:
+Loop End: Iteration finished
+[line 17]  for temp in measurements:
+Loop End: Iteration finished
+[line 17]  for temp in measurements:
+Loop End: Iteration finished
+[line 17]  for temp in measurements:
+Loop End: Iteration finished
+[line 21]  if filtered_temps:
+Condition: True, entering 'if' block
+[line 36]  final_metrics = {}
+Compute: {} = {}
+[line 37]  for key, value in metrics.items():
+(Missing param: 'iter_var')
+[line 38]  if key in ['average', 'temperature', 'variance']:
+Condition: True, entering 'if' block
+[line 39]  final_metrics[key] = round(value, 2)
+(Missing param: 'func_name')
+[line 37]  for key, value in metrics.items():
+(Missing param: 'iter_var')
+[line 38]  if key in ['average', 'temperature', 'variance']:
+Condition: True, entering 'if' block
+... [Line 37] repeats 2 more times ...
+... [Line 37] repeats 2 more times ...
+... [Line 37] repeats 2 more times ...
+[line 37]  for key, value in metrics.items():
+(Missing param: 'iter_var')
+[line 38]  if key in ['average', 'temperature', 'variance']:
+Condition: True, entering 'if' block
+[line 37]  for key, value in metrics.items():
+Loop End: Iteration finished
+[line 41]  target_value = final_metrics['temperature']
+Compute: final_metrics['temperature'], where final_metrics={average: 19.5, temperature: 25.4, variance: 10.92} (defined at [line 36]) = 25.4
 
-Answer: delimiter_count = 5 (last updated on defined at [line 18])
+Answer: target_value = 25.4 (last updated on defined at [line 41])

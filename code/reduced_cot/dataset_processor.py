@@ -13,7 +13,7 @@ import time
 from tracer import PythonTracer
 from pruner import TracePruner
 from cot_generator import COTGenerator
-from ai_analyzer import AIAnalyzer, TargetValidator
+from ai_analyzer import AIAnalyzer, RegexTargetExtractor
 
 
 class DatasetProcessor:
@@ -36,7 +36,11 @@ class DatasetProcessor:
         self.attention_path = self.dataset_dir / 'attention.json'
         
         self.ai_analyzer = AIAnalyzer(api_config)
+        self.regex_extractor = RegexTargetExtractor()
         self.max_workers = max_workers
+        
+        # 确保必要目录存在
+        self.temp_code_dir.mkdir(parents=True, exist_ok=True)
         
         # 加载数据集
         self.raw_dataset = self._load_dataset()
@@ -91,7 +95,7 @@ class DatasetProcessor:
         if self.attention_path.exists():
             with open(self.attention_path, 'r', encoding='utf-8') as f:
                 return json.load(f)
-        return {'1': [], '2': [], '3': []}
+        return {'regex_failed': [], 'ai_failed': []}
     
     def _save_attention(self):
         """保存错误记录"""
@@ -101,26 +105,55 @@ class DatasetProcessor:
     def analyze_target_with_retry(self, case, max_retries=3):
         """
         分析目标行和变量，支持重试
+        使用正则表达式优先，失败后使用AI
         
         Args:
             case: 数据集中的case
-            max_retries: 最大重试次数
+            max_retries: AI分析的最大重试次数
             
         Returns:
-            dict: 目标信息 {'target_line': int, 'target_var': str}
+            dict: 目标信息 {'target_line': int, 'target_var': str, 'method': str} 或 None
         """
         case_id = case['id']
         description = case['task']['description']
         code = case['task']['code']
         
+        # 步骤1: 尝试正则表达式提取
+        print(f"  [方法1] 正则表达式提取...")
+        regex_result = self.regex_extractor.extract_target(description, code)
+        
+        if regex_result:
+            # 验证正则结果
+            if self.ai_analyzer.validate_target(
+                code, 
+                regex_result['target_line'], 
+                regex_result['target_var']
+            ):
+                print(f"  ✓ 正则提取成功: line={regex_result['target_line']}, var={regex_result['target_var']}")
+                return regex_result
+            else:
+                print(f"  ✗ 正则提取的结果验证失败")
+                if 'regex_failed' not in self.attention_cases:
+                    self.attention_cases['regex_failed'] = []
+                if case_id not in self.attention_cases['regex_failed']:
+                    self.attention_cases['regex_failed'].append(case_id)
+        else:
+            print(f"  ✗ 正则提取失败")
+            if 'regex_failed' not in self.attention_cases:
+                self.attention_cases['regex_failed'] = []
+            if case_id not in self.attention_cases['regex_failed']:
+                self.attention_cases['regex_failed'].append(case_id)
+        
+        # 步骤2: 使用AI分析（带重试）
+        print(f"  [方法2] AI分析...")
         for attempt in range(1, max_retries + 1):
-            print(f"  [尝试 {attempt}/{max_retries}] 分析目标...")
+            print(f"    [AI尝试 {attempt}/{max_retries}]")
             
             # AI分析
             result = self.ai_analyzer.analyze_target(description, code, case_id)
             
             if result is None:
-                print(f"  ✗ AI分析失败")
+                print(f"    ✗ AI分析失败")
                 if attempt < max_retries:
                     time.sleep(1)
                 continue
@@ -130,27 +163,132 @@ class DatasetProcessor:
             
             # 验证
             if not self.ai_analyzer.validate_target(code, target_line, target_var):
-                print(f"  ✗ 验证失败: 目标信息不合理")
+                print(f"    ✗ 验证失败: 目标信息不合理")
                 if attempt < max_retries:
                     time.sleep(1)
-                    if str(attempt) not in self.attention_cases:
-                        self.attention_cases[str(attempt)] = []
-                    if case_id not in self.attention_cases[str(attempt)]:
-                        self.attention_cases[str(attempt)].append(case_id)
                 continue
             
-            print(f"  ✓ 分析成功: line={target_line}, var={target_var}")
-            print(f"    推理: {result.get('reasoning', '')}")
+            print(f"    ✓ AI分析成功: line={target_line}, var={target_var}")
+            if result.get('reasoning'):
+                print(f"      推理: {result['reasoning']}")
             return result
         
         # 所有尝试都失败
-        print(f"  ✗ 所有尝试都失败")
-        if str(max_retries) not in self.attention_cases:
-            self.attention_cases[str(max_retries)] = []
-        if case_id not in self.attention_cases[str(max_retries)]:
-            self.attention_cases[str(max_retries)].append(case_id)
+        print(f"  ✗ 所有方法都失败")
+        if 'ai_failed' not in self.attention_cases:
+            self.attention_cases['ai_failed'] = []
+        if case_id not in self.attention_cases['ai_failed']:
+            self.attention_cases['ai_failed'].append(case_id)
         
         return None
+    
+    def extract_all_targets(self, force=False):
+        """
+        批量提取所有cases的目标信息
+        
+        Args:
+            force: 是否强制重新提取（即使已存在）
+        """
+        print(f"\n{'='*60}")
+        print(f"批量提取目标信息")
+        print(f"{'='*60}\n")
+        
+        cases_to_extract = []
+        for case in self.dataset:
+            case_id = case['id']
+            if not force and case_id in self.all_target_info:
+                continue
+            cases_to_extract.append(case)
+        
+        if not cases_to_extract:
+            print("所有cases都已有目标信息！")
+            return
+        
+        print(f"需要提取: {len(cases_to_extract)} cases\n")
+        
+        success_count = 0
+        failure_count = 0
+        regex_success = 0
+        ai_success = 0
+        
+        for case in tqdm(cases_to_extract, desc="提取目标信息"):
+            case_id = case['id']
+            print(f"\n处理 {case_id}...")
+            
+            target_info = self.analyze_target_with_retry(case)
+            
+            if target_info:
+                self.all_target_info[case_id] = {
+                    'target_line': target_info['target_line'],
+                    'target_var': target_info['target_var']
+                }
+                success_count += 1
+                
+                # 统计方法
+                if target_info.get('method') == 'regex':
+                    regex_success += 1
+                elif target_info.get('method') == 'ai':
+                    ai_success += 1
+                
+                # 定期保存
+                if success_count % 10 == 0:
+                    self._save_all_target_info()
+                    self._save_attention()
+            else:
+                failure_count += 1
+        
+        # 最终保存
+        self._save_all_target_info()
+        self._save_attention()
+        
+        print(f"\n{'='*60}")
+        print(f"目标信息提取完成")
+        print(f"成功: {success_count} cases")
+        print(f"  - 正则提取: {regex_success} cases")
+        print(f"  - AI分析: {ai_success} cases")
+        print(f"失败: {failure_count} cases")
+        print(f"总计: {len(self.all_target_info)} cases 有目标信息")
+        print(f"{'='*60}\n")
+        
+        # 打印错误统计
+        if self.attention_cases.get('regex_failed'):
+            print(f"正则提取失败: {len(self.attention_cases['regex_failed'])} cases")
+        if self.attention_cases.get('ai_failed'):
+            print(f"AI分析失败: {len(self.attention_cases['ai_failed'])} cases")
+            print(f"  {', '.join(self.attention_cases['ai_failed'][:10])}{'...' if len(self.attention_cases['ai_failed']) > 10 else ''}")
+    
+    def write_code_files(self, force=False):
+        """
+        将所有cases的代码写入临时文件
+        
+        Args:
+            force: 是否强制重写（即使文件已存在）
+        """
+        print(f"\n{'='*60}")
+        print(f"写入代码文件")
+        print(f"{'='*60}\n")
+        
+        written_count = 0
+        skipped_count = 0
+        
+        for case in tqdm(self.dataset, desc="写入代码文件"):
+            case_id = case['id']
+            code = case['task']['code']
+            code_file = self.temp_code_dir / f"{case_id}.py"
+            
+            if code_file.exists() and not force:
+                skipped_count += 1
+                continue
+            
+            with open(code_file, 'w', encoding='utf-8') as f:
+                f.write(code)
+            
+            written_count += 1
+        
+        print(f"\n写入: {written_count} 个文件")
+        print(f"跳过: {skipped_count} 个文件")
+        print(f"总计: {len(self.dataset)} 个文件")
+        print(f"{'='*60}\n")
     
     def process_single_case(self, case):
         """
@@ -176,17 +314,21 @@ class DatasetProcessor:
         case_dir = self.temp_code_dir / case_id
         case_dir.mkdir(parents=True, exist_ok=True)
         
+        # 检查代码文件
         code_file = self.temp_code_dir / f"{case_id}.py"
         if not code_file.exists():
-            print(f"  ✗ 错误: 代码文件不存在 {code_file}")
-            return False
+            # 尝试写入代码文件
+            try:
+                with open(code_file, 'w', encoding='utf-8') as f:
+                    f.write(case['task']['code'])
+                print(f"  ✓ 创建代码文件")
+            except Exception as e:
+                print(f"  ✗ 错误: 无法创建代码文件: {e}")
+                return False
         
-        # 步骤1: 分析目标（从统一的all-target-info.json读取或分析）
-        if case_id in self.all_target_info:
-            print(f"  ⊙ 使用已有的目标信息")
-            target_info = self.all_target_info[case_id]
-        else:
-            print(f"  [步骤1/5] AI分析目标...")
+        # 步骤1: 获取目标信息
+        if case_id not in self.all_target_info:
+            print(f"  [步骤1/5] 分析目标...")
             target_info = self.analyze_target_with_retry(case)
             
             if target_info is None:
@@ -194,12 +336,19 @@ class DatasetProcessor:
                 return False
             
             # 保存到统一的all-target-info.json
-            self.all_target_info[case_id] = target_info
+            self.all_target_info[case_id] = {
+                'target_line': target_info['target_line'],
+                'target_var': target_info['target_var']
+            }
             self._save_all_target_info()
             self._save_attention()
+        else:
+            print(f"  [步骤1/5] 使用已有的目标信息")
+            target_info = self.all_target_info[case_id]
         
         target_line = target_info['target_line']
         target_var = target_info['target_var']
+        print(f"    目标: line={target_line}, var={target_var}")
         
         # 步骤2: 代码追踪
         print(f"  [步骤2/5] 代码追踪...")
@@ -311,12 +460,12 @@ class DatasetProcessor:
         print(f"失败: {failure_count} cases")
         print(f"{'='*60}\n")
         
-        if self.attention_cases and any(self.attention_cases.values()):
-            print("错误重试统计:")
-            for attempt, cases in self.attention_cases.items():
-                if cases:
-                    print(f"  第{attempt}次失败: {len(cases)} cases")
-                    print(f"    {', '.join(cases[:10])}{'...' if len(cases) > 10 else ''}")
+        # 打印错误统计
+        if self.attention_cases.get('regex_failed'):
+            print(f"正则提取失败: {len(self.attention_cases['regex_failed'])} cases")
+        if self.attention_cases.get('ai_failed'):
+            print(f"AI分析失败: {len(self.attention_cases['ai_failed'])} cases")
+            print(f"  {', '.join(self.attention_cases['ai_failed'][:10])}{'...' if len(self.attention_cases['ai_failed']) > 10 else ''}")
     
     def process_case_by_id(self, case_id):
         """处理指定ID的case"""

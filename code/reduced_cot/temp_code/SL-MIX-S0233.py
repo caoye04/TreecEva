@@ -1,57 +1,44 @@
-import math
-from contextlib import contextmanager
-
-def log_decorator(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result
-    return wrapper
-
-class StateMachine:
-    def __init__(self):
-        self.state = 'IDLE'
+def optimize_storage(capacity, items):
+    # Calculate base efficiency
+    base_efficiency = len(items) * 2 if capacity > 10 else len(items)
     
-    @log_decorator
-    def process(self, input_signal):
-        if self.state == 'IDLE' and input_signal > 0:
-            self.state = 'ACTIVE'
-            return 1
-        elif self.state == 'ACTIVE':
-            if input_signal == 0:
-                self.state = 'LATCHED'
-                return 2
-            else:
-                return (input_signal ** 2) % 7
-        elif self.state == 'LATCHED':
-            if input_signal < 0:
-                self.state = 'ERROR'
-                return -1
-            else:
-                return int(math.log(input_signal + 1)) if input_signal > 0 else 0
-        else:  # ERROR state
-            return 0
+    # Distractor computation - not used in final result
+    temp_calc = (capacity * 3) // 2
+    
+    # Conditional expression for efficiency adjustment
+    adjusted_efficiency = base_efficiency + 5 if capacity % 2 == 0 else base_efficiency - 3
+    
+    # Recursive helper function
+    def calculate_utilization(current_cap, item_set):
+        if current_cap <= 0 or not item_set:
+            return current_cap
+        # Simple recursion with set operations
+        remaining_items = item_set - {min(item_set)}
+        return calculate_utilization(current_cap - 1, remaining_items)
+    
+    # Main optimization logic
+    final_utilization = calculate_utilization(capacity, items)
+    
+    # Final result computation with conditional
+    result = final_utilization + adjusted_efficiency if final_utilization > 0 else adjusted_efficiency
+    
+    # Unused intermediate variable
+    unused_var = temp_calc + len(items)
+    
+    return result
 
-@contextmanager
-def circuit_context():
-    sm = StateMachine()
-    try:
-        yield sm
-    finally:
-        pass
+# Initialize storage parameters
+initial_capacity = 15
+items_set = {3, 7, 12, 5, 8}
 
-signals = [3, -1, 5, 0, 2, -3]
-circuit_output = 0
+# Pre-computation that doesn't affect final result
+preliminary_analysis = sum(items_set) * 2
 
-with circuit_context() as machine:
-    for i, sig in enumerate(signals):
-        intermediate = machine.process(sig)
-        if i % 2 == 0:
-            circuit_output = circuit_output | intermediate
-        else:
-            circuit_output = circuit_output & (intermediate ^ ((sig * 3) % 5))
-        
-        # Short-circuit evaluation check
-        if circuit_output > 10 or (circuit_output < 0 and machine.state != 'ERROR'):
-            circuit_output = circuit_output ^ 0xF
+# Execute main optimization
+final_capacity = optimize_storage(initial_capacity, items_set)
 
-print(f"Result: {circuit_output}")
+# Distractor print statement
+print(f"Analysis complete: {preliminary_analysis}")
+
+# Final target result
+print(f"Target result: {final_capacity}")

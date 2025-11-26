@@ -1,30 +1,32 @@
-import hashlib
-import math
+def calculate_player_score(accuracy, reaction_time, combo_count):
+    base_score = accuracy * 100
+    time_bonus = 500 - reaction_time if reaction_time < 500 else 0
+    combo_multiplier = combo_count // 5 + 1
+    
+    # Distractor calculations that don't affect final result
+    max_possible = base_score * 2 + time_bonus
+    average_metrics = (accuracy + reaction_time / 100 + combo_count) / 3
+    
+    raw_total = base_score + time_bonus
+    adjusted_total = raw_total * combo_multiplier
+    
+    # Conditional expression for multiplier
+    multiplier = 1.5 if accuracy > 0.8 else 1.2 if accuracy > 0.6 else 1.0
+    bonus_points = 50 if combo_count > 10 else 25 if combo_count > 5 else 0
+    
+    final_score = adjusted_total * multiplier + bonus_points
+    
+    # More distractor operations
+    score_variance = final_score - raw_total
+    performance_ratio = accuracy * multiplier
+    
+    print(f"Final result: {final_score}")
+    return final_score
 
-def compute_weighted_average(readings, factors, reliabilities):
-    adjusted = [r * f for r, f in zip(readings, factors)]
-    valid_data = [(a, r) for a, r in zip(adjusted, reliabilities) if abs(a - sum(adjusted)/len(adjusted)) < 2*max(adjusted)]
-    if not valid_data:
-        return 0
-    total_weighted_sum = sum(value * weight for value, weight in valid_data)
-    total_weights = sum(weight for _, weight in valid_data)
-    return total_weighted_sum / total_weights if total_weights != 0 else 0
+# Test case execution
+player_accuracy = 0.85
+player_reaction = 420
+player_combos = 12
 
-sensor_readings = [23.5, 25.1, 22.8, 24.3, 26.7]
-calibration_factors = [1.02, 0.98, 1.05, 0.99, 1.01]
-sensor_reliabilities = [0.9, 0.85, 0.95, 0.88, 0.92]
-
-weighted_avg_temp = compute_weighted_average(sensor_readings, calibration_factors, sensor_reliabilities)
-
-# Compute a stability index based on hash of the readings and the weighted average
-readings_str = ''.join(map(str, sensor_readings))
-hash_digest = hashlib.sha256(readings_str.encode()).hexdigest()
-ascii_sum = sum(ord(c) for c in hash_digest[:10])
-
-final_temperature_index = 0
-if weighted_avg_temp > 24.0:
-    final_temperature_index = ascii_sum * math.log(weighted_avg_temp)
-else:
-    final_temperature_index = ascii_sum / (weighted_avg_temp + 1e-5)  # Avoid division by zero
-
-print(f"Result: {final_temperature_index}")
+result = calculate_player_score(player_accuracy, player_reaction, player_combos)
+print(f"Target result: {result}")

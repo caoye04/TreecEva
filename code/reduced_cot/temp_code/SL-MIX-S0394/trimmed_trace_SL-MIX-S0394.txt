@@ -1,0 +1,37 @@
+36
+final_capacity
+---
+29 backup_volumes = [320, 480, 210, 650]
+29 ['backup_volumes'] ['[320, 480, 210, 650]']
+30 active_pools = [420, 580, 310, 720, 490]
+30 ['backup_volumes', 'active_pools'] ['[320, 480, 210, 650]', '[420, 580, 310, 720, 490]']
+35 final_capacity = storage_optimizer(backup_volumes, active_pools)
+35 ['backup_volumes', 'active_pools'] ['[320, 480, 210, 650]', '[420, 580, 310, 720, 490]']
+3 total_volume = sum(volumes)
+3 ['volumes', 'pools', 'total_volume'] ['[320, 480, 210, 650]', '[420, 580, 310, 720, 490]', '1660']
+10 active_threshold = 500
+10 ['volumes', 'pools', 'total_volume', 'active_threshold'] ['[320, 480, 210, 650]', '[420, 580, 310, 720, 490]', '1660', '500']
+11 qualified_pools = [p for p in pools if p > active_threshold]
+11 ['volumes', 'pools', 'total_volume', 'active_threshold', 'p'] ['[320, 480, 210, 650]', '[420, 580, 310, 720, 490]', '1660', '500', '420']
+11 qualified_pools = [p for p in pools if p > active_threshold]
+11 ['volumes', 'pools', 'total_volume', 'active_threshold', 'p'] ['[320, 480, 210, 650]', '[420, 580, 310, 720, 490]', '1660', '500', '580']
+11 qualified_pools = [p for p in pools if p > active_threshold]
+11 ['volumes', 'pools', 'total_volume', 'active_threshold', 'p'] ['[320, 480, 210, 650]', '[420, 580, 310, 720, 490]', '1660', '500', '310']
+11 qualified_pools = [p for p in pools if p > active_threshold]
+11 ['volumes', 'pools', 'total_volume', 'active_threshold', 'p'] ['[320, 480, 210, 650]', '[420, 580, 310, 720, 490]', '1660', '500', '720']
+11 qualified_pools = [p for p in pools if p > active_threshold]
+11 ['volumes', 'pools', 'total_volume', 'active_threshold', 'p'] ['[320, 480, 210, 650]', '[420, 580, 310, 720, 490]', '1660', '500', '490']
+11 qualified_pools = [p for p in pools if p > active_threshold]
+11 ['volumes', 'pools', 'total_volume', 'active_threshold', 'qualified_pools'] ['[320, 480, 210, 650]', '[420, 580, 310, 720, 490]', '1660', '500', '[580, 720]']
+17 if qualified_pools:
+17 ['volumes', 'total_volume', 'qualified_pools'] ['[320, 480, 210, 650]', '1660', '[580, 720]']
+18 optimal_capacity = total_volume + sum(qualified_pools[-2:])  # Last two qualified pools
+18 ['volumes', 'total_volume', 'qualified_pools', 'optimal_capacity'] ['[320, 480, 210, 650]', '1660', '[580, 720]', '2960']
+23 volume_ratio = volumes[-1] / volumes[0] if volumes else 1
+23 ['volumes', 'optimal_capacity', 'volume_ratio'] ['[320, 480, 210, 650]', '2960', '2.03125']
+24 final_value = optimal_capacity * (0.8 if volume_ratio > 2 else 1.2)
+24 ['optimal_capacity', 'volume_ratio', 'final_value'] ['2960', '2.03125', '2368.0']
+26 return round(final_value, 2)
+26 ['final_value'] ['2368.0']
+36 print(f"Result: {final_capacity}")
+36 ['final_capacity'] ['2368.0']

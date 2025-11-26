@@ -1,6 +1,22 @@
-Target: Find the value of variable available_count after [line 4] executes
+Target: Find the value of variable final_result after [line 26] executes
 
-[line 4]  available_count = 0
-Assign: available_count = 0
+[line 3]  raw_orders = [25, 42, 18, 56, 31, 29, 48, 15]
+Compute: [25, 42, 18, 56, 31, 29, 48, 15] = [25, 42, 18, 56, 31, ...]
+[line 7]  threshold = 30
+Assign: threshold = 30
+[line 8]  filtered_orders = [order for order in raw_orders if order > threshold]
+Compute: [order for order in raw_orders if order > threshold], where order=25 (an unknown source), raw_orders=[25, 42, 18, 56, 31, ...] (defined at [line 3]), threshold=30 (defined at [line 7]) = ?
+[line 11]  base_total = sum(filtered_orders)
+Call function sum(filtered_orders=[42, 56, 31, 48] (defined at [line 8]))
+[line 12]  high_value_bonus = len([order for order in filtered_orders if order > 40]) * 10
+Compute: len([order for order in filtered_orders if order > 40]) * 10, where order=42 (an unknown source), filtered_orders=[42, 56, 31, 48] (defined at [line 8]) = ?
+[line 15]  processed_count = len(filtered_orders)
+Call function len(filtered_orders=[42, 56, 31, 48] (defined at [line 8]))
+[line 23]  target_value = base_total if processed_count >= 3 else base_total // 2
+Compute: base_total if processed_count >= 3 else base_total // 2, where base_total=177 (defined at [line 11]), processed_count=4 (defined at [line 15]) = 177
+[line 24]  adjustment = high_value_bonus if target_value > 100 else high_value_bonus // 2
+Compute: high_value_bonus if target_value > 100 else high_value_bonus // 2, where high_value_bonus=30 (defined at [line 12]), target_value=177 (defined at [line 23]) = 30
+[line 26]  final_result = target_value + adjustment
+Compute: target_value + adjustment, where target_value=177 (defined at [line 23]), adjustment=30 (defined at [line 24]) = 207
 
-Answer: available_count = 0 (last updated on defined at [line 4])
+Answer: final_result = 207 (last updated on defined at [line 26])

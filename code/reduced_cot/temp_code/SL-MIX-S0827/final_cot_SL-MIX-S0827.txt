@@ -1,0 +1,16 @@
+Target: Find the value of variable processed_result after [line 23] executes
+
+[line 3]  packet_sizes = [1500, 512, 1024, 768, 2048, 256, 1536, 384]
+Compute: [1500, 512, 1024, 768, 2048, 256, 1536, 384] = [1500, 512, 1024, 768, 2048, ...]
+[line 11]  selected_packets = packet_sizes[2:6]
+Compute: packet_sizes[2:6], where packet_sizes=[1500, 512, 1024, 768, 2048, ...] (defined at [line 3]) = [1024, 768, 2048, 256]
+[line 12]  processed_sizes = [size * 0.8 for size in selected_packets]
+Compute: [size * 0.8 for size in selected_packets], where size=1024 (an unknown source), selected_packets=[1024, 768, 2048, 256] (defined at [line 11]) = ?
+[line 15]  size_sum = sum(processed_sizes)
+Call function sum(processed_sizes=[819.2, 614.4000000000001, 1638.4, 204.8] (defined at [line 12]))
+[line 16]  temp_avg = size_sum / len(processed_sizes)
+Compute: size_sum / len(processed_sizes), where size_sum=3276.8 (defined at [line 15]), processed_sizes=[819.2, 614.4000000000001, 1638.4, 204.8] (defined at [line 12]) = 819.2
+[line 23]  processed_result = round(size_sum - temp_avg * 2, 1)
+Call function round(size_sum - temp_avg * 2, 1)
+
+Answer: processed_result = 1638.4 (last updated on defined at [line 23])

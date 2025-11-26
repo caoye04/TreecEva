@@ -1,0 +1,48 @@
+Target: Find the value of variable final_output after [line 41] executes
+
+[line 29]  main_values = [8, 15, 22, 30, 41, 45, 52, 60]
+Compute: [8, 15, 22, 30, 41, 45, 52, 60] = [8, 15, 22, 30, 41, ...]
+[line 30]  secondary_data = [7, 12, 18, 25]
+Compute: [7, 12, 18, 25] = [7, 12, 18, 25]
+[line 37]  result = process_data(main_values, secondary_data)
+Call function process_data(main_values=[8, 15, 22, 30, 41, ...] (defined at [line 29]), secondary_data=[7, 12, 18, 25] (defined at [line 30]))
+[line 5]  filtered = list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+Call function list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+[line 5]  filtered = list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+Call function list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+[line 5]  filtered = list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+Call function list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+[line 5]  filtered = list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+Call function list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+[line 5]  filtered = list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+Call function list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+[line 5]  filtered = list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+Call function list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+[line 5]  filtered = list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+Call function list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+[line 5]  filtered = list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+Call function list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+[line 5]  filtered = list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+Call function list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+[line 6]  transformed = [x * 2 - 1 for x in filtered]
+Compute: [x * 2 - 1 for x in filtered], where x=15 (an unknown source), filtered=[15, 30, 45, 60] (defined at [line 5]) = ?
+[line 9]  secondary_sum = sum(secondary) * 3
+Compute: sum(secondary) * 3, where secondary=[7, 12, 18, 25] (an unknown source) = 186
+[line 10]  unused_permutations = list(itertools.permutations(secondary[:3]))
+Call function list(itertools.permutations(secondary[:3]))
+[line 11]  misleading_total = len(unused_permutations) * secondary_sum
+Compute: len(unused_permutations) * secondary_sum, where unused_permutations=[(7, 12, 18), (7, 18, 12), (12, 7, 18), (12, 18, 7), (18, 7, 12), ...] (defined at [line 10]), secondary_sum=186 (defined at [line 9]) = 1116
+[line 14]  if len(transformed) == 0:
+Condition: True, entering 'if' block
+[line 18]  pairs = list(itertools.combinations(transformed, 2))
+Call function list(itertools.combinations(transformed, 2))
+[line 19]  valid_pairs = [(a, b) for a, b in pairs if a > b and (a + b) % 4 == 0]
+Compute: [(a, b) for a, b in pairs if a > b and (a + b) % 4 == 0], where a=29 (an unknown source), b=59 (an unknown source), pairs=[(29, 59), (29, 89), (29, 119), (59, 89), (59, 119), ...] (defined at [line 18]) = ?
+[line 21]  if not valid_pairs:
+Condition: True, entering 'if' block
+[line 22]  return misleading_total  # Another dead path
+Return: misleading_total  # Another dead path
+[line 41]  final_output = result + 0  # Critical variable - answer is just result
+Compute: result + 0  # Critical variable - answer is just result, where result=1116 (defined at [line 37]) = 1116
+
+Answer: final_output = 1116 (last updated on defined at [line 41])

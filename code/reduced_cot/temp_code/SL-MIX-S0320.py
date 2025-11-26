@@ -1,66 +1,53 @@
-import re
 from collections import defaultdict
 
-def hash_string(s, mod):
-    hash_val = 0
-    for char in s:
-        hash_val = (hash_val * 31 + ord(char)) % mod
-    return hash_val
-
-def explore_combinations(prefix, remaining, target_hash, mod):
-    if len(prefix) == 3:
-        if hash_string(prefix, mod) == target_hash:
-            return prefix
-        return None
+def process_inventory(items):
+    inventory_map = defaultdict(lambda: 0)
     
-    for i, char in enumerate(remaining):
-        result = explore_combinations(prefix + char, remaining[:i] + remaining[i+1:], target_hash, mod)
-        if result:
-            return result
-    return None
-
-class DocumentSegment:
-    def __init__(self, content):
-        self.content = content
-        self.processed = False
-        self.hash_map = defaultdict(list)
+    # Distractor: complex but irrelevant inventory processing
+    for idx, item in enumerate(items):
+        if idx % 3 == 0:
+            inventory_map[item] += 7
+        elif idx % 5 == 0:
+            inventory_map[item] -= 3
+        else:
+            inventory_map[item] += 1
     
-    def process(self, mod):
-        self.processed = True
-        segments = re.split(r'[.!?]', self.content)
-        for seg in segments:
-            clean_seg = re.sub(r'[^a-zA-Z]', '', seg).lower()
-            if len(clean_seg) >= 3:
-                key = hash_string(clean_seg[:3], mod)
-                self.hash_map[key].append(clean_seg)
+    # More irrelevant computations
+    temp_sum = sum(len(str(k)) for k in inventory_map.keys())
+    cycle_count = (temp_sum * 3) % 11
     
-    def find_match(self, target_hash, mod):
-        if not self.processed:
-            self.process(mod)
-        
-        candidates = self.hash_map.get(target_hash, [])
-        for candidate in candidates:
-            if hash_string(candidate, mod) == target_hash:
-                return candidate
-        
-        # If not found, try to construct a 3-char string with matching hash
-        charset = ''.join(set(''.join(candidates)))
-        result = explore_combinations('', charset, target_hash, mod)
-        return result
+    # Dead code path - never executed
+    if cycle_count > 20:
+        unused_var = inventory_map.get('phantom', 100)
+        cycle_count += unused_var
+    
+    # Core logic starts here
+    base_value = 42
+    multiplier = 3
+    
+    # Distracting intermediate calculations
+    intermediate = (base_value << 2) ^ 15
+    shadow_value = intermediate % 7 + 2
+    
+    # Key computation chain
+    if shadow_value > 4:
+        target_value = base_value * multiplier - 25
+    else:
+        target_value = base_value // multiplier + 18
+    
+    # More distractions
+    fake_result = target_value + 100
+    misleading_counter = sum(1 for x in range(10) if x % 2 == 0)
+    
+    # Final transformation
+    def final_transform(x):
+        return (x * 2) - 7
+    
+    result = final_transform(target_value)
+    
+    print(f"Target result: {result}")
+    return result
 
-doc_content = "Natural language processing involves statistical models. These models often use neural networks!"
-segment = DocumentSegment(doc_content)
-modulus = 1009
-target_checksum = 523
-
-match_result = segment.find_match(target_checksum, modulus)
-
-# Execution Point Y
-checksum = 0
-if match_result:
-    for c in match_result:
-        checksum = (checksum * 26 + (ord(c) - ord('a') + 1)) % 1000000007
-else:
-    checksum = -1
-
-print(f"Result: {checksum}")
+# Execute the main function
+sample_items = ['apple', 'banana', 'cherry', 'apple', 'date', 'elderberry']
+process_inventory(sample_items)

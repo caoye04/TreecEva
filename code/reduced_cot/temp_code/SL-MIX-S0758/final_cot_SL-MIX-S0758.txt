@@ -1,0 +1,28 @@
+Target: Find the value of variable final_throughput after [line 45] executes
+
+[line 35]  packet_sizes = [128, 256, 512, 64, 1024, 32, 768]
+Compute: [128, 256, 512, 64, 1024, 32, 768] = [128, 256, 512, 64, 1024, ...]
+[line 36]  transmission_count = 150
+Assign: transmission_count = 150
+[line 37]  bandwidth_limit = 50000
+Assign: bandwidth_limit = 50000
+[line 44]  result = calculate_network_efficiency(transmission_count, packet_sizes, bandwidth_limit)
+Call function calculate_network_efficiency(transmission_count=150 (defined at [line 36]), packet_sizes=[128, 256, 512, 64, 1024, ...] (defined at [line 35]), bandwidth_limit=50000 (defined at [line 37]))
+[line 7]  filtered_packets = [size for size in sizes if size > 64]
+Compute: [size for size in sizes if size > 64], where size=128 (an unknown source), sizes=[128, 256, 512, 64, 1024, ...] (an unknown source) = ?
+[line 8]  total_payload = sum(filtered_packets)
+Call function sum(filtered_packets=[128, 256, 512, 1024, 768] (defined at [line 7]))
+[line 15]  successful_transmissions = transmissions * 0.85  # 15% packet loss
+Compute: transmissions * 0.85  # 15% packet loss, where transmissions=150 (an unknown source) = 127.5
+[line 16]  efficiency_factor = successful_transmissions / len(filtered_packets)
+Compute: successful_transmissions / len(filtered_packets), where successful_transmissions=127.5 (defined at [line 15]), filtered_packets=[128, 256, 512, 1024, 768] (defined at [line 7]) = 25.5
+[line 23]  if total_payload > limit:
+Condition: True, entering 'if' block
+[line 26]  actual_throughput = total_payload * efficiency_factor
+Compute: total_payload * efficiency_factor, where total_payload=2688 (defined at [line 8]), efficiency_factor=25.5 (defined at [line 16]) = 68544.0
+[line 32]  return actual_throughput
+Return: actual_throughput=68544.0 (defined at [line 26])
+[line 45]  final_throughput = round(result, 2)
+Call function round(result=68544.0 (defined at [line 44]), 2)
+
+Answer: final_throughput = 68544.0 (last updated on defined at [line 45])

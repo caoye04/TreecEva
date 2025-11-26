@@ -1,60 +1,33 @@
-from collections import defaultdict
-import math
+def energy_tracker(func, data_array):
+    # Distractor: complex-looking but irrelevant calculation
+    temp_buffer = [x * 2 + 1 for x in data_array]
+    capacity_metrics = sum(temp_buffer) // len(data_array)
+    
+    # Relevant: find minimum using lambda
+    critical_points = [func(x) for x in data_array]
+    min_energy = min(critical_points)
+    
+    # Distractor: misleading intermediate calculation
+    thermal_efficiency = (capacity_metrics * 3.14159) / 2.71828
+    unused_variable = thermal_efficiency ** 0.5
+    
+    # Dead code path that never executes
+    if thermal_efficiency > 1000:
+        redundant_check = thermal_efficiency - min_energy
+    else:
+        # This path is always taken
+        system_optimization = min_energy + capacity_metrics
+    
+    # Key logic: combine minimum with adjustment
+    power_adjustment = (system_optimization * 2) % 7
+    optimization_result = min_energy + power_adjustment
+    
+    # Additional distractor calculations
+    noise_reduction = [x % 5 for x in data_array]
+    signal_quality = sum(noise_reduction) - len(data_array)
+    
+    print(f"Result: {optimization_result}")
+    return optimization_result
 
-class SensorNode:
-    def __init__(self, delay):
-        self.delay = delay
-        self.connections = []
-    
-    def connect(self, other):
-        self.connections.append(other)
-
-def calculate_cumulative_delay(node, memo):
-    if node in memo:
-        return memo[node]
-    
-    if not node.connections:
-        memo[node] = node.delay
-        return node.delay
-    
-    max_subdelay = 0
-    for connected_node in node.connections:
-        subdelay = calculate_cumulative_delay(connected_node, memo)
-        max_subdelay = max(max_subdelay, subdelay)
-    
-    total_delay = node.delay + max_subdelay
-    memo[node] = total_delay
-    return total_delay
-
-def build_sensor_network():
-    nodes = [SensorNode(i * 2) for i in range(1, 6)]
-    
-    # Create connections forming a directed acyclic graph
-    nodes[0].connect(nodes[1])
-    nodes[0].connect(nodes[2])
-    nodes[1].connect(nodes[3])
-    nodes[2].connect(nodes[3])
-    nodes[3].connect(nodes[4])
-    
-    return nodes
-
-def main():
-    network = build_sensor_network()
-    memoization_table = {}
-    
-    # Calculate delays for all nodes using dynamic programming
-    delays = [calculate_cumulative_delay(node, memoization_table) for node in network]
-    
-    # Apply a transformation using array operations
-    transformed_delays = [math.floor(d / 3) for d in delays]
-    
-    # Find the maximum transformed delay
-    max_transformed = max(transformed_delays)
-    
-    # Calculate final delay using a combinatorial approach
-    final_delay = sum(transformed_delays) * max_transformed
-    
-    return final_delay
-
-final_delay = main()
-print(f"Result: {final_delay}")
+efficiency_data = [1, 2, 3, 4, 5]
+optimization_result = energy_tracker(lambda x: x**2 - 4*x + 4, efficiency_data)

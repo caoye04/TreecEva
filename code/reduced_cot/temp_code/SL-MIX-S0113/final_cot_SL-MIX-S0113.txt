@@ -1,153 +1,18 @@
-Target: Find the value of variable processed_signal_strength after [line 33] executes
+Target: Find the value of variable final_capacity after [line 28] executes
 
-[line 5]  sensor_readings = [[2, 4, 6], [3, 5, 7], [1, 8, 9]]
-Compute: [[2, 4, 6], [3, 5, 7], [1, 8, 9]] = [[2, 4, 6], [3, 5, 7], [1, 8, 9]]
-[line 6]  weight_factors = [0.5, 1.5, 2.0]
-Compute: [0.5, 1.5, 2.0] = [0.5, 1.5, 2.0]
-[line 9]  adjust_signal = lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF
-Compute: lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF = ?
-[line 12]  processed_signal_strength = 0
-Assign: processed_signal_strength = 0
-[line 15]  for interval_idx in range(len(sensor_readings)):
-Loop Start: interval_idx takes its first value 0
-[line 16]  interval_readings = sensor_readings[interval_idx]
-Compute: sensor_readings[interval_idx], where sensor_readings=[[2, 4, 6], [3, 5, 7], [1, 8, 9]] (defined at [line 5]), interval_idx=0 (defined at [line 15]) = [2, 4, 6]
-[line 19]  for sensor_idx in range(len(interval_readings)):
-Loop Start: sensor_idx takes its first value 0
-[line 20]  raw_value = interval_readings[sensor_idx]
-Compute: interval_readings[sensor_idx], where interval_readings=[2, 4, 6] (defined at [line 16]), sensor_idx=0 (defined at [line 19]) = 2
-[line 21]  weight = weight_factors[sensor_idx]
-Compute: weight_factors[sensor_idx], where weight_factors=[0.5, 1.5, 2.0] (defined at [line 6]), sensor_idx=0 (defined at [line 19]) = 0.5
-[line 24]  adjusted_value = adjust_signal(raw_value, weight)
-Call function adjust_signal(raw_value=2 (defined at [line 20]), weight=0.5 (defined at [line 21]))
-[line 9]  adjust_signal = lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF
-Compute: lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF, where base_value=2 (an unknown source), weight=0.5 (defined at [line 21]) = ?
-[line 25]  processed_signal_strength += adjusted_value
-Update: processed_signal_strength changed from ? (defined at defined at [line 12]) to ?+adjusted_value = 2
-[line 28]  if interval_idx % 2 == 1:
+[line 7]  data_segments = [10, 25, 40, 55, 70, 85]
+Compute: [10, 25, 40, 55, 70, 85] = [10, 25, 40, 55, 70, ...]
+[line 8]  primary_segment = data_segments[1:4]
+Compute: data_segments[1:4], where data_segments=[10, 25, 40, 55, 70, ...] (defined at [line 7]) = [25, 40, 55]
+[line 12]  base_capacity = sum(primary_segment) - 15
+Compute: sum(primary_segment) - 15, where primary_segment=[25, 40, 55] (defined at [line 8]) = 105
+[line 20]  if base_capacity > 80:
 Condition: True, entering 'if' block
-[line 19]  for sensor_idx in range(len(interval_readings)):
-Loop Iteration: sensor_idx is now 1 (iteration 2)
-[line 20]  raw_value = interval_readings[sensor_idx]
-Compute: interval_readings[sensor_idx], where interval_readings=[2, 4, 6] (defined at [line 16]), sensor_idx=1 (defined at [line 19]) = 4
-[line 21]  weight = weight_factors[sensor_idx]
-Compute: weight_factors[sensor_idx], where weight_factors=[0.5, 1.5, 2.0] (defined at [line 6]), sensor_idx=1 (defined at [line 19]) = 1.5
-[line 24]  adjusted_value = adjust_signal(raw_value, weight)
-Call function adjust_signal(raw_value=4 (defined at [line 20]), weight=1.5 (defined at [line 21]))
-[line 9]  adjust_signal = lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF
-Compute: lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF, where base_value=4 (an unknown source), weight=1.5 (defined at [line 21]) = ?
-[line 25]  processed_signal_strength += adjusted_value
-Update: processed_signal_strength changed from ? (defined at defined at [line 25]) to ?+adjusted_value = 26
-[line 28]  if interval_idx % 2 == 1:
-Condition: True, entering 'if' block
-... [Line 19] repeats 8 more times ...
-... [Line 19] repeats 8 more times ...
-... [Line 19] repeats 8 more times ...
-... [Line 19] repeats 8 more times ...
-... [Line 19] repeats 8 more times ...
-... [Line 19] repeats 8 more times ...
-... [Line 19] repeats 8 more times ...
-[line 15]  for interval_idx in range(len(sensor_readings)):
-Loop Iteration: interval_idx is now 1 (iteration 2)
-[line 16]  interval_readings = sensor_readings[interval_idx]
-Compute: sensor_readings[interval_idx], where sensor_readings=[[2, 4, 6], [3, 5, 7], [1, 8, 9]] (defined at [line 5]), interval_idx=1 (defined at [line 15]) = [3, 5, 7]
-[line 19]  for sensor_idx in range(len(interval_readings)):
-Loop Iteration: sensor_idx is now 0 (iteration 5)
-[line 20]  raw_value = interval_readings[sensor_idx]
-Compute: interval_readings[sensor_idx], where interval_readings=[3, 5, 7] (defined at [line 16]), sensor_idx=0 (defined at [line 19]) = 3
-[line 21]  weight = weight_factors[sensor_idx]
-Compute: weight_factors[sensor_idx], where weight_factors=[0.5, 1.5, 2.0] (defined at [line 6]), sensor_idx=0 (defined at [line 19]) = 0.5
-[line 24]  adjusted_value = adjust_signal(raw_value, weight)
-Call function adjust_signal(raw_value=3 (defined at [line 20]), weight=0.5 (defined at [line 21]))
-[line 9]  adjust_signal = lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF
-Compute: lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF, where base_value=3 (an unknown source), weight=0.5 (defined at [line 21]) = ?
-[line 25]  processed_signal_strength += adjusted_value
-Update: processed_signal_strength changed from ? (defined at defined at [line 25]) to ?+adjusted_value = 102
-[line 28]  if interval_idx % 2 == 1:
-Condition: True, entering 'if' block
-[line 19]  for sensor_idx in range(len(interval_readings)):
-Loop Iteration: sensor_idx is now 1 (iteration 6)
-[line 20]  raw_value = interval_readings[sensor_idx]
-Compute: interval_readings[sensor_idx], where interval_readings=[3, 5, 7] (defined at [line 16]), sensor_idx=1 (defined at [line 19]) = 5
-[line 21]  weight = weight_factors[sensor_idx]
-Compute: weight_factors[sensor_idx], where weight_factors=[0.5, 1.5, 2.0] (defined at [line 6]), sensor_idx=1 (defined at [line 19]) = 1.5
-[line 24]  adjusted_value = adjust_signal(raw_value, weight)
-Call function adjust_signal(raw_value=5 (defined at [line 20]), weight=1.5 (defined at [line 21]))
-[line 9]  adjust_signal = lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF
-Compute: lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF, where base_value=5 (an unknown source), weight=1.5 (defined at [line 21]) = ?
-[line 25]  processed_signal_strength += adjusted_value
-Update: processed_signal_strength changed from ? (defined at defined at [line 25]) to ?+adjusted_value = 138
-[line 28]  if interval_idx % 2 == 1:
-Condition: True, entering 'if' block
-[line 19]  for sensor_idx in range(len(interval_readings)):
-Loop Iteration: sensor_idx is now 2 (iteration 7)
-[line 20]  raw_value = interval_readings[sensor_idx]
-Compute: interval_readings[sensor_idx], where interval_readings=[3, 5, 7] (defined at [line 16]), sensor_idx=2 (defined at [line 19]) = 7
-[line 21]  weight = weight_factors[sensor_idx]
-Compute: weight_factors[sensor_idx], where weight_factors=[0.5, 1.5, 2.0] (defined at [line 6]), sensor_idx=2 (defined at [line 19]) = 2.0
-[line 24]  adjusted_value = adjust_signal(raw_value, weight)
-Call function adjust_signal(raw_value=7 (defined at [line 20]), weight=2.0 (defined at [line 21]))
-[line 9]  adjust_signal = lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF
-Compute: lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF, where base_value=7 (an unknown source), weight=2.0 (defined at [line 21]) = ?
-[line 25]  processed_signal_strength += adjusted_value
-Update: processed_signal_strength changed from ? (defined at defined at [line 25]) to ?+adjusted_value = 241
-[line 28]  if interval_idx % 2 == 1:
-Condition: True, entering 'if' block
-[line 19]  for sensor_idx in range(len(interval_readings)):
-Loop End: Iteration finished
-[line 15]  for interval_idx in range(len(sensor_readings)):
-Loop Iteration: interval_idx is now 2 (iteration 3)
-[line 16]  interval_readings = sensor_readings[interval_idx]
-Compute: sensor_readings[interval_idx], where sensor_readings=[[2, 4, 6], [3, 5, 7], [1, 8, 9]] (defined at [line 5]), interval_idx=2 (defined at [line 15]) = [1, 8, 9]
-[line 19]  for sensor_idx in range(len(interval_readings)):
-Loop Iteration: sensor_idx is now 0 (iteration 9)
-[line 20]  raw_value = interval_readings[sensor_idx]
-Compute: interval_readings[sensor_idx], where interval_readings=[1, 8, 9] (defined at [line 16]), sensor_idx=0 (defined at [line 19]) = 1
-[line 21]  weight = weight_factors[sensor_idx]
-Compute: weight_factors[sensor_idx], where weight_factors=[0.5, 1.5, 2.0] (defined at [line 6]), sensor_idx=0 (defined at [line 19]) = 0.5
-[line 24]  adjusted_value = adjust_signal(raw_value, weight)
-Call function adjust_signal(raw_value=1 (defined at [line 20]), weight=0.5 (defined at [line 21]))
-[line 9]  adjust_signal = lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF
-Compute: lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF, where base_value=1 (an unknown source), weight=0.5 (defined at [line 21]) = ?
-[line 25]  processed_signal_strength += adjusted_value
-Update: processed_signal_strength changed from ? (defined at defined at [line 25]) to ?+adjusted_value = 246
-[line 28]  if interval_idx % 2 == 1:
-Condition: True, entering 'if' block
-[line 19]  for sensor_idx in range(len(interval_readings)):
-Loop Iteration: sensor_idx is now 1 (iteration 10)
-[line 20]  raw_value = interval_readings[sensor_idx]
-Compute: interval_readings[sensor_idx], where interval_readings=[1, 8, 9] (defined at [line 16]), sensor_idx=1 (defined at [line 19]) = 8
-[line 21]  weight = weight_factors[sensor_idx]
-Compute: weight_factors[sensor_idx], where weight_factors=[0.5, 1.5, 2.0] (defined at [line 6]), sensor_idx=1 (defined at [line 19]) = 1.5
-[line 24]  adjusted_value = adjust_signal(raw_value, weight)
-Call function adjust_signal(raw_value=8 (defined at [line 20]), weight=1.5 (defined at [line 21]))
-[line 9]  adjust_signal = lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF
-Compute: lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF, where base_value=8 (an unknown source), weight=1.5 (defined at [line 21]) = ?
-[line 25]  processed_signal_strength += adjusted_value
-Update: processed_signal_strength changed from ? (defined at defined at [line 25]) to ?+adjusted_value = 342
-[line 28]  if interval_idx % 2 == 1:
-Condition: True, entering 'if' block
-[line 19]  for sensor_idx in range(len(interval_readings)):
-Loop Iteration: sensor_idx is now 2 (iteration 11)
-[line 20]  raw_value = interval_readings[sensor_idx]
-Compute: interval_readings[sensor_idx], where interval_readings=[1, 8, 9] (defined at [line 16]), sensor_idx=2 (defined at [line 19]) = 9
-[line 21]  weight = weight_factors[sensor_idx]
-Compute: weight_factors[sensor_idx], where weight_factors=[0.5, 1.5, 2.0] (defined at [line 6]), sensor_idx=2 (defined at [line 19]) = 2.0
-[line 24]  adjusted_value = adjust_signal(raw_value, weight)
-Call function adjust_signal(raw_value=9 (defined at [line 20]), weight=2.0 (defined at [line 21]))
-[line 25]  processed_signal_strength += adjusted_value
-Update: processed_signal_strength changed from 342 (defined at defined at [line 25]) to 342+adjusted_value = 504
-[line 28]  if interval_idx % 2 == 1:
-Condition: True, entering 'if' block
-[line 19]  for sensor_idx in range(len(interval_readings)):
-Loop End: Iteration finished
-[line 15]  for interval_idx in range(len(sensor_readings)):
-Loop End: Iteration finished
-[line 32]  final_transform = list(map(lambda x: x & 0xF, [processed_signal_strength]))
-Call function list(map(lambda x: x & 0xF, [processed_signal_strength]))
-[line 32]  final_transform = list(map(lambda x: x & 0xF, [processed_signal_strength]))
-Call function list(map(lambda x: x & 0xF, [processed_signal_strength]))
-[line 33]  processed_signal_strength = reduce(lambda a, b: a + b, final_transform)
-Call function reduce(lambda a, b: a + b, final_transform)
+[line 21]  current_capacity = base_capacity - 20
+Compute: base_capacity - 20, where base_capacity=105 (defined at [line 12]) = 85
+[line 22]  scaling_factor = 1.5
+Assign: scaling_factor = 1.5
+[line 28]  final_capacity = current_capacity * scaling_factor
+Compute: current_capacity * scaling_factor, where current_capacity=85 (defined at [line 21]), scaling_factor=1.5 (defined at [line 22]) = 127.5
 
-Answer: processed_signal_strength = 8 (last updated on defined at [line 33])
+Answer: final_capacity = 127.5 (last updated on defined at [line 28])

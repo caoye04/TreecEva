@@ -1,0 +1,23 @@
+35
+cipher_key
+---
+35 cipher_key = 0b01101001  # 105 in decimal
+35 ['cipher_key'] ['105']
+PARAM_MAPPING {'initial_key': {'actual_var': 'cipher_key', 'value': 105}, 'bit_mask': {'actual_var': 'mask_bits', 'value': 52}}
+FUNCTION_ENTER 1 compute_final_key def compute_final_key(initial_key, bit_mask):
+1 ['initial_key', 'bit_mask'] [{'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 52}]
+6 key_xor = initial_key ^ bit_mask
+6 ['initial_key', 'bit_mask', 'key_xor'] ['105', '52', '93']
+18 rotated = rotate_bits(key_xor, 1)
+18 ['key_xor'] ['93']
+14 shift = shift % 8 + 1
+14 ['value', 'shift'] ['93', '2']
+15 return ((value << shift) | (value >> (8 - shift))) & 0xFF
+15 ['value', 'shift'] ['93', '2']
+21 if rotated > 200:
+21 ['rotated'] ['117']
+27 final_key = (rotated | 0x0F) & 0x7F
+27 ['rotated', 'final_key'] ['117', '127']
+32 return final_key
+32 ['final_key'] ['127']
+FUNCTION_RETURN 32 compute_final_key {'_type': 'int', '_value': 127}

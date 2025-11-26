@@ -1,52 +1,48 @@
-import hashlib
-import itertools
+def process_network_data(node_set, matrix):
+    # Distractor: unused lambda for processing
+    data_processor = lambda x: x.upper() if isinstance(x, str) else x * 2
+    
+    # Main logic: process active nodes and connections
+    active_nodes = {node for node in node_set if node % 3 != 0}
+    connection_bits = sum(bin(val).count('1') for row in matrix for val in row)
+    
+    # Distractor: misleading intermediate calculation
+    temp_metric = len(node_set) * 7 + connection_bits
+    
+    # Key logic: bitwise operations and set intersection
+    mask_value = 0b1011
+    filtered_nodes = {node for node in active_nodes if node & mask_value == node}
+    
+    # Distractor: dead code path
+    if len(filtered_nodes) > 10:
+        bonus_factor = 25
+    else:
+        bonus_factor = 0  # This path is never taken
+    
+    # Core computation with string operations
+    status_strings = ['CONNECTED' if node in filtered_nodes else 'DISCONNECTED' for node in node_set]
+    connected_count = status_strings.count('CONNECTED')
+    
+    # Final calculation combining multiple paradigms
+    network_status = (connected_count * 17) ^ (connection_bits & 0xFF)
+    network_status |= (len(filtered_nodes) << 8)
+    
+    # Distractor: irrelevant final computation
+    final_check = network_status + temp_metric - bonus_factor
+    
+    return network_status
 
-def fibonacci_sequence(n):
-    a, b = 0, 1
-    for _ in range(n):
-        yield a
-        a, b = b, a + b
+# Initial setup
+node_pool = {2, 5, 8, 11, 14, 17, 20, 23, 26}
+connection_matrix = [[1, 3], [2, 5], [7, 9]]
 
-def encode_with_fibonacci_mask(text):
-    fib_values = list(fibonacci_sequence(len(text)))
-    encoded = []
-    for i, char in enumerate(text):
-        char_code = ord(char)
-        masked_code = char_code ^ fib_values[i]  # XOR with Fibonacci number
-        encoded.append(masked_code)
-    return encoded
-
-def generate_permutation_hash(numbers):
-    # Generate all permutations of the first 3 numbers
-    perms = list(itertools.permutations(numbers[:3]))
-    hash_sum = 0
-    for perm in perms:
-        product = 1
-        for num in perm:
-            product *= num
-        hash_sum += product
-    return hash_sum
-
-def custom_hash_function(transaction_id):
-    # Step 1: Encode the transaction ID with Fibonacci mask
-    encoded_chars = encode_with_fibonacci_mask(transaction_id)
-    
-    # Step 2: Generate a permutation-based hash from the first 4 encoded values
-    perm_hash = generate_permutation_hash(encoded_chars[:4])
-    
-    # Step 3: Apply bitwise operations
-    shifted_hash = perm_hash << 2  # Left shift by 2
-    masked_hash = shifted_hash & 0xFFFF  # Apply 16-bit mask
-    
-    # Step 4: Incorporate string hash of the original transaction ID
-    string_hash = hash(transaction_id) & 0xFF  # Lower 8 bits of Python's hash
-    
-    # Step 5: Combine all components
-    final_hash_code = masked_hash ^ string_hash
-    
-    return final_hash_code
+# Distractor: unused variables
+backup_nodes = {x for x in range(30) if x % 4 == 0}
+redundancy_factor = len(backup_nodes) * 3
 
 # Main execution
-transaction_identifier = "TX-9A2F"
-final_hash_code = custom_hash_function(transaction_identifier)
-print(f"Result: {final_hash_code}")
+active_nodes = node_pool - {2, 14, 26}
+final_processing = process_network_data(active_nodes, connection_matrix)
+network_status = final_processing
+
+print(f"Result: {network_status}")

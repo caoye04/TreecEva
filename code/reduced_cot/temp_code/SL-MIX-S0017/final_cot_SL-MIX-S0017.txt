@@ -1,46 +1,40 @@
-Target: Find the value of variable normalized_aggregate after [line 22] executes
+Target: Find the value of variable final_score after [line 41] executes
 
-[line 4]  device_readings = [1000, 2500, 4000, 8000]
-Compute: [1000, 2500, 4000, 8000] = [1000, 2500, 4000, 8000]
-[line 5]  device_ids = ['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']
-Compute: ['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d'] = ['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']
-[line 8]  scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
-Call function list(map(lambda x: math.log(x, 10), device_readings))
-[line 8]  scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
-Call function list(map(lambda x: math.log(x, 10), device_readings))
-[line 8]  scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
-Call function list(map(lambda x: math.log(x, 10), device_readings))
-[line 8]  scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
-Call function list(map(lambda x: math.log(x, 10), device_readings))
-[line 8]  scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
-Call function list(map(lambda x: math.log(x, 10), device_readings))
-[line 11]  hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
-Call function list(map(lambda s: hash(s) % 100 + 1, device_ids))
-[line 11]  hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
-Call function list(map(lambda s: hash(s) % 100 + 1, device_ids))
-[line 11]  hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
-Call function list(map(lambda s: hash(s) % 100 + 1, device_ids))
-[line 11]  hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
-Call function list(map(lambda s: hash(s) % 100 + 1, device_ids))
-[line 11]  hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
-Call function list(map(lambda s: hash(s) % 100 + 1, device_ids))
-[line 14]  weight_sum = sum(hash_weights)
-Call function sum(hash_weights=[59, 98, 50, 77] (defined at [line 11]))
-[line 15]  normalized_weights = [w / weight_sum for w in hash_weights]
-Compute: [w / weight_sum for w in hash_weights], where w=59 (an unknown source), weight_sum=284 (defined at [line 14]), hash_weights=[59, 98, 50, 77] (defined at [line 11]) = ?
-[line 18]  harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-Call function reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-[line 18]  harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-Call function reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-[line 18]  harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-Call function reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-[line 18]  harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-Call function reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-[line 18]  harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-Call function reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-[line 19]  weighted_harmonic_mean = 1 / harmonic_sum
-Compute: 1 / harmonic_sum, where harmonic_sum=0.28914287109912085 (defined at [line 18]) = 3.458497856781642
-[line 22]  normalized_aggregate = math.exp(weighted_harmonic_mean)
-(Missing param: 'func_name')
+[line 30]  metrics_data = [2, 5, 3, 8, 4]
+Compute: [2, 5, 3, 8, 4] = [2, 5, 3, 8, 4]
+[line 38]  final_score = process_results(metrics_data)
+Call function process_results(metrics_data=[2, 5, 3, 8, 4] (defined at [line 30]))
+[line 1]  def analyze_performance(data_points):
+Enter function analyze_performance: data_points=[2, 5, 3, 8, 4]
+  [line 3]  temp_sum = sum([x * 2 for x in data_points if x > 5])
+  Call function sum([x * 2 for x in data_points if x > 5])
+  [line 4]  offset = len(data_points) * 3.14
+  Compute: len(data_points) * 3.14, where data_points=[2, 5, 3, 8, 4] (parameter data_points) = 15.700000000000001
+  [line 5]  adjusted = temp_sum - offset
+  Compute: temp_sum - offset, where temp_sum=16 (defined at [line 3]), offset=15.700000000000001 (defined at [line 4]) = 0.29999999999999893
+  [line 6]  return adjusted
+  Return: adjusted=0.29999999999999893 (defined at [line 5])
+Function analyze_performance returns 0.29999999999999893
+[line 19]  metrics_value = calculate_metrics(input_data)
+Call function calculate_metrics(input_data=[2, 5, 3, 8, 4] (an unknown source))
+[line 8]  def calculate_metrics(values):
+Enter function calculate_metrics: values=[2, 5, 3, 8, 4]
+  [line 10]  processed = [v ** 2 if v % 2 == 0 else v * 3 for v in values]
+  Compute: [v ** 2 if v % 2 == 0 else v * 3 for v in values], where v=2 (an unknown source), values=[2, 5, 3, 8, 4] (parameter values) = ?
+  [line 11]  weighted_sum = sum([p * (i + 1) for i, p in enumerate(processed)])
+  Call function sum([p * (i + 1) for i, p in enumerate(processed)])
+  [line 12]  return weighted_sum
+  Return: weighted_sum=397 (defined at [line 11])
+Function calculate_metrics returns 397
+[line 22]  noise_factor = (len(input_data) * 2.5) - 7
+Compute: (len(input_data) * 2.5) - 7, where input_data=[2, 5, 3, 8, 4] (an unknown source) = 5.5
+[line 23]  interference = metrics_value + noise_factor
+Compute: metrics_value + noise_factor, where metrics_value=397 (defined at [line 19]), noise_factor=5.5 (defined at [line 22]) = 402.5
+[line 26]  actual_result = interference - noise_factor
+Compute: interference - noise_factor, where interference=402.5 (defined at [line 23]), noise_factor=5.5 (defined at [line 22]) = 397.0
+[line 27]  return actual_result
+Return: actual_result=397.0 (defined at [line 26])
+[line 41]  print(f"Result: {final_score}")
+Output: f"Result: {final_score}"
 
-Answer: normalized_aggregate = 31.769218737658147 (last updated on an unknown source)
+Answer: final_score = 397.0 (last updated on defined at [line 38])

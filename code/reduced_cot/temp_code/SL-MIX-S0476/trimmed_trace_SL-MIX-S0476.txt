@@ -1,0 +1,41 @@
+28
+final_checksum
+---
+23 data_stream = [15, 22, 8, 31, 45, 12, 19]
+23 ['data_stream'] ['[15, 22, 8, 31, 45, ...]']
+24 mask_pattern = [8, 12, 19, 27, 33]
+24 ['data_stream', 'mask_pattern'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]']
+27 final_checksum = compute_final_value(data_stream, mask_pattern)
+27 ['data_stream', 'mask_pattern'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]']
+PARAM_MAPPING {'data_stream': {'actual_var': 'data_stream', 'value': [15, 22, 8, 31, 45, 12, 19]}, 'mask_pattern': {'actual_var': 'mask_pattern', 'value': [8, 12, 19, 27, 33]}}
+FUNCTION_ENTER 1 compute_final_value def compute_final_value(data_stream, mask_pattern):
+1 ['data_stream', 'mask_pattern'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 22}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 31}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 19}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 27}, {'_type': 'int', '_value': 33}], '_len': 5}]
+2 temp_buffer = [x * 2 for x in data_stream if x > 0]
+2 ['data_stream', 'mask_pattern', 'x'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]', '15']
+2 temp_buffer = [x * 2 for x in data_stream if x > 0]
+2 ['data_stream', 'mask_pattern', 'x'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]', '22']
+2 temp_buffer = [x * 2 for x in data_stream if x > 0]
+2 ['data_stream', 'mask_pattern', 'x'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]', '8']
+2 temp_buffer = [x * 2 for x in data_stream if x > 0]
+2 ['data_stream', 'mask_pattern', 'x'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]', '31']
+2 temp_buffer = [x * 2 for x in data_stream if x > 0]
+2 ['data_stream', 'mask_pattern', 'x'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]', '45']
+2 temp_buffer = [x * 2 for x in data_stream if x > 0]
+2 ['data_stream', 'mask_pattern', 'x'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]', '12']
+2 temp_buffer = [x * 2 for x in data_stream if x > 0]
+2 ['data_stream', 'mask_pattern', 'x'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]', '19']
+2 temp_buffer = [x * 2 for x in data_stream if x > 0]
+2 ['data_stream', 'mask_pattern', 'temp_buffer'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]', '[30, 44, 16, 62, 90, ...]']
+3 intermediate_sum = sum(temp_buffer)
+3 ['data_stream', 'mask_pattern', 'temp_buffer', 'intermediate_sum'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]', '[30, 44, 16, 62, 90, ...]', '304']
+9 filtered_set = set(data_stream) & set(mask_pattern)
+9 ['data_stream', 'mask_pattern', 'intermediate_sum', 'filtered_set'] ['[15, 22, 8, 31, 45, ...]', '[8, 12, 19, 27, 33]', '304', '{8, 19, 12}']
+10 filtered_sum = sum(filtered_set)
+10 ['intermediate_sum', 'filtered_set', 'filtered_sum'] ['304', '{8, 19, 12}', '39']
+16 result = (intermediate_sum - filtered_sum) % 256
+16 ['intermediate_sum', 'filtered_sum', 'result'] ['304', '39', '9']
+21 return result
+21 ['result'] ['9']
+FUNCTION_RETURN 21 compute_final_value {'_type': 'int', '_value': 9}
+28 print(f"Result: {final_checksum}")
+28 ['final_checksum'] ['9']

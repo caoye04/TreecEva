@@ -1,0 +1,37 @@
+39
+data_verification_hash
+---
+15 sensor_readings = [45, 23, 67, 23, 89, 45, 23, 12, 67, 45]
+15 ['sensor_readings'] ['[45, 23, 67, 23, 89, ...]']
+22 frequency_analysis = analyze_data_pattern(sensor_readings)
+22 ['sensor_readings'] ['[45, 23, 67, 23, 89, ...]']
+PARAM_MAPPING {'data_points': {'actual_var': 'sensor_readings', 'value': [45, 23, 67, 23, 89, 45, 23, 12, 67, 45]}}
+FUNCTION_ENTER 8 analyze_data_pattern def analyze_data_pattern(data_points):
+8 ['data_points'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 45}], '_len': 10}]
+9 counter = Counter(data_points)
+9 ['data_points', 'counter'] ['[45, 23, 67, 23, 89, ...]', '{45: 3, 23: 3, 67: 2, ...}']
+12 return counter
+12 ['counter'] ['{45: 3, 23: 3, 67: 2, ...}']
+FUNCTION_RETURN 12 analyze_data_pattern {'_type': 'dict', '_items': {'45': {'_type': 'int', '_value': 3}, '23': {'_type': 'int', '_value': 3}, '67': {'_type': 'int', '_value': 2}, '89': {'_type': 'int', '_value': 1}, '12': {'_type': 'int', '_value': 1}}, '_len': 5}
+23 most_common_value = frequency_analysis.most_common(1)[0][0]
+23 ['sensor_readings', 'frequency_analysis', 'most_common_value'] ['[45, 23, 67, 23, 89, ...]', '{45: 3, 23: 3, 67: 2, ...}', '45']
+26 verification_flag = most_common_value > 50
+26 ['sensor_readings', 'most_common_value', 'verification_flag'] ['[45, 23, 67, 23, 89, ...]', '45', 'False']
+29 unique_values = set(sensor_readings)
+29 ['sensor_readings', 'most_common_value', 'verification_flag', 'unique_values'] ['[45, 23, 67, 23, 89, ...]', '45', 'False', '{67, 12, 45, 23, 89}']
+30 value_modifications = [x - min(unique_values) for x in unique_values]
+30 ['most_common_value', 'verification_flag', 'unique_values', 'x'] ['45', 'False', '{67, 12, 45, 23, 89}', '67']
+30 value_modifications = [x - min(unique_values) for x in unique_values]
+30 ['most_common_value', 'verification_flag', 'unique_values', 'x'] ['45', 'False', '{67, 12, 45, 23, 89}', '12']
+30 value_modifications = [x - min(unique_values) for x in unique_values]
+30 ['most_common_value', 'verification_flag', 'unique_values', 'x'] ['45', 'False', '{67, 12, 45, 23, 89}', '45']
+30 value_modifications = [x - min(unique_values) for x in unique_values]
+30 ['most_common_value', 'verification_flag', 'unique_values', 'x'] ['45', 'False', '{67, 12, 45, 23, 89}', '23']
+30 value_modifications = [x - min(unique_values) for x in unique_values]
+30 ['most_common_value', 'verification_flag', 'unique_values', 'x'] ['45', 'False', '{67, 12, 45, 23, 89}', '89']
+30 value_modifications = [x - min(unique_values) for x in unique_values]
+30 ['most_common_value', 'verification_flag', 'unique_values', 'value_modifications'] ['45', 'False', '{67, 12, 45, 23, 89}', '[55, 0, 33, 11, 77]']
+33 if verification_flag:
+33 ['most_common_value', 'verification_flag', 'value_modifications'] ['45', 'False', '[55, 0, 33, 11, 77]']
+39 data_verification_hash = sum(value_modifications) + most_common_value
+39 ['most_common_value', 'value_modifications', 'data_verification_hash'] ['45', '[55, 0, 33, 11, 77]', '221']

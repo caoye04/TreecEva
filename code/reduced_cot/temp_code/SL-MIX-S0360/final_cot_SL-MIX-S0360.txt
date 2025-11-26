@@ -1,0 +1,49 @@
+Target: Find the value of variable final_balance after [line 50] executes
+
+[line 39]  account_data = [150, -25, 300, -100, -50, 200]
+Compute: [150, -25, 300, -100, -50, 200] = [150, -25, 300, -100, -50, ...]
+[line 40]  fee_calculator = lambda amount: (amount // 100) * 10
+Compute: lambda amount: (amount // 100) * 10 = ?
+[line 47]  final_balance = process_transactions(account_data, fee_calculator)
+Call function process_transactions(account_data=[150, -25, 300, -100, -50, ...] (defined at [line 39]), fee_calculator)
+[line 3]  base_balance = 1000
+Assign: base_balance = 1000
+[line 5]  bonus_amount = 50
+Assign: bonus_amount = 50
+[line 13]  total_credits = 0
+Assign: total_credits = 0
+[line 14]  total_debits = 0
+Assign: total_debits = 0
+[line 16]  for trans in transactions:
+Loop Start: trans takes its first value 150
+[line 17]  if trans > 0:
+Condition: True, entering 'if' block
+[line 18]  total_credits += trans
+Update: total_credits changed from 0 (defined at defined at [line 13]) to 0+trans = 150
+[line 16]  for trans in transactions:
+Loop Iteration: trans is now -25 (iteration 2)
+[line 17]  if trans > 0:
+Condition: True, entering 'if' block
+[line 20]  total_debits += abs(trans)
+Update: total_debits changed from 0 (defined at defined at [line 14]) to 0+abs(trans) = 25
+... [Line 16] repeats 3 more times ...
+... [Line 16] repeats 3 more times ...
+... [Line 16] repeats 3 more times ...
+[line 16]  for trans in transactions:
+Loop Iteration: trans is now 200 (iteration 6)
+[line 17]  if trans > 0:
+Condition: True, entering 'if' block
+[line 18]  total_credits += trans
+Update: total_credits changed from 450 (defined at defined at [line 18]) to 450+trans = 650
+[line 16]  for trans in transactions:
+Loop End: Iteration finished
+[line 27]  total_fees = fee_fn(total_credits + total_debits)
+Call function fee_fn(total_credits + total_debits)
+[line 30]  final_amount = base_balance + total_credits - total_debits - total_fees + bonus_amount
+Compute: base_balance + total_credits - total_debits - total_fees + bonus_amount, where base_balance=1000 (defined at [line 3]), total_credits=650 (defined at [line 18]), total_debits=175 (defined at [line 20]), total_fees=80 (defined at [line 27]), bonus_amount=50 (defined at [line 5]) = 1445
+[line 36]  return final_amount
+Return: final_amount=1445 (defined at [line 30])
+[line 50]  print(f"Result: {final_balance}")
+Output: f"Result: {final_balance}"
+
+Answer: final_balance = 1445 (last updated on defined at [line 47])

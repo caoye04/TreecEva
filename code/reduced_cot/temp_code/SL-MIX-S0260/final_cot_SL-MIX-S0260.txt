@@ -1,0 +1,40 @@
+Target: Find the value of variable final_count after [line 37] executes
+
+[line 9]  total_sum = sum(sensor_readings)
+Call function sum(sensor_readings=[45, 173, 89, 237, 125, ...] (an unknown source))
+[line 10]  average_val = total_sum / len(sensor_readings) if sensor_readings else 0
+Compute: total_sum / len(sensor_readings) if sensor_readings else 0, where total_sum=1297 (defined at [line 9]), sensor_readings=[45, 173, 89, 237, 125, ...] (an unknown source) = 144.11111111111111
+[line 11]  adjusted_avg = average_val * 2.5 - 15
+Compute: average_val * 2.5 - 15, where average_val=144.11111111111111 (defined at [line 10]) = 345.27777777777777
+[line 14]  if adjusted_avg > 1000:
+Condition: True, entering 'if' block
+[line 21]  valid_count = 0
+Assign: valid_count = 0
+[line 22]  for reading in sensor_readings:
+Loop Start: reading takes its first value 45
+[line 24]  if (masked_value | 0b00100000) == 0b10101101:
+Condition: True, entering 'if' block
+[line 22]  for reading in sensor_readings:
+Loop Iteration: reading is now 173 (iteration 2)
+[line 24]  if (masked_value | 0b00100000) == 0b10101101:
+Condition: True, entering 'if' block
+[line 25]  valid_count += 1
+Update: valid_count changed from 0 (defined at defined at [line 21]) to 0+1 = 1
+... [Line 22] repeats 6 more times ...
+... [Line 22] repeats 6 more times ...
+[line 22]  for reading in sensor_readings:
+Loop Iteration: reading is now 201 (iteration 9)
+[line 24]  if (masked_value | 0b00100000) == 0b10101101:
+Condition: True, entering 'if' block
+[line 22]  for reading in sensor_readings:
+Loop End: Iteration finished
+[line 32]  active_tracker = valid_count * 4
+Compute: valid_count * 4, where valid_count=4 (defined at [line 25]) = 16
+[line 33]  false_positive = (len(sensor_readings) - valid_count) // 2
+Compute: (len(sensor_readings) - valid_count) // 2, where sensor_readings=[45, 173, 89, 237, 125, ...] (an unknown source), valid_count=4 (defined at [line 25]) = 2
+[line 34]  correction_factor = (active_tracker >> 2) | 0b110
+Compute: (active_tracker >> 2) | 0b110, where active_tracker=16 (defined at [line 32]) = 6
+[line 37]  final_count = active_tracker + correction_factor - false_positive
+Compute: active_tracker + correction_factor - false_positive, where active_tracker=16 (defined at [line 32]), correction_factor=6 (defined at [line 34]), false_positive=2 (defined at [line 33]) = 20
+
+Answer: final_count = 20 (last updated on defined at [line 37])

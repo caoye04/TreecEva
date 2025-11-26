@@ -1,0 +1,19 @@
+13
+final_output
+---
+2 base_stock = 150
+2 ['base_stock'] ['150']
+3 daily_demand = 25
+3 ['base_stock', 'daily_demand'] ['150', '25']
+4 safety_stock = 40
+4 ['base_stock', 'daily_demand', 'safety_stock'] ['150', '25', '40']
+5 current_level = base_stock - daily_demand
+5 ['base_stock', 'daily_demand', 'safety_stock', 'current_level'] ['150', '25', '40', '125']
+8 reorder_threshold = 80
+8 ['safety_stock', 'current_level', 'reorder_threshold'] ['40', '125', '80']
+9 needs_restock = current_level <= reorder_threshold
+9 ['safety_stock', 'current_level', 'reorder_threshold', 'needs_restock'] ['40', '125', '80', 'False']
+12 buffer_multiplier = 2 if needs_restock else 1
+12 ['safety_stock', 'current_level', 'needs_restock', 'buffer_multiplier'] ['40', '125', 'False', '1']
+13 final_output = (current_level + safety_stock) * buffer_multiplier
+13 ['safety_stock', 'current_level', 'buffer_multiplier', 'final_output'] ['40', '125', '1', '165']

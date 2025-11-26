@@ -1,25 +1,46 @@
-import re
-from collections import defaultdict
-from statistics import mean
+def compute_checksum(data, mask):
+    # Initialize tracking variables
+    temp_sum = 0
+    irrelevant_counter = 42
+    misleading_buffer = []
+    
+    # Process data with mask using enumerate
+    for idx, (d_val, m_val) in enumerate(zip(data, mask)):
+        # Conditional expression for processing
+        processed = (d_val & m_val) if idx % 2 == 0 else (d_val | m_val)
+        temp_sum += processed
+        
+        # Distractor operations
+        misleading_buffer.append(processed * 2)  # Never used
+        irrelevant_counter = (irrelevant_counter ^ processed) - 5
+        
+        # Dead code path
+        if idx > len(data) * 2:
+            temp_sum = temp_sum * 3  # Never reached
+    
+    # More distraction
+    fake_validation = temp_sum % 1000
+    decoy_set = {x for x in misleading_buffer if x > 50}
+    
+    # Final computation with slicing
+    data_slice = data[2:5]
+    mask_slice = mask[-3:]
+    
+    core_result = sum(x ^ y for x, y in zip(data_slice, mask_slice))
+    final_checksum = (temp_sum + core_result) % 256
+    
+    # Return statement with final computation
+    return final_checksum
 
-def tokenize(text):
-    return re.findall(r'\b\w+\b', text.lower())
+# Main execution
+mask_sequence = (0x0F, 0x3C, 0x55, 0xAA, 0xF0, 0xFF)
+data_stream = [0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC]
 
-corpus_text = "The quick brown fox jumps over the lazy dog while the dog sleeps peacefully"
-stops = frozenset(['the', 'over', 'while', 'sleeps'])
+# Irrelevant intermediate computations
+dummy_calc = sum(data_stream) * 2
+decoy_tuple = tuple(x & 0x0F for x in data_stream)
 
-words = tokenize(corpus_text)
-filtered_words = [word for word in words if word not in stops]
-word_lengths = list(map(len, filtered_words))
-length_frequency = defaultdict(int)
+# Key execution
+final_result = compute_checksum(data_stream, mask_sequence)
 
-for length in word_lengths:
-    length_frequency[length] += 1
-
-unique_lengths = set(length_frequency.keys())
-max_freq = max(length_frequency.values())
-common_lengths = {k for k, v in length_frequency.items() if v == max_freq}
-avg_length = mean(word_lengths)
-
-lexical_density_score = int(avg_length * len(common_lengths) + sum(unique_lengths))
-print(f"Result: {lexical_density_score}")
+print(f"Result: {final_result}")

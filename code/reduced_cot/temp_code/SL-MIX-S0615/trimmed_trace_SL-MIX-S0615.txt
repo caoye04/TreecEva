@@ -1,0 +1,63 @@
+46
+final_value
+---
+44 processed_data = process_payments(transactions)
+44 ['transactions'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}']
+3 processed = {}
+3 ['transaction_data', 'processed'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{}']
+6 for key, amount in transaction_data.items():
+6 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{}', "'txn_001'", '125']
+8 if amount > 0:
+8 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{}', "'txn_001'", '125']
+9 processed[key] = amount % 100  # Extract last two digits
+9 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{txn_001: 25}', "'txn_001'", '125']
+6 for key, amount in transaction_data.items():
+6 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{txn_001: 25}', "'txn_002'", '87']
+8 if amount > 0:
+8 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{txn_001: 25}', "'txn_002'", '87']
+9 processed[key] = amount % 100  # Extract last two digits
+9 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{txn_001: 25, txn_002: 87}', "'txn_002'", '87']
+6 for key, amount in transaction_data.items():
+6 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{txn_001: 25, txn_002: 87}', "'txn_003'", '342']
+8 if amount > 0:
+8 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{txn_001: 25, txn_002: 87}', "'txn_003'", '342']
+9 processed[key] = amount % 100  # Extract last two digits
+9 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{txn_001: 25, txn_002: 87, txn_003: 42}', "'txn_003'", '342']
+6 for key, amount in transaction_data.items():
+6 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{txn_001: 25, txn_002: 87, txn_003: 42}', "'txn_004'", '56']
+8 if amount > 0:
+8 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{txn_001: 25, txn_002: 87, txn_003: 42}', "'txn_004'", '56']
+9 processed[key] = amount % 100  # Extract last two digits
+9 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{txn_001: 25, txn_002: 87, txn_003: 42, ...}', "'txn_004'", '56']
+6 for key, amount in transaction_data.items():
+6 ['transaction_data', 'processed', 'key', 'amount'] ['{txn_001: 125, txn_002: 87, txn_003: 342, ...}', '{txn_001: 25, txn_002: 87, txn_003: 42, ...}', "'txn_004'", '56']
+16 return processed
+16 ['processed', 'key'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}', "'txn_004'"]
+46 final_value = compute_final(processed_data)
+46 ['processed_data'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}']
+PARAM_MAPPING {'data_dict': {'actual_var': 'processed_data', 'value': {'txn_001': 25, 'txn_002': 87, 'txn_003': 42, 'txn_004': 56}}}
+FUNCTION_ENTER 18 compute_final def compute_final(data_dict):
+18 ['data_dict'] [{'_type': 'dict', '_items': {'txn_001': {'_type': 'int', '_value': 25}, 'txn_002': {'_type': 'int', '_value': 87}, 'txn_003': {'_type': 'int', '_value': 42}, 'txn_004': {'_type': 'int', '_value': 56}}, '_len': 4}]
+21 total = 0
+21 ['data_dict', 'total'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}', '0']
+23 for key, value in data_dict.items():
+23 ['data_dict', 'total', 'key', 'value'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}', '0', "'txn_001'", '25']
+28 total = (total + value) % 50
+28 ['data_dict', 'total', 'key', 'value'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}', '25', "'txn_001'", '25']
+23 for key, value in data_dict.items():
+23 ['data_dict', 'total', 'key', 'value'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}', '25', "'txn_002'", '87']
+28 total = (total + value) % 50
+28 ['data_dict', 'total', 'key', 'value'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}', '12', "'txn_002'", '87']
+23 for key, value in data_dict.items():
+23 ['data_dict', 'total', 'key', 'value'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}', '12', "'txn_003'", '42']
+28 total = (total + value) % 50
+28 ['data_dict', 'total', 'key', 'value'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}', '4', "'txn_003'", '42']
+23 for key, value in data_dict.items():
+23 ['data_dict', 'total', 'key', 'value'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}', '4', "'txn_004'", '56']
+28 total = (total + value) % 50
+28 ['data_dict', 'total', 'key', 'value'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}', '10', "'txn_004'", '56']
+23 for key, value in data_dict.items():
+23 ['data_dict', 'total', 'key', 'value'] ['{txn_001: 25, txn_002: 87, txn_003: 42, ...}', '10', "'txn_004'", '56']
+33 return total
+33 ['total'] ['10']
+FUNCTION_RETURN 33 compute_final {'_type': 'int', '_value': 10}

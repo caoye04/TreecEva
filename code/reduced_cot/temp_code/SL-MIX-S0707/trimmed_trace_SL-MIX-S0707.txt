@@ -1,0 +1,19 @@
+7
+encrypted_value
+---
+PARAM_MAPPING {'data': {'actual_var': 'input_data', 'value': 170}, 'security_key': {'actual_var': 'security_key', 'value': 85}}
+FUNCTION_ENTER 1 secure_transform def secure_transform(data, security_key):
+1 ['data', 'security_key'] [{'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}]
+2 mask = 0b10101010
+2 ['data', 'security_key', 'mask'] ['170', '85', '170']
+3 key = security_key
+3 ['data', 'security_key', 'mask', 'key'] ['170', '85', '170', '85']
+4 original_value = data
+4 ['data', 'mask', 'key', 'original_value'] ['170', '170', '85', '170']
+7 encrypted_value = ((original_value & mask) | (~original_value & ~mask)) ^ key
+7 ['mask', 'key', 'original_value', 'encrypted_value'] ['170', '85', '170', '-86']
+12 print(f"Result: {encrypted_value}")
+12 ['encrypted_value'] ['-86']
+13 return encrypted_value
+13 ['encrypted_value'] ['-86']
+FUNCTION_RETURN 13 secure_transform {'_type': 'int', '_value': -86}

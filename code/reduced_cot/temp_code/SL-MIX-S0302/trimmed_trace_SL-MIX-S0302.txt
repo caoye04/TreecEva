@@ -1,0 +1,27 @@
+20
+final_balance
+---
+PARAM_MAPPING {'holdings': {'actual_var': 'holdings', 'value': {'AAPL': 50, 'GOOGL': 30, 'MSFT': 25}}, 'prices': {'actual_var': 'market_prices', 'value': {'AAPL': 150.0, 'GOOGL': 2800.0, 'MSFT': 340.0}}, 'dividend_rate': {'actual_var': 'dividend_yield', 'value': 0.015}}
+FUNCTION_ENTER 1 portfolio_calculations def portfolio_calculations(holdings, prices, dividend_rate):
+1 ['holdings', 'prices', 'dividend_rate'] [{'_type': 'dict', '_items': {'AAPL': {'_type': 'int', '_value': 50}, 'GOOGL': {'_type': 'int', '_value': 30}, 'MSFT': {'_type': 'int', '_value': 25}}, '_len': 3}, {'_type': 'dict', '_items': {'AAPL': {'_type': 'float', '_value': 150.0}, 'GOOGL': {'_type': 'float', '_value': 2800.0}, 'MSFT': {'_type': 'float', '_value': 340.0}}, '_len': 3}, {'_type': 'float', '_value': 0.015}]
+3 market_value = sum(holdings[symbol] * prices[symbol] for symbol in holdings)
+3 ['holdings', 'prices'] ['{AAPL: 50, GOOGL: 30, MSFT: 25}', '{AAPL: 150.0, GOOGL: 2800.0, MSFT: 340.0}']
+3 market_value = sum(holdings[symbol] * prices[symbol] for symbol in holdings)
+3 ['holdings', 'prices', 'symbol'] ['{AAPL: 50, GOOGL: 30, MSFT: 25}', '{AAPL: 150.0, GOOGL: 2800.0, MSFT: 340.0}', "'AAPL'"]
+3 market_value = sum(holdings[symbol] * prices[symbol] for symbol in holdings)
+3 ['holdings', 'prices', 'symbol'] ['{AAPL: 50, GOOGL: 30, MSFT: 25}', '{AAPL: 150.0, GOOGL: 2800.0, MSFT: 340.0}', "'GOOGL'"]
+3 market_value = sum(holdings[symbol] * prices[symbol] for symbol in holdings)
+3 ['holdings', 'prices', 'symbol'] ['{AAPL: 50, GOOGL: 30, MSFT: 25}', '{AAPL: 150.0, GOOGL: 2800.0, MSFT: 340.0}', "'MSFT'"]
+3 market_value = sum(holdings[symbol] * prices[symbol] for symbol in holdings)
+3 ['holdings', 'prices', 'symbol'] ['{AAPL: 50, GOOGL: 30, MSFT: 25}', '{AAPL: 150.0, GOOGL: 2800.0, MSFT: 340.0}', "'MSFT'"]
+13 adjustment_factor = 0.85
+13 ['market_value', 'adjustment_factor'] ['100000.0', '0.85']
+14 adjusted_value = market_value * adjustment_factor
+14 ['market_value', 'adjustment_factor', 'adjusted_value'] ['100000.0', '0.85', '85000.0']
+17 management_fee = adjusted_value * 0.02
+17 ['adjusted_value', 'management_fee'] ['85000.0', '1700.0']
+20 final_balance = adjusted_value - management_fee
+20 ['adjusted_value', 'management_fee', 'final_balance'] ['85000.0', '1700.0', '83300.0']
+21 return final_balance
+21 ['final_balance'] ['83300.0']
+FUNCTION_RETURN 21 portfolio_calculations {'_type': 'float', '_value': 83300.0}

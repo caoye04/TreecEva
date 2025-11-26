@@ -1,0 +1,65 @@
+32 network_nodes = 4
+32 ['network_nodes'] [{'_type': 'int', '_value': 4}]
+33 data_packets = 7
+33 ['network_nodes', 'data_packets'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}]
+34 redundancy_factor = 2
+34 ['network_nodes', 'data_packets', 'redundancy_factor'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}]
+37 max_throughput = network_nodes * data_packets * 10
+37 ['network_nodes', 'data_packets', 'redundancy_factor', 'max_throughput'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 280}]
+38 latency_estimate = max_throughput // 3
+38 ['network_nodes', 'data_packets', 'redundancy_factor', 'max_throughput', 'latency_estimate'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 280}, {'_type': 'int', '_value': 93}]
+39 transmission_delay = calculate_transmission_interval(max_throughput, latency_estimate)
+39 ['network_nodes', 'data_packets', 'redundancy_factor', 'max_throughput', 'latency_estimate'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 280}, {'_type': 'int', '_value': 93}]
+PARAM_MAPPING calculate_transmission_interval {'throughput': {'actual_var': 'max_throughput', 'value': 280}, 'latency': {'actual_var': 'latency_estimate', 'value': 93}}
+FUNCTION_ENTER 1 calculate_transmission_interval def calculate_transmission_interval(throughput, latency):
+1 ['throughput', 'latency'] [{'_type': 'int', '_value': 280}, {'_type': 'int', '_value': 93}]
+DEPTH_2 2     return (throughput * 2) + latency
+2 ['throughput', 'latency'] [{'_type': 'int', '_value': 280}, {'_type': 'int', '_value': 93}]
+FUNCTION_RETURN 2 calculate_transmission_interval {'_type': 'int', '_value': 653}
+42 final_capacity = process_network_config(network_nodes, data_packets, redundancy_factor)
+42 ['network_nodes', 'data_packets', 'redundancy_factor', 'max_throughput', 'latency_estimate', 'transmission_delay'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 280}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 653}]
+PARAM_MAPPING process_network_config {'nodes': {'actual_var': 'network_nodes', 'value': 4}, 'packets': {'actual_var': 'data_packets', 'value': 7}, 'redundancy': {'actual_var': 'redundancy_factor', 'value': 2}}
+FUNCTION_ENTER 4 process_network_config def process_network_config(nodes, packets, redundancy):
+4 ['nodes', 'packets', 'redundancy'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}]
+DEPTH_2 6     temp_throughput = nodes * packets * 3
+6 ['nodes', 'packets', 'redundancy', 'temp_throughput'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}]
+DEPTH_2 7     unused_calc = (temp_throughput >> 2) & 0xFF
+7 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}]
+DEPTH_2 10     network_load = temp_throughput // redundancy if redundancy else 0
+10 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}]
+DEPTH_2 13     if network_load > 1000:
+13 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}]
+DEPTH_2 16         dummy_var = network_load // 10
+16 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load', 'dummy_var'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 4}]
+DEPTH_2 19     base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+19 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load', 'dummy_var', 'i'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 0}]
+DEPTH_2 19     base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+19 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load', 'dummy_var', 'i'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 1}]
+DEPTH_2 19     base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+19 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load', 'dummy_var', 'i'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 2}]
+DEPTH_2 19     base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+19 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load', 'dummy_var', 'i'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 3}]
+DEPTH_2 19     base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+19 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load', 'dummy_var', 'base_capacity'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 70}]
+DEPTH_2 20     adjusted_capacity = base_capacity - (redundancy * 2)
+20 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load', 'dummy_var', 'base_capacity', 'adjusted_capacity'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 70}, {'_type': 'int', '_value': 66}]
+DEPTH_2 23     capacity_multiplier = lambda x: x * 3 if x % 2 == 0 else x * 2
+23 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load', 'dummy_var', 'base_capacity', 'adjusted_capacity'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 70}, {'_type': 'int', '_value': 66}]
+DEPTH_2 26     capacity_values = [adjusted_capacity, network_load, temp_throughput]
+26 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load', 'dummy_var', 'base_capacity', 'adjusted_capacity', 'capacity_values'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 70}, {'_type': 'int', '_value': 66}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 66}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 84}], '_len': 3}]
+DEPTH_2 27     final_value = capacity_multiplier(capacity_values[0:2][-1])
+27 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load', 'dummy_var', 'base_capacity', 'adjusted_capacity', 'capacity_values'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 70}, {'_type': 'int', '_value': 66}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 66}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 84}], '_len': 3}]
+FUNCTION_ENTER 23 <lambda>     capacity_multiplier = lambda x: x * 3 if x % 2 == 0 else x * 2
+23 ['x'] [{'_type': 'int', '_value': 42}]
+DEPTH_3 23     capacity_multiplier = lambda x: x * 3 if x % 2 == 0 else x * 2
+23 ['x'] [{'_type': 'int', '_value': 42}]
+FUNCTION_RETURN 23 <lambda> {'_type': 'int', '_value': 126}
+DEPTH_2 29     return final_value
+29 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'unused_calc', 'network_load', 'dummy_var', 'base_capacity', 'adjusted_capacity', 'capacity_values', 'final_value'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 70}, {'_type': 'int', '_value': 66}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 66}, {'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 84}], '_len': 3}, {'_type': 'int', '_value': 126}]
+FUNCTION_RETURN 29 process_network_config {'_type': 'int', '_value': 126}
+45 optimization_factor = (transmission_delay & 0xF) | 0x10
+45 ['network_nodes', 'data_packets', 'redundancy_factor', 'max_throughput', 'latency_estimate', 'transmission_delay', 'final_capacity', 'optimization_factor'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 280}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 653}, {'_type': 'int', '_value': 126}, {'_type': 'int', '_value': 29}]
+46 network_efficiency = optimization_factor / 2.5
+46 ['network_nodes', 'data_packets', 'redundancy_factor', 'max_throughput', 'latency_estimate', 'transmission_delay', 'final_capacity', 'optimization_factor', 'network_efficiency'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 280}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 653}, {'_type': 'int', '_value': 126}, {'_type': 'int', '_value': 29}, {'_type': 'float', '_value': 11.6}]
+48 print(f"Target result: {final_capacity}")
+48 ['network_nodes', 'data_packets', 'redundancy_factor', 'max_throughput', 'latency_estimate', 'transmission_delay', 'final_capacity', 'optimization_factor', 'network_efficiency'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 280}, {'_type': 'int', '_value': 93}, {'_type': 'int', '_value': 653}, {'_type': 'int', '_value': 126}, {'_type': 'int', '_value': 29}, {'_type': 'float', '_value': 11.6}]

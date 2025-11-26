@@ -1,42 +1,24 @@
-import math
-
-class EnergyTracker:
-    def __init__(self):
-        self.total_energy_loss = 0
+def calculate_processing_metrics(data_points):
+    filtered_data = [x * 2 for x in data_points if x > 3]
+    temp_calculation = sum([i * j for i, j in enumerate(filtered_data) if i % 2 == 0])
+    intermediate_sum = temp_calculation + len(data_points)
     
-    def __enter__(self):
-        return self
+    # Distractor calculations (not used in final result)
+    unused_metric = max(data_points) - min(data_points) if data_points else 0
+    secondary_check = intermediate_sum * 0.5
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+    processed_values = []
+    for idx, val in enumerate(filtered_data):
+        adjusted_val = val + idx if val > 10 else val - idx
+        processed_values.append(adjusted_val)
     
-    def record_loss(self, loss):
-        self.total_energy_loss += loss
+    # More distraction operations
+    verification_sum = sum(processed_values) + unused_metric
+    final_result = processed_values[-1]
+    
+    print(f"Result: {final_result}")
+    return final_result
 
-def correction_factor(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result * 1.25 if result > 0 else result * 0.9
-    return wrapper
-
-@correction_factor
-def calculate_base_score(particles_count, decay_constant):
-    base = particles_count * math.log(decay_constant)
-    adjusted = base - (particles_count // 3)
-    return adjusted
-
-initial_particles = 120
-constant = 7
-correction_applied = False
-final_score = 0
-
-with EnergyTracker() as tracker:
-    base_score = calculate_base_score(initial_particles, constant)
-    tracker.record_loss(initial_particles * 0.05)
-    corrected_base = base_score - tracker.total_energy_loss
-    if corrected_base > 50:
-        final_score = int(corrected_base * 1.1)
-    else:
-        final_score = int(corrected_base * 0.95)
-
-print(f'Result: {final_score}')
+# Main execution
+input_data = [2, 5, 8, 3, 7, 4, 6]
+result = calculate_processing_metrics(input_data)

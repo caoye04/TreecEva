@@ -1,64 +1,66 @@
-import math
-from contextlib import contextmanager
+import itertools
 
-def tokenize_signal(signal_data):
-    return [ord(c) for c in signal_data]
+def calculate_weighted_sum(values, weights):
+    # Irrelevant helper function - never called
+    return sum(v * w for v, w in zip(values, weights))
 
-def process_with_lambda(tokens):
-    transform = lambda x: (x >> 2) & 0x3F if x > 100 else (x << 1) & 0xFF
-    return [transform(token) for token in tokens]
+def filter_and_transform(data_sequence):
+    # Distractor variable that looks important but isn't
+    processing_factor = 2.5
+    misleading_temp = [x * processing_factor for x in data_sequence if x % 3 == 0]
+    
+    # Actual processing logic
+    filtered_data = [x for x in data_sequence if x > 10 and x % 2 != 0]
+    
+    # Dead code path that looks relevant
+    unused_calculation = sum(x ** 2 for x in data_sequence) // len(data_sequence)
+    
+    # Key transformation using itertools
+    grouped_data = itertools.groupby(sorted(filtered_data), key=lambda x: x % 5)
+    transformed = []
+    for key, group in grouped_data:
+        group_list = list(group)
+        # Misleading intermediate operation
+        fake_avg = sum(group_list) / len(group_list) if group_list else 0
+        # Actual transformation - bitwise operation
+        transformed.append(sum(group_list) ^ (key * 7))
+    
+    return transformed
 
-@contextmanager
-def processing_stage(name):
-    print(f"Starting {name}")
-    yield
-    print(f"Finished {name}")
+def compute_final_result(processed_values):
+    # More distractions
+    temp_buffer = [x * 0.8 for x in processed_values]
+    irrelevant_counter = len([x for x in processed_values if x < 50])
+    
+    # Core computation with multiple steps
+    step1 = sum(processed_values)
+    step2 = step1 & 0xFF  # Bitwise AND
+    step3 = step2 * 3 - 17
+    
+    # Final adjustment
+    final_value = step3 // 2 + (step2 % 11)
+    return final_value
 
-class SignalProcessor:
-    def __init__(self):
-        self.stages = []
-    
-    def add_stage(self, stage_name):
-        self.stages.append(stage_name)
-    
-    def get_stage_count(self):
-        return len(self.stages)
+# Main execution
+raw_data = [8, 15, 23, 12, 31, 19, 27, 14, 33, 21]
 
-def categorize_result(value):
-    # Switch-like structure using dictionary
-    switch = {
-        0: lambda: value * 2,
-        1: lambda: value + 10,
-        2: lambda: value - 5,
-        3: lambda: value // 3,
-        4: lambda: int(math.sqrt(value)) if value >= 0 else 0
-    }
-    
-    category = (value // 10) % 5
-    return switch.get(category, lambda: 0)()
+# Misleading variable that seems important
+preliminary_analysis = [x + 5 for x in raw_data if x < 20]
 
-def main():
-    input_signal = "HelloAudio"
-    processor = SignalProcessor()
-    
-    with processing_stage("Tokenization"):
-        tokenized = tokenize_signal(input_signal)
-        processor.add_stage("Tokenization")
-    
-    with processing_stage("Lambda Transformation"):
-        transformed = process_with_lambda(tokenized)
-        processor.add_stage("Lambda Transformation")
-    
-    matrix = [[transformed[i+j] if i+j < len(transformed) else 0 for j in range(3)] for i in range(0, len(transformed), 3)]
-    
-    flattened = [item for row in matrix for item in row]
-    aggregated = sum(flattened) // len(flattened)
-    
-    processor.add_stage("Matrix Aggregation")
-    
-    final_category_score = categorize_result(aggregated) * processor.get_stage_count()
-    
-    print(f"Result: {final_category_score}")
+# Key function call
+processed_data = filter_and_transform(raw_data)
 
-if __name__ == "__main__":
-    main()
+# More irrelevant computations
+secondary_calc = sum(x ** 0.5 for x in raw_data) * 2
+misleading_flag = len([x for x in processed_data if x > 30])
+
+# Final computation
+final_score = compute_final_result(processed_data)
+
+# Dead code that looks relevant but never affects result
+if misleading_flag > 2:
+    potential_adjustment = final_score + 10
+else:
+    potential_adjustment = final_score - 5
+
+print(f"Result: {final_score}")

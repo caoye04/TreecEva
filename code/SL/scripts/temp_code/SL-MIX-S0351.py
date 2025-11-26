@@ -1,28 +1,40 @@
-from collections import defaultdict
+def process_inventory(items):
+    # Distractor: calculate total items (not used in final result)
+    total_items = sum(items.values())
+    
+    # Main logic: filter items with quantity > 5
+    filtered_items = {k: v for k, v in items.items() if v > 5}
+    
+    # Distractor: create a sorted list of keys (not used directly)
+    sorted_keys = sorted(filtered_items.keys())
+    
+    # Apply lambda function to process quantities
+    process_quantity = lambda x: x * 2 - 3
+    processed_data = {k: process_quantity(v) for k, v in filtered_items.items()}
+    
+    # Distractor: calculate average (not used in final result)
+    avg_quantity = sum(processed_data.values()) / len(processed_data) if processed_data else 0
+    
+    # Key slicing operation to get specific keys
+    filtered_keys = list(processed_data.keys())[1:3]
+    
+    # Final target calculation
+    final_quantity = processed_data[filtered_keys[1]]
+    
+    # Distractor: additional unused calculation
+    potential_max = max(processed_data.values()) if processed_data else 0
+    
+    print(f"Result: {final_quantity}")
+    return final_quantity
 
-daily_sales = [
-    {'croissant': 15, 'muffin': 20, 'scone': 10},
-    {'croissant': 12, 'muffin': 18, 'scone': 15},
-    {'croissant': 10, 'muffin': 15, 'scone': 12},
-    {'croissant': 18, 'muffin': 25, 'scone': 8},
-    {'croissant': 20, 'muffin': 30, 'scone': 10},
-    {'croissant': 8, 'muffin': 12, 'scone': 20},
-    {'croissant': 22, 'muffin': 28, 'scone': 15}
-]
+# Main execution
+inventory = {
+    'widget_a': 8,
+    'widget_b': 3,
+    'widget_c': 12,
+    'widget_d': 6,
+    'widget_e': 15
+}
 
-prices = {'croissant': 2.50, 'muffin': 1.75, 'scone': 2.00}
-
-total_revenue = 0.0
-found_target_week = False
-
-for day in daily_sales:
-    if not found_target_week:
-        croissant_muffin_total = day['croissant'] + day['muffin']
-        if croissant_muffin_total > 100:
-            found_target_week = True
-            
-    if found_target_week:
-        for item, quantity in day.items():
-            total_revenue += quantity * prices[item]
-
-print(f"Result: {total_revenue}")
+result = process_inventory(inventory)
+print(f"Target result: {result}")

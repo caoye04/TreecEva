@@ -1,0 +1,61 @@
+35
+final_output
+---
+23 key_data = [0x1F, 0x8C, 0x47, 0x92, 0xE3]
+23 ['key_data'] ['[31, 140, 71, 146, 227]']
+24 mask_pattern = 0x17
+24 ['key_data', 'mask_pattern'] ['[31, 140, 71, 146, 227]', '23']
+27 aux_data = [x * 3 for x in range(10)]
+27 ['key_data', 'mask_pattern', 'x'] ['[31, 140, 71, 146, 227]', '23', '0']
+27 aux_data = [x * 3 for x in range(10)]
+27 ['key_data', 'mask_pattern', 'x'] ['[31, 140, 71, 146, 227]', '23', '1']
+27 aux_data = [x * 3 for x in range(10)]
+27 ['key_data', 'mask_pattern', 'x'] ['[31, 140, 71, 146, 227]', '23', '2']
+27 aux_data = [x * 3 for x in range(10)]
+27 ['key_data', 'mask_pattern', 'x'] ['[31, 140, 71, 146, 227]', '23', '3']
+27 aux_data = [x * 3 for x in range(10)]
+27 ['key_data', 'mask_pattern', 'x'] ['[31, 140, 71, 146, 227]', '23', '4']
+27 aux_data = [x * 3 for x in range(10)]
+27 ['key_data', 'mask_pattern', 'x'] ['[31, 140, 71, 146, 227]', '23', '5']
+27 aux_data = [x * 3 for x in range(10)]
+27 ['key_data', 'mask_pattern', 'x'] ['[31, 140, 71, 146, 227]', '23', '6']
+27 aux_data = [x * 3 for x in range(10)]
+27 ['key_data', 'mask_pattern', 'x'] ['[31, 140, 71, 146, 227]', '23', '7']
+27 aux_data = [x * 3 for x in range(10)]
+27 ['key_data', 'mask_pattern', 'x'] ['[31, 140, 71, 146, 227]', '23', '8']
+27 aux_data = [x * 3 for x in range(10)]
+27 ['key_data', 'mask_pattern', 'x'] ['[31, 140, 71, 146, 227]', '23', '9']
+27 aux_data = [x * 3 for x in range(10)]
+27 ['key_data', 'mask_pattern', 'aux_data'] ['[31, 140, 71, 146, 227]', '23', '[0, 3, 6, 9, 12, ...]']
+28 aux_sum = sum(aux_data[::2])
+28 ['key_data', 'mask_pattern', 'aux_data', 'aux_sum'] ['[31, 140, 71, 146, 227]', '23', '[0, 3, 6, 9, 12, ...]', '60']
+29 shadow_var = aux_sum ^ mask_pattern
+29 ['key_data', 'mask_pattern', 'aux_sum', 'shadow_var'] ['[31, 140, 71, 146, 227]', '23', '60', '43']
+32 result = process_crypto_key(key_data, mask_pattern)
+32 ['key_data', 'mask_pattern', 'shadow_var'] ['[31, 140, 71, 146, 227]', '23', '43']
+7 key_hash = sum(key_bytes) % 256
+7 ['key_bytes', 'mask_gen', 'key_hash'] ['[31, 140, 71, 146, 227]', '23', '103']
+8 temp_val = (key_hash ^ mask_gen) & 0x3F
+8 ['key_bytes', 'mask_gen', 'key_hash', 'temp_val'] ['[31, 140, 71, 146, 227]', '23', '103', '48']
+15 shifted_val = (temp_val << 2) | (temp_val >> 4)
+15 ['key_bytes', 'temp_val', 'shifted_val'] ['[31, 140, 71, 146, 227]', '48', '195']
+16 filtered_bytes = [b for b in key_bytes if (b & 0x1) == 0]
+16 ['key_bytes', 'shifted_val', 'b'] ['[31, 140, 71, 146, 227]', '195', '31']
+16 filtered_bytes = [b for b in key_bytes if (b & 0x1) == 0]
+16 ['key_bytes', 'shifted_val', 'b'] ['[31, 140, 71, 146, 227]', '195', '140']
+16 filtered_bytes = [b for b in key_bytes if (b & 0x1) == 0]
+16 ['key_bytes', 'shifted_val', 'b'] ['[31, 140, 71, 146, 227]', '195', '71']
+16 filtered_bytes = [b for b in key_bytes if (b & 0x1) == 0]
+16 ['key_bytes', 'shifted_val', 'b'] ['[31, 140, 71, 146, 227]', '195', '146']
+16 filtered_bytes = [b for b in key_bytes if (b & 0x1) == 0]
+16 ['key_bytes', 'shifted_val', 'b'] ['[31, 140, 71, 146, 227]', '195', '227']
+16 filtered_bytes = [b for b in key_bytes if (b & 0x1) == 0]
+16 ['key_bytes', 'shifted_val', 'filtered_bytes'] ['[31, 140, 71, 146, 227]', '195', '[140, 146]']
+17 byte_sum = sum(filtered_bytes) if filtered_bytes else 42
+17 ['shifted_val', 'filtered_bytes', 'byte_sum'] ['195', '[140, 146]', '286']
+19 result = (shifted_val + byte_sum) % 128
+19 ['shifted_val', 'byte_sum', 'result'] ['195', '286', '97']
+20 return result
+20 ['result'] ['97']
+35 final_output = result + (shadow_var % 16)
+35 ['shadow_var', 'result', 'final_output'] ['43', '97', '108']

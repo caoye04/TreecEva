@@ -1,0 +1,89 @@
+Target: Find the value of variable final_metric after [line 63] executes
+
+[line 58]  sensor_readings = [24, 45, 18, 33, 52, 67, 14, 89, 26, 41]
+Compute: [24, 45, 18, 33, 52, 67, 14, 89, 26, 41] = [24, 45, 18, 33, 52, ...]
+[line 7]  def process_sensor_data(values):
+Enter function process_sensor_data: values=[24, 45, 18, 33, 52, ...] (sensor_readings defined at [line 58])
+  [line 11]  processed = []
+  Compute: [] = []
+  [line 13]  for i, val in enumerate(values):
+  (Missing param: 'iter_var')
+  [line 15]  if i > 100 and val < -50:
+  Condition: True, entering 'if' block
+  [line 17]  elif i % 2 == 0:
+  'elif' Condition: True, entering block
+  [line 13]  for i, val in enumerate(values):
+  (Missing param: 'iter_var')
+  [line 15]  if i > 100 and val < -50:
+  Condition: True, entering 'if' block
+  [line 17]  elif i % 2 == 0:
+  'elif' Condition: True, entering block
+... [Line 13] repeats 7 more times ...
+... [Line 13] repeats 7 more times ...
+... [Line 13] repeats 7 more times ...
+  [line 13]  for i, val in enumerate(values):
+  (Missing param: 'iter_var')
+  [line 15]  if i > 100 and val < -50:
+  Condition: True, entering 'if' block
+  [line 17]  elif i % 2 == 0:
+  'elif' Condition: True, entering block
+  [line 13]  for i, val in enumerate(values):
+  Loop End: Iteration finished
+  [line 22]  return processed
+  Return: processed=[41, 28, 35, 16, 69, ...] (defined at [line 11])
+Function process_sensor_data returns [41, 28, 35, 16, 69, ...]
+[line 60]  final_metric = compute_final_score(sensor_readings)
+Call function compute_final_score(sensor_readings=[24, 45, 18, 33, 52, ...] (defined at [line 58]))
+[line 26]  threshold_map = {0: 5, 1: 3, 2: 7, 3: 2, 4: 8}
+Compute: {0: 5, 1: 3, 2: 7, 3: 2, 4: 8} = {0: 5, 1: 3, 2: 7, ...}
+[line 27]  running_total = 0
+Assign: running_total = 0
+[line 28]  valid_count = 0
+Assign: valid_count = 0
+[line 30]  for idx, value in enumerate(data_stream):
+(Missing param: 'iter_var')
+[line 32]  threshold = threshold_map.get(idx % 5, 4)
+(Missing param: 'func_name')
+[line 35]  if value > 100 or value < -100:
+Condition: True, entering 'if' block
+[line 38]  adjustment = threshold
+Compute: threshold, where threshold=5 (an unknown source) = 5
+[line 41]  if value % 2 == 0 and value > 0:
+Condition: True, entering 'if' block
+[line 42]  running_total += value + adjustment
+Update: running_total changed from 0 (defined at defined at [line 27]) to 0+value + adjustment = 29
+[line 43]  valid_count += 1
+Update: valid_count changed from 0 (defined at defined at [line 28]) to 0+1 = 1
+[line 30]  for idx, value in enumerate(data_stream):
+(Missing param: 'iter_var')
+[line 32]  threshold = threshold_map.get(idx % 5, 4)
+(Missing param: 'func_name')
+[line 35]  if value > 100 or value < -100:
+Condition: True, entering 'if' block
+[line 38]  adjustment = threshold
+Compute: threshold, where threshold=3 (an unknown source) = 3
+[line 41]  if value % 2 == 0 and value > 0:
+Condition: True, entering 'if' block
+... [Line 30] repeats 7 more times ...
+... [Line 30] repeats 7 more times ...
+... [Line 30] repeats 7 more times ...
+... [Line 30] repeats 7 more times ...
+... [Line 30] repeats 7 more times ...
+... [Line 30] repeats 7 more times ...
+... [Line 30] repeats 7 more times ...
+[line 30]  for idx, value in enumerate(data_stream):
+Loop End: Iteration finished
+[line 35]  if value > 100 or value < -100:
+Condition: True, entering 'if' block
+[line 41]  if value % 2 == 0 and value > 0:
+Condition: True, entering 'if' block
+[line 30]  for idx, value in enumerate(data_stream):
+Loop End: Iteration finished
+[line 49]  final_score = running_total // valid_count if valid_count > 0 else 0
+Compute: running_total // valid_count if valid_count > 0 else 0, where running_total=159 (defined at [line 42]), valid_count=5 (defined at [line 43]) = 31
+[line 55]  return final_score
+Return: final_score=31 (defined at [line 49])
+[line 63]  print(f"Result: {final_metric}")
+Output: f"Result: {final_metric}"
+
+Answer: final_metric = 31 (last updated on defined at [line 60])

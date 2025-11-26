@@ -1,49 +1,37 @@
-from collections import deque
-import base64
-
-def hex_to_int(hex_str):
-    return int(hex_str, 16)
-
-def decode_log(encoded_chunk):
-    decoded_bytes = base64.b64decode(encoded_chunk)
-    return decoded_bytes.decode('utf-8')
-
-# Encoded log entries
-log_entries = ["Njg2Zjc0NmY=", "NzI2ZTY1NjY=", "NmU2ZTY1NzI="]
-
-# Initialize data structures
-frequency_map = {}
-anomaly_queue = deque()
-modulus_base = 13
-
-for idx, entry in enumerate(log_entries):
-    try:
-        # Stage 1: Base64 decode
-        decoded_str = decode_log(entry)
+def calculate_quality_scores(items):
+    base_score = 0
+    adjustment_factor = 1.5
+    temp_calc = []
+    
+    for idx, item in enumerate(items):
+        quality_check = len(item) % 3
+        temp_val = quality_check * adjustment_factor
+        temp_calc.append(temp_val)
         
-        # Stage 2: Hex to integer conversion
-        numeric_val = hex_to_int(decoded_str)
-        
-        # Stage 3: Modular reduction
-        reduced_val = numeric_val % modulus_base
-        
-        # Stage 4: Frequency tracking
-        if reduced_val in frequency_map:
-            frequency_map[reduced_val] += 1
+        if quality_check == 0:
+            base_score += 5
+        elif quality_check == 1:
+            base_score += 3
         else:
-            frequency_map[reduced_val] = 1
-            
-        # Stage 5: Anomaly detection (values appearing once are anomalies)
-        if frequency_map[reduced_val] == 1:
-            anomaly_queue.append(reduced_val)
-    except Exception as e:
-        pass  # Skip malformed entries
+            base_score += 1
+    
+    # Distractor operations that don't affect final result
+    unused_sum = sum(temp_calc)
+    average_temp = unused_sum / len(temp_calc) if temp_calc else 0
+    
+    # Key logic that determines final score
+    bonus_points = 0
+    for score in temp_calc:
+        if score > 2.0:
+            bonus_points += 2
+    
+    # Additional unused calculation
+    unused_product = base_score * adjustment_factor
+    
+    final_score = base_score + bonus_points
+    result = final_score
+    print(f"Target result: {result}")
 
-# Calculate anomaly score
-anomaly_score = 0
-while anomaly_queue:
-    val = anomaly_queue.popleft()
-    if frequency_map[val] == 1:
-        anomaly_score += val * 2
-
-print(f"Result: {anomaly_score}")
+# Execute the function
+items_list = ["apple", "banana", "cherry", "date", "elderberry"]
+calculate_quality_scores(items_list)

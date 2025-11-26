@@ -1,0 +1,24 @@
+Target: Find the value of variable final_balance after [line 23] executes
+
+[line 1]  transaction_count = 15
+Assign: transaction_count = 15
+[line 2]  account_balance = 1000
+Assign: account_balance = 1000
+[line 3]  threshold = 10
+Assign: threshold = 10
+[line 5]  penalty_rate = 0.1
+Assign: penalty_rate = 0.1
+[line 6]  interest_rate = 0.05
+Assign: interest_rate = 0.05
+[line 7]  bonus_amount = 50
+Assign: bonus_amount = 50
+[line 18]  penalty = account_balance * penalty_rate if transaction_count > threshold else 0
+Compute: account_balance * penalty_rate if transaction_count > threshold else 0, where account_balance=1000 (defined at [line 2]), penalty_rate=0.1 (defined at [line 5]), transaction_count=15 (defined at [line 1]), threshold=10 (defined at [line 3]) = 100.0
+[line 19]  bonus = bonus_amount if transaction_count > threshold else 0
+Compute: bonus_amount if transaction_count > threshold else 0, where bonus_amount=50 (defined at [line 7]), transaction_count=15 (defined at [line 1]), threshold=10 (defined at [line 3]) = 50
+[line 20]  interest = account_balance * interest_rate if transaction_count <= threshold else 0
+Compute: account_balance * interest_rate if transaction_count <= threshold else 0, where account_balance=1000 (defined at [line 2]), interest_rate=0.05 (defined at [line 6]), transaction_count=15 (defined at [line 1]), threshold=10 (defined at [line 3]) = 0
+[line 23]  final_balance = account_balance - penalty + bonus if transaction_count > threshold else account_balance + interest
+Compute: account_balance - penalty + bonus if transaction_count > threshold else account_balance + interest, where account_balance=1000 (defined at [line 2]), penalty=100.0 (defined at [line 18]), bonus=50 (defined at [line 19]), transaction_count=15 (defined at [line 1]), threshold=10 (defined at [line 3]), interest=0 (defined at [line 20]) = 950.0
+
+Answer: final_balance = 950.0 (last updated on defined at [line 23])

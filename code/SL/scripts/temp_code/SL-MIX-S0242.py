@@ -1,50 +1,79 @@
-class SensorNode:
-    def __init__(self, value, position):
-        self.value = value
-        self.position = position
-        self.next = None
+def parse_geodata(raw_input):
+    coordinates = []
+    temp_buffer = []
+    irrelevant_sum = 0
+    
+    # Distractor: processing that doesn't affect final result
+    for i, segment in enumerate(raw_input.split(';')):
+        if len(segment) > 0:
+            parts = segment.strip().split(',')
+            if len(parts) == 2:
+                try:
+                    x = int(parts[0])
+                    y = int(parts[1])
+                    coordinates.append((x, y))
+                    temp_buffer.append(x * y)  # Irrelevant computation
+                except ValueError:
+                    pass
+    
+    # Misleading intermediate calculation
+    intermediate_value = sum(temp_buffer) if temp_buffer else 0
+    irrelevant_sum = intermediate_value * 2  # Dead code path
+    
+    return coordinates
 
-def build_sensor_list(readings):
-    head = None
-    current = None
-    for i, val in enumerate(readings):
-        node = SensorNode(val, i+1)
-        if head is None:
-            head = node
-            current = node
+def filter_quadrant(points):
+    filtered = []
+    count_unused = 0  # Misleading counter
+    
+    for x, y in points:
+        # Complex conditional with dead branches
+        if x > 0 and y > 0:
+            filtered.append((x, y))
+        elif x < 0 and y < 0:
+            count_unused += 1  # This path is never taken in our data
         else:
-            current.next = node
-            current = node
-    return head
+            # Distractor: complex but unused computation
+            unused_metric = abs(x) ^ abs(y)
+    
+    return filtered
 
-def decode_value(node):
-    key = (node.position << 2) & 0xFF
-    return node.value ^ key
+def process_coordinates(data_points):
+    from itertools import chain
+    
+    # Slicing operations with complex indices
+    if len(data_points) >= 4:
+        sliced_data = data_points[1:-1:2] + data_points[::3]
+    else:
+        sliced_data = data_points
+    
+    # Irrelevant string manipulation
+    debug_string = "Processing " + str(len(sliced_data)) + " points"
+    
+    # Core computation with bitwise operations
+    result = 0
+    for point in sliced_data:
+        x, y = point
+        # Key calculation: XOR with modular arithmetic
+        result ^= (abs(x) % 16) | ((abs(y) % 16) << 4)
+    
+    # Final adjustment with dead code path
+    if result > 1000:
+        result = result // 2  # Never executed in our case
+    
+    return result
 
-def compute_checksum_divide_conquer(nodes_list):
-    if not nodes_list:
-        return 0
-    if len(nodes_list) == 1:
-        return decode_value(nodes_list[0])
-    mid = len(nodes_list) // 2
-    left_checksum = compute_checksum_divide_conquer(nodes_list[:mid])
-    right_checksum = compute_checksum_divide_conquer(nodes_list[mid:])
-    return (left_checksum + right_checksum) & 0xFF
+# Main execution
+raw_coordinates = "5,12; 8,15; 3,7; 11,9; 6,4; 14,2"
 
-def collect_nodes(head):
-    nodes = []
-    current = head
-    while current:
-        nodes.append(current)
-        current = current.next
-    return nodes
+# Parse and filter data
+parsed_data = parse_geodata(raw_coordinates)
+filtered_data = filter_quadrant(parsed_data)
 
-def main():
-    sensor_readings = [0x3C, 0x7A, 0x5F, 0x1D, 0x9B]
-    sensor_head = build_sensor_list(sensor_readings)
-    node_collection = collect_nodes(sensor_head)
-    final_checksum = compute_checksum_divide_conquer(node_collection)
-    print(f"Result: {final_checksum}")
+# Distractor: unused computation
+unused_calculation = sum(x + y for x, y in parsed_data) * 3
 
-if __name__ == "__main__":
-    main()
+# Key execution point
+final_output = process_coordinates(filtered_data)
+
+print(f"Target result: {final_output}")

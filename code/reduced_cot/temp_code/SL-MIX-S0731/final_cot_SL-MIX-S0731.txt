@@ -1,0 +1,34 @@
+Target: Find the value of variable final_quality_score after [line 30] executes
+
+[line 3]  processed_readings = [r * 1.5 for r in readings if r > 0]
+Compute: [r * 1.5 for r in readings if r > 0], where r=8 (an unknown source), readings=[8, 12, 6, 15, 9, ...] (an unknown source) = ?
+[line 7]  quality_metrics = []
+Compute: [] = []
+[line 8]  for idx, value in enumerate(processed_readings):
+(Missing param: 'iter_var')
+[line 9]  if idx % 2 == 0:
+Condition: True, entering 'if' block
+[line 8]  for idx, value in enumerate(processed_readings):
+(Missing param: 'iter_var')
+[line 9]  if idx % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 8] repeats 4 more times ...
+... [Line 8] repeats 4 more times ...
+[line 8]  for idx, value in enumerate(processed_readings):
+(Missing param: 'iter_var')
+[line 9]  if idx % 2 == 0:
+Condition: True, entering 'if' block
+[line 8]  for idx, value in enumerate(processed_readings):
+Loop End: Iteration finished
+[line 20]  reading_pairs = list(zip(readings, processed_readings))
+Call function list(zip(readings, processed_readings))
+[line 21]  valid_pairs = [(orig, proc) for orig, proc in reading_pairs if proc > 15]
+Compute: [(orig, proc) for orig, proc in reading_pairs if proc > 15], where orig=8 (an unknown source), proc=12.0 (an unknown source), reading_pairs=[(8, 12.0), (12, 18.0), (6, 9.0), (15, 22.5), (9, 13.5), ...] (defined at [line 20]) = ?
+[line 23]  if len(valid_pairs) > 0:
+Condition: True, entering 'if' block
+[line 24]  processed_idx = len(valid_pairs) - 1
+Compute: len(valid_pairs) - 1, where valid_pairs=[(12, 18.0), (15, 22.5), (11, 16.5)] (defined at [line 21]) = 2
+[line 30]  final_quality_score = quality_metrics[processed_idx]
+Compute: quality_metrics[processed_idx], where quality_metrics=[20.0, 37.4, 12.5, 45.5, 23.75, ...] (defined at [line 7]), processed_idx=2 (defined at [line 24]) = 12.5
+
+Answer: final_quality_score = 12.5 (last updated on defined at [line 30])

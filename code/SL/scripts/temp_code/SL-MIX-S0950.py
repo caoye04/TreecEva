@@ -1,45 +1,34 @@
-import math
-from functools import reduce
+from collections import defaultdict
 
-def process_sensor_data():
-    sensor_readings = {
-        'temp_a': [23.5, 24.1, 22.8, 25.0],
-        'temp_b': [19.2, 20.0, 18.9, 21.5],
-        'temp_c': [27.3, 26.7, 28.1, 27.0]
-    }
-    
-    # Exponential smoothing factor
-    alpha = 0.3
-    
-    # Apply exponential smoothing and then take log of smoothed values
-    smoothed_logs = {
-        sensor: [math.log10(alpha * x + (1 - alpha) * sum(vals)/len(vals)) for x in vals]
-        for sensor, vals in sensor_readings.items()
-    }
-    
-    # Compute average of log values per sensor
-    avg_log_values = {
-        sensor: sum(log_vals)/len(log_vals)
-        for sensor, log_vals in smoothed_logs.items()
-    }
-    
-    # Hash sensor names and combine with average log values
-    sensor_hashes = {sensor: hash(sensor) % 1000 for sensor in sensor_readings}
-    
-    # Calculate weighted combination using ternary logic for thresholding
-    weighted_combinations = {
-        sensor: (avg_log_values[sensor] * 100) if avg_log_values[sensor] > 1 else (avg_log_values[sensor] * 50)
-        for sensor in avg_log_values
-    }
-    
-    # Final checksum calculation using reduction
-    final_checksum = reduce(
-        lambda acc, sensor: acc + int(weighted_combinations[sensor]) * sensor_hashes[sensor],
-        weighted_combinations,
-        0
-    )
-    
-    return final_checksum
+# Warehouse inventory analysis
+warehouse_zones = ['A', 'B', 'C', 'D']
+initial_stock = [125, 340, 210, 85]
+restock_amounts = [45, 60, 25, 15]
+zone_weights = [1.2, 0.8, 1.5, 1.0]
 
-final_checksum = process_sensor_data()
-print(f"Result: {final_checksum}")
+# Calculate current inventory
+current_inventory = []
+for i in range(len(warehouse_zones)):
+    stock = initial_stock[i] + restock_amounts[i]
+    current_inventory.append(stock)
+
+# Temporary calculation (distractor)
+zone_efficiency = []
+for stock, weight in zip(current_inventory, zone_weights):
+    efficiency = stock * weight / 100
+    zone_efficiency.append(efficiency)
+
+# Create warehouse totals dictionary
+warehouse_totals = defaultdict(int)
+for zone, stock in zip(warehouse_zones, current_inventory):
+    warehouse_totals[zone] = stock
+
+# Additional processing (distractor)
+total_capacity = sum(current_inventory)
+average_stock = total_capacity / len(current_inventory)
+
+# Select zone with maximum stock
+selected_zone = warehouse_zones[current_inventory.index(max(current_inventory))]
+final_inventory_value = warehouse_totals[selected_zone]
+
+print(f"Target result: {final_inventory_value}")

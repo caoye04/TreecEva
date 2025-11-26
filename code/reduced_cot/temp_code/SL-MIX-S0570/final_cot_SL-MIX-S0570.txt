@@ -1,0 +1,65 @@
+Target: Find the value of variable final_calibration after [line 59] executes
+
+[line 45]  measurements = [45, 52, 38, 61, 47, 55, 42, 58]
+Compute: [45, 52, 38, 61, 47, 55, 42, 58] = [45, 52, 38, 61, 47, ...]
+[line 46]  thresholds = {'min': 40, 'max': 60}
+Compute: {'min': 40, 'max': 60} = {min: 40, max: 60}
+[line 53]  final_calibration = compute_system_adjustment(measurements, thresholds)
+Call function compute_system_adjustment(measurements=[45, 52, 38, 61, 47, ...] (defined at [line 45]), thresholds={min: 40, max: 60} (defined at [line 46]))
+[line 1]  def compute_system_adjustment(measurements, thresholds):
+Enter function compute_system_adjustment: measurements=[45, 52, 38, 61, 47, ...] (measurements defined at [line 45]), thresholds={min: 40, max: 60} (thresholds defined at [line 46])
+  [line 8]  valid_measurements = set(measurements)
+  Call function set(measurements=[45, 52, 38, 61, 47, ...] (parameter measurements defined at [line 45]))
+  [line 9]  threshold_range = range(thresholds['min'], thresholds['max'] + 1)
+  Call function range(thresholds['min'], thresholds['max'] + 1)
+  [line 15]  filtered_vals = []
+  Compute: [] = []
+  [line 16]  for idx, val in enumerate(measurements):
+  (Missing param: 'iter_var')
+  [line 17]  if val in threshold_range:
+  Condition: True, entering 'if' block
+  [line 16]  for idx, val in enumerate(measurements):
+  (Missing param: 'iter_var')
+  [line 17]  if val in threshold_range:
+  Condition: True, entering 'if' block
+... [Line 16] repeats 5 more times ...
+... [Line 16] repeats 5 more times ...
+  [line 16]  for idx, val in enumerate(measurements):
+  (Missing param: 'iter_var')
+  [line 17]  if val in threshold_range:
+  Condition: True, entering 'if' block
+  [line 16]  for idx, val in enumerate(measurements):
+  Loop End: Iteration finished
+  [line 24]  if filtered_vals:
+  Condition: True, entering 'if' block
+  [line 25]  value_pairs = list(zip(filtered_vals, filtered_vals[1:]))
+  Call function list(zip(filtered_vals, filtered_vals[1:]))
+  [line 26]  adjustments = []
+  Compute: [] = []
+  [line 27]  for pair in value_pairs:
+  Loop Start: pair takes its first value (45, 52)
+  [line 27]  for pair in value_pairs:
+  Loop End: Iteration finished
+  [line 27]  for pair in value_pairs:
+  Loop End: Iteration finished
+  [line 27]  for pair in value_pairs:
+  Loop End: Iteration finished
+  [line 27]  for pair in value_pairs:
+  Loop End: Iteration finished
+  [line 27]  for pair in value_pairs:
+  Loop End: Iteration finished
+  [line 32]  if len(adjustments) >= 3:
+  Condition: True, entering 'if' block
+  [line 33]  core_adjustment = sum(adjustments[:3]) - adjustments[2]
+  Compute: sum(adjustments[:3]) - adjustments[2], where adjustments=[48, 49, 51, 48, 50] (defined at [line 26]) = 97
+  [line 38]  valid_count = len(valid_measurements & set(threshold_range))
+  Call function len(valid_measurements & set(threshold_range))
+  [line 39]  final_value = core_adjustment + valid_count * 7
+  Compute: core_adjustment + valid_count * 7, where core_adjustment=97 (defined at [line 33]), valid_count=6 (defined at [line 38]) = 139
+  [line 40]  return final_value
+  Return: final_value=139 (defined at [line 39])
+Function compute_system_adjustment returns 139
+[line 59]  print(f"Target result: {final_calibration}")
+Output: f"Target result: {final_calibration}"
+
+Answer: final_calibration = 139 (last updated on defined at [line 53])

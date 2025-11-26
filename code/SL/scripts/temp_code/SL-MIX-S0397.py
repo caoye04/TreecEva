@@ -1,77 +1,56 @@
-from functools import reduce
+def process_final_data(data_sequence):
+    # Main processing function with nested operations
+    temp_sum = 0
+    counter = 0
+    irrelevant_accumulator = 1  # Distractor variable
+    
+    for idx, (x_val, y_val) in enumerate(zip(data_sequence, data_sequence[1:])):
+        # Primary logic: process adjacent pairs
+        if idx % 3 == 0:
+            temp_sum += (x_val ^ y_val) * (idx + 1)  # XOR and scaling
+        elif idx % 3 == 1:
+            temp_sum -= (x_val | y_val) << 1  # OR and bit shift
+        else:
+            temp_sum += (x_val & y_val) * 3  # AND operation
+            
+        counter += 1
+        irrelevant_accumulator *= (idx + 2)  # Misleading computation
+    
+    # Dead code path - never executed
+    if counter > 100:
+        misleading_result = irrelevant_accumulator // 10
+        temp_sum = misleading_result  # This never happens
+    
+    # Final adjustment using modular arithmetic
+    if temp_sum % 7 == 0:
+        final_value = temp_sum // 3
+    elif temp_sum % 7 == 1:
+        final_value = temp_sum * 2 - 5
+    else:
+        final_value = temp_sum + 8
+    
+    return final_value
 
-def calculate_shipping_cost(weight, distance):
-    base_rate = 2.5
-    return base_rate * weight * (distance / 100)
+# Main execution with data preparation
+input_data = [12, 7, 9, 15, 3, 11, 8]
 
-def apply_divide_and_conquer_discount(weights, costs):
-    if len(weights) <= 1:
-        return costs
-    mid = len(weights) // 2
-    left_weights, right_weights = weights[:mid], weights[mid:]
-    left_costs, right_costs = costs[:mid], costs[mid:]
-    return apply_divide_and_conquer_discount(left_weights, left_costs) + apply_divide_and_conquer_discount(right_weights, right_costs)
+# Irrelevant data processing
+secondary_data = [x * 2 for x in input_data if x > 5]  # Never used
+misleading_array = [x % 4 for x in input_data]  # Distractor
 
-def process_shipments():
-    # State machine for package routing
-    states = {'A': ['B', 'C'], 'B': ['C', 'D'], 'C': ['D'], 'D': []}
-    current_city = 'A'
-    
-    # Shipment data: (weight, destination)
-    shipments = [(15, 'D'), (8, 'C'), (22, 'D'), (5, 'B'), (12, 'D')]
-    distances = {'A': {'B': 120, 'C': 200}, 'B': {'C': 80, 'D': 150}, 'C': {'D': 70}}
-    
-    total_cost = 0
-    shipment_weights = []
-    shipment_costs = []
-    
-    for weight, destination in shipments:
-        if weight > 25:
-            return 0  # Early return for overweight packages
-        
-        path_cost = 0
-        temp_city = current_city
-        
-        # Route package through cities using state machine
-        while temp_city != destination:
-            if not states[temp_city]:
-                break
-            next_cities = states[temp_city]
-            if destination in next_cities:
-                path_cost += calculate_shipping_cost(weight, distances[temp_city][destination])
-                break
-            else:
-                # Move to first available city
-                next_city = next_cities[0]
-                if temp_city in distances and next_city in distances[temp_city]:
-                    path_cost += calculate_shipping_cost(weight, distances[temp_city][next_city])
-                temp_city = next_city
-                
-                if temp_city == destination:
-                    break
-        
-        shipment_weights.append(weight)
-        shipment_costs.append(path_cost)
-        total_cost += path_cost
-    
-    # Sort weights for divide and conquer discount application
-    sorted_indices = sorted(range(len(shipment_weights)), key=lambda i: shipment_weights[i])
-    sorted_weights = [shipment_weights[i] for i in sorted_indices]
-    sorted_costs = [shipment_costs[i] for i in sorted_indices]
-    
-    # Apply discount: 10% off for shipments >= 10 weight units
-    discounted_costs = [
-        cost * 0.9 if weight >= 10 else cost 
-        for weight, cost in zip(sorted_weights, sorted_costs)
-    ]
-    
-    # Use divide and conquer to finalize costs
-    final_costs = apply_divide_and_conquer_discount(sorted_weights, discounted_costs)
-    
-    # Sum all discounted costs
-    total_discounted_cost = reduce(lambda x, y: x + y, final_costs, 0)
-    
-    return total_discounted_cost
+# Core data transformation
+processed_values = []
+for i, val in enumerate(input_data):
+    if i % 2 == 0:
+        processed_values.append(val + 3)
+    else:
+        processed_values.append(val - 2)
 
-result = process_shipments()
-print(f"Result: {result}")
+# More irrelevant operations
+unused_result = sum(misleading_array) * 2  # Dead variable
+
+# Key execution point
+transformed_data = [x % 13 for x in processed_values]
+final_aggregate = process_final_data(transformed_data)
+
+print(f"Target result: {final_aggregate}")

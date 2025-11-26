@@ -1,7 +1,43 @@
-8
-planned_croissants
+21
+final_throughput
 ---
-3 today_sales = Counter({'croissants': 45, 'muffins': 20, 'danish': 30})
-3 ['today_sales'] ['{croissants: 45, muffins: 20, danish: 30}']
-8 planned_croissants = today_sales['croissants']
-8 ['today_sales', 'planned_croissants'] ['{croissants: 45, muffins: 20, danish: 30}', '45']
+2 packet_sizes = [512, 1024, 768, 2048, 1536, 512, 2560, 1024]
+2 ['packet_sizes'] ['[512, 1024, 768, 2048, 1536, ...]']
+3 bandwidth_limit = 1500
+3 ['packet_sizes', 'bandwidth_limit'] ['[512, 1024, 768, 2048, 1536, ...]', '1500']
+6 filtered_packets = [size for size in packet_sizes if size <= bandwidth_limit]
+6 ['packet_sizes', 'bandwidth_limit', 'size'] ['[512, 1024, 768, 2048, 1536, ...]', '1500', '512']
+6 filtered_packets = [size for size in packet_sizes if size <= bandwidth_limit]
+6 ['packet_sizes', 'bandwidth_limit', 'size'] ['[512, 1024, 768, 2048, 1536, ...]', '1500', '1024']
+6 filtered_packets = [size for size in packet_sizes if size <= bandwidth_limit]
+6 ['packet_sizes', 'bandwidth_limit', 'size'] ['[512, 1024, 768, 2048, 1536, ...]', '1500', '768']
+6 filtered_packets = [size for size in packet_sizes if size <= bandwidth_limit]
+6 ['packet_sizes', 'bandwidth_limit', 'size'] ['[512, 1024, 768, 2048, 1536, ...]', '1500', '2048']
+6 filtered_packets = [size for size in packet_sizes if size <= bandwidth_limit]
+6 ['packet_sizes', 'bandwidth_limit', 'size'] ['[512, 1024, 768, 2048, 1536, ...]', '1500', '1536']
+6 filtered_packets = [size for size in packet_sizes if size <= bandwidth_limit]
+6 ['packet_sizes', 'bandwidth_limit', 'size'] ['[512, 1024, 768, 2048, 1536, ...]', '1500', '512']
+6 filtered_packets = [size for size in packet_sizes if size <= bandwidth_limit]
+6 ['packet_sizes', 'bandwidth_limit', 'size'] ['[512, 1024, 768, 2048, 1536, ...]', '1500', '2560']
+6 filtered_packets = [size for size in packet_sizes if size <= bandwidth_limit]
+6 ['packet_sizes', 'bandwidth_limit', 'size'] ['[512, 1024, 768, 2048, 1536, ...]', '1500', '1024']
+6 filtered_packets = [size for size in packet_sizes if size <= bandwidth_limit]
+6 ['packet_sizes', 'bandwidth_limit', 'filtered_packets'] ['[512, 1024, 768, 2048, 1536, ...]', '1500', '[512, 1024, 768, 512, 1024]']
+13 processed_packets = []
+13 ['filtered_packets', 'processed_packets'] ['[512, 1024, 768, 512, 1024]', '[]']
+14 for packet in filtered_packets:
+14 ['filtered_packets', 'processed_packets', 'packet'] ['[512, 1024, 768, 512, 1024]', '[]', '512']
+14 for packet in filtered_packets:
+14 ['filtered_packets', 'processed_packets', 'packet'] ['[512, 1024, 768, 512, 1024]', '[544]', '1024']
+14 for packet in filtered_packets:
+14 ['filtered_packets', 'processed_packets', 'packet'] ['[512, 1024, 768, 512, 1024]', '[544, 1056]', '768']
+14 for packet in filtered_packets:
+14 ['filtered_packets', 'processed_packets', 'packet'] ['[512, 1024, 768, 512, 1024]', '[544, 1056, 800]', '512']
+14 for packet in filtered_packets:
+14 ['filtered_packets', 'processed_packets', 'packet'] ['[512, 1024, 768, 512, 1024]', '[544, 1056, 800, 544]', '1024']
+14 for packet in filtered_packets:
+14 ['filtered_packets', 'processed_packets', 'packet'] ['[512, 1024, 768, 512, 1024]', '[544, 1056, 800, 544, 1056]', '1024']
+20 if len(processed_packets) > 0:
+20 ['processed_packets'] ['[544, 1056, 800, 544, 1056]']
+21 final_throughput = processed_packets[-1]
+21 ['processed_packets', 'final_throughput'] ['[544, 1056, 800, 544, 1056]', '1056']

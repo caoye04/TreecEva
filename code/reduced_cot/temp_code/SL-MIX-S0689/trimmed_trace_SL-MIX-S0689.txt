@@ -1,0 +1,55 @@
+47
+final_checksum
+---
+47 final_checksum = process_inventory_data(inventory_items)
+47 ['inventory_items'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]"]
+PARAM_MAPPING {'items': {'actual_var': 'inventory_items', 'value': [{'id': 101, 'name': 'laptop', 'quantity': 15, 'price': 42, 'status': 'active', 'category': 'electronics'}, {'id': 102, 'name': 'monitor', 'quantity': 8, 'price': 67, 'status': 'active', 'category': 'electronics'}, {'id': 103, 'name': 'keyboard', 'quantity': 25, 'price': 23, 'status': 'inactive', 'category': 'accessories'}, {'id': 104, 'name': 'mouse', 'quantity': 30, 'price': 18, 'status': 'active', 'category': 'accessories'}]}}
+FUNCTION_ENTER 1 process_inventory_data def process_inventory_data(items):
+1 ['items'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 101}, 'name': {'_type': 'str', '_value': 'laptop'}, 'quantity': {'_type': 'int', '_value': 15}, 'price': {'_type': 'int', '_value': 42}, 'status': {'_type': 'str', '_value': 'active'}}, '_len': 6}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 102}, 'name': {'_type': 'str', '_value': 'monitor'}, 'quantity': {'_type': 'int', '_value': 8}, 'price': {'_type': 'int', '_value': 67}, 'status': {'_type': 'str', '_value': 'active'}}, '_len': 6}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 103}, 'name': {'_type': 'str', '_value': 'keyboard'}, 'quantity': {'_type': 'int', '_value': 25}, 'price': {'_type': 'int', '_value': 23}, 'status': {'_type': 'str', '_value': 'inactive'}}, '_len': 6}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 104}, 'name': {'_type': 'str', '_value': 'mouse'}, 'quantity': {'_type': 'int', '_value': 30}, 'price': {'_type': 'int', '_value': 18}, 'status': {'_type': 'str', '_value': 'active'}}, '_len': 6}], '_len': 4}]
+11 checksum = 0
+11 ['items', 'checksum'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '0']
+12 processed_count = 0
+12 ['items', 'checksum', 'processed_count'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '0', '0']
+14 for item in items:
+14 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '0', '0', "{id: 101, name: 'laptop', quantity: 15, ...}"]
+19 if item['status'] == 'active':
+19 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '0', '0', "{id: 101, name: 'laptop', quantity: 15, ...}"]
+20 checksum ^= (item['quantity'] << 4) | (item['price'] & 0xFF)
+20 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '250', '0', "{id: 101, name: 'laptop', quantity: 15, ...}"]
+21 processed_count += 1
+21 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '250', '1', "{id: 101, name: 'laptop', quantity: 15, ...}"]
+24 if item['category'] == 'electronics':
+24 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '250', '1', "{id: 101, name: 'laptop', quantity: 15, ...}"]
+14 for item in items:
+14 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '250', '1', "{id: 102, name: 'monitor', quantity: 8, ...}"]
+19 if item['status'] == 'active':
+19 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '250', '1', "{id: 102, name: 'monitor', quantity: 8, ...}"]
+20 checksum ^= (item['quantity'] << 4) | (item['price'] & 0xFF)
+20 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '57', '1', "{id: 102, name: 'monitor', quantity: 8, ...}"]
+21 processed_count += 1
+21 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '57', '2', "{id: 102, name: 'monitor', quantity: 8, ...}"]
+24 if item['category'] == 'electronics':
+24 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '57', '2', "{id: 102, name: 'monitor', quantity: 8, ...}"]
+14 for item in items:
+14 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '57', '2', "{id: 103, name: 'keyboard', quantity: 25, ...}"]
+19 if item['status'] == 'active':
+19 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '57', '2', "{id: 103, name: 'keyboard', quantity: 25, ...}"]
+24 if item['category'] == 'electronics':
+24 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '57', '2', "{id: 103, name: 'keyboard', quantity: 25, ...}"]
+14 for item in items:
+14 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '57', '2', "{id: 104, name: 'mouse', quantity: 30, ...}"]
+19 if item['status'] == 'active':
+19 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '57', '2', "{id: 104, name: 'mouse', quantity: 30, ...}"]
+20 checksum ^= (item['quantity'] << 4) | (item['price'] & 0xFF)
+20 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '459', '2', "{id: 104, name: 'mouse', quantity: 30, ...}"]
+21 processed_count += 1
+21 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '459', '3', "{id: 104, name: 'mouse', quantity: 30, ...}"]
+24 if item['category'] == 'electronics':
+24 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '459', '3', "{id: 104, name: 'mouse', quantity: 30, ...}"]
+14 for item in items:
+14 ['items', 'checksum', 'processed_count', 'item'] ["[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]", '459', '3', "{id: 104, name: 'mouse', quantity: 30, ...}"]
+31 checksum = (checksum + processed_count) & 0xFFFF
+31 ['checksum', 'processed_count'] ['462', '3']
+32 return checksum
+32 ['checksum'] ['462']
+FUNCTION_RETURN 32 process_inventory_data {'_type': 'int', '_value': 462}

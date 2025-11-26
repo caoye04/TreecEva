@@ -1,20 +1,72 @@
-Target: Find the value of variable top_seller_units after [line 20] executes
+Target: Find the value of variable final_quality_score after [line 34] executes
 
-[line 17]  top_seller_units = 0
-Assign: top_seller_units = 0
-[line 18]  for item_name, pastry in sales_data.items():
+[line 3]  raw_values = [45, 67, 23, 89, 34, 78, 56, 12, 91, 64]
+Compute: [45, 67, 23, 89, 34, 78, 56, 12, 91, 64] = [45, 67, 23, 89, 34, ...]
+[line 4]  filtered_values = list(filter(lambda x: x > 30 and x < 80, raw_values))
+Call function list(filter(lambda x: x > 30 and x < 80, raw_values))
+[line 4]  filtered_values = list(filter(lambda x: x > 30 and x < 80, raw_values))
+Call function list(filter(lambda x: x > 30 and x < 80, raw_values))
+[line 4]  filtered_values = list(filter(lambda x: x > 30 and x < 80, raw_values))
+Call function list(filter(lambda x: x > 30 and x < 80, raw_values))
+[line 4]  filtered_values = list(filter(lambda x: x > 30 and x < 80, raw_values))
+Call function list(filter(lambda x: x > 30 and x < 80, raw_values))
+[line 4]  filtered_values = list(filter(lambda x: x > 30 and x < 80, raw_values))
+Call function list(filter(lambda x: x > 30 and x < 80, raw_values))
+[line 4]  filtered_values = list(filter(lambda x: x > 30 and x < 80, raw_values))
+Call function list(filter(lambda x: x > 30 and x < 80, raw_values))
+[line 4]  filtered_values = list(filter(lambda x: x > 30 and x < 80, raw_values))
+Call function list(filter(lambda x: x > 30 and x < 80, raw_values))
+[line 4]  filtered_values = list(filter(lambda x: x > 30 and x < 80, raw_values))
+Call function list(filter(lambda x: x > 30 and x < 80, raw_values))
+[line 4]  filtered_values = list(filter(lambda x: x > 30 and x < 80, raw_values))
+Call function list(filter(lambda x: x > 30 and x < 80, raw_values))
+[line 4]  filtered_values = list(filter(lambda x: x > 30 and x < 80, raw_values))
+Call function list(filter(lambda x: x > 30 and x < 80, raw_values))
+[line 4]  filtered_values = list(filter(lambda x: x > 30 and x < 80, raw_values))
+Call function list(filter(lambda x: x > 30 and x < 80, raw_values))
+[line 12]  normalized_values = [val / 100.0 for val in filtered_values]
+Compute: [val / 100.0 for val in filtered_values], where val=45 (an unknown source), filtered_values=[45, 67, 34, 78, 56, ...] (defined at [line 4]) = ?
+[line 13]  scaled_values = [val * 10 for val in normalized_values]
+Compute: [val * 10 for val in normalized_values], where val=0.45 (an unknown source), normalized_values=[0.45, 0.67, 0.34, 0.78, 0.56, ...] (defined at [line 12]) = ?
+[line 20]  processed_scores = []
+Compute: [] = []
+[line 21]  for idx, val in enumerate(scaled_values):
 (Missing param: 'iter_var')
-[line 19]  if pastry.units_sold > 100:
+[line 22]  if val > 4.5:
 Condition: True, entering 'if' block
-[line 18]  for item_name, pastry in sales_data.items():
+[line 21]  for idx, val in enumerate(scaled_values):
 (Missing param: 'iter_var')
-[line 19]  if pastry.units_sold > 100:
+[line 22]  if val > 4.5:
 Condition: True, entering 'if' block
-[line 18]  for item_name, pastry in sales_data.items():
+... [Line 21] repeats 3 more times ...
+... [Line 21] repeats 3 more times ...
+[line 21]  for idx, val in enumerate(scaled_values):
 (Missing param: 'iter_var')
-[line 19]  if pastry.units_sold > 100:
+[line 22]  if val > 4.5:
 Condition: True, entering 'if' block
-[line 20]  top_seller_units = pastry.units_sold
-Compute: pastry.units_sold, where pastry=Pastry(units_sold=120) (an unknown source) = 120
+[line 21]  for idx, val in enumerate(scaled_values):
+Loop End: Iteration finished
+[line 28]  adjustment_factor = 0
+Assign: adjustment_factor = 0
+[line 29]  for i in range(len(processed_scores) - 1):
+Loop Start: i takes its first value 0
+[line 30]  if abs(processed_scores[i] - processed_scores[i + 1]) < 3:
+Condition: True, entering 'if' block
+[line 29]  for i in range(len(processed_scores) - 1):
+Loop Iteration: i is now 1 (iteration 2)
+[line 30]  if abs(processed_scores[i] - processed_scores[i + 1]) < 3:
+Condition: True, entering 'if' block
+... [Line 29] repeats 2 more times ...
+... [Line 29] repeats 2 more times ...
+[line 29]  for i in range(len(processed_scores) - 1):
+Loop Iteration: i is now 4 (iteration 5)
+[line 30]  if abs(processed_scores[i] - processed_scores[i + 1]) < 3:
+Condition: True, entering 'if' block
+[line 31]  adjustment_factor += 1
+Update: adjustment_factor changed from 0 (defined at defined at [line 28]) to 0+1 = 1
+[line 29]  for i in range(len(processed_scores) - 1):
+Loop End: Iteration finished
+[line 34]  final_quality_score = (sum(processed_scores) // len(processed_scores)) + adjustment_factor
+Compute: (sum(processed_scores) // len(processed_scores)) + adjustment_factor, where processed_scores=[6, 13, 5, 15, 11, ...] (defined at [line 20]), adjustment_factor=1 (defined at [line 31]) = 11
 
-Answer: top_seller_units = 120 (last updated on defined at [line 20])
+Answer: final_quality_score = 11 (last updated on defined at [line 34])

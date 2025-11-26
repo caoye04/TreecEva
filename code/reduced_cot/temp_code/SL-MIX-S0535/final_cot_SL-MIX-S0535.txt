@@ -1,0 +1,82 @@
+Target: Find the value of variable final_network_score after [line 68] executes
+
+[line 60]  primary_nodes = [101, 103, 107, 109]
+Compute: [101, 103, 107, 109] = [101, 103, 107, 109]
+[line 61]  secondary_routers = ['router_a', 'router_b']
+Compute: ['router_a', 'router_b'] = ['router_a', 'router_b']
+[line 62]  bandwidth_map = {101: 1000, 103: 1500, 107: 800, 109: 1200}
+Compute: {101: 1000, 103: 1500, 107: 800, 109: 1200} = {101: 1000, 103: 1500, 107: 800, ...}
+[line 65]  final_network_score = compute_network_efficiency(primary_nodes, secondary_routers, bandwidth_map)
+Call function compute_network_efficiency(primary_nodes=[101, 103, 107, 109] (defined at [line 60]), secondary_routers=['router_a', 'router_b'] (defined at [line 61]), bandwidth_map={101: 1000, 103: 1500, 107: 800, ...} (defined at [line 62]))
+[line 28]  def compute_network_efficiency(primary_nodes, secondary_routers, bandwidth_config):
+Enter function compute_network_efficiency: primary_nodes=[101, 103, 107, 109] (primary_nodes defined at [line 60]), secondary_routers=['router_a', 'router_b'] (secondary_routers defined at [line 61]), bandwidth_config={101: 1000, 103: 1500, 107: 800, ...} (bandwidth_map defined at [line 62])
+  [line 30]  active_paths = len(primary_nodes) * len(secondary_routers)
+  Compute: len(primary_nodes) * len(secondary_routers), where primary_nodes=[101, 103, 107, 109] (parameter primary_nodes defined at [line 60]), secondary_routers=['router_a', 'router_b'] (parameter secondary_routers defined at [line 61]) = 8
+  [line 31]  total_capacity = sum(bandwidth_config.values())
+  Call function sum(bandwidth_config.values())
+  [line 3]  def calculate_redundancy_factor(active_paths, total_capacity):
+  Enter function calculate_redundancy_factor: active_paths=8 (active_paths defined at [line 30]), total_capacity=4500 (total_capacity defined at [line 31])
+    [line 5]  efficiency_ratio = total_capacity / (active_paths + 1)
+    Compute: total_capacity / (active_paths + 1), where total_capacity=4500 (parameter total_capacity defined at [line 31]), active_paths=8 (parameter active_paths defined at [line 30]) = 500.0
+    [line 6]  return efficiency_ratio * 0.8  # dead coefficient
+    Return: efficiency_ratio * 0.8  # dead coefficient
+  Function calculate_redundancy_factor returns 400.0
+  [line 35]  max_bandwidth = max(bandwidth_config.values()) if bandwidth_config else 0
+  Compute: max(bandwidth_config.values()) if bandwidth_config else 0, where bandwidth_config={101: 1000, 103: 1500, 107: 800, ...} (parameter bandwidth_config defined at [line 62]) = 1500
+  [line 38]  throughput_matrix = [[bandwidth_config.get(node, 0) for node in primary_nodes]]
+  Compute: [[bandwidth_config.get(node, 0) for node in primary_nodes]], where bandwidth_config={101: 1000, 103: 1500, 107: 800, ...} (parameter bandwidth_config defined at [line 62]), node=101 (an unknown source), primary_nodes=[101, 103, 107, 109] (parameter primary_nodes defined at [line 60]) = ?
+  [line 39]  utilization_score = compute_bandwidth_utilization(throughput_matrix, max_bandwidth)
+  Call function compute_bandwidth_utilization(throughput_matrix=[[1000, 1500, 800, 1200]] (defined at [line 38]), max_bandwidth=1500 (defined at [line 35]))
+  [line 8]  def compute_bandwidth_utilization(throughput_matrix, max_throughput):
+  Enter function compute_bandwidth_utilization: throughput_matrix=[[1000, 1500, 800, 1200]] (throughput_matrix defined at [line 38]), max_throughput=1500 (max_bandwidth defined at [line 35])
+    [line 9]  temp_sum = sum(sum(row) for row in throughput_matrix)
+    Call function sum(sum(row) for row in throughput_matrix)
+    [line 9]  temp_sum = sum(sum(row) for row in throughput_matrix)
+    Call function sum(sum(row) for row in throughput_matrix)
+    [line 9]  temp_sum = sum(sum(row) for row in throughput_matrix)
+    Call function sum(sum(row) for row in throughput_matrix)
+    [line 10]  utilization = temp_sum / (len(throughput_matrix) * max_throughput)
+    Compute: temp_sum / (len(throughput_matrix) * max_throughput), where temp_sum=4500 (defined at [line 9]), throughput_matrix=[[1000, 1500, 800, 1200]] (parameter throughput_matrix defined at [line 38]), max_throughput=1500 (parameter max_throughput defined at [line 35]) = 3.0
+    [line 12]  return min(utilization, 1.0)
+    Return: min(utilization, 1.0)
+  Function compute_bandwidth_utilization returns 1.0
+  [line 45]  node_pairs = list(itertools.combinations(primary_nodes, 2))
+  Call function list(itertools.combinations(primary_nodes, 2))
+  [line 46]  average_latency = analyze_network_latency(node_pairs, 10)
+  Call function analyze_network_latency(node_pairs=[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...] (defined at [line 45]), 10)
+  [line 14]  def analyze_network_latency(node_pairs, base_latency):
+  Enter function analyze_network_latency: node_pairs=[(101, 103), (101, 107), (101, 109), (103, 107), (103, 109), ...] (node_pairs defined at [line 45]), base_latency=10
+    [line 15]  latency_values = []
+    Compute: [] = []
+    [line 16]  for pair in node_pairs:
+    Loop Start: pair takes its first value (101, 103)
+    [line 17]  if len(pair) == 2:
+    Condition: True, entering 'if' block
+    [line 16]  for pair in node_pairs:
+    Loop Iteration: pair is now (101, 107) (iteration 2)
+    [line 17]  if len(pair) == 2:
+    Condition: True, entering 'if' block
+... [Line 16] repeats 3 more times ...
+... [Line 16] repeats 3 more times ...
+    [line 16]  for pair in node_pairs:
+    Loop Iteration: pair is now (107, 109) (iteration 6)
+    [line 17]  if len(pair) == 2:
+    Condition: True, entering 'if' block
+    [line 16]  for pair in node_pairs:
+    Loop End: Iteration finished
+    [line 23]  if not latency_values:
+    Condition: True, entering 'if' block
+    [line 26]  return sum(latency_values) / len(latency_values)
+    Return: sum(latency_values) / len(latency_values)
+  Function analyze_network_latency returns 12.333333333333334
+  [line 49]  efficiency_score = (total_capacity * utilization_score) / (average_latency + 1)
+  Compute: (total_capacity * utilization_score) / (average_latency + 1), where total_capacity=4500 (defined at [line 31]), utilization_score=1.0 (defined at [line 39]), average_latency=12.333333333333334 (defined at [line 46]) = 337.5
+  [line 55]  final_score = efficiency_score / (len(secondary_routers) + 1)
+  Compute: efficiency_score / (len(secondary_routers) + 1), where efficiency_score=337.5 (defined at [line 49]), secondary_routers=['router_a', 'router_b'] (parameter secondary_routers defined at [line 61]) = 112.5
+  [line 57]  return int(final_score)
+  Return: int(final_score)
+Function compute_network_efficiency returns 112
+[line 68]  print(f"Result: {final_network_score}")
+Output: f"Result: {final_network_score}"
+
+Answer: final_network_score = 112 (last updated on defined at [line 65])

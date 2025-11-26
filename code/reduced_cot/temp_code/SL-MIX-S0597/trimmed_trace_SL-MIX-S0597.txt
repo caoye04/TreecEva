@@ -1,0 +1,53 @@
+39
+final_metric
+---
+7 valid_measures = [m for m in measurements if m >= 10]
+7 ['measurements', 'm'] ['[15, 32, 8, 45, 12, ...]', '15']
+7 valid_measures = [m for m in measurements if m >= 10]
+7 ['measurements', 'm'] ['[15, 32, 8, 45, 12, ...]', '32']
+7 valid_measures = [m for m in measurements if m >= 10]
+7 ['measurements', 'm'] ['[15, 32, 8, 45, 12, ...]', '8']
+7 valid_measures = [m for m in measurements if m >= 10]
+7 ['measurements', 'm'] ['[15, 32, 8, 45, 12, ...]', '45']
+7 valid_measures = [m for m in measurements if m >= 10]
+7 ['measurements', 'm'] ['[15, 32, 8, 45, 12, ...]', '12']
+7 valid_measures = [m for m in measurements if m >= 10]
+7 ['measurements', 'm'] ['[15, 32, 8, 45, 12, ...]', '28']
+7 valid_measures = [m for m in measurements if m >= 10]
+7 ['measurements', 'm'] ['[15, 32, 8, 45, 12, ...]', '50']
+7 valid_measures = [m for m in measurements if m >= 10]
+7 ['measurements', 'm'] ['[15, 32, 8, 45, 12, ...]', '6']
+7 valid_measures = [m for m in measurements if m >= 10]
+7 ['measurements', 'valid_measures'] ['[15, 32, 8, 45, 12, ...]', '[15, 32, 45, 12, 28, ...]']
+8 if not valid_measures:
+8 ['valid_measures'] ['[15, 32, 45, 12, 28, ...]']
+17 quality_threshold = 25
+17 ['valid_measures', 'quality_threshold'] ['[15, 32, 45, 12, 28, ...]', '25']
+18 high_quality = [m for m in valid_measures if m > quality_threshold]
+18 ['valid_measures', 'quality_threshold', 'm'] ['[15, 32, 45, 12, 28, ...]', '25', '15']
+18 high_quality = [m for m in valid_measures if m > quality_threshold]
+18 ['valid_measures', 'quality_threshold', 'm'] ['[15, 32, 45, 12, 28, ...]', '25', '32']
+18 high_quality = [m for m in valid_measures if m > quality_threshold]
+18 ['valid_measures', 'quality_threshold', 'm'] ['[15, 32, 45, 12, 28, ...]', '25', '45']
+18 high_quality = [m for m in valid_measures if m > quality_threshold]
+18 ['valid_measures', 'quality_threshold', 'm'] ['[15, 32, 45, 12, 28, ...]', '25', '12']
+18 high_quality = [m for m in valid_measures if m > quality_threshold]
+18 ['valid_measures', 'quality_threshold', 'm'] ['[15, 32, 45, 12, 28, ...]', '25', '28']
+18 high_quality = [m for m in valid_measures if m > quality_threshold]
+18 ['valid_measures', 'quality_threshold', 'm'] ['[15, 32, 45, 12, 28, ...]', '25', '50']
+18 high_quality = [m for m in valid_measures if m > quality_threshold]
+18 ['valid_measures', 'quality_threshold', 'high_quality'] ['[15, 32, 45, 12, 28, ...]', '25', '[32, 45, 28, 50]']
+21 quality_score = (lambda x: (len(x) * (sum(x) // len(x))) >> 2)(high_quality)
+21 ['high_quality'] ['[32, 45, 28, 50]']
+21 quality_score = (lambda x: (len(x) * (sum(x) // len(x))) >> 2)(high_quality)
+21 ['x'] ['[32, 45, 28, 50]']
+28 base_score = quality_score
+28 ['high_quality', 'quality_score', 'base_score'] ['[32, 45, 28, 50]', '38', '38']
+29 parity_check = base_score & 1
+29 ['high_quality', 'base_score', 'parity_check'] ['[32, 45, 28, 50]', '38', '0']
+30 scaled_result = base_score * (3 if parity_check else 4)
+30 ['high_quality', 'base_score', 'parity_check', 'scaled_result'] ['[32, 45, 28, 50]', '38', '0', '152']
+36 aggregate_result = scaled_result - (len(high_quality) * 2)
+36 ['high_quality', 'scaled_result', 'aggregate_result'] ['[32, 45, 28, 50]', '152', '144']
+39 final_metric = aggregate_result
+39 ['aggregate_result', 'final_metric'] ['144', '144']

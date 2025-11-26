@@ -1,0 +1,38 @@
+Target: Find the value of variable final_checksum after [line 47] executes
+
+[line 35]  primary_data = [12, 45, 78, 23, 56, 89, 34, 67]
+Compute: [12, 45, 78, 23, 56, 89, 34, 67] = [12, 45, 78, 23, 56, ...]
+[line 36]  secondary_data = [8, 29, 51, 74, 16, 39, 62, 95]
+Compute: [8, 29, 51, 74, 16, 39, 62, 95] = [8, 29, 51, 74, 16, ...]
+[line 39]  checksum_a = sum(calculate_weights(primary_data))
+Call function sum(calculate_weights(primary_data))
+[line 5]  base_mask = 0xFF
+Assign: base_mask = 255
+[line 6]  shift_count = 2
+Assign: shift_count = 2
+[line 9]  transformed = [(x << shift_count) & base_mask for x in data_stream]
+Compute: [(x << shift_count) & base_mask for x in data_stream], where x=12 (an unknown source), shift_count=2 (defined at [line 6]), base_mask=255 (defined at [line 5]), data_stream=[12, 45, 78, 23, 56, ...] (an unknown source) = ?
+[line 15]  weight_vector = [t % 17 for t in transformed]
+Compute: [t % 17 for t in transformed], where t=48 (an unknown source), transformed=[48, 180, 56, 92, 224, ...] (defined at [line 9]) = ?
+[line 16]  return weight_vector
+Return: weight_vector=[14, 10, 5, 7, 3, ...] (defined at [line 15])
+[line 40]  checksum_b = validate_pattern(secondary_data)
+Call function validate_pattern(secondary_data=[8, 29, 51, 74, 16, ...] (defined at [line 36]))
+[line 20]  temp_sum = sum(pattern_data)
+Call function sum(pattern_data=[8, 29, 51, 74, 16, ...] (an unknown source))
+[line 21]  validation_flag = (temp_sum & 0x0F) == 7
+Compute: (temp_sum & 0x0F) == 7, where temp_sum=374 (defined at [line 20]) = False
+[line 24]  if validation_flag and len(pattern_data) > 10:
+Condition: True, entering 'if' block
+[line 30]  freq_counter = Counter(pattern_data)
+Call function Counter(pattern_data=[8, 29, 51, 74, 16, ...] (an unknown source))
+[line 31]  dominant_value = freq_counter.most_common(1)[0][0] if freq_counter else 0
+Compute: freq_counter.most_common(1)[0][0] if freq_counter else 0, where freq_counter={8: 1, 29: 1, 51: 1, ...} (defined at [line 30]) = 8
+[line 32]  return dominant_value
+Return: dominant_value=8 (defined at [line 31])
+[line 46]  verification_mod = 97
+Assign: verification_mod = 97
+[line 47]  final_checksum = (checksum_a ^ checksum_b) % verification_mod
+Compute: (checksum_a ^ checksum_b) % verification_mod, where checksum_a=66 (defined at [line 39]), checksum_b=8 (defined at [line 40]), verification_mod=97 (defined at [line 46]) = 74
+
+Answer: final_checksum = 74 (last updated on defined at [line 47])

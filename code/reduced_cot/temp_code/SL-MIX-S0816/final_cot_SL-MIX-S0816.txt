@@ -1,0 +1,34 @@
+Target: Find the value of variable final_capacity after [line 48] executes
+
+[line 32]  network_nodes = 4
+Assign: network_nodes = 4
+[line 33]  data_packets = 7
+Assign: data_packets = 7
+[line 34]  redundancy_factor = 2
+Assign: redundancy_factor = 2
+[line 2]  return (throughput * 2) + latency
+Return: (throughput * 2) + latency
+[line 42]  final_capacity = process_network_config(network_nodes, data_packets, redundancy_factor)
+Call function process_network_config(network_nodes=4 (defined at [line 32]), data_packets=7 (defined at [line 33]), redundancy_factor=2 (defined at [line 34]))
+[line 6]  temp_throughput = nodes * packets * 3
+Compute: nodes * packets * 3, where nodes=4 (an unknown source), packets=7 (an unknown source) = 84
+[line 10]  network_load = temp_throughput // redundancy if redundancy else 0
+Compute: temp_throughput // redundancy if redundancy else 0, where temp_throughput=84 (defined at [line 6]), redundancy=2 (an unknown source) = 42
+[line 13]  if network_load > 1000:
+Condition: True, entering 'if' block
+[line 19]  base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+Call function sum([packets * (i + 1) for i in range(nodes)])
+[line 20]  adjusted_capacity = base_capacity - (redundancy * 2)
+Compute: base_capacity - (redundancy * 2), where base_capacity=70 (defined at [line 19]), redundancy=2 (an unknown source) = 66
+[line 23]  capacity_multiplier = lambda x: x * 3 if x % 2 == 0 else x * 2
+Compute: lambda x: x * 3 if x % 2 == 0 else x * 2 = ?
+[line 26]  capacity_values = [adjusted_capacity, network_load, temp_throughput]
+Compute: [adjusted_capacity, network_load, temp_throughput], where adjusted_capacity=66 (defined at [line 20]), network_load=42 (defined at [line 10]), temp_throughput=84 (defined at [line 6]) = [66, 42, 84]
+[line 27]  final_value = capacity_multiplier(capacity_values[0:2][-1])
+Call function capacity_multiplier(capacity_values[0:2][-1])
+[line 29]  return final_value
+Return: final_value=126 (defined at [line 27])
+[line 48]  print(f"Target result: {final_capacity}")
+Output: f"Target result: {final_capacity}"
+
+Answer: final_capacity = 126 (last updated on defined at [line 42])

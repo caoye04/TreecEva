@@ -1,52 +1,38 @@
-from functools import reduce
-from collections import namedtuple
-
-def hash_transform(text):
-    return reduce(lambda x, y: (x * 31 + ord(y)) & 0xFFFFFFFF, text, 0)
-
-def process_reading(sensor_data, calibration_map):
-    base_hash = hash_transform(sensor_data.location)
-    adjusted_value = float(sensor_data.temperature) * 1.8 + 32  # Celsius to Fahrenheit
+def process_data_points():
+    # Initialize data points with tuples
+    sensor_readings = [(12, 5), (8, 3), (15, 7), (6, 2)]
+    calibration_offsets = [1, -2, 0, 3]
     
-    if adjusted_value > 100:
-        mode = 'HOT'
-    elif adjusted_value < 32:
-        mode = 'FREEZING'
-    else:
-        mode = 'NORMAL'
-    
-    # Switch-case simulation
-    processors = {
-        'HOT': lambda v: (v * 2) % 97,
-        'FREEZING': lambda v: (v // 3) % 79,
-        'NORMAL': lambda v: (v + 10) % 53
-    }
-    
-    processed = processors[mode](base_hash)
-    calibrated = processed ^ calibration_map.get(mode, 0xFF)
-    return calibrated
-
-def main():
-    SensorData = namedtuple('SensorData', ['location', 'temperature'])
-    
-    sensors = [
-        SensorData('arctic_station_01', '-40.0'),
-        SensorData('desert_outpost_a', '50.0'),
-        SensorData('tropical_buoy_12', '30.0')
+    # Process readings using list comprehension with conditional expression
+    processed_readings = [
+        (x + offset if x > 10 else x - offset) 
+        for (x, y), offset in zip(sensor_readings, calibration_offsets)
     ]
     
-    calibration = {'HOT': 0xA5, 'FREEZING': 0x3C, 'NORMAL': 0x6F}
+    # Distractor computation (not used in final result)
+    temp_sum = sum(x + y for x, y in sensor_readings)
     
-    results = []
-    for sensor in sensors:
-        value = process_reading(sensor, calibration)
-        results.append(value)
+    # Apply bitwise XOR operations
+    xor_result = 0
+    for val in processed_readings:
+        xor_result ^= val
     
-    # Final aggregation step
-    final_output = (results[0] << 2) + (results[1] >> 1) - results[2]
-    final_output = final_output % 1000
+    # Final computation with additional distractor
+    scaling_factor = 2.5
+    intermediate = xor_result * scaling_factor
     
-    print(f"Result: {final_output}")
+    # Unnecessary transformation (distractor)
+    transformed = [(x & 0xF) | (x >> 4) for x in processed_readings]
+    
+    # The actual result computation
+    final_result = int(intermediate % 100)
+    
+    return final_result
 
-if __name__ == "__main__":
-    main()
+def result_computation():
+    result = process_data_points()
+    print(f"Target result: {result}")
+    return result
+
+# Execute the computation
+result_computation()

@@ -1,44 +1,57 @@
-import re
-from itertools import combinations
-
-def tokenize(expr):
-    return re.findall(r'\w+|[^\w\s]', expr)
-
-def hash_token(token):
-    val = 0
-    for char in token:
-        val = (val * 31 + ord(char)) & 0xFF
-    return val
-
-class TokenProcessor:
-    def __init__(self, modifiers=None):
-        self.modifiers = modifiers or []
+def process_transaction_data(log_data):
+    # Distractor: This calculates word count but isn't used in final result
+    word_count = len(log_data.split())
     
-    def process(self, tokens):
-        scores = []
-        for t in tokens:
-            base = hash_token(t)
-            if any(c.isdigit() for c in t):
-                base *= 2
-            elif t.isupper():
-                base += 100
-            scores.append(base)
-        
-        # Apply modifier functions if any
-        for mod in self.modifiers:
-            scores = [mod(s) for s in scores]
-        
-        # Compute pairwise XOR of all combinations of 2
-        xor_results = [a ^ b for a, b in combinations(scores, 2)]
-        
-        # Return sum modulo a prime
-        return sum(xor_results) % 1291
+    # Distractor: Uppercase conversion that doesn't affect numeric processing
+    processed_log = log_data.upper()
+    
+    # Main processing logic
+    transaction_set = set()
+    balance = 1000
+    
+    for line in processed_log.split(';'):
+        if line.strip():
+            parts = line.split(':')
+            if len(parts) == 2:
+                operation, amount_str = parts
+                try:
+                    amount = int(amount_str.strip())
+                    transaction_set.add(operation.strip())
+                    
+                    # Actual balance calculation
+                    if operation.strip() == 'DEPOSIT':
+                        balance += amount
+                        # Distractor: Redundant operation
+                        temp_adjust = balance | 0b1010
+                    elif operation.strip() == 'WITHDRAW':
+                        balance -= amount
+                        # Distractor: Unused bitwise operation
+                        check_bit = balance & 0xFF
+                    elif operation.strip() == 'FEE':
+                        balance = max(balance - amount, 0)
+                        # Distractor: String operation on number
+                        fee_str = str(balance)
+                except ValueError:
+                    # Distractor: Dead code path
+                    error_count = len(transaction_set)
+                    
+    # Distractor: Unused character counting
+    char_total = sum(len(op) for op in transaction_set)
+    
+    # Final adjustment based on unique operations
+    final_adjust = len(transaction_set) * 5
+    
+    # Final balance calculation
+    final_balance = balance + final_adjust
+    
+    # Distractor: Unused calculation
+    avg_transaction = balance / len(transaction_set) if transaction_set else 0
+    
+    print(f"Result: {final_balance}")
+    return final_balance
 
-def double_if_even(x):
-    return x * 2 if x % 2 == 0 else x
+# Test data
+transaction_log = "DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150"
 
-token_processor = TokenProcessor([double_if_even])
-input_sequence = "SECURITY2023 TOKEN_abc DEF456x"
-tokens = tokenize(input_sequence)
-final_score = token_processor.process(tokens)
-print(f"Result: {final_score}")
+# Execute main processing
+final_balance = process_transaction_data(transaction_log)

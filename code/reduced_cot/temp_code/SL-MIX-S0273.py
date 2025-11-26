@@ -1,20 +1,19 @@
-import statistics
-from collections import namedtuple
+def analyze_climate_data():
+    temperature_readings = [22.5, 19.8, 25.3, 18.9, 23.7, 21.2]
+    humidity_levels = [65, 72, 58, 75, 62, 68]
+    
+    # Main calculation - this determines the final result
+    temperature_analysis = lambda readings: (max(readings) + min(readings)) / 2
+    final_temperature = temperature_analysis(temperature_readings)
+    
+    # Distraction operations that don't affect final_temperature
+    average_humidity = sum(humidity_levels) / len(humidity_levels)
+    temperature_variance = max(temperature_readings) - min(temperature_readings)
+    
+    # More distraction - processing that's unused
+    filtered_readings = [temp for temp in temperature_readings if temp > 20]
+    reading_count = len(filtered_readings)
+    
+    print(f"Target result: {final_temperature}")
 
-# Define a nucleotide mapping
-Nucleotide = namedtuple('Nucleotide', ['symbol', 'value'])
-
-code_map = {
-    'A': Nucleotide('Adenine', 0),
-    'T': Nucleotide('Thymine', 1),
-    'G': Nucleotide('Guanine', 2),
-    'C': Nucleotide('Cytosine', 3)
-}
-
-# Encoded DNA sequence values
-dna_values = [2, 1, 3, 0, 2, 3, 1]
-
-# Calculate variance of the encoded sequence
-encoded_variance = statistics.variance(dna_values)
-
-print(f"Result: {encoded_variance}")
+analyze_climate_data()

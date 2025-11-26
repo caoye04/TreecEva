@@ -1,33 +1,40 @@
-import re
-from collections import Counter
-import math
+def calculate_business_metrics(transactions):
+    total_revenue = sum([t['amount'] for t in transactions if t['type'] == 'sale'])
+    operating_costs = sum([t['amount'] for t in transactions if t['type'] == 'expense'])
+    
+    # Distractor calculations that don't affect final profit
+    transaction_count = len(transactions)
+    avg_transaction = total_revenue / transaction_count if transaction_count > 0 else 0
+    
+    # Additional intermediate variables
+    revenue_tax = total_revenue * 0.18  # Not actually used
+    cost_analysis = operating_costs * 1.1  # Distractor
+    
+    gross_profit = total_revenue - operating_costs
+    overhead_fixed = 2500  # Fixed overhead costs
+    
+    # Using enumerate to iterate with index (mandatory feature)
+    profit_adjustments = []
+    for idx, transaction in enumerate(transactions):
+        if transaction['type'] == 'sale':
+            adjustment = transaction['amount'] * 0.95
+            profit_adjustments.append(adjustment)
+    
+    adjusted_revenue = sum(profit_adjustments)
+    net_profit = adjusted_revenue - operating_costs - overhead_fixed
+    
+    # Final calculation (key statement)
+    final_calculation = net_profit * 1.0
+    print(f"Result: {net_profit}")
 
-def decode_telemetry(hex_string):
-    # Remove hex prefix if present
-    clean_hex = re.sub(r'^0x', '', hex_string)
-    # Convert hex to integer
-    value = int(clean_hex, 16)
-    # Apply decoding formula: (value^3) mod 1009
-    decoded = pow(value, 3, 1009)
-    return decoded
+# Sample transaction data
+transaction_data = [
+    {'type': 'sale', 'amount': 15000},
+    {'type': 'sale', 'amount': 8500},
+    {'type': 'expense', 'amount': 3200},
+    {'type': 'sale', 'amount': 11200},
+    {'type': 'expense', 'amount': 1800},
+    {'type': 'expense', 'amount': 950}
+]
 
-# Telemetry readings
-readings = ['0xFF', '0x1A2B', '0x3C4D', '0x5E6F']
-
-# Process readings
-processed_values = []
-for reading in readings:
-    decoded_val = decode_telemetry(reading)
-    processed_values.append(decoded_val)
-
-# Calculate checksum using Counter
-freq_counter = Counter(processed_values)
-checksum_components = []
-for val, count in freq_counter.items():
-    # For each unique value, add (value * log(count)) to checksum
-    if count > 0:
-        component = val * math.log(count)
-        checksum_components.append(int(component))
-
-checksum_result = sum(checksum_components) % 1000000
-print(f"Result: {checksum_result}")
+calculate_business_metrics(transaction_data)

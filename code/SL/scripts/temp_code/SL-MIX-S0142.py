@@ -1,48 +1,31 @@
-from collections import defaultdict
-import math
-
-def calculate_optimal_loading(weights, capacity):
-    # Sort packages by weight in descending order (greedy approach)
-    sorted_weights = sorted(weights, reverse=True)
+def process_inventory(items):
+    # Process warehouse inventory with various calculations
+    item_codes = [item * 2 for item in items if item % 3 != 0]
     
-    # Initialize tracking variables
-    loaded_weight = 0.0
-    loaded_packages_count = 0
+    # Intermediate calculations (some not directly used)
+    temp_sum = sum(item_codes)
+    alternate_calc = len(item_codes) * 5.5
+    unused_metric = temp_sum / max(1, len(item_codes))
     
-    # Greedily load packages
-    for weight in sorted_weights:
-        if loaded_weight + weight <= capacity:
-            loaded_weight += weight
-            loaded_packages_count += 1
-        else:
-            # Apply a correction factor using floating point operations
-            correction = math.log(loaded_weight + 1.5) * 0.1
-            loaded_weight = round(loaded_weight - correction, 2)
+    # Create mapping with lambda for processing
+    result_mapping = {code: (lambda x: x ** 1.5)(code) for code in item_codes}
+    
+    # Filter and process with enumerate
+    filtered_value = None
+    for idx, code in enumerate(item_codes):
+        if idx % 2 == 0:
+            filtered_value = code
             break
     
-    # Apply string transformation to create a report identifier
-    report_id = f"LOAD-{str(loaded_packages_count).zfill(3)}-{str(int(loaded_weight*100)).zfill(5)}"
+    # Additional unused operations
+    potential_result = sum(result_mapping.values()) / 10
+    fallback_calc = (temp_sum - alternate_calc) if temp_sum > 100 else temp_sum
     
-    # Use dictionary comprehension to create a weight distribution map
-    weight_distribution = {f"pkg_{i}": w for i, w in enumerate(sorted_weights[:loaded_packages_count])}
+    # Final calculation with intervention
+    final_output = result_mapping.get(filtered_value, fallback_calc)
     
-    # Merge with default values using dictionary merging
-    default_weights = defaultdict(lambda: 0.0, {"base": 5.0})
-    final_distribution = default_weights | weight_distribution
-    
-    # Calculate a checksum using bit operations
-    checksum = 0
-    for w in weight_distribution.values():
-        checksum ^= int(w * 100)  # Convert to cents to avoid floating point issues
-    
-    return loaded_packages_count, loaded_weight, report_id, dict(final_distribution), checksum
+    print(f"Result: {final_output}")
 
-# Package weights in kilograms
-package_weights = [12.5, 8.3, 15.7, 6.2, 22.1, 9.8, 18.4, 5.6, 14.9, 7.7]
-truck_capacity = 65.0  # Maximum load capacity in kilograms
-
-# Execute the loading optimization
-loaded_packages_count, total_loaded_weight, report_identifier, distribution_map, validation_checksum = calculate_optimal_loading(package_weights, truck_capacity)
-
-# Print the result
-print(f"Result: {loaded_packages_count}")
+# Execute with sample inventory
+inventory_items = [8, 12, 15, 20, 25, 30]
+process_inventory(inventory_items)

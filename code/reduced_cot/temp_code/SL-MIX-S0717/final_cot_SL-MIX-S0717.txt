@@ -1,0 +1,74 @@
+Target: Find the value of variable final_count after [line 39] executes
+
+[line 34]  sensor_readings = [25, 45, 67, 89, 12, 34, 78, 95, 102, 8, 56]
+Compute: [25, 45, 67, 89, 12, 34, 78, 95, 102, 8, 56] = [25, 45, 67, 89, 12, ...]
+[line 38]  result = analyze_sensor_data(sensor_readings)
+Call function analyze_sensor_data(sensor_readings=[25, 45, 67, 89, 12, ...] (defined at [line 34]))
+[line 3]  valid_count = 0
+Assign: valid_count = 0
+[line 4]  temp_total = 0
+Assign: temp_total = 0
+[line 5]  calibration_factor = 1.25
+Assign: calibration_factor = 1.25
+[line 6]  debug_sum = 0
+Assign: debug_sum = 0
+[line 9]  for reading in readings:
+Loop Start: reading takes its first value 25
+[line 11]  if 10 <= reading <= 90:
+Condition: True, entering 'if' block
+[line 12]  valid_count += 1
+Update: valid_count changed from 0 (defined at defined at [line 3]) to 0+1 = 1
+[line 13]  temp_total += reading
+Update: temp_total changed from 0 (defined at defined at [line 4]) to 0+reading = 25
+[line 14]  debug_sum += reading * 2  # Distractor calculation
+Update: debug_sum changed from 0 (defined at defined at [line 6]) to 0+reading * 2  # Distractor calculation = 50
+[line 17]  if reading > 100:
+Condition: True, entering 'if' block
+[line 9]  for reading in readings:
+Loop Iteration: reading is now 45 (iteration 2)
+[line 11]  if 10 <= reading <= 90:
+Condition: True, entering 'if' block
+[line 12]  valid_count += 1
+Update: valid_count changed from 1 (defined at defined at [line 12]) to 1+1 = 2
+[line 13]  temp_total += reading
+Update: temp_total changed from 25 (defined at defined at [line 13]) to 25+reading = 70
+[line 14]  debug_sum += reading * 2  # Distractor calculation
+Update: debug_sum changed from 50 (defined at defined at [line 14]) to 50+reading * 2  # Distractor calculation = 140
+[line 17]  if reading > 100:
+Condition: True, entering 'if' block
+... [Line 9] repeats 8 more times ...
+... [Line 9] repeats 8 more times ...
+... [Line 9] repeats 8 more times ...
+... [Line 9] repeats 8 more times ...
+... [Line 9] repeats 8 more times ...
+... [Line 9] repeats 8 more times ...
+[line 9]  for reading in readings:
+Loop Iteration: reading is now 56 (iteration 11)
+[line 11]  if 10 <= reading <= 90:
+Condition: True, entering 'if' block
+[line 12]  valid_count += 1
+Update: valid_count changed from 7 (defined at defined at [line 12]) to 7+1 = 8
+[line 13]  temp_total += reading
+Update: temp_total changed from 350 (defined at defined at [line 13]) to 350+reading = 406
+[line 14]  debug_sum += reading * 2  # Distractor calculation
+Update: debug_sum changed from 700 (defined at defined at [line 14]) to 700+reading * 2  # Distractor calculation = 812
+[line 17]  if reading > 100:
+Condition: True, entering 'if' block
+[line 9]  for reading in readings:
+Loop End: Iteration finished
+[line 21]  if valid_count > 0:
+Condition: True, entering 'if' block
+[line 22]  average_temp = temp_total / valid_count
+Compute: temp_total / valid_count, where temp_total=406 (defined at [line 13]), valid_count=8 (defined at [line 12]) = 50.75
+[line 23]  processed_data = average_temp * calibration_factor
+Compute: average_temp * calibration_factor, where average_temp=50.75 (defined at [line 22]), calibration_factor=1.375 (defined at [line 5]) = 69.78125
+[line 26]  rounded_data = round(processed_data, 2)
+Call function round(processed_data=69.78125 (defined at [line 23]), 2)
+[line 27]  final_adjustment = rounded_data - (debug_sum % 5)  # Distractor operation
+Compute: rounded_data - (debug_sum % 5)  # Distractor operation, where rounded_data=69.78 (defined at [line 26]), debug_sum=812 (defined at [line 14]) = 67.78
+[line 29]  return int(final_adjustment * 10)
+Return: int(final_adjustment * 10)
+[line 39]  final_count = result
+Compute: result, where result=677 (defined at [line 38]) = 677
+
+Answer: final_count = 677 (last updated on defined at [line 39])

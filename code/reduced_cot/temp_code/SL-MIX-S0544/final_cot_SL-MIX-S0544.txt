@@ -1,0 +1,54 @@
+Target: Find the value of variable final_result after [line 46] executes
+
+[line 36]  mask_sequence = (0x0F, 0x3C, 0x55, 0xAA, 0xF0, 0xFF)
+Compute: (0x0F, 0x3C, 0x55, 0xAA, 0xF0, 0xFF) = (15, 60, 85, 170, 240, ...)
+[line 37]  data_stream = [0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC]
+Compute: [0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC] = [18, 52, 86, 120, 154, ...]
+[line 44]  final_result = compute_checksum(data_stream, mask_sequence)
+Call function compute_checksum(data_stream=[18, 52, 86, 120, 154, ...] (defined at [line 37]), mask_sequence=(15, 60, 85, 170, 240, ...) (defined at [line 36]))
+[line 3]  temp_sum = 0
+Assign: temp_sum = 0
+[line 8]  for idx, (d_val, m_val) in enumerate(zip(data, mask)):
+(Missing param: 'iter_var')
+[line 10]  processed = (d_val & m_val) if idx % 2 == 0 else (d_val | m_val)
+Compute: (d_val & m_val) if idx % 2 == 0 else (d_val | m_val), where d_val=18 (an unknown source), m_val=15 (an unknown source), idx=0 (an unknown source) = 2
+[line 11]  temp_sum += processed
+Update: temp_sum changed from 0 (defined at defined at [line 3]) to 0+processed = 2
+[line 18]  if idx > len(data) * 2:
+Condition: True, entering 'if' block
+[line 8]  for idx, (d_val, m_val) in enumerate(zip(data, mask)):
+(Missing param: 'iter_var')
+[line 10]  processed = (d_val & m_val) if idx % 2 == 0 else (d_val | m_val)
+Compute: (d_val & m_val) if idx % 2 == 0 else (d_val | m_val), where d_val=52 (an unknown source), m_val=60 (an unknown source), idx=1 (an unknown source) = 60
+[line 11]  temp_sum += processed
+Update: temp_sum changed from 2 (defined at defined at [line 11]) to 2+processed = 62
+[line 18]  if idx > len(data) * 2:
+Condition: True, entering 'if' block
+... [Line 8] repeats 3 more times ...
+... [Line 8] repeats 3 more times ...
+... [Line 8] repeats 3 more times ...
+... [Line 8] repeats 3 more times ...
+[line 8]  for idx, (d_val, m_val) in enumerate(zip(data, mask)):
+(Missing param: 'iter_var')
+[line 10]  processed = (d_val & m_val) if idx % 2 == 0 else (d_val | m_val)
+Compute: (d_val & m_val) if idx % 2 == 0 else (d_val | m_val), where d_val=188 (an unknown source), m_val=255 (an unknown source), idx=5 (an unknown source) = 255
+[line 11]  temp_sum += processed
+Update: temp_sum changed from 540 (defined at defined at [line 11]) to 540+processed = 795
+[line 18]  if idx > len(data) * 2:
+Condition: True, entering 'if' block
+[line 8]  for idx, (d_val, m_val) in enumerate(zip(data, mask)):
+Loop End: Iteration finished
+[line 26]  data_slice = data[2:5]
+Compute: data[2:5], where data=[18, 52, 86, 120, 154, ...] (an unknown source) = [86, 120, 154]
+[line 27]  mask_slice = mask[-3:]
+Compute: mask[-3:], where mask=(15, 60, 85, 170, 240, ...) (an unknown source) = (170, 240, 255)
+[line 29]  core_result = sum(x ^ y for x, y in zip(data_slice, mask_slice))
+Call function sum(x ^ y for x, y in zip(data_slice, mask_slice))
+[line 30]  final_checksum = (temp_sum + core_result) % 256
+Compute: (temp_sum + core_result) % 256, where temp_sum=795 (defined at [line 11]), core_result=489 (defined at [line 29]) = 4
+[line 33]  return final_checksum
+Return: final_checksum=4 (defined at [line 30])
+[line 46]  print(f"Result: {final_result}")
+Output: f"Result: {final_result}"
+
+Answer: final_result = 4 (last updated on defined at [line 44])

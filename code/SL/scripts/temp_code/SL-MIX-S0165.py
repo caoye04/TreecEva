@@ -1,57 +1,53 @@
-from collections import defaultdict
-import itertools
-
-# Packet header analysis for threat detection
-packet_headers = [
-    {'proto': 'TCP', 'flags': 0b00010010, 'size': 1420, 'ttl': 64},
-    {'proto': 'UDP', 'flags': 0b00000000, 'size': 512, 'ttl': 128},
-    {'proto': 'TCP', 'flags': 0b00010001, 'size': 890, 'ttl': 32},
-    {'proto': 'ICMP', 'flags': 0b00000000, 'size': 76, 'ttl': 255}
-]
-
-# Threat scoring rules
-threat_score = 0
-protocol_weights = {'TCP': 3, 'UDP': 1, 'ICMP': 2}
-flag_danger_bits = 0b00010010  # SYN and URG flags
-size_threshold = 1000
-
-# Process each packet
-for packet in packet_headers:
-    score = 0
-    # Protocol weight
-    score += protocol_weights.get(packet['proto'], 0)
+def transform_data(input_seq, pattern_mask):
+    temp_buffer = []
+    irrelevant_sum = 0
+    dummy_flag = False
     
-    # Flag analysis - check if any danger bits are set
-    if packet['flags'] & flag_danger_bits:
-        score += 5
+    # Irrelevant string processing (distractor)
+    text_data = "cryptographic_analysis"
+    processed_text = text_data.upper().replace('_', '-').split('-')
+    char_count = sum(len(word) for word in processed_text)
     
-    # Size analysis
-    if packet['size'] > size_threshold:
-        score += 2
+    # Main transformation logic
+    for idx, value in enumerate(input_seq):
+        # Dead code path that never executes
+        if dummy_flag and idx > 100:
+            irrelevant_sum += value * 2
+            continue
+            
+        # Mask application with bitwise operations
+        mask_value = pattern_mask[idx % len(pattern_mask)]
+        transformed = (value ^ mask_value) & 0xFF
+        
+        # Irrelevant intermediate calculation
+        temp_calc = (transformed << 2) | (transformed >> 6)
+        irrelevant_sum += temp_calc
+        
+        temp_buffer.append(transformed)
     
-    # TTL anomaly detection (suspicious if TTL is power of 2 minus 1, common in some scans)
-    if packet['ttl'] == 2**5 - 1 or packet['ttl'] == 2**7 - 1 or packet['ttl'] == 2**8 - 1:
-        score += 3
+    # Unused complex computation (distractor)
+    unused_result = [(x | 0x80) for x in temp_buffer if x % 2 == 0]
     
-    threat_score += score
+    # Final computation using zip
+    final_result = 0
+    for a, b in zip(temp_buffer, pattern_mask * len(temp_buffer)):
+        final_result = (final_result << 8) | (a ^ b)
+    
+    # Misleading intermediate assignment
+    interim_value = final_result + irrelevant_sum
+    return interim_value % 100000
 
-# Additional correlation analysis using itertools
-# Check all pairs of packets for suspicious protocol combinations
-suspicious_combinations = [('TCP', 'ICMP')]
-correlation_penalty = 0
+# Data initialization
+mask_pattern = [0x37, 0x5A, 0x89, 0xF2]
+data_sequence = [120, 67, 255, 42, 189, 13, 200, 91]
 
-for pkt1, pkt2 in itertools.combinations(packet_headers, 2):
-    combo = tuple(sorted([pkt1['proto'], pkt2['proto']]))
-    if combo in suspicious_combinations:
-        correlation_penalty += 7
+# Irrelevant variable setup
+unused_counter = 0
+backup_data = data_sequence.copy()
+redundant_flag = True
 
-# Final aggregation with logical conditions
-aggregated_threat_score = 0
-if threat_score > 10 and correlation_penalty > 0:
-    aggregated_threat_score = threat_score + correlation_penalty
-elif threat_score <= 10:
-    aggregated_threat_score = threat_score - correlation_penalty
-else:
-    aggregated_threat_score = threat_score
+# Key execution point
+final_encrypted = transform_data(data_sequence, mask_pattern)
 
-print(f"Result: {aggregated_threat_score}")
+# Print the result
+print(f"Target result: {final_encrypted}")

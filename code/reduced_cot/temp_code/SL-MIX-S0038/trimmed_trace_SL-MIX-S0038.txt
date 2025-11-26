@@ -1,19 +1,69 @@
-17
-final_batch_cost
+35
+final_balance
 ---
-8 return wrapper
-8 [] []
-17 final_batch_cost = compute_batch_expense(10.5, 5.2, 200)
-17 [] []
-6 base_price = func(*args, **kwargs)
-6 ['args', 'kwargs'] ['(10.5, 5.2, 200)', '{}']
-12 flour_cost = flour_kg * 3.50
-12 ['flour_kg', 'butter_kg', 'yeast_units', 'flour_cost'] ['10.5', '5.2', '200', '36.75']
-13 butter_cost = butter_kg * 7.80
-13 ['butter_kg', 'yeast_units', 'flour_cost', 'butter_cost'] ['5.2', '200', '36.75', '40.56']
-14 yeast_cost = yeast_units * 0.15
-14 ['yeast_units', 'flour_cost', 'butter_cost', 'yeast_cost'] ['200', '36.75', '40.56', '30.0']
-15 return flour_cost + butter_cost + yeast_cost
-15 ['flour_cost', 'butter_cost', 'yeast_cost'] ['36.75', '40.56', '30.0']
-7 return round(base_price * 1.2, 2)
-7 ['base_price'] ['107.31']
+9 volume_sum = sum(abs(amt) for _, amt in trades)
+9 [] []
+9 volume_sum = sum(abs(amt) for _, amt in trades)
+9 ['_', 'amt'] ["'AAPL'", '1500']
+9 volume_sum = sum(abs(amt) for _, amt in trades)
+9 ['_', 'amt'] ["'MSFT'", '-800']
+9 volume_sum = sum(abs(amt) for _, amt in trades)
+9 ['_', 'amt'] ["'GOOGL'", '1200']
+9 volume_sum = sum(abs(amt) for _, amt in trades)
+9 ['_', 'amt'] ["'AAPL'", '-600']
+9 volume_sum = sum(abs(amt) for _, amt in trades)
+9 ['_', 'amt'] ["'TSLA'", '900']
+9 volume_sum = sum(abs(amt) for _, amt in trades)
+9 ['_', 'amt'] ["'TSLA'", '900']
+10 temp_multiplier = (volume_sum % 17) + 3
+10 ['trades', 'capital', 'volume_sum', 'temp_multiplier'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '10000', '5000', '5']
+13 if volume_sum > 10000:
+13 ['trades', 'capital', 'volume_sum', 'temp_multiplier'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '10000', '5000', '5']
+17 balance = capital
+17 ['trades', 'capital', 'temp_multiplier', 'balance'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '10000', '5', '10000']
+18 for symbol, amount in trades:
+18 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '10000', "'AAPL'", '1500']
+25 if amount > 0:
+25 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '10000', "'AAPL'", '1500']
+26 balance += amount * (1 - 0.02)  # 2% fee on buys
+26 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '11470.0', "'AAPL'", '1500']
+18 for symbol, amount in trades:
+18 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '11470.0', "'MSFT'", '-800']
+25 if amount > 0:
+25 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '11470.0', "'MSFT'", '-800']
+28 balance += amount * (1 + 0.01)  # 1% fee on sells
+28 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '10662.0', "'MSFT'", '-800']
+18 for symbol, amount in trades:
+18 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '10662.0', "'GOOGL'", '1200']
+25 if amount > 0:
+25 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '10662.0', "'GOOGL'", '1200']
+26 balance += amount * (1 - 0.02)  # 2% fee on buys
+26 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '11838.0', "'GOOGL'", '1200']
+18 for symbol, amount in trades:
+18 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '11838.0', "'AAPL'", '-600']
+25 if amount > 0:
+25 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '11838.0', "'AAPL'", '-600']
+28 balance += amount * (1 + 0.01)  # 1% fee on sells
+28 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '11232.0', "'AAPL'", '-600']
+18 for symbol, amount in trades:
+18 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '11232.0', "'TSLA'", '900']
+25 if amount > 0:
+25 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '11232.0', "'TSLA'", '900']
+26 balance += amount * (1 - 0.02)  # 2% fee on buys
+26 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '12114.0', "'TSLA'", '900']
+18 for symbol, amount in trades:
+18 ['trades', 'temp_multiplier', 'balance', 'symbol', 'amount'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '12114.0', "'TSLA'", '900']
+34 fee_adjustment = len([amt for _, amt in trades if amt > 0]) * 5
+34 ['trades', 'temp_multiplier', 'balance', '_', 'amt'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '12114.0', "'AAPL'", '1500']
+34 fee_adjustment = len([amt for _, amt in trades if amt > 0]) * 5
+34 ['trades', 'temp_multiplier', 'balance', '_', 'amt'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '12114.0', "'MSFT'", '-800']
+34 fee_adjustment = len([amt for _, amt in trades if amt > 0]) * 5
+34 ['trades', 'temp_multiplier', 'balance', '_', 'amt'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '12114.0', "'GOOGL'", '1200']
+34 fee_adjustment = len([amt for _, amt in trades if amt > 0]) * 5
+34 ['trades', 'temp_multiplier', 'balance', '_', 'amt'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '12114.0', "'AAPL'", '-600']
+34 fee_adjustment = len([amt for _, amt in trades if amt > 0]) * 5
+34 ['trades', 'temp_multiplier', 'balance', '_', 'amt'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '12114.0', "'TSLA'", '900']
+34 fee_adjustment = len([amt for _, amt in trades if amt > 0]) * 5
+34 ['trades', 'temp_multiplier', 'balance', 'fee_adjustment'] ["[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)]", '5', '12114.0', '15']
+35 final_balance = balance - fee_adjustment + (temp_multiplier % 7)
+35 ['temp_multiplier', 'balance', 'fee_adjustment', 'final_balance'] ['5', '12114.0', '15', '12104.0']

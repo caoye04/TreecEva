@@ -1,46 +1,41 @@
-import math
-from collections import namedtuple
-
-# Define drone movement states
-DroneState = namedtuple('DroneState', ['position', 'velocity'])
-
-def distance(z1, z2):
-    return abs(z1 - z2)
-
-def update_position(state, move):
-    new_pos = state.position + move
-    return DroneState(new_pos, move)
-
-# Movement sequences for three drones (complex numbers representing x+yj coordinates)
-drone_sequences = [
-    [1+2j, 3+1j, -1-2j, 2-1j],
-    [2+1j, 1+3j, -2-1j, 1-2j],
-    [1+1j, 2+2j, -1-1j, 3-1j]
-]
-
-# Initialize drone states
-states = [DroneState(0+0j, 0+0j) for _ in range(3)]
-
-detected_convergence_events = 0
-convergence_threshold = 1.5
-max_steps = max(len(seq) for seq in drone_sequences)
-
-for step in range(max_steps):
-    positions = []
-    for i in range(3):
-        if step < len(drone_sequences[i]):
-            states[i] = update_position(states[i], drone_sequences[i][step])
-        positions.append(states[i].position)
+def analyze_text_patterns(text_data):
+    # Initial processing with string methods
+    cleaned_text = text_data.strip().lower()
+    vowels = {'a', 'e', 'i', 'o', 'u'}
     
-    # Check pairwise distances
-    distances = [distance(positions[i], positions[j]) 
-                 for i in range(3) for j in range(i+1, 3)]
+    # Count vowels using lambda and filter
+    vowel_count = len(list(filter(lambda x: x in vowels, cleaned_text)))
     
-    # Statistical check: mean distance < threshold and max distance < 2*threshold
-    if len(distances) > 0:
-        mean_dist = sum(distances) / len(distances)
-        max_dist = max(distances)
-        if mean_dist < convergence_threshold and max_dist < 2 * convergence_threshold:
-            detected_convergence_events += 1
+    # Create character frequency analysis (distractor)
+    char_freq = {}
+    for char in cleaned_text:
+        char_freq[char] = char_freq.get(char, 0) + 1
+    
+    # Calculate weighted vowel score (main logic)
+    weighted_vowels = vowel_count * 2
+    
+    # String slicing operation for pattern analysis
+    first_half = cleaned_text[:len(cleaned_text)//2]
+    second_half = cleaned_text[len(cleaned_text)//2:]
+    
+    # Compare halves (distractor operation)
+    half_diff = abs(len(first_half) - len(second_half))
+    
+    # Process values through multiple steps
+    base_value = weighted_vowels + half_diff
+    processed_values = [base_value, base_value * 3, base_value // 2, base_value + 10]
+    
+    # Determine critical index using set operations
+    unique_chars = set(cleaned_text.replace(' ', ''))
+    critical_index = len(unique_chars) % len(processed_values)
+    
+    # Final calculation with scale factor
+    scale_factor = 1.5
+    final_result = processed_values[critical_index] * scale_factor
+    
+    print(f"Target result: {final_result}")
+    return final_result
 
-print(f"Result: {detected_convergence_events}")
+# Execute with sample data
+text_sample = "Programming Evaluation Benchmark Analysis"
+analyze_text_patterns(text_sample)

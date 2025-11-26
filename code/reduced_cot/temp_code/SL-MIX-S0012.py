@@ -1,16 +1,16 @@
-import math
+initial_balance = 1000
+transaction_log = ["deposit:200", "withdrawal:150", "deposit:300", "withdrawal:50"]
 
-# Define radii for the flower beds
-radius_first_bed = 5
-radius_second_bed = 3
-radius_third_bed = 4
+total_deposits = 0
+total_withdrawals = 0
 
-# The second bed is placed at the edge of the first
-# So the distance between their centers is the sum of their radii
-distance_first_to_second = radius_first_bed + radius_second_bed
+for entry in transaction_log:
+    if entry.startswith("deposit:"):
+        amount = int(entry.split(":")[1])
+        total_deposits += amount
+    elif entry.startswith("withdrawal:"):
+        amount = int(entry.split(":")[1])
+        total_withdrawals += amount
 
-# To ensure the third bed doesn't overlap with the first,
-# the distance must be at least the sum of their radii
-min_safe_distance = distance_first_to_second + radius_third_bed
-
-print(f"Result: {min_safe_distance}")
+final_balance = total_deposits - total_withdrawals + initial_balance
+print(f"Result: {final_balance}")

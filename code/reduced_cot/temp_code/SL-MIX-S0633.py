@@ -1,50 +1,46 @@
-from itertools import combinations
+from collections import Counter
 
-def encode_dna(sequence):
-    mapping = {'A': 0, 'T': 1, 'G': 2, 'C': 3}
-    return [mapping[nucleotide] for nucleotide in sequence]
+def calculate_capacity(active_nodes, max_bandwidth=100):
+    # Distractor: unused parameter and misleading calculation
+    unused_temp = active_nodes * 2 + max_bandwidth // 3
+    return active_nodes * max_bandwidth
 
-def decode_dna(encoded_seq):
-    mapping = {0: 'A', 1: 'T', 2: 'G', 3: 'C'}
-    return ''.join([mapping[num] for num in encoded_seq])
+def validate_nodes(node_list):
+    # Misleading validation that doesn't affect main logic
+    if len(node_list) > 10:
+        return False  # Dead code path
+    return sum(node_list) % 2 == 0
 
-def transform_sequence(seq, operations):
-    result = seq[:]
-    for op in operations:
-        if op == 'reverse':
-            result = result[::-1]
-        elif op == 'complement':
-            result = [3 - x for x in result]
-    return result
-
-def longest_common_subsequence(seq1, seq2):
-    m, n = len(seq1), len(seq2)
-    dp = [[0] * (n + 1) for _ in range(m + 1)]
+def final_calculation(primary, backup):
+    # Core logic with multiple steps and distractions
+    base_capacity = calculate_capacity(primary)
     
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            if seq1[i-1] == seq2[j-1]:
-                dp[i][j] = dp[i-1][j-1] + 1
-            else:
-                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
-    return dp[m][n]
+    # Irrelevant intermediate calculation
+    misleading_sum = primary + backup * 2 - (backup // 3)
+    
+    # Actual relevant calculation with conditional expression
+    adjusted_capacity = (base_capacity // 2) if primary > backup else (base_capacity * 3 // 4)
+    
+    # More distractions
+    node_status = [primary, backup, misleading_sum]
+    status_count = Counter(node_status)
+    
+    # Final calculation with bitwise operations
+    final_value = adjusted_capacity ^ (backup & 0xFF)
+    return final_value
 
-# Original DNA sequences
-sequence_alpha = "ATGCGT"
-sequence_beta = "TGCATC"
+# Main execution with irrelevant variables
+primary_nodes = 7
+backup_nodes = 5
+redundancy_factor = 3  # Unused variable
+system_load = 85  # Misleading constant
 
-# Encode sequences
-encoded_alpha = encode_dna(sequence_alpha)
-encoded_beta = encode_dna(sequence_beta)
+# Irrelevant validation that doesn't affect result
+node_list = [primary_nodes, backup_nodes]
+validation_result = validate_nodes(node_list)
 
-# Apply transformations
-transform_ops_alpha = ['reverse', 'complement']
-transform_ops_beta = ['complement', 'reverse']
+# The key execution point
+network_throughput = final_calculation(primary_nodes, backup_nodes)
 
-transformed_alpha = transform_sequence(encoded_alpha, transform_ops_alpha)
-transformed_beta = transform_sequence(encoded_beta, transform_ops_beta)
-
-# Find longest common subsequence
-lcs_length = longest_common_subsequence(transformed_alpha, transformed_beta)
-
-print(f"Result: {lcs_length}")
+# Print the target result
+print(f"Target result: {network_throughput}")

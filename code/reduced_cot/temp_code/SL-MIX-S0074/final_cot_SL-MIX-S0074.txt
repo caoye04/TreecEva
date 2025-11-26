@@ -1,42 +1,16 @@
-Target: Find the value of variable final_state after [line 22] executes
+Target: Find the value of variable final_metric after [line 28] executes
 
-[line 3]  document_content = "The quick brown fox jumps over the lazy dog"
-Assign: document_content = 'The quick brown fox jumps over the lazy dog'
-[line 5]  current_state = 0
-Assign: current_state = 0
-[line 6]  max_state = 3
-Assign: max_state = 3
-[line 9]  char_hashes = [hash(c) for c in document_content]
-Compute: [hash(c) for c in document_content], where c='T' (an unknown source), document_content='The quick brown fox jumps over the lazy dog' (defined at [line 3]) = ?
-[line 11]  for h in char_hashes:
-Loop Start: h takes its first value 5033251359471690560
-[line 13]  if mod_val == 0:  # Stay in current state
+[line 16]  filtered_a = {x for x in data_a if x % 2 == 0}
+Compute: {x for x in data_a if x % 2 == 0}, where x=4 (an unknown source), data_a=[4, 8, 12, 16, 20, ...] (an unknown source) = ?
+[line 17]  filtered_b = {x for x in data_b if x % 3 == 0}
+Compute: {x for x in data_b if x % 3 == 0}, where x=6 (an unknown source), data_b=[6, 12, 18, 24, 30, ...] (an unknown source) = ?
+[line 20]  if len(filtered_a) > 10:
 Condition: True, entering 'if' block
-[line 11]  for h in char_hashes:
-Loop Iteration: h is now 6170499119441860794 (iteration 2)
-[line 13]  if mod_val == 0:  # Stay in current state
-Condition: True, entering 'if' block
-[line 15]  elif mod_val == 1:  # Move to next state
-'elif' Condition: True, entering block
-[line 17]  elif mod_val == 2:  # Skip one state
-'elif' Condition: True, entering block
-[line 18]  current_state = min(current_state + 2, max_state)
-Call function min(current_state + 2, max_state=3 (defined at [line 6]))
-... [Line 11] repeats 40 more times ...
-... [Line 11] repeats 40 more times ...
-[line 11]  for h in char_hashes:
-Loop Iteration: h is now -8121869071693211441 (iteration 43)
-[line 13]  if mod_val == 0:  # Stay in current state
-Condition: True, entering 'if' block
-[line 15]  elif mod_val == 1:  # Move to next state
-'elif' Condition: True, entering block
-[line 17]  elif mod_val == 2:  # Skip one state
-'elif' Condition: True, entering block
-[line 20]  current_state = 0
-Assign: current_state = 0
-[line 11]  for h in char_hashes:
-Loop End: Iteration finished
-[line 22]  final_state = current_state
-Compute: current_state, where current_state=0 (defined at [line 20]) = 0
+[line 24]  common_elements = filtered_a & filtered_b
+Compute: filtered_a & filtered_b, where filtered_a={32, 4, 36, 8, 12, ...} (defined at [line 16]), filtered_b={36, 6, 42, 12, 48, ...} (defined at [line 17]) = {24, 36, 12}
+[line 25]  union_elements = filtered_a | filtered_b
+Compute: filtered_a | filtered_b, where filtered_a={32, 4, 36, 8, 12, ...} (defined at [line 16]), filtered_b={36, 6, 42, 12, 48, ...} (defined at [line 17]) = {32, 4, 36, 6, 8, ...}
+[line 28]  final_metric = (len(common_elements) * 100) if len(common_elements) > 0 else (len(union_elements) * 50)
+Compute: (len(common_elements) * 100) if len(common_elements) > 0 else (len(union_elements) * 50), where common_elements={24, 36, 12} (defined at [line 24]), union_elements={32, 4, 36, 6, 8, ...} (defined at [line 25]) = 300
 
-Answer: final_state = 0 (last updated on defined at [line 22])
+Answer: final_metric = 300 (last updated on defined at [line 28])

@@ -1,31 +1,16 @@
-Target: Find the value of variable security_checksum after [line 20] executes
+Target: Find the value of variable final_result after [line 24] executes
 
-[line 19]  network_packets = [0x1F, 0x2C, 0x3A, 0x45]
-Compute: [0x1F, 0x2C, 0x3A, 0x45] = [31, 44, 58, 69]
-[line 20]  security_checksum = compute_custom_checksum(network_packets)
-Call function compute_custom_checksum(network_packets=[31, 44, 58, 69] (defined at [line 19]))
-[line 4]  def compute_custom_checksum(packet_ids):
-Enter function compute_custom_checksum: packet_ids=[31, 44, 58, 69] (network_packets defined at [line 19])
-  [line 5]  if len(packet_ids) < 2:
-  Condition: True, entering 'if' block
-  [line 9]  pairs = list(itertools.combinations(packet_ids, 2))
-  Call function list(itertools.combinations(packet_ids, 2))
-  [line 12]  xor_results = [a ^ b for a, b in pairs]
-  Compute: [a ^ b for a, b in pairs], where a=31 (an unknown source), b=44 (an unknown source), pairs=[(31, 44), (31, 58), (31, 69), (44, 58), (44, 69), ...] (defined at [line 9]) = ?
-  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
-  Call function reduce(lambda x, y: x & y, xor_results=[51, 37, 90, 22, 105, ...] (defined at [line 12]))
-  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
-  Call function reduce(lambda x, y: x & y, xor_results=[51, 37, 90, 22, 105, ...] (defined at [line 12]))
-  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
-  Call function reduce(lambda x, y: x & y, xor_results)
-  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
-  Call function reduce(lambda x, y: x & y, xor_results)
-  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
-  Call function reduce(lambda x, y: x & y, xor_results)
-  [line 15]  checksum = reduce(lambda x, y: x & y, xor_results)
-  Call function reduce(lambda x, y: x & y, xor_results)
-  [line 16]  return checksum
-  Return: checksum=0 (defined at [line 15])
-Function compute_custom_checksum returns 0
+[line 3]  packet_count = len(packet_data)
+Call function len(packet_data=[8, 15, 22, 30, 41, ...] (an unknown source))
+[line 7]  filtered_data = [x for x in packet_data if x % 3 != 0]
+Compute: [x for x in packet_data if x % 3 != 0], where x=8 (an unknown source), packet_data=[8, 15, 22, 30, 41, ...] (an unknown source) = ?
+[line 8]  processed_sum = sum(filtered_data)
+Call function sum(filtered_data=[8, 22, 41, 55, 74, ...] (defined at [line 7]))
+[line 15]  if packet_count > 100:
+Condition: True, entering 'if' block
+[line 23]  parity_mask = 0b10101010
+Assign: parity_mask = 170
+[line 24]  final_result = processed_sum ^ parity_mask
+Compute: processed_sum ^ parity_mask, where processed_sum=386 (defined at [line 8]), parity_mask=170 (defined at [line 23]) = 296
 
-Answer: security_checksum = ? (last updated on defined at [line 20])
+Answer: final_result = 296 (last updated on defined at [line 24])

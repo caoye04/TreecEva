@@ -1,50 +1,40 @@
-import statistics
-
-def call_tracker(func):
-    def wrapper(*args, **kwargs):
-        wrapper.call_count += 1
-        return func(*args, **kwargs)
-    wrapper.call_count = 0
-    return wrapper
-
-def process_ancient_text():
-    # Ancient text word frequencies
-    word_frequencies = [12, 8, 15, 22, 9, 18, 9, 11, 14, 16, 7, 20, 13, 10, 17]
+def analyze_text_data(text_segments):
+    # Initialize word counter with some irrelevant processing
+    segment_lengths = [len(seg) for seg in text_segments]
+    total_chars = sum(segment_lengths)
     
-    # Filter out low frequency words
-    significant_words = [freq for freq in word_frequencies if freq > 10]
+    # Distractor: character frequency analysis that won't be used
+    char_freq = {}
+    for seg in text_segments:
+        for char in seg:
+            char_freq[char] = char_freq.get(char, 0) + 1
     
-    # Apply transformations using set operations
-    unique_freq_set = frozenset(significant_words)
-    transformed_freqs = []
-    
-    # Process each frequency with potential multiple transformations
-    for freq in unique_freq_set:
-        # Short-circuit evaluation pattern
-        if freq > 15 and (freq % 2 == 0 or freq > 18):
-            transformed_freqs.append(freq * 2)
-        elif freq <= 15 or freq < 12:
-            transformed_freqs.append(freq + 5)
+    # Main word counting logic with slicing operations
+    all_words = []
+    for segment in text_segments:
+        words = segment.split()
+        # Use slicing to exclude first and last word for some segments
+        if len(words) > 2:
+            processed_words = words[1:-1]
+            all_words.extend(processed_words)
         else:
-            transformed_freqs.append(freq)
+            all_words.extend(words)
     
-    # Calculate statistical measures
-    mean_freq = statistics.mean(transformed_freqs)
-    variance_freq = statistics.variance(transformed_freqs) if len(transformed_freqs) > 1 else 0
+    # Build word counts using dictionary operations
+    word_counts = {}
+    for word in all_words:
+        word_counts[word] = word_counts.get(word, 0) + 1
     
-    # Apply final scoring algorithm
-    @call_tracker
-    def calculate_score(base_value, modifier):
-        return base_value * modifier + len(transformed_freqs)
+    # Distractor: lambda function for filtering that's not actually used
+    filter_long_words = lambda w, threshold: len(w) > threshold
     
-    # Multiple function calls to test decorator
-    score1 = calculate_score(mean_freq, 1.5)
-    score2 = calculate_score(variance_freq, 0.75)
+    # The key operation we care about
+    final_count = word_counts.get("target", 0)
     
-    # Final calculation combining all factors
-    final_score = int(score1 + score2 + calculate_score.call_count)
-    
-    return final_score
+    # Print the result
+    print(f"Result: {final_count}")
+    return final_count
 
-final_score = process_ancient_text()
-print(f"Result: {final_score}")
+# Test data with mixed content
+text_data = ["find the target word here", "no target in this sentence", "target appears multiple target words target"]
+result = analyze_text_data(text_data)

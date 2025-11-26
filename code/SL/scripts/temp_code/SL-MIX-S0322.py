@@ -1,25 +1,10 @@
-import heapq
+customer_ids_a = {101, 102, 103, 104, 105}
+customer_ids_b = {103, 104, 105, 106, 107}
 
-def process_bakery_orders():
-    # Priority mapping: higher number means higher priority
-    priorities = {'apple': 3, 'cherry': 2, 'blueberry': 1}
-    
-    # Orders received throughout the day
-    orders = ['blueberry', 'apple', 'cherry', 'apple', 'blueberry', 'cherry', 'apple']
-    
-    # Initialize max heap (using negative values since heapq is min heap)
-    priority_heap = []
-    
-    # Process each order
-    for pie_type in orders:
-        heapq.heappush(priority_heap, -priorities[pie_type])
-    
-    # Calculate sum of priorities in the heap
-    priority_sum = 0
-    while priority_heap:
-        priority_sum += (-heapq.heappop(priority_heap))
-    
-    return priority_sum
+# Calculate union and intersection
+union_set = customer_ids_a | customer_ids_b
+intersection_set = customer_ids_a & customer_ids_b
 
-final_priority_sum = process_bakery_orders()
-print(f"Result: {final_priority_sum}")
+# Final calculation
+final_result = union_set - intersection_set
+print(f"Result: {len(final_result)}")

@@ -1,0 +1,49 @@
+25
+performance_score
+---
+16 workload_data = {6, 9, 12, 15, 18}
+16 ['workload_data'] ['{18, 6, 9, 12, 15}']
+17 initial_processing = analyze_workload(workload_data)
+17 ['workload_data'] ['{18, 6, 9, 12, 15}']
+3 processed_data = {x * 2 for x in load_data}
+3 ['load_data', 'x'] ['{18, 6, 9, 12, 15}', '18']
+3 processed_data = {x * 2 for x in load_data}
+3 ['load_data', 'x'] ['{18, 6, 9, 12, 15}', '6']
+3 processed_data = {x * 2 for x in load_data}
+3 ['load_data', 'x'] ['{18, 6, 9, 12, 15}', '9']
+3 processed_data = {x * 2 for x in load_data}
+3 ['load_data', 'x'] ['{18, 6, 9, 12, 15}', '12']
+3 processed_data = {x * 2 for x in load_data}
+3 ['load_data', 'x'] ['{18, 6, 9, 12, 15}', '15']
+3 processed_data = {x * 2 for x in load_data}
+3 ['load_data', 'processed_data'] ['{18, 6, 9, 12, 15}', '{36, 12, 18, 24, 30}']
+6 return processed_data
+6 ['processed_data'] ['{36, 42, 12, 18, 30}']
+18 reference_set = {20, 25, 30, 35, 40}
+18 ['initial_processing', 'reference_set'] ['{36, 42, 12, 18, 30}', '{35, 20, 40, 25, 30}']
+21 adjusted_set = evaluate_metrics(initial_processing, reference_set)
+21 ['initial_processing', 'reference_set'] ['{36, 42, 12, 18, 30}', '{35, 20, 40, 25, 30}']
+9 common_metrics = primary_set.intersection(secondary_set)
+9 ['primary_set', 'secondary_set', 'common_metrics'] ['{36, 42, 12, 18, 30}', '{35, 20, 40, 25, 30}', '{30}']
+10 unique_to_primary = primary_set - secondary_set
+10 ['primary_set', 'secondary_set', 'common_metrics', 'unique_to_primary'] ['{36, 42, 12, 18, 30}', '{35, 20, 40, 25, 30}', '{30}', '{42, 18, 36, 12}']
+11 temp_result = len(common_metrics) * 5
+11 ['common_metrics', 'unique_to_primary', 'temp_result'] ['{30}', '{42, 18, 36, 12}', '5']
+12 adjusted_set = {x + temp_result for x in unique_to_primary}
+12 ['unique_to_primary', 'temp_result', 'x'] ['{42, 18, 36, 12}', '5', '42']
+12 adjusted_set = {x + temp_result for x in unique_to_primary}
+12 ['unique_to_primary', 'temp_result', 'x'] ['{42, 18, 36, 12}', '5', '18']
+12 adjusted_set = {x + temp_result for x in unique_to_primary}
+12 ['unique_to_primary', 'temp_result', 'x'] ['{42, 18, 36, 12}', '5', '36']
+12 adjusted_set = {x + temp_result for x in unique_to_primary}
+12 ['unique_to_primary', 'temp_result', 'x'] ['{42, 18, 36, 12}', '5', '12']
+12 adjusted_set = {x + temp_result for x in unique_to_primary}
+12 ['unique_to_primary', 'temp_result', 'adjusted_set'] ['{42, 18, 36, 12}', '5', '{41, 23, 17, 47}']
+14 return adjusted_set
+14 ['adjusted_set'] ['{17, 23, 41, 60, 47}']
+22 extra_metrics = {55, 60, 65}
+22 ['adjusted_set', 'extra_metrics'] ['{17, 23, 41, 60, 47}', '{65, 60, 55}']
+23 final_score = adjusted_set.union(extra_metrics)
+23 ['adjusted_set', 'extra_metrics', 'final_score'] ['{17, 23, 41, 60, 47}', '{65, 60, 55}', '{17, 65, 55, 23, 41, ...}']
+25 performance_score = sum(final_score) - sum(extra_metrics)
+25 ['extra_metrics', 'final_score', 'performance_score'] ['{65, 60, 55}', '{17, 65, 55, 23, 41, ...}', '128']

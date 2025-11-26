@@ -1,35 +1,51 @@
-from collections import defaultdict
-import statistics
-
-temperature_readings = [
-    {'sensor_id': 'A', 'values': [23.5, 24.0, None, 25.1, 22.8]},
-    {'sensor_id': 'B', 'values': [21.0, 21.5, 22.0, 21.8, None]},
-    {'sensor_id': 'C', 'values': [None, 19.5, 20.0, 19.8, 20.2]}
-]
-
-sensor_valid_data = defaultdict(list)
-quality_scores = {}
-
-for reading in temperature_readings:
-    sensor = reading['sensor_id']
-    values = [v for v in reading['values'] if v is not None]
-    sensor_valid_data[sensor].extend(values)
+def calculate_account_metrics(accounts):
+    processing_results = {}
+    temp_analysis = {}
+    account_ids = []
     
-    # Short-circuit evaluation in quality check
-    if len(values) > 0 and statistics.mean(values) > 20:
-        base_score = len(values) * 10
-        variance_bonus = 5 if statistics.variance(values) < 1 else 0
-        quality_scores[sensor] = base_score + variance_bonus
-    else:
-        quality_scores[sensor] = 0
+    # Irrelevant data processing
+    dummy_data = [15, 27, 8, 42, 33, 19]
+    filtered_dummy = [x for x in dummy_data if x % 3 == 0]
+    dummy_sum = sum(filtered_dummy)  # This is unused
+    
+    # Main account processing
+    for i, (account_id, transactions) in enumerate(accounts):
+        account_ids.append(account_id)
+        
+        # Misleading intermediate calculation
+        if len(transactions) > 2:
+            temp_sum = sum(transactions)
+            temp_analysis[account_id] = temp_sum * 2  # Red herring
+        
+        # Actual processing logic
+        net_flow = transactions[-1] - transactions[0] if transactions else 0
+        for j, trans in enumerate(transactions):
+            if j > 0:
+                net_flow += trans * (1 if j % 2 == 0 else -1)
+        
+        # Conditional branch with early optimization
+        if net_flow > 50:
+            processing_results[account_id] = net_flow // 2
+        elif net_flow < -20:
+            processing_results[account_id] = net_flow * 3
+        else:
+            processing_results[account_id] = abs(net_flow)
+    
+    # Distractor operations
+    unused_calc = [x**2 for x in range(10)]
+    dummy_multiplier = len(unused_calc) * 2  # Dead code path
+    
+    # Critical computation
+    multiplier = 2 if len(account_ids) % 2 == 0 else 3
+    final_balance = processing_results.get(account_ids[-1], 0) * multiplier
+    
+    print(f"Target result: {final_balance}")
 
-# Calculate system-wide metrics
-all_valid_values = [v for values in sensor_valid_data.values() for v in values]
-system_mean = statistics.mean(all_valid_values) if all_valid_values else 0
-
-# Final score computation with lambda function
-weight_function = lambda s: 1.5 if quality_scores[s] > 50 else 1.0
-weighted_scores = [quality_scores[sensor] * weight_function(sensor) for sensor in quality_scores]
-
-final_score = int(sum(weighted_scores) * system_mean / 10)
-print(f"Result: {final_score}")
+# Sample execution
+accounts_data = [
+    (101, [100, 25, 75, 50]),
+    (102, [200, 80, 120]),
+    (103, [150, 90, 60, 30]),
+    (104, [300, 150, 50])
+]
+calculate_account_metrics(accounts_data)

@@ -1,35 +1,41 @@
-import math
-
-def process_waveform_signal(samples):
-    state = 'INIT'
-    amplitude_sum = 0
-    sample_count = 0
-    modulation_index = 13
+def analyze_text_scores(text_samples):
+    # Initialize base metrics
+    base_scores = [len(sample) for sample in text_samples]
+    processed_scores = []
     
-    for i, sample in enumerate(samples):
-        if state == 'INIT':
-            if sample > 0:
-                state = 'ACCUMULATE'
-            else:
-                continue
-        elif state == 'ACCUMULATE':
-            amplitude_sum += sample
-            sample_count += 1
-            if sample_count >= 3:
-                state = 'MODULATE'
-        elif state == 'MODULATE':
-            if sample <= 0:
-                break
-            amplitude_sum = (amplitude_sum * sample) % modulation_index
-            state = 'SCALE' if amplitude_sum > 10 else 'ACCUMULATE'
-        elif state == 'SCALE':
-            amplitude_sum = int(math.log(amplitude_sum + 1)) if amplitude_sum > 0 else 0
-            sample_count = 0
-            state = 'ACCUMULATE'
+    # Process each score with some intermediate calculations
+    for score in base_scores:
+        # Some intermediate calculations that don't affect final result
+        temp_adj = score * 1.5
+        normalized = temp_adj / 2
+        irrelevant_calc = normalized + 100
+        
+        # Actual relevant processing
+        if score > 10:
+            processed = score - 5
+        else:
+            processed = score + 3
+        processed_scores.append(processed)
     
-    final_adjustment = amplitude_sum if amplitude_sum < 100 else amplitude_sum // 2
-    return final_adjustment
+    # More intermediate operations
+    total_sum = sum(processed_scores)
+    avg_length = total_sum / len(processed_scores)
+    
+    # Unused variable that looks relevant
+    weighted_avg = avg_length * 1.2
+    
+    # Final relevant calculation
+    processed_data = {
+        'total': total_sum,
+        'average': avg_length,
+        'max': max(processed_scores)
+    }
+    
+    # Key execution point
+    final_score = processed_data.get('total', 0)
+    print(f"Result: {final_score}")
+    return final_score
 
-digitized_samples = [2, 4, 6, 3, 1, 8, 0, 5, 7]
-final_adjustment = process_waveform_signal(digitized_samples)
-print(f'Result: {final_adjustment}')
+# Test data
+text_samples = ['hello', 'world', 'python', 'programming', 'language']
+result = analyze_text_scores(text_samples)

@@ -1,27 +1,27 @@
-def compute_checksum(packets):
-    n = len(packets)
-    dp = [0] * (n + 1)
-    xor_prefix = 0
-    
-    for i in range(1, n + 1):
-        xor_prefix ^= packets[i-1]
-        dp[i] = dp[i-1] ^ xor_prefix
-    
-    return dp[n]
+from itertools import chain
 
-def process_packets_with_verification(packet_sequences):
-    verification_score = 0
-    for seq in packet_sequences:
-        checksum = compute_checksum(seq)
-        verification_score ^= checksum
-    return verification_score
+raw_readings = [15, 28, 33, 42, 51, 67, 74]
+calibration_offset = 5
+threshold_map = {1: 25, 2: 40, 3: 60, 4: 75}
+metric_map = {25: 8, 40: 12, 60: 18, 75: 22}
 
-# Packet sequences represented as lists of byte values
-network_traffic = [
-    [0b11001010, 0b10110101, 0b11100010],
-    [0b10101010, 0b01010101],
-    [0b11110000, 0b00001111, 0b10101010, 0b01010101]
-]
+temp_adjustment = calibration_offset * 2  # Not used in final calculation
+processed_data = []
 
-verification_score = process_packets_with_verification(network_traffic)
-print(f"Result: {verification_score}")
+for reading in raw_readings:
+    calibrated = reading - calibration_offset
+    if calibrated > 30:
+        category_key = None
+        for threshold_key, threshold_val in threshold_map.items():
+            if calibrated <= threshold_val:
+                category_key = threshold_key
+                break
+        if category_key is not None:
+            processed_data.append(threshold_map[category_key])
+
+# Distractor operations that don't affect the result
+intermediate_sum = sum(processed_data)
+filtered_chain = list(chain(processed_data, [100, 200]))
+final_metric = metric_map[processed_data[2]]
+
+print(f"Result: {final_metric}")

@@ -1,60 +1,35 @@
-import itertools
+def analyze_network_traffic(log_entries):
+    packet_sizes = [entry.get('size', 0) for entry in log_entries if entry.get('protocol') == 'TCP']
+    processed_data = {}
+    
+    # Calculate total and average packet size
+    total_packets = len(packet_sizes)
+    if total_packets > 0:
+        total_size = sum(packet_sizes)
+        average_size = total_size / total_packets
+        processed_data['total'] = total_size
+        processed_data['average'] = average_size
+    
+    # Distractor operations that don't affect final result
+    connection_stats = {}
+    temp_sum = sum([x * 2 for x in packet_sizes])  # Unused computation
+    protocol_count = len([entry for entry in log_entries if entry.get('type') == 'incoming'])  # Red herring
+    
+    # Final assignment
+    final_count = processed_data.get('total', 0)
+    
+    # Additional unused variables
+    max_size = max(packet_sizes) if packet_sizes else 0
+    
+    print(f"Target result: {final_count}")
 
-def process_logistics():
-    # Package data: (destination_code, weight, priority_multiplier)
-    packages = [
-        ('ALPHA_123', 15, 2),
-        ('BETA_456', 8, 3),
-        ('GAMMA_789', 22, 1),
-        ('DELTA_000', 5, 4),
-        ('EPSILON_111', 18, 2)
-    ]
-    
-    # Destination mapping using hash table
-    destination_zones = {
-        'ALPHA': 'Zone_A',
-        'BETA': 'Zone_B',
-        'GAMMA': 'Zone_C',
-        'DELTA': 'Zone_D',
-        'EPSILON': 'Zone_E'
-    }
-    
-    # Process packages using stack (LIFO)
-    package_stack = []
-    for pkg in packages:
-        package_stack.append(pkg)
-    
-    accumulated_priority_score = 0
-    zone_loads = {'Zone_A': 0, 'Zone_B': 0, 'Zone_C': 0, 'Zone_D': 0, 'Zone_E': 0}
-    
-    # Greedy processing: prioritize by priority_multiplier * weight
-    while package_stack:
-        # Pop from stack
-        dest_code, weight, priority = package_stack.pop()
-        
-        # Tokenize destination code
-        tokens = dest_code.split('_')
-        base_dest = tokens[0]
-        
-        # Transform to zone
-        zone = destination_zones.get(base_dest, 'Unknown')
-        
-        # Calculate priority score
-        priority_score = priority * weight
-        
-        # Apply zone-based modifier using divide and conquer approach for load balancing
-        current_load = zone_loads[zone]
-        if current_load > 20:
-            priority_score = priority_score // 2  # Reduce priority for overloaded zones
-        
-        # Update accumulated score
-        accumulated_priority_score += priority_score
-        
-        # Update zone load
-        zone_loads[zone] += weight
-    
-    return accumulated_priority_score
+# Sample data
+network_logs = [
+    {'protocol': 'TCP', 'size': 1500, 'type': 'incoming'},
+    {'protocol': 'TCP', 'size': 800, 'type': 'outgoing'},
+    {'protocol': 'UDP', 'size': 512, 'type': 'incoming'},
+    {'protocol': 'TCP', 'size': 1200, 'type': 'incoming'},
+    {'protocol': 'TCP', 'size': 900, 'type': 'outgoing'}
+]
 
-# Execute logistics processing
-final_score = process_logistics()
-print(f"Result: {final_score}")
+analyze_network_traffic(network_logs)

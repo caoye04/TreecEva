@@ -1,30 +1,20 @@
-from math import gcd
-from functools import reduce
+def process_sensor_data(measurements):
+    # Filter even measurements and square them
+    squared_evens = [x**2 for x in measurements if x % 2 == 0]
+    
+    # Calculate total energy from squared even readings
+    energy_sum = sum(squared_evens)
+    
+    # Apply calibration factor (distractor operation)
+    calibration_factor = 1.05
+    adjusted_energy = energy_sum * calibration_factor
+    
+    # Final result is the simple sum without adjustment
+    result = sum(squared_evens)
+    final_result = result
+    
+    print(f"Final result: {final_result}")
 
-def is_prime(n):
-    if n < 2:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
-
-# Generate first 5 primes greater than 20
-primes = []
-candidate = 21
-while len(primes) < 5:
-    if is_prime(candidate):
-        primes.append(candidate)
-    candidate += 1
-
-# Calculate product of these primes
-prime_product = reduce(lambda x, y: x * y, primes)
-
-# Euler's totient function φ(35)
-# Since 35 = 5 * 7, φ(35) = (5-1)*(7-1) = 24
-totient_35 = 24
-
-# Apply modular reduction
-session_checksum = prime_product % totient_35
-
-print(f"Result: {session_checksum}")
+# Sample sensor measurements
+sensor_readings = [3, 8, 12, 5, 6, 9, 14, 7]
+process_sensor_data(sensor_readings)

@@ -1,43 +1,22 @@
-Target: Find the value of variable suspicious_score after [line 26] executes
+Target: Find the value of variable network_capacity after [line 27] executes
 
-[line 18]  suspicious_patterns = [r'SUSPICIOUS$', r'FLAGGED$']
-Compute: [r'SUSPICIOUS$', r'FLAGGED$'] = ['SUSPICIOUS$', 'FLAGGED$']
-[line 19]  for log_entry in transaction_logs:
-Loop Start: log_entry takes its first value 'TXN_001:USD:1250.75:CLEARED'
-[line 24]  if any(re.search(pattern, log_entry) for pattern in suspicious_patterns):
-Condition: True, entering 'if' block
-[line 24]  if any(re.search(pattern, log_entry) for pattern in suspicious_patterns):
-Condition: True, entering 'if' block
-[line 24]  if any(re.search(pattern, log_entry) for pattern in suspicious_patterns):
-Condition: True, entering 'if' block
-[line 24]  if any(re.search(pattern, log_entry) for pattern in suspicious_patterns):
-Condition: True, entering 'if' block
-[line 19]  for log_entry in transaction_logs:
-Loop Iteration: log_entry is now 'TXN_002:EUR:890.50:FLAGGED' (iteration 2)
-[line 24]  if any(re.search(pattern, log_entry) for pattern in suspicious_patterns):
-Condition: True, entering 'if' block
-[line 24]  if any(re.search(pattern, log_entry) for pattern in suspicious_patterns):
-Condition: True, entering 'if' block
-[line 24]  if any(re.search(pattern, log_entry) for pattern in suspicious_patterns):
-Condition: True, entering 'if' block
-... [Line 19] repeats 7 more times ...
-... [Line 19] repeats 7 more times ...
-... [Line 19] repeats 7 more times ...
-... [Line 19] repeats 7 more times ...
-... [Line 19] repeats 7 more times ...
-[line 19]  for log_entry in transaction_logs:
-Loop Iteration: log_entry is now 'TXN_010:GBP:300.60:CLEARED' (iteration 10)
-[line 24]  if any(re.search(pattern, log_entry) for pattern in suspicious_patterns):
-Condition: True, entering 'if' block
-[line 24]  if any(re.search(pattern, log_entry) for pattern in suspicious_patterns):
-Condition: True, entering 'if' block
-[line 24]  if any(re.search(pattern, log_entry) for pattern in suspicious_patterns):
-Condition: True, entering 'if' block
-[line 24]  if any(re.search(pattern, log_entry) for pattern in suspicious_patterns):
-Condition: True, entering 'if' block
-[line 19]  for log_entry in transaction_logs:
-Loop End: Iteration finished
-[line 26]  suspicious_score = 0
-Assign: suspicious_score = 0
+[line 5]  node_requests = [120, 85, 200, 150, 90, 180]
+Compute: [120, 85, 200, 150, 90, 180] = [120, 85, 200, 150, 90, ...]
+[line 6]  bandwidth_threshold = 150
+Assign: bandwidth_threshold = 150
+[line 9]  approved_requests = [req for req in node_requests if req <= bandwidth_threshold]
+Compute: [req for req in node_requests if req <= bandwidth_threshold], where req=120 (an unknown source), node_requests=[120, 85, 200, 150, 90, ...] (defined at [line 5]), bandwidth_threshold=150 (defined at [line 6]) = ?
+[line 17]  redundancy_factor = 1.2
+Assign: redundancy_factor = 1.2
+[line 18]  base_allocation = sum(approved_requests)
+Call function sum(approved_requests=[120, 85, 150, 90] (defined at [line 9]))
+[line 19]  preliminary_capacity = base_allocation * redundancy_factor
+Compute: base_allocation * redundancy_factor, where base_allocation=445 (defined at [line 18]), redundancy_factor=1.2 (defined at [line 17]) = 534.0
+[line 25]  overhead_percentage = 0.15
+Assign: overhead_percentage = 0.15
+[line 26]  overhead_adjustment = preliminary_capacity * overhead_percentage
+Compute: preliminary_capacity * overhead_percentage, where preliminary_capacity=534.0 (defined at [line 19]), overhead_percentage=0.15 (defined at [line 25]) = 80.1
+[line 27]  network_capacity = preliminary_capacity - overhead_adjustment
+Compute: preliminary_capacity - overhead_adjustment, where preliminary_capacity=534.0 (defined at [line 19]), overhead_adjustment=80.1 (defined at [line 26]) = 453.9
 
-Answer: suspicious_score = 0 (last updated on defined at [line 26])
+Answer: network_capacity = 453.9 (last updated on defined at [line 27])

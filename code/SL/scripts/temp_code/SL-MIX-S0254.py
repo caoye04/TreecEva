@@ -1,37 +1,42 @@
-from itertools import combinations
-
-class Palette:
-    def __init__(self, hues):
-        self.hues = hues
-        self.length = len(hues)
+def process_data_values(data_input):
+    # Distractor: complex but irrelevant string operations
+    temp_str = 'computation_result_placeholder'
+    processed_str = temp_str.upper().replace('_', '-').strip()
+    str_length = len(processed_str)
     
-    def compute_harmony(self, subset_indices):
-        if not subset_indices:
-            return 0
-        product = 1
-        for idx in subset_indices:
-            product *= (idx + 1) * self.hues[idx]
-        return product + sum(subset_indices)
+    # Main logic path - data processing with multiple steps
+    initial_sum = sum(data_input)
+    processed_data = [x * 2 if x > 10 else x // 2 for x in data_input]
+    
+    # Misleading intermediate computation (unused)
+    fake_metric = len([x for x in processed_data if x % 3 == 0]) * 7
+    
+    # Distractor: complex set operations that don't affect result
+    value_set = set(processed_data)
+    unique_count = len(value_set)
+    overlapping = value_set.intersection({5, 10, 15})
+    
+    # Actual relevant computation
+    filtered_values = [x for x in processed_data if x > 5]
+    weighted_sum = sum(filtered_values) * 1.5
+    
+    # Dead code path with misleading calculations
+    if str_length > 20:
+        fake_adjustment = weighted_sum * 0.8
+    else:
+        fake_adjustment = weighted_sum * 1.2
+    
+    # Final result calculation
+    final_result = int(weighted_sum) - unique_count
+    return final_result
 
-# Initialize palette with specific hue values
-artistic_hues = [2, -1, 3, 0, 4]
-creative_palette = Palette(artistic_hues)
+# Main execution
+original_data = [8, 15, 22, 7, 18, 12, 9]
+composite_score = process_data_values(original_data)
 
-# Dynamic programming table for storing max harmony up to index i
-harmony_table = [float('-inf')] * creative_palette.length
-harmony_table[0] = creative_palette.compute_harmony([0])
+# Distractor: more irrelevant computations
+sample_dict = {'a': 5, 'b': 10, 'c': 15}
+dict_sum = sum(sample_dict.values())
+string_slice = 'intervention_test'[3:11]
 
-# Combinatorial exploration with dynamic programming
-for idx in range(1, creative_palette.length):
-    # Calculate all combinations including current index
-    current_max = float('-inf')
-    for r in range(1, idx+2):  # r is the size of combination
-        for combo in combinations(range(idx+1), r):
-            if idx in combo:  # Only consider combos that include current index
-                score = creative_palette.compute_harmony(list(combo))
-                if score > current_max:
-                    current_max = score
-    harmony_table[idx] = max(harmony_table[idx-1], current_max)
-
-max_harmony_score = harmony_table[-1]
-print(f"Result: {max_harmony_score}")
+print(f"Target result: {composite_score}")

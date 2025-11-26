@@ -1,25 +1,31 @@
-15
-total_revenue
+14
+final_total
 ---
-4 Item = namedtuple('Item', ['name', 'price'])
-4 [] []
-5 croissant = Item('croissant', 2.5)
-5 ['croissant'] ["Item(name='croissant', price=2.5)"]
-6 muffin = Item('muffin', 3.0)
-6 ['croissant', 'muffin'] ["Item(name='croissant', price=2.5)", "Item(name='muffin', price=3.0)"]
-7 scone = Item('scone', 2.0)
-7 ['croissant', 'muffin', 'scone'] ["Item(name='croissant', price=2.5)", "Item(name='muffin', price=3.0)", "Item(name='scone', price=2.0)"]
-10 sales_quantities = [40, 25, 30]  # croissants, muffins, scones
-10 ['croissant', 'muffin', 'scone', 'sales_quantities'] ["Item(name='croissant', price=2.5)", "Item(name='muffin', price=3.0)", "Item(name='scone', price=2.0)", '[40, 25, 30]']
-13 prices = [croissant.price, muffin.price, scone.price]
-13 ['croissant', 'muffin', 'scone', 'sales_quantities', 'prices'] ["Item(name='croissant', price=2.5)", "Item(name='muffin', price=3.0)", "Item(name='scone', price=2.0)", '[40, 25, 30]', '[2.5, 3.0, 2.0]']
-14 revenues = [qty * price for qty, price in zip(sales_quantities, prices)]
-14 ['sales_quantities', 'prices', 'qty', 'price'] ['[40, 25, 30]', '[2.5, 3.0, 2.0]', '40', '2.5']
-14 revenues = [qty * price for qty, price in zip(sales_quantities, prices)]
-14 ['sales_quantities', 'prices', 'qty', 'price'] ['[40, 25, 30]', '[2.5, 3.0, 2.0]', '25', '3.0']
-14 revenues = [qty * price for qty, price in zip(sales_quantities, prices)]
-14 ['sales_quantities', 'prices', 'qty', 'price'] ['[40, 25, 30]', '[2.5, 3.0, 2.0]', '30', '2.0']
-14 revenues = [qty * price for qty, price in zip(sales_quantities, prices)]
-14 ['sales_quantities', 'prices', 'revenues'] ['[40, 25, 30]', '[2.5, 3.0, 2.0]', '[100.0, 75.0, 60.0]']
-15 total_revenue = sum(revenues) if all(revenues) else 0
-15 ['revenues', 'total_revenue'] ['[100.0, 75.0, 60.0]', '235.0']
+9 primary_sum = sum([value for key, value in data_records.items() if key.startswith(('A', 'B', 'C'))])
+9 ['data_records', 'key', 'value'] ['{A001: 45, B002: 67, C003: 23, ...}', "'A001'", '45']
+9 primary_sum = sum([value for key, value in data_records.items() if key.startswith(('A', 'B', 'C'))])
+9 ['data_records', 'key', 'value'] ['{A001: 45, B002: 67, C003: 23, ...}', "'B002'", '67']
+9 primary_sum = sum([value for key, value in data_records.items() if key.startswith(('A', 'B', 'C'))])
+9 ['data_records', 'key', 'value'] ['{A001: 45, B002: 67, C003: 23, ...}', "'C003'", '23']
+9 primary_sum = sum([value for key, value in data_records.items() if key.startswith(('A', 'B', 'C'))])
+9 ['data_records', 'key', 'value'] ['{A001: 45, B002: 67, C003: 23, ...}', "'D004'", '89']
+9 primary_sum = sum([value for key, value in data_records.items() if key.startswith(('A', 'B', 'C'))])
+9 ['data_records', 'key', 'value'] ['{A001: 45, B002: 67, C003: 23, ...}', "'E005'", '12']
+9 primary_sum = sum([value for key, value in data_records.items() if key.startswith(('A', 'B', 'C'))])
+9 ['data_records', 'primary_sum'] ['{A001: 45, B002: 67, C003: 23, ...}', '135']
+11 modifier = len([key for key in data_records.keys() if key.endswith('3')]) + 1
+11 ['data_records', 'primary_sum', 'key'] ['{A001: 45, B002: 67, C003: 23, ...}', '135', "'A001'"]
+11 modifier = len([key for key in data_records.keys() if key.endswith('3')]) + 1
+11 ['data_records', 'primary_sum', 'key'] ['{A001: 45, B002: 67, C003: 23, ...}', '135', "'B002'"]
+11 modifier = len([key for key in data_records.keys() if key.endswith('3')]) + 1
+11 ['data_records', 'primary_sum', 'key'] ['{A001: 45, B002: 67, C003: 23, ...}', '135', "'C003'"]
+11 modifier = len([key for key in data_records.keys() if key.endswith('3')]) + 1
+11 ['data_records', 'primary_sum', 'key'] ['{A001: 45, B002: 67, C003: 23, ...}', '135', "'D004'"]
+11 modifier = len([key for key in data_records.keys() if key.endswith('3')]) + 1
+11 ['data_records', 'primary_sum', 'key'] ['{A001: 45, B002: 67, C003: 23, ...}', '135', "'E005'"]
+11 modifier = len([key for key in data_records.keys() if key.endswith('3')]) + 1
+11 ['data_records', 'primary_sum', 'modifier'] ['{A001: 45, B002: 67, C003: 23, ...}', '135', '2']
+13 adjustment = len(data_records) * 10
+13 ['data_records', 'primary_sum', 'modifier', 'adjustment'] ['{A001: 45, B002: 67, C003: 23, ...}', '135', '2', '50']
+14 final_total = primary_sum * modifier - adjustment
+14 ['primary_sum', 'modifier', 'adjustment', 'final_total'] ['135', '2', '50', '220']

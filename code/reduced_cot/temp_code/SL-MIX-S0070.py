@@ -1,22 +1,46 @@
-from collections import namedtuple
+def data_validator(items, keys):
+    # Irrelevant helper function that distracts from main logic
+    def fake_processor(x):
+        return (x * 3 + 7) % 11
+    
+    # Misleading intermediate computations
+    temp_sum = 0
+    for i in range(len(items)):
+        temp_sum += items[i] * (i + 1)
+    
+    # Dead code path that never executes
+    if temp_sum > 1000:
+        unused_result = temp_sum // 2
+    else:
+        unused_result = temp_sum * 2
+    
+    # Main logic using zip and enumerate
+    validation_sum = 0
+    for idx, (item, key) in enumerate(zip(items, keys)):
+        # Distracting computation
+        fake_check = (item ^ key) & 0xFF
+        
+        # Actual validation logic
+        if item % 2 == 0:
+            validation_sum += item + key
+        else:
+            validation_sum += item - key
+        
+        # More irrelevant operations
+        distraction = fake_processor(idx)
+    
+    # Final computation with misleading variable
+    intermediate = validation_sum % 50
+    checksum = intermediate * 3 - 7
+    
+    return checksum
 
-# Sales record for one day
-Sale = namedtuple('Sale', ['customer_id', 'sourdough_sales', 'croissant_sales'])
+data_items = [12, 8, 15, 23, 6]
+verification_keys = [3, 5, 2, 7, 4]
 
-daily_records = [
-    Sale(customer_id=101, sourdough_sales=75, croissant_sales=20),
-    Sale(customer_id=102, sourdough_sales=50, croissant_sales=30),
-    Sale(customer_id=103, sourdough_sales=65, croissant_sales=15),
-    Sale(customer_id=104, sourdough_sales=40, croissant_sales=45),
-    Sale(customer_id=105, sourdough_sales=80, croissant_sales=10)
-]
+# Irrelevant parallel computation
+distraction_list = [x * 2 for x in data_items]
+fake_total = sum(distraction_list)
 
-# Calculate loyalty points and check discount qualification
-qualifying_customers = 0
-for record in daily_records:
-    total_spent = record.sourdough_sales + record.croissant_sales
-    loyalty_points = total_spent // 5
-    if loyalty_points >= 10 and record.sourdough_sales > 60:
-        qualifying_customers += 1
-
-print(f"Result: {qualifying_customers}")
+final_checksum = data_validator(data_items, verification_keys)
+print(f"Result: {final_checksum}")

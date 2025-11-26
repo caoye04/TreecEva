@@ -1,9 +1,8 @@
-from collections import Counter
+data_points = [2, 5, 8, 11, 14]
+weights = [1.5, 2.0, 0.5, 1.0, 2.5]
+reference_data = [3, 6, 9, 12, 15]
 
-document = "Hello world hello world hello"
-tokens = document.lower().split()
-word_counts = Counter(tokens)
-unique_words = len(word_counts)
-most_frequent_count = max(word_counts.values())
-metric = unique_words * most_frequent_count
-print(f'Result: {metric}')
+# Calculate weighted average
+final_metric = sum(x*y for x, y in zip(data_points, weights)) / len(data_points)
+
+print(f"Result: {final_metric}")

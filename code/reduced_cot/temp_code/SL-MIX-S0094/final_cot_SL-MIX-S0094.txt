@@ -1,106 +1,12 @@
-Target: Find the value of variable secure_key after [line 31] executes
+Target: Find the value of variable final_count after [line 5] executes
 
-[line 26]  tokens = TokenSet(['alpha', 'beta', 'gamma'])
-Call function TokenSet(['alpha', 'beta', 'gamma'])
-[line 30]  hashes_list = tokens.get_permutation_hashes()
-(Missing param: 'func_name')
-[line 19]  hashes = [hash_token(t) for t in self.items]
-Compute: [hash_token(t) for t in self.items], where t='alpha' (an unknown source), self=TokenSet(items=['alpha', 'beta', 'gamma']) (an unknown source) = ?
-[line 6]  return hash(token) % 10000
-Return: hash(token) % 10000
-[line 6]  return hash(token) % 10000
-Return: hash(token) % 10000
-[line 6]  return hash(token) % 10000
-Return: hash(token) % 10000
-[line 20]  perm_hashes = []
-Compute: [] = []
-[line 21]  for p in permutations(hashes):
-Loop Start: p takes its first value (4215, 5824, 7429)
-[line 9]  result = 0
-Assign: result = 0
-[line 10]  for v in values:
-Loop Start: v takes its first value 4215
-[line 10]  for v in values:
-Loop Iteration: v is now 5824 (iteration 2)
-... [Line 10] repeats 20 more times ...
-... [Line 10] repeats 20 more times ...
-[line 12]  return result
-Return: result=7090 (defined at [line 9])
-[line 21]  for p in permutations(hashes):
-Loop End: Iteration finished
-[line 9]  result = 0
-Assign: result = 0
-[line 10]  for v in values:
-Loop Iteration: v is now 4215 (iteration 5)
-[line 10]  for v in values:
-Loop Iteration: v is now 7429 (iteration 6)
-[line 10]  for v in values:
-Loop Iteration: v is now 5824 (iteration 7)
-[line 10]  for v in values:
-Loop Iteration: v is now 5824 (iteration 8)
-[line 12]  return result
-Return: result=7090 (defined at [line 9])
-[line 21]  for p in permutations(hashes):
-Loop End: Iteration finished
-[line 9]  result = 0
-Assign: result = 0
-[line 10]  for v in values:
-Loop Iteration: v is now 5824 (iteration 9)
-[line 10]  for v in values:
-Loop Iteration: v is now 4215 (iteration 10)
-[line 10]  for v in values:
-Loop Iteration: v is now 7429 (iteration 11)
-[line 10]  for v in values:
-Loop Iteration: v is now 7429 (iteration 12)
-[line 12]  return result
-Return: result=7090 (defined at [line 9])
-[line 21]  for p in permutations(hashes):
-Loop End: Iteration finished
-[line 9]  result = 0
-Assign: result = 0
-[line 10]  for v in values:
-Loop Iteration: v is now 5824 (iteration 13)
-[line 10]  for v in values:
-Loop Iteration: v is now 7429 (iteration 14)
-[line 10]  for v in values:
-Loop Iteration: v is now 4215 (iteration 15)
-[line 10]  for v in values:
-Loop Iteration: v is now 4215 (iteration 16)
-[line 12]  return result
-Return: result=7090 (defined at [line 9])
-[line 21]  for p in permutations(hashes):
-Loop End: Iteration finished
-[line 9]  result = 0
-Assign: result = 0
-[line 10]  for v in values:
-Loop Iteration: v is now 7429 (iteration 17)
-[line 10]  for v in values:
-Loop Iteration: v is now 4215 (iteration 18)
-[line 10]  for v in values:
-Loop Iteration: v is now 5824 (iteration 19)
-[line 10]  for v in values:
-Loop Iteration: v is now 5824 (iteration 20)
-[line 12]  return result
-Return: result=7090 (defined at [line 9])
-[line 21]  for p in permutations(hashes):
-Loop End: Iteration finished
-[line 9]  result = 0
-Assign: result = 0
-[line 10]  for v in values:
-Loop Iteration: v is now 7429 (iteration 21)
-[line 10]  for v in values:
-Loop Iteration: v is now 5824 (iteration 22)
-[line 10]  for v in values:
-Loop Iteration: v is now 4215 (iteration 23)
-[line 10]  for v in values:
-Loop Iteration: v is now 4215 (iteration 24)
-[line 12]  return result
-Return: result=7090 (defined at [line 9])
-[line 21]  for p in permutations(hashes):
-Loop End: Iteration finished
-[line 24]  return perm_hashes
-Return: perm_hashes=[7090, 7090, 7090, 7090, 7090, ...] (defined at [line 20])
-[line 31]  secure_key = sum(hashes_list) % 997
-Compute: sum(hashes_list) % 997, where hashes_list=[7090, 7090, 7090, 7090, 7090, ...] (an unknown source) = 666
+[line 1]  sensor_readings = [3, 8, 2, 7, 4, 9]
+Compute: [3, 8, 2, 7, 4, 9] = [3, 8, 2, 7, 4, ...]
+[line 3]  processed_data = [x * 2 if x > 5 else x + 1 for x in sensor_readings]
+Compute: [x * 2 if x > 5 else x + 1 for x in sensor_readings], where x=3 (an unknown source), sensor_readings=[3, 8, 2, 7, 4, ...] (defined at [line 1]) = ?
+[line 4]  temp_storage = [item for item in processed_data if item > 10]
+Compute: [item for item in processed_data if item > 10], where item=4 (an unknown source), processed_data=[4, 16, 3, 14, 5, ...] (defined at [line 3]) = ?
+[line 5]  final_count = len(temp_storage)
+Call function len(temp_storage=[16, 14, 18] (defined at [line 4]))
 
-Answer: secure_key = 666 (last updated on defined at [line 31])
+Answer: final_count = 3 (last updated on defined at [line 5])

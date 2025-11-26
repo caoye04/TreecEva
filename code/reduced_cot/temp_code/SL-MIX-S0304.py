@@ -1,56 +1,42 @@
-class VendingMachine:
-    def __init__(self):
-        self.inventory = {
-            'chips': {'count': 5, 'value': 2},
-            'candy': {'count': 2, 'value': 1},
-            'soda': {'count': 8, 'value': 3},
-            'nuts': {'count': 1, 'value': 4}
-        }
-        self.state = 'NORMAL'
-        self.restock_quota = 15
-        
-    def update_state(self):
-        if any(item['count'] == 0 for item in self.inventory.values()):
-            self.state = 'OUT_OF_ORDER'
-        elif any(item['count'] < 3 for item in self.inventory.values()):
-            self.state = 'LOW_STOCK'
-        else:
-            self.state = 'NORMAL'
-        
-    def process_purchases(self, purchases):
-        for item, quantity in purchases.items():
-            if item in self.inventory and self.inventory[item]['count'] >= quantity:
-                self.inventory[item]['count'] -= quantity
-        self.update_state()
+def filter_odd_values(data):
+    irrelevant_set = {2, 4, 6, 8, 10}
+    temp_cache = [x for x in data if x % 2 == 1]
+    misleading_total = sum(irrelevant_set)  # Distractor: 30
+    return temp_cache
+
+def process_core_data(values):
+    threshold = 7
+    dead_code_result = len(values) * 3.14  # Unused calculation
+    filtered = [v for v in values if v > threshold]
+    sliced_data = filtered[1:-1]  # Remove first and last
+    return sum(sliced_data)
+
+def main():
+    # Primary dataset
+    sensor_readings = [5, 8, 12, 3, 15, 9, 6, 11, 7, 14]
     
-    def restock_greedy(self):
-        # Greedy algorithm: prioritize items with lowest stock first
-        items_sorted = sorted(self.inventory.items(), key=lambda x: x[1]['count'])
-        restock_priority_score = 0
-        remaining_quota = self.restock_quota
-        
-        for item_name, item_data in items_sorted:
-            if remaining_quota <= 0:
-                break
-            needed = max(0, 10 - item_data['count'])  # Target stock level is 10
-            restock_amount = min(needed, remaining_quota)
-            
-            if restock_amount > 0:
-                self.inventory[item_name]['count'] += restock_amount
-                restock_priority_score += restock_amount * item_data['value']
-                remaining_quota -= restock_amount
-        
-        self.update_state()
-        return restock_priority_score
+    # Distractor operations
+    calibration_set = {1, 2, 3, 4, 5}
+    validation_offset = 25
+    redundant_checksum = sum(range(10))  # 45
+    
+    # Core processing chain
+    odd_readings = filter_odd_values(sensor_readings)
+    core_sum = process_core_data(odd_readings)
+    
+    # More distractors
+    backup_data = [x * 2 for x in sensor_readings[:3]]
+    system_overhead = len(backup_data) * 10
+    
+    # Key assignment - this is the target
+    final_filter_sum = core_sum + validation_offset
+    processed_sum = final_filter_sum
+    
+    # Unused variables and operations
+    diagnostic_flag = (len(sensor_readings) > 5)
+    unused_buffer = bytearray(10)
+    
+    print(f"Result: {processed_sum}")
 
-# Execution sequence
-vm = VendingMachine()
-purchase_list = {'chips': 3, 'candy': 1, 'soda': 6, 'nuts': 1}
-vm.process_purchases(purchase_list)
-
-# Apply greedy restocking algorithm only if machine is not OUT_OF_ORDER
-restock_priority_score = 0
-if vm.state != 'OUT_OF_ORDER':
-    restock_priority_score = vm.restock_greedy()
-
-print(f'Result: {restock_priority_score}')
+if __name__ == "__main__":
+    main()

@@ -1,57 +1,28 @@
-from collections import defaultdict, deque
-import itertools
-
-class SensorNode:
-    def __init__(self, delay):
-        self.delay = delay
-        self.left = None
-        self.right = None
-
-def generate_delay_permutations(base_pattern):
-    return list(itertools.permutations(base_pattern))
-
-def build_sensor_tree():
-    # Binary tree with specific delay values
-    root = SensorNode(3)
-    root.left = SensorNode(1)
-    root.right = SensorNode(2)
-    root.left.left = SensorNode(4)
-    root.left.right = SensorNode(5)
-    root.right.left = SensorNode(6)
-    root.right.right = SensorNode(7)
-    return root
-
-def traverse_and_count(root, target_delay_sum, valid_patterns):
-    if not root:
-        return 0
+def analyze_energy_readings(readings):
+    # Process sensor readings
+    filtered_readings = [r for r in readings if r > 50 and r < 200]
     
-    path_counter = 0
-    queue = deque([(root, [root.delay])])
+    # Calculate base energy (distractor - not used in final calculation)
+    base_calc = sum(filtered_readings) * 0.1
     
-    while queue:
-        current_node, current_path = queue.popleft()
-        
-        # Check if we're at a leaf node
-        if not current_node.left and not current_node.right:
-            # Verify sum matches target
-            if sum(current_path) == target_delay_sum:
-                # Check if path is a permutation of valid pattern
-                path_tuple = tuple(current_path)
-                if path_tuple in valid_patterns:
-                    path_counter += 1
-        else:
-            # Continue traversal
-            if current_node.left:
-                queue.append((current_node.left, current_path + [current_node.left.delay]))
-            if current_node.right:
-                queue.append((current_node.right, current_path + [current_node.right.delay]))
+    # Find energy extremes
+    energy_values = [reading * 0.8 for reading in filtered_readings]
+    max_energy = max(energy_values)
+    min_energy = min(energy_values)
     
-    return path_counter
+    # Intermediate calculation (distractor)
+    temp_variance = (max_energy - min_energy) * 1.5
+    
+    # Base energy from different source
+    base_energy = len(filtered_readings) * 25
+    
+    # Final energy calculation
+    final_energy = max(energy_values) - min(energy_values) + base_energy
+    
+    # Print result
+    print(f"Target result: {final_energy}")
+    return final_energy
 
-tree_root = build_sensor_tree()
-pattern_base = [3, 1, 4]  # Root to one specific leaf
-valid_sequence_perms = set(generate_delay_permutations(pattern_base))
-target_sum_threshold = 8
-
-matching_paths_count = traverse_and_count(tree_root, target_sum_threshold, valid_sequence_perms)
-print(f"Result: {matching_paths_count}")
+# Sensor readings data
+sensor_data = [45, 78, 92, 150, 185, 210, 65, 120, 95, 175, 55, 135]
+result = analyze_energy_readings(sensor_data)

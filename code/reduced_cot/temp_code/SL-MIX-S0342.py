@@ -1,40 +1,36 @@
-import math
-from collections import deque
+def analyze_quality_samples(samples):
+    irrelevant_calc = samples[0] * 3.14 + len(samples) ** 2
+    temp_buffer = [x * 2 for x in samples]
+    processed_data = [sample // 2 if sample % 2 == 0 else sample * 3 + 1 for sample in samples]
+    
+    # Misleading intermediate processing
+    dummy_metrics = [x + 5 for x in processed_data]
+    shadow_calc = sum(dummy_metrics) // len(dummy_metrics)
+    
+    # Actual quality processing
+    quality_metrics = [sample * 2 - 3 for sample in processed_data]
+    processed_indices = [i for i in range(len(quality_metrics)) if quality_metrics[i] > 10]
+    
+    # Dead code path - never executed
+    if shadow_calc > 100:
+        unused_result = shadow_calc * 2
+    else:
+        unused_result = shadow_calc // 2
+    
+    # Slicing operations for key processing
+    relevant_slice = quality_metrics[:len(quality_metrics)//2]
+    processed_indices = [i for i, val in enumerate(quality_metrics) if val in relevant_slice]
+    
+    # Critical execution point
+    final_quality_score = quality_metrics[processed_indices[-1]]
+    
+    print(f"Result: {final_quality_score}")
+    return final_quality_score
 
-def triangle_area(a, b, c):
-    # Using Heron's formula
-    s = (a + b + c) / 2
-    return math.sqrt(s * (s - a) * (s - b) * (s - c))
+# Main execution with distractor variables
+sample_data = [8, 15, 22, 7, 19, 11]
+redundant_check = [x % 4 for x in sample_data]
+misleading_total = sum(sample_data) * 2
 
-# Initial mesh stack with triangle side lengths
-mesh_stack = deque([
-    (3, 4, 5),
-    (5, 12, 13),
-    (8, 15, 17)
-])
-
-# Transformation operations
-scale_factor = 2
-area_multiplier = lambda x: x * scale_factor ** 2
-
-# Process mesh transformations
-processed_areas = []
-while mesh_stack:
-    sides = mesh_stack.pop()
-    base_area = triangle_area(*sides)
-    transformed_area = area_multiplier(base_area)
-    processed_areas.append(transformed_area)
-
-# Apply combinatorial aggregation
-from itertools import combinations
-aggregated_values = []
-for combo in combinations(processed_areas, 2):
-    aggregated_values.append(sum(combo) * math.log(sum(combo), 2))
-
-# Calculate final surface area using matrix operations
-import numpy as np
-area_matrix = np.array(aggregated_values).reshape(3, 1)
-weight_matrix = np.array([[1, -1, 2]])
-final_surface_area = np.dot(weight_matrix, area_matrix)[0]
-
-print(f"Result: {final_surface_area}")
+result = analyze_quality_samples(sample_data)
+dummy_output = misleading_total // len(sample_data)

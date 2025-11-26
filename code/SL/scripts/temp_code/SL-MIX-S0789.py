@@ -1,41 +1,25 @@
-from collections import defaultdict
+def compute_data_validation(data_blocks):
+    # Process data blocks with validation checks
+    processed_values = [x * 2 + 1 for x in data_blocks if x > 0]
+    
+    # Apply bitwise operations for data masking
+    mask = 0b10101010
+    temp_mask = mask << 2  # Unused distractor operation
+    
+    # Sort and filter values
+    sorted_values = sorted(processed_values)
+    filtered_values = [v for v in sorted_values if v % 3 == 0]  # Unused distractor list
+    
+    # Compute checksum with XOR operation
+    intermediate_sum = sum(sorted_values[:3]) + len(data_blocks)  # Partially used
+    final_checksum = sum(sorted_values) ^ mask
+    
+    # Additional unused computations
+    redundant_check = intermediate_sum & mask  # Unused variable
+    
+    print(f"Result: {final_checksum}")
+    return final_checksum
 
-class TreeNode:
-    def __init__(self, val=0):
-        self.val = val
-        self.children = []
-
-def compute_tree_metric(node):
-    if not node.children:
-        return node.val
-    child_sum = sum(compute_tree_metric(child) for child in node.children)
-    return node.val + child_sum * len(node.children)
-
-token_stream = ['{', '{', '{', '}', '{', '}', '}', '{', '}', '}']
-block_stack = []
-root_node = TreeNode(1)
-active_nodes = [root_node]
-structural_score = 0
-state = 'IDLE'
-
-for token in token_stream:
-    if token == '{':
-        if state == 'IDLE':
-            state = 'BLOCK_OPEN'
-        new_node = TreeNode(len(active_nodes)+1)
-        if active_nodes:
-            active_nodes[-1].children.append(new_node)
-        active_nodes.append(new_node)
-        block_stack.append('{')
-    elif token == '}' and block_stack:
-        block_stack.pop()
-        closed_node = active_nodes.pop()
-        if not block_stack:
-            state = 'IDLE'
-        else:
-            state = 'BLOCK_CLOSE'
-        # Calculate contribution only when a top-level block closes
-        if not block_stack:
-            structural_score += compute_tree_metric(closed_node)
-
-print(f"Result: {structural_score}")
+# Test data
+sample_data = [5, 2, 8, 3, 1]
+result = compute_data_validation(sample_data)

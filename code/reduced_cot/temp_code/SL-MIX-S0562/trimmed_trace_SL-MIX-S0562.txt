@@ -1,0 +1,49 @@
+32
+final_measurement
+---
+4 raw_readings = [12, 8, 15, 6, 9, 11, 7, 14]
+4 ['raw_readings'] ['[12, 8, 15, 6, 9, ...]']
+5 threshold = 10
+5 ['raw_readings', 'threshold'] ['[12, 8, 15, 6, 9, ...]', '10']
+8 filtered_readings = [x for x in raw_readings if x > threshold]
+8 ['raw_readings', 'threshold', 'x'] ['[12, 8, 15, 6, 9, ...]', '10', '12']
+8 filtered_readings = [x for x in raw_readings if x > threshold]
+8 ['raw_readings', 'threshold', 'x'] ['[12, 8, 15, 6, 9, ...]', '10', '8']
+8 filtered_readings = [x for x in raw_readings if x > threshold]
+8 ['raw_readings', 'threshold', 'x'] ['[12, 8, 15, 6, 9, ...]', '10', '15']
+8 filtered_readings = [x for x in raw_readings if x > threshold]
+8 ['raw_readings', 'threshold', 'x'] ['[12, 8, 15, 6, 9, ...]', '10', '6']
+8 filtered_readings = [x for x in raw_readings if x > threshold]
+8 ['raw_readings', 'threshold', 'x'] ['[12, 8, 15, 6, 9, ...]', '10', '9']
+8 filtered_readings = [x for x in raw_readings if x > threshold]
+8 ['raw_readings', 'threshold', 'x'] ['[12, 8, 15, 6, 9, ...]', '10', '11']
+8 filtered_readings = [x for x in raw_readings if x > threshold]
+8 ['raw_readings', 'threshold', 'x'] ['[12, 8, 15, 6, 9, ...]', '10', '7']
+8 filtered_readings = [x for x in raw_readings if x > threshold]
+8 ['raw_readings', 'threshold', 'x'] ['[12, 8, 15, 6, 9, ...]', '10', '14']
+8 filtered_readings = [x for x in raw_readings if x > threshold]
+8 ['raw_readings', 'threshold', 'filtered_readings'] ['[12, 8, 15, 6, 9, ...]', '10', '[12, 15, 11, 14]']
+15 processed_metrics = []
+15 ['filtered_readings', 'processed_metrics'] ['[12, 15, 11, 14]', '[]']
+18 for i, reading in enumerate(filtered_readings):
+18 ['filtered_readings', 'processed_metrics', 'i', 'reading'] ['[12, 15, 11, 14]', '[]', '0', '12']
+18 for i, reading in enumerate(filtered_readings):
+18 ['filtered_readings', 'processed_metrics', 'i', 'reading'] ['[12, 15, 11, 14]', '[12]', '1', '15']
+18 for i, reading in enumerate(filtered_readings):
+18 ['filtered_readings', 'processed_metrics', 'i', 'reading'] ['[12, 15, 11, 14]', '[12, 13]', '2', '11']
+18 for i, reading in enumerate(filtered_readings):
+18 ['filtered_readings', 'processed_metrics', 'i', 'reading'] ['[12, 15, 11, 14]', '[12, 13, 12]', '3', '14']
+18 for i, reading in enumerate(filtered_readings):
+18 ['filtered_readings', 'processed_metrics', 'i', 'reading'] ['[12, 15, 11, 14]', '[12, 13, 12, 13]', '3', '14']
+23 reading_set = set(filtered_readings)
+23 ['filtered_readings', 'processed_metrics', 'reading_set'] ['[12, 15, 11, 14]', '[12, 13, 12, 13]', '{11, 12, 14, 15}']
+24 baseline_set = {12, 15, 14}
+24 ['processed_metrics', 'reading_set', 'baseline_set'] ['[12, 13, 12, 13]', '{11, 12, 14, 15}', '{12, 14, 15}']
+25 common_elements = reading_set.intersection(baseline_set)
+25 ['processed_metrics', 'reading_set', 'baseline_set', 'common_elements'] ['[12, 13, 12, 13]', '{11, 12, 14, 15}', '{12, 14, 15}', '{12, 14, 15}']
+26 uncommon_elements = reading_set.symmetric_difference(baseline_set)
+26 ['processed_metrics', 'reading_set', 'baseline_set', 'common_elements', 'uncommon_elements'] ['[12, 13, 12, 13]', '{11, 12, 14, 15}', '{12, 14, 15}', '{12, 14, 15}', '{11}']
+29 adjustment_offset = len(common_elements) * 2 - len(uncommon_elements)
+29 ['processed_metrics', 'common_elements', 'uncommon_elements', 'adjustment_offset'] ['[12, 13, 12, 13]', '{12, 14, 15}', '{11}', '5']
+32 final_measurement = processed_metrics[-1] + adjustment_offset
+32 ['processed_metrics', 'adjustment_offset', 'final_measurement'] ['[12, 13, 12, 13]', '5', '18']

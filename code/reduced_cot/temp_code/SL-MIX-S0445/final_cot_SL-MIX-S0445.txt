@@ -1,0 +1,58 @@
+Target: Find the value of variable final_balance after [line 34] executes
+
+[line 32]  transaction_log = "deposit:250,withdraw:100,deposit:75,withdraw:50"
+Assign: transaction_log = 'deposit:250,withdraw:100,deposit:75,withdraw:50'
+[line 33]  final_balance = process_transactions(transaction_log)
+Call function process_transactions(transaction_log='deposit:250,withdraw:100,deposit:75,withdraw:50' (defined at [line 32]))
+[line 5]  initial_funds = 1000
+Assign: initial_funds = 1000
+[line 7]  temp_log = log_entries.split(',')
+(Missing param: 'func_name')
+[line 10]  balance_adjustment = 0
+Assign: balance_adjustment = 0
+[line 13]  for entry in temp_log:
+Loop Start: entry takes its first value 'deposit:250'
+[line 14]  if entry.startswith('deposit:'):
+Condition: True, entering 'if' block
+[line 15]  amount = int(entry.split(':')[1])
+Call function int(entry.split(':')[1])
+[line 16]  balance_adjustment += amount
+Update: balance_adjustment changed from 0 (defined at defined at [line 10]) to 0+amount = 250
+[line 13]  for entry in temp_log:
+Loop Iteration: entry is now 'withdraw:100' (iteration 2)
+[line 14]  if entry.startswith('deposit:'):
+Condition: True, entering 'if' block
+[line 18]  elif entry.startswith('withdraw:'):
+'elif' Condition: True, entering block
+[line 19]  amount = int(entry.split(':')[1])
+Call function int(entry.split(':')[1])
+[line 20]  balance_adjustment -= amount
+Update: balance_adjustment changed from 250 (defined at defined at [line 16]) to 250-amount = 150
+[line 13]  for entry in temp_log:
+Loop Iteration: entry is now 'deposit:75' (iteration 3)
+[line 14]  if entry.startswith('deposit:'):
+Condition: True, entering 'if' block
+[line 15]  amount = int(entry.split(':')[1])
+Call function int(entry.split(':')[1])
+[line 16]  balance_adjustment += amount
+Update: balance_adjustment changed from 150 (defined at defined at [line 20]) to 150+amount = 225
+[line 13]  for entry in temp_log:
+Loop Iteration: entry is now 'withdraw:50' (iteration 4)
+[line 14]  if entry.startswith('deposit:'):
+Condition: True, entering 'if' block
+[line 18]  elif entry.startswith('withdraw:'):
+'elif' Condition: True, entering block
+[line 19]  amount = int(entry.split(':')[1])
+Call function int(entry.split(':')[1])
+[line 20]  balance_adjustment -= amount
+Update: balance_adjustment changed from 225 (defined at defined at [line 16]) to 225-amount = 175
+[line 13]  for entry in temp_log:
+Loop End: Iteration finished
+[line 28]  final_amount = initial_funds + balance_adjustment
+Compute: initial_funds + balance_adjustment, where initial_funds=1000 (defined at [line 5]), balance_adjustment=175 (defined at [line 20]) = 1175
+[line 29]  return final_amount
+Return: final_amount=1175 (defined at [line 28])
+[line 34]  print(f"Result: {final_balance}")
+Output: f"Result: {final_balance}"
+
+Answer: final_balance = 1175 (last updated on defined at [line 33])

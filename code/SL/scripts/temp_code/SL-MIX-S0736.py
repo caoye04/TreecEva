@@ -1,84 +1,47 @@
-from collections import deque
-
-class DeliveryNode:
-    def __init__(self, zone_id, left=None, right=None):
-        self.zone_id = zone_id
-        self.left = left
-        self.right = right
-        self.visited = False
-
-def count_non_overlapping_zones(root):
-    if not root:
-        return 0
+def process_accounts(transactions, initial_amount):
+    # Distractor variables and computations
+    service_fee = 2.5
+    monthly_charges = [5, 10, 15]
+    temp_sum = sum(monthly_charges) * 3  # Unused computation
+    bonus_multiplier = 1.1
     
-    # Stack for DFS traversal
-    stack = [root]
-    selected_zones = set()
+    # Relevant processing
+    processed = []
+    for t in transactions:
+        amount = t['amount']
+        if t['type'] == 'credit':
+            processed.append(amount * bonus_multiplier)
+        else:
+            processed.append(amount * 0.9)  # 10% fee for debits
     
-    while stack:
-        node = stack.pop()
-        
-        # Greedy selection: pick leaf nodes first if not visited
-        if not node.left and not node.right and not node.visited:
-            selected_zones.add(node.zone_id)
-            # Mark all ancestors as visited to prevent overlap
-            temp = root
-            path_stack = []
-            
-            # Find path to current leaf
-            def find_path(node, target, path):
-                if not node:
-                    return False
-                path.append(node)
-                if node == target:
-                    return True
-                if find_path(node.left, target, path) or find_path(node.right, target, path):
-                    return True
-                path.pop()
-                return False
-            
-            path_to_leaf = []
-            find_path(root, node, path_to_leaf)
-            
-            # Mark all nodes in path as visited
-            for n in path_to_leaf:
-                n.visited = True
-        
-        # Add children to stack
-        if node.right and not node.right.visited:
-            stack.append(node.right)
-        if node.left and not node.left.visited:
-            stack.append(node.left)
+    # More distractors
+    account_ids = [101, 102, 103, 104]
+    unused_total = len(account_ids) * service_fee
     
-    return len(selected_zones)
+    # Critical computation
+    net_change = sum(processed)
+    balance = initial_amount + net_change
+    
+    # Conditional expression and final adjustment
+    final_balance = balance - service_fee if balance > 50 else balance + service_fee
+    
+    # Dead code path
+    if balance > 1000:
+        extra_bonus = 25
+        # This branch never executes with current data
+        final_balance += extra_bonus
+    
+    print(f"Target result: {final_balance}")
+    return final_balance
 
-# Create delivery tree
-#       1
-#      / \
-#     2   3
-#    /|   |\
-#   4 5   6 7
-#  /|
-# 8 9
+# Transaction data
+base_funds = 100
+transactions = [
+    {'type': 'credit', 'amount': 25},
+    {'type': 'debit', 'amount': 40},
+    {'type': 'credit', 'amount': 15},
+    {'type': 'debit', 'amount': 30}
+]
 
-zone_1 = DeliveryNode(1)
-zone_2 = DeliveryNode(2)
-zone_3 = DeliveryNode(3)
-zone_4 = DeliveryNode(4)
-zone_5 = DeliveryNode(5)
-zone_6 = DeliveryNode(6)
-zone_7 = DeliveryNode(7)
-zone_8 = DeliveryNode(8)
-zone_9 = DeliveryNode(9)
-
-zone_1.left = zone_2
-zone_1.right = zone_3
-zone_2.left = zone_4
-zone_2.right = zone_5
-zone_3.left = zone_6
-zone_3.right = zone_7
-zone_4.left = zone_8
-zone_4.right = zone_9
-
-max_zones = count_non_overlapping_zones(zone_1)
-print(f"Result: {max_zones}")
+# Execute the key statement
+final_balance = process_accounts(transactions, base_funds)

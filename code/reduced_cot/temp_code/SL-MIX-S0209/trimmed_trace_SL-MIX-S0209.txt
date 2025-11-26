@@ -1,39 +1,53 @@
-26
-final_metric
+58
+final_balance
 ---
-11 data_stream = [3, 7, 2, 9, 1, 8, 4, 6, 5]
-11 ['data_stream'] ['[3, 7, 2, 9, 1, ...]']
-12 threshold_filter = lambda x: x > 4
-12 ['data_stream'] ['[3, 7, 2, 9, 1, ...]']
-13 transformer = lambda x: x * 2 if x % 2 == 0 else x + 1
-13 ['data_stream'] ['[3, 7, 2, 9, 1, ...]']
-8 wrapper.calls = 0
-8 [] []
-9 return wrapper
-9 [] []
-22 processed_data = process_chunk(data_stream)
-22 ['data_stream'] ['[3, 7, 2, 9, 1, ...]']
-7 return func(*args, **kwargs)
-7 ['args', 'kwargs'] ['([3, 7, 2, 9, 1, ...])', '{}']
-17 squared_values = map(lambda val: val**2, chunk)
-17 ['chunk', 'squared_values'] ['[3, 7, 2, 9, 1, ...]', '<map object at 0x000001D3DC6474F0>']
-18 filtered_mask = map(threshold_filter, squared_values)
-18 ['squared_values', 'filtered_mask'] ['<map object at 0x000001D3DC6474F0>', '<map object at 0x000001D3DC647430>']
-19 selected_items = list(compress(squared_values, filtered_mask))
-19 ['squared_values', 'filtered_mask'] ['<map object at 0x000001D3DC6474F0>', '<map object at 0x000001D3DC647430>']
-20 return selected_items
-20 ['selected_items'] ['[9, 4, 1, 16]']
-23 transformed_values = list(map(transformer, processed_data))
-23 ['processed_data'] ['[9, 4, 1, 16]']
-24 sorted_values = sorted(transformed_values, reverse=True)
-24 ['transformed_values', 'sorted_values'] ['[10, 8, 2, 32]', '[32, 10, 8, 2]']
-26 final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-26 ['sorted_values'] ['[32, 10, 8, 2]']
-26 final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-26 ['acc', 'val'] ['0', '32']
-26 final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-26 ['acc', 'val'] ['32', '10']
-26 final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-26 ['acc', 'val'] ['32', '8']
-26 final_metric = reduce(lambda acc, val: acc + val if val > 10 else acc, sorted_values, 0)
-26 ['acc', 'val'] ['32', '2']
+40 principal = 10000
+40 ['principal'] ['10000']
+45 market_conditions = {'volatility_index': 1.2, 'leverage': 2}
+45 ['principal', 'operations_data', 'market_conditions'] ['10000', "{completed: {long: 5000, short: 3000}, pending: ['trade_A', 'trade_B']}", '{volatility_index: 1.2, leverage: 2}']
+3 total_volume = sum(transaction_log.values()) * 0.85
+3 ['assets', 'transaction_log', 'total_volume'] ['{bitcoin: 2, ethereum: 5}', '{BTC: 10000, ETH: 8000}', '15300.0']
+5 market_cap = assets.get('bitcoin', 0) * 45000 + assets.get('ethereum', 0) * 3000
+5 ['assets', 'total_volume', 'market_cap'] ['{bitcoin: 2, ethereum: 5}', '15300.0', '105000']
+6 return market_cap + total_volume
+6 ['total_volume', 'market_cap'] ['15300.0', '105000']
+52 final_balance = apply_crypto_operations(principal, operations_data, market_conditions)
+52 ['principal', 'operations_data', 'market_conditions'] ['10000', "{completed: {long: 5000, short: 3000}, pending: ['trade_A', 'trade_B']}", '{volatility_index: 1.2, leverage: 2}']
+PARAM_MAPPING {'principal': {'actual_var': 'principal', 'value': 10000}, 'operations': {'actual_var': 'operations_data', 'value': {'completed': {'long': 5000, 'short': 3000}, 'pending': ['trade_A', 'trade_B']}}, 'conditions': {'actual_var': 'market_conditions', 'value': {'volatility_index': 1.2, 'leverage': 2}}}
+FUNCTION_ENTER 8 apply_crypto_operations def apply_crypto_operations(principal, operations, conditions):
+8 ['principal', 'operations', 'conditions'] [{'_type': 'int', '_value': 10000}, {'_type': 'dict', '_items': {'completed': {'_type': 'dict', '_items': {'long': {'_type': 'int', '_value': 5000}, 'short': {'_type': 'int', '_value': 3000}}, '_len': 2}, 'pending': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'trade_A'}, {'_type': 'str', '_value': 'trade_B'}], '_len': 2}}, '_len': 2}, {'_type': 'dict', '_items': {'volatility_index': {'_type': 'float', '_value': 1.2}, 'leverage': {'_type': 'int', '_value': 2}}, '_len': 2}]
+10 volatility_multiplier = conditions.get('volatility_index', 1.0)
+10 ['principal', 'operations', 'conditions', 'volatility_multiplier'] ['10000', "{completed: {long: 5000, short: 3000}, pending: ['trade_A', 'trade_B']}", '{volatility_index: 1.2, leverage: 2}', '1.2']
+11 leverage_factor = conditions.get('leverage', 1)
+11 ['principal', 'operations', 'conditions', 'volatility_multiplier', 'leverage_factor'] ['10000', "{completed: {long: 5000, short: 3000}, pending: ['trade_A', 'trade_B']}", '{volatility_index: 1.2, leverage: 2}', '1.2', '2']
+15 pending_transactions = operations.get('pending', [])
+15 ['principal', 'operations', 'volatility_multiplier', 'leverage_factor', 'pending_transactions'] ['10000', "{completed: {long: 5000, short: 3000}, pending: ['trade_A', 'trade_B']}", '1.2', '2', "['trade_A', 'trade_B']"]
+16 completed_trades = operations.get('completed', {})
+16 ['principal', 'operations', 'volatility_multiplier', 'leverage_factor', 'pending_transactions', 'completed_trades'] ['10000', "{completed: {long: 5000, short: 3000}, pending: ['trade_A', 'trade_B']}", '1.2', '2', "['trade_A', 'trade_B']", '{long: 5000, short: 3000}']
+19 base_return = principal
+19 ['principal', 'volatility_multiplier', 'leverage_factor', 'pending_transactions', 'completed_trades', 'base_return'] ['10000', '1.2', '2', "['trade_A', 'trade_B']", '{long: 5000, short: 3000}', '10000']
+20 for trade_type, amount in completed_trades.items():
+20 ['volatility_multiplier', 'leverage_factor', 'pending_transactions', 'completed_trades', 'base_return', 'trade_type', 'amount'] ['1.2', '2', "['trade_A', 'trade_B']", '{long: 5000, short: 3000}', '10000', "'long'", '5000']
+21 if trade_type == 'long':
+21 ['volatility_multiplier', 'leverage_factor', 'pending_transactions', 'completed_trades', 'base_return', 'trade_type', 'amount'] ['1.2', '2', "['trade_A', 'trade_B']", '{long: 5000, short: 3000}', '10000', "'long'", '5000']
+22 base_return += amount * 0.15 * leverage_factor
+22 ['volatility_multiplier', 'leverage_factor', 'pending_transactions', 'completed_trades', 'base_return', 'trade_type', 'amount'] ['1.2', '2', "['trade_A', 'trade_B']", '{long: 5000, short: 3000}', '11500.0', "'long'", '5000']
+20 for trade_type, amount in completed_trades.items():
+20 ['volatility_multiplier', 'pending_transactions', 'completed_trades', 'base_return', 'trade_type', 'amount'] ['1.2', "['trade_A', 'trade_B']", '{long: 5000, short: 3000}', '11500.0', "'short'", '3000']
+21 if trade_type == 'long':
+21 ['volatility_multiplier', 'pending_transactions', 'completed_trades', 'base_return', 'trade_type', 'amount'] ['1.2', "['trade_A', 'trade_B']", '{long: 5000, short: 3000}', '11500.0', "'short'", '3000']
+23 elif trade_type == 'short':
+23 ['volatility_multiplier', 'pending_transactions', 'completed_trades', 'base_return', 'trade_type', 'amount'] ['1.2', "['trade_A', 'trade_B']", '{long: 5000, short: 3000}', '11500.0', "'short'", '3000']
+24 base_return -= amount * 0.12 * volatility_multiplier
+24 ['volatility_multiplier', 'pending_transactions', 'completed_trades', 'base_return', 'trade_type', 'amount'] ['1.2', "['trade_A', 'trade_B']", '{long: 5000, short: 3000}', '11068.0', "'short'", '3000']
+20 for trade_type, amount in completed_trades.items():
+20 ['volatility_multiplier', 'pending_transactions', 'completed_trades', 'base_return', 'trade_type', 'amount'] ['1.2', "['trade_A', 'trade_B']", '{long: 5000, short: 3000}', '11068.0', "'short'", '3000']
+31 final_amount = base_return * volatility_multiplier
+31 ['volatility_multiplier', 'pending_transactions', 'base_return', 'final_amount'] ['1.2', "['trade_A', 'trade_B']", '11068.0', '13281.6']
+34 if len(pending_transactions) > 10:
+34 ['pending_transactions', 'final_amount'] ["['trade_A', 'trade_B']", '13281.6']
+37 return int(final_amount)
+37 ['final_amount'] ['13281.6']
+FUNCTION_RETURN 37 apply_crypto_operations {'_type': 'int', '_value': 13281}
+58 print(f"Target result: {final_balance}")
+58 ['final_balance'] ['13281']

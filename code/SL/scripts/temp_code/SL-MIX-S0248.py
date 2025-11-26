@@ -1,29 +1,40 @@
-from collections import defaultdict
-from functools import reduce
+def transform_value(x):
+    # Irrelevant bitwise operation that doesn't affect main logic
+    bit_shift = (x << 2) & 0xFF
+    
+    # Main transformation - conditional expression with arithmetic
+    return x * 3 if x % 2 == 0 else x + 7
 
-# Route efficiency metrics: (on_time_rate, avg_delay_minutes, customer_satisfaction)
-route_metrics = [
-    (0.85, 12, 4.2),
-    (0.92, 5, 4.7),
-    (0.78, 20, 3.9),
-    (0.95, 2, 4.9),
-    (0.88, 8, 4.4)
-]
+def calculate_bonus(scores):
+    # Dead code path - never called
+    unused_computation = sum(scores) * 2
+    return max(scores) - min(scores)
 
-# Step 1: Filter routes with on_time_rate >= 0.85 AND avg_delay_minutes <= 10
-filtered_routes = list(filter(lambda x: x[0] >= 0.85 and x[1] <= 10, route_metrics))
+# Primary data structure - 3x3 matrix
+matrix = [[2, 5, 8], [3, 7, 1], [4, 6, 9]]
 
-# Step 2: Compute reliability score for each filtered route: on_time_rate * customer_satisfaction
-reliability_scores = list(map(lambda x: x[0] * x[2], filtered_routes))
+# Distractor calculations
+row_sums = [sum(row) for row in matrix]
+total_sum = sum(row_sums)
+mean_value = total_sum / len(matrix) ** 2
 
-# Step 3: Use reduce to compute weighted sum where weights are derived from index positions
-# Weight formula: (index + 1) * score
-weighted_sum = reduce(lambda acc, pair: acc + (pair[0] + 1) * pair[1], enumerate(reliability_scores), 0)
+# Misleading intermediate result
+intermediate = [x for row in matrix for x in row]
+filtered_values = [x for x in intermediate if x > 4]
 
-# Step 4: Apply bonus if all filtered routes have customer satisfaction above 4.5
-bonus = 1.1 if all(route[2] > 4.5 for route in filtered_routes) else 1.0
+# Irrelevant tuple operations
+coordinate_pairs = [(i, j) for i in range(len(matrix)) for j in range(len(matrix[0]))]
+distance_calc = sum(abs(a - b) for a, b in coordinate_pairs)
 
-# Step 5: Calculate final reliability score
-final_reliability_score = round(weighted_sum * bonus, 2)
+# Critical execution point - list comprehension with helper function
+result_matrix = [[transform_value(matrix[i][j]) for j in range(len(matrix[0]))] for i in range(len(matrix))]
 
-print(f"Result: {final_reliability_score}")
+# Final computation with slicing
+flattened = [item for sublist in result_matrix for item in sublist]
+selected = flattened[2:7]  # Slice from index 2 to 6
+final_output = sum(selected)
+
+# Red herring - never used
+bonus_calc = calculate_bonus([x for row in matrix for x in row])
+
+print(f"Result: {final_output}")

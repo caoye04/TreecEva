@@ -1,42 +1,54 @@
-from functools import reduce
+def validate_inputs(items):
+    irrelevant_check = sum(len(str(x)) for x in items) % 7
+    misleading_flag = irrelevant_check == 0
+    return misleading_flag
 
-def calculate_mutation_paths(matrix, row, col, visited, current_score):
-    if row < 0 or row >= len(matrix) or col < 0 or col >= len(matrix[0]):
-        return 0
-    
-    if (row, col) in visited:
-        return 0
-    
-    visited.add((row, col))
-    current_score += matrix[row][col]
-    
-    # Define valid transitions using set operations
-    nucleotide_set = {matrix[row][col]}
-    transition_rules = [{1, 2}, {2, 3}, {3, 4}, {4, 1}]
-    valid_transitions = reduce(lambda a, b: a.union(b), 
-                              filter(lambda s: nucleotide_set.issubset(s), transition_rules),
-                              set())
-    
-    max_score = current_score if nucleotide_set.issubset(valid_transitions) else 0
-    
-    # Recursive exploration in four directions
-    for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
-        next_row, next_col = row + dr, col + dc
-        if 0 <= next_row < len(matrix) and 0 <= next_col < len(matrix[0]):
-            next_nucleotide = matrix[next_row][next_col]
-            if next_nucleotide in valid_transitions or valid_transitions == set():
-                path_score = calculate_mutation_paths(matrix, next_row, next_col, 
-                                                     visited.copy(), current_score)
-                max_score = max(max_score, path_score)
-    
-    return max_score
+def compute_base_value(data_points):
+    temp_sum = sum(data_points)
+    # Misleading computation that's never used
+    distraction_value = temp_sum * 2 - len(data_points) ** 3
+    return temp_sum
 
-genomic_matrix = [
-    [1, 2, 3],
-    [4, 1, 2],
-    [3, 4, 1]
-]
+def process_metrics(values, threshold=50):
+    processed = []
+    for i, val in enumerate(values):
+        if val > threshold:
+            processed.append(val * 2)
+        else:
+            processed.append(val // 2)
+    # Dead code path
+    if len(processed) > 10:
+        extra_computation = sum(processed) ** 2
+    return processed
 
-visited_positions = set()
-final_path_score = calculate_mutation_paths(genomic_matrix, 0, 0, visited_positions, 0)
-print(f'Result: {final_path_score}')
+def compute_final_score(items, multiplier):
+    base_val = compute_base_value(items)
+    metrics = process_metrics(items)
+    
+    # Irrelevant set operation that doesn't affect result
+    temp_set = set(metrics)
+    set_distraction = len(temp_set) * 3
+    
+    # Misleading intermediate variable
+    intermediate = base_val + sum(metrics)
+    
+    # Critical computation
+    final_score = (base_val * multiplier) + len(metrics)
+    return final_score
+
+# Main execution
+sample_data = [25, 60, 45, 80, 35, 90]
+base_multiplier = 3
+
+# Irrelevant validation call
+validation_result = validate_inputs(sample_data)
+
+# Distraction computations
+unused_var1 = sample_data[0] * sample_data[-1]
+unused_var2 = max(sample_data) - min(sample_data)
+
+# Core computation
+processed_items = process_metrics(sample_data)
+final_metric = compute_final_score(processed_items, base_multiplier)
+
+print(f"Result: {final_metric}")

@@ -1,0 +1,63 @@
+Target: Find the value of variable final_score after [line 41] executes
+
+[line 35]  encrypted_data = [0x37, 0x5A, 0x89, 0xF2, 0x1E, 0x4C, 0xB7, 0x63]
+Compute: [0x37, 0x5A, 0x89, 0xF2, 0x1E, 0x4C, 0xB7, 0x63] = [55, 90, 137, 242, 30, ...]
+[line 36]  validator_mask = [0x7F, 0x3A, 0x55, 0x91]
+Compute: [0x7F, 0x3A, 0x55, 0x91] = [127, 58, 85, 145]
+[line 41]  final_score = compute_validation_score(encrypted_data, validator_mask)
+Call function compute_validation_score(encrypted_data=[55, 90, 137, 242, 30, ...] (defined at [line 35]), validator_mask=[127, 58, 85, 145] (defined at [line 36]))
+[line 1]  def compute_validation_score(data_stream, mask_bits):
+Enter function compute_validation_score: data_stream=[55, 90, 137, 242, 30, ...] (encrypted_data defined at [line 35]), mask_bits=[127, 58, 85, 145] (validator_mask defined at [line 36])
+  [line 2]  temp_buffer = [0] * 8
+  Compute: [0] * 8 = [0, 0, 0, 0, 0, ...]
+  [line 9]  for i, byte_val in enumerate(data_stream):
+  (Missing param: 'iter_var')
+  [line 10]  masked_val = byte_val & mask_bits[i % len(mask_bits)]
+  Compute: byte_val & mask_bits[i % len(mask_bits)], where byte_val=55 (an unknown source), mask_bits=[127, 58, 85, 145] (parameter mask_bits defined at [line 36]), i=0 (an unknown source) = 55
+  [line 9]  for i, byte_val in enumerate(data_stream):
+  (Missing param: 'iter_var')
+  [line 10]  masked_val = byte_val & mask_bits[i % len(mask_bits)]
+  Compute: byte_val & mask_bits[i % len(mask_bits)], where byte_val=90 (an unknown source), mask_bits=[127, 58, 85, 145] (parameter mask_bits defined at [line 36]), i=1 (an unknown source) = 26
+... [Line 9] repeats 5 more times ...
+... [Line 9] repeats 5 more times ...
+... [Line 9] repeats 5 more times ...
+  [line 9]  for i, byte_val in enumerate(data_stream):
+  (Missing param: 'iter_var')
+  [line 10]  masked_val = byte_val & mask_bits[i % len(mask_bits)]
+  Compute: byte_val & mask_bits[i % len(mask_bits)], where byte_val=99 (an unknown source), mask_bits=[127, 58, 85, 145] (parameter mask_bits defined at [line 36]), i=7 (an unknown source) = 1
+  [line 9]  for i, byte_val in enumerate(data_stream):
+  Loop End: Iteration finished
+  [line 16]  validation_sum = 0
+  Assign: validation_sum = 0
+  [line 17]  for idx, val in enumerate(temp_buffer):
+  (Missing param: 'iter_var')
+  [line 18]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 19]  validation_sum += (val << 1) | 0x1
+  Update: validation_sum changed from 0 (defined at defined at [line 16]) to 0+(val << 1) | 0x1 = 111
+  [line 17]  for idx, val in enumerate(temp_buffer):
+  (Missing param: 'iter_var')
+  [line 18]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 21]  validation_sum += val ^ 0x3A
+  Update: validation_sum changed from 111 (defined at defined at [line 19]) to 111+val ^ 0x3A = 143
+... [Line 17] repeats 5 more times ...
+... [Line 17] repeats 5 more times ...
+... [Line 17] repeats 5 more times ...
+  [line 17]  for idx, val in enumerate(temp_buffer):
+  (Missing param: 'iter_var')
+  [line 18]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 21]  validation_sum += val ^ 0x3A
+  Update: validation_sum changed from 470 (defined at defined at [line 21]) to 470+val ^ 0x3A = 529
+  [line 17]  for idx, val in enumerate(temp_buffer):
+  Loop End: Iteration finished
+  [line 27]  if validation_sum > 100:
+  Condition: True, entering 'if' block
+  [line 28]  validation_sum = (validation_sum % 64) + 25
+  Compute: (validation_sum % 64) + 25, where validation_sum=529 (defined at [line 21]) = 42
+  [line 32]  return validation_sum
+  Return: validation_sum=42 (defined at [line 28])
+Function compute_validation_score returns 42
+
+Answer: final_score = 42 (last updated on defined at [line 41])

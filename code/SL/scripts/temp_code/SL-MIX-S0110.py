@@ -1,53 +1,49 @@
-import math
-from collections import defaultdict
-from itertools import combinations
+def calculate_investment_growth(principal_amount, annual_rate, years):
+    # Initial setup with some irrelevant calculations
+    initial_deposit = principal_amount * 2.5
+    compound_frequency = 4
+    monthly_adjustment = annual_rate / 12.0
+    
+    # Misleading intermediate results
+    quarterly_interest = annual_rate / compound_frequency
+    daily_rate = annual_rate / 365.0
+    
+    # Some dead code paths
+    if initial_deposit > 10000:
+        bonus = 500
+    else:
+        bonus = 100
+    
+    # Slicing operations with irrelevant data
+    investment_periods = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    selected_periods = investment_periods[1:8:2]
+    period_sum = sum(selected_periods)
+    
+    # Logical operations with bitwise mixing
+    rate_modifier = (annual_rate > 5 and annual_rate < 15)
+    time_adjustment = (years % 2 == 0) or (years % 3 == 0)
+    
+    # More misleading calculations
+    compounded_amount = principal_amount * (1 + annual_rate/100) ** years
+    simple_interest = principal_amount * annual_rate * years / 100
+    
+    # Key computation with slicing influence
+    principal = principal_amount
+    rate = annual_rate
+    time = years
+    
+    # The critical statement
+    final_balance = principal + (principal * (rate / 100) * time)
+    
+    # More irrelevant operations after the key statement
+    redundant_calculation = final_balance * 0.95
+    alternative_result = compounded_amount - simple_interest
+    
+    print(f"Target result: {final_balance}")
+    return final_balance
 
-def encode_base36(num):
-    if num == 0:
-        return '0'
-    chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    result = ''
-    while num:
-        num, remainder = divmod(num, 36)
-        result = chars[remainder] + result
-    return result
-
-def decode_base36(s):
-    return int(s, 36)
-
-def euclidean_distance(p1, p2):
-    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
-
-# Encoded waypoints representing x,y coordinates in base36
-encoded_waypoints = ['1F4', 'A0', '2K', 'ZO', '1S2', '9A']
-
-# Decode waypoints
-waypoints = []
-for code in encoded_waypoints:
-    x_encoded = code[:len(code)//2] if len(code) > 1 else code
-    y_encoded = code[len(code)//2:] if len(code) > 1 else '0'
-    x = decode_base36(x_encoded)
-    y = decode_base36(y_encoded)
-    waypoints.append((x, y))
-
-# Calculate distances between consecutive points
-distances = []
-for i in range(len(waypoints) - 1):
-    d = euclidean_distance(waypoints[i], waypoints[i+1])
-    distances.append(round(d, 2))
-
-# Sort distances
-sorted_distances = sorted(distances)
-
-# Find all combinations of 3 points
-point_combinations = list(combinations(waypoints, 3))
-
-# Check for triangular patterns (non-zero area triangles)
-triangular_patterns_count = 0
-for p1, p2, p3 in point_combinations:
-    # Using cross product to check if three points form a triangle (non-collinear)
-    cross_product = (p2[0] - p1[0]) * (p3[1] - p1[1]) - (p3[0] - p1[0]) * (p2[1] - p1[1])
-    if abs(cross_product) > 1e-9:  # Non-zero area indicates triangle
-        triangular_patterns_count += 1
-
-print(f"Result: {triangular_patterns_count}")
+# Test execution
+principal_amount = 1500
+annual_rate = 8.5
+years = 3
+result = calculate_investment_growth(principal_amount, annual_rate, years)

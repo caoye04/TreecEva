@@ -1,0 +1,125 @@
+48
+final_score
+---
+2 temp_sum = sum(data.values())
+2 ['data', 'temp_sum'] ['{test: 100}', '100']
+7 offset_value = (temp_sum % 7) * 3.14
+7 ['data', 'temp_sum', 'offset_value'] ['{test: 100}', '100', '6.28']
+9 processed = []
+9 ['data', 'temp_sum', 'offset_value', 'processed'] ['{test: 100}', '100', '6.28', '[]']
+10 for key, value in data.items():
+10 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value'] ['{test: 100}', '100', '6.28', '[]', "'test'", '100']
+11 if key.endswith('_score'):
+11 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value'] ['{test: 100}', '100', '6.28', '[]', "'test'", '100']
+13 elif 'metric' in key:
+13 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value'] ['{test: 100}', '100', '6.28', '[]', "'test'", '100']
+10 for key, value in data.items():
+10 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value'] ['{test: 100}', '100', '6.28', '[100]', "'test'", '100']
+20 intermediate = sum(processed) + offset_value
+20 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value', 'intermediate'] ['{test: 100}', '100', '6.28', '[100]', "'test'", '100', '106.28']
+23 relevant_scores = [v for k, v in data.items() if k.endswith('_score')]
+23 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value', 'intermediate', 'k', 'v'] ['{test: 100}', '100', '6.28', '[100]', "'test'", '100', '106.28', "'test'", '100']
+23 relevant_scores = [v for k, v in data.items() if k.endswith('_score')]
+23 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value', 'intermediate', 'relevant_scores'] ['{test: 100}', '100', '6.28', '[100]', "'test'", '100', '106.28', '[]']
+24 weighted_sum = sum(relevant_scores) * 1.2
+24 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value', 'intermediate', 'relevant_scores', 'weighted_sum'] ['{test: 100}', '100', '6.28', '[100]', "'test'", '100', '106.28', '[]', '0.0']
+26 bonus = len([k for k in data if 'bonus' in k.lower()]) * 15
+26 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value', 'intermediate', 'relevant_scores', 'weighted_sum', 'k'] ['{test: 100}', '100', '6.28', '[100]', "'test'", '100', '106.28', '[]', '0.0', "'test'"]
+26 bonus = len([k for k in data if 'bonus' in k.lower()]) * 15
+26 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value', 'intermediate', 'relevant_scores', 'weighted_sum', 'bonus'] ['{test: 100}', '100', '6.28', '[100]', "'test'", '100', '106.28', '[]', '0.0', '0']
+27 penalty = (intermediate - weighted_sum) % 10
+27 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value', 'intermediate', 'relevant_scores', 'weighted_sum', 'bonus', 'penalty'] ['{test: 100}', '100', '6.28', '[100]', "'test'", '100', '106.28', '[]', '0.0', '0', '6.280000000000001']
+29 result = weighted_sum + bonus - penalty
+29 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value', 'intermediate', 'relevant_scores', 'weighted_sum', 'bonus', 'penalty', 'result'] ['{test: 100}', '100', '6.28', '[100]', "'test'", '100', '106.28', '[]', '0.0', '0', '6.280000000000001', '-6.280000000000001']
+30 return int(result)
+30 ['data', 'temp_sum', 'offset_value', 'processed', 'key', 'value', 'intermediate', 'relevant_scores', 'weighted_sum', 'bonus', 'penalty', 'result'] ['{test: 100}', '100', '6.28', '[100]', "'test'", '100', '106.28', '[]', '0.0', '0', '6.280000000000001', '-6.280000000000001']
+47 final_score = calculate_performance(metrics)
+47 ['metrics'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}']
+2 temp_sum = sum(data.values())
+2 ['data', 'temp_sum'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '400']
+7 offset_value = (temp_sum % 7) * 3.14
+7 ['data', 'temp_sum', 'offset_value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '400', '3.14']
+9 processed = []
+9 ['data', 'offset_value', 'processed'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[]']
+10 for key, value in data.items():
+10 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[]', "'response_score'", '85']
+11 if key.endswith('_score'):
+11 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[]', "'response_score'", '85']
+10 for key, value in data.items():
+10 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0]', "'accuracy_score'", '92']
+11 if key.endswith('_score'):
+11 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0]', "'accuracy_score'", '92']
+10 for key, value in data.items():
+10 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001]', "'speed_metric'", '78']
+11 if key.endswith('_score'):
+11 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001]', "'speed_metric'", '78']
+13 elif 'metric' in key:
+13 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001]', "'speed_metric'", '78']
+10 for key, value in data.items():
+10 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83]', "'quality_score'", '88']
+11 if key.endswith('_score'):
+11 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83]', "'quality_score'", '88']
+10 for key, value in data.items():
+10 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83, 70.4]', "'bonus_efficiency'", '10']
+11 if key.endswith('_score'):
+11 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83, 70.4]', "'bonus_efficiency'", '10']
+13 elif 'metric' in key:
+13 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83, 70.4]', "'bonus_efficiency'", '10']
+10 for key, value in data.items():
+10 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83, 70.4, 9]', "'x_factor'", '5']
+11 if key.endswith('_score'):
+11 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83, 70.4, 9]', "'x_factor'", '5']
+13 elif 'metric' in key:
+13 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83, 70.4, 9]', "'x_factor'", '5']
+10 for key, value in data.items():
+10 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83, 70.4, 9, ...]', "'irrelevant_data'", '42']
+11 if key.endswith('_score'):
+11 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83, 70.4, 9, ...]', "'irrelevant_data'", '42']
+13 elif 'metric' in key:
+13 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83, 70.4, 9, ...]', "'irrelevant_data'", '42']
+10 for key, value in data.items():
+10 ['data', 'offset_value', 'processed', 'key', 'value'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83, 70.4, 9, ...]', "'irrelevant_data'", '42']
+20 intermediate = sum(processed) + offset_value
+20 ['data', 'offset_value', 'processed', 'intermediate'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '3.14', '[68.0, 73.60000000000001, 83, 70.4, 9, ...]', '352.14']
+23 relevant_scores = [v for k, v in data.items() if k.endswith('_score')]
+23 ['data', 'intermediate', 'k', 'v'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', "'response_score'", '85']
+23 relevant_scores = [v for k, v in data.items() if k.endswith('_score')]
+23 ['data', 'intermediate', 'k', 'v'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', "'accuracy_score'", '92']
+23 relevant_scores = [v for k, v in data.items() if k.endswith('_score')]
+23 ['data', 'intermediate', 'k', 'v'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', "'speed_metric'", '78']
+23 relevant_scores = [v for k, v in data.items() if k.endswith('_score')]
+23 ['data', 'intermediate', 'k', 'v'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', "'quality_score'", '88']
+23 relevant_scores = [v for k, v in data.items() if k.endswith('_score')]
+23 ['data', 'intermediate', 'k', 'v'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', "'bonus_efficiency'", '10']
+23 relevant_scores = [v for k, v in data.items() if k.endswith('_score')]
+23 ['data', 'intermediate', 'k', 'v'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', "'x_factor'", '5']
+23 relevant_scores = [v for k, v in data.items() if k.endswith('_score')]
+23 ['data', 'intermediate', 'k', 'v'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', "'irrelevant_data'", '42']
+23 relevant_scores = [v for k, v in data.items() if k.endswith('_score')]
+23 ['data', 'intermediate', 'relevant_scores'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', '[85, 92, 88]']
+24 weighted_sum = sum(relevant_scores) * 1.2
+24 ['data', 'intermediate', 'relevant_scores', 'weighted_sum'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', '[85, 92, 88]', '318.0']
+26 bonus = len([k for k in data if 'bonus' in k.lower()]) * 15
+26 ['data', 'intermediate', 'weighted_sum', 'k'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', '318.0', "'response_score'"]
+26 bonus = len([k for k in data if 'bonus' in k.lower()]) * 15
+26 ['data', 'intermediate', 'weighted_sum', 'k'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', '318.0', "'accuracy_score'"]
+26 bonus = len([k for k in data if 'bonus' in k.lower()]) * 15
+26 ['data', 'intermediate', 'weighted_sum', 'k'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', '318.0', "'speed_metric'"]
+26 bonus = len([k for k in data if 'bonus' in k.lower()]) * 15
+26 ['data', 'intermediate', 'weighted_sum', 'k'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', '318.0', "'quality_score'"]
+26 bonus = len([k for k in data if 'bonus' in k.lower()]) * 15
+26 ['data', 'intermediate', 'weighted_sum', 'k'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', '318.0', "'bonus_efficiency'"]
+26 bonus = len([k for k in data if 'bonus' in k.lower()]) * 15
+26 ['data', 'intermediate', 'weighted_sum', 'k'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', '318.0', "'x_factor'"]
+26 bonus = len([k for k in data if 'bonus' in k.lower()]) * 15
+26 ['data', 'intermediate', 'weighted_sum', 'k'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', '318.0', "'irrelevant_data'"]
+26 bonus = len([k for k in data if 'bonus' in k.lower()]) * 15
+26 ['data', 'intermediate', 'weighted_sum', 'bonus'] ['{response_score: 85, accuracy_score: 92, speed_metric: 78, ...}', '352.14', '318.0', '15']
+27 penalty = (intermediate - weighted_sum) % 10
+27 ['intermediate', 'weighted_sum', 'bonus', 'penalty'] ['352.14', '318.0', '15', '4.139999999999986']
+29 result = weighted_sum + bonus - penalty
+29 ['weighted_sum', 'bonus', 'penalty', 'result'] ['318.0', '15', '4.139999999999986', '328.86']
+30 return int(result)
+30 ['result'] ['328.86']
+48 print(f"Result: {final_score}")
+48 ['final_score'] ['328']

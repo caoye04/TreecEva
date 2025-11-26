@@ -1,21 +1,33 @@
-def mod_exp(base, exp, mod):
-    return pow(base, exp, mod)
+from collections import Counter
 
-def transform_char(c, shift):
-    return chr((ord(c) - ord('a') + shift) % 26 + ord('a'))
+data_stream = [2, 5, 3, 7, 2, 8, 3, 5, 2, 1]
+frequency_map = Counter(data_stream)
 
-# Character to number mapping using dictionary comprehension
-char_map = {chr(ord('a') + i): i+1 for i in range(26)}
-valid_keys = {k for k,v in char_map.items() if v % 3 != 0}
-filtered_values = {char_map[k] for k in valid_keys}
+# Primary analysis
+primary_sum = 0
+for value, count in frequency_map.items():
+    if count > 1:
+        primary_sum += value * count
 
-# Apply modular arithmetic and transformations
-transformed_chars = ''.join([transform_char(k, 5) for k in sorted(valid_keys)])
-mod_results = [mod_exp(v, 3, 17) for v in sorted(filtered_values)]
+# Secondary analysis (distraction)
+secondary_total = 0
+temp_list = []
+for num in data_stream:
+    if num % 2 == 0:
+        temp_list.append(num * 2)
+    else:
+        temp_list.append(num + 1)
 
-# Store intermediate results in frozenset
-intermediate_storage = frozenset(mod_results)
+# This loop doesn't affect the final answer
+for item in temp_list:
+    if item > 10:
+        secondary_total += 3
+    else:
+        secondary_total += 1
 
-# Final cryptographic computation
-cipher_sum = sum(intermediate_storage) * len(transformed_chars)
-print(f"Result: {cipher_sum}")
+# Calculate intermediate value (irrelevant)
+intermediate_val = sum(data_stream) // len(data_stream)
+
+# Final computation
+final_metric = primary_sum - secondary_total
+print(f"Result: {final_metric}")

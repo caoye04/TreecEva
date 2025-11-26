@@ -1,16 +1,18 @@
-Target: Find the value of variable adjusted_signal_intensity after [line 18] executes
+Target: Find the value of variable final_count after [line 9] executes
 
-[line 13]  decay_constant = 0.5
-Assign: decay_constant = 0.5
-[line 14]  initial_intensity = 100.0
-Assign: initial_intensity = 100.0
-[line 5]  return self
-Return: self=PrecisionHandler(...) (an unknown source)
-[line 17]  exponential_decay = initial_intensity * math.exp(-decay_constant)
-Compute: initial_intensity * math.exp(-decay_constant), where initial_intensity=100.0 (defined at [line 14]), decay_constant=0.5 (defined at [line 13]) = 60.653065971263345
-[line 18]  adjusted_signal_intensity = ph.apply_log_correction(exponential_decay)
+[line 6]  sample_text = "the quick brown fox jumps over the lazy dog"
+Assign: sample_text = 'the quick brown fox jumps over the lazy dog'
+[line 7]  word_collection = process_text(sample_text)
+Call function process_text(sample_text='the quick brown fox jumps over the lazy dog' (defined at [line 6]))
+[line 2]  words = text.lower().split()
 (Missing param: 'func_name')
-[line 11]  return math.log(value) if value > 0 else 0
-Return: math.log(value) if value > 0 else 0
+[line 3]  word_set = set(words)
+Call function set(words=['the', 'quick', 'brown', 'fox', 'jumps', ...] (an unknown source))
+[line 4]  return word_set
+Return: word_set={'dog', 'lazy', 'jumps', 'quick', 'the', ...} (defined at [line 3])
+[line 8]  unique_words = word_collection
+Compute: word_collection, where word_collection={'dog', 'lazy', 'jumps', 'quick', 'the', ...} (defined at [line 7]) = {'dog', 'lazy', 'jumps', 'quick', 'the', ...}
+[line 9]  final_count = len(unique_words)
+Call function len(unique_words={'dog', 'lazy', 'jumps', 'quick', 'the', ...} (defined at [line 8]))
 
-Answer: adjusted_signal_intensity = ? (last updated on an unknown source)
+Answer: final_count = 8 (last updated on defined at [line 9])

@@ -1,88 +1,53 @@
-import re
-import math
-from functools import wraps
+from collections import defaultdict
 
-def encode_dna_sequence(sequence):
-    mapping = {'A': '00', 'T': '01', 'C': '10', 'G': '11'}
-    return ''.join(mapping[nucleotide] for nucleotide in sequence)
+def process_inventory(items):
+    inventory_map = defaultdict(lambda: 0)
+    
+    # Distractor: complex but irrelevant inventory processing
+    for idx, item in enumerate(items):
+        if idx % 3 == 0:
+            inventory_map[item] += 7
+        elif idx % 5 == 0:
+            inventory_map[item] -= 3
+        else:
+            inventory_map[item] += 1
+    
+    # More irrelevant computations
+    temp_sum = sum(len(str(k)) for k in inventory_map.keys())
+    cycle_count = (temp_sum * 3) % 11
+    
+    # Dead code path - never executed
+    if cycle_count > 20:
+        unused_var = inventory_map.get('phantom', 100)
+        cycle_count += unused_var
+    
+    # Core logic starts here
+    base_value = 42
+    multiplier = 3
+    
+    # Distracting intermediate calculations
+    intermediate = (base_value << 2) ^ 15
+    shadow_value = intermediate % 7 + 2
+    
+    # Key computation chain
+    if shadow_value > 4:
+        target_value = base_value * multiplier - 25
+    else:
+        target_value = base_value // multiplier + 18
+    
+    # More distractions
+    fake_result = target_value + 100
+    misleading_counter = sum(1 for x in range(10) if x % 2 == 0)
+    
+    # Final transformation
+    def final_transform(x):
+        return (x * 2) - 7
+    
+    result = final_transform(target_value)
+    
+    print(f"Target result: {result}")
+    return result
 
-def decode_dna_sequence(encoded):
-    mapping = {'00': 'A', '01': 'T', '10': 'C', '11': 'G'}
-    return ''.join(mapping[encoded[i:i+2]] for i in range(0, len(encoded), 2))
-
-def fibonacci(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
-
-class GeneticAnalyzer:
-    def __init__(self):
-        self.marker_values = []
-    
-    def add_marker(self, value):
-        self.marker_values.append(value)
-    
-    def calculate_variance(self):
-        if not self.marker_values:
-            return 0
-        mean = sum(self.marker_values) / len(self.marker_values)
-        return sum((x - mean) ** 2 for x in self.marker_values) / len(self.marker_values)
-
-def retry_analysis(max_attempts=3):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            for attempt in range(max_attempts):
-                try:
-                    return func(*args, **kwargs)
-                except Exception:
-                    if attempt == max_attempts - 1:
-                        raise
-            return None
-        return wrapper
-    return decorator
-
-@retry_analysis(max_attempts=2)
-def process_genetic_data(dna_sequence):
-    # Encode sequence
-    encoded = encode_dna_sequence(dna_sequence)
-    
-    # Apply transformation using Fibonacci
-    transformed = ''
-    for i, bit in enumerate(encoded):
-        fib_val = fibonacci(i+1) % 2
-        transformed += str(int(bit) ^ fib_val)  # XOR with Fibonacci bit
-    
-    # Decode back
-    decoded = decode_dna_sequence(transformed)
-    
-    # Extract marker patterns
-    analyzer = GeneticAnalyzer()
-    marker_pattern = re.compile(r'[AT]{2,}')
-    matches = marker_pattern.findall(decoded)
-    
-    for match in matches:
-        # Calculate marker value based on length and composition
-        at_count = match.count('A') + match.count('T')
-        cg_count = match.count('C') + match.count('G')
-        marker_value = (at_count * 2) + (cg_count * 3) if at_count > cg_count else (cg_count * 4) - (at_count * 1)
-        analyzer.add_marker(marker_value)
-    
-    return analyzer.calculate_variance()
-
-# Main analysis
-original_sequence = "ATCGATCGATCG"
-
-with open('genetic_analysis.log', 'w') as log_file:
-    log_file.write(f"Starting analysis of {original_sequence}\n")
-    
-    # Check if sequence meets quality criteria
-    quality_check = len(original_sequence) >= 10 and \
-                   original_sequence.count('N') == 0  # N represents unknown nucleotides
-    
-    final_genetic_marker_score = quality_check and process_genetic_data(original_sequence) or 0
-    
-    log_file.write(f"Analysis complete. Score: {final_genetic_marker_score}\n")
-
-print(f"Result: {final_genetic_marker_score}")
+# Execute the main function
+sample_items = ['apple', 'banana', 'cherry', 'apple', 'date', 'elderberry']
+process_inventory(sample_items)

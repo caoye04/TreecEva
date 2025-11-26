@@ -1,30 +1,14 @@
-import math
-import numpy as np
-from functools import reduce
+# Library inventory processing
+book_categories = {'fiction': 12, 'science': 8, 'history': 15, 'art': 5}
+base_value = 7
 
-def log_normalize(values):
-    return [math.log(x + 1) for x in values]
+# Calculate total books using lambda and dictionary operations
+total_books = sum(map(lambda x: book_categories[x], book_categories))
 
-def exp_smooth(values, alpha=0.3):
-    smoothed = []
-    prev = values[0]
-    for v in values:
-        current = alpha * v + (1 - alpha) * prev
-        smoothed.append(current)
-        prev = current
-    return smoothed
+# Additional inventory check (distractor)
+inventory_status = len(book_categories) > 3
 
-temperature_readings = [25.3, 26.1, 24.8, 27.5, 26.9, 25.0, 28.2, 27.1]
-normalized_temps = log_normalize(temperature_readings)
-smoothed_temps = exp_smooth(normalized_temps)
-filtered_temps = list(filter(lambda x: x > math.log(26), smoothed_temps))
+# Final calculation
+final_total = total_books * base_value
 
-if len(filtered_temps) > 0:
-    matrix_a = np.array([[len(filtered_temps), sum(filtered_temps)], 
-                         [sum(filtered_temps), sum([x**2 for x in filtered_temps])]])
-    eigenvals = np.linalg.eigvals(matrix_a)
-    stability_index = round(reduce(lambda a, b: a + b, eigenvals), 4)
-else:
-    stability_index = 0
-
-print(f"Result: {stability_index}")
+print(f"Result: {final_total}")

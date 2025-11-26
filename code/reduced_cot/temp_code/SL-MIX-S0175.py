@@ -1,61 +1,47 @@
-import heapq
-import base64
-from collections import deque
-
-def call_tracker(func):
-    calls = []
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        calls.append(result)
-        return result
-    wrapper.calls = calls
-    return wrapper
-
-class ResourcePool:
-    def __init__(self, resources):
-        self.resources = resources
-        self.active = []
+def compute_final_score(data_set):
+    # Initial processing with irrelevant operations
+    temp_buffer = [x * 2 for x in data_set]
+    redundant_sum = sum(temp_buffer)
     
-    def __enter__(self):
-        self.active = list(self.resources)
-        return self.active
+    # Misleading intermediate calculations
+    fake_modulo = redundant_sum % 17
+    fake_binary = bin(fake_modulo)
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.active.clear()
-
-@call_tracker
-def encode_message(msg):
-    return base64.b64encode(msg.encode()).decode()
-
-@call_tracker
-def decode_message(encoded_msg):
-    return base64.b64decode(encoded_msg).decode()
-
-messages = ['alpha', 'beta', 'gamma', 'delta']
-priorities = [3, 1, 4, 2]
-heap = list(zip(priorities, messages))
-heapq.heapify(heap)
-
-processing_stack = []
-output_queue = deque()
-
-with ResourcePool([1, 2, 3]) as pool:
-    while heap:
-        priority, msg = heapq.heappop(heap)
-        encoded = encode_message(msg)
-        processing_stack.append((priority, encoded))
+    # Actual core logic with set operations
+    unique_values = set(data_set)
+    filtered_set = {x for x in unique_values if x % 3 != 0}
     
-    while processing_stack:
-        priority, encoded = processing_stack.pop()
-        decoded = decode_message(encoded)
-        output_queue.appendleft((priority, decoded))
+    # Lambda function for processing
+    transform_fn = lambda x: (x ** 2) % 13
+    transformed_data = map(transform_fn, filtered_set)
     
-    checksum_components = []
-    while output_queue:
-        priority, text = output_queue.popleft()
-        text_hash = hash(text) % 1000
-        checksum_components.append(text_hash ^ priority)
+    # More distractions
+    dead_code_path = sum([i for i in range(10) if i % 2 == 0])
+    unused_string = "placeholder_" + str(dead_code_path)
     
-    final_checksum = sum(checksum_components) & 0xFF
+    # Critical calculation chain
+    intermediate_sum = sum(transformed_data)
+    adjustment_factor = (len(filtered_set) * 7) % 11
+    
+    # Final computation (the answer)
+    final_score = intermediate_sum + adjustment_factor
+    
+    # Print irrelevant values for distraction
+    print(f"Debug: fake_modulo = {fake_modulo}")
+    print(f"Debug: dead_code_path = {dead_code_path}")
+    
+    return final_score
 
-print(f"Result: {final_checksum}")
+# Main execution with input data
+input_data = [4, 8, 15, 16, 23, 42]
+processed_data = [x + 1 for x in input_data if x > 10]
+
+# Additional irrelevant operations
+misdirection_sum = sum(input_data) * 3
+bogus_list = [i * 2 for i in range(5)]
+
+# The key execution point
+final_score = compute_final_score(processed_data)
+
+# Print the target result
+print(f"Result: {final_score}")

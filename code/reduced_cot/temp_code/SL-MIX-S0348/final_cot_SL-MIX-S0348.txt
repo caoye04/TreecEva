@@ -1,0 +1,34 @@
+Target: Find the value of variable final_metric after [line 65] executes
+
+[line 63]  final_metric = process_circuit_data(circuit_data, analyze_circuit_patterns)
+Call function process_circuit_data(circuit_data={input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...} (an unknown source), analyze_circuit_patterns)
+[line 22]  voltage_data = circuit_parameters['input_voltage']
+Compute: circuit_parameters['input_voltage'], where circuit_parameters={input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...} (an unknown source) = [12.5, 8.3, 15.7, 9.1, 11.2, ...]
+[line 35]  valid_count = filter_func(voltage_data, circuit_parameters['threshold'])
+Call function filter_func(voltage_data=[12.5, 8.3, 15.7, 9.1, 11.2, ...] (defined at [line 22]), circuit_parameters['threshold'])
+[line 7]  max_reading = max(voltage_readings)
+Call function max(voltage_readings=[12.5, 8.3, 15.7, 9.1, 11.2, ...] (an unknown source))
+[line 8]  min_reading = min(voltage_readings)
+Call function min(voltage_readings=[12.5, 8.3, 15.7, 9.1, 11.2, ...] (an unknown source))
+[line 9]  range_analysis = max_reading - min_reading
+Compute: max_reading - min_reading, where max_reading=15.7 (defined at [line 7]), min_reading=7.5 (defined at [line 8]) = 8.2
+[line 12]  if range_analysis > 1000:
+Condition: True, entering 'if' block
+[line 18]  filtered_readings = [v for v in voltage_readings if v > current_threshold]
+Compute: [v for v in voltage_readings if v > current_threshold], where v=12.5 (an unknown source), voltage_readings=[12.5, 8.3, 15.7, 9.1, 11.2, ...] (an unknown source), current_threshold=10.0 (an unknown source) = ?
+[line 19]  return len(filtered_readings)
+Return: len(filtered_readings)
+[line 38]  base_metric = valid_count * circuit_parameters['scale_factor']
+Compute: valid_count * circuit_parameters['scale_factor'], where valid_count=5 (defined at [line 35]), circuit_parameters={input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...} (an unknown source) = 35
+[line 39]  adjustment = circuit_parameters['calibration'] * 0.85
+Compute: circuit_parameters['calibration'] * 0.85, where circuit_parameters={input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...} (an unknown source) = 15.299999999999999
+[line 40]  intermediate = (base_metric + adjustment) // 3
+Compute: (base_metric + adjustment) // 3, where base_metric=35 (defined at [line 38]), adjustment=15.299999999999999 (defined at [line 39]) = 16.0
+[line 43]  final_value = intermediate * 2 - circuit_parameters['offset']
+Compute: intermediate * 2 - circuit_parameters['offset'], where intermediate=16.0 (defined at [line 40]), circuit_parameters={input_voltage: [12.5, 8.3, 15.7, 9.1, 11.2, ...], load_resistance: [100, 150, 80, 120, 90, ...], threshold: 10.0, ...} (an unknown source) = 17.0
+[line 44]  return final_value
+Return: final_value=17.0 (defined at [line 43])
+[line 65]  print(f"Result: {final_metric}")
+Output: f"Result: {final_metric}"
+
+Answer: final_metric = 17.0 (last updated on defined at [line 63])

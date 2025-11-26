@@ -1,28 +1,52 @@
-from collections import defaultdict
-import math
+def calculate_fees(amounts):
+    # Distractor: complex fee calculation that's not actually used
+    fee_total = sum([amt * 0.02 if amt > 100 else amt * 0.01 for amt in amounts])
+    penalty = max(amounts) * 0.05 if len(amounts) > 3 else 0
+    return fee_total + penalty
 
-def hamming_window(n, N):
-    return 0.54 - 0.46 * math.cos(2 * math.pi * n / (N - 1))
+def process_transactions(accounts, transactions):
+    balance = accounts['initial']
+    processed_count = 0
+    
+    # Misleading: process deposits first (dead code path)
+    for i, trans in enumerate(transactions):
+        if trans['type'] == 'deposit':
+            balance += trans['amount'] * 0.8  # Wrong multiplier
+            processed_count += 1
+    
+    # Actual processing with zip
+    for account_ref, trans in zip(accounts['references'], transactions):
+        if trans['type'] == 'deposit':
+            balance += trans['amount']
+        elif trans['type'] == 'withdrawal':
+            balance -= trans['amount']
+        
+        # Irrelevant: track something that doesn't affect result
+        processed_count += account_ref % 2
+    
+    # Distractor: unused interest calculation
+    interest = balance * 0.03 if balance > 500 else balance * 0.01
+    
+    # Misleading intermediate result
+    temp_adjustment = balance - sum([t['amount'] for t in transactions if t['type'] == 'deposit'])
+    
+    return balance
 
-audio_samples = [0.1, -0.3, 0.5, -0.7, 0.9, -0.2, 0.4]
-sample_count = len(audio_samples)
-weighted_sum = 0.0
+# Main execution
+account_data = {
+    'initial': 1000,
+    'references': [101, 102, 103, 104]
+}
 
-for idx in range(sample_count):
-    window_value = hamming_window(idx, sample_count)
-    weighted_sum += audio_samples[idx] * window_value
+transaction_log = [
+    {'type': 'deposit', 'amount': 200},
+    {'type': 'withdrawal', 'amount': 150},
+    {'type': 'deposit', 'amount': 300},
+    {'type': 'withdrawal', 'amount': 75}
+]
 
-threshold = 0.1
-is_above_threshold = weighted_sum > threshold
+# Irrelevant: calculate fees that won't be used
+unused_fees = calculate_fees([t['amount'] for t in transaction_log])
 
-energy_map = defaultdict(float)
-for i, sample in enumerate(audio_samples):
-    energy_map[i] = sample ** 2
-
-total_energy = sum(energy_map.values())
-high_energy_flag = total_energy > 0.5
-
-# Signal detection logic combines both metrics
-signal_detected = int(is_above_threshold and high_energy_flag)
-
-print(f"Result: {signal_detected}")
+final_balance = process_transactions(account_data, transaction_log)
+print(f"Target result: {final_balance}")

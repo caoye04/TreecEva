@@ -1,27 +1,30 @@
-def calculate_max_profit(prices, fee):
-    n = len(prices)
-    if n <= 1:
-        return 0
+def process_data(samples):
+    total_chars = sum(len(sample) for sample in samples)
+    vowel_count = sum(1 for sample in samples for char in sample if char.lower() in 'aeiou')
+    consonant_count = sum(1 for sample in samples for char in sample if char.lower() in 'bcdfghjklmnpqrstvwxyz')
     
-    # hold[i] represents max profit when holding stock at day i
-    # sold[i] represents max profit when not holding stock at day i
-    hold = [0] * n
-    sold = [0] * n
+    # Distractor calculations
+    irrelevant_sum = total_chars * 3 + vowel_count // 2
+    misleading_factor = consonant_count % 7 if consonant_count > 20 else 5
     
-    hold[0] = -prices[0]
-    sold[0] = 0
+    # Main logic with conditional expressions
+    char_ratio = (vowel_count * 2) // (consonant_count + 1) if consonant_count > 0 else vowel_count
+    adjustment = 15 if total_chars > 50 else -8
     
-    for i in range(1, n):
-        # Either keep holding or buy today
-        hold[i] = max(hold[i-1], sold[i-1] - prices[i])
-        # Either keep not holding or sell today (with fee)
-        sold[i] = max(sold[i-1], hold[i-1] + prices[i] - fee)
+    # Dead code path (never executed)
+    if misleading_factor < 0:
+        unused_value = irrelevant_sum * 2
     
-    return sold[n-1]
+    # Final calculation
+    result = (char_ratio * 3) + adjustment
+    return result
 
-# Stock prices over 7 days
-stock_prices = [10, 15, 8, 12, 9, 14, 7]
-transaction_fee = 2
+text_samples = ['Python programming', 'Data analysis', 'Machine learning', 'Algorithm design']
 
-max_profit = calculate_max_profit(stock_prices, transaction_fee)
-print(f'Result: {max_profit}')
+# Distractor variables and operations
+preliminary_count = len(''.join(text_samples))
+misleading_total = preliminary_count * 2 - 10
+unused_list = [x * 2 for x in range(10)]
+
+final_tally = process_data(text_samples)
+print(f"Result: {final_tally}")

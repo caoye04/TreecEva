@@ -1,52 +1,39 @@
-from collections import defaultdict
-import math
-
-def encode_triangulation(triangles):
-    encoded = 0
-    for i, triangle in enumerate(triangles):
-        # Simple encoding: sum of vertex indices shifted by position
-        value = sum(triangle) << (i % 8)
-        encoded ^= value
-    return encoded
-
-def greedy_triangulation(points):
-    # Sort points by x-coordinate (greedy choice)
-    points.sort(key=lambda p: p[0])
-    triangles = []
+def evaluate_performance(data_strings):
+    quality_scores = []
+    efficiency_values = []
     
-    # Create triangles using consecutive triplets after sorting
-    for i in range(len(points) - 2):
-        triangle = (points[i][2], points[i+1][2], points[i+2][2])  # Use point IDs
-        triangles.append(tuple(sorted(triangle)))  # Normalize triangle representation
+    for data_str in data_strings:
+        # Calculate quality score based on string length and content
+        base_quality = len(data_str.strip())
+        vowel_count = sum(1 for char in data_str.lower() if char in 'aeiou')
+        quality_score = base_quality * 2 + vowel_count
+        quality_scores.append(quality_score)
+        
+        # Calculate efficiency (distractor - not used in final result)
+        digit_count = sum(1 for char in data_str if char.isdigit())
+        efficiency = digit_count * 3
+        efficiency_values.append(efficiency)
     
-    return triangles
+    # Process quality scores
+    max_quality = max(quality_scores) if quality_scores else 0
+    min_quality = min(quality_scores) if quality_scores else 0
+    quality_range = max_quality - min_quality
+    
+    # Calculate final metrics
+    quality_score = sum(quality_scores) // len(quality_scores) if quality_scores else 0
+    efficiency_bonus = 5 if quality_range > 10 else 2
+    multiplier = 3 if max_quality > 25 else 1
+    
+    # Distractor calculations that don't affect final result
+    unused_metric = sum(efficiency_values) * 2
+    temp_adjustment = len(data_strings) * 4
+    
+    # Key calculation
+    final_score = (quality_score + efficiency_bonus) * multiplier
+    
+    print(f"Target result: {final_score}")
+    return final_score
 
-def calculate_elevation_stats(elevations):
-    total = sum(elevations)
-    count = len(elevations)
-    avg = total // count if count else 0
-    return avg
-
-elevation_data = [
-    (10.5, 20.3, 1),   # (x, y, point_id)
-    (15.2, 25.1, 2),
-    (12.8, 22.7, 3),
-    (18.9, 30.4, 4),
-    (14.6, 24.8, 5),
-    (16.3, 26.9, 6)
-]
-
-# Step 1: Calculate average elevation
-elevations = [int(p[0]*p[1]) for p in elevation_data]  # Derived elevation metric
-avg_elevation = calculate_elevation_stats(elevations)
-
-# Step 2: Filter points above average (greedy filtering)
-filtered_points = [p for p in elevation_data if int(p[0]*p[1]) > avg_elevation]
-
-# Step 3: Generate triangulation
-triangulation_result = greedy_triangulation(filtered_points)
-
-# Step 4: Encode triangulation
-encoded_result = encode_triangulation(triangulation_result)
-
-print(f"Result: {encoded_result}")
+# Test data
+data_samples = ["Project Alpha", "Task Beta v2", "Operation Gamma 3.0", "Analysis Delta"]
+result = evaluate_performance(data_samples)

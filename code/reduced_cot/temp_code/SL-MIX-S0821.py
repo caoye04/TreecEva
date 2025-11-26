@@ -1,11 +1,59 @@
-rgb_normalizer = lambda r, g, b: (r/255.0, g/255.0, b/255.0)
+def data_processor():
+    input_data = ['Alpha', 'beta', 'GAMMA', 'delta', 'EPSILON']
+    
+    # Distractor variables - misleading intermediate calculations
+    char_sum = sum(len(word) for word in input_data)
+    offset_value = char_sum % 7  # Unused distractor
+    multiplier = 2.5  # Misleading constant
+    
+    # Irrelevant helper function that's never called
+    def calculate_weight(s):
+        return sum(ord(c) for c in s.upper()) * 0.1
+    
+    def validate_and_transform(data):
+        processed = []
+        temp_cache = {}
+        
+        # Dead code path - misleading conditional
+        if len(data) > 10:
+            backup_factor = 3.14
+            processed.append('invalid')
+        
+        # Actual processing logic with bitwise operations
+        for idx, item in enumerate(data):
+            # Irrelevant bitwise distraction
+            mask = idx & 0b11
+            
+            # Main logic - character counting with conditional expressions
+            char_count = len(item)
+            is_uppercase = 1 if item.isupper() else 0
+            
+            # Transform: even index = upper, odd index = lower
+            transformed = item.upper() if idx % 2 == 0 else item.lower()
+            
+            # Compute value using bitwise XOR and character operations
+            checksum_part = (char_count ^ is_uppercase) * (idx + 1)
+            processed.append(checksum_part)
+            
+            # Cache for distraction (unused in final result)
+            temp_cache[item] = checksum_part * 2
+        
+        # Final computation with irrelevant intermediate steps
+        base_sum = sum(processed)
+        adjustment = (base_sum >> 2) & 0xFF  # Bit shift distraction
+        
+        # The actual answer computation
+        final_result = base_sum - len(data)
+        
+        # More distractions
+        verification = final_result * multiplier  # Never used
+        dead_branch = verification if adjustment > 100 else 0  # Dead code
+        
+        return final_result
+    
+    final_checksum = validate_and_transform(input_data)
+    print(f"Result: {final_checksum}")
+    return final_checksum
 
-red_component, green_component, blue_component = 153, 76, 255
-normalized_red, normalized_green, normalized_blue = rgb_normalizer(red_component, green_component, blue_component)
-
-# Color encoding formula: hex(round(n*255)) concatenated
-encoded_color = hex(round(normalized_red*255))[2:].zfill(2) + \
-                hex(round(normalized_green*255))[2:].zfill(2) + \
-                hex(round(normalized_blue*255))[2:].zfill(2)
-
-print(f"Result: {encoded_color}")
+# Execute the function
+data_processor()

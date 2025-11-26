@@ -1,0 +1,85 @@
+57
+final_signal
+---
+46 raw_inputs = [15, 22, 8, 31, 45, 12, 7, 18]
+46 ['raw_inputs'] ['[15, 22, 8, 31, 45, ...]']
+54 final_signal = process_data_chain(raw_inputs)
+54 ['raw_inputs'] ['[15, 22, 8, 31, 45, ...]']
+14 filtered_data = [x for x in data_stream if x % 3 != 0]
+14 ['data_stream', 'x'] ['[15, 22, 8, 31, 45, ...]', '15']
+14 filtered_data = [x for x in data_stream if x % 3 != 0]
+14 ['data_stream', 'x'] ['[15, 22, 8, 31, 45, ...]', '22']
+14 filtered_data = [x for x in data_stream if x % 3 != 0]
+14 ['data_stream', 'x'] ['[15, 22, 8, 31, 45, ...]', '8']
+14 filtered_data = [x for x in data_stream if x % 3 != 0]
+14 ['data_stream', 'x'] ['[15, 22, 8, 31, 45, ...]', '31']
+14 filtered_data = [x for x in data_stream if x % 3 != 0]
+14 ['data_stream', 'x'] ['[15, 22, 8, 31, 45, ...]', '45']
+14 filtered_data = [x for x in data_stream if x % 3 != 0]
+14 ['data_stream', 'x'] ['[15, 22, 8, 31, 45, ...]', '12']
+14 filtered_data = [x for x in data_stream if x % 3 != 0]
+14 ['data_stream', 'x'] ['[15, 22, 8, 31, 45, ...]', '7']
+14 filtered_data = [x for x in data_stream if x % 3 != 0]
+14 ['data_stream', 'x'] ['[15, 22, 8, 31, 45, ...]', '18']
+14 filtered_data = [x for x in data_stream if x % 3 != 0]
+14 ['data_stream', 'filtered_data'] ['[15, 22, 8, 31, 45, ...]', '[22, 8, 31, 7]']
+21 processed = [bitwise_transform(x) for x in filtered_data]
+21 ['filtered_data', 'x'] ['[22, 8, 31, 7]', '22']
+10 transformed = (value & 0x0F) | ((value >> 4) << 4)
+10 ['value', 'transformed'] ['22', '22']
+11 return transformed
+11 ['value', 'transformed'] ['22', '22']
+21 processed = [bitwise_transform(x) for x in filtered_data]
+21 ['filtered_data', 'x'] ['[22, 8, 31, 7]', '8']
+10 transformed = (value & 0x0F) | ((value >> 4) << 4)
+10 ['value', 'transformed'] ['8', '8']
+11 return transformed
+11 ['value', 'transformed'] ['8', '8']
+21 processed = [bitwise_transform(x) for x in filtered_data]
+21 ['filtered_data', 'x'] ['[22, 8, 31, 7]', '31']
+10 transformed = (value & 0x0F) | ((value >> 4) << 4)
+10 ['value', 'transformed'] ['31', '31']
+11 return transformed
+11 ['value', 'transformed'] ['31', '31']
+21 processed = [bitwise_transform(x) for x in filtered_data]
+21 ['filtered_data', 'x'] ['[22, 8, 31, 7]', '7']
+10 transformed = (value & 0x0F) | ((value >> 4) << 4)
+10 ['value', 'transformed'] ['7', '7']
+11 return transformed
+11 ['transformed'] ['7']
+21 processed = [bitwise_transform(x) for x in filtered_data]
+21 ['filtered_data', 'processed'] ['[22, 8, 31, 7]', '[22, 8, 31, 7]']
+24 unique_vals = set(processed)
+24 ['processed', 'unique_vals'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}']
+31 accumulator = 0
+31 ['processed', 'unique_vals', 'accumulator'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '0']
+32 for idx, val in enumerate(processed):
+32 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '0', '0', '22']
+33 if idx % 2 == 0:
+33 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '0', '0', '22']
+34 accumulator += val
+34 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '22', '0', '22']
+32 for idx, val in enumerate(processed):
+32 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '22', '1', '8']
+33 if idx % 2 == 0:
+33 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '22', '1', '8']
+36 accumulator -= val
+36 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '14', '1', '8']
+32 for idx, val in enumerate(processed):
+32 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '14', '2', '31']
+33 if idx % 2 == 0:
+33 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '14', '2', '31']
+34 accumulator += val
+34 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '45', '2', '31']
+32 for idx, val in enumerate(processed):
+32 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '45', '3', '7']
+33 if idx % 2 == 0:
+33 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '45', '3', '7']
+36 accumulator -= val
+36 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '38', '3', '7']
+32 for idx, val in enumerate(processed):
+32 ['processed', 'unique_vals', 'accumulator', 'idx', 'val'] ['[22, 8, 31, 7]', '{8, 7, 22, 31}', '38', '3', '7']
+43 return accumulator + len(unique_vals)
+43 ['unique_vals', 'accumulator'] ['{8, 7, 22, 31}', '38']
+57 print(f"Result: {final_signal}")
+57 ['final_signal'] ['42']

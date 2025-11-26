@@ -1,33 +1,19 @@
-from collections import defaultdict
-
-def process_buffer_ops(ops_sequence):
-    buffer_state = 0
-    op_counts = defaultdict(int)
+def calculate_project_budget():
+    initial_funds = 15000
+    operational_costs = [1200, 850, 1900, 2300, 1400]
+    # Distractor: this variable is calculated but not used in final result
+    total_operational = sum(operational_costs) * 1.1
     
-    for op_code in ops_sequence:
-        op_counts[op_code] += 1
-        
-        # Switch-like dictionary mapping
-        operation_map = {
-            'XOR': lambda x: x ^ 0x5F,
-            'ADD': lambda x: (x + 127) % 256,
-            'ROT': lambda x: ((x << 3) | (x >> 5)) & 0xFF,
-            'NEG': lambda x: (~x) & 0xFF
-        }
-        
-        # Apply operation if exists, else do nothing
-        buffer_state = operation_map.get(op_code, lambda x: x)(buffer_state)
-        
-        # Conditional update based on operation count
-        buffer_state = buffer_state + 1 if op_counts[op_code] % 3 == 0 else buffer_state
+    remaining_funds = initial_funds - sum(operational_costs)
+    contingency_reserve = remaining_funds * 0.15
     
-    return buffer_state
+    # Distractor: this calculation doesn't affect the final answer
+    potential_bonus = [x * 0.1 for x in operational_costs if x > 1500]
+    
+    bonus_pool = [200, 350, 500]
+    bonus_reserve = sum(bonus_pool) * 0.8
+    
+    total_budget = remaining_funds + sum(bonus_pool)
+    print(f"Target result: {total_budget}")
 
-# Main execution
-operation_sequence = ['XOR', 'ADD', 'ROT', 'XOR', 'NEG', 'ADD', 'XOR', 'ROT', 'ADD']
-intermediate_result = process_buffer_ops(operation_sequence)
-
-# Additional processing with ternary operator and modular arithmetic
-final_hash_state = (intermediate_result * 17 + 42) % 100 if intermediate_result > 100 else (intermediate_result * 23 + 73) % 100
-
-print(f'Result: {final_hash_state}')
+calculate_project_budget()

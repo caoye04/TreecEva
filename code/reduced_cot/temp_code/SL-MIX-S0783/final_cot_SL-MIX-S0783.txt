@@ -1,0 +1,34 @@
+Target: Find the value of variable final_concentration after [line 34] executes
+
+[line 3]  initial_mixture = "75% ethanol, 15% water, 10% impurities"
+Assign: initial_mixture = '75% ethanol, 15% water, 10% impurities'
+[line 4]  components = initial_mixture.split(", ")
+(Missing param: 'func_name')
+[line 7]  ethanol_data = components[0].replace("%", "").split(" ")
+(Missing param: 'func_name')
+[line 9]  impurity_data = components[2].replace("%", "").split(" ")
+(Missing param: 'func_name')
+[line 11]  ethanol_percentage = int(ethanol_data[0])
+Call function int(ethanol_data[0])
+[line 13]  impurity_percentage = int(impurity_data[0])
+Call function int(impurity_data[0])
+[line 16]  total_volume = 200
+Assign: total_volume = 200
+[line 17]  purification_factor = 1.25
+Assign: purification_factor = 1.25
+[line 20]  active_substance = (ethanol_percentage / 100) * total_volume * purification_factor
+Compute: (ethanol_percentage / 100) * total_volume * purification_factor, where ethanol_percentage=75 (defined at [line 11]), total_volume=200 (defined at [line 16]), purification_factor=1.25 (defined at [line 17]) = 187.5
+[line 24]  waste_volume = (impurity_percentage / 100) * total_volume
+Compute: (impurity_percentage / 100) * total_volume, where impurity_percentage=10 (defined at [line 13]), total_volume=200 (defined at [line 16]) = 20.0
+[line 28]  purity_threshold = 0.8
+Assign: purity_threshold = 0.8
+[line 29]  actual_purity = ethanol_percentage / 100
+Compute: ethanol_percentage / 100, where ethanol_percentage=75 (defined at [line 11]) = 0.75
+[line 30]  purity_check = actual_purity > purity_threshold
+Compute: actual_purity > purity_threshold, where actual_purity=0.75 (defined at [line 29]), purity_threshold=0.8 (defined at [line 28]) = False
+[line 33]  total_solution = total_volume - waste_volume
+Compute: total_volume - waste_volume, where total_volume=200 (defined at [line 16]), waste_volume=20.0 (defined at [line 24]) = 180.0
+[line 34]  final_concentration = active_substance / total_solution if purity_check else 0
+Compute: active_substance / total_solution if purity_check else 0, where active_substance=187.5 (defined at [line 20]), total_solution=180.0 (defined at [line 33]), purity_check=False (defined at [line 30]) = 0
+
+Answer: final_concentration = 0 (last updated on defined at [line 34])

@@ -1,41 +1,53 @@
-from collections import defaultdict
+def process_data_sequence():
+    import itertools
+    
+    data_stream = [4, 8, 15, 16, 23, 42]
+    processing_buffer = []
+    
+    # Main processing chain with some irrelevant computations
+    for i, value in enumerate(data_stream):
+        temp_mod = (value * 3 + 7) % 11
+        processing_buffer.append(temp_mod)
+    
+    # Distractor: string processing that doesn't affect final result
+    dummy_text = "processing_data_sequence_xyz"
+    dummy_count = dummy_text.count('e')
+    
+    # Key computation with conditional logic
+    filtered_values = [x for x in processing_buffer if x > 5]
+    
+    # Irrelevant computation that gets discarded
+    unused_sum = sum(data_stream) + len(data_stream)
+    
+    if len(filtered_values) >= 2:
+        # Main logical chain
+        first_val = filtered_values[0]
+        last_val = filtered_values[-1]
+        intermediate = (first_val ^ last_val) & 0b1111
+        
+        # Another distractor computation
+        cycle_check = list(itertools.islice(itertools.cycle([1, 2, 3]), 5))
+        
+        result = intermediate * 3 - 7
+    else:
+        result = unused_sum % 100  # This branch won't be taken
+    
+    return result
 
-def find_consistent_patterns(sensor_readings):
-    value_counts = defaultdict(int)
-    value_sensors = defaultdict(set)
+def calculate_final_output():
+    primary_result = process_data_sequence()
     
-    # Count occurrences and track which sensors reported each value (±2 tolerance)
-    for sensor_id, readings in enumerate(sensor_readings):
-        for reading in readings:
-            for adjusted_value in range(reading-2, reading+3):  # ±2 tolerance
-                value_counts[adjusted_value] += 1
-                value_sensors[adjusted_value].add(sensor_id)
+    # Final adjustment with bitwise operation
+    adjustment = (primary_result >> 1) | 1
     
-    # Find values that appear in at least half the sensors
-    min_sensors = len(sensor_readings) // 2
-    candidates = []
+    # Another irrelevant string operation
+    validation_string = "result_verification"
+    string_length = len(validation_string)
     
-    for value, sensors in value_sensors.items():
-        if len(sensors) > min_sensors:
-            candidates.append((value, value_counts[value]))
+    final_output = adjustment + 10
     
-    # Return the value with highest total count, breaking ties by highest value
-    if not candidates:
-        return -1
-    
-    candidates.sort(key=lambda x: (-x[1], -x[0]))
-    return candidates[0][0]
+    # Print the target variable
+    print(f"Target result: {final_output}")
+    return final_output
 
-# Sensor data from 7 different environmental monitors
-sensor_data = [
-    [15, 22, 30, 18],
-    [17, 24, 29, 20],
-    [16, 23, 31, 19],
-    [18, 25, 28, 21],
-    [14, 22, 32, 17],
-    [16, 24, 30, 19],
-    [15, 23, 29, 18]
-]
-
-strongest_pattern = find_consistent_patterns(sensor_data)
-print(f"Result: {strongest_pattern}")
+result = calculate_final_output()

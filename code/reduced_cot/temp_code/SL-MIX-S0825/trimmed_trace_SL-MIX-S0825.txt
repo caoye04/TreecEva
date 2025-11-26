@@ -1,0 +1,17 @@
+9
+remaining_balance
+---
+3 account_balance = 1500
+3 ['account_balance'] ['1500']
+4 recent_transactions = [25, 60, 120, 45, 90, 30]
+4 ['account_balance', 'recent_transactions'] ['1500', '[25, 60, 120, 45, 90, ...]']
+5 transaction_freq = Counter(recent_transactions)
+5 ['account_balance', 'recent_transactions', 'transaction_freq'] ['1500', '[25, 60, 120, 45, 90, ...]', '{25: 1, 60: 1, 120: 1, ...}']
+6 most_common_amount = transaction_freq.most_common(1)[0][0]
+6 ['account_balance', 'transaction_freq', 'most_common_amount'] ['1500', '{25: 1, 60: 1, 120: 1, ...}', '25']
+7 recurring_payments = [80, 45, 120]
+7 ['account_balance', 'most_common_amount', 'recurring_payments'] ['1500', '25', '[80, 45, 120]']
+8 total_payment = sum(recurring_payments) + most_common_amount
+8 ['account_balance', 'most_common_amount', 'recurring_payments', 'total_payment'] ['1500', '25', '[80, 45, 120]', '270']
+9 remaining_balance = account_balance - total_payment
+9 ['account_balance', 'total_payment', 'remaining_balance'] ['1500', '270', '1230']

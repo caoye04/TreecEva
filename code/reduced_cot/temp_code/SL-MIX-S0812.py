@@ -1,56 +1,60 @@
-class VendingMachine:
-    def __init__(self):
-        self.inventory = {'cola': 5, 'chips': 3, 'candy': 8}
-        self.prices = {'cola': 125, 'chips': 100, 'candy': 75}
-        self.denominations = [100, 25, 10, 5]
-        self.total_revenue = 0
-        
-    def process_payment(self, item, payment):
-        if item in self.inventory and self.inventory[item] > 0 and payment >= self.prices[item]:
-            self.inventory[item] -= 1
-            change_due = payment - self.prices[item]
-            self.total_revenue += self.prices[item]
-            
-            # Greedy algorithm for making change
-            change_breakdown = {}
-            for denom in self.denominations:
-                count = change_due // denom
-                if count > 0:
-                    change_breakdown[denom] = count
-                    change_due -= count * denom
-            
-            return True
-        return False
+def analyze_string(text):
+    # Distractor: unused character frequency calculation
+    char_freq = {}
+    for ch in text:
+        char_freq[ch] = char_freq.get(ch, 0) + 1
+    
+    # Relevant: count vowels and consonants
+    vowels = 'aeiouAEIOU'
+    vowel_count = sum(1 for ch in text if ch in vowels)
+    consonant_count = sum(1 for ch in text if ch.isalpha() and ch not in vowels)
+    
+    # Misleading intermediate calculation
+    temp_ratio = vowel_count / (consonant_count + 1) if consonant_count > 0 else 0
+    
+    # Distractor: unused string manipulation
+    reversed_text = text[::-1]
+    uppercase_count = sum(1 for ch in text if ch.isupper())
+    
+    return vowel_count, consonant_count, temp_ratio
 
-# State machine for transaction processing
-transaction_states = [
-    ('cola', 200),
-    ('chips', 100),
-    ('candy', 100),
-    ('cola', 150),
-    ('invalid_item', 100),
-    ('candy', 50),
-    ('chips', 125)
-]
+def process_data(analysis_result):
+    vowels, consonants, ratio = analysis_result
+    
+    # Distractor: unused lambda function
+    square_lambda = lambda x: x * x
+    
+    # Relevant: bitwise operations and arithmetic
+    bit_mask = (vowels << 2) | (consonants & 0b1111)
+    
+    # Misleading calculation path
+    alt_calc = (vowels * 3 + consonants * 2) % 17
+    
+    # Relevant: logical operations and final computation
+    if vowels > consonants:
+        base_value = (vowels ^ consonants) + (vowels & consonants)
+    else:
+        base_value = (vowels | consonants) - (vowels ^ consonants)
+    
+    # Distractor: unused variable
+    dead_result = base_value * ratio
+    
+    # Key calculation with bitwise XOR
+    key_value = base_value ^ bit_mask
+    
+    # Final transformation
+    result = (key_value * 3 - alt_calc) % 256
+    
+    return result
 
-vm = VendingMachine()
-for item, payment in transaction_states:
-    vm.process_payment(item, payment)
+# Main execution
+input_text = "ProgrammingEvaluationBenchmark"
 
-# Additional revenue calculation using lambda
-bonus_func = lambda sales: sales * 0.1 if sales > 500 else sales * 0.05
-bonus_revenue = bonus_func(vm.total_revenue)
+# Distractor: unused processing
+word_length = len(input_text)
+word_sum = sum(ord(ch) for ch in input_text)
 
-# Context manager for logging final revenue
-class RevenueLogger:
-    def __enter__(self):
-        return self
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
-    def get_final_revenue(self, base, bonus):
-        return base + bonus
+# Key statement
+final_result = process_data(analyze_string(input_text))
 
-with RevenueLogger() as logger:
-    final_revenue = logger.get_final_revenue(vm.total_revenue, bonus_revenue)
-
-print(f"Result: {final_revenue}")
+print(f"Result: {final_result}")

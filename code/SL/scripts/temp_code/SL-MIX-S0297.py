@@ -1,41 +1,33 @@
-import heapq
-import math
+from collections import Counter
 
-def calculate_priority(distance, weight, urgency):
-    base_score = distance * 0.5 + weight * 2.0
-    adjusted_score = base_score if urgency == 'normal' else base_score * (1.5 if urgency == 'high' else 2.0)
-    return int(adjusted_score)
+# Inventory management system analysis
+product_categories = ['electronics', 'clothing', 'home_goods', 'electronics', 'clothing', 'books']
+category_counts = Counter(product_categories)
 
-def process_deliveries(requests_heap):
-    processed_scores = []
-    while requests_heap:
-        priority, distance, weight, urgency = heapq.heappop(requests_heap)
-        if distance > 100 and weight < 50:
-            continue
-        score = calculate_priority(distance, weight, urgency)
-        if urgency != 'low' or score > 100:
-            processed_scores.append(score)
-    return processed_scores
+# Initial revenue calculations
+base_prices = [450, 120, 85, 490, 130, 45]
+quantities = [12, 25, 18, 15, 30, 40]
 
-delivery_requests = [
-    (10, 120, 45, 'high'),
-    (5, 80, 60, 'normal'),
-    (15, 150, 30, 'low'),
-    (8, 95, 55, 'high'),
-    (12, 200, 25, 'normal')
-]
+revenue_by_category = {}
+total_revenue = 0
 
-# Create max heap using negative priorities
-requests_heap = [(-priority, distance, weight, urgency) for priority, distance, weight, urgency in delivery_requests]
-heapq.heapify(requests_heap)
+for i, (category, price) in enumerate(zip(product_categories, base_prices)):
+    if category not in revenue_by_category:
+        revenue_by_category[category] = 0
+    revenue_by_category[category] += price * quantities[i]
+    total_revenue += price * quantities[i]
 
-processed_scores = process_deliveries(requests_heap)
+# Operating costs (some are irrelevant distractions)
+operating_costs = 2850
+staff_salaries = 4200  # Not used in final calculation
+marketing_expense = 1250
+utilities = 850  # Not used in final calculation
+depreciation = 650
 
-# Calculate final priority score using complex aggregation
-priority_weights = {i: math.log(i+2) for i in range(len(processed_scores))}
-weighted_scores = {i: processed_scores[i] * priority_weights[i] for i in range(len(processed_scores)) if processed_scores[i] > 100}
+# Inventory holding costs (distractor)
+inventory_holding_cost = sum(quantities) * 3.5  # Not used
 
-final_priority_score = sum(weighted_scores.values()) if weighted_scores else 0
-final_priority_score = int(final_priority_score) & 0xFF  # Keep only lower 8 bits
+# Final balance calculation
+final_balance = total_revenue - (operating_costs + marketing_expense + depreciation)
 
-print(f"Result: {final_priority_score}")
+print(f"Target result: {final_balance}")

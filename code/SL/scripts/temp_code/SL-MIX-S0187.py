@@ -1,30 +1,6 @@
-from functools import reduce
-
-def token_counter(func):
-    def wrapper(*args, **kwargs):
-        wrapper.count += len(args[0]) if args else 0
-        return func(*args, **kwargs)
-    wrapper.count = 0
-    return wrapper
-
-@token_counter
-def process_tokens(tokens):
-    return tokens
-
-token_stream = [3, 5, '+', 2, '*']
-processed = process_tokens(token_stream)
-
-# Evaluate expression: 3 + 5 * 2
-stack = []
-for item in processed:
-    if isinstance(item, int):
-        stack.append(item)
-    elif item == '+':
-        b, a = stack.pop(), stack.pop()
-        stack.append(a + b)
-    elif item == '*':
-        b, a = stack.pop(), stack.pop()
-        stack.append(a * b)
-
-final_result = stack[0] if stack else 0
-print(f'Result: {final_result}')
+initial_readings = [15.2, 18.7, 22.3, 19.8, 25.1]
+calibration_offset = 2.5
+processed_measurements = [reading - calibration_offset for reading in initial_readings]
+quality_check = len(processed_measurements) > 3
+final_volume = processed_measurements[-1]
+print(f"Result: {final_volume}")

@@ -1,48 +1,63 @@
-from collections import defaultdict, Counter
+from collections import Counter
 
-def tokenize_and_score(text_series):
-    token_weights = defaultdict(lambda: 1.0)
-    token_weights.update({'python': 2.5, 'optimization': 3.0, 'algorithm': 2.0, 'complexity': 1.5})
+def analyze_inventory(items):
+    # Irrelevant inventory analysis (distractor)
+    item_counts = Counter(items)
+    max_count = max(item_counts.values()) if item_counts else 0
+    min_count = min(item_counts.values()) if item_counts else 0
     
-    all_tokens = []
-    cumulative_scores = []
+    # Dead code path - never executed
+    if max_count > 100:
+        bonus_points = 50
+    else:
+        bonus_points = 25
     
-    for idx, sentence in enumerate(text_series):
-        tokens = sentence.lower().replace(',', '').replace('.', '').split()
-        token_count = Counter(tokens)
-        
-        score = 0.0
-        for token, count in token_count.items():
-            score += token_weights.get(token, 1.0) * count
-        
-        all_tokens.append(set(tokens))
-        cumulative_scores.append(score if not cumulative_scores else cumulative_scores[-1] + score)
-    
-    # Dynamic programming: find maximum weighted intersection score
-    dp_table = [0.0] * len(all_tokens)
-    if all_tokens:
-        dp_table[0] = sum(token_weights.get(t, 1.0) for t in all_tokens[0])
-    
-    for i in range(1, len(all_tokens)):
-        intersection = all_tokens[i].intersection(all_tokens[i-1])
-        intersection_value = sum(token_weights.get(t, 1.0) for t in intersection)
-        dp_table[i] = max(dp_table[i-1], (dp_table[i-1] if i > 1 else 0) + intersection_value)
-    
-    # Final optimization using set operations
-    universal_tokens = set().union(*all_tokens)
-    rare_tokens = {t for t, w in token_weights.items() if w > 2.0}
-    
-    optimized_score = dp_table[-1] if dp_table else 0.0
-    optimized_score += len(universal_tokens.intersection(rare_tokens)) * 1.5
-    
-    return optimized_score
+    return max_count - min_count
 
-# Process linguistic data
-linguistic_corpus = [
-    "Python optimization algorithms require complexity analysis",
-    "Algorithm complexity in Python demands optimization techniques",
-    "Text processing and pattern recognition in Python"
-]
+def calculate_quality_scores(base_metrics):
+    # Misleading intermediate calculations
+    raw_total = sum(base_metrics)
+    average_score = raw_total / len(base_metrics) if base_metrics else 0
+    
+    # Irrelevant quality threshold check
+    quality_threshold = 75.0
+    if average_score > quality_threshold:
+        quality_bonus = 15
+    else:
+        quality_bonus = 5
+    
+    # Unused variable (distractor)
+    unused_calibration = quality_bonus * 2
+    
+    return average_score, quality_bonus
 
-final_score = tokenize_and_score(linguistic_corpus)
-print(f"Result: {final_score}")
+# Main execution with multiple distractor variables
+inventory_data = ['widget', 'gadget', 'widget', 'tool', 'gadget', 'widget']
+metrics_data = [82, 76, 91, 68, 85]
+
+# Distractor function call
+inventory_range = analyze_inventory(inventory_data)
+
+# Relevant calculations mixed with distractors
+base_score, bonus = calculate_quality_scores(metrics_data)
+
+# Misleading intermediate variable
+intermediate_value = base_score * 1.1
+
+# Dead code - condition never met
+if intermediate_value > 100:
+    adjustment_factor = 12
+else:
+    adjustment_factor = 8
+
+# Another distractor calculation
+quality_variance = max(metrics_data) - min(metrics_data)
+
+# Core logic chain
+primary_score = int(base_score + bonus)
+correction_offset = quality_variance // 10
+
+# Final answer calculation
+final_metric = primary_score - adjustment_factor + correction_offset
+
+print(f"Result: {final_metric}")

@@ -1,31 +1,23 @@
-import re
-from collections import defaultdict
+# Temperature analysis for environmental monitoring
+base_temps = {85, 92, 78, 96, 89, 91}
+threshold_temp = 90
 
-def custom_hash(token, modulus):
-    hash_val = 0
-    for char in token:
-        hash_val = (hash_val * 31 + ord(char)) % modulus
-    return hash_val
+# Filter temperatures above threshold using set comprehension
+high_temps = {temp for temp in base_temps if temp > threshold_temp}
 
-def is_hex_token(s):
-    return bool(re.match(r'^[0-9a-fA-F]+$', s))
+# Calculate average high temperature
+if high_temps:
+    avg_high = sum(high_temps) // len(high_temps)
+else:
+    avg_high = 0
 
-token_stream = ['a1b2', 'c3d4', 'e5f6', 'a1b2', 'g7h8', 'c3d4', 'i9j0', 'a1b2', 'k1l2']
-hash_freq = defaultdict(int)
-collision_counter = 0
-threshold = 3
-modulus = 1009
+# Additional monitoring data (contextual information)
+monitoring_stations = 5
+sensor_readings = [87, 93, 95, 88, 96]
 
-for idx, token in enumerate(token_stream):
-    if not is_hex_token(token):
-        continue
-    hash_val = custom_hash(token, modulus)
-    hash_freq[hash_val] += 1
-    if hash_freq[hash_val] == 2:
-        collision_counter += 1
-    elif hash_freq[hash_val] > 2:
-        collision_counter += hash_freq[hash_val] - 1
-    if collision_counter >= threshold:
-        break
+# Final calculation using dictionary operations
+temp_data = {'avg_high': avg_high, 'count_high': len(high_temps)}
+result_calculation = temp_data['avg_high'] * temp_data['count_high']
+final_result = result_calculation
 
-print(f"Result: {collision_counter}")
+print(f"Target result: {final_result}")

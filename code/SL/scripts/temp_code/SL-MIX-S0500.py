@@ -1,41 +1,47 @@
-from collections import defaultdict
-import itertools
+def compute_final_key(initial_key, bit_mask):
+    # Distractor: unused variable
+    temp_shift = 3
+    
+    # Relevant computation: XOR with mask
+    key_xor = initial_key ^ bit_mask
+    
+    # Distractor: misleading intermediate calculation
+    fake_rotation = (key_xor << 2) & 0xFF
+    
+    # Relevant: bit rotation function
+    def rotate_bits(value, shift):
+        # Distractor: unused parameter manipulation
+        shift = shift % 8 + 1
+        return ((value << shift) | (value >> (8 - shift))) & 0xFF
+    
+    # Main computation path
+    rotated = rotate_bits(key_xor, 1)
+    
+    # Distractor: dead code path
+    if rotated > 200:
+        backup_calc = (rotated * 2) - 50
+    else:
+        backup_calc = rotated + 100
+    
+    # Relevant: final adjustment
+    final_key = (rotated | 0x0F) & 0x7F
+    
+    # Distractor: unused result from list comprehension
+    checksum_values = [x for x in range(final_key, final_key + 5)]
+    
+    return final_key
 
-def calculate_security_metrics(attempts_log):
-    success_flags = 0b10101010
-    failure_flags = 0b01010101
-    base_score = 100
-    
-    user_scores = defaultdict(int)
-    access_patterns = set()
-    
-    for user_id, attempt_flags in attempts_log:
-        if attempt_flags & success_flags:
-            user_scores[user_id] += (attempt_flags & success_flags).bit_count()
-            access_patterns.add(frozenset([user_id, 'success']))
-        elif attempt_flags & failure_flags:
-            user_scores[user_id] -= (attempt_flags & failure_flags).bit_count()
-            if user_scores[user_id] < 0 and len(access_patterns) > 0:
-                user_scores[user_id] = 0
-            access_patterns.add(frozenset([user_id, 'failure']))
-    
-    pattern_combinations = list(itertools.combinations(access_patterns, 2))
-    security_bonus = len(pattern_combinations) if pattern_combinations else 0
-    
-    total_user_score = sum(user_scores.values())
-    final_security_score = base_score + total_user_score + security_bonus
-    
-    return final_security_score
+# Initialization
+cipher_key = 0b01101001  # 105 in decimal
+mask_bits = 0b00110100   # 52 in decimal
 
-# Authentication log: (user_id, bit_flags)
-auth_log = [
-    ('admin', 0b11001100),
-    ('user1', 0b10100010),
-    ('guest', 0b00110100),
-    ('admin', 0b01010000),
-    ('user1', 0b11110000),
-    ('guest', 0b00001111)
-]
+# Distractor: irrelevant computation
+offset_calc = (cipher_key >> 2) + mask_bits
 
-final_security_score = calculate_security_metrics(auth_log)
-print(f"Result: {final_security_score}")
+# Critical execution point
+final_key = compute_final_key(cipher_key, mask_bits)
+
+# Distractor: misleading variable assignment
+cipher_key = (final_key * 3) % 256
+
+print(f"Result: {cipher_key}")

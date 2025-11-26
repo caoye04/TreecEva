@@ -1,49 +1,55 @@
-from collections import defaultdict
-import math
-
-def calculate_polygon_area(vertices):
-    n = len(vertices)
-    area = 0
-    for i in range(n):
-        j = (i + 1) % n
-        area += vertices[i][0] * vertices[j][1]
-        area -= vertices[j][0] * vertices[i][1]
-    return abs(area) / 2
-
-def get_resource_priority(district_id):
-    match district_id:
-        case 1: return 0.8
-        case 2: return 1.2
-        case 3: return 0.9
-        case 4: return 1.1
-        case _: return 1.0
-
-districts = [
-    {'id': 1, 'vertices': [(0, 0), (4, 0), (4, 3), (0, 3)]},
-    {'id': 2, 'vertices': [(1, 1), (5, 1), (5, 4), (1, 4)]},
-    {'id': 3, 'vertices': [(2, 2), (6, 2), (6, 5), (2, 5)]},
-    {'id': 4, 'vertices': [(3, 3), (7, 3), (7, 6), (3, 6)]}
-]
-
-area_scores = defaultdict(float)
-for district in districts:
-    area = calculate_polygon_area(district['vertices'])
-    priority = get_resource_priority(district['id'])
-    area_scores[district['id']] = area * priority
-
-available_resources = 100
-allocation = {}
-remaining_resources = available_resources
-
-sorted_districts = sorted(area_scores.items(), key=lambda x: x[1], reverse=True)
-for district_id, score in sorted_districts:
-    if remaining_resources <= 0:
-        allocation[district_id] = 0
-        continue
+def analyze_text_complexity(text_samples):
+    # Irrelevant initialization for distraction
+    baseline_score = 42
+    temp_cache = [i * 2 for i in range(10)]
+    unused_metric = sum(temp_cache) / len(temp_cache)
     
-    allocated = min(math.floor(score), remaining_resources)
-    allocation[district_id] = allocated
-    remaining_resources -= allocated
+    # Main logic with multiple steps
+    processed_data = []
+    for sample in text_samples:
+        # Character counting and string operations
+        char_count = len(sample)
+        vowel_count = sum(1 for c in sample.lower() if c in 'aeiou')
+        
+        # Conditional expression with multiple conditions
+        complexity_factor = (char_count * 2 + vowel_count) if char_count > 5 else (vowel_count - char_count)
+        
+        # Bitwise operations as distractor
+        bit_shift = complexity_factor << 2
+        unused_bit = bit_shift & 0xFF
+        
+        # String method operations
+        processed_text = sample.upper().replace(' ', '_')
+        text_length = len(processed_text)
+        
+        # Composite calculation with misleading intermediate
+        temp_value = (complexity_factor + text_length) * 3
+        misleading_result = temp_value // 2 + baseline_score
+        
+        # Actual relevant calculation
+        if text_length % 2 == 0:
+            metric = complexity_factor + vowel_count
+        else:
+            metric = complexity_factor - vowel_count
+            
+        processed_data.append(metric)
+    
+    # Dead code path that's never executed
+    if baseline_score > 100:
+        unused_result = sum(processed_data) * 2
+    
+    # Final computation with early return logic
+    processed_data.sort()
+    if len(processed_data) > 3:
+        processed_data = processed_data[1:-1]
+    
+    # Key statement - this is what we're tracking
+    final_metric = processed_data[-1]
+    
+    # Print the target result
+    print(f"Target result: {final_metric}")
+    return final_metric
 
-optimal_allocation = sum(allocation[district_id] * get_resource_priority(district_id) for district_id in allocation)
-print(f"Result: {int(optimal_allocation)}")
+# Test execution
+text_samples = ["hello world", "python programming", "code analysis", "benchmark evaluation"]
+result = analyze_text_complexity(text_samples)

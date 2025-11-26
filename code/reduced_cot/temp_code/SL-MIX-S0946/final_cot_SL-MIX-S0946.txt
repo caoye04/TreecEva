@@ -1,0 +1,97 @@
+Target: Find the value of variable final_score after [line 59] executes
+
+[line 3]  base_bonus = performance_rating * 100
+Compute: performance_rating * 100, where performance_rating=8 (an unknown source) = 800
+[line 4]  multiplier = seniority // 2
+Compute: seniority // 2, where seniority=3 (an unknown source) = 1
+[line 6]  return base_bonus + multiplier * 25
+Return: base_bonus + multiplier * 25
+[line 8]  def filter_candidates_by_skills(candidate_data, required_skills):
+Enter function filter_candidates_by_skills: candidate_data=[{technical: 85, behavioral: 75, skills: [...3 items]}, {technical: 78, behavioral: 82, skills: [...3 items]}, {technical: 92, behavioral: 68, skills: [...3 items]}, {technical: 88, behavioral: 79, skills: [...3 items]}, {technical: 95, behavioral: 85, skills: [...3 items]}], required_skills=['python', 'java']
+  [line 10]  qualified = []
+  Compute: [] = []
+  [line 11]  for candidate in candidate_data:
+  Loop Start: candidate takes its first value {technical: 85, behavioral: 75, skills: ['python', 'sql', 'git']}
+  [line 13]  if skill_match >= 2:
+  Condition: True, entering 'if' block
+  [line 11]  for candidate in candidate_data:
+  Loop Iteration: candidate is now {technical: 78, behavioral: 82, skills: ['java', 'c++', 'python']} (iteration 2)
+  [line 13]  if skill_match >= 2:
+  Condition: True, entering 'if' block
+... [Line 11] repeats 2 more times ...
+... [Line 11] repeats 2 more times ...
+  [line 11]  for candidate in candidate_data:
+  Loop Iteration: candidate is now {technical: 95, behavioral: 85, skills: ['python', 'ml', 'stats']} (iteration 5)
+  [line 13]  if skill_match >= 2:
+  Condition: True, entering 'if' block
+  [line 11]  for candidate in candidate_data:
+  Loop End: Iteration finished
+  [line 15]  return qualified
+  Return: qualified=[{technical: 78, behavioral: 82, skills: [...3 items]}] (defined at [line 10])
+Function filter_candidates_by_skills returns [{technical: 78, behavioral: 82, skills: [...3 items]}]
+[line 17]  def compute_final_score(candidates, threshold):
+Enter function compute_final_score: candidates=[{technical: 85, behavioral: 75, skills: [...3 items]}, {technical: 78, behavioral: 82, skills: [...3 items]}, {technical: 92, behavioral: 68, skills: [...3 items]}, {technical: 88, behavioral: 79, skills: [...3 items]}, {technical: 95, behavioral: 85, skills: [...3 items]}], threshold=75
+  [line 19]  processed_scores = []
+  Compute: [] = []
+  [line 22]  for idx, candidate in enumerate(candidates):
+  (Missing param: 'iter_var')
+  [line 24]  behavioral_score = candidate['behavioral']
+  Compute: candidate['behavioral'], where candidate={technical: 85, behavioral: 75, skills: ['python', 'sql', 'git']} (defined at [line 11]) = 75
+  [line 27]  if technical_score >= 80 and behavioral_score >= 70:
+  Condition: True, entering 'if' block
+  [line 31]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 22]  for idx, candidate in enumerate(candidates):
+  (Missing param: 'iter_var')
+  [line 24]  behavioral_score = candidate['behavioral']
+  Compute: candidate['behavioral'], where candidate={technical: 78, behavioral: 82, skills: ['java', 'c++', 'python']} (defined at [line 11]) = 82
+  [line 27]  if technical_score >= 80 and behavioral_score >= 70:
+  Condition: True, entering 'if' block
+... [Line 22] repeats 2 more times ...
+... [Line 22] repeats 2 more times ...
+... [Line 22] repeats 2 more times ...
+  [line 22]  for idx, candidate in enumerate(candidates):
+  (Missing param: 'iter_var')
+  [line 24]  behavioral_score = candidate['behavioral']
+  Compute: candidate['behavioral'], where candidate={technical: 95, behavioral: 85, skills: ['python', 'ml', 'stats']} (defined at [line 11]) = 85
+  [line 27]  if technical_score >= 80 and behavioral_score >= 70:
+  Condition: True, entering 'if' block
+  [line 31]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 22]  for idx, candidate in enumerate(candidates):
+  Loop End: Iteration finished
+  [line 40]  weighted_scores = []
+  Compute: [] = []
+  [line 41]  scores_and_indices = list(enumerate(processed_scores))
+  Call function list(enumerate(processed_scores))
+  [line 42]  pairs = list(zip(scores_and_indices, [x * 2 for x in processed_scores]))
+  Call function list(zip(scores_and_indices, [x * 2 for x in processed_scores]))
+  [line 44]  for (idx, score), double_score in pairs:
+  (Missing param: 'iter_var')
+  [line 45]  if score > threshold:
+  Condition: True, entering 'if' block
+  [line 44]  for (idx, score), double_score in pairs:
+  (Missing param: 'iter_var')
+  [line 45]  if score > threshold:
+  Condition: True, entering 'if' block
+  [line 44]  for (idx, score), double_score in pairs:
+  (Missing param: 'iter_var')
+  [line 45]  if score > threshold:
+  Condition: True, entering 'if' block
+  [line 44]  for (idx, score), double_score in pairs:
+  Loop End: Iteration finished
+  [line 50]  if len(weighted_scores) == 0:
+  Condition: True, entering 'if' block
+  [line 56]  if weighted_scores:
+  Condition: True, entering 'if' block
+  [line 57]  max_score = max(weighted_scores)
+  Call function max(weighted_scores=[85, 87, 97] (defined at [line 40]))
+  [line 58]  min_score = min(weighted_scores)
+  Call function min(weighted_scores=[85, 87, 97] (defined at [line 40]))
+  [line 59]  final_score = (max_score + min_score) // 2
+  Compute: (max_score + min_score) // 2, where max_score=97 (defined at [line 57]), min_score=85 (defined at [line 58]) = 91
+  [line 63]  return final_score
+  Return: final_score=91 (defined at [line 59])
+Function compute_final_score returns 91
+
+Answer: final_score = 91 (last updated on defined at [line 59])

@@ -1,39 +1,30 @@
-import math
+import itertools
 
-def gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
+# Process scheduling simulation with priority queues
+processes = ["A", "B", "C", "D", "E"]
+base_priorities = [3, 1, 4, 2, 5]
 
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
+# Create priority queue with process names and priorities
+priority_queue = []
+for idx, (process, priority) in enumerate(zip(processes, base_priorities)):
+    adjusted_priority = priority * 2 + idx % 3
+    priority_queue.append((process, adjusted_priority))
 
-def harmonic_sum(values):
-    if len(values) == 0:
-        return 0
-    if len(values) == 1:
-        return 1 / values[0]
-    mid = len(values) // 2
-    left_sum = harmonic_sum(values[:mid])
-    right_sum = harmonic_sum(values[mid:])
-    return left_sum + right_sum
+# Some intermediate calculations that don't affect final result
+process_count = len(processes)
+total_priority_sum = sum(p[1] for p in priority_queue)
+avg_priority = total_priority_sum / process_count
 
-# Deep space prime frequency bands
-prime_bands = [2, 3, 5, 7, 11]
+# Sort by priority (lower number = higher priority)
+priority_queue.sort(key=lambda x: x[1])
 
-# Calculate LCM of all prime bands using set operations
-band_set = frozenset(prime_bands)
-lcm_value = 1
-for freq in band_set:
-    lcm_value = lcm(lcm_value, freq)
+# Distractor operations - calculate some metrics but don't use them
+max_priority = max(p[1] for p in priority_queue)
+min_priority = min(p[1] for p in priority_queue)
+priority_range = max_priority - min_priority
 
-# Generate harmonic components using list comprehension
-harmonic_components = [f * 2 for f in prime_bands if f < 10]
+# Critical execution point
+final_priority = priority_queue[-1][1]
 
-# Compute harmonic sum using divide and conquer
-h_sum = harmonic_sum(harmonic_components)
-
-# Calculate final synchronization index
-synchronization_index = int(lcm_value * h_sum)
-
-print(f"Result: {synchronization_index}")
+# Print the result
+print(f"Result: {final_priority}")

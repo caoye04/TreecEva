@@ -1,33 +1,51 @@
-def is_prime(n):
-    if n <= 1:
-        return False
-    for i in range(2, int(n**0.5)+1):
-        if n % i == 0:
-            return False
-    return True
+def calculate_metrics(values):
+    total = sum(values)
+    avg = total / len(values)
+    squared_diffs = [pow((x - avg), 2) for x in values]
+    variance = sum(squared_diffs) / len(values)
+    return variance, total
 
-def count_primes_less_than(n):
-    return sum(1 for i in range(2, n) if is_prime(i))
+def filter_data(records, threshold):
+    filtered = [r for r in records if r > threshold]
+    return len(filtered), sum(filtered)
 
-def sum_of_divisors(n):
-    return sum(i for i in range(1, n+1) if n % i == 0)
+def process_data(dataset, flags):
+    # Irrelevant computation path 1
+    temp_calc = (flags[0] * 3.14) + (flags[1] * 2.71)
+    unused_var = temp_calc % 7
+    
+    # Main logic path
+    base_values = [x for x in dataset if x % 2 == flags[2]]
+    variance, total_base = calculate_metrics(base_values)
+    
+    # Irrelevant computation path 2
+    bit_ops = (flags[0] & flags[1]) | (flags[1] ^ flags[2])
+    redundant_calc = bit_ops * 3 - 7
+    
+    # Secondary processing
+    threshold = total_base / len(base_values) if base_values else 0
+    count_above, sum_above = filter_data(dataset, threshold)
+    
+    # Dead code path
+    if count_above > 1000:
+        bonus = count_above * 2
+    else:
+        bonus = count_above // 2
+    
+    # Final computation
+    result = (total_base + sum_above) // (count_above + 1)
+    return result
 
-# Compute base scores using dictionary comprehension
-node_base_scores = {
-    n: sum_of_divisors(n) if not is_prime(n) else count_primes_less_than(n)
-    for n in range(2, 11)
-}
+# Initialize data
+initial_set = [15, 28, 42, 56, 71, 89, 103, 117, 132, 148]
+configuration = [3, 5, 1]
 
-# Adjust scores using ternary-like logic
-adjusted_scores = [
-    score * 2 if score % 3 == 0 else
-    score + 5 if score % 3 == 1 else
-    score
-    for score in node_base_scores.values()
-]
+# Misleading intermediate variable
+temp_result = process_data(initial_set, [1, 2, 0])
+distraction = temp_result * 2 + 10
 
-# Apply lambda filter and aggregate
-filter_and_sum = lambda scores: sum(s for s in scores if s > 10)
-aggregated_trust_score = filter_and_sum(adjusted_scores)
+# Actual computation
+final_result = process_data(initial_set, configuration)
 
-print(f"Result: {aggregated_trust_score}")
+# Verify execution
+print(f"Result: {final_result}")

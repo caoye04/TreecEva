@@ -1,0 +1,65 @@
+Target: Find the value of variable final_result after [line 51] executes
+
+[line 40]  initial_set = [15, 28, 42, 56, 71, 89, 103, 117, 132, 148]
+Compute: [15, 28, 42, 56, 71, 89, 103, 117, 132, 148] = [15, 28, 42, 56, 71, ...]
+[line 41]  configuration = [3, 5, 1]
+Compute: [3, 5, 1] = [3, 5, 1]
+[line 12]  def process_data(dataset, flags):
+Enter function process_data: dataset=[15, 28, 42, 56, 71, ...] (initial_set defined at [line 40]), flags=[1, 2, 0]
+  [line 18]  base_values = [x for x in dataset if x % 2 == flags[2]]
+  Compute: [x for x in dataset if x % 2 == flags[2]], where x=15 (an unknown source), dataset=[15, 28, 42, 56, 71, ...] (parameter dataset defined at [line 40]), flags=[1, 2, 0] (parameter flags) = ?
+  [line 19]  variance, total_base = calculate_metrics(base_values)
+  (Missing param: 'func_name')
+  [line 2]  total = sum(values)
+  Call function sum(values=[28, 42, 56, 132, 148] (an unknown source))
+  [line 3]  avg = total / len(values)
+  Compute: total / len(values), where total=406 (defined at [line 2]), values=[28, 42, 56, 132, 148] (an unknown source) = 81.2
+  [line 4]  squared_diffs = [pow((x - avg), 2) for x in values]
+  Compute: [pow((x - avg), 2) for x in values], where x=28 (an unknown source), avg=81.2 (defined at [line 3]), values=[28, 42, 56, 132, 148] (an unknown source) = ?
+  [line 5]  variance = sum(squared_diffs) / len(values)
+  Compute: sum(squared_diffs) / len(values), where squared_diffs=[2830.2400000000002, 1536.6400000000003, 635.0400000000002, 2580.64, 4462.24] (defined at [line 4]), values=[28, 42, 56, 132, 148] (an unknown source) = 2408.96
+  [line 6]  return variance, total
+  Return: variance, total
+  [line 26]  threshold = total_base / len(base_values) if base_values else 0
+  Compute: total_base / len(base_values) if base_values else 0, where total_base=406 (an unknown source), base_values=[28, 42, 56, 132, 148] (defined at [line 18]) = 81.2
+  [line 27]  count_above, sum_above = filter_data(dataset, threshold)
+  (Missing param: 'func_name')
+  [line 9]  filtered = [r for r in records if r > threshold]
+  Compute: [r for r in records if r > threshold], where r=15 (an unknown source), records=[15, 28, 42, 56, 71, ...] (an unknown source), threshold=81.2 (defined at [line 26]) = ?
+  [line 10]  return len(filtered), sum(filtered)
+  Return: len(filtered), sum(filtered)
+  [line 30]  if count_above > 1000:
+  Condition: True, entering 'if' block
+  [line 36]  result = (total_base + sum_above) // (count_above + 1)
+  Compute: (total_base + sum_above) // (count_above + 1), where total_base=406 (an unknown source), sum_above=589 (an unknown source), count_above=5 (an unknown source) = 165
+  [line 37]  return result
+  Return: result=165 (defined at [line 36])
+Function process_data returns 165
+[line 48]  final_result = process_data(initial_set, configuration)
+Call function process_data(initial_set=[15, 28, 42, 56, 71, ...] (defined at [line 40]), configuration=[3, 5, 1] (defined at [line 41]))
+[line 19]  variance, total_base = calculate_metrics(base_values)
+(Missing param: 'func_name')
+[line 2]  total = sum(values)
+Call function sum(values=[15, 71, 89, 103, 117] (an unknown source))
+[line 3]  avg = total / len(values)
+Compute: total / len(values), where total=395 (defined at [line 2]), values=[15, 71, 89, 103, 117] (an unknown source) = 79.0
+[line 5]  variance = sum(squared_diffs) / len(values)
+Compute: sum(squared_diffs) / len(values), where squared_diffs=[4096.0, 64.0, 100.0, 576.0, 1444.0] (defined at [line 4]), values=[15, 71, 89, 103, 117] (an unknown source) = 1256.0
+[line 6]  return variance, total
+Return: variance, total
+[line 26]  threshold = total_base / len(base_values) if base_values else 0
+Compute: total_base / len(base_values) if base_values else 0, where total_base=395 (an unknown source), base_values=[15, 71, 89, 103, 117] (defined at [line 18]) = 79.0
+[line 27]  count_above, sum_above = filter_data(dataset, threshold)
+(Missing param: 'func_name')
+[line 10]  return len(filtered), sum(filtered)
+Return: len(filtered), sum(filtered)
+[line 30]  if count_above > 1000:
+Condition: True, entering 'if' block
+[line 36]  result = (total_base + sum_above) // (count_above + 1)
+Compute: (total_base + sum_above) // (count_above + 1), where total_base=395 (an unknown source), sum_above=589 (an unknown source), count_above=5 (an unknown source) = 164
+[line 37]  return result
+Return: result=164 (defined at [line 36])
+[line 51]  print(f"Result: {final_result}")
+Output: f"Result: {final_result}"
+
+Answer: final_result = 164 (last updated on defined at [line 48])

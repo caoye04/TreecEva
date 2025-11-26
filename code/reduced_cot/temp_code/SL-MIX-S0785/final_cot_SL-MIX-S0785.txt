@@ -1,0 +1,34 @@
+Target: Find the value of variable processing_timestamp after [line 39] executes
+
+[line 33]  threshold = 15
+Assign: threshold = 15
+[line 34]  offset_factor = 2.5
+Assign: offset_factor = 2.5
+[line 38]  processing_timestamp = final_time_calculation(log_entries, threshold, offset_factor)
+Call function final_time_calculation(log_entries=[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}] (an unknown source), threshold=15 (defined at [line 33]), offset_factor=2.5 (defined at [line 34]))
+[line 5]  valid_entries = [entry for entry in log_data if entry['duration'] > cutoff]
+Compute: [entry for entry in log_data if entry['duration'] > cutoff], where entry={timestamp: 1654321000, duration: 45, type: 'api'} (an unknown source), log_data=[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}] (an unknown source), cutoff=15 (an unknown source) = ?
+[line 6]  sorted_entries = sorted(valid_entries, key=lambda x: x['timestamp'], reverse=True)
+Call function sorted(valid_entries=[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654323000, duration: 52, type: 'batch'}] (defined at [line 5]), key=lambda x: x['timestamp'], reverse=True)
+[line 6]  sorted_entries = sorted(valid_entries, key=lambda x: x['timestamp'], reverse=True)
+Call function sorted(valid_entries=[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654323000, duration: 52, type: 'batch'}] (defined at [line 5]), key=lambda x: x['timestamp'], reverse=True)
+[line 6]  sorted_entries = sorted(valid_entries, key=lambda x: x['timestamp'], reverse=True)
+Call function sorted(valid_entries, key=lambda x: x['timestamp'], reverse=True)
+[line 6]  sorted_entries = sorted(valid_entries, key=lambda x: x['timestamp'], reverse=True)
+Call function sorted(valid_entries, key=lambda x: x['timestamp'], reverse=True)
+[line 8]  timing_offset = multiplier * 1000
+Compute: multiplier * 1000, where multiplier=2.5 (an unknown source) = 2500.0
+[line 11]  if len(sorted_entries) > 0:
+Condition: True, entering 'if' block
+[line 12]  primary_timestamp = sorted_entries[0]['timestamp']
+Compute: sorted_entries[0]['timestamp'], where sorted_entries=[{timestamp: 1654323000, duration: 52, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654321000, duration: 45, type: 'api'}] (defined at [line 6]) = 1654323000
+[line 15]  adjustment_factor = len(log_data) - len(valid_entries)
+Compute: len(log_data) - len(valid_entries), where log_data=[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654321500, duration: 12, type: 'batch'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654322500, duration: 8, type: 'cron'}, {timestamp: 1654323000, duration: 52, type: 'batch'}] (an unknown source), valid_entries=[{timestamp: 1654321000, duration: 45, type: 'api'}, {timestamp: 1654322000, duration: 28, type: 'api'}, {timestamp: 1654323000, duration: 52, type: 'batch'}] (defined at [line 5]) = 2
+[line 18]  result = primary_timestamp - (adjustment_factor * multiplier) + timing_offset
+Compute: primary_timestamp - (adjustment_factor * multiplier) + timing_offset, where primary_timestamp=1654323000 (defined at [line 12]), adjustment_factor=2 (defined at [line 15]), multiplier=2.5 (an unknown source), timing_offset=2500.0 (defined at [line 8]) = 1654325495.0
+[line 23]  return result
+Return: result=1654325495.0 (defined at [line 18])
+[line 39]  print(f"Result: {processing_timestamp}")
+Output: f"Result: {processing_timestamp}"
+
+Answer: processing_timestamp = 1654325495.0 (last updated on defined at [line 38])

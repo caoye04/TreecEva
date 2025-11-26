@@ -1,18 +1,42 @@
-def fibonacci(n):
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
+def process_data(input_data):
+    # Distractor: complex preprocessing that doesn't affect final result
+    processed = {k: (v * 2 if v % 3 == 0 else v // 2) for k, v in input_data.items()}
+    
+    # Irrelevant intermediate computations
+    temp_sum = sum(input_data.values()) * 0.75
+    max_val = max(input_data.values()) ^ 15
+    
+    # Actual logic path
+    filtered = {k: v for k, v in input_data.items() if v > 8}
+    
+    # More distractions
+    dead_code_path = lambda x: x ** 2 + 3 * x - 7
+    unused_result = dead_code_path(len(filtered))
+    
+    # Key computation
+    result = 0
+    for key, value in filtered.items():
+        if key.startswith('data_'):
+            result += value
+        else:
+            result -= value // 2
+    
+    # Final adjustment (critical step)
+    adjustment = (result & 0b1111) | ((result >> 4) & 0b1111)
+    return result + adjustment
 
-def hash_chain(depth, accumulator=0):
-    if depth <= 0 or (depth > 10 and accumulator > 1000):
-        return accumulator
-    fib_index = fibonacci(depth)
-    transform = lambda x: (x * 17 + 23) % 1000
-    transformed_value = transform(fib_index)
-    return hash_chain(depth - 1, accumulator + transformed_value)
+data_pool = {
+    'data_alpha': 12,
+    'data_beta': 8,
+    'data_gamma': 15,
+    'temp_data': 20,
+    'backup': 6,
+    'data_delta': 9
+}
 
-# Initialize security parameters
-initial_values = {i: fibonacci(i) for i in range(5, 8)}
-combined_seed = sum(initial_values.values())
-security_token = hash_chain(6, combined_seed)
-print(f"Result: {security_token}")
+# Misleading computations that look important
+intermediate_calc = (data_pool['data_alpha'] * data_pool['data_gamma']) % 17
+unused_var = intermediate_calc + sum(data_pool.values())
+
+final_value = process_data(data_pool)
+print(f"Result: {final_value}")

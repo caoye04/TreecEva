@@ -1,69 +1,23 @@
-43
-final_score
+27
+final_priority
 ---
-5 genomic_sequences = ['atgc', 'tgcA', 'GCAT', 'catg']
-5 ['genomic_sequences'] ["['atgc', 'tgcA', 'GCAT', 'catg']"]
-6 base_weights = {'A': 2, 'T': 3, 'G': 5, 'C': 7}
-6 ['genomic_sequences', 'base_weights'] ["['atgc', 'tgcA', 'GCAT', 'catg']", '{A: 2, T: 3, G: 5, ...}']
-13 return wrapper
-13 [] []
-24 processed_sequences = []
-24 ['genomic_sequences', 'base_weights', 'processed_sequences'] ["['atgc', 'tgcA', 'GCAT', 'catg']", '{A: 2, T: 3, G: 5, ...}', '[]']
-25 for seq in genomic_sequences:
-25 ['genomic_sequences', 'base_weights', 'processed_sequences', 'seq'] ["['atgc', 'tgcA', 'GCAT', 'catg']", '{A: 2, T: 3, G: 5, ...}', '[]', "'atgc'"]
-25 for seq in genomic_sequences:
-25 ['genomic_sequences', 'base_weights', 'processed_sequences', 'seq'] ["['atgc', 'tgcA', 'GCAT', 'catg']", '{A: 2, T: 3, G: 5, ...}', "['XTGC']", "'tgcA'"]
-25 for seq in genomic_sequences:
-25 ['genomic_sequences', 'base_weights', 'processed_sequences', 'seq'] ["['atgc', 'tgcA', 'GCAT', 'catg']", '{A: 2, T: 3, G: 5, ...}', "['XTGC', 'TGCX']", "'GCAT'"]
-25 for seq in genomic_sequences:
-25 ['genomic_sequences', 'base_weights', 'processed_sequences', 'seq'] ["['atgc', 'tgcA', 'GCAT', 'catg']", '{A: 2, T: 3, G: 5, ...}', "['XTGC', 'TGCX', 'GCXT']", "'catg'"]
-25 for seq in genomic_sequences:
-25 ['genomic_sequences', 'base_weights', 'processed_sequences', 'seq'] ["['atgc', 'tgcA', 'GCAT', 'catg']", '{A: 2, T: 3, G: 5, ...}', "['XTGC', 'TGCX', 'GCXT', 'CXTG']", "'catg'"]
-33 all_chars = ''.join(processed_sequences)
-33 ['base_weights', 'processed_sequences', 'all_chars'] ['{A: 2, T: 3, G: 5, ...}', "['XTGC', 'TGCX', 'GCXT', 'CXTG']", "'XTGCTGCXGCXTCXTG'"]
-34 frequency_count = Counter(all_chars)
-34 ['base_weights', 'all_chars', 'frequency_count'] ['{A: 2, T: 3, G: 5, ...}', "'XTGCTGCXGCXTCXTG'", '{X: 4, T: 4, G: 4, ...}']
-37 bases = list('XTGC')
-37 ['base_weights', 'frequency_count', 'bases'] ['{A: 2, T: 3, G: 5, ...}', '{X: 4, T: 4, G: 4, ...}', "['X', 'T', 'G', 'C']"]
-38 perm_count = len(list(permutations(bases, 2)))
-38 ['base_weights', 'frequency_count', 'bases', 'perm_count'] ['{A: 2, T: 3, G: 5, ...}', '{X: 4, T: 4, G: 4, ...}', "['X', 'T', 'G', 'C']", '12']
-41 adjustment_factor = perm_count
-41 ['base_weights', 'frequency_count', 'perm_count', 'adjustment_factor'] ['{A: 2, T: 3, G: 5, ...}', '{X: 4, T: 4, G: 4, ...}', '12', '12']
-42 scoring_func = lambda freq: compute_weighted_score(freq) * adjustment_factor
-42 ['base_weights', 'frequency_count', 'adjustment_factor'] ['{A: 2, T: 3, G: 5, ...}', '{X: 4, T: 4, G: 4, ...}', '12']
-43 final_score = scoring_func(frequency_count)
-43 ['base_weights', 'frequency_count', 'adjustment_factor'] ['{A: 2, T: 3, G: 5, ...}', '{X: 4, T: 4, G: 4, ...}', '12']
-42 scoring_func = lambda freq: compute_weighted_score(freq) * adjustment_factor
-42 ['freq'] ['{X: 4, T: 4, G: 4, ...}']
-11 result = func(*args, **kwargs)
-11 ['args', 'kwargs'] ['({X: 4, T: 4, G: 4, ...})', '{}']
-17 score = 0
-17 ['freq_dict', 'score'] ['{X: 4, T: 4, G: 4, ...}', '0']
-18 for base, count in freq_dict.items():
-18 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '0', "'X'", '4']
-19 if base in base_weights:
-19 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '0', "'X'", '4']
-18 for base, count in freq_dict.items():
-18 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '0', "'T'", '4']
-19 if base in base_weights:
-19 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '0', "'T'", '4']
-20 score += count * base_weights[base]
-20 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '12', "'T'", '4']
-18 for base, count in freq_dict.items():
-18 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '12', "'G'", '4']
-19 if base in base_weights:
-19 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '12', "'G'", '4']
-20 score += count * base_weights[base]
-20 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '32', "'G'", '4']
-18 for base, count in freq_dict.items():
-18 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '32', "'C'", '4']
-19 if base in base_weights:
-19 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '32', "'C'", '4']
-20 score += count * base_weights[base]
-20 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '60', "'C'", '4']
-18 for base, count in freq_dict.items():
-18 ['freq_dict', 'score', 'base', 'count'] ['{X: 4, T: 4, G: 4, ...}', '60', "'C'", '4']
-21 return score
-21 ['score'] ['60']
-12 return result
-12 ['result'] ['60']
+4 processes = ["A", "B", "C", "D", "E"]
+4 ['processes'] ["['A', 'B', 'C', 'D', 'E']"]
+5 base_priorities = [3, 1, 4, 2, 5]
+5 ['processes', 'base_priorities'] ["['A', 'B', 'C', 'D', 'E']", '[3, 1, 4, 2, 5]']
+8 priority_queue = []
+8 ['processes', 'base_priorities', 'priority_queue'] ["['A', 'B', 'C', 'D', 'E']", '[3, 1, 4, 2, 5]', '[]']
+9 for idx, (process, priority) in enumerate(zip(processes, base_priorities)):
+9 ['processes', 'base_priorities', 'priority_queue', 'idx', 'process', 'priority'] ["['A', 'B', 'C', 'D', 'E']", '[3, 1, 4, 2, 5]', '[]', '0', "'A'", '3']
+9 for idx, (process, priority) in enumerate(zip(processes, base_priorities)):
+9 ['processes', 'base_priorities', 'priority_queue', 'idx', 'process', 'priority'] ["['A', 'B', 'C', 'D', 'E']", '[3, 1, 4, 2, 5]', "[('A', 6)]", '1', "'B'", '1']
+9 for idx, (process, priority) in enumerate(zip(processes, base_priorities)):
+9 ['processes', 'base_priorities', 'priority_queue', 'idx', 'process', 'priority'] ["['A', 'B', 'C', 'D', 'E']", '[3, 1, 4, 2, 5]', "[('A', 6), ('B', 3)]", '2', "'C'", '4']
+9 for idx, (process, priority) in enumerate(zip(processes, base_priorities)):
+9 ['processes', 'base_priorities', 'priority_queue', 'idx', 'process', 'priority'] ["['A', 'B', 'C', 'D', 'E']", '[3, 1, 4, 2, 5]', "[('A', 6), ('B', 3), ('C', 10)]", '3', "'D'", '2']
+9 for idx, (process, priority) in enumerate(zip(processes, base_priorities)):
+9 ['processes', 'base_priorities', 'priority_queue', 'idx', 'process', 'priority'] ["['A', 'B', 'C', 'D', 'E']", '[3, 1, 4, 2, 5]', "[('A', 6), ('B', 3), ('C', 10), ('D', 4)]", '4', "'E'", '5']
+9 for idx, (process, priority) in enumerate(zip(processes, base_priorities)):
+9 ['processes', 'base_priorities', 'priority_queue', 'idx', 'process', 'priority'] ["['A', 'B', 'C', 'D', 'E']", '[3, 1, 4, 2, 5]', "[('A', 6), ('B', 3), ('C', 10), ('D', 4), ('E', 11)]", '4', "'E'", '5']
+27 final_priority = priority_queue[-1][1]
+27 ['priority_queue', 'final_priority'] ["[('B', 3), ('D', 4), ('A', 6), ('C', 10), ('E', 11)]", '11']

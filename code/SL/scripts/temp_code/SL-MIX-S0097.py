@@ -1,24 +1,25 @@
-def process_recipes():
-    appetizer_ingredients = {'bread', 'cheese', 'olives', 'tomato'}
-    main_course_ingredients = {'rice', 'chicken', 'broccoli', 'carrot'}
-    dessert_ingredients = {'sugar', 'flour', 'butter', 'eggs', 'milk'}
-    
-    # Some ingredients overlap between recipes
-    shared_dessert_appetizer = {'bread'}
-    shared_dessert_main = {'eggs'}
-    
-    # Remove shared items from dessert set
-    exclusive_dessert = dessert_ingredients - shared_dessert_appetizer - shared_dessert_main
-    
-    return len(exclusive_dessert)
+def bonus_calc(func, value):
+    temp_multiplier = 2.0  # Distractor - not used
+    intermediate = value + 5  # Distractor - not used in final
+    return func(value)
 
-# Using a dictionary comprehension to simulate a switch-case pattern
-recipe_operations = {
-    'appetizer': lambda: None,
-    'main_course': lambda: None,
-    'dessert': process_recipes
-}
+base_score = 25
+metrics_data = {"efficiency": 8.2, "reliability": 9.1, "performance": 12.5}
 
-selected_recipe = 'dessert'
-final_count = recipe_operations.get(selected_recipe, lambda: 0)()
-print(f'Result: {final_count}')
+# Processing steps with some irrelevant operations
+processed_metrics = {}
+for key, val in metrics_data.items():
+    if key.startswith('p'):
+        processed_metrics[key] = val * 1.1
+    elif key.startswith('r'):
+        processed_metrics[key] = val - 0.5  # Distractor - unused
+    else:
+        processed_metrics[key] = val + 2.0  # Distractor - unused
+
+adjusted_metrics = {k: v * 0.8 for k, v in processed_metrics.items()}
+temp_calc = sum(adjusted_metrics.values())  # Distractor - not used
+
+# The critical execution point
+final_score = adjusted_metrics.get("performance", 0) + bonus_calc(lambda x: x * 1.5, base_score)
+
+print(f"Target result: {final_score}")

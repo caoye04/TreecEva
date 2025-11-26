@@ -1,0 +1,16 @@
+Target: Find the value of variable final_checksum after [line 9] executes
+
+[line 2]  header_data = [0x45, 0x00, 0x00, 0x3C]
+Compute: [0x45, 0x00, 0x00, 0x3C] = [69, 0, 0, 60]
+[line 3]  payload_data = [0x10, 0x11, 0x12, 0x13, 0x14]
+Compute: [0x10, 0x11, 0x12, 0x13, 0x14] = [16, 17, 18, 19, 20]
+[line 5]  header_xor = header_data[0] ^ header_data[1] ^ header_data[2] ^ header_data[3]
+Compute: header_data[0] ^ header_data[1] ^ header_data[2] ^ header_data[3], where header_data=[69, 0, 0, 60] (defined at [line 2]) = 121
+[line 6]  payload_xor = payload_data[0] ^ payload_data[1] ^ payload_data[2] ^ payload_data[3] ^ payload_data[4]
+Compute: payload_data[0] ^ payload_data[1] ^ payload_data[2] ^ payload_data[3] ^ payload_data[4], where payload_data=[16, 17, 18, 19, 20] (defined at [line 3]) = 20
+[line 8]  mask_value = 0xFF
+Assign: mask_value = 255
+[line 9]  final_checksum = (header_xor ^ payload_xor) & mask_value
+Compute: (header_xor ^ payload_xor) & mask_value, where header_xor=121 (defined at [line 5]), payload_xor=20 (defined at [line 6]), mask_value=255 (defined at [line 8]) = 109
+
+Answer: final_checksum = 109 (last updated on defined at [line 9])

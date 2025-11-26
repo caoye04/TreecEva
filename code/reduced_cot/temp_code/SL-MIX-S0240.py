@@ -1,52 +1,51 @@
-from collections import defaultdict
-
-class PlantNode:
-    def __init__(self, biomass, left=None, right=None):
-        self.biomass = biomass
-        self.left = left
-        self.right = right
-
-# Predefined plant growth tree structure
-plant_growth_tree = PlantNode(10,
-    PlantNode(5, 
-        PlantNode(2),
-        PlantNode(3, 
-            PlantNode(1),
-            PlantNode(1)
-        )
-    ),
-    PlantNode(7,
-        PlantNode(4),
-        PlantNode(6, 
-            None,
-            PlantNode(2)
-        )
-    )
-)
-
-def calculate_efficiency(node):
-    if not node:
-        return 0
+def process_cipher_text(text_data):
+    # Irrelevant string processing (distractor)
+    temp_chars = list(text_data)
+    char_codes = [ord(c) for c in temp_chars]
+    sum_codes = sum(char_codes)  # Dead code path - unused
     
-    # Base case: leaf nodes have special efficiency calculation
-    if not node.left and not node.right:
-        return node.biomass * 2
+    # Main encryption calculation
+    vowels = {'a', 'e', 'i', 'o', 'u'}
+    consonant_count = 0
+    vowel_positions = []
     
-    # Divide and conquer: calculate efficiency of subtrees
-    left_efficiency = calculate_efficiency(node.left)
-    right_efficiency = calculate_efficiency(node.right)
+    for idx, char in enumerate(text_data.lower()):
+        if char.isalpha():
+            if char in vowels:
+                vowel_positions.append(idx)
+            else:
+                consonant_count += 1
     
-    # Combine results with logical conditions
-    subtree_sum = left_efficiency + right_efficiency
-    is_balanced = abs((node.left.biomass if node.left else 0) - (node.right.biomass if node.right else 0)) <= 2
+    # Misleading intermediate calculations
+    position_product = 1
+    for pos in vowel_positions:
+        position_product *= (pos + 1)  # +1 to avoid zero
     
-    # Apply efficiency formula with logical operations
-    if is_balanced and subtree_sum > 10:
-        return (subtree_sum // 2) + node.biomass
-    elif not is_balanced or subtree_sum <= 5:
-        return subtree_sum + (node.biomass // 2)
+    # Relevant calculation path
+    base_score = consonant_count * len(vowel_positions)
+    shift_value = position_product % 100  # Modulo to keep reasonable
+    
+    # Distractor operations
+    fake_checksum = sum(ord(c) for c in text_data[:3])  # Unused
+    redundancy_check = len(text_data) * 2 - 5  # Dead code
+    
+    # Core encryption logic
+    if len(vowel_positions) > 0:
+        encryption_score = base_score + shift_value
     else:
-        return subtree_sum
+        encryption_score = base_score - 10  # Unreachable path
+    
+    # Final adjustment with bitwise operations
+    adjustment_value = (encryption_score & 0b1111) | 0b1000
+    
+    # Target statement
+    final_output = encryption_score + adjustment_value
+    
+    # Irrelevant final operations (distractors)
+    verification_code = final_output % 37  # Unused
+    debug_value = final_output * 2 - 15  # Dead code
+    
+    print(f"Target result: {final_output}")
 
-cumulative_efficiency = calculate_efficiency(plant_growth_tree)
-print(f"Result: {cumulative_efficiency}")
+# Execute with test data
+process_cipher_text("CryptographicAnalysis")

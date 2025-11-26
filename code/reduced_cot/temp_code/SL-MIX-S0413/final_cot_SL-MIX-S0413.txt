@@ -1,0 +1,14 @@
+Target: Find the value of variable final_energy after [line 9] executes
+
+[line 1]  power_sources = {'solar': 120, 'wind': 85, 'hydro': 65, 'geothermal': 40}
+Compute: {'solar': 120, 'wind': 85, 'hydro': 65, 'geothermal': 40} = {solar: 120, wind: 85, hydro: 65, ...}
+[line 2]  active_sources = {k: v for k, v in power_sources.items() if v > 50}
+Compute: {k: v for k, v in power_sources.items() if v > 50}, where k='solar' (an unknown source), v=120 (an unknown source), power_sources={solar: 120, wind: 85, hydro: 65, ...} (defined at [line 1]) = ?
+[line 5]  dormant_sources = [k for k, v in power_sources.items() if v <= 50]
+Compute: [k for k, v in power_sources.items() if v <= 50], where k='solar' (an unknown source), v=120 (an unknown source), power_sources={solar: 120, wind: 85, hydro: 65, ...} (defined at [line 1]) = ?
+[line 6]  dormant_loss = len(dormant_sources) * 5
+Compute: len(dormant_sources) * 5, where dormant_sources=['geothermal'] (defined at [line 5]) = 5
+[line 9]  final_energy = sum(active_sources.values()) - dormant_loss
+Compute: sum(active_sources.values()) - dormant_loss, where active_sources={solar: 120, wind: 85, hydro: 65} (defined at [line 2]), dormant_loss=5 (defined at [line 6]) = 265
+
+Answer: final_energy = 265 (last updated on defined at [line 9])

@@ -1,0 +1,55 @@
+44
+final_result
+---
+40 threshold = 100
+40 ['transactions', 'threshold'] ["[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...]", '100']
+43 result = process_transactions(transactions, threshold)
+43 ['transactions', 'threshold'] ["[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...]", '100']
+PARAM_MAPPING {'transactions': {'actual_var': 'transactions', 'value': [{'amount': 150, 'type': 'purchase'}, {'amount': 75, 'type': 'refund'}, {'amount': 200, 'type': 'purchase'}, {'amount': 150, 'type': 'purchase'}, {'amount': 50, 'type': 'refund'}, {'amount': 200, 'type': 'transfer'}]}, 'threshold': {'actual_var': 'threshold', 'value': 100}}
+FUNCTION_ENTER 3 process_transactions def process_transactions(transactions, threshold):
+3 ['transactions', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'amount': {'_type': 'int', '_value': 150}, 'type': {'_type': 'str', '_value': 'purchase'}}, '_len': 2}, {'_type': 'dict', '_items': {'amount': {'_type': 'int', '_value': 75}, 'type': {'_type': 'str', '_value': 'refund'}}, '_len': 2}, {'_type': 'dict', '_items': {'amount': {'_type': 'int', '_value': 200}, 'type': {'_type': 'str', '_value': 'purchase'}}, '_len': 2}, {'_type': 'dict', '_items': {'amount': {'_type': 'int', '_value': 150}, 'type': {'_type': 'str', '_value': 'purchase'}}, '_len': 2}, {'_type': 'dict', '_items': {'amount': {'_type': 'int', '_value': 50}, 'type': {'_type': 'str', '_value': 'refund'}}, '_len': 2}, {'_type': 'dict', '_items': {'amount': {'_type': 'int', '_value': 200}, 'type': {'_type': 'str', '_value': 'transfer'}}, '_len': 2}], '_len': 6}, {'_type': 'int', '_value': 100}]
+5 amounts = [t['amount'] for t in transactions]
+5 ['transactions', 'threshold', 't'] ["[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...]", '100', "{amount: 150, type: 'purchase'}"]
+5 amounts = [t['amount'] for t in transactions]
+5 ['transactions', 'threshold', 't'] ["[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...]", '100', "{amount: 75, type: 'refund'}"]
+5 amounts = [t['amount'] for t in transactions]
+5 ['transactions', 'threshold', 't'] ["[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...]", '100', "{amount: 200, type: 'purchase'}"]
+5 amounts = [t['amount'] for t in transactions]
+5 ['transactions', 'threshold', 't'] ["[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...]", '100', "{amount: 150, type: 'purchase'}"]
+5 amounts = [t['amount'] for t in transactions]
+5 ['transactions', 'threshold', 't'] ["[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...]", '100', "{amount: 50, type: 'refund'}"]
+5 amounts = [t['amount'] for t in transactions]
+5 ['transactions', 'threshold', 't'] ["[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...]", '100', "{amount: 200, type: 'transfer'}"]
+5 amounts = [t['amount'] for t in transactions]
+5 ['transactions', 'threshold', 'amounts'] ["[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...]", '100', '[150, 75, 200, 150, 50, ...]']
+6 valid_amounts = [amt for amt in amounts if amt >= threshold]
+6 ['threshold', 'amounts', 'amt'] ['100', '[150, 75, 200, 150, 50, ...]', '150']
+6 valid_amounts = [amt for amt in amounts if amt >= threshold]
+6 ['threshold', 'amounts', 'amt'] ['100', '[150, 75, 200, 150, 50, ...]', '75']
+6 valid_amounts = [amt for amt in amounts if amt >= threshold]
+6 ['threshold', 'amounts', 'amt'] ['100', '[150, 75, 200, 150, 50, ...]', '200']
+6 valid_amounts = [amt for amt in amounts if amt >= threshold]
+6 ['threshold', 'amounts', 'amt'] ['100', '[150, 75, 200, 150, 50, ...]', '150']
+6 valid_amounts = [amt for amt in amounts if amt >= threshold]
+6 ['threshold', 'amounts', 'amt'] ['100', '[150, 75, 200, 150, 50, ...]', '50']
+6 valid_amounts = [amt for amt in amounts if amt >= threshold]
+6 ['threshold', 'amounts', 'amt'] ['100', '[150, 75, 200, 150, 50, ...]', '200']
+6 valid_amounts = [amt for amt in amounts if amt >= threshold]
+6 ['threshold', 'amounts', 'valid_amounts'] ['100', '[150, 75, 200, 150, 50, ...]', '[150, 200, 150, 200]']
+13 amount_counts = Counter(valid_amounts)
+13 ['valid_amounts', 'amount_counts'] ['[150, 200, 150, 200]', '{150: 2, 200: 2}']
+16 if amount_counts:
+16 ['valid_amounts', 'amount_counts'] ['[150, 200, 150, 200]', '{150: 2, 200: 2}']
+17 most_common = amount_counts.most_common(1)[0]
+17 ['valid_amounts', 'amount_counts', 'most_common'] ['[150, 200, 150, 200]', '{150: 2, 200: 2}', '(150, 2)']
+18 base_result = most_common[0] * most_common[1]
+18 ['valid_amounts', 'most_common', 'base_result'] ['[150, 200, 150, 200]', '(150, 2)', '300']
+24 processing_fee = len(valid_amounts) * 2  # $2 per transaction (semi-relevant)
+24 ['valid_amounts', 'base_result', 'processing_fee'] ['[150, 200, 150, 200]', '300', '8']
+27 result = base_result - processing_fee
+27 ['base_result', 'processing_fee', 'result'] ['300', '8', '292']
+28 return result
+28 ['result'] ['292']
+FUNCTION_RETURN 28 process_transactions {'_type': 'int', '_value': 292}
+44 final_result = int(result)
+44 ['result', 'final_result'] ['292', '292']

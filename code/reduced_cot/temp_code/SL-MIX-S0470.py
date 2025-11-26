@@ -1,28 +1,38 @@
-from functools import lru_cache
-
-def generate_key(n):
-    if n <= 1:
-        return n
-    return (generate_key(n-1) ^ generate_key(n-2)) & 0xFF
-
-def process_signal(base_signal, iterations):
-    key = generate_key(iterations)
-    adjusted = base_signal
+def process_sequence(data):
+    # Distractor variables and operations
+    temp_sum = sum(range(1, 11))  # Irrelevant sum
+    multiplier = 7
+    dummy_list = [x * 2 for x in range(5)]  # Unused list comprehension
     
-    for i in range(3):
-        if i & 1:
-            adjusted = (adjusted * 1.5) if (key & (1 << i)) else (adjusted / 2.0)
-        else:
-            adjusted = (adjusted + 10.0) if not (key & (1 << i)) else (adjusted - 5.0)
+    # Main processing logic
+    unique_values = list(set(data))
+    filtered = [x for x in unique_values if x % 2 == 0]
     
-    return int(adjusted) ^ key
+    # Misleading intermediate calculation
+    misleading_total = len(filtered) * multiplier + 5
+    
+    # Actual core computation with lambda
+    process_func = lambda x: x // 2 if x > 10 else x * 3
+    processed = list(map(process_func, filtered))
+    
+    # Dead code path that never executes
+    if len(processed) > 100:
+        dead_result = sum(processed) - 50
+    
+    # Set operations with bitwise distraction
+    base_set = {2, 4, 6, 8}
+    result_set = set(processed) | base_set
+    
+    # Final count calculation
+    count_func = lambda s: len([x for x in s if x % 4 == 0])
+    final_count = count_func(result_set)
+    
+    # More distractors
+    unused_var = temp_sum - misleading_total
+    
+    return final_count
 
-# Audio processing pipeline
-base_level = 42.5
-processing_rounds = 7
-intermediate_result = process_signal(base_level, processing_rounds)
-
-# Final adjustment using bitwise operations
-final_amplitude = (intermediate_result << 2) & 0xFF if (intermediate_result > 100) else (intermediate_result | 0x0F)
-
-print(f"Result: {final_amplitude}")
+# Main execution
+input_data = [3, 7, 12, 16, 12, 8, 20, 7, 24]
+result = process_sequence(input_data)
+print(f"Result: {result}")

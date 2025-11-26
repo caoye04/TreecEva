@@ -1,70 +1,37 @@
-def token_handler(token_type):
-    def decorator(func):
-        func.token_type = token_type
-        return func
-    return decorator
-
-class Lexer:
-    def __init__(self):
-        self.handlers = {}
-        self.state = 'START'
-        self.buffer = ''
-        self.tokens = []
+def analyze_inventory(products):
+    # Process inventory data
+    product_codes = [p['code'] for p in products if p['stock'] > 0]
     
-    def register(self, func):
-        self.handlers[func.token_type] = func
-        return func
+    # Calculate total stock (distractor - not used in final result)
+    total_stock = sum(p['stock'] for p in products)
     
-    def tokenize(self, input_str):
-        i = 0
-        while i < len(input_str):
-            char = input_str[i]
-            if self.state == 'START':
-                if char.isdigit():
-                    self.state = 'INTEGER'
-                    self.buffer = char
-                elif char.isalpha():
-                    self.state = 'IDENTIFIER'
-                    self.buffer = char
-                elif char.isspace():
-                    pass
-                else:
-                    # Handle single character tokens if needed
-                    pass
-            elif self.state == 'INTEGER':
-                if char.isdigit():
-                    self.buffer += char
-                else:
-                    self.tokens.append(int(self.buffer))
-                    self.buffer = ''
-                    self.state = 'START'
-                    continue  # Re-evaluate current char in START state
-            elif self.state == 'IDENTIFIER':
-                if char.isalnum():
-                    self.buffer += char
-                else:
-                    keyword = self.buffer
-                    if keyword in ['SET', 'APPLY']:
-                        self.tokens.append(keyword)
-                    else:
-                        self.tokens.append(('ID', keyword))
-                    self.buffer = ''
-                    self.state = 'START'
-                    continue
-            i += 1
-        # Handle last token if buffer is not empty
-        if self.state == 'INTEGER' and self.buffer:
-            self.tokens.append(int(self.buffer))
-        elif self.state == 'IDENTIFIER' and self.buffer:
-            keyword = self.buffer
-            if keyword in ['SET', 'APPLY']:
-                self.tokens.append(keyword)
-            else:
-                self.tokens.append(('ID', keyword))
-        return self.tokens
+    # Filter products based on multiple conditions
+    high_demand = [p for p in products if p['demand'] > 50 and p['price'] < 100]
+    low_supply = [p for p in products if p['stock'] < 20]
+    
+    # Perform intermediate calculations (some are distractors)
+    avg_price = sum(p['price'] for p in products) / len(products) if products else 0
+    max_stock = max(p['stock'] for p in products) if products else 0
+    
+    # Critical logic: count products meeting specific criteria
+    filtered_products = len([p for p in products 
+                           if p['category'] == 'electronics' 
+                           and p['price'] >= 50 
+                           and p['stock'] > 10])
+    
+    # Final assignment
+    final_count = filtered_products
+    print(f"Result: {final_count}")
+    return final_count
 
-lexer = Lexer()
-input_config = 'SET threshold APPLY 42 SET mode APPLY debug'
-tokens = lexer.tokenize(input_config)
-token_count = len(tokens)
-print(f'Result: {token_count}')
+# Test data
+products = [
+    {'code': 'A001', 'category': 'electronics', 'price': 75, 'stock': 15, 'demand': 60},
+    {'code': 'A002', 'category': 'electronics', 'price': 45, 'stock': 25, 'demand': 40},
+    {'code': 'B001', 'category': 'furniture', 'price': 120, 'stock': 8, 'demand': 30},
+    {'code': 'A003', 'category': 'electronics', 'price': 90, 'stock': 5, 'demand': 80},
+    {'code': 'C001', 'category': 'clothing', 'price': 35, 'stock': 30, 'demand': 70},
+    {'code': 'A004', 'category': 'electronics', 'price': 150, 'stock': 12, 'demand': 45}
+]
+
+analyze_inventory(products)

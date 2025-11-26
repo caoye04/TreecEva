@@ -1,53 +1,20 @@
-import re
-from dataclasses import dataclass
-from enum import Enum
+def analyze_network_devices():
+    # Network device inventory analysis
+    department_a_devices = {'router-1', 'switch-2', 'server-3', 'firewall-4', 'switch-2', 'router-1'}
+    department_b_devices = {'switch-2', 'server-3', 'workstation-5', 'router-6', 'server-3'}
+    
+    # Remove duplicates using sets
+    unique_a = set(department_a_devices)
+    unique_b = set(department_b_devices)
+    
+    # Find common devices between departments
+    final_intersection = unique_a.intersection(unique_b)
+    
+    # Calculate result based on intersection size
+    common_device_count = len(final_intersection)
+    result = common_device_count * 25
+    
+    print(f"Result: {result}")
+    return result
 
-class DocumentState(Enum):
-    INIT = 1
-    PARSED = 2
-    SECURITY_CHECKED = 3
-    ACCESS_GRANTED = 4
-
-def tokenize(text):
-    return re.findall(r'\b\w+\b', text)
-
-def evaluate_security(tokens):
-    has_confidential = any(token.lower() == 'confidential' for token in tokens)
-    has_public = any(token.lower() == 'public' for token in tokens)
-    return has_confidential and not has_public
-
-def calculate_access(base_clearance, is_secure, has_override):
-    if is_secure and not has_override:
-        return 0
-    elif is_secure and has_override:
-        return base_clearance - 1
-    else:
-        return base_clearance + 2
-
-@dataclass
-class DocumentMetadata:
-    content: str
-    clearance_level: int
-    override_code: bool = False
-
-metadata = DocumentMetadata(
-    content="This confidential document contains sensitive operational data",
-    clearance_level=3,
-    override_code=True
-)
-
-state = DocumentState.INIT
-access_level = 0
-
-while state != DocumentState.ACCESS_GRANTED:
-    if state == DocumentState.INIT:
-        tokens = tokenize(metadata.content)
-        state = DocumentState.PARSED
-    elif state == DocumentState.PARSED:
-        is_secure = evaluate_security(tokens)
-        state = DocumentState.SECURITY_CHECKED
-    elif state == DocumentState.SECURITY_CHECKED:
-        access_level = calculate_access(metadata.clearance_level, is_secure, metadata.override_code)
-        state = DocumentState.ACCESS_GRANTED
-
-print(f"Result: {access_level}")
+analyze_network_devices()

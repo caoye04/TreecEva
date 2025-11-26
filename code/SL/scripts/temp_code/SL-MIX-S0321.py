@@ -1,39 +1,39 @@
-class DailyLogger:
-    def __enter__(self):
-        self.log = []
-        return self
-    
-    def __exit__(self, exc_type, exc_value, traceback):
-        pass
-    
-    def log_sales(self, day, sales):
-        self.log.append((day, sales))
+from itertools import combinations
 
-fib_prev, fib_curr = 1, 1
-total_pies = 1
-discount_day = -1
+# Process inventory data for a warehouse
+data_entries = [('A123', 15), ('B456', 8), ('C789', 12), ('D321', 6), ('E654', 18)]
 
-with DailyLogger() as logger:
-    logger.log_sales(1, 1)
-    if 1 % 5 == 0 and 1 % 2 == 0:
-        discount_day = 1
-    
-    if discount_day == -1:
-        total_pies += 1
-        logger.log_sales(2, 1)
-        if total_pies % 5 == 0 and 2 % 2 == 0:
-            discount_day = 2
-    
-    day = 3
-    while discount_day == -1:
-        fib_next = fib_prev + fib_curr
-        total_pies += fib_next
-        logger.log_sales(day, fib_next)
-        
-        if total_pies % 5 == 0 and day % 2 == 0:
-            discount_day = day
-        
-        fib_prev, fib_curr = fib_curr, fib_next
-        day += 1
+# Initial processing with some unnecessary computations
+processed_data = []
+intermediate_sum = 0
+temp_list = []
 
-print(f"Result: {discount_day}")
+for entry in data_entries:
+    item_code, quantity = entry
+    processed_data.append((item_code, quantity * 2))
+    intermediate_sum += quantity
+    temp_list.append(item_code[::-1])  # Reverse codes (distractor)
+
+# Filter items based on quantity threshold
+filtered_items = []
+threshold_check = 10
+
+for item_code, doubled_quantity in processed_data:
+    if doubled_quantity > threshold_check:
+        filtered_items.append(item_code)
+    # Add some irrelevant processing
+    dummy_calc = len(item_code) * 3
+
+# Unused combination calculation (distractor)
+if len(filtered_items) >= 2:
+    combos = list(combinations(filtered_items, 2))
+    combo_count = len(combos)
+
+# Final result calculation
+final_count = len(filtered_items)
+
+# Additional unused computations
+remaining_items = len(data_entries) - final_count
+backup_check = sum([q for _, q in data_entries])
+
+print(f"Result: {final_count}")

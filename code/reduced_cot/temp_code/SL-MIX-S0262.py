@@ -1,34 +1,57 @@
-import math
+def analyze_crypto_patterns(transactions):
+    # Initial setup with irrelevant crypto data
+    bitcoin_price = 45000
+    ethereum_volume = 1200000
+    altcoin_fluctuation = 0.15
+    
+    # Distractor calculations that won't be used
+    market_cap = bitcoin_price * ethereum_volume
+    projected_gain = market_cap * altcoin_fluctuation
+    
+    # Actual processing with relevant data
+    processed_tx = []
+    for idx, tx in enumerate(transactions):
+        if tx % 2 == 0 and tx > 100:
+            processed_tx.append(tx * 2)
+        elif tx < 50:
+            processed_tx.append(tx + 10)  # Dead code path - never reached
+    
+    # More irrelevant crypto metrics
+    volatility_index = 25.7
+    trading_fee = 0.0025
+    network_congestion = 15
+    
+    # Core logic with bitwise operations
+    temp_result = 0
+    for val in processed_tx:
+        temp_result ^= (val & 0xFF)  # Bitwise AND then XOR
+    
+    # Misleading intermediate calculation
+    misleading_total = sum(processed_tx) * trading_fee
+    
+    # List comprehension for final processing
+    final_values = [x | 0x1F for x in processed_tx]  # Bitwise OR
+    
+    # More distractor crypto analysis
+    def calculate_yield(principal):
+        return principal * (1 + 0.08)  # Unused function
+    
+    liquidity_pool = 500000
+    staking_rewards = liquidity_pool * 0.05
+    
+    # Final computation chain
+    base_value = temp_result
+    adjustment = len(final_values) * 7
+    intermediate = (base_value << 2) + adjustment  # Bitwise shift
+    
+    # Critical execution point
+    final_total = intermediate - (misleading_total % 100)
+    crypto_sum = final_total
+    
+    # Print result for verification
+    print(f"Result: {crypto_sum}")
+    return crypto_sum
 
-def compute_portfolio_score(returns, categories):
-    # Normalize returns using logarithmic scaling
-    scaled_returns = [math.log(r + 1) for r in returns]
-    
-    # Greedy selection: pick top 2 returns
-    scaled_returns.sort(reverse=True)
-    selected = scaled_returns[:2]
-    
-    # Calculate exponential weight sum
-    weighted_sum = sum(math.exp(r) for r in selected)
-    
-    # Set operations on categories
-    unique_categories = frozenset(categories)
-    base_set = {'equity', 'bond', 'commodity'}
-    intersection = unique_categories & base_set
-    
-    # Logical operations to determine bonus
-    has_equity = 'equity' in intersection
-    has_bond = 'bond' in intersection
-    bonus = 1.5 if (has_equity and not has_bond) else 1.0
-    
-    # Final score calculation
-    final_score = weighted_sum * len(intersection) * bonus
-    return final_score
-
-# Portfolio data
-asset_returns = [0.05, 0.12, 0.08, 0.15, 0.03]
-asset_categories = ['equity', 'real_estate', 'equity', 'commodity', 'bond']
-
-# Compute and print result
-final_score = compute_portfolio_score(asset_returns, asset_categories)
-print(f"Result: {final_score}")
+# Execute with test data
+transactions = [125, 88, 200, 42, 156, 99, 180]
+analyze_crypto_patterns(transactions)

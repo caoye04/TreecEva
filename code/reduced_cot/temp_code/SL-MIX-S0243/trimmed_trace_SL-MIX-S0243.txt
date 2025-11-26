@@ -1,69 +1,75 @@
-42
-final_priority_score
+26
+final_score
 ---
-16 packet_queue = []
-16 ['encoded_packets', 'packet_queue'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", '[]']
-17 priority_heap = []
-17 ['encoded_packets', 'packet_queue', 'priority_heap'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", '[]', '[]']
-18 processed_scores = set()
-18 ['encoded_packets', 'packet_queue', 'priority_heap', 'processed_scores'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", '[]', '[]', 'set()']
-21 for enc_data, base_priority in encoded_packets:
-21 ['encoded_packets', 'packet_queue', 'priority_heap', 'processed_scores', 'enc_data', 'base_priority'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", '[]', '[]', 'set()', "'SGVsbG8='", '5']
-5 return hash(s) % 1000
-5 ['s'] ["'Hello'"]
-21 for enc_data, base_priority in encoded_packets:
-21 ['encoded_packets', 'packet_queue', 'priority_heap', 'processed_scores', 'enc_data', 'base_priority'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", "[(64, 'Hello')]", '[]', 'set()', "'V29ybGQ='", '3']
-5 return hash(s) % 1000
-5 ['s'] ["'World'"]
-21 for enc_data, base_priority in encoded_packets:
-21 ['encoded_packets', 'packet_queue', 'priority_heap', 'processed_scores', 'enc_data', 'base_priority'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", "[(64, 'Hello'), (34, 'World')]", '[]', 'set()', "'UGl6emE='", '7']
-5 return hash(s) % 1000
-5 ['s'] ["'Pizza'"]
-21 for enc_data, base_priority in encoded_packets:
-21 ['encoded_packets', 'packet_queue', 'priority_heap', 'processed_scores', 'enc_data', 'base_priority'] ["[('SGVsbG8=', 5), ('V29ybGQ=', 3), ('UGl6emE=', 7)]", "[(64, 'Hello'), (34, 'World'), (76, 'Pizza')]", '[]', 'set()', "'UGl6emE='", '7']
-28 for priority, data in packet_queue:
-28 ['packet_queue', 'priority_heap', 'processed_scores', 'priority', 'data'] ["[(64, 'Hello'), (34, 'World'), (76, 'Pizza')]", '[]', 'set()', '64', "'Hello'"]
-28 for priority, data in packet_queue:
-28 ['packet_queue', 'priority_heap', 'processed_scores', 'priority', 'data'] ["[(64, 'Hello'), (34, 'World'), (76, 'Pizza')]", "[(64, 'Hello')]", 'set()', '34', "'World'"]
-28 for priority, data in packet_queue:
-28 ['packet_queue', 'priority_heap', 'processed_scores', 'priority', 'data'] ["[(64, 'Hello'), (34, 'World'), (76, 'Pizza')]", "[(34, 'World'), (64, 'Hello')]", 'set()', '76', "'Pizza'"]
-28 for priority, data in packet_queue:
-28 ['packet_queue', 'priority_heap', 'processed_scores', 'priority', 'data'] ["[(64, 'Hello'), (34, 'World'), (76, 'Pizza')]", "[(34, 'World'), (64, 'Hello'), (76, 'Pizza')]", 'set()', '76', "'Pizza'"]
-32 total_score = 0
-32 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score'] ["[(34, 'World'), (64, 'Hello'), (76, 'Pizza')]", 'set()', '76', "'Pizza'", '0']
-33 while priority_heap:
-33 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score'] ["[(34, 'World'), (64, 'Hello'), (76, 'Pizza')]", 'set()', '76', "'Pizza'", '0']
-34 priority, data = heapq.heappop(priority_heap)
-34 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score'] ["[(64, 'Hello'), (76, 'Pizza')]", 'set()', '34', "'World'", '0']
-35 if len(data) > 4 and priority not in processed_scores:
-35 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score'] ["[(64, 'Hello'), (76, 'Pizza')]", 'set()', '34', "'World'", '0']
-36 score = priority ^ len(data)
-36 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(64, 'Hello'), (76, 'Pizza')]", 'set()', '34', "'World'", '0', '39']
-37 if score > 10 and (score % 2 == 0 or score < 50):
-37 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(64, 'Hello'), (76, 'Pizza')]", 'set()', '34', "'World'", '0', '39']
-38 total_score += score
-38 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(64, 'Hello'), (76, 'Pizza')]", 'set()', '34', "'World'", '39', '39']
-33 while priority_heap:
-33 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(64, 'Hello'), (76, 'Pizza')]", '{34}', '34', "'World'", '39', '39']
-34 priority, data = heapq.heappop(priority_heap)
-34 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(76, 'Pizza')]", '{34}', '64', "'Hello'", '39', '39']
-35 if len(data) > 4 and priority not in processed_scores:
-35 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(76, 'Pizza')]", '{34}', '64', "'Hello'", '39', '39']
-36 score = priority ^ len(data)
-36 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(76, 'Pizza')]", '{34}', '64', "'Hello'", '39', '69']
-37 if score > 10 and (score % 2 == 0 or score < 50):
-37 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(76, 'Pizza')]", '{34}', '64', "'Hello'", '39', '69']
-33 while priority_heap:
-33 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ["[(76, 'Pizza')]", '{34}', '64', "'Hello'", '39', '69']
-34 priority, data = heapq.heappop(priority_heap)
-34 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ['[]', '{34}', '76', "'Pizza'", '39', '69']
-35 if len(data) > 4 and priority not in processed_scores:
-35 ['priority_heap', 'processed_scores', 'priority', 'data', 'total_score', 'score'] ['[]', '{34}', '76', "'Pizza'", '39', '69']
-36 score = priority ^ len(data)
-36 ['priority_heap', 'priority', 'data', 'total_score', 'score'] ['[]', '76', "'Pizza'", '39', '73']
-37 if score > 10 and (score % 2 == 0 or score < 50):
-37 ['priority_heap', 'total_score', 'score'] ['[]', '39', '73']
-33 while priority_heap:
-33 ['priority_heap', 'total_score'] ['[]', '39']
-42 final_priority_score = total_score & 0xFF
-42 ['total_score', 'final_priority_score'] ['39', '39']
+2 raw_data = [45, 78, 23, 91, 56, 34, 82, 67]
+2 ['raw_data'] ['[45, 78, 23, 91, 56, ...]']
+3 processed_values = []
+3 ['raw_data', 'processed_values'] ['[45, 78, 23, 91, 56, ...]', '[]']
+7 for idx, value in enumerate(raw_data):
+7 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[]', '0', '45']
+8 if value > 50:
+8 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[]', '0', '45']
+7 for idx, value in enumerate(raw_data):
+7 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[]', '1', '78']
+8 if value > 50:
+8 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[]', '1', '78']
+7 for idx, value in enumerate(raw_data):
+7 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113]', '2', '23']
+8 if value > 50:
+8 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113]', '2', '23']
+7 for idx, value in enumerate(raw_data):
+7 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113]', '3', '91']
+8 if value > 50:
+8 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113]', '3', '91']
+7 for idx, value in enumerate(raw_data):
+7 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113, 100]', '4', '56']
+8 if value > 50:
+8 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113, 100]', '4', '56']
+7 for idx, value in enumerate(raw_data):
+7 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113, 100, 7]', '5', '34']
+8 if value > 50:
+8 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113, 100, 7]', '5', '34']
+7 for idx, value in enumerate(raw_data):
+7 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113, 100, 7]', '6', '82']
+8 if value > 50:
+8 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113, 100, 7]', '6', '82']
+7 for idx, value in enumerate(raw_data):
+7 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113, 100, 7, 109]', '7', '67']
+8 if value > 50:
+8 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113, 100, 7, 109]', '7', '67']
+7 for idx, value in enumerate(raw_data):
+7 ['raw_data', 'processed_values', 'idx', 'value'] ['[45, 78, 23, 91, 56, ...]', '[113, 100, 7, 109, 124]', '7', '67']
+15 validation_mask = 0
+15 ['processed_values', 'validation_mask'] ['[113, 100, 7, 109, 124]', '0']
+16 for i, val in enumerate(processed_values):
+16 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '0', '0', '113']
+17 if i % 2 == 0:
+17 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '0', '0', '113']
+18 validation_mask |= (val & 0xF)  # Bitwise OR accumulation
+18 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '1', '0', '113']
+16 for i, val in enumerate(processed_values):
+16 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '1', '1', '100']
+17 if i % 2 == 0:
+17 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '1', '1', '100']
+16 for i, val in enumerate(processed_values):
+16 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '1', '2', '7']
+17 if i % 2 == 0:
+17 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '1', '2', '7']
+18 validation_mask |= (val & 0xF)  # Bitwise OR accumulation
+18 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '7', '2', '7']
+16 for i, val in enumerate(processed_values):
+16 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '7', '3', '109']
+17 if i % 2 == 0:
+17 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '7', '3', '109']
+16 for i, val in enumerate(processed_values):
+16 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '7', '4', '124']
+17 if i % 2 == 0:
+17 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '7', '4', '124']
+18 validation_mask |= (val & 0xF)  # Bitwise OR accumulation
+18 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '15', '4', '124']
+16 for i, val in enumerate(processed_values):
+16 ['processed_values', 'validation_mask', 'i', 'val'] ['[113, 100, 7, 109, 124]', '15', '4', '124']
+22 processed_data = sum(processed_values) & 0xFF  # Keep lower 8 bits
+22 ['processed_values', 'validation_mask', 'processed_data'] ['[113, 100, 7, 109, 124]', '15', '197']
+26 final_score = processed_data | validation_mask
+26 ['validation_mask', 'processed_data', 'final_score'] ['15', '197', '207']

@@ -1,0 +1,43 @@
+Target: Find the value of variable final_result after [line 44] executes
+
+[line 40]  threshold = 100
+Assign: threshold = 100
+[line 43]  result = process_transactions(transactions, threshold)
+Call function process_transactions(transactions=[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...] (an unknown source), threshold=100 (defined at [line 40]))
+[line 3]  def process_transactions(transactions, threshold):
+Enter function process_transactions: transactions=[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...], threshold=100 (threshold defined at [line 40])
+  [line 5]  amounts = [t['amount'] for t in transactions]
+  Compute: [t['amount'] for t in transactions], where t={amount: 150, type: 'purchase'} (an unknown source), transactions=[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...] (parameter transactions) = ?
+  [line 5]  amounts = [t['amount'] for t in transactions]
+  Compute: [t['amount'] for t in transactions], where t={amount: 75, type: 'refund'} (an unknown source), transactions=[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...] (parameter transactions) = ?
+  [line 5]  amounts = [t['amount'] for t in transactions]
+  Compute: [t['amount'] for t in transactions], where t={amount: 200, type: 'purchase'} (an unknown source), transactions=[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...] (parameter transactions) = ?
+  [line 5]  amounts = [t['amount'] for t in transactions]
+  Compute: [t['amount'] for t in transactions], where t={amount: 150, type: 'purchase'} (an unknown source), transactions=[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...] (parameter transactions) = ?
+  [line 5]  amounts = [t['amount'] for t in transactions]
+  Compute: [t['amount'] for t in transactions], where t={amount: 50, type: 'refund'} (an unknown source), transactions=[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...] (parameter transactions) = ?
+  [line 5]  amounts = [t['amount'] for t in transactions]
+  Compute: [t['amount'] for t in transactions], where t={amount: 200, type: 'transfer'} (an unknown source), transactions=[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...] (parameter transactions) = ?
+  [line 5]  amounts = [t['amount'] for t in transactions]
+  Compute: [t['amount'] for t in transactions], where t={amount: 200, type: 'transfer'} (an unknown source), transactions=[{amount: 150, type: 'purchase'}, {amount: 75, type: 'refund'}, {amount: 200, type: 'purchase'}, {amount: 150, type: 'purchase'}, {amount: 50, type: 'refund'}, ...] (parameter transactions) = [150, 75, 200, 150, 50, ...]
+  [line 6]  valid_amounts = [amt for amt in amounts if amt >= threshold]
+  Compute: [amt for amt in amounts if amt >= threshold], where amt=150 (an unknown source), amounts=[150, 75, 200, 150, 50, ...] (defined at [line 5]), threshold=100 (parameter threshold defined at [line 40]) = ?
+  [line 13]  amount_counts = Counter(valid_amounts)
+  Call function Counter(valid_amounts=[150, 200, 150, 200] (defined at [line 6]))
+  [line 16]  if amount_counts:
+  Condition: True, entering 'if' block
+  [line 17]  most_common = amount_counts.most_common(1)[0]
+  Compute: amount_counts.most_common(1)[0], where amount_counts={150: 2, 200: 2} (defined at [line 13]) = (150, 2)
+  [line 18]  base_result = most_common[0] * most_common[1]
+  Compute: most_common[0] * most_common[1], where most_common=(150, 2) (defined at [line 17]) = 300
+  [line 24]  processing_fee = len(valid_amounts) * 2  # $2 per transaction (semi-relevant)
+  Compute: len(valid_amounts) * 2  # $2 per transaction (semi-relevant), where valid_amounts=[150, 200, 150, 200] (defined at [line 6]) = 8
+  [line 27]  result = base_result - processing_fee
+  Compute: base_result - processing_fee, where base_result=300 (defined at [line 18]), processing_fee=8 (defined at [line 24]) = 292
+  [line 28]  return result
+  Return: result=292 (defined at [line 27])
+Function process_transactions returns 292
+[line 44]  final_result = int(result)
+Call function int(result=292 (defined at [line 27]))
+
+Answer: final_result = 292 (last updated on defined at [line 44])

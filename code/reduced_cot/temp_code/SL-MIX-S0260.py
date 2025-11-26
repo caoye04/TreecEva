@@ -1,35 +1,50 @@
-from functools import reduce
 from collections import Counter
 
-def compute_modular_hash(timestamps):
-    return reduce(lambda x, y: (x * 31 + y) % 1009, timestamps, 0)
+def analyze_sensor_data(sensor_readings):
+    # Distractor: unused frequency analysis
+    frequency_counter = Counter(sensor_readings)
+    common_vals = frequency_counter.most_common(3)
+    
+    # Misleading intermediate calculations
+    total_sum = sum(sensor_readings)
+    average_val = total_sum / len(sensor_readings) if sensor_readings else 0
+    adjusted_avg = average_val * 2.5 - 15
+    
+    # Dead code path - never executed
+    if adjusted_avg > 1000:
+        threshold_bypass = adjusted_avg // 10
+    else:
+        threshold_bypass = 0
+    
+    # Relevant bitwise operations for data validation
+    validation_mask = 0b10101101
+    valid_count = 0
+    for reading in sensor_readings:
+        masked_value = reading & validation_mask
+        if (masked_value | 0b00100000) == 0b10101101:
+            valid_count += 1
+    
+    # More distractions with arithmetic
+    noise_reduction = len(sensor_readings) * 3 - 7
+    calibration_offset = (noise_reduction ^ 0b1111) + 12
+    
+    # Key relevant variables
+    active_tracker = valid_count * 4
+    false_positive = (len(sensor_readings) - valid_count) // 2
+    correction_factor = (active_tracker >> 2) | 0b110
+    
+    # Final calculation (this is what matters)
+    final_count = active_tracker + correction_factor - false_positive
+    
+    # Print irrelevant intermediate values for distraction
+    print(f"Debug - Total sum: {total_sum}")
+    print(f"Debug - Adjusted avg: {adjusted_avg}")
+    print(f"Debug - Calibration offset: {calibration_offset}")
+    
+    # The actual result we care about
+    print(f"Result: {final_count}")
+    return final_count
 
-def get_role_weights(roles):
-    weights = {'admin': 97, 'operator': 71, 'analyst': 53, 'guest': 11}
-    return [weights[r] for r in roles if r in weights]
-
-# System configuration
-active_roles = ['operator', 'analyst', 'guest', 'admin']
-time_markers = [1623456789, 1623456889, 1623456989, 1623457089]
-
-# Token generation process
-role_weights = get_role_weights(active_roles)
-hash_value = compute_modular_hash(time_markers)
-
-# Clearance computation with short-circuit logic
-is_critical_window = (time_markers[-1] % 86400) > 75600  # Last 3 hours of day
-has_admin_role = 'admin' in active_roles
-
-if is_critical_window and has_admin_role:
-    clearance_boost = 2
-elif is_critical_window or not has_admin_role:
-    clearance_boost = 1
-else:
-    clearance_boost = 0
-
-# Final clearance calculation
-base_clearance = sum(role_weights) % 100
-weighted_hash = (hash_value * clearance_boost) % 100
-final_clearance_level = (base_clearance + weighted_hash) % 50
-
-print(f'Result: {final_clearance_level}')
+# Test data with mixed patterns
+sensor_data = [45, 173, 89, 237, 125, 189, 65, 173, 201]
+result = analyze_sensor_data(sensor_data)

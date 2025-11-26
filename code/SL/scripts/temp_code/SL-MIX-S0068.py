@@ -1,33 +1,66 @@
-from functools import reduce
 import itertools
 
-def fibonacci_sequence(n):
-    a, b = 0, 1
-    for _ in range(n):
-        yield a
-        a, b = b, a + b
+def analyze_data(data_points):
+    # Initialize tracking variables
+    primary_sum = 0
+    secondary_buffer = []
+    temp_storage = {}
+    
+    # Process each data point
+    for i, point in enumerate(data_points):
+        # Main computation path
+        if i % 3 == 0:
+            primary_sum += point * 2
+        elif i % 3 == 1:
+            primary_sum -= point
+        else:
+            # This path is misleading - not used in final result
+            secondary_buffer.append(point * 3)
+        
+        # Store intermediate (mostly irrelevant) values
+        temp_storage[f"key_{i}"] = primary_sum + len(secondary_buffer)
+    
+    # Compute checksum (distractor)
+    checksum = sum(secondary_buffer) * 2
+    
+    # Actual relevant processing
+    processed_data = []
+    for pair in itertools.combinations(data_points, 2):
+        if abs(pair[0] - pair[1]) <= 5:
+            processed_data.append(sum(pair))
+    
+    # Final computation - this is what matters
+    if len(processed_data) > 0:
+        final_value = sum(processed_data) // len(processed_data)
+    else:
+        final_value = primary_sum
+    
+    return final_value
 
-def apply_fibonacci_filter(signals):
-    fib_weights = list(fibonacci_sequence(len(signals)))
-    weighted_signals = [s * w for s, w in zip(signals, fib_weights)]
-    return reduce(lambda x, y: x + y, weighted_signals)
+# Sample data processing
+sample_data = [12, 8, 15, 7, 20, 3, 18, 11, 25]
 
-def normalize_signal(signal_value, normalization_factor=10):
-    return signal_value / normalization_factor if normalization_factor != 0 else 0
+# Misleading intermediate computations
+backup_calc = sum(sample_data) * 2 - 50
+validation_flag = backup_calc > 100
+auxiliary_sum = 0
 
-# Deep space signal measurements (arbitrary units)
-space_signals = [5, 8, 13, 21, 34]
+for num in sample_data:
+    if num % 2 == 0:
+        auxiliary_sum += num
+    else:
+        auxiliary_sum -= num // 2
 
-# Apply transformation process
-weighted_sum = apply_fibonacci_filter(space_signals)
-filtered_signal_strength = normalize_signal(weighted_sum)
+# This is the key execution
+result = analyze_data(sample_data)
 
-# Additional processing step
-if filtered_signal_strength > 10:
-    adjustment_factor = len(list(itertools.combinations(range(3), 2)))
-    filtered_signal_strength += adjustment_factor
-else:
-    adjustment_factor = len(set(space_signals)) - len(frozenset(space_signals))
-    filtered_signal_strength -= adjustment_factor
+# Final variable assignment
+final_analysis = result + (auxiliary_sum % 10)
 
-print(f"Result: {filtered_signal_strength}")
+# Dead code path (never executed)
+if validation_flag and backup_calc < 200:
+    final_analysis += 5
+elif not validation_flag:
+    final_analysis -= 3
+
+print(f"Result: {final_analysis}")

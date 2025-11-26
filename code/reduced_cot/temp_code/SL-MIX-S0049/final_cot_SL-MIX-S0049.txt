@@ -1,74 +1,34 @@
-Target: Find the value of variable final_checksum after [line 37] executes
+Target: Find the value of variable final_metric after [line 43] executes
 
-[line 36]  network_packets = [12, 7, 23, 8, 15, 4]
-Compute: [12, 7, 23, 8, 15, 4] = [12, 7, 23, 8, 15, ...]
-[line 37]  final_checksum = process_packets(network_packets)
-Call function process_packets(network_packets=[12, 7, 23, 8, 15, ...] (defined at [line 36]))
-[line 4]  def process_packets(packet_ids):
-Enter function process_packets: packet_ids=[12, 7, 23, 8, 15, ...] (network_packets defined at [line 36])
-  [line 6]  layer1 = [pid ^ (pid << 2) for pid in packet_ids]
-  Compute: [pid ^ (pid << 2) for pid in packet_ids], where pid=12 (an unknown source), packet_ids=[12, 7, 23, 8, 15, ...] (parameter packet_ids defined at [line 36]) = ?
-  [line 9]  layer2 = [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1]
-  Compute: [int(math.log(pid + 1)) if pid > 0 else 0 for pid in layer1], where pid=60 (an unknown source), layer1=[60, 27, 75, 40, 51, ...] (defined at [line 6]) = ?
-  [line 12]  sorted_packets = sorted(layer2)
-  Call function sorted(layer2=[4, 3, 4, 3, 3, ...] (defined at [line 9]))
-  [line 13]  packet_queue = deque(sorted_packets)
-  Call function deque(sorted_packets=[3, 3, 3, 3, 4, ...] (defined at [line 12]))
-  [line 16]  stack_reduction = 0
-  Assign: stack_reduction = 0
-  [line 17]  while packet_queue:
-  while Loop Start: Condition is true
-  [line 18]  left = packet_queue.popleft()
-  (Missing param: 'func_name')
-  [line 19]  if packet_queue:
-  Condition: True, entering 'if' block
-  [line 20]  right = packet_queue.pop()
-  (Missing param: 'func_name')
-  [line 17]  while packet_queue:
-  while Loop Iteration: Condition is still true
-  [line 18]  left = packet_queue.popleft()
-  (Missing param: 'func_name')
-  [line 19]  if packet_queue:
-  Condition: True, entering 'if' block
-  [line 20]  right = packet_queue.pop()
-  (Missing param: 'func_name')
-  [line 17]  while packet_queue:
-  while Loop Iteration: Condition is still true
-  [line 18]  left = packet_queue.popleft()
-  (Missing param: 'func_name')
-  [line 19]  if packet_queue:
-  Condition: True, entering 'if' block
-  [line 20]  right = packet_queue.pop()
-  (Missing param: 'func_name')
-  [line 17]  while packet_queue:
-  while Loop Iteration: Condition is still true
-  [line 26]  accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
-  Compute: lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1) = ?
-  [line 27]  final_checksum = 0
-  Assign: final_checksum = 0
-  [line 28]  for val in sorted_packets:
-  Loop Start: val takes its first value 3
-  [line 29]  final_checksum = accumulator(final_checksum, val)
-  Call function accumulator(final_checksum=0 (defined at [line 27]), val=3 (defined at [line 28]))
-  [line 26]  accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
-  Compute: lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1), where a=0 (an unknown source), b=3 (an unknown source) = ?
-  [line 28]  for val in sorted_packets:
-  Loop Iteration: val is now 3 (iteration 2)
-  [line 29]  final_checksum = accumulator(final_checksum, val)
-  Call function accumulator(final_checksum=-1 (defined at [line 29]), val=3 (defined at [line 28]))
-  [line 26]  accumulator = lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1)
-  Compute: lambda a, b: a + (b << 1) if b % 2 == 0 else a - (b >> 1), where a=-1 (an unknown source), b=3 (an unknown source) = ?
-... [Line 28] repeats 3 more times ...
-... [Line 28] repeats 3 more times ...
-... [Line 28] repeats 3 more times ...
-  [line 28]  for val in sorted_packets:
-  Loop Iteration: val is now 4 (iteration 6)
-  [line 29]  final_checksum = accumulator(final_checksum, val)
-  Call function accumulator(final_checksum=4 (defined at [line 29]), val=4 (defined at [line 28]))
-  [line 28]  for val in sorted_packets:
-  Loop End: Iteration finished
-  [line 33]  return final_checksum
-  Return: final_checksum=15 (defined at [line 29])
-Function process_packets returns 15
+[line 32]  metrics_data = [15, 8, 22, 5, 17, 9, 31, 12, 6, 19]
+Compute: [15, 8, 22, 5, 17, 9, 31, 12, 6, 19] = [15, 8, 22, 5, 17, ...]
+[line 33]  validation_criteria = lambda x: x > 10 and x % 2 != 0
+Compute: lambda x: x > 10 and x % 2 != 0 = ?
+[line 40]  final_metric = data_processor(metrics_data, validation_criteria)
+Call function data_processor(metrics_data=[15, 8, 22, 5, 17, ...] (defined at [line 32]), validation_criteria)
+[line 7]  processed_set = {x % 7 for x in dataset}
+Compute: {x % 7 for x in dataset}, where x=15 (an unknown source), dataset=[15, 8, 22, 5, 17, ...] (an unknown source) = ?
+[line 8]  filtered_data = [x for x in dataset if criteria(x)]
+Compute: [x for x in dataset if criteria(x)], where x=15 (an unknown source), dataset=[15, 8, 22, 5, 17, ...] (an unknown source) = ?
+[line 11]  text_data = ['alpha', 'beta', 'gamma', 'delta']
+Compute: ['alpha', 'beta', 'gamma', 'delta'] = ['alpha', 'beta', 'gamma', 'delta']
+[line 12]  char_counts = [len(s) for s in text_data]
+Compute: [len(s) for s in text_data], where s='alpha' (an unknown source), text_data=['alpha', 'beta', 'gamma', 'delta'] (defined at [line 11]) = ?
+[line 13]  max_chars = max(char_counts)
+Call function max(char_counts=[5, 4, 5, 5] (defined at [line 12]))
+[line 16]  if max_chars > 10:
+Condition: True, entering 'if' block
+[line 22]  valid_entries = [x for x in filtered_data if x in processed_set]
+Compute: [x for x in filtered_data if x in processed_set], where x=15 (an unknown source), filtered_data=[15, 17, 31, 19] (defined at [line 8]), processed_set={1, 2, 3, 5, 6} (defined at [line 7]) = ?
+[line 23]  sorted_metrics = sorted(valid_entries, reverse=True)
+Call function sorted(valid_entries=[] (defined at [line 22]), reverse=True)
+[line 26]  core_values = sorted_metrics[:3] if len(sorted_metrics) >= 3 else sorted_metrics
+Compute: sorted_metrics[:3] if len(sorted_metrics) >= 3 else sorted_metrics, where sorted_metrics=[] (defined at [line 23]) = []
+[line 27]  result = sum(core_values) * len(processed_set)
+Compute: sum(core_values) * len(processed_set), where core_values=[] (defined at [line 26]), processed_set={1, 2, 3, 5, 6} (defined at [line 7]) = 0
+[line 29]  return result
+Return: result=0 (defined at [line 27])
+[line 43]  print(f"Result: {final_metric}")
+Output: f"Result: {final_metric}"
 
-Answer: final_checksum = 15 (last updated on defined at [line 29])
+Answer: final_metric = 0 (last updated on defined at [line 40])

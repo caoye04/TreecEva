@@ -1,31 +1,41 @@
-import re
-from collections import Counter
-from itertools import combinations
+import itertools
 
-def normalize_char_dist(text_segment):
-    clean_text = re.sub(r'[^a-z]', '', text_segment.lower())
-    char_freq = Counter(clean_text)
-    total_chars = sum(char_freq.values())
-    if total_chars == 0:
-        return 0.0
-    probabilities = [count / total_chars for count in char_freq.values()]
-    entropy_sum = -sum(p * (p * 1000 // 1) for p in probabilities)
-    return entropy_sum % 100
+def analyze_text_complexity(text_samples):
+    # Distractor: Complex preprocessing that doesn't affect final calculation
+    word_counts = [len(sample.split()) for sample in text_samples]
+    avg_word_lengths = [sum(len(word) for word in sample.split()) / len(sample.split()) for sample in text_samples]
+    
+    # Relevant calculation: Find longest word across all samples
+    all_words = list(itertools.chain(*[sample.split() for sample in text_samples]))
+    max_word_length = max(len(word) for word in all_words) if all_words else 0
+    
+    # Distractor: Unused complexity metrics
+    sentence_complexity = sum(1 for word in all_words if len(word) > 6)
+    vocabulary_richness = len(set(all_words)) / len(all_words) if all_words else 0
+    
+    # Key calculation: Process data with logical operations
+    base_score = max_word_length * 3
+    has_long_words = any(len(word) > 10 for word in all_words)
+    
+    # Conditional processing
+    if has_long_words and base_score > 15:
+        processed_data = base_score - 2
+    else:
+        processed_data = base_score + 1
+    
+    # Final calculation with distractor
+    penalty_factor = 0.85 if len(text_samples) > 2 else 1.0
+    readability_index = sum(word_counts) * 0.5  # Unused distractor
+    
+    final_score = processed_data * penalty_factor
+    print(f"Target result: {final_score}")
+    return final_score
 
-def linguistic_entropy_analyzer(input_corpus):
-    segments = input_corpus.split('.')
-    entropy_values = []
-    for segment in segments:
-        if segment.strip():
-            base_entropy = normalize_char_dist(segment)
-            adjusted_entropy = (base_entropy * 3 + 7) % 97
-            entropy_values.append(adjusted_entropy)
-    paired_combinations = list(combinations(entropy_values, 2))
-    aggregate_measure = sum((a + b) % 53 for a, b in paired_combinations)
-    return aggregate_measure
+# Test data
+text_samples = [
+    "The quick brown fox jumps over the lazy dog",
+    "Programming languages require precise syntax and logical structure",
+    "Complex algorithms demonstrate computational thinking processes"
+]
 
-research_corpus = "The quick brown fox jumps over the lazy dog. Sphinx of black quartz judge my vow. Pack my box with five dozen liquor jugs."
-intermediate_result = linguistic_entropy_analyzer(research_corpus)
-modular_adjustment = (intermediate_result * 13 + 17) % 89
-final_entropy_score = round(modular_adjustment ** 0.5 * 100) % 79
-print(f"Result: {final_entropy_score}")
+analyze_text_complexity(text_samples)

@@ -1,0 +1,32 @@
+Target: Find the value of variable final_score after [line 39] executes
+
+[line 32]  initial_points = 24
+Assign: initial_points = 24
+[line 33]  threshold = 20
+Assign: threshold = 20
+[line 27]  def misleading_helper(x, y):
+Enter function misleading_helper: x=24 (initial_points defined at [line 32]), y=20 (threshold defined at [line 33])
+  [line 29]  return (x ** 2) + (y // 3)
+  Return: (x ** 2) + (y // 3)
+Function misleading_helper returns 582
+[line 39]  final_score = compute_final_rating(initial_points, threshold)
+Call function compute_final_rating(initial_points=24 (defined at [line 32]), threshold=20 (defined at [line 33]))
+[line 1]  def compute_final_rating(base_points, cutoff):
+Enter function compute_final_rating: base_points=24 (initial_points defined at [line 32]), cutoff=20 (threshold defined at [line 33])
+  [line 7]  multiplier = 3 if base_points > cutoff else 2
+  Compute: 3 if base_points > cutoff else 2, where base_points=24 (parameter base_points defined at [line 32]), cutoff=20 (parameter cutoff defined at [line 33]) = 3
+  [line 8]  adjusted_base = base_points * multiplier
+  Compute: base_points * multiplier, where base_points=24 (parameter base_points defined at [line 32]), multiplier=3 (defined at [line 7]) = 72
+  [line 15]  if base_points < 0:
+  Condition: True, entering 'if' block
+  [line 20]  mask = 0b1111
+  Assign: mask = 15
+  [line 21]  masked_value = adjusted_base & mask
+  Compute: adjusted_base & mask, where adjusted_base=72 (defined at [line 8]), mask=15 (defined at [line 20]) = 8
+  [line 24]  result = (adjusted_base - 8) if masked_value > 5 else (adjusted_base + 4)
+  Compute: (adjusted_base - 8) if masked_value > 5 else (adjusted_base + 4), where adjusted_base=72 (defined at [line 8]), masked_value=8 (defined at [line 21]) = 64
+  [line 25]  return result
+  Return: result=64 (defined at [line 24])
+Function compute_final_rating returns 64
+
+Answer: final_score = 64 (last updated on defined at [line 39])

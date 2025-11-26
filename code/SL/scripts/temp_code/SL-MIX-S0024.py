@@ -1,27 +1,40 @@
-import itertools
+def calculate_student_performance(scores_dict):
+    total_sum = 0
+    valid_count = 0
+    processed_scores = []
+    
+    # Process each student's score
+    for student, score_data in scores_dict.items():
+        base_score = score_data.get('exam', 0)
+        bonus = score_data.get('bonus', 0)
+        is_valid = score_data.get('valid', True)
+        
+        # Distractor calculation that doesn't affect final result
+        temp_adjustment = (base_score * 2) - bonus
+        
+        if is_valid and base_score >= 0:
+            adjusted_score = base_score + bonus
+            processed_scores.append(adjusted_score)
+            total_sum += adjusted_score
+            valid_count += 1
+        
+        # Unused intermediate variable
+        potential_max = max(base_score, bonus) if base_score > 0 else 0
+    
+    # Calculate average using only valid scores
+    adjusted_sum = total_sum + 10  # Small adjustment
+    final_score = adjusted_sum // valid_count if valid_count > 0 else -1
+    
+    # Print result for verification
+    print(f"Result: {final_score}")
+    return final_score
 
-def transmission_efficiency(nodes, depth=0):
-    if depth > 3:
-        return 0
-    if nodes <= 1:
-        return nodes
-    
-    # Calculate base efficiency using bitwise operations
-    base = (nodes & (nodes - 1)) ^ (nodes >> 1)
-    
-    # Recursive calculation with modified node count
-    recursive_part = transmission_efficiency(nodes // 2, depth + 1)
-    
-    # Combine using combinatorial logic
-    combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
-    combo_count = len(combinations)
-    
-    # Efficiency adjustment based on comparisons
-    adjusted = base + combo_count if base < combo_count else base - combo_count
-    
-    return adjusted + recursive_part
+# Test data
+student_scores = {
+    'alice': {'exam': 85, 'bonus': 5, 'valid': True},
+    'bob': {'exam': 92, 'bonus': 8, 'valid': True},
+    'charlie': {'exam': 78, 'bonus': 0, 'valid': False},
+    'diana': {'exam': 88, 'bonus': 3, 'valid': True}
+}
 
-# Initial network nodes
-network_nodes = 12
-final_efficiency = transmission_efficiency(network_nodes)
-print(f'Result: {final_efficiency}')
+result = calculate_student_performance(student_scores)

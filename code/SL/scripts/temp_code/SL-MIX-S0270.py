@@ -1,61 +1,47 @@
-from itertools import combinations
-import bisect
+import itertools
 
-def compute_weighted_sum(scores):
-    if not scores:
-        return 0
-    sorted_scores = sorted(scores)
-    n = len(sorted_scores)
-    weights = [i + 1 for i in range(n)]
-    total = sum(score * weight for score, weight in zip(sorted_scores, weights))
-    return total
+class ChecksumTracker:
+    def __init__(self, base_value):
+        self.base = base_value
+        self.distractor_cache = []
+        self.temp_calc = 0
+        
+    def process_data_chunk(self, data_range):
+        # Distractor: complex-looking but unused operation
+        self.distractor_cache = list(itertools.combinations(data_range, 2))
+        relevant_values = [x for x in data_range if x % 3 == 0]
+        
+        # Misleading intermediate calculation
+        self.temp_calc = sum(relevant_values) * 2
+        
+        actual_sum = sum(x for x in data_range if x % 4 == 0)
+        return actual_sum
+    
+    def get_verification_value(self):
+        # Main logic path
+        data_range = range(1, 25)
+        chunk_result = self.process_data_chunk(data_range)
+        
+        # Distractor: unused bit operations
+        bit_check = chunk_result & 0xFF | 0x10
+        
+        # Final calculation
+        verification = (chunk_result * 3 + self.base) % 47
+        return verification
 
-def process_routes(route_segments):
-    valid_segments = []
-    for segment in route_segments:
-        if segment.efficiency > 0 and segment.duration <= 120:
-            valid_segments.append(segment.efficiency)
-        else:
-            continue
-    
-    if len(valid_segments) < 3:
-        return -1
-    
-    # Remove outliers using IQR method
-    sorted_valid = sorted(valid_segments)
-    n = len(sorted_valid)
-    q1_index = n // 4
-    q3_index = 3 * n // 4
-    q1 = sorted_valid[q1_index]
-    q3 = sorted_valid[q3_index]
-    iqr = q3 - q1
-    lower_bound = q1 - 1.5 * iqr
-    upper_bound = q3 + 1.5 * iqr
-    
-    filtered_scores = [s for s in sorted_valid if lower_bound <= s <= upper_bound]
-    
-    if len(filtered_scores) < 2:
-        return -1
-    
-    # Compute weighted sum of remaining scores
-    return compute_weighted_sum(filtered_scores)
+# Main execution with distractions
+input_data = [5, 12, 8, 17, 23]
+redundant_sum = sum(input_data) * 2  # Dead calculation
 
-from collections import namedtuple
-Segment = namedtuple('Segment', ['efficiency', 'duration'])
+checksum_tracker = ChecksumTracker(15)
 
-# Route data
-segments_data = [
-    Segment(85, 45),
-    Segment(92, 60),
-    Segment(78, 90),
-    Segment(95, 30),
-    Segment(65, 150),  # Outlier due to duration
-    Segment(88, 75),
-    Segment(91, 50),
-    Segment(40, 100),  # Potential outlier in efficiency
-    Segment(93, 55),
-    Segment(87, 65)
-]
+# Misleading operation that doesn't affect final result
+mock_verification = checksum_tracker.process_data_chunk(range(10, 20))
 
-final_route_score = process_routes(segments_data)
-print(f"Result: {final_route_score}")
+final_checksum = checksum_tracker.get_verification_value()
+
+# Distractor print statements
+print(f"Debug temp: {checksum_tracker.temp_calc}")
+print(f"Debug bit: {checksum_tracker.distractor_cache[:2]}")
+
+print(f"Result: {final_checksum}")

@@ -1,0 +1,18 @@
+Target: Find the value of variable final_count after [line 16] executes
+
+[line 4]  inventory_items = ['widget', 'gadget', 'widget', 'tool', 'gadget', 'widget', 'part']
+Compute: ['widget', 'gadget', 'widget', 'tool', 'gadget', 'widget', 'part'] = ['widget', 'gadget', 'widget', 'tool', 'gadget', ...]
+[line 5]  processing_batch = ['gadget', 'part', 'part', 'component', 'gadget']
+Compute: ['gadget', 'part', 'part', 'component', 'gadget'] = ['gadget', 'part', 'part', 'component', 'gadget']
+[line 8]  unique_items_counter = Counter(inventory_items)
+Call function Counter(inventory_items=['widget', 'gadget', 'widget', 'tool', 'gadget', ...] (defined at [line 4]))
+[line 11]  processed_batch = [item.upper() for item in processing_batch]
+Compute: [item.upper() for item in processing_batch], where item='gadget' (an unknown source), processing_batch=['gadget', 'part', 'part', 'component', 'gadget'] (defined at [line 5]) = ?
+[line 12]  primary_item = 'widget'
+Assign: primary_item = 'widget'
+[line 13]  target_item = 'GADGET'
+Assign: target_item = 'GADGET'
+[line 16]  final_count = unique_items_counter.get(primary_item, 0) + processed_batch.count(target_item)
+Compute: unique_items_counter.get(primary_item, 0) + processed_batch.count(target_item), where unique_items_counter={widget: 3, gadget: 2, tool: 1, ...} (defined at [line 8]), primary_item='widget' (defined at [line 12]), processed_batch=['GADGET', 'PART', 'PART', 'COMPONENT', 'GADGET'] (defined at [line 11]), target_item='GADGET' (defined at [line 13]) = 5
+
+Answer: final_count = 5 (last updated on defined at [line 16])

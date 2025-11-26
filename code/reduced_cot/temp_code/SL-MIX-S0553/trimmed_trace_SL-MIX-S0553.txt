@@ -1,0 +1,51 @@
+34
+final_metric
+---
+33 final_metric = calculate_final_metric(scores_data)
+33 ['scores_data'] ['[{value: 15, active: True}, {value: 22, active: True}, {value: 18, active: True}, {value: 25, active: False}, {value: 19, active: True}]']
+PARAM_MAPPING {'scores_data': {'actual_var': 'scores_data', 'value': [{'value': 15, 'active': True}, {'value': 22, 'active': True}, {'value': 18, 'active': True}, {'value': 25, 'active': False}, {'value': 19, 'active': True}]}}
+FUNCTION_ENTER 1 calculate_final_metric def calculate_final_metric(scores_data):
+1 ['scores_data'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'value': {'_type': 'int', '_value': 15}, 'active': {'_type': 'bool', '_value': True}}, '_len': 2}, {'_type': 'dict', '_items': {'value': {'_type': 'int', '_value': 22}, 'active': {'_type': 'bool', '_value': True}}, '_len': 2}, {'_type': 'dict', '_items': {'value': {'_type': 'int', '_value': 18}, 'active': {'_type': 'bool', '_value': True}}, '_len': 2}, {'_type': 'dict', '_items': {'value': {'_type': 'int', '_value': 25}, 'active': {'_type': 'bool', '_value': False}}, '_len': 2}, {'_type': 'dict', '_items': {'value': {'_type': 'int', '_value': 19}, 'active': {'_type': 'bool', '_value': True}}, '_len': 2}], '_len': 5}]
+3 base_scores = [x['value'] for x in scores_data if x.get('active', False)]
+3 ['scores_data', 'x'] ['[{value: 15, active: True}, {value: 22, active: True}, {value: 18, active: True}, {value: 25, active: False}, {value: 19, active: True}]', '{value: 15, active: True}']
+3 base_scores = [x['value'] for x in scores_data if x.get('active', False)]
+3 ['scores_data', 'x'] ['[{value: 15, active: True}, {value: 22, active: True}, {value: 18, active: True}, {value: 25, active: False}, {value: 19, active: True}]', '{value: 22, active: True}']
+3 base_scores = [x['value'] for x in scores_data if x.get('active', False)]
+3 ['scores_data', 'x'] ['[{value: 15, active: True}, {value: 22, active: True}, {value: 18, active: True}, {value: 25, active: False}, {value: 19, active: True}]', '{value: 18, active: True}']
+3 base_scores = [x['value'] for x in scores_data if x.get('active', False)]
+3 ['scores_data', 'x'] ['[{value: 15, active: True}, {value: 22, active: True}, {value: 18, active: True}, {value: 25, active: False}, {value: 19, active: True}]', '{value: 25, active: False}']
+3 base_scores = [x['value'] for x in scores_data if x.get('active', False)]
+3 ['scores_data', 'x'] ['[{value: 15, active: True}, {value: 22, active: True}, {value: 18, active: True}, {value: 25, active: False}, {value: 19, active: True}]', '{value: 19, active: True}']
+3 base_scores = [x['value'] for x in scores_data if x.get('active', False)]
+3 ['scores_data', 'base_scores'] ['[{value: 15, active: True}, {value: 22, active: True}, {value: 18, active: True}, {value: 25, active: False}, {value: 19, active: True}]', '[15, 22, 18, 19]']
+4 processed_scores = list(map(lambda x: x * 2 - 5, base_scores))
+4 ['base_scores'] ['[15, 22, 18, 19]']
+4 processed_scores = list(map(lambda x: x * 2 - 5, base_scores))
+4 ['x'] ['15']
+4 processed_scores = list(map(lambda x: x * 2 - 5, base_scores))
+4 ['x'] ['22']
+4 processed_scores = list(map(lambda x: x * 2 - 5, base_scores))
+4 ['x'] ['18']
+4 processed_scores = list(map(lambda x: x * 2 - 5, base_scores))
+4 ['x'] ['19']
+12 weights = [0.3, 0.5, 0.2]
+12 ['processed_scores', 'weights'] ['[25, 39, 31, 33]', '[0.3, 0.5, 0.2]']
+13 weighted_sum = sum(score * weight for score, weight in zip(processed_scores[:3], weights))
+13 [] []
+13 weighted_sum = sum(score * weight for score, weight in zip(processed_scores[:3], weights))
+13 ['score', 'weight'] ['25', '0.3']
+13 weighted_sum = sum(score * weight for score, weight in zip(processed_scores[:3], weights))
+13 ['score', 'weight'] ['39', '0.5']
+13 weighted_sum = sum(score * weight for score, weight in zip(processed_scores[:3], weights))
+13 ['score', 'weight'] ['31', '0.2']
+13 weighted_sum = sum(score * weight for score, weight in zip(processed_scores[:3], weights))
+13 ['score', 'weight'] ['31', '0.2']
+19 adjustment_factor = 1.25
+19 ['weighted_sum', 'adjustment_factor'] ['33.2', '1.25']
+20 final_result = weighted_sum * adjustment_factor
+20 ['weighted_sum', 'adjustment_factor', 'final_result'] ['33.2', '1.25', '41.5']
+22 return final_result
+22 ['final_result'] ['41.5']
+FUNCTION_RETURN 22 calculate_final_metric {'_type': 'float', '_value': 41.5}
+34 print(f"Result: {final_metric}")
+34 ['final_metric'] ['41.5']

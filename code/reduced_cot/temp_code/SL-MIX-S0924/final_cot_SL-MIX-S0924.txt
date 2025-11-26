@@ -1,0 +1,20 @@
+Target: Find the value of variable final_count after [line 24] executes
+
+[line 2]  device_types = ['router', 'switch', 'firewall', 'access_point', 'server']
+Compute: ['router', 'switch', 'firewall', 'access_point', 'server'] = ['router', 'switch', 'firewall', 'access_point', 'server']
+[line 3]  deployment_zones = ['core', 'distribution', 'access']
+Compute: ['core', 'distribution', 'access'] = ['core', 'distribution', 'access']
+[line 6]  all_combinations = [(device, zone) for device in device_types for zone in deployment_zones]
+Compute: [(device, zone) for device in device_types for zone in deployment_zones], where device='router' (an unknown source), zone='core' (an unknown source), device_types=['router', 'switch', 'firewall', 'access_point', 'server'] (defined at [line 2]), deployment_zones=['core', 'distribution', 'access'] (defined at [line 3]) = ?
+[line 14]  high_security_zones = ['core', 'distribution']
+Compute: ['core', 'distribution'] = ['core', 'distribution']
+[line 15]  valid_combinations = [pair for pair in all_combinations if pair[1] in high_security_zones]
+Compute: [pair for pair in all_combinations if pair[1] in high_security_zones], where pair=('router', 'core') (an unknown source), all_combinations=[('router', 'core'), ('router', 'distribution'), ('router', 'access'), ('switch', 'core'), ('switch', 'distribution'), ...] (defined at [line 6]), high_security_zones=['core', 'distribution'] (defined at [line 14]) = ?
+[line 18]  discount_count = len([pair for pair in valid_combinations if pair[0] in ['router', 'switch']])
+Call function len([pair for pair in valid_combinations if pair[0] in ['router', 'switch']])
+[line 21]  bonus_count = len([pair for pair in all_combinations if pair[0] == 'firewall'])
+Call function len([pair for pair in all_combinations if pair[0] == 'firewall'])
+[line 24]  final_count = len(valid_combinations) - discount_count + bonus_count
+Compute: len(valid_combinations) - discount_count + bonus_count, where valid_combinations=[('router', 'core'), ('router', 'distribution'), ('switch', 'core'), ('switch', 'distribution'), ('firewall', 'core'), ...] (defined at [line 15]), discount_count=4 (defined at [line 18]), bonus_count=3 (defined at [line 21]) = 9
+
+Answer: final_count = 9 (last updated on defined at [line 24])

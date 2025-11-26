@@ -1,14 +1,5 @@
-from collections import Counter
-import math
-
-def calculate_semantic_density(sentence, stop_words):
-    tokens = [word.strip('.,!?;').lower() for word in sentence.split()]
-    filtered_tokens = [token for token in tokens if token not in stop_words]
-    freq_map = Counter(filtered_tokens)
-    total_weight = sum(math.log(freq + 1) * len(word) for word, freq in freq_map.items())
-    return round(total_weight / len(filtered_tokens), 2) if filtered_tokens else 0
-
-sentence = "The quick brown fox jumps over the lazy dog efficiently and swiftly"
-stop_words = {'the', 'over', 'and'}
-semantic_density_score = calculate_semantic_density(sentence, stop_words)
-print(f"Result: {semantic_density_score}")
+inventory_tracker = {"apples": 42, "oranges": 28, "bananas": 15, "grapes": 33}
+stock_check = len(inventory_tracker)
+fruit_categories = list(inventory_tracker.keys())
+final_quantity = inventory_tracker["apples"] + inventory_tracker["oranges"] - inventory_tracker["bananas"]
+print(f"Result: {final_quantity}")

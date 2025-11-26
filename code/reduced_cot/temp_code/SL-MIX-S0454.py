@@ -1,41 +1,35 @@
-from collections import deque
-import heapq
+def process_data_points():
+    data_sources = [(3, 7), (1, 9), (5, 2), (8, 4)]
+    processed_values = []
+    temp_buffer = []
+    
+    for idx, (x, y) in enumerate(data_sources):
+        product = x * y
+        processed_values.append(product)
+        # Distractor computation that doesn't affect final result
+        temp_buffer.append(idx + product % 3)
+    
+    # Distractor operation with zip that looks relevant but isn't used
+    zipped_pairs = list(zip(processed_values, temp_buffer))
+    
+    # Another distractor - tuple operations that don't contribute to answer
+    coordinate_tuples = [(val, idx) for idx, val in enumerate(processed_values)]
+    
+    enumerated_values = []
+    for index, value in enumerate(processed_values):
+        enumerated_values.append(value + index)
+    
+    # Distractor: calculate average but don't use it
+    avg_value = sum(enumerated_values) / len(enumerated_values)
+    
+    # The key computation that determines the answer
+    final_computation = max(enumerated_values) - min(enumerated_values)
+    
+    # Distractor: unused combination count
+    unused_count = len(set(enumerated_values))
+    
+    print(f"Target result: {final_computation}")
+    return final_computation
 
-def prepare_ingredients():
-    ingredients = [
-        {'name': 'saffron', 'priority': 3, 'prep_time': 5},
-        {'name': 'truffle', 'priority': 1, 'prep_time': 10},
-        {'name': 'lobster', 'priority': 2, 'prep_time': 7},
-        {'name': 'caviar', 'priority': 4, 'prep_time': 3}
-    ]
-    
-    # Priority queue for ingredients (min-heap based on priority)
-    priority_queue = []
-    for ingredient in ingredients:
-        heapq.heappush(priority_queue, (ingredient['priority'], ingredient['prep_time'], ingredient['name']))
-    
-    # Stack for preparation steps
-    prep_stack = deque()
-    
-    # Process ingredients
-    total_time = 0
-    while priority_queue:
-        priority, prep_time, name = heapq.heappop(priority_queue)
-        total_time += prep_time
-        prep_stack.append((name, total_time))
-    
-    # Calculate final score based on preparation efficiency
-    final_score = 0
-    step_count = 0
-    while prep_stack:
-        name, time = prep_stack.pop()
-        step_count += 1
-        if step_count % 2 == 0:
-            final_score += time * 2
-        else:
-            final_score -= time
-    
-    return final_score
-
-final_score = prepare_ingredients()
-print(f"Result: {final_score}")
+if __name__ == "__main__":
+    result = process_data_points()

@@ -1,40 +1,61 @@
-from collections import defaultdict
+import itertools
 
-def calculate_security_score():
-    # Packet signature sets from different network zones
-    zone_a_signatures = frozenset({12, 25, 33, 47, 58})
-    zone_b_signatures = frozenset({25, 33, 64, 71, 82})
-    zone_c_signatures = frozenset({12, 47, 64, 91, 103})
+def calculate_bonus(base_value, multiplier):
+    # Irrelevant helper function that's never called
+    return (base_value * multiplier) // 2 + 7
+
+def filter_valid_scores(scores, threshold=50):
+    # This function is called but its result is partially ignored
+    valid_scores = [score for score in scores if score >= threshold]
+    fake_result = sum(valid_scores) * 3 - 15  # Misleading computation
+    return valid_scores, fake_result
+
+def process_sequence(values, weights):
+    # Main processing with multiple logical steps
+    processed = []
+    temp_sum = 0
     
-    # Find common signatures between all zones
-    common_signatures = zone_a_signatures & zone_b_signatures & zone_c_signatures
+    # Step 1: Filter and process initial values
+    filtered_vals, distraction = filter_valid_scores(values)
     
-    # Count total occurrences of each signature across zones
-    signature_counter = defaultdict(int)
-    for sig in zone_a_signatures | zone_b_signatures | zone_c_signatures:
-        count = sum([sig in zone_a_signatures, sig in zone_b_signatures, sig in zone_c_signatures])
-        signature_counter[sig] = count
+    # Step 2: Generate combinations (distractor)
+    combos = list(itertools.combinations(filtered_vals, 2))
+    combo_sum = sum(sum(pair) for pair in combos[:3])  # Partial use
     
-    # Calculate base metric from signature overlaps
-    overlap_sum = sum(common_signatures)
-    
-    # Apply modular transformation based on signature counts
-    transformed_values = []
-    for sig, count in signature_counter.items():
-        if count >= 2:  # Only consider signatures appearing in multiple zones
-            mod_result = (sig * count) % 17
-            transformed_values.append(mod_result)
-    
-    # Compute security score using comparison and modular arithmetic
-    security_score = 0
-    for val in transformed_values:
-        if val > 8:
-            security_score += val * 2
+    # Step 3: Apply weights with conditional logic
+    for i, val in enumerate(filtered_vals):
+        if i < len(weights):
+            weighted_val = val * weights[i]
+            if weighted_val > 100:
+                processed.append(weighted_val // 2)
+            else:
+                processed.append(weighted_val + 10)
         else:
-            security_score += val
-        
-    security_score = security_score % 100
-    return security_score
+            processed.append(val * 2)  # Different path
+    
+    # Step 4: Final computation with early exit condition
+    if len(processed) == 0:
+        return -999  # Dead code path
+    
+    # Step 5: Core logic chain
+    result = sum(processed) - combo_sum + len(filtered_vals) * 5
+    
+    # More distractions
+    unused_var = distraction // 2  # Never used
+    misleading_result = result * 2 - 25  # Misleading intermediate
+    
+    return result
 
-security_score = calculate_security_score()
-print(f"Result: {security_score}")
+# Initial data setup
+initial_values = [45, 78, 92, 34, 67, 81, 56]
+score_weights = [2, 3, 1, 4, 2]
+
+# Irrelevant computations
+distraction_values = [x * 2 for x in initial_values if x > 60]
+fake_total = sum(distraction_values) + 100
+
+# Main execution
+final_score = process_sequence(initial_values, score_weights)
+
+# Print the target result
+print(f"Target result: {final_score}")

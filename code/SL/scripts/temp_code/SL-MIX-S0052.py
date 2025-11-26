@@ -1,59 +1,57 @@
-from collections import deque
-
-def calculate_priority(items):
-    return sum(item ** 2 if item > 0 else -item for item in items)
-
-def process_inventory():
-    shipments_stack = []
-    orders_queue = deque()
+def data_validator(records):
+    # Irrelevant metadata processing
+    file_header = [0xDE, 0xAD, 0xBE, 0xEF]
+    header_sum = sum(file_header)  # This is irrelevant distractor
     
-    # Incoming shipments with item values
-    shipments_data = [
-        [3, -2, 5],
-        [-1, 4, -3],
-        [2, 2, 2, 2],
-        [-5, -5]
-    ]
+    # Main data processing with misleading intermediate steps
+    temp_buffer = []
+    validation_flags = []
     
-    # Outgoing orders with item requests
-    orders_data = [
-        [1, -1, 2],
-        [-2, 3],
-        [4, 4, -3, -3]
-    ]
-    
-    # Load shipments into stack with their priorities
-    for shipment_items in shipments_data:
-        priority = calculate_priority(shipment_items)
-        shipments_stack.append(priority)
-    
-    # Load orders into queue with their priorities
-    for order_items in orders_data:
-        priority = calculate_priority(order_items)
-        orders_queue.append(priority)
-    
-    # Process shipments and orders
-    while shipments_stack and orders_queue:
-        top_shipment = shipments_stack[-1]
-        front_order = orders_queue[0]
-        
-        if top_shipment >= front_order:
-            # Shipment fulfills order
-            shipments_stack.pop()
-            orders_queue.popleft()
+    for idx, record in enumerate(records):
+        # Misleading conditional that doesn't affect final result
+        if idx % 3 == 0:
+            validation_flags.append(record * 2)  # Dead code path
         else:
-            # Cannot fulfill, check next shipment
-            if len(shipments_stack) > 1:
-                shipments_stack.pop()  # Remove lower priority shipment
-            else:
-                break  # Cannot proceed further
+            temp_buffer.append(record)
     
-    # Calculate discrepancy
-    highest_remaining_shipment = max(shipments_stack) if shipments_stack else 0
-    earliest_pending_order = orders_queue[0] if orders_queue else 0
-    discrepancy = highest_remaining_shipment - earliest_pending_order
+    # Distractor calculations that look important
+    buffer_sum = sum(temp_buffer) * 17 % 256
     
-    return discrepancy
+    # Actual core logic with modular arithmetic
+    processed_data = []
+    for record in records:
+        # Key transformation using modular arithmetic
+        processed_val = (record * 7 + 13) % 100
+        processed_data.append(processed_val)
+    
+    # More irrelevant operations
+    debug_counter = len(validation_flags)  # Unused variable
+    
+    # Final checksum calculation (this is the actual answer)
+    checksum = 0
+    for val in processed_data:
+        checksum = (checksum + val) % 1000
+    
+    # Final irrelevant transformation that gets discarded
+    final_debug = (checksum + buffer_sum) % 500  # Misleading result
+    
+    return checksum
 
-final_discrepancy = process_inventory()
-print(f"Result: {final_discrepancy}")
+# Initialize test data
+raw_measurements = [45, 23, 67, 89, 12, 34, 78, 56, 91, 14]
+
+# Irrelevant preprocessing steps
+calibration_offset = 17
+calibrated_data = [x + calibration_offset for x in raw_measurements]
+
+# More distraction - unused operations
+quality_metrics = [x * 0.5 for x in calibrated_data]
+
+# Actual processing
+processed_records = [x % 50 + 10 for x in calibrated_data]
+
+# Call the validator function
+final_checksum = data_validator(processed_records)
+
+# Print the result
+print(f"Result: {final_checksum}")

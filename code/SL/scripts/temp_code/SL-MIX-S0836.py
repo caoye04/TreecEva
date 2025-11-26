@@ -1,51 +1,34 @@
-import itertools
-
-def process_packets(packet_flags):
-    state_machine = {
-        'START': {'SYN': 'HANDSHAKE', 'DATA': 'PROCESSING'},
-        'HANDSHAKE': {'ACK': 'ESTABLISHED', 'RST': 'RESET'},
-        'PROCESSING': {'FIN': 'CLOSING', 'DATA': 'PROCESSING'},
-        'ESTABLISHED': {'FIN': 'CLOSING', 'DATA': 'ESTABLISHED'},
-        'CLOSING': {'ACK': 'CLOSED'},
-        'RESET': {},
-        'CLOSED': {}
-    }
+def data_processor(raw_values):
+    # Irrelevant processing for distraction
+    temp_sum = sum([x * 2 for x in raw_values if x % 3 == 0])
+    misleading_value = temp_sum // len(raw_values) if len(raw_values) > 0 else 0
     
-    state_scores = {'START': 0, 'HANDSHAKE': 5, 'PROCESSING': 3, 'ESTABLISHED': 10, 'CLOSING': 2, 'RESET': -10, 'CLOSED': 1}
+    # Actual relevant processing
+    filtered_data = [x for x in raw_values if x % 2 == 0]
+    processed = [x * 3 + 1 for x in filtered_data]
     
-    total_score = 0
-    current_state = 'START'
+    # More distractions
+    unused_data = [x - 5 for x in raw_values if x < 10]
+    dummy_calc = (misleading_value * 2) if temp_sum > 20 else (misleading_value // 2)
     
-    for flag_sequence in packet_flags:
-        for flag in flag_sequence:
-            if flag in state_machine[current_state]:
-                next_state = state_machine[current_state][flag]
-                total_score += state_scores[next_state]
-                current_state = next_state
-            else:
-                total_score -= 5  # Penalty for invalid transition
-                break
-    
-    return total_score
+    return processed
 
-# Packet sequences to analyze
-packet_sequences = [
-    ['SYN', 'ACK', 'DATA', 'FIN', 'ACK'],
-    ['SYN', 'RST'],
-    ['DATA', 'DATA', 'FIN']
-]
+# Main execution
+input_data = [4, 7, 12, 15, 8, 11, 6, 9]
+processed_data = data_processor(input_data)
 
-# Generate all possible orderings of processing the packet sequences
-sequence_permutations = list(itertools.permutations(packet_sequences))
+# Distracting calculations
+base_offset = 17
+adjustment_value = (base_offset ^ 5) & 15  # XOR and bitwise AND
 
-# Calculate scores for each permutation
-permutation_scores = {}
-for i, perm in enumerate(sequence_permutations):
-    score = sum(process_packets([seq]) for seq in perm)
-    permutation_scores[i] = score
+# Misleading path that's never used
+if len(processed_data) > 10:
+    alternative_result = sum(processed_data) - adjustment_value
+else:
+    alternative_result = max(processed_data) if processed_data else 0
 
-# Find the maximum score among all permutations
-max_score_key = max(permutation_scores, key=permutation_scores.get)
-final_score = permutation_scores[max_score_key]
+# The critical execution point
+final_result = processed_data[-1] + adjustment_value
 
-print(f"Result: {final_score}")
+# Print the target result
+print(f"Target result: {final_result}")

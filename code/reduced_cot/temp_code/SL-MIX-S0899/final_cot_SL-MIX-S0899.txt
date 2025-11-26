@@ -1,0 +1,40 @@
+Target: Find the value of variable final_value after [line 28] executes
+
+[line 5]  priority_count = 0
+Assign: priority_count = 0
+[line 6]  secondary_count = 0
+Assign: secondary_count = 0
+[line 8]  for packet in packets:
+Loop Start: packet takes its first value 8
+[line 10]  if packet % 3 == 0:
+Condition: True, entering 'if' block
+[line 17]  if packet > 15 and packet < 35:
+Condition: True, entering 'if' block
+[line 20]  secondary_count += packet % 5
+Update: secondary_count changed from 0 (defined at defined at [line 6]) to 0+packet % 5 = 3
+[line 8]  for packet in packets:
+Loop Iteration: packet is now 12 (iteration 2)
+[line 10]  if packet % 3 == 0:
+Condition: True, entering 'if' block
+... [Line 8] repeats 7 more times ...
+... [Line 8] repeats 7 more times ...
+... [Line 8] repeats 7 more times ...
+... [Line 8] repeats 7 more times ...
+[line 8]  for packet in packets:
+Loop Iteration: packet is now 20 (iteration 10)
+[line 10]  if packet % 3 == 0:
+Condition: True, entering 'if' block
+[line 17]  if packet > 15 and packet < 35:
+Condition: True, entering 'if' block
+[line 18]  priority_count += packet % 7
+Update: priority_count changed from 11 (defined at defined at [line 5]) to 11+packet % 7 = 17
+[line 8]  for packet in packets:
+Loop End: Iteration finished
+[line 26]  base_value = priority_count * 3 + secondary_count * 2
+Compute: priority_count * 3 + secondary_count * 2, where priority_count=17 (defined at [line 18]), secondary_count=3 (defined at [line 20]) = 57
+[line 27]  adjustment = len([p for p in packets if p % 4 == 0]) - 1
+Compute: len([p for p in packets if p % 4 == 0]) - 1, where p=8 (an unknown source), packets=[8, 12, 19, 24, 31, ...] (an unknown source) = ?
+[line 28]  final_value = base_value - adjustment
+Compute: base_value - adjustment, where base_value=57 (defined at [line 26]), adjustment=4 (defined at [line 27]) = 53
+
+Answer: final_value = 53 (last updated on defined at [line 28])

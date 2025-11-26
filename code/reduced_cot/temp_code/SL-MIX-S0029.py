@@ -1,39 +1,27 @@
-import base64
-
-def normalize_frequency(freq):
-    return round((freq - 1000) / 100, 2)
-
-class SignalProcessor:
-    def __init__(self, data):
-        self.raw_data = data
-        self.processed_signals = []
+def analyze_performance(metrics):
+    baseline = sum(metrics[:3])  # Not used in final calculation
+    processed = []
+    temp_buffer = 0
     
-    def __enter__(self):
-        encoded_segments = self.raw_data.split('|')
-        for segment in encoded_segments:
-            try:
-                decoded_bytes = base64.b64decode(segment)
-                freq_str = decoded_bytes.decode('utf-8')
-                freq_val = float(freq_str)
-                normalized_freq = normalize_frequency(freq_val)
-                self.processed_signals.append(normalized_freq)
-            except Exception:
-                continue
-        return self
+    for idx, value in enumerate(metrics):
+        temp_buffer += value * 2  # Distractor calculation
+        if idx % 2 == 0:
+            processed.append(value + 5)
+        else:
+            processed.append(value - 3)
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+    # Intermediate calculations that don't affect final result
+    running_total = sum(processed)
+    average_metric = running_total / len(processed) if processed else 0
+    
+    # Key processing with slicing and enumerate
+    performance_data = []
+    for i, val in enumerate(processed[1:]):
+        performance_data.append(val * (i + 1))
+    
+    final_score = performance_data[-1]
+    print(f"Result: {final_score}")
 
-def compute_stellar_hash(signals):
-    product = 1
-    for s in signals:
-        product *= (int(s * 100) + 1)
-    return product % 997
-
-encoded_data = "MTIwMA==|MTMwMA==|MTE1MA==|MTQwMA==|MTI1MA=="
-with SignalProcessor(encoded_data) as processor:
-    sorted_signals = sorted(processor.processed_signals, reverse=True)
-    window_avg = sum(sorted_signals[:3]) / 3
-    adjusted_signals = [s + window_avg for s in sorted_signals]
-    stellar_checksum = compute_stellar_hash(adjusted_signals)
-print(f"Result: {stellar_checksum}")
+# Input data
+performance_metrics = [12, 8, 15, 6, 20, 10]
+analyze_performance(performance_metrics)

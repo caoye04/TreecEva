@@ -1,13 +1,27 @@
-from collections import Counter
+def analyze_product_reviews():
+    # Product review analysis system
+    review_scores = [85, 92, 78, 96, 88, 74, 95, 81, 90, 77]
+    threshold = 80
+    
+    # Calculate average (distractor - not used in final result)
+    avg_score = sum(review_scores) / len(review_scores)
+    
+    # Filter high-quality reviews using list comprehension
+    ratings_filtered = [score for score in review_scores if score >= threshold]
+    
+    # Calculate rating adjustment based on distribution
+    rating_range = max(ratings_filtered) - min(ratings_filtered)
+    adjustment_factor = rating_range // 5  # This is relevant
+    
+    # Unnecessary intermediate calculation (distractor)
+    median_check = sorted(ratings_filtered)[len(ratings_filtered) // 2]
+    
+    # Final rating calculation
+    final_rating = max(ratings_filtered) - adjustment_factor
+    
+    # Print result for verification
+    print(f"Result: {final_rating}")
+    return final_rating
 
-daily_sales = Counter({'bread': 45, 'croissant': 30, 'muffin': 25, 'cookie': 15})
-prices = {'bread': 2.50, 'croissant': 3.00, 'muffin': 2.00, 'cookie': 1.50}
-
-total_items = sum(daily_sales.values())
-total_revenue = sum(daily_sales[item] * prices[item] for item in daily_sales)
-
-if total_items > 100:
-    total_revenue *= 0.9
-
-final_revenue = int(total_revenue * 100)  # Convert to cents for precise integer handling
-print(f'Result: {final_revenue}')
+# Execute the function
+final_result = analyze_product_reviews()

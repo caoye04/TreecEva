@@ -1,245 +1,44 @@
-Target: Find the value of variable matched_routes after [line 64] executes
+Target: Find the value of variable final_result after [line 30] executes
 
-[line 63]  config_string = 'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'
-Assign: config_string = 'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'
-[line 64]  matched_routes = process_network_config(config_string)
-Call function process_network_config(config_string='ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443' (defined at [line 63]))
-[line 41]  def process_network_config(config: str) -> int:
-Enter function process_network_config: config='ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443' (config_string defined at [line 63])
-  [line 42]  tokens = tokenize_config(config)
-  Call function tokenize_config(config='ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443' (parameter config defined at [line 63]))
-  [line 7]  return re.findall(r'\b\w+|[/.=]', config_str)
-  Return: re.findall(r'\b\w+|[/.=]', config_str)
-  [line 43]  decision_tree = build_decision_tree(tokens)
-  Call function build_decision_tree(tokens=['ALLOW', 'TCP', 'FROM', '192', '.', ...] (defined at [line 42]))
-  [line 15]  def build_decision_tree(tokens: List[str]) -> TreeNode:
-  Enter function build_decision_tree: tokens=['ALLOW', 'TCP', 'FROM', '192', '.', ...] (tokens defined at [line 42])
-    [line 16]  stack = []
-    Compute: [] = []
-    [line 17]  for token in tokens:
-    Loop Start: token takes its first value 'ALLOW'
-    [line 18]  if token in ('AND', 'OR'):
-    Condition: True, entering 'if' block
-    [line 23]  elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
-    'elif' Condition: True, entering block
-    [line 17]  for token in tokens:
-    Loop Iteration: token is now 'TCP' (iteration 2)
-    [line 18]  if token in ('AND', 'OR'):
-    Condition: True, entering 'if' block
-    [line 23]  elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
-    'elif' Condition: True, entering block
-... [Line 17] repeats 29 more times ...
-... [Line 17] repeats 29 more times ...
-... [Line 17] repeats 29 more times ...
-    [line 17]  for token in tokens:
-    Loop Iteration: token is now '443' (iteration 32)
-    [line 18]  if token in ('AND', 'OR'):
-    Condition: True, entering 'if' block
-    [line 23]  elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
-    'elif' Condition: True, entering block
-    [line 24]  if stack and stack[-1].right is None:
-    Condition: True, entering 'if' block
-    [line 17]  for token in tokens:
-    Loop End: Iteration finished
-    [line 28]  return stack[0] if stack else None
-    Return: stack[0] if stack else None
-  Function build_decision_tree returns TreeNode(value='192', left=None, right=TreeNode(value='.', left=None, right=None))
-  [line 44]  route_queue = deque(["192.168.1.1:80", "192.168.1.2:22", "10.0.0.5:443", "172.16.0.1:8080"])
-  Call function deque(["192.168.1.1:80", "192.168.1.2:22", "10.0.0.5:443", "172.16.0.1:8080"])
-  [line 45]  matched_routes = 0
-  Assign: matched_routes = 0
-  [line 47]  while route_queue:
-  while Loop Start: Condition is true
-  [line 48]  route = route_queue.popleft()
-  (Missing param: 'func_name')
-  [line 49]  port = route.split(':')[1]
-  Compute: route.split(':')[1], where route='192.168.1.1:80' (an unknown source) = '80'
-  [line 50]  temp_tree = TreeNode(port)
-  Call function TreeNode(port='80' (defined at [line 49]))
-  [line 51]  if decision_tree:
-  Condition: True, entering 'if' block
-  [line 53]  condition_tree = TreeNode('OR')
-  Call function TreeNode('OR')
-  [line 54]  condition_tree.left = decision_tree
-  (Missing param: 'result')
-  [line 55]  condition_tree.right = temp_tree
-  (Missing param: 'result')
-  [line 56]  if evaluate_tree(condition_tree):
-  Condition: True, entering 'if' block
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 35]  if node.value == 'OR':
-  Condition: True, entering 'if' block
-  [line 36]  return evaluate_tree(node.left) or evaluate_tree(node.right)
-  Return: evaluate_tree(node.left) or evaluate_tree(node.right)
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 35]  if node.value == 'OR':
-  Condition: True, entering 'if' block
-  [line 37]  if node.value == 'AND':
-  Condition: True, entering 'if' block
-  [line 39]  return False
-  Return: False
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 34]  return True
-  Return: True
-  [line 36]  return evaluate_tree(node.left) or evaluate_tree(node.right)
-  Return: evaluate_tree(node.left) or evaluate_tree(node.right)
-  [line 57]  matched_routes += 1
-  Update: matched_routes changed from ? (defined at defined at [line 45]) to ?+1 = 1
-  [line 47]  while route_queue:
-  while Loop Iteration: Condition is still true
-  [line 48]  route = route_queue.popleft()
-  (Missing param: 'func_name')
-  [line 49]  port = route.split(':')[1]
-  Compute: route.split(':')[1], where route='192.168.1.2:22' (an unknown source) = '22'
-  [line 50]  temp_tree = TreeNode(port)
-  Call function TreeNode(port='22' (defined at [line 49]))
-  [line 51]  if decision_tree:
-  Condition: True, entering 'if' block
-  [line 53]  condition_tree = TreeNode('OR')
-  Call function TreeNode('OR')
-  [line 54]  condition_tree.left = decision_tree
-  (Missing param: 'result')
-  [line 55]  condition_tree.right = temp_tree
-  (Missing param: 'result')
-  [line 56]  if evaluate_tree(condition_tree):
-  Condition: True, entering 'if' block
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 35]  if node.value == 'OR':
-  Condition: True, entering 'if' block
-  [line 36]  return evaluate_tree(node.left) or evaluate_tree(node.right)
-  Return: evaluate_tree(node.left) or evaluate_tree(node.right)
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 35]  if node.value == 'OR':
-  Condition: True, entering 'if' block
-  [line 37]  if node.value == 'AND':
-  Condition: True, entering 'if' block
-  [line 39]  return False
-  Return: False
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 35]  if node.value == 'OR':
-  Condition: True, entering 'if' block
-  [line 37]  if node.value == 'AND':
-  Condition: True, entering 'if' block
-  [line 39]  return False
-  Return: False
-  [line 36]  return evaluate_tree(node.left) or evaluate_tree(node.right)
-  Return: evaluate_tree(node.left) or evaluate_tree(node.right)
-  [line 47]  while route_queue:
-  while Loop Iteration: Condition is still true
-  [line 48]  route = route_queue.popleft()
-  (Missing param: 'func_name')
-  [line 49]  port = route.split(':')[1]
-  Compute: route.split(':')[1], where route='10.0.0.5:443' (an unknown source) = '443'
-  [line 50]  temp_tree = TreeNode(port)
-  Call function TreeNode(port='443' (defined at [line 49]))
-  [line 51]  if decision_tree:
-  Condition: True, entering 'if' block
-  [line 53]  condition_tree = TreeNode('OR')
-  Call function TreeNode('OR')
-  [line 54]  condition_tree.left = decision_tree
-  (Missing param: 'result')
-  [line 55]  condition_tree.right = temp_tree
-  (Missing param: 'result')
-  [line 56]  if evaluate_tree(condition_tree):
-  Condition: True, entering 'if' block
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 35]  if node.value == 'OR':
-  Condition: True, entering 'if' block
-  [line 36]  return evaluate_tree(node.left) or evaluate_tree(node.right)
-  Return: evaluate_tree(node.left) or evaluate_tree(node.right)
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 35]  if node.value == 'OR':
-  Condition: True, entering 'if' block
-  [line 37]  if node.value == 'AND':
-  Condition: True, entering 'if' block
-  [line 39]  return False
-  Return: False
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 34]  return True
-  Return: True
-  [line 36]  return evaluate_tree(node.left) or evaluate_tree(node.right)
-  Return: evaluate_tree(node.left) or evaluate_tree(node.right)
-  [line 57]  matched_routes += 1
-  Update: matched_routes changed from ? (defined at defined at [line 57]) to ?+1 = 2
-  [line 47]  while route_queue:
-  while Loop Iteration: Condition is still true
-  [line 48]  route = route_queue.popleft()
-  (Missing param: 'func_name')
-  [line 49]  port = route.split(':')[1]
-  Compute: route.split(':')[1], where route='172.16.0.1:8080' (an unknown source) = '8080'
-  [line 50]  temp_tree = TreeNode(port)
-  Call function TreeNode(port='8080' (defined at [line 49]))
-  [line 51]  if decision_tree:
-  Condition: True, entering 'if' block
-  [line 53]  condition_tree = TreeNode('OR')
-  Call function TreeNode('OR')
-  [line 54]  condition_tree.left = decision_tree
-  (Missing param: 'result')
-  [line 55]  condition_tree.right = temp_tree
-  (Missing param: 'result')
-  [line 56]  if evaluate_tree(condition_tree):
-  Condition: True, entering 'if' block
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 35]  if node.value == 'OR':
-  Condition: True, entering 'if' block
-  [line 36]  return evaluate_tree(node.left) or evaluate_tree(node.right)
-  Return: evaluate_tree(node.left) or evaluate_tree(node.right)
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 35]  if node.value == 'OR':
-  Condition: True, entering 'if' block
-  [line 37]  if node.value == 'AND':
-  Condition: True, entering 'if' block
-  [line 39]  return False
-  Return: False
-  [line 31]  if not node:
-  Condition: True, entering 'if' block
-  [line 33]  if node.value in ('80', '443'):
-  Condition: True, entering 'if' block
-  [line 35]  if node.value == 'OR':
-  Condition: True, entering 'if' block
-  [line 37]  if node.value == 'AND':
-  Condition: True, entering 'if' block
-  [line 39]  return False
-  Return: False
-  [line 36]  return evaluate_tree(node.left) or evaluate_tree(node.right)
-  Return: evaluate_tree(node.left) or evaluate_tree(node.right)
-  [line 47]  while route_queue:
-  while Loop Iteration: Condition is still true
-  [line 61]  return matched_routes
-  Return: matched_routes=2 (defined at [line 57])
-Function process_network_config returns 2
+[line 4]  inventory_items = ['widget_a', 'widget_b', 'widget_c', 'widget_a', 'widget_b', 'widget_a']
+Compute: ['widget_a', 'widget_b', 'widget_c', 'widget_a', 'widget_b', 'widget_a'] = ['widget_a', 'widget_b', 'widget_c', 'widget_a', 'widget_b', ...]
+[line 5]  price_mapping = {'widget_a': 25, 'widget_b': 40, 'widget_c': 60}
+Compute: {'widget_a': 25, 'widget_b': 40, 'widget_c': 60} = {widget_a: 25, widget_b: 40, widget_c: 60}
+[line 7]  item_counts = defaultdict(int)
+Call function defaultdict(int)
+[line 8]  for item in inventory_items:
+Loop Start: item takes its first value 'widget_a'
+[line 8]  for item in inventory_items:
+Loop Iteration: item is now 'widget_b' (iteration 2)
+... [Line 8] repeats 3 more times ...
+... [Line 8] repeats 3 more times ...
+[line 8]  for item in inventory_items:
+Loop Iteration: item is now 'widget_a' (iteration 6)
+[line 8]  for item in inventory_items:
+Loop End: Iteration finished
+[line 11]  total_revenue = 0
+Assign: total_revenue = 0
+[line 13]  for item, count in item_counts.items():
+(Missing param: 'iter_var')
+[line 14]  total_revenue += price_mapping[item] * count
+Update: total_revenue changed from 0 (defined at defined at [line 11]) to 0+price_mapping[item] * count = 75
+[line 13]  for item, count in item_counts.items():
+(Missing param: 'iter_var')
+[line 14]  total_revenue += price_mapping[item] * count
+Update: total_revenue changed from 75 (defined at defined at [line 14]) to 75+price_mapping[item] * count = 155
+[line 13]  for item, count in item_counts.items():
+(Missing param: 'iter_var')
+[line 14]  total_revenue += price_mapping[item] * count
+Update: total_revenue changed from 155 (defined at defined at [line 14]) to 155+price_mapping[item] * count = 215
+[line 13]  for item, count in item_counts.items():
+Loop End: Iteration finished
+[line 17]  key_modifier = len(inventory_items) % 4
+Compute: len(inventory_items) % 4, where inventory_items=['widget_a', 'widget_b', 'widget_c', 'widget_a', 'widget_b', ...] (defined at [line 4]) = 2
+[line 18]  processed_key = f'rev_mod_{key_modifier}'
+Compute: f'rev_mod_{key_modifier}', where key_modifier=2 (defined at [line 17]) = 'rev_mod_2'
+[line 28]  fallback_value = total_revenue // 3
+Compute: total_revenue // 3, where total_revenue=215 (defined at [line 14]) = 71
+[line 30]  final_result = result_mapping.get(processed_key, fallback_value)
+(Missing param: 'func_name')
 
-Answer: matched_routes = 2 (last updated on defined at [line 57])
+Answer: final_result = 161.25 (last updated on an unknown source)

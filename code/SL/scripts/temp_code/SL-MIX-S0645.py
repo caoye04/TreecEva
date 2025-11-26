@@ -1,40 +1,23 @@
-import re
-from functools import reduce
+data_records = ["user_1:active:online", "user_2:inactive:offline", "user_3:active:online", "user_4:active:busy", "user_5:inactive:offline", "user_6:active:online"]
 
-def tokenize_and_score(document):
-    # Preprocessing: remove punctuation and convert to lowercase
-    clean_text = re.sub(r'[^\w\s]', '', document).lower()
-    tokens = clean_text.split()
-    
-    # Dynamic programming table for valid word formation counts
-    dp = [0] * (len(tokens) + 1)
-    dp[0] = 1  # Base case: empty sequence is valid
-    
-    # Valid words dictionary (simulating a small lexicon)
-    valid_words = {'the': True, 'quick': True, 'brown': True, 'fox': True, 'jumps': True, 
-                   'over': True, 'lazy': True, 'dog': True, 'a': True, 'an': True}
-    
-    # Lambda for checking if a token is a valid word
-    is_valid_word = lambda word: valid_words.get(word, False)
-    
-    # Process tokens using dynamic programming
-    for i in range(1, len(tokens) + 1):
-        # Check single token
-        if is_valid_word(tokens[i-1]):
-            dp[i] += dp[i-1]
-        # Check pairs of tokens
-        if i >= 2:
-            pair = ' '.join(tokens[i-2:i])
-            if is_valid_word(pair):
-                dp[i] += dp[i-2]
-    
-    # Calculate linguistic score using functional programming
-    word_lengths = list(map(len, filter(is_valid_word, tokens)))
-    linguistic_score = reduce(lambda x, y: x + y, word_lengths, 0) if word_lengths else 0
-    
-    return dp[len(tokens)], linguistic_score
+# Process the data records
+status_list = []
+for record in data_records:
+    parts = record.split(":")
+    status = parts[1]
+    status_list.append(status)
 
-# Document to analyze
-document = "The quick brown fox jumps over the lazy dog"
-valid_formations, linguistic_score = tokenize_and_score(document)
-print(f"Result: {linguistic_score}")
+# Create a copy for analysis (distractor operation)
+backup_list = status_list.copy()
+
+# Calculate temporary metrics (distractor variables)
+temp_active = len([s for s in backup_list if s == "active"])
+temp_inactive = len([s for s in backup_list if s == "inactive"])
+ratio_analysis = temp_active / len(backup_list) if backup_list else 0
+
+# Main processing - filter and count active records
+processed_data = [status.upper() for status in status_list if status.startswith("a")]
+final_count = processed_data.count("ACTIVE")
+
+# Print result for verification
+print(f"Result: {final_count}")

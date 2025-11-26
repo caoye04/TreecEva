@@ -1,6 +1,26 @@
-from functools import reduce
+data_entries = [15, 22, 38, 45, 51]
+processed_entries = []
+intermediate_calc = 0
 
-temperature_anomalies = [1.2, -0.5, 0.3, 2.1, -1.0, 0.8, 1.5, -0.2]
-positive_anomalies = list(filter(lambda x: x > 0, temperature_anomalies))
-total_warming_impact = reduce(lambda acc, val: acc + val, positive_anomalies, 0)
-print(f"Result: {total_warming_impact}")
+# Process data with enumerate
+for index, value in enumerate(data_entries):
+    processed_value = value + index * 2
+    processed_entries.append(processed_value)
+    # Distractor calculation that doesn't affect final result
+    intermediate_calc += value * 3
+
+# Additional processing step (distractor)
+temp_processing = [x % 10 for x in processed_entries]
+
+# Create enumerated data for final calculation
+enumerated_data = []
+for idx, val in enumerate(processed_entries):
+    enumerated_data.append(idx + val)
+
+# Another distractor operation
+preliminary_sum = sum(temp_processing)
+
+# Final analysis calculation
+final_analysis_result = sum(enumerated_data) / len(processed_entries)
+
+print(f"Target result: {final_analysis_result}")

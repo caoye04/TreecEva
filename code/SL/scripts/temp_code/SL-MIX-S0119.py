@@ -1,15 +1,37 @@
-from functools import reduce
+def decode_sequence(seq):
+    # Generate intermediate values (distraction)
+    temp_sum = sum(seq) * 2
+    temp_product = 1
+    for val in seq:
+        temp_product *= (val + 1)
+    
+    # Apply XOR operations with bitwise manipulation
+    xor_result = seq[0]
+    for i in range(1, len(seq)):
+        xor_result ^= seq[i]
+    
+    # Set operations for pattern analysis (distraction)
+    unique_values = set(seq)
+    sorted_unique = sorted(unique_values)
+    mid_value = sorted_unique[len(sorted_unique) // 2] if sorted_unique else 0
+    
+    # Slice operations and final computation
+    pattern_slice = seq[1:4]
+    slice_sum = sum(pattern_slice)
+    
+    # Main computation chain
+    base_key = xor_result + slice_sum
+    offset = len(seq) * 3
+    
+    # Final key generation (critical variable)
+    cipher_key = (base_key - offset) % 256
+    
+    # Distraction: unused intermediate calculation
+    unused_value = temp_sum - temp_product
+    
+    return cipher_key
 
-def get_item_price(item_name):
-    prices = {'croissant': 2.50, 'bagel': 1.75, 'muffin': 2.00}
-    return prices.get(item_name, 0)
-
-sold_items = [('croissant', 12), ('bagel', 8), ('muffin', 15)]
-
-# Calculate revenue per item type
-revenues = list(map(lambda x: get_item_price(x[0]) * x[1], sold_items))
-
-# Sum all revenues to get total
-total_revenue = reduce(lambda a, b: a + b, revenues)
-
-print(f"Result: {total_revenue}")
+# Input sequence
+encoded_pattern = [45, 67, 89, 12, 34, 56, 78]
+final_result = decode_sequence(encoded_pattern)
+print(f"Result: {final_result}")

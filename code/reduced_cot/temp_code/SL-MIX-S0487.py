@@ -1,76 +1,45 @@
-import heapq
-import re
+import itertools
 
-def tokenize_config(config_str):
-    tokens = []
-    depth = 0
-    i = 0
-    while i < len(config_str):
-        if config_str[i] == '[':
-            depth += 1
-            tokens.append(('LBRACKET', depth))
-            i += 1
-        elif config_str[i] == ']':
-            if depth > 0:
-                tokens.append(('RBRACKET', depth))
-                depth -= 1
-            else:
-                # Unmatched bracket - trigger backtracking
-                return None, True
-            i += 1
-        elif config_str[i].isspace():
-            i += 1
-        else:
-            match = re.match(r'[a-zA-Z_][a-zA-Z0-9_]*', config_str[i:])
-            if match:
-                word = match.group(0)
-                tokens.append((word, depth))
-                i += len(word)
-            else:
-                i += 1
-    return tokens, False
+# Analyze data segments and calculate composite metrics
+data_segments = [12, 8, 15, 6, 9, 11]
+segment_pairs = list(itertools.combinations(data_segments, 2))
 
-def process_with_backtracking(config_str):
-    heap = []
-    attempt = 0
-    max_attempts = 3
-    
-    while attempt < max_attempts:
-        tokens, needs_backtrack = tokenize_config(config_str)
-        if not needs_backtrack:
-            # Push tokens to heap with priority based on depth
-            for token_type, depth in tokens:
-                heapq.heappush(heap, (-depth, token_type))  # Max-heap using negative depth
-            break
-        else:
-            # Backtrack: remove last unmatched closing bracket
-            last_bracket_pos = config_str.rfind(']')
-            if last_bracket_pos != -1:
-                config_str = config_str[:last_bracket_pos] + config_str[last_bracket_pos+1:]
-                attempt += 1
-            else:
-                break
-    
-    return heap
+# Calculate difference products (distractor calculation)
+diff_products = []
+for pair in segment_pairs:
+    diff = abs(pair[0] - pair[1])
+    product = diff * (pair[0] + pair[1])
+    diff_products.append(product)
 
-# Main execution
-config_language = "settingA [subSettingB [item1 item2] settingC] [unmatched]"
+# This sum is not used in final calculation (interference)
+unused_sum = sum(diff_products)
 
-priority_heap = process_with_backtracking(config_language)
+# Calculate weighted segment scores
+weighted_scores = []
+for i, segment in enumerate(data_segments):
+    weight = 1.5 if segment > 10 else 0.8
+    weighted = segment * weight
+    weighted_scores.append(weighted)
 
-# Calculate final token weight
-final_token_weight = 0
-weight_multiplier = 1
+# Filter and process relevant scores
+filtered_scores = [score for score in weighted_scores if score > 12]
 
-while priority_heap:
-    neg_depth, token = heapq.heappop(priority_heap)
-    depth = -neg_depth
-    if token in ['LBRACKET', 'RBRACKET']:
-        final_token_weight += depth * weight_multiplier
-        weight_multiplier += 1
+# Calculate average of filtered scores (distractor)
+avg_filtered = sum(filtered_scores) / len(filtered_scores) if filtered_scores else 0
+
+# Core calculation: analyze score patterns
+pattern_sum = 0
+for score in weighted_scores:
+    if score % 2 == 0:
+        pattern_sum += score * 2
     else:
-        # For identifiers, add fixed value
-        final_token_weight += 10
-        
-# Execution point Z
-print(f"Result: {final_token_weight}")
+        pattern_sum += score * 3
+
+# Final analysis score (target variable)
+final_analysis_score = pattern_sum - (max(weighted_scores) if weighted_scores else 0)
+
+# Redundant calculation (interference)
+redundant_calc = final_analysis_score * 0.75 + avg_filtered
+
+result = final_analysis_score
+print(f"Result: {result}")

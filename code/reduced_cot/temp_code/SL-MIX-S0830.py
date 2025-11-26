@@ -1,53 +1,30 @@
-import re
+from collections import Counter
 
-def calculate_threat_score(packet_headers):
-    base_patterns = {
-        'sql_injection': r"(?i)(union|select|insert|update|delete).*?\b(from|into|where|set)\b",
-        'xss_attempt': r"<script.*?>.*?</script>",
-        'path_traversal': r"(\.\./)+",
-        'cmd_exec': r"(;|&&|\|\||`)"
-    }
-    
-    pattern_scores = {pattern: idx * 5 for idx, pattern in enumerate(base_patterns.keys(), 1)}
-    detected_patterns = set()
-    
-    for header in packet_headers:
-        for name, pattern in base_patterns.items():
-            if re.search(pattern, header):
-                detected_patterns.add(name)
-    
-    threat_level = sum(pattern_scores[p] for p in detected_patterns)
-    return threat_level
+# Process inventory data
+inventory_data = ["apple", "banana", "apple", "cherry", "banana", "apple", "date", "elderberry", "fig"]
+processed_items = [item.upper() for item in inventory_data if len(item) > 3]
 
-# Simulated packet headers with various payloads
-network_traffic = [
-    "GET /page?id=1 HTTP/1.1",
-    "User-Agent: Mozilla/5.0 <script>alert('XSS')</script>",
-    "Cookie: session=../../../etc/passwd",
-    "Referer: http://example.com; rm -rf /",
-    "Accept: */* UNION SELECT username, password FROM users"
-]
+# Count items and perform analysis
+item_counts = Counter(processed_items)
+primary_items = ["APPLE", "BANANA", "CHERRY"]
+secondary_items = ["DATE", "ELDERBERRY", "FIG"]
 
-# Matrix representing previous threat assessments (historical scores)
-previous_assessments = [
-    [15, 20, 25],
-    [10, 30, 35],
-    [5,  40, 45]
-]
+# Relevant calculations
+valid_items = sum(item_counts[item] for item in primary_items)
+secondary_count = sum(item_counts[item] for item in secondary_items)
 
-# Calculate current threat score from packet analysis
-new_threat_score = calculate_threat_score(network_traffic)
+# Distractor calculations that don't affect final result
+total_processed = len(processed_items)
+average_length = sum(len(item) for item in processed_items) / len(processed_items) if processed_items else 0
 
-# Dictionary comprehension to adjust historical scores based on new findings
-adjusted_scores = {f'packet_{i}': score + new_threat_score 
-                  for i, row in enumerate(previous_assessments) 
-                  for score in row}
+# More distraction operations
+unused_calculation = (total_processed * 2) - secondary_count
+irrelevant_sum = valid_items + secondary_count + total_processed
 
-# Merge with a default baseline assessment
-baseline = {'default': 10}
-dictionary_merge = {**baseline, **adjusted_scores}
+# Key adjustment (relevant)
+secondary_adjustment = secondary_count // 2 if secondary_count > 0 else 1
 
-# Final threat level combines new findings with adjusted historical data
-threat_level = new_threat_score + sum(dictionary_merge.values())
+# Final calculation
+final_count = valid_items + secondary_adjustment
 
-print(f'Result: {threat_level}')
+print(f"Result: {final_count}")

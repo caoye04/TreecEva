@@ -1,0 +1,41 @@
+20 base_level = 4
+20 ['base_level'] [{'_type': 'int', '_value': 4}]
+21 final_energy = energy_transform(lambda x: x**2 + 3*x - 7, base_level)
+21 ['base_level'] [{'_type': 'int', '_value': 4}]
+PARAM_MAPPING energy_transform {'func': {'actual_var': 'lambda x: x**2 + 3*x - 7', 'value': 'lambda x: x**2 + 3*x - 7'}, 'base': {'actual_var': 'base_level', 'value': 4}}
+FUNCTION_ENTER 1 energy_transform def energy_transform(func, base):
+1 ['base'] [{'_type': 'int', '_value': 4}]
+DEPTH_2 3     primary = func(base)
+3 ['base'] [{'_type': 'int', '_value': 4}]
+FUNCTION_ENTER 21 <lambda> final_energy = energy_transform(lambda x: x**2 + 3*x - 7, base_level)
+21 ['x'] [{'_type': 'int', '_value': 4}]
+DEPTH_3 21 final_energy = energy_transform(lambda x: x**2 + 3*x - 7, base_level)
+21 ['x'] [{'_type': 'int', '_value': 4}]
+FUNCTION_RETURN 21 <lambda> {'_type': 'int', '_value': 21}
+DEPTH_2 4     secondary = func(base + 2)
+4 ['base', 'primary'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 21}]
+FUNCTION_ENTER 21 <lambda> final_energy = energy_transform(lambda x: x**2 + 3*x - 7, base_level)
+21 ['x'] [{'_type': 'int', '_value': 6}]
+DEPTH_3 21 final_energy = energy_transform(lambda x: x**2 + 3*x - 7, base_level)
+21 ['x'] [{'_type': 'int', '_value': 6}]
+FUNCTION_RETURN 21 <lambda> {'_type': 'int', '_value': 47}
+DEPTH_2 7     temp_shift = (base << 1) & 0xFF
+7 ['base', 'primary', 'secondary', 'temp_shift'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 8}]
+DEPTH_2 8     redundant_metric = primary * 0.5 + secondary * 0.3
+8 ['base', 'primary', 'secondary', 'temp_shift', 'redundant_metric'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 8}, {'_type': 'float', '_value': 24.6}]
+DEPTH_2 11     energy_adjust = lambda x: x // 2 if x > 10 else x * 2
+11 ['base', 'primary', 'secondary', 'temp_shift', 'redundant_metric'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 8}, {'_type': 'float', '_value': 24.6}]
+DEPTH_2 12     adjusted_primary = energy_adjust(primary)
+12 ['base', 'primary', 'secondary', 'temp_shift', 'redundant_metric'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 8}, {'_type': 'float', '_value': 24.6}]
+FUNCTION_ENTER 11 <lambda>     energy_adjust = lambda x: x // 2 if x > 10 else x * 2
+11 ['x'] [{'_type': 'int', '_value': 21}]
+DEPTH_3 11     energy_adjust = lambda x: x // 2 if x > 10 else x * 2
+11 ['x'] [{'_type': 'int', '_value': 21}]
+FUNCTION_RETURN 11 <lambda> {'_type': 'int', '_value': 10}
+DEPTH_2 15     final_energy = adjusted_primary + (secondary % 5)
+15 ['base', 'primary', 'secondary', 'temp_shift', 'redundant_metric', 'adjusted_primary', 'final_energy'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 8}, {'_type': 'float', '_value': 24.6}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 12}]
+DEPTH_2 17     print(f"Result: {final_energy}")
+17 ['base', 'primary', 'secondary', 'temp_shift', 'redundant_metric', 'adjusted_primary', 'final_energy'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 8}, {'_type': 'float', '_value': 24.6}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 12}]
+DEPTH_2 18     return final_energy
+18 ['base', 'primary', 'secondary', 'temp_shift', 'redundant_metric', 'adjusted_primary', 'final_energy'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 8}, {'_type': 'float', '_value': 24.6}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 12}]
+FUNCTION_RETURN 18 energy_transform {'_type': 'int', '_value': 12}

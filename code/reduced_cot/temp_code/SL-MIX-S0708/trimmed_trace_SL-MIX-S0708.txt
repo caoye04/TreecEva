@@ -1,0 +1,57 @@
+30
+final_result
+---
+24 x_points = [3, 7, 11]
+24 ['x_points'] ['[3, 7, 11]']
+25 y_points = [5, 9, 2]
+25 ['x_points', 'y_points'] ['[3, 7, 11]', '[5, 9, 2]']
+26 threshold_map = {'critical': 50, 'warning': 30, 'irrelevant': 100}
+26 ['x_points', 'y_points', 'threshold_map'] ['[3, 7, 11]', '[5, 9, 2]', '{critical: 50, warning: 30, irrelevant: 100}']
+29 final_result = compute_final_value(transform_coordinates(x_points, y_points), threshold_map)
+29 ['x_points', 'y_points', 'threshold_map'] ['[3, 7, 11]', '[5, 9, 2]', '{critical: 50, warning: 30, irrelevant: 100}']
+2 coordinate_shift = 15
+2 ['x_values', 'y_values', 'coordinate_shift'] ['[3, 7, 11]', '[5, 9, 2]', '15']
+4 temp_x = [x + coordinate_shift for x in x_values]
+4 ['x_values', 'y_values', 'coordinate_shift', 'x'] ['[3, 7, 11]', '[5, 9, 2]', '15', '3']
+4 temp_x = [x + coordinate_shift for x in x_values]
+4 ['x_values', 'y_values', 'coordinate_shift', 'x'] ['[3, 7, 11]', '[5, 9, 2]', '15', '7']
+4 temp_x = [x + coordinate_shift for x in x_values]
+4 ['x_values', 'y_values', 'coordinate_shift', 'x'] ['[3, 7, 11]', '[5, 9, 2]', '15', '11']
+4 temp_x = [x + coordinate_shift for x in x_values]
+4 ['x_values', 'y_values', 'coordinate_shift', 'temp_x'] ['[3, 7, 11]', '[5, 9, 2]', '15', '[18, 22, 26]']
+5 temp_y = [y * 2 - coordinate_shift for y in y_values]
+5 ['y_values', 'coordinate_shift', 'temp_x', 'y'] ['[5, 9, 2]', '15', '[18, 22, 26]', '5']
+5 temp_y = [y * 2 - coordinate_shift for y in y_values]
+5 ['y_values', 'coordinate_shift', 'temp_x', 'y'] ['[5, 9, 2]', '15', '[18, 22, 26]', '9']
+5 temp_y = [y * 2 - coordinate_shift for y in y_values]
+5 ['y_values', 'coordinate_shift', 'temp_x', 'y'] ['[5, 9, 2]', '15', '[18, 22, 26]', '2']
+5 temp_y = [y * 2 - coordinate_shift for y in y_values]
+5 ['y_values', 'coordinate_shift', 'temp_x', 'temp_y'] ['[5, 9, 2]', '15', '[18, 22, 26]', '[-5, 3, -11]']
+7 return [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+7 ['temp_x', 'temp_y', 'i'] ['[18, 22, 26]', '[-5, 3, -11]', '0']
+7 return [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+7 ['temp_x', 'temp_y', 'i'] ['[18, 22, 26]', '[-5, 3, -11]', '1']
+7 return [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+7 ['temp_x', 'temp_y', 'i'] ['[18, 22, 26]', '[-5, 3, -11]', '2']
+7 return [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+7 ['temp_x', 'temp_y'] ['[18, 22, 26]', '[-5, 3, -11]']
+10 base_multiplier = 7
+10 ['transformed_data', 'threshold_dict', 'base_multiplier'] ['[-90, 66, -286]', '{critical: 50, warning: 30, irrelevant: 100}', '7']
+14 relevant_data = [x for x in transformed_data if x > threshold_dict['critical']]
+14 ['transformed_data', 'threshold_dict', 'base_multiplier', 'x'] ['[-90, 66, -286]', '{critical: 50, warning: 30, irrelevant: 100}', '7', '-90']
+14 relevant_data = [x for x in transformed_data if x > threshold_dict['critical']]
+14 ['transformed_data', 'threshold_dict', 'base_multiplier', 'x'] ['[-90, 66, -286]', '{critical: 50, warning: 30, irrelevant: 100}', '7', '66']
+14 relevant_data = [x for x in transformed_data if x > threshold_dict['critical']]
+14 ['transformed_data', 'threshold_dict', 'base_multiplier', 'x'] ['[-90, 66, -286]', '{critical: 50, warning: 30, irrelevant: 100}', '7', '-286']
+14 relevant_data = [x for x in transformed_data if x > threshold_dict['critical']]
+14 ['transformed_data', 'threshold_dict', 'base_multiplier', 'relevant_data'] ['[-90, 66, -286]', '{critical: 50, warning: 30, irrelevant: 100}', '7', '[66]']
+15 if not relevant_data:
+15 ['threshold_dict', 'base_multiplier', 'relevant_data'] ['{critical: 50, warning: 30, irrelevant: 100}', '7', '[66]']
+19 intermediate = (sum(relevant_data) // len(relevant_data)) if len(relevant_data) > 1 else relevant_data[0]
+19 ['threshold_dict', 'base_multiplier', 'relevant_data', 'intermediate'] ['{critical: 50, warning: 30, irrelevant: 100}', '7', '[66]', '66']
+20 final_adjustment = intermediate - threshold_dict['warning'] if intermediate > threshold_dict['warning'] else intermediate + threshold_dict['critical']
+20 ['threshold_dict', 'base_multiplier', 'intermediate', 'final_adjustment'] ['{critical: 50, warning: 30, irrelevant: 100}', '7', '66', '36']
+22 return final_adjustment * base_multiplier
+22 ['base_multiplier', 'final_adjustment'] ['7', '36']
+30 print(f"Result: {final_result}")
+30 ['final_result'] ['252']

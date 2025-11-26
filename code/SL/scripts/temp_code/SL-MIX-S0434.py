@@ -1,33 +1,31 @@
-import math
-from collections import defaultdict
+data_points = [25, 18, 42, 7, 33, 56, 12, 29, 41, 8]
+threshold = 20
 
-def gaussian_window(N, sigma):
-    return {n: math.exp(-0.5 * ((n - (N-1)/2) / sigma) ** 2) for n in range(N)}
+# Process and filter data
+filtered_values = []
+processed_indices = []
+temp_analysis = []
 
-def apply_gain(window_dict, gain_factor):
-    return {k: v * gain_factor for k, v in window_dict.items()}
+for idx, value in enumerate(data_points):
+    if value > threshold:
+        filtered_values.append(value)
+        processed_indices.append(idx)
+    # Distractor operation - not used in final result
+    temp_value = value * 2 - 5
+    temp_analysis.append(temp_value)
 
-def compute_energy(window_dict):
-    return sum(v**2 for v in window_dict.values())
+# Intermediate calculations that don't affect final result
+preliminary_sum = sum(data_points[:5])
+average_check = preliminary_sum / len(data_points[:5])
 
-# Signal processing pipeline
-window_cache = {}
-signal_segments = [128, 256, 512]
-gain_schedule = [0.8, 1.2, 0.9]
+# Key operation that determines final result
+processed_data = sum(filtered_values) // len(processed_indices)
 
-processed_energies = []
-for i, (segment_size, gain) in enumerate(zip(signal_segments, gain_schedule)):
-    if segment_size not in window_cache:
-        # Compute and cache window coefficients
-        window_cache[segment_size] = gaussian_window(segment_size, segment_size/8)
-    
-    # Apply dynamic gain adjustment
-    adjusted_window = apply_gain(window_cache[segment_size], gain)
-    
-    # Compute energy of processed segment
-    segment_energy = compute_energy(adjusted_window)
-    processed_energies.append(segment_energy)
+# More distraction operations
+alternate_calc = max(data_points) - min(data_points)
+scaled_result = processed_data * 3
 
-# Calculate final energy metric
-final_energy = round(sum(processed_energies) * 1000)
-print(f"Result: {final_energy}")
+# Final assignment
+final_result = processed_data
+
+print(f"Result: {final_result}")

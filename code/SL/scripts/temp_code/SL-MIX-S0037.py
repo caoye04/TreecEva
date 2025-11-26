@@ -1,18 +1,20 @@
-from functools import wraps
+# Analyze overlapping research domains between two academic groups
+research_group_a = {'bioinformatics', 'computational_biology', 'machine_learning', 'data_science'}
+research_group_b = {'computational_biology', 'genomics', 'machine_learning', 'statistics'}
 
-def price_tracker(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        base_price = func(*args, **kwargs)
-        return round(base_price * 1.2, 2)
-    return wrapper
+# Find common research interests
+common_interests = research_group_a.intersection(research_group_b)
+print(f"Common research areas: {common_interests}")
 
-@price_tracker
-def compute_batch_expense(flour_kg, butter_kg, yeast_units):
-    flour_cost = flour_kg * 3.50
-    butter_cost = butter_kg * 7.80
-    yeast_cost = yeast_units * 0.15
-    return flour_cost + butter_cost + yeast_cost
+# Calculate overlap count
+overlap_count = len(common_interests)
 
-final_batch_cost = compute_batch_expense(10.5, 5.2, 200)
-print(f'Result: {final_batch_cost}')
+# Identify unique research domains for group a
+unique_to_a = research_group_a - research_group_b
+print(f"Unique to group A: {unique_to_a}")
+
+# Find remaining items after processing
+remaining_items = research_group_a.symmetric_difference(research_group_b)
+final_count = len(remaining_items)
+
+print(f"Target result: {final_count}")

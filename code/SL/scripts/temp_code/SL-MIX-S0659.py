@@ -1,25 +1,60 @@
-from math import gcd
-from itertools import combinations
+def analyze_sensor_data(values, min_val):
+    # This function is a distractor - it processes but doesn't affect final result
+    temp_sum = sum(values)
+    filtered = [v for v in values if v > min_val]
+    return len(filtered) * 2.5
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
+def calculate_offset(base, modifier):
+    # Another distractor function with misleading operations
+    bit_shift = base << 2
+    xor_result = bit_shift ^ modifier
+    return xor_result // 4
 
-threshold = 100
-lower_bound = 5
-upper_bound = 20
-valid_pairs = []
+def process_data(readings, limit):
+    # Main processing function with complex logic chain
+    from collections import Counter
+    
+    # Distractor calculations that don't affect the final result
+    temp_counter = Counter(readings)
+    most_common_val = temp_counter.most_common(1)[0][0]
+    offset_distraction = calculate_offset(most_common_val, 15)
+    
+    # Core logic with multiple steps
+    valid_readings = [r for r in readings if r >= limit]
+    if not valid_readings:
+        # Dead code path - never executed with given inputs
+        return -999
+    
+    # Complex conditional chain
+    first_valid = valid_readings[0]
+    last_valid = valid_readings[-1]
+    
+    # Main computation with bitwise and arithmetic operations
+    base_calc = (first_valid & 0x0F) | (last_valid & 0xF0)
+    
+    # Conditional expression with multiple checks
+    adjustment = 25 if len(valid_readings) > 3 else 10
+    
+    # Final computation with misleading intermediate variable
+    intermediate = base_calc * adjustment
+    
+    # Additional distractor that looks important but isn't
+    sensor_analysis = analyze_sensor_data(readings, limit)
+    
+    # Actual result computation
+    result = intermediate - (len(valid_readings) * 5)
+    
+    return result
 
-for a, b in combinations(range(lower_bound, upper_bound + 1), 2):
-    if gcd(a, b) == 1 and (a * b) < threshold:
-        valid_pairs.append((a, b))
+# Main execution with realistic data
+sensor_readings = [12, 8, 15, 6, 20, 9, 18, 5, 22, 7]
+threshold = 10
 
-prime_count = sum(1 for pair in valid_pairs if is_prime(pair[0]) or is_prime(pair[1]))
-composite_count = len(valid_pairs) - prime_count
+# Execute the key statement
+final_output = process_data(sensor_readings, threshold)
 
-security_index = float(prime_count * 3.5 - composite_count * 1.2)
-print(f"Result: {security_index}")
+# Additional distractor operations that don't affect output
+backup_calc = sum(sensor_readings) // len(sensor_readings)
+validation_check = backup_calc & 0xFF
+
+print(f"Result: {final_output}")

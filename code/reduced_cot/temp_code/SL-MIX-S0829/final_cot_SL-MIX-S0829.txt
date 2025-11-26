@@ -1,0 +1,22 @@
+Target: Find the value of variable final_throughput after [line 45] executes
+
+[line 35]  bandwidth_capacity = 100  # Mbps
+Assign: bandwidth_capacity = 100
+[line 39]  throughput_analysis = analyze_network_throughput(data_packets, bandwidth_capacity)
+Call function analyze_network_throughput(data_packets=[{size: 1500, status: 'delivered', timestamp: 100}, {size: 800, status: 'dropped', timestamp: 200}, {size: 1200, status: 'delivered', timestamp: 50}, {size: 950, status: 'delivered', timestamp: 300}, {size: 1800, status: 'queued', timestamp: 150}] (an unknown source), bandwidth_capacity=100 (defined at [line 35]))
+[line 10]  successful_packets = [p for p in packets if p['status'] == 'delivered']
+Compute: [p for p in packets if p['status'] == 'delivered'], where p={size: 1500, status: 'delivered', timestamp: 100} (an unknown source), packets=[{size: 1500, status: 'delivered', timestamp: 100}, {size: 800, status: 'dropped', timestamp: 200}, {size: 1200, status: 'delivered', timestamp: 50}, {size: 950, status: 'delivered', timestamp: 300}, {size: 1800, status: 'queued', timestamp: 150}] (an unknown source) = ?
+[line 11]  total_delivered = sum(p['size'] for p in successful_packets)
+Call function sum(p['size'] for p in successful_packets)
+[line 14]  if theoretical_max & 0xFF == 0:
+Condition: True, entering 'if' block
+[line 18]  time_window = 60  # seconds
+Assign: time_window = 60
+[line 19]  actual_throughput = total_delivered / time_window
+Compute: total_delivered / time_window, where total_delivered=3650 (defined at [line 11]), time_window=60 (defined at [line 18]) = 60.833333333333336
+[line 24]  return actual_throughput
+Return: actual_throughput=60.833333333333336 (defined at [line 19])
+[line 45]  final_throughput = int(throughput_analysis)
+Call function int(throughput_analysis=60.833333333333336 (defined at [line 39]))
+
+Answer: final_throughput = 60 (last updated on defined at [line 45])

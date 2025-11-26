@@ -1,0 +1,93 @@
+39
+final_balance
+---
+PARAM_MAPPING {'transactions': {'actual_var': 'transaction_log', 'value': [('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]}}
+FUNCTION_ENTER 1 portfolio_manager def portfolio_manager(transactions):
+1 ['transactions'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'AAPL'}, {'_type': 'int', '_value': 25}, {'_type': 'str', '_value': 'BUY'}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'GOOGL'}, {'_type': 'int', '_value': 10}, {'_type': 'str', '_value': 'SELL'}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'MSFT'}, {'_type': 'int', '_value': 30}, {'_type': 'str', '_value': 'BUY'}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'TSLA'}, {'_type': 'int', '_value': 50}, {'_type': 'str', '_value': 'SELL'}], '_len': 3}], '_len': 4}]
+8 stock_prices = {'AAPL': 150, 'GOOGL': 2800, 'MSFT': 330, 'TSLA': 220}
+8 ['stock_prices'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}']
+9 initial_positions = {'AAPL': 100, 'GOOGL': 50, 'MSFT': 75, 'TSLA': 200}
+9 ['stock_prices', 'initial_positions'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', '{AAPL: 100, GOOGL: 50, MSFT: 75, ...}']
+16 transaction_log = [('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]
+16 ['stock_prices', 'initial_positions', 'transaction_log'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', '{AAPL: 100, GOOGL: 50, MSFT: 75, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]"]
+17 current_positions = initial_positions.copy()
+17 ['stock_prices', 'initial_positions', 'transaction_log', 'current_positions'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', '{AAPL: 100, GOOGL: 50, MSFT: 75, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 100, GOOGL: 50, MSFT: 75, ...}']
+18 cash_balance = 100000  # Starting cash
+18 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 100, GOOGL: 50, MSFT: 75, ...}', '100000']
+23 for symbol, quantity, action in transaction_log:
+23 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 100, GOOGL: 50, MSFT: 75, ...}', '100000', "'AAPL'", '25', "'BUY'"]
+24 price = stock_prices[symbol]
+24 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 100, GOOGL: 50, MSFT: 75, ...}', '100000', "'AAPL'", '25', "'BUY'", '150']
+25 if action == 'BUY':
+25 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 100, GOOGL: 50, MSFT: 75, ...}', '100000', "'AAPL'", '25', "'BUY'", '150']
+26 cost = quantity * price
+26 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 100, GOOGL: 50, MSFT: 75, ...}', '100000', "'AAPL'", '25', "'BUY'", '150', '3750']
+27 cash_balance -= cost
+27 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 100, GOOGL: 50, MSFT: 75, ...}', '96250', "'AAPL'", '25', "'BUY'", '150', '3750']
+28 current_positions[symbol] += quantity
+28 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 50, MSFT: 75, ...}', '96250', "'AAPL'", '25', "'BUY'", '150', '3750']
+30 if cash_balance < 0:
+30 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 50, MSFT: 75, ...}', '96250', "'AAPL'", '25', "'BUY'", '150', '3750']
+23 for symbol, quantity, action in transaction_log:
+23 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 50, MSFT: 75, ...}', '96250', "'GOOGL'", '10', "'SELL'", '150', '3750']
+24 price = stock_prices[symbol]
+24 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 50, MSFT: 75, ...}', '96250', "'GOOGL'", '10', "'SELL'", '2800', '3750']
+25 if action == 'BUY':
+25 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 50, MSFT: 75, ...}', '96250', "'GOOGL'", '10', "'SELL'", '2800', '3750']
+32 elif action == 'SELL':
+32 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 50, MSFT: 75, ...}', '96250', "'GOOGL'", '10', "'SELL'", '2800', '3750']
+33 proceeds = quantity * price
+33 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 50, MSFT: 75, ...}', '96250', "'GOOGL'", '10', "'SELL'", '2800', '3750', '28000']
+34 cash_balance += proceeds
+34 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 50, MSFT: 75, ...}', '124250', "'GOOGL'", '10', "'SELL'", '2800', '3750', '28000']
+35 current_positions[symbol] -= quantity
+35 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 75, ...}', '124250', "'GOOGL'", '10', "'SELL'", '2800', '3750', '28000']
+23 for symbol, quantity, action in transaction_log:
+23 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 75, ...}', '124250', "'MSFT'", '30', "'BUY'", '2800', '3750', '28000']
+24 price = stock_prices[symbol]
+24 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 75, ...}', '124250', "'MSFT'", '30', "'BUY'", '330', '3750', '28000']
+25 if action == 'BUY':
+25 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 75, ...}', '124250', "'MSFT'", '30', "'BUY'", '330', '3750', '28000']
+26 cost = quantity * price
+26 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 75, ...}', '124250', "'MSFT'", '30', "'BUY'", '330', '9900', '28000']
+27 cash_balance -= cost
+27 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'cost', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 75, ...}', '114350', "'MSFT'", '30', "'BUY'", '330', '9900', '28000']
+28 current_positions[symbol] += quantity
+28 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 105, ...}', '114350', "'MSFT'", '30', "'BUY'", '330', '28000']
+30 if cash_balance < 0:
+30 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 105, ...}', '114350', "'MSFT'", '30', "'BUY'", '330', '28000']
+23 for symbol, quantity, action in transaction_log:
+23 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 105, ...}', '114350', "'TSLA'", '50', "'SELL'", '330', '28000']
+24 price = stock_prices[symbol]
+24 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 105, ...}', '114350', "'TSLA'", '50', "'SELL'", '220', '28000']
+25 if action == 'BUY':
+25 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 105, ...}', '114350', "'TSLA'", '50', "'SELL'", '220', '28000']
+32 elif action == 'SELL':
+32 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 105, ...}', '114350', "'TSLA'", '50', "'SELL'", '220', '28000']
+33 proceeds = quantity * price
+33 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'price', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 105, ...}', '114350', "'TSLA'", '50', "'SELL'", '220', '11000']
+34 cash_balance += proceeds
+34 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action', 'proceeds'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 105, ...}', '125350', "'TSLA'", '50', "'SELL'", '11000']
+35 current_positions[symbol] -= quantity
+35 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 105, ...}', '125350', "'TSLA'", '50', "'SELL'"]
+23 for symbol, quantity, action in transaction_log:
+23 ['stock_prices', 'transaction_log', 'current_positions', 'cash_balance', 'symbol', 'quantity', 'action'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "[('AAPL', 25, 'BUY'), ('GOOGL', 10, 'SELL'), ('MSFT', 30, 'BUY'), ('TSLA', 50, 'SELL')]", '{AAPL: 125, GOOGL: 40, MSFT: 105, ...}', '125350', "'TSLA'", '50', "'SELL'"]
+38 final_value = sum(stock_prices[sym] * qty for sym, qty in current_positions.items())
+38 ['stock_prices'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}']
+38 final_value = sum(stock_prices[sym] * qty for sym, qty in current_positions.items())
+38 ['stock_prices', 'sym', 'qty'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "'AAPL'", '125']
+38 final_value = sum(stock_prices[sym] * qty for sym, qty in current_positions.items())
+38 ['stock_prices', 'sym', 'qty'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "'GOOGL'", '40']
+38 final_value = sum(stock_prices[sym] * qty for sym, qty in current_positions.items())
+38 ['stock_prices', 'sym', 'qty'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "'MSFT'", '105']
+38 final_value = sum(stock_prices[sym] * qty for sym, qty in current_positions.items())
+38 ['stock_prices', 'sym', 'qty'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "'TSLA'", '150']
+38 final_value = sum(stock_prices[sym] * qty for sym, qty in current_positions.items())
+38 ['stock_prices', 'sym', 'qty'] ['{AAPL: 150, GOOGL: 2800, MSFT: 330, ...}', "'TSLA'", '150']
+39 final_balance = cash_balance + final_value
+39 ['cash_balance', 'final_value', 'final_balance'] ['125350', '198400', '323750']
+45 print(f"Result: {final_balance}")
+45 ['final_balance'] ['323750']
+46 return final_balance
+46 ['final_balance'] ['323750']
+FUNCTION_RETURN 46 portfolio_manager {'_type': 'int', '_value': 323750}

@@ -1,0 +1,56 @@
+Target: Find the value of variable target_value after [line 58] executes
+
+[line 43]  inventory_data = [45, 23, 67, 89, 12, 34, 56, 78, 90, 11]
+Compute: [45, 23, 67, 89, 12, 34, 56, 78, 90, 11] = [45, 23, 67, 89, 12, ...]
+[line 1]  def process_inventory(items):
+Enter function process_inventory: items=[45, 23, 67, 89, 12, ...] (inventory_data defined at [line 43])
+  [line 3]  total_items = len(items)
+  Call function len(items=[45, 23, 67, 89, 12, ...] (parameter items defined at [line 43]))
+  [line 4]  max_price = max(items) if items else 0
+  Compute: max(items) if items else 0, where items=[45, 23, 67, 89, 12, ...] (parameter items defined at [line 43]) = 90
+  [line 5]  min_price = min(items) if items else 0
+  Compute: min(items) if items else 0, where items=[45, 23, 67, 89, 12, ...] (parameter items defined at [line 43]) = 11
+  [line 6]  irrelevant_sum = sum(items) * 2  # Misleading calculation
+  Compute: sum(items) * 2  # Misleading calculation, where items=[45, 23, 67, 89, 12, ...] (parameter items defined at [line 43]) = 1010
+  [line 7]  return total_items, max_price, min_price, irrelevant_sum
+  Return: total_items, max_price, min_price, irrelevant_sum
+Function process_inventory returns (10, 90, 11, 1010)
+[line 11]  mean_val = sum(data_points) / len(data_points)
+Compute: sum(data_points) / len(data_points), where data_points=[10, 25, 40, 15, 30, ...] (an unknown source) = 25.0
+[line 14]  range_val = max(data_points) - min(data_points)
+Compute: max(data_points) - min(data_points), where data_points=[10, 25, 40, 15, 30, ...] (an unknown source) = 30
+[line 15]  return mean_val, range_val
+Return: mean_val, range_val
+[line 55]  processed_data = [x + 5 for x in inventory_data[2:8]]
+Compute: [x + 5 for x in inventory_data[2:8]], where x=67 (an unknown source), inventory_data=[45, 23, 67, 89, 12, ...] (defined at [line 43]) = ?
+[line 58]  target_value = final_calc(processed_data)
+Call function final_calc(processed_data=[72, 94, 17, 39, 61, ...] (defined at [line 55]))
+[line 17]  def final_calc(input_list):
+Enter function final_calc: input_list=[72, 94, 17, 39, 61, ...] (processed_data defined at [line 55])
+  [line 19]  filtered_vals = [x for i, x in enumerate(input_list) if i % 3 == 0]
+  Compute: [x for i, x in enumerate(input_list) if i % 3 == 0], where x=72 (an unknown source), i=0 (an unknown source), input_list=[72, 94, 17, 39, 61, ...] (parameter input_list defined at [line 55]) = ?
+  [line 25]  indexed_data = [(idx, val) for idx, val in enumerate(filtered_vals)]
+  Compute: [(idx, val) for idx, val in enumerate(filtered_vals)], where idx=0 (an unknown source), val=72 (an unknown source), filtered_vals=[72, 39] (defined at [line 19]) = ?
+  [line 31]  result = 0
+  Assign: result = 0
+  [line 32]  for idx, val in indexed_data:
+  (Missing param: 'iter_var')
+  [line 33]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 34]  result += val * (idx + 1)
+  Update: result changed from 0 (defined at defined at [line 31]) to 0+val * (idx + 1) = 72
+  [line 32]  for idx, val in indexed_data:
+  (Missing param: 'iter_var')
+  [line 33]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 36]  result -= val // (idx + 1)
+  Update: result changed from 72 (defined at defined at [line 34]) to 72-val // (idx + 1) = 53
+  [line 32]  for idx, val in indexed_data:
+  Loop End: Iteration finished
+  [line 39]  result = result % 1000 if result > 0 else abs(result) % 1000
+  Compute: result % 1000 if result > 0 else abs(result) % 1000, where result=53 (defined at [line 36]) = 53
+  [line 40]  return result
+  Return: result=53 (defined at [line 39])
+Function final_calc returns 53
+
+Answer: target_value = 53 (last updated on defined at [line 58])

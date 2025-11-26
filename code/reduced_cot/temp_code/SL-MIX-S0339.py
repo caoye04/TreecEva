@@ -1,51 +1,32 @@
-from contextlib import contextmanager
-
-def validate_transaction_chain(transactions, index=0, accumulated_flags=0):
-    if index >= len(transactions):
-        return accumulated_flags
+def calculate_performance():
+    raw_scores = [85, 92, 78, 64, 91, 87, 95, 73]
+    threshold = 80
+    bonus_points = 5
     
-    current_tx = transactions[index]
-    tx_valid = (current_tx['amount'] > 0) and (current_tx['timestamp'] is not None)
+    # Process scores above threshold with bonus
+    qualifying_scores = [score + bonus_points for score in raw_scores if score > threshold]
     
-    if not tx_valid:
-        return validate_transaction_chain(transactions, index + 1, accumulated_flags)
+    # Distractor calculations that don't affect final result
+    avg_score = sum(raw_scores) // len(raw_scores)
+    max_score = max(raw_scores)
+    min_score = min(raw_scores)
     
-    checksum_match = (current_tx['checksum'] & 0xFF) == (current_tx['id'] & 0xFF)
+    # Calculate total points from qualifying scores
+    total_points = sum(qualifying_scores)
     
-    if checksum_match and current_tx['amount'] < 1000:
-        new_flags = accumulated_flags | (1 << (index % 8))
-        return validate_transaction_chain(transactions, index + 1, new_flags)
-    elif checksum_match:
-        return validate_transaction_chain(transactions, index + 1, accumulated_flags)
-    else:
-        return accumulated_flags
-
-@contextmanager
-def audit_trail_context(transactions):
-    print(f"Starting audit of {len(transactions)} transactions")
-    try:
-        yield transactions
-    finally:
-        print("Audit completed")
-
-transactions_ledger = [
-    {'id': 1001, 'amount': 1500.0, 'timestamp': '2023-01-01', 'checksum': 0x1F2A},
-    {'id': 1002, 'amount': 750.5, 'timestamp': '2023-01-02', 'checksum': 0x2B02},
-    {'id': 1003, 'amount': -200.0, 'timestamp': '2023-01-03', 'checksum': 0x3C03},
-    {'id': 1004, 'amount': 1200.0, 'timestamp': None, 'checksum': 0x4D04},
-    {'id': 1005, 'amount': 300.0, 'timestamp': '2023-01-05', 'checksum': 0x5E05}
-]
-
-compliance_score = 0
-
-with audit_trail_context(transactions_ledger) as ledger:
-    compliance_score = validate_transaction_chain(ledger)
+    # Multiplier based on score distribution
+    high_performers = len([score for score in raw_scores if score >= 90])
+    multiplier = 2 if high_performers >= 3 else 1
     
-    # Apply final adjustment based on number of valid transactions
-    valid_count = sum(1 for tx in ledger if tx['amount'] > 0 and tx['timestamp'] is not None)
-    if valid_count >= 3 and (compliance_score & 0b1010) == 0b1010:
-        compliance_score += 100
-    elif valid_count < 3 or not (compliance_score & 0b0101):
-        compliance_score -= 50
+    # Bonus adjustment (irrelevant calculation)
+    bonus_adjust = (max_score - min_score) // 10
+    
+    # Final calculation
+    final_score = total_points * multiplier // bonus_adjust
+    
+    # Unused intermediate variable
+    score_range = max_score - min_score
+    
+    print(f"Target result: {final_score}")
 
-print(f"Result: {compliance_score}")
+calculate_performance()

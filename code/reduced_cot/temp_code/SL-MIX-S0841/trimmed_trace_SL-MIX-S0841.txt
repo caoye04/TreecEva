@@ -1,0 +1,49 @@
+49
+final_score
+---
+37 student_scores = {"math": 85, "science": 92, "history": 45, "english": 78, "art": 67}
+37 ['student_scores'] ['{math: 85, science: 92, history: 45, ...}']
+45 backup_score = 75.0  # Red herring value
+45 ['student_scores', 'backup_score'] ['{math: 85, science: 92, history: 45, ...}', '75.0']
+46 processed_data = {"final_value": calculate_weighted_scores(student_scores)}
+46 ['student_scores', 'backup_score'] ['{math: 85, science: 92, history: 45, ...}', '75.0']
+7 valid_scores = {k: v for k, v in scores_dict.items() if v > 50}
+7 ['scores_dict', 'k', 'v'] ['{math: 85, science: 92, history: 45, ...}', "'math'", '85']
+7 valid_scores = {k: v for k, v in scores_dict.items() if v > 50}
+7 ['scores_dict', 'k', 'v'] ['{math: 85, science: 92, history: 45, ...}', "'science'", '92']
+7 valid_scores = {k: v for k, v in scores_dict.items() if v > 50}
+7 ['scores_dict', 'k', 'v'] ['{math: 85, science: 92, history: 45, ...}', "'history'", '45']
+7 valid_scores = {k: v for k, v in scores_dict.items() if v > 50}
+7 ['scores_dict', 'k', 'v'] ['{math: 85, science: 92, history: 45, ...}', "'english'", '78']
+7 valid_scores = {k: v for k, v in scores_dict.items() if v > 50}
+7 ['scores_dict', 'k', 'v'] ['{math: 85, science: 92, history: 45, ...}', "'art'", '67']
+7 valid_scores = {k: v for k, v in scores_dict.items() if v > 50}
+7 ['scores_dict', 'valid_scores'] ['{math: 85, science: 92, history: 45, ...}', '{math: 85, science: 92, english: 78, ...}']
+8 if not valid_scores:
+8 ['valid_scores'] ['{math: 85, science: 92, english: 78, ...}']
+12 avg_temp = sum(valid_scores.values()) / len(valid_scores)
+12 ['valid_scores', 'avg_temp'] ['{math: 85, science: 92, english: 78, ...}', '80.5']
+16 if avg_temp > 1000:
+16 ['valid_scores', 'avg_temp'] ['{math: 85, science: 92, english: 78, ...}', '80.5']
+22 weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+22 [] []
+22 weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+22 ['i', 'score'] ['0', '85']
+22 weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+22 ['i', 'score'] ['1', '92']
+22 weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+22 ['i', 'score'] ['2', '78']
+22 weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+22 ['i', 'score'] ['3', '67']
+22 weighted_sum = sum(score * (i + 1) for i, score in enumerate(valid_scores.values()))
+22 ['i', 'score'] ['3', '67']
+23 total_weights = sum(range(1, len(valid_scores) + 1))
+23 ['valid_scores', 'weighted_sum', 'total_weights'] ['{math: 85, science: 92, english: 78, ...}', '771', '10']
+29 if total_weights > 0:
+29 ['weighted_sum', 'total_weights'] ['771', '10']
+30 processed_value = weighted_sum / total_weights
+30 ['weighted_sum', 'total_weights', 'processed_value'] ['771', '10', '77.1']
+34 return processed_value
+34 ['processed_value'] ['77.1']
+49 final_score = processed_data.get("final_value", backup_score)
+49 ['backup_score', 'processed_data', 'final_score'] ['75.0', '{final_value: 77.1}', '77.1']

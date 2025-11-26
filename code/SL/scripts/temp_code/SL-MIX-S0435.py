@@ -1,57 +1,62 @@
-from collections import defaultdict
-import itertools
-
-def process_packets():
-    # Packet header tokens (simulated)
-    packet_headers = [
-        "TCP SRC:192.168.1.1 DST:10.0.0.1 PORT:80",
-        "UDP SRC:192.168.1.2 DST:10.0.0.2 PORT:53",
-        "TCP SRC:10.0.0.1 DST:192.168.1.1 PORT:80",
-        "ICMP SRC:192.168.1.3 DST:10.0.0.3 TYPE:8"
-    ]
+def process_data_sequence(data_seq, mask_pat):
+    # Irrelevant initialization for distraction
+    temp_buffer = [0] * len(data_seq)
+    offset_calc = sum(x % 3 for x in range(10))  # Distractor computation
     
-    # State machine for connection tracking
-    state_machine = {
-        'INIT': {'TCP': 'TCP_CONN', 'UDP': 'UDP_CONN', 'ICMP': 'ICMP_CONN'},
-        'TCP_CONN': {'ACK': 'ESTABLISHED', 'RST': 'CLOSED'},
-        'UDP_CONN': {'DATA': 'ACTIVE', 'TIMEOUT': 'CLOSED'},
-        'ICMP_CONN': {'REPLY': 'COMPLETED', 'TIMEOUT': 'CLOSED'}
-    }
-    
-    connection_states = defaultdict(str)
-    anomaly_counter = 0
-    security_weights = {'TCP': 3, 'UDP': 2, 'ICMP': 1}
-    
-    for header in packet_headers:
-        tokens = header.split()
-        protocol = tokens[0]
-        src_ip = tokens[1].split(':')[1]
-        dst_ip = tokens[2].split(':')[1]
-        
-        # Encoding source IP to numerical value
-        src_encoded = sum(ord(c) for c in src_ip)
-        
-        # State machine transition
-        current_state = connection_states[(src_ip, dst_ip)]
-        if not current_state:
-            connection_states[(src_ip, dst_ip)] = state_machine['INIT'].get(protocol, 'UNKNOWN')
+    # Main processing logic
+    processed_values = []
+    for idx, value in enumerate(data_seq):
+        # Misleading conditional path
+        if idx % 2 == 0:
+            masked_val = value & mask_pat
         else:
-            # Simulate state transition based on protocol
-            if protocol == 'TCP' and 'ACK' in header:
-                connection_states[(src_ip, dst_ip)] = state_machine.get(current_state, {}).get('ACK', current_state)
-            elif protocol == 'ICMP' and 'REPLY' in header:
-                connection_states[(src_ip, dst_ip)] = state_machine.get(current_state, {}).get('REPLY', current_state)
+            masked_val = value | mask_pat
         
-        # Detect anomalies (simplified)
-        if src_encoded > 1000:
-            anomaly_counter += 1
+        # Red herring transformation
+        temp_transform = (masked_val << 2) ^ 0xFF
+        
+        # Actual relevant computation
+        if idx > 0 and data_seq[idx-1] < value:
+            processed_val = (masked_val + temp_transform) // 2
+        else:
+            processed_val = (masked_val * temp_transform) % 256
+        
+        processed_values.append(processed_val)
     
-    # Calculate final security score
-    state_scores = {'INIT': 0, 'TCP_CONN': 5, 'UDP_CONN': 3, 'ICMP_CONN': 2, 'ESTABLISHED': 10, 'ACTIVE': 7, 'COMPLETED': 8, 'CLOSED': 1, 'UNKNOWN': 0}
-    total_state_score = sum(state_scores[state] for state in connection_states.values())
-    final_security_score = (total_state_score * anomaly_counter) - sum(security_weights.values())
+    # Dead code path - never executed
+    unused_result = sum(x * 2 for x in processed_values if x % 3 == 0)
     
-    return final_security_score
+    return processed_values
 
-final_security_score = process_packets()
-print(f"Result: {final_security_score}")
+# Main execution with multiple distractions
+data_sequence = [45, 78, 123, 56, 189, 34, 200]
+mask_pattern = 0x7F
+
+# Irrelevant computations for interference
+auxiliary_sum = sum(data_sequence) + len(data_sequence)
+pattern_shift = mask_pattern << 1
+
+# Critical execution point
+processed_data = process_data_sequence(data_sequence, mask_pattern)
+
+# More distractor operations
+filtered_data = [x for x in processed_data if x > 50]
+weighted_avg = sum(x * i for i, x in enumerate(processed_data)) / len(processed_data)
+
+# Final hash calculation (target variable)
+final_hash = 0
+for i, val in enumerate(processed_data):
+    # Complex bitwise operation chain
+    if i < len(processed_data) // 2:
+        final_hash ^= (val << (i % 4))
+    else:
+        final_hash |= (val >> ((i - 3) % 4))
+    
+    # Misleading intermediate update
+    if i % 2 == 0:
+        final_hash += 16  # This gets overwritten
+    
+    # Actual final computation
+    final_hash = (final_hash * 31 + val) & 0xFFFF
+
+print(f"Result: {final_hash}")

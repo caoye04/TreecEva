@@ -1,46 +1,39 @@
-from collections import defaultdict
-import hashlib
+from collections import Counter
 
-def process_document_signatures():
-    # State machine states
-    states = ['INIT', 'PARSE', 'HASH', 'VERIFY']
-    current_state = 0
+def analyze_word_patterns(text):
+    words = text.lower().split()
+    word_counts = Counter(words)
     
-    # Document signatures
-    signatures = ['doc_alpha_2023', 'doc_beta_2024', 'doc_gamma_2025']
+    # Calculate pattern score (main logic)
+    unique_words = len(word_counts)
+    total_words = len(words)
+    pattern_density = unique_words / total_words
     
-    # Hash accumulator initialized with a base value
-    hash_accumulator = 1000.5
+    # Some intermediate calculations (partially relevant)
+    char_count = sum(len(word) for word in words)
+    avg_word_length = char_count / total_words
     
-    # Process each signature through state machine
-    for sig in signatures:
-        # State transition: INIT -> PARSE
-        if states[current_state] == 'INIT':
-            transformed_sig = sig.upper().replace('_', '-')
-            current_state = 1
-        
-        # State transition: PARSE -> HASH
-        if states[current_state] == 'PARSE':
-            # String hashing with floating point conversion
-            sig_hash = int(hashlib.md5(transformed_sig.encode()).hexdigest(), 16) % 1000
-            hash_accumulator += sig_hash * 1.5
-            current_state = 2
-        
-        # State transition: HASH -> VERIFY
-        if states[current_state] == 'HASH':
-            # Bitwise operation and arithmetic
-            hash_accumulator = (int(hash_accumulator) & 0xFF) + (hash_accumulator * 0.7)
-            current_state = 3
-        
-        # State transition: VERIFY -> INIT (for next iteration)
-        if states[current_state] == 'VERIFY':
-            hash_accumulator -= 50.25
-            current_state = 0
+    # Key computation (main path)
+    base_score = int(pattern_density * 100)
+    length_factor = int(avg_word_length * 10)
     
-    # Final verification score calculation
-    verification_score = int(hash_accumulator) ^ 0xAA
-    return verification_score
+    # Adjustment calculations (somewhat relevant but not used in final)
+    vowel_counts = sum(1 for word in words for char in word if char in 'aeiou')
+    consonant_ratio = (char_count - vowel_counts) / char_count if char_count > 0 else 0
+    
+    # Distractor operations (irrelevant to final result)
+    temp_adjust = base_score & length_factor
+    cyclic_check = (base_score << 2) | (length_factor >> 1)
+    
+    # Core result computation
+    result = base_score + length_factor
+    adjustment = result % 7
+    
+    # Final computation
+    final_result = result ^ adjustment
+    
+    print(f"Target result: {final_result}")
 
-# Execute the document processing
-final_score = process_document_signatures()
-print(f"Result: {final_score}")
+# Execute the function
+text_sample = "data science machine learning artificial intelligence data analysis"
+analyze_word_patterns(text_sample)

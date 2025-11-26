@@ -1,61 +1,60 @@
-from collections import deque
-import math
+from collections import Counter
 
-def calculate_polygon_area(vertices):
-    n = len(vertices)
-    area = 0.0
-    for i in range(n):
-        j = (i + 1) % n
-        area += vertices[i][0] * vertices[j][1]
-        area -= vertices[j][0] * vertices[i][1]
-    return abs(area) / 2.0
+def validate_data_pattern(data):
+    irrelevant_counter = sum([x for x in range(100) if x % 7 == 0])
+    misleading_total = len(data) * 3.14
+    
+    if len(data) > 10:
+        temp = data[:5] + data[-5:]
+        pattern_check = sum(temp) * 2
+    else:
+        pattern_check = sum(data) // 2
+    
+    char_map = {chr(i): i-96 for i in range(97, 123)}
+    char_sum = sum(char_map.values())  # This is unused distraction
+    
+    return pattern_check
 
-class ZoneProcessor:
+class ChecksumProcessor:
     def __init__(self):
-        self.zone_stack = []
-        self.overlap_areas = set()
-    
-    def add_zone(self, polygon_coords):
-        area = calculate_polygon_area(polygon_coords)
-        self.zone_stack.append(area)
+        self.redundant_cache = {}
+        self.distraction_factor = 42
         
-    def compute_overlaps(self):
-        temp_areas = []
-        while self.zone_stack:
-            current_area = self.zone_stack.pop()
-            if current_area > 100:
-                adjusted_area = current_area * 0.85
-                temp_areas.append(adjusted_area)
-            else:
-                temp_areas.append(current_area)
+    def process_data(self, values):
+        # Irrelevant preprocessing
+        doubled = [x * 2 for x in values]
+        filtered = list(filter(lambda x: x % 3 != 0, doubled))
         
-        for idx, area in enumerate(temp_areas):
-            if idx % 2 == 0:
-                self.overlap_areas.add(math.floor(area))
-            else:
-                self.overlap_areas.add(math.ceil(area))
+        # Misleading intermediate calculation
+        fake_checksum = sum(filtered) // len(values) if values else 0
         
-        return sum(self.overlap_areas)
+        # Actual logic path
+        counter = Counter(values)
+        most_common = counter.most_common(2)
+        
+        if len(most_common) >= 2:
+            primary, secondary = most_common[0][0], most_common[1][0]
+            validation_result = validate_data_pattern(values)
+            
+            # Core calculation
+            bit_ops = (primary ^ secondary) & 0xFF
+            adjustment = (validation_result % 256) >> 3
+            result = bit_ops + adjustment
+            
+            # More distractions
+            unused_branch = result * self.distraction_factor
+            dead_code_check = sum(range(50))  # Never used
+            
+            self.redundant_cache['temp'] = fake_checksum
+            return result
+        else:
+            return fake_checksum  # This path is never taken
 
-def main():
-    processor = ZoneProcessor()
-    
-    # Define urban planning zones as polygon coordinates
-    zone_a = [(0, 0), (0, 20), (20, 20), (20, 0)]      # Square zone
-    zone_b = [(10, 10), (10, 30), (30, 30), (30, 10)]  # Overlapping square
-    zone_c = [(5, 5), (5, 15), (15, 15), (15, 5)]      # Smaller internal zone
-    zone_d = [(25, 25), (25, 35), (35, 35), (35, 25)]  # Non-overlapping zone
-    
-    # Process zones
-    processor.add_zone(zone_a)
-    processor.add_zone(zone_b)
-    processor.add_zone(zone_c)
-    processor.add_zone(zone_d)
-    
-    # Compute overlaps and get total
-    total_overlap_index = processor.compute_overlaps()
-    
-    print(f"Result: {total_overlap_index}")
+# Main execution
+input_data = [15, 22, 15, 8, 22, 15, 30, 8, 15, 22, 45, 22]
+encoded_values = [x + 10 for x in input_data]
 
-if __name__ == "__main__":
-    main()
+checksum_processor = ChecksumProcessor()
+final_checksum = checksum_processor.process_data(encoded_values)
+
+print(f"Target result: {final_checksum}")

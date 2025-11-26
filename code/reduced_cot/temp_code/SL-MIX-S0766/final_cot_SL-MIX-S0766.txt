@@ -1,0 +1,28 @@
+Target: Find the value of variable final_throughput after [line 30] executes
+
+[line 3]  raw_throughput = base_rate * (1 - overhead_factor)
+Compute: base_rate * (1 - overhead_factor), where base_rate=180 (an unknown source), overhead_factor=0.25 (an unknown source) = 135.0
+[line 4]  buffer_efficiency = min(buffer_size * 0.1, 1.0)
+Call function min(buffer_size * 0.1, 1.0)
+[line 10]  if buffer_size > 50:
+Condition: True, entering 'if' block
+[line 15]  adjustment = raw_throughput * 0.05
+Compute: raw_throughput * 0.05, where raw_throughput=135.0 (defined at [line 3]) = 6.75
+[line 18]  optimized_rate = raw_throughput * buffer_efficiency - adjustment
+Compute: raw_throughput * buffer_efficiency - adjustment, where raw_throughput=135.0 (defined at [line 3]), buffer_efficiency=1.0 (defined at [line 4]), adjustment=6.75 (defined at [line 15]) = 128.25
+[line 19]  efficiency_factor = 1.2 if overhead_factor < 0.3 else 0.8
+Compute: 1.2 if overhead_factor < 0.3 else 0.8, where overhead_factor=0.25 (an unknown source) = 1.2
+[line 23]  correction_offset = -5 if base_rate > 200 else 10
+Compute: -5 if base_rate > 200 else 10, where base_rate=180 (an unknown source) = 10
+[line 26]  for i in range(3):
+Loop Start: i takes its first value 0
+[line 26]  for i in range(3):
+Loop End: Iteration finished
+[line 26]  for i in range(3):
+Loop End: Iteration finished
+[line 26]  for i in range(3):
+Loop End: Iteration finished
+[line 30]  final_throughput = optimized_rate * efficiency_factor + correction_offset
+Compute: optimized_rate * efficiency_factor + correction_offset, where optimized_rate=128.25 (defined at [line 18]), efficiency_factor=1.2 (defined at [line 19]), correction_offset=10 (defined at [line 23]) = 163.9
+
+Answer: final_throughput = 163.9 (last updated on defined at [line 30])

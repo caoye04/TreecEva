@@ -1,56 +1,72 @@
-import math
-import re
-from collections import deque
-from functools import reduce
+import collections
 
-def fibonacci(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
+def analyze_text_quality(text_samples):
+    # Red herring calculations
+    char_count = sum(len(sample) for sample in text_samples)
+    vowel_count = sum(sum(1 for c in sample.lower() if c in 'aeiou') for sample in text_samples)
+    
+    # Misleading intermediate results
+    irrelevant_metric = (char_count * 3) - (vowel_count * 2) + 17
+    distraction_value = irrelevant_metric % 23
+    
+    # Dead code path (never executed due to condition)
+    if distraction_value > 100:
+        unused_result = distraction_value * 2 + 5
+    
+    # Actual quality analysis
+    word_lengths = [len(word) for sample in text_samples for word in sample.split()]
+    avg_length = sum(word_lengths) / len(word_lengths) if word_lengths else 0
+    
+    # More distractions
+    temp_calc = (distraction_value + 7) * 3
+    misleading_score = temp_calc // 2
+    
+    # Core quality calculation
+    quality_score = round(avg_length * 10, 2)
+    return quality_score
 
-def compute_deviation(altitudes):
-    deviations = []
-    for i in range(1, len(altitudes)):
-        diff = abs(altitudes[i] - altitudes[i-1])
-        fib_weight = fibonacci(i)
-        deviations.append(diff * fib_weight)
-    return deviations
-
-def trig_smoothing(values):
-    smoothed = [math.sin(v) if v < 1 else math.cos(v) for v in values]
-    return smoothed
-
-def hash_filter(segments):
-    registry = {}
-    filtered = []
-    for s in segments:
-        key = hash(round(s, 4)) % 1000
-        if key not in registry:
-            registry[key] = True
-            filtered.append(s)
+def filter_text_samples(texts):
+    # Multiple irrelevant operations
+    total_chars = sum(len(text) for text in texts)
+    char_frequency = collections.Counter(''.join(texts))
+    
+    # Distracting intermediate steps
+    most_common_count = char_frequency.most_common(1)[0][1] if char_frequency else 0
+    ratio_calc = (total_chars * 3) // (most_common_count + 1)
+    
+    # Actual filtering logic
+    filtered = [text for text in texts if len(text.split()) >= 2]
+    
+    # More red herrings
+    unused_filter_metric = ratio_calc % 15
+    distraction_list = [i * 2 for i in range(5)]
+    
     return filtered
 
-telemetry_log = "ALT:100.5,102.3,99.8,105.0,103.2,107.1"
-match = re.search(r'ALT:(.*)', telemetry_log)
-altitude_data = list(map(float, match.group(1).split(',')))
+# Main execution with heavy interference
+sample_texts = ["Python programming", "Code analysis", "Machine learning models", "A", "Data processing pipelines"]
 
-# Step 1: Compute Fibonacci-weighted deviations
-weighted_deviations = compute_deviation(altitude_data)
+# Irrelevant preprocessing
+initial_lengths = [len(text) for text in sample_texts]
+sum_initial = sum(initial_lengths)
+product_initial = 1
+for length in initial_lengths:
+    product_initial *= (length + 1)
 
-# Step 2: Apply trigonometric smoothing
-smoothed_values = trig_smoothing(weighted_deviations)
+# Dead variable (never used)
+unused_complex_metric = (sum_initial * product_initial) % 47
 
-# Step 3: Filter using hash-based registry
-unique_segments = hash_filter(smoothed_values)
+# Actual processing chain
+filtered_text = filter_text_samples(sample_texts)
+processed_quality = analyze_text_quality(filtered_text)
 
-# Step 4: Aggregate into stability score using stack-like reduction
-stack = deque(unique_segments)
-aggregated = 0
-while stack:
-    val = stack.pop()
-    aggregated = math.atan2(val, aggregated) if aggregated != 0 else val
+# Final calculation with distractions
+intermediate_value = processed_quality * 1.5
+temp_adjustment = (len(filtered_text) * 3) - 2
+final_quality_score = round(intermediate_value + temp_adjustment, 2)
 
-# Final stability score
-final_stability_score = round(aggregated * 1000)
-print(f"Result: {final_stability_score}")
+# More irrelevant computations that don't affect final result
+final_distraction = (sum_initial + 15) * 2
+another_unused = final_distraction // 3
+
+print(f"Target result: {final_quality_score}")

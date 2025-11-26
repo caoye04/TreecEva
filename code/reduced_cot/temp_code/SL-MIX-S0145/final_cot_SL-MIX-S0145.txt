@@ -1,14 +1,44 @@
-Target: Find the value of variable total_area after [line 14] executes
+Target: Find the value of variable final_analysis_result after [line 42] executes
 
-[line 4]  flower_bed_radius = 3
-Assign: flower_bed_radius = 3
-[line 5]  path_width = 1.5
-Assign: path_width = 1.5
-[line 8]  outer_radius = flower_bed_radius + path_width
-Compute: flower_bed_radius + path_width, where flower_bed_radius=3 (defined at [line 4]), path_width=1.5 (defined at [line 5]) = 4.5
-[line 11]  areas = [math.pi * r**2 for r in [flower_bed_radius, outer_radius]]
-Compute: [math.pi * r**2 for r in [flower_bed_radius, outer_radius]], where r=3 (an unknown source), flower_bed_radius=3 (defined at [line 4]), outer_radius=4.5 (defined at [line 8]) = ?
-[line 14]  total_area = areas[1]
-Compute: areas[1], where areas=[28.274333882308138, 63.61725123519331] (defined at [line 11]) = 63.61725123519331
+[line 5]  sample_sizes = [len(sample) for sample in text_samples]
+Compute: [len(sample) for sample in text_samples], where sample='algorithmic complexity' (an unknown source), text_samples=['algorithmic complexity', 'data structures', 'computational thinking', 'programming paradigms'] (an unknown source) = ?
+[line 6]  avg_size = sum(sample_sizes) / len(sample_sizes) if sample_sizes else 0
+Compute: sum(sample_sizes) / len(sample_sizes) if sample_sizes else 0, where sample_sizes=[22, 15, 22, 21] (defined at [line 5]) = 20.0
+[line 10]  for sample in text_samples:
+Loop Start: sample takes its first value 'algorithmic complexity'
+[line 10]  for sample in text_samples:
+Loop End: Iteration finished
+[line 10]  for sample in text_samples:
+Loop End: Iteration finished
+[line 10]  for sample in text_samples:
+Loop End: Iteration finished
+[line 10]  for sample in text_samples:
+Loop End: Iteration finished
+[line 15]  vowel_counts = []
+Compute: [] = []
+[line 17]  for sample in text_samples:
+Loop Start: sample takes its first value 'algorithmic complexity'
+[line 17]  for sample in text_samples:
+Loop End: Iteration finished
+[line 17]  for sample in text_samples:
+Loop End: Iteration finished
+[line 17]  for sample in text_samples:
+Loop End: Iteration finished
+[line 17]  for sample in text_samples:
+Loop End: Iteration finished
+[line 25]  if len(text_samples) > 100:
+Condition: True, entering 'if' block
+[line 31]  base_metric = sum(vowel_counts) * 3
+Compute: sum(vowel_counts) * 3, where vowel_counts=[7, 5, 8, 6] (defined at [line 15]) = 78
+[line 32]  quality_adjustment = max(vowel_counts) * 2 if vowel_counts else 0
+Compute: max(vowel_counts) * 2 if vowel_counts else 0, where vowel_counts=[7, 5, 8, 6] (defined at [line 15]) = 16
+[line 35]  processing_overhead = base_metric // 4 + len(text_samples) * 7
+Compute: base_metric // 4 + len(text_samples) * 7, where base_metric=78 (defined at [line 31]), text_samples=['algorithmic complexity', 'data structures', 'computational thinking', 'programming paradigms'] (an unknown source) = 47
+[line 38]  processed_data_tracker = base_metric - processing_overhead
+Compute: base_metric - processing_overhead, where base_metric=78 (defined at [line 31]), processing_overhead=47 (defined at [line 35]) = 31
+[line 39]  correction_factor = 1.5 if avg_size > 10 else 2.0
+Compute: 1.5 if avg_size > 10 else 2.0, where avg_size=20.0 (defined at [line 6]) = 1.5
+[line 42]  final_analysis_result = processed_data_tracker * correction_factor - quality_adjustment
+Compute: processed_data_tracker * correction_factor - quality_adjustment, where processed_data_tracker=31 (defined at [line 38]), correction_factor=1.5 (defined at [line 39]), quality_adjustment=16 (defined at [line 32]) = 30.5
 
-Answer: total_area = 63.61725123519331 (last updated on defined at [line 14])
+Answer: final_analysis_result = 30.5 (last updated on defined at [line 42])

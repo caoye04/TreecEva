@@ -1,0 +1,57 @@
+19
+final_quantity
+---
+4 warehouse_stock = {'A': 150, 'B': 200, 'C': 175, 'D': 90}
+4 ['warehouse_stock'] ['{A: 150, B: 200, C: 175, ...}']
+5 recent_transactions = [('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]
+5 ['warehouse_stock', 'recent_transactions'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]"]
+8 transaction_counts = Counter()
+8 ['warehouse_stock', 'recent_transactions', 'transaction_counts'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{}']
+9 for warehouse, quantity in recent_transactions:
+9 ['warehouse_stock', 'recent_transactions', 'transaction_counts', 'warehouse', 'quantity'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{}', "'A'", '25']
+10 transaction_counts[warehouse] += quantity
+10 ['warehouse_stock', 'recent_transactions', 'transaction_counts', 'warehouse', 'quantity'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{A: 25}', "'A'", '25']
+9 for warehouse, quantity in recent_transactions:
+9 ['warehouse_stock', 'recent_transactions', 'transaction_counts', 'warehouse', 'quantity'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{A: 25}', "'B'", '30']
+10 transaction_counts[warehouse] += quantity
+10 ['warehouse_stock', 'recent_transactions', 'transaction_counts', 'warehouse', 'quantity'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{A: 25, B: 30}', "'B'", '30']
+9 for warehouse, quantity in recent_transactions:
+9 ['warehouse_stock', 'recent_transactions', 'transaction_counts', 'warehouse', 'quantity'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{A: 25, B: 30}', "'A'", '15']
+10 transaction_counts[warehouse] += quantity
+10 ['warehouse_stock', 'recent_transactions', 'transaction_counts', 'warehouse', 'quantity'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{A: 40, B: 30}', "'A'", '15']
+9 for warehouse, quantity in recent_transactions:
+9 ['warehouse_stock', 'recent_transactions', 'transaction_counts', 'warehouse', 'quantity'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{A: 40, B: 30}', "'C'", '20']
+10 transaction_counts[warehouse] += quantity
+10 ['warehouse_stock', 'recent_transactions', 'transaction_counts', 'warehouse', 'quantity'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{A: 40, B: 30, C: 20}', "'C'", '20']
+9 for warehouse, quantity in recent_transactions:
+9 ['warehouse_stock', 'recent_transactions', 'transaction_counts', 'warehouse', 'quantity'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{A: 40, B: 30, C: 20}', "'B'", '10']
+10 transaction_counts[warehouse] += quantity
+10 ['warehouse_stock', 'recent_transactions', 'transaction_counts', 'warehouse', 'quantity'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{A: 40, B: 40, C: 20}', "'B'", '10']
+9 for warehouse, quantity in recent_transactions:
+9 ['warehouse_stock', 'recent_transactions', 'transaction_counts', 'warehouse', 'quantity'] ['{A: 150, B: 200, C: 175, ...}', "[('A', 25), ('B', 30), ('A', 15), ('C', 20), ('B', 10)]", '{A: 40, B: 40, C: 20}', "'B'", '10']
+12 stock_levels = {}
+12 ['warehouse_stock', 'transaction_counts', 'warehouse', 'stock_levels'] ['{A: 150, B: 200, C: 175, ...}', '{A: 40, B: 40, C: 20}', "'B'", '{}']
+13 for warehouse, initial_stock in warehouse_stock.items():
+13 ['warehouse_stock', 'transaction_counts', 'warehouse', 'stock_levels', 'initial_stock'] ['{A: 150, B: 200, C: 175, ...}', '{A: 40, B: 40, C: 20}', "'A'", '{}', '150']
+14 stock_levels[warehouse] = initial_stock - transaction_counts[warehouse]
+14 ['warehouse_stock', 'transaction_counts', 'warehouse', 'stock_levels', 'initial_stock'] ['{A: 150, B: 200, C: 175, ...}', '{A: 40, B: 40, C: 20}', "'A'", '{A: 110}', '150']
+13 for warehouse, initial_stock in warehouse_stock.items():
+13 ['warehouse_stock', 'transaction_counts', 'warehouse', 'stock_levels', 'initial_stock'] ['{A: 150, B: 200, C: 175, ...}', '{A: 40, B: 40, C: 20}', "'B'", '{A: 110}', '200']
+14 stock_levels[warehouse] = initial_stock - transaction_counts[warehouse]
+14 ['warehouse_stock', 'transaction_counts', 'warehouse', 'stock_levels', 'initial_stock'] ['{A: 150, B: 200, C: 175, ...}', '{A: 40, B: 40, C: 20}', "'B'", '{A: 110, B: 160}', '200']
+13 for warehouse, initial_stock in warehouse_stock.items():
+13 ['warehouse_stock', 'transaction_counts', 'warehouse', 'stock_levels', 'initial_stock'] ['{A: 150, B: 200, C: 175, ...}', '{A: 40, B: 40, C: 20}', "'C'", '{A: 110, B: 160}', '175']
+14 stock_levels[warehouse] = initial_stock - transaction_counts[warehouse]
+14 ['warehouse_stock', 'transaction_counts', 'warehouse', 'stock_levels', 'initial_stock'] ['{A: 150, B: 200, C: 175, ...}', '{A: 40, B: 40, C: 20}', "'C'", '{A: 110, B: 160, C: 155}', '175']
+13 for warehouse, initial_stock in warehouse_stock.items():
+13 ['warehouse_stock', 'transaction_counts', 'warehouse', 'stock_levels', 'initial_stock'] ['{A: 150, B: 200, C: 175, ...}', '{A: 40, B: 40, C: 20}', "'D'", '{A: 110, B: 160, C: 155}', '90']
+14 stock_levels[warehouse] = initial_stock - transaction_counts[warehouse]
+14 ['warehouse_stock', 'transaction_counts', 'warehouse', 'stock_levels', 'initial_stock'] ['{A: 150, B: 200, C: 175, ...}', '{A: 40, B: 40, C: 20}', "'D'", '{A: 110, B: 160, C: 155, ...}', '90']
+13 for warehouse, initial_stock in warehouse_stock.items():
+13 ['warehouse_stock', 'warehouse', 'stock_levels', 'initial_stock'] ['{A: 150, B: 200, C: 175, ...}', "'D'", '{A: 110, B: 160, C: 155, ...}', '90']
+17 warehouse_id = 'B'
+17 ['stock_levels', 'warehouse_id'] ['{A: 110, B: 160, C: 155, ...}', "'B'"]
+18 pending_orders = 45
+18 ['stock_levels', 'warehouse_id', 'pending_orders'] ['{A: 110, B: 160, C: 155, ...}', "'B'", '45']
+19 final_quantity = stock_levels[warehouse_id] - pending_orders
+19 ['stock_levels', 'warehouse_id', 'pending_orders', 'final_quantity'] ['{A: 110, B: 160, C: 155, ...}', "'B'", '45', '115']

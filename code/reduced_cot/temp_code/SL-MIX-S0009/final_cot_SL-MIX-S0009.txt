@@ -1,30 +1,36 @@
-Target: Find the value of variable verification_mask after [line 19] executes
+Target: Find the value of variable final_analysis_result after [line 24] executes
 
-[line 7]  test_values = [0b11001010, 0b10101100, 0b10011101]
-Compute: [0b11001010, 0b10101100, 0b10011101] = [202, 172, 157]
-[line 5]  return wrapper
-Return: wrapper
-[line 17]  initial_mask = 0b00001111
-Assign: initial_mask = 15
-[line 18]  test_result = apply_circuit_operations(test_values)
-Call function apply_circuit_operations(test_values=[202, 172, 157] (defined at [line 7]))
-[line 3]  result = func(*args, **kwargs)
-Call function func(*args, **kwargs)
-[line 11]  accumulator = 0
-Assign: accumulator = 0
-[line 12]  for val in values:
-Loop Start: val takes its first value 202
-[line 12]  for val in values:
-Loop Iteration: val is now 172 (iteration 2)
-[line 12]  for val in values:
-Loop Iteration: val is now 157 (iteration 3)
-[line 12]  for val in values:
+[line 1]  data_entries = [15, 22, 38, 45, 51]
+Compute: [15, 22, 38, 45, 51] = [15, 22, 38, 45, 51]
+[line 2]  processed_entries = []
+Compute: [] = []
+[line 6]  for index, value in enumerate(data_entries):
+(Missing param: 'iter_var')
+[line 6]  for index, value in enumerate(data_entries):
 Loop End: Iteration finished
-[line 14]  return accumulator
-Return: accumulator=255 (defined at [line 11])
-[line 4]  return result
-Return: result=255 (defined at [line 3])
-[line 19]  verification_mask = (test_result & 0xFF) ^ initial_mask
-Compute: (test_result & 0xFF) ^ initial_mask, where test_result=255 (defined at [line 18]), initial_mask=15 (defined at [line 17]) = 240
+[line 6]  for index, value in enumerate(data_entries):
+Loop End: Iteration finished
+[line 6]  for index, value in enumerate(data_entries):
+Loop End: Iteration finished
+[line 6]  for index, value in enumerate(data_entries):
+Loop End: Iteration finished
+[line 6]  for index, value in enumerate(data_entries):
+Loop End: Iteration finished
+[line 16]  enumerated_data = []
+Compute: [] = []
+[line 17]  for idx, val in enumerate(processed_entries):
+(Missing param: 'iter_var')
+[line 17]  for idx, val in enumerate(processed_entries):
+Loop End: Iteration finished
+[line 17]  for idx, val in enumerate(processed_entries):
+Loop End: Iteration finished
+[line 17]  for idx, val in enumerate(processed_entries):
+Loop End: Iteration finished
+[line 17]  for idx, val in enumerate(processed_entries):
+Loop End: Iteration finished
+[line 17]  for idx, val in enumerate(processed_entries):
+Loop End: Iteration finished
+[line 24]  final_analysis_result = sum(enumerated_data) / len(processed_entries)
+Compute: sum(enumerated_data) / len(processed_entries), where enumerated_data=[15, 25, 44, 54, 63] (defined at [line 16]), processed_entries=[15, 24, 42, 51, 59] (defined at [line 2]) = 40.2
 
-Answer: verification_mask = 240 (last updated on defined at [line 19])
+Answer: final_analysis_result = 40.2 (last updated on defined at [line 24])

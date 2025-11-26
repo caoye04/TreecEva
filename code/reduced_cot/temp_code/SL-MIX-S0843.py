@@ -1,45 +1,18 @@
-from dataclasses import dataclass
-from typing import List
-import math
+product_codes = ['A123', 'B456', 'C789', 'D012', 'E345']
+active_codes = ['A123', 'C789', 'E345']
 
-def calculate_adjustment_factor(market_signal: str, volatility_index: float) -> float:
-    if market_signal == 'bull':
-        return 1.0 + (volatility_index * 0.1)
-    elif market_signal == 'bear':
-        return 1.0 - (volatility_index * 0.05)
-    else:  # 'stable'
-        return 1.0 + (volatility_index * 0.02)
+# Filter active products using set intersection
+active_set = set(product_codes)
+reference_set = set(active_codes)
+valid_items = active_set.intersection(reference_set)
 
-def process_day(portfolio_value: float, signal: str, vol_idx: float) -> float:
-    factor = calculate_adjustment_factor(signal, vol_idx)
-    adjusted_value = portfolio_value * factor
-    # Transaction cost is 0.1% of transaction volume
-    transaction_cost = abs(adjusted_value - portfolio_value) * 0.001
-    return adjusted_value - transaction_cost
+# Process multiplier based on conditions
+base_value = 3
+if len(valid_items) > 2:
+    multiplier = base_value + 1
+else:
+    multiplier = base_value - 1
 
-@dataclass
-class MarketDay:
-    signal: str
-    volatility: float
-
-# Initial portfolio setup
-portfolio_value = 100000.0
-market_conditions: List[MarketDay] = [
-    MarketDay('bull', 0.8),
-    MarketDay('stable', 0.2),
-    MarketDay('bear', 1.2),
-    MarketDay('bull', 0.5),
-    MarketDay('bear', 0.9)
-]
-
-# Process each market day with greedy strategy (always execute full adjustment)
-for day in market_conditions:
-    portfolio_value = process_day(portfolio_value, day.signal, day.volatility)
-    # Cap adjustment to prevent extreme growth/decline
-    if portfolio_value > 150000:
-        portfolio_value = 150000
-    elif portfolio_value < 50000:
-        portfolio_value = 50000
-
-final_portfolio_value = round(portfolio_value, 2)
-print(f'Result: {final_portfolio_value}')
+# Calculate final count
+final_count = len(valid_items) * multiplier
+print(f"Target result: {final_count}")

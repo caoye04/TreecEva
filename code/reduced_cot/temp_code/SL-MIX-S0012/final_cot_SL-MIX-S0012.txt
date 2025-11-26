@@ -1,14 +1,52 @@
-Target: Find the value of variable min_safe_distance after [line 14] executes
+Target: Find the value of variable final_balance after [line 15] executes
 
-[line 4]  radius_first_bed = 5
-Assign: radius_first_bed = 5
-[line 5]  radius_second_bed = 3
-Assign: radius_second_bed = 3
-[line 6]  radius_third_bed = 4
-Assign: radius_third_bed = 4
-[line 10]  distance_first_to_second = radius_first_bed + radius_second_bed
-Compute: radius_first_bed + radius_second_bed, where radius_first_bed=5 (defined at [line 4]), radius_second_bed=3 (defined at [line 5]) = 8
-[line 14]  min_safe_distance = distance_first_to_second + radius_third_bed
-Compute: distance_first_to_second + radius_third_bed, where distance_first_to_second=8 (defined at [line 10]), radius_third_bed=4 (defined at [line 6]) = 12
+[line 1]  initial_balance = 1000
+Assign: initial_balance = 1000
+[line 2]  transaction_log = ["deposit:200", "withdrawal:150", "deposit:300", "withdrawal:50"]
+Compute: ["deposit:200", "withdrawal:150", "deposit:300", "withdrawal:50"] = ['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']
+[line 4]  total_deposits = 0
+Assign: total_deposits = 0
+[line 5]  total_withdrawals = 0
+Assign: total_withdrawals = 0
+[line 7]  for entry in transaction_log:
+Loop Start: entry takes its first value 'deposit:200'
+[line 8]  if entry.startswith("deposit:"):
+Condition: True, entering 'if' block
+[line 9]  amount = int(entry.split(":")[1])
+Call function int(entry.split(":")[1])
+[line 10]  total_deposits += amount
+Update: total_deposits changed from 0 (defined at defined at [line 4]) to 0+amount = 200
+[line 7]  for entry in transaction_log:
+Loop Iteration: entry is now 'withdrawal:150' (iteration 2)
+[line 8]  if entry.startswith("deposit:"):
+Condition: True, entering 'if' block
+[line 11]  elif entry.startswith("withdrawal:"):
+'elif' Condition: True, entering block
+[line 12]  amount = int(entry.split(":")[1])
+Call function int(entry.split(":")[1])
+[line 13]  total_withdrawals += amount
+Update: total_withdrawals changed from 0 (defined at defined at [line 5]) to 0+amount = 150
+[line 7]  for entry in transaction_log:
+Loop Iteration: entry is now 'deposit:300' (iteration 3)
+[line 8]  if entry.startswith("deposit:"):
+Condition: True, entering 'if' block
+[line 9]  amount = int(entry.split(":")[1])
+Call function int(entry.split(":")[1])
+[line 10]  total_deposits += amount
+Update: total_deposits changed from 200 (defined at defined at [line 10]) to 200+amount = 500
+[line 7]  for entry in transaction_log:
+Loop Iteration: entry is now 'withdrawal:50' (iteration 4)
+[line 8]  if entry.startswith("deposit:"):
+Condition: True, entering 'if' block
+[line 11]  elif entry.startswith("withdrawal:"):
+'elif' Condition: True, entering block
+[line 12]  amount = int(entry.split(":")[1])
+Call function int(entry.split(":")[1])
+[line 13]  total_withdrawals += amount
+Update: total_withdrawals changed from 150 (defined at defined at [line 13]) to 150+amount = 200
+[line 7]  for entry in transaction_log:
+Loop End: Iteration finished
+[line 15]  final_balance = total_deposits - total_withdrawals + initial_balance
+Compute: total_deposits - total_withdrawals + initial_balance, where total_deposits=500 (defined at [line 10]), total_withdrawals=200 (defined at [line 13]), initial_balance=1000 (defined at [line 1]) = 1300
 
-Answer: min_safe_distance = 12 (last updated on defined at [line 14])
+Answer: final_balance = 1300 (last updated on defined at [line 15])

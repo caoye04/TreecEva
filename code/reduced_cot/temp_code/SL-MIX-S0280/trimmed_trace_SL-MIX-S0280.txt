@@ -1,0 +1,47 @@
+43
+final_temperature
+---
+29 thermal_readings = [22.5, 23.1, 21.8, 24.2, 22.9, -100, 200]
+29 ['thermal_readings'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]']
+30 calibration_set = {0, 2, 4, 6, 8}
+30 ['thermal_readings', 'calibration_set'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{0, 2, 4, 6, 8}']
+38 temperature = apply_thermal_correction(thermal_readings, calibration_set)
+38 ['thermal_readings', 'calibration_set'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{0, 2, 4, 6, 8}']
+PARAM_MAPPING {'readings': {'actual_var': 'thermal_readings', 'value': [22.5, 23.1, 21.8, 24.2, 22.9, -100, 200]}, 'calibration': {'actual_var': 'calibration_set', 'value': {0, 2, 4, 6, 8}}}
+FUNCTION_ENTER 1 apply_thermal_correction def apply_thermal_correction(readings, calibration):
+1 ['readings', 'calibration'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 22.5}, {'_type': 'float', '_value': 23.1}, {'_type': 'float', '_value': 21.8}, {'_type': 'float', '_value': 24.2}, {'_type': 'float', '_value': 22.9}, {'_type': 'int', '_value': -100}, {'_type': 'int', '_value': 200}], '_len': 7}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 8}], '_len': 5}]
+7 valid_readings = {x for x in readings if x > -50 and x < 150}
+7 ['readings', 'calibration', 'x'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{0, 2, 4, 6, 8}', '22.5']
+7 valid_readings = {x for x in readings if x > -50 and x < 150}
+7 ['readings', 'calibration', 'x'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{0, 2, 4, 6, 8}', '23.1']
+7 valid_readings = {x for x in readings if x > -50 and x < 150}
+7 ['readings', 'calibration', 'x'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{0, 2, 4, 6, 8}', '21.8']
+7 valid_readings = {x for x in readings if x > -50 and x < 150}
+7 ['readings', 'calibration', 'x'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{0, 2, 4, 6, 8}', '24.2']
+7 valid_readings = {x for x in readings if x > -50 and x < 150}
+7 ['readings', 'calibration', 'x'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{0, 2, 4, 6, 8}', '22.9']
+7 valid_readings = {x for x in readings if x > -50 and x < 150}
+7 ['readings', 'calibration', 'x'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{0, 2, 4, 6, 8}', '-100']
+7 valid_readings = {x for x in readings if x > -50 and x < 150}
+7 ['readings', 'calibration', 'x'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{0, 2, 4, 6, 8}', '200']
+7 valid_readings = {x for x in readings if x > -50 and x < 150}
+7 ['readings', 'calibration', 'valid_readings'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{0, 2, 4, 6, 8}', '{23.1, 21.8, 22.9, 22.5, 24.2}']
+8 calibration_delta = calibration.difference({-5, 0, 5, 10})
+8 ['readings', 'calibration', 'valid_readings', 'calibration_delta'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{0, 2, 4, 6, 8}', '{23.1, 21.8, 22.9, 22.5, 24.2}', '{8, 2, 4, 6}']
+15 if len(valid_readings) >= 3:
+15 ['readings', 'valid_readings', 'calibration_delta'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{23.1, 21.8, 22.9, 22.5, 24.2}', '{8, 2, 4, 6}']
+16 base_temp = min(valid_readings) + max(valid_readings)
+16 ['readings', 'valid_readings', 'calibration_delta', 'base_temp'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{23.1, 21.8, 22.9, 22.5, 24.2}', '{8, 2, 4, 6}', '46.0']
+17 correction_factor = len(calibration_delta) * 2.5
+17 ['readings', 'calibration_delta', 'base_temp', 'correction_factor'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '{8, 2, 4, 6}', '46.0', '10.0']
+18 corrected_temp = base_temp - correction_factor
+18 ['readings', 'base_temp', 'correction_factor', 'corrected_temp'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '46.0', '10.0', '36.0']
+21 if len(readings) > 10:
+21 ['readings', 'corrected_temp'] ['[22.5, 23.1, 21.8, 24.2, 22.9, ...]', '36.0']
+24 return round(corrected_temp, 2)
+24 ['corrected_temp'] ['36.0']
+FUNCTION_RETURN 24 apply_thermal_correction {'_type': 'float', '_value': 36.0}
+42 calibration_error = max(calibration_set) - min(calibration_set)
+42 ['calibration_set', 'temperature', 'calibration_error'] ['{0, 2, 4, 6, 8}', '36.0', '8']
+43 final_temperature = temperature + (calibration_error / 10)
+43 ['temperature', 'calibration_error', 'final_temperature'] ['36.0', '8', '36.8']

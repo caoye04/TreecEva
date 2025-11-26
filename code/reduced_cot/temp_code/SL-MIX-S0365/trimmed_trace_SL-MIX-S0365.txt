@@ -1,0 +1,79 @@
+51
+final_balance
+---
+3 fee_total = sum([amt * 0.02 if amt > 100 else amt * 0.01 for amt in amounts])
+3 ['amounts', 'amt'] ['[200, 150, 300, 75]', '200']
+3 fee_total = sum([amt * 0.02 if amt > 100 else amt * 0.01 for amt in amounts])
+3 ['amounts', 'amt'] ['[200, 150, 300, 75]', '150']
+3 fee_total = sum([amt * 0.02 if amt > 100 else amt * 0.01 for amt in amounts])
+3 ['amounts', 'amt'] ['[200, 150, 300, 75]', '300']
+3 fee_total = sum([amt * 0.02 if amt > 100 else amt * 0.01 for amt in amounts])
+3 ['amounts', 'amt'] ['[200, 150, 300, 75]', '75']
+3 fee_total = sum([amt * 0.02 if amt > 100 else amt * 0.01 for amt in amounts])
+3 ['amounts', 'fee_total'] ['[200, 150, 300, 75]', '13.75']
+4 penalty = max(amounts) * 0.05 if len(amounts) > 3 else 0
+4 ['amounts', 'fee_total', 'penalty'] ['[200, 150, 300, 75]', '13.75', '15.0']
+5 return fee_total + penalty
+5 ['fee_total', 'penalty'] ['13.75', '15.0']
+51 final_balance = process_transactions(account_data, transaction_log)
+51 ['account_data', 'transaction_log'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]"]
+PARAM_MAPPING {'accounts': {'actual_var': 'account_data', 'value': {'initial': 1000, 'references': [101, 102, 103, 104]}}, 'transactions': {'actual_var': 'transaction_log', 'value': [{'type': 'deposit', 'amount': 200}, {'type': 'withdrawal', 'amount': 150}, {'type': 'deposit', 'amount': 300}, {'type': 'withdrawal', 'amount': 75}]}}
+FUNCTION_ENTER 7 process_transactions def process_transactions(accounts, transactions):
+7 ['accounts', 'transactions'] [{'_type': 'dict', '_items': {'initial': {'_type': 'int', '_value': 1000}, 'references': {'_type': 'list', '_items': [{'_type': 'int', '_value': 101}, {'_type': 'int', '_value': 102}, {'_type': 'int', '_value': 103}, {'_type': 'int', '_value': 104}], '_len': 4}}, '_len': 2}, {'_type': 'list', '_items': [{'_type': 'dict', '_items': {'type': {'_type': 'str', '_value': 'deposit'}, 'amount': {'_type': 'int', '_value': 200}}, '_len': 2}, {'_type': 'dict', '_items': {'type': {'_type': 'str', '_value': 'withdrawal'}, 'amount': {'_type': 'int', '_value': 150}}, '_len': 2}, {'_type': 'dict', '_items': {'type': {'_type': 'str', '_value': 'deposit'}, 'amount': {'_type': 'int', '_value': 300}}, '_len': 2}, {'_type': 'dict', '_items': {'type': {'_type': 'str', '_value': 'withdrawal'}, 'amount': {'_type': 'int', '_value': 75}}, '_len': 2}], '_len': 4}]
+8 balance = accounts['initial']
+8 ['accounts', 'transactions', 'balance'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1000']
+12 for i, trans in enumerate(transactions):
+12 ['accounts', 'transactions', 'balance', 'i', 'trans'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1000', '0', "{type: 'deposit', amount: 200}"]
+13 if trans['type'] == 'deposit':
+13 ['accounts', 'transactions', 'balance', 'i', 'trans'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1000', '0', "{type: 'deposit', amount: 200}"]
+14 balance += trans['amount'] * 0.8  # Wrong multiplier
+14 ['accounts', 'transactions', 'balance', 'i', 'trans'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1160.0', '0', "{type: 'deposit', amount: 200}"]
+12 for i, trans in enumerate(transactions):
+12 ['accounts', 'transactions', 'balance', 'i', 'trans'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1160.0', '1', "{type: 'withdrawal', amount: 150}"]
+13 if trans['type'] == 'deposit':
+13 ['accounts', 'transactions', 'balance', 'i', 'trans'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1160.0', '1', "{type: 'withdrawal', amount: 150}"]
+12 for i, trans in enumerate(transactions):
+12 ['accounts', 'transactions', 'balance', 'i', 'trans'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1160.0', '2', "{type: 'deposit', amount: 300}"]
+13 if trans['type'] == 'deposit':
+13 ['accounts', 'transactions', 'balance', 'i', 'trans'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1160.0', '2', "{type: 'deposit', amount: 300}"]
+14 balance += trans['amount'] * 0.8  # Wrong multiplier
+14 ['accounts', 'transactions', 'balance', 'i', 'trans'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1400.0', '2', "{type: 'deposit', amount: 300}"]
+12 for i, trans in enumerate(transactions):
+12 ['accounts', 'transactions', 'balance', 'i', 'trans'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1400.0', '3', "{type: 'withdrawal', amount: 75}"]
+13 if trans['type'] == 'deposit':
+13 ['accounts', 'transactions', 'balance', 'i', 'trans'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1400.0', '3', "{type: 'withdrawal', amount: 75}"]
+12 for i, trans in enumerate(transactions):
+12 ['accounts', 'transactions', 'balance', 'i', 'trans'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1400.0', '3', "{type: 'withdrawal', amount: 75}"]
+18 for account_ref, trans in zip(accounts['references'], transactions):
+18 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1400.0', "{type: 'deposit', amount: 200}", '101']
+19 if trans['type'] == 'deposit':
+19 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1400.0', "{type: 'deposit', amount: 200}", '101']
+20 balance += trans['amount']
+20 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1600.0', "{type: 'deposit', amount: 200}", '101']
+18 for account_ref, trans in zip(accounts['references'], transactions):
+18 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1600.0', "{type: 'withdrawal', amount: 150}", '102']
+19 if trans['type'] == 'deposit':
+19 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1600.0', "{type: 'withdrawal', amount: 150}", '102']
+21 elif trans['type'] == 'withdrawal':
+21 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1600.0', "{type: 'withdrawal', amount: 150}", '102']
+22 balance -= trans['amount']
+22 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1450.0', "{type: 'withdrawal', amount: 150}", '102']
+18 for account_ref, trans in zip(accounts['references'], transactions):
+18 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1450.0', "{type: 'deposit', amount: 300}", '103']
+19 if trans['type'] == 'deposit':
+19 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1450.0', "{type: 'deposit', amount: 300}", '103']
+20 balance += trans['amount']
+20 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1750.0', "{type: 'deposit', amount: 300}", '103']
+18 for account_ref, trans in zip(accounts['references'], transactions):
+18 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1750.0', "{type: 'withdrawal', amount: 75}", '104']
+19 if trans['type'] == 'deposit':
+19 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1750.0', "{type: 'withdrawal', amount: 75}", '104']
+21 elif trans['type'] == 'withdrawal':
+21 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1750.0', "{type: 'withdrawal', amount: 75}", '104']
+22 balance -= trans['amount']
+22 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1675.0', "{type: 'withdrawal', amount: 75}", '104']
+18 for account_ref, trans in zip(accounts['references'], transactions):
+18 ['accounts', 'transactions', 'balance', 'trans', 'account_ref'] ['{initial: 1000, references: [101, 102, 103, 104]}', "[{type: 'deposit', amount: 200}, {type: 'withdrawal', amount: 150}, {type: 'deposit', amount: 300}, {type: 'withdrawal', amount: 75}]", '1675.0', "{type: 'withdrawal', amount: 75}", '104']
+33 return balance
+33 ['balance'] ['1675.0']
+FUNCTION_RETURN 33 process_transactions {'_type': 'float', '_value': 1675.0}

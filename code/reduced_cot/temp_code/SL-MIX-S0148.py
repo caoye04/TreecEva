@@ -1,46 +1,45 @@
-from collections import defaultdict
-
-class SensorReading:
-    def __init__(self, start_time, end_time, animal_count):
-        self.start_time = start_time
-        self.end_time = end_time
-        self.animal_count = animal_count
-
-def calculate_max_animals(sensor_data):
-    # Sort sensors by end time
-    sensor_data.sort(key=lambda x: x.end_time)
+def analyze_performance(metrics):
+    # Distractor: processing unrelated data
+    raw_scores = [m['response_time'] for m in metrics]
+    processed_scores = [score * 2 for score in raw_scores]
     
-    # Dynamic programming array to store maximum animals up to each sensor
-    dp = [0] * (len(sensor_data) + 1)
+    # Relevant processing for quality scores
+    quality_scores = [m['accuracy'] * 100 for m in metrics]
+    adjusted_scores = [score + (score % 7) for score in quality_scores]
     
-    # For each sensor, calculate maximum animals
-    for i in range(1, len(sensor_data) + 1):
-        # Current sensor index in original array
-        current = i - 1
-        
-        # Find latest non-overlapping sensor
-        latest_non_overlap = 0
-        for j in range(current - 1, -1, -1):
-            if sensor_data[j].end_time <= sensor_data[current].start_time:
-                latest_non_overlap = j + 1
-                break
-        
-        # Choose maximum between including or excluding current sensor
-        dp[i] = max(dp[i-1], dp[latest_non_overlap] + sensor_data[current].animal_count)
+    # Distractor: unused calculations
+    time_variance = max(raw_scores) - min(raw_scores)
+    performance_index = time_variance * len(metrics)
     
-    return dp[len(sensor_data)]
+    # Critical path: sorting and indexing
+    sorted_scores = sorted(adjusted_scores)
+    score_gap = sorted_scores[-1] - sorted_scores[0]
+    
+    # More distractors: misleading computations
+    quality_modifier = sum(adjusted_scores) // len(metrics) if len(metrics) > 0 else 0
+    efficiency_ratio = score_gap / quality_modifier if quality_modifier != 0 else 0
+    
+    # Dead code path
+    if efficiency_ratio > 10:
+        bonus_points = efficiency_ratio * 2
+    else:
+        bonus_points = 0
+    
+    # Final calculation with string manipulation
+    score_labels = [f"Score_{i}" for i in range(len(sorted_scores))]
+    label_index = len(score_labels) - 1
+    
+    # Key statement: final computation
+    final_score = sorted_scores[-1] - quality_modifier
+    
+    print(f"Result: {final_score}")
 
-# Sensor data: (start_time, end_time, animal_count)
-sensor_readings = [
-    SensorReading(1, 4, 5),
-    SensorReading(3, 5, 1),
-    SensorReading(0, 6, 8),
-    SensorReading(4, 7, 4),
-    SensorReading(3, 8, 6),
-    SensorReading(5, 9, 2),
-    SensorReading(6, 10, 7),
-    SensorReading(8, 11, 3)
+# Test data
+performance_metrics = [
+    {'response_time': 45, 'accuracy': 0.87},
+    {'response_time': 32, 'accuracy': 0.92},
+    {'response_time': 51, 'accuracy': 0.85},
+    {'response_time': 28, 'accuracy': 0.95}
 ]
 
-max_animals_tracked = calculate_max_animals(sensor_readings)
-print(f"Result: {max_animals_tracked}")
+analyze_performance(performance_metrics)

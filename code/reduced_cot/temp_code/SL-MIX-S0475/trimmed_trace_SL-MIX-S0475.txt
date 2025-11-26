@@ -1,0 +1,39 @@
+44
+final_throughput
+---
+29 packet_sizes = [120, 180, 90, 210, 160, 75, 195, 140]
+29 ['packet_sizes'] ['[120, 180, 90, 210, 160, ...]']
+37 result = analyze_network_traffic(packet_sizes, latency_threshold=150)
+37 ['packet_sizes'] ['[120, 180, 90, 210, 160, ...]']
+6 filtered_packets = [p for p in packets if p > latency_threshold]
+6 ['packets', 'latency_threshold', 'p'] ['[120, 180, 90, 210, 160, ...]', '150', '120']
+6 filtered_packets = [p for p in packets if p > latency_threshold]
+6 ['packets', 'latency_threshold', 'p'] ['[120, 180, 90, 210, 160, ...]', '150', '180']
+6 filtered_packets = [p for p in packets if p > latency_threshold]
+6 ['packets', 'latency_threshold', 'p'] ['[120, 180, 90, 210, 160, ...]', '150', '90']
+6 filtered_packets = [p for p in packets if p > latency_threshold]
+6 ['packets', 'latency_threshold', 'p'] ['[120, 180, 90, 210, 160, ...]', '150', '210']
+6 filtered_packets = [p for p in packets if p > latency_threshold]
+6 ['packets', 'latency_threshold', 'p'] ['[120, 180, 90, 210, 160, ...]', '150', '160']
+6 filtered_packets = [p for p in packets if p > latency_threshold]
+6 ['packets', 'latency_threshold', 'p'] ['[120, 180, 90, 210, 160, ...]', '150', '75']
+6 filtered_packets = [p for p in packets if p > latency_threshold]
+6 ['packets', 'latency_threshold', 'p'] ['[120, 180, 90, 210, 160, ...]', '150', '195']
+6 filtered_packets = [p for p in packets if p > latency_threshold]
+6 ['packets', 'latency_threshold', 'p'] ['[120, 180, 90, 210, 160, ...]', '150', '140']
+6 filtered_packets = [p for p in packets if p > latency_threshold]
+6 ['packets', 'latency_threshold', 'filtered_packets'] ['[120, 180, 90, 210, 160, ...]', '150', '[180, 210, 160, 195]']
+12 calc_throughput = lambda x, y: (x / y) * 1000 if y > 0 else 0
+12 ['packets', 'filtered_packets'] ['[120, 180, 90, 210, 160, ...]', '[180, 210, 160, 195]']
+13 throughput = calc_throughput(len(filtered_packets), len(packets))
+13 ['packets', 'filtered_packets'] ['[120, 180, 90, 210, 160, ...]', '[180, 210, 160, 195]']
+16 if len(packets) < 2:
+16 ['packets', 'throughput'] ['[120, 180, 90, 210, 160, ...]', '500.0']
+20 efficiency_factor = 0.85 if throughput > 200 else 0.92
+20 ['throughput', 'efficiency_factor'] ['500.0', '0.85']
+21 adjusted_throughput = throughput * efficiency_factor
+21 ['throughput', 'efficiency_factor', 'adjusted_throughput'] ['500.0', '0.85', '425.0']
+26 return adjusted_throughput
+26 ['adjusted_throughput'] ['425.0']
+44 final_throughput = round(result, 2)
+44 ['result', 'final_throughput'] ['425.0', '425.0']

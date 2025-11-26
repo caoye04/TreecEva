@@ -1,41 +1,42 @@
-import heapq
-from math import gcd
-from functools import reduce
+def transform_input(input_data):
+    # Misleading transformation that looks important but isn't
+    processed = [x * 2 - 3 for x in input_data if x > 0]
+    unused_computation = sum([i ** 2 for i in range(10)])  # Dead code path
+    misleading_result = len(processed) * 7.5  # Red herring
+    
+    # Actual relevant processing
+    filtered = [str(x).replace('8', '5').replace('9', '2') for x in input_data]
+    combined = ''.join(filter(lambda x: x.isdigit(), filtered))
+    return int(combined) if combined else 0
 
-def is_prime(n):
-    if n < 2:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
+def decrypt_message(encoded_value):
+    # Multiple irrelevant operations
+    temp_shift = encoded_value << 3
+    fake_mask = 0b11111111  # Misleading bitwise constant
+    dummy_calc = (temp_shift & fake_mask) | 64  # Dead operation
+    
+    # Actual decryption logic
+    base_value = encoded_value ^ 0x2A  # XOR with constant
+    rotated = (base_value >> 2) | ((base_value & 3) << 6)
+    
+    # More distractions
+    unused_list = [rotated + i for i in range(5)]
+    misleading_total = sum(unused_list)  # Red herring
+    
+    return rotated - 17
 
-# Initialize cryptographic components
-processed_values_heap = []
-prime_sequence = [n for n in range(2, 50) if is_prime(n)]
-accumulated_hash = 1
-modulus_base = 1000
+# Main execution with distractions
+data_sample = [8, 3, 9, 7, 2, 4]
+irrelevant_set = {1, 8, 3, 9, 7, 2, 4}  # Similar but unused
+misleading_string = "893724"  # Looks relevant but isn't
+fake_result = transform_input(list(irrelevant_set))  # Dead computation
 
-# Process prime sequence with custom hashing
-for idx, prime in enumerate(prime_sequence):
-    if idx % 3 == 0:
-        heapq.heappush(processed_values_heap, prime * 2)
-    elif idx % 3 == 1:
-        heapq.heappush(processed_values_heap, prime + 5)
-    else:
-        squared_val = prime ** 2
-        heapq.heappush(processed_values_heap, squared_val if squared_val < 100 else prime)
+# Critical execution point
+final_solution = decrypt_message(transform_input(data_sample))
 
-# Apply reduction with GCD operations
-while len(processed_values_heap) > 1:
-    first = heapq.heappop(processed_values_heap)
-    second = heapq.heappop(processed_values_heap)
-    combined_gcd = gcd(first, second)
-    accumulated_hash = (accumulated_hash * combined_gcd) % modulus_base
-    heapq.heappush(processed_values_heap, combined_gcd)
+# More irrelevant calculations
+dummy_vars = [final_solution * i for i in range(1, 4)]
+unused_sum = lambda x, y, z: x + y + z
+misleading_output = unused_sum(*dummy_vars)  # Dead code path
 
-# Final signature calculation with ternary logic
-final_element = heapq.heappop(processed_values_heap)
-cryptographic_signature = accumulated_hash if final_element > 10 else accumulated_hash // 2
-
-print(f"Result: {cryptographic_signature}")
+print(f"Target result: {final_solution}")

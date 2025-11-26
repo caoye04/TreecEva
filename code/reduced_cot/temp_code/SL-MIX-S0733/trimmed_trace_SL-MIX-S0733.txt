@@ -1,0 +1,123 @@
+41
+final_score
+---
+35 encrypted_data = [0x37, 0x5A, 0x89, 0xF2, 0x1E, 0x4C, 0xB7, 0x63]
+35 ['encrypted_data'] ['[55, 90, 137, 242, 30, ...]']
+36 validator_mask = [0x7F, 0x3A, 0x55, 0x91]
+36 ['encrypted_data', 'validator_mask'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]']
+41 final_score = compute_validation_score(encrypted_data, validator_mask)
+41 ['encrypted_data', 'validator_mask'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]']
+PARAM_MAPPING {'data_stream': {'actual_var': 'encrypted_data', 'value': [55, 90, 137, 242, 30, 76, 183, 99]}, 'mask_bits': {'actual_var': 'validator_mask', 'value': [127, 58, 85, 145]}}
+FUNCTION_ENTER 1 compute_validation_score def compute_validation_score(data_stream, mask_bits):
+1 ['data_stream', 'mask_bits'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 55}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 137}, {'_type': 'int', '_value': 242}, {'_type': 'int', '_value': 30}, {'_type': 'int', '_value': 76}, {'_type': 'int', '_value': 183}, {'_type': 'int', '_value': 99}], '_len': 8}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 127}, {'_type': 'int', '_value': 58}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 145}], '_len': 4}]
+2 temp_buffer = [0] * 8
+2 ['data_stream', 'mask_bits', 'temp_buffer'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[0, 0, 0, 0, 0, ...]']
+9 for i, byte_val in enumerate(data_stream):
+9 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[0, 0, 0, 0, 0, ...]', '0', '55']
+10 masked_val = byte_val & mask_bits[i % len(mask_bits)]
+10 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[0, 0, 0, 0, 0, ...]', '0', '55', '55']
+11 temp_buffer[i % 8] ^= masked_val
+11 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 0, 0, 0, 0, ...]', '0', '55', '55']
+9 for i, byte_val in enumerate(data_stream):
+9 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 0, 0, 0, 0, ...]', '1', '90', '55']
+10 masked_val = byte_val & mask_bits[i % len(mask_bits)]
+10 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 0, 0, 0, 0, ...]', '1', '90', '26']
+11 temp_buffer[i % 8] ^= masked_val
+11 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 0, 0, 0, ...]', '1', '90', '26']
+9 for i, byte_val in enumerate(data_stream):
+9 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 0, 0, 0, ...]', '2', '137', '26']
+10 masked_val = byte_val & mask_bits[i % len(mask_bits)]
+10 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 0, 0, 0, ...]', '2', '137', '1']
+11 temp_buffer[i % 8] ^= masked_val
+11 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 0, 0, ...]', '2', '137', '1']
+9 for i, byte_val in enumerate(data_stream):
+9 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 0, 0, ...]', '3', '242', '1']
+10 masked_val = byte_val & mask_bits[i % len(mask_bits)]
+10 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 0, 0, ...]', '3', '242', '144']
+11 temp_buffer[i % 8] ^= masked_val
+11 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 0, ...]', '3', '242', '144']
+9 for i, byte_val in enumerate(data_stream):
+9 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 0, ...]', '4', '30', '144']
+10 masked_val = byte_val & mask_bits[i % len(mask_bits)]
+10 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 0, ...]', '4', '30', '30']
+11 temp_buffer[i % 8] ^= masked_val
+11 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 30, ...]', '4', '30', '30']
+9 for i, byte_val in enumerate(data_stream):
+9 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 30, ...]', '5', '76', '30']
+10 masked_val = byte_val & mask_bits[i % len(mask_bits)]
+10 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 30, ...]', '5', '76', '8']
+11 temp_buffer[i % 8] ^= masked_val
+11 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 30, ...]', '5', '76', '8']
+9 for i, byte_val in enumerate(data_stream):
+9 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 30, ...]', '6', '183', '8']
+10 masked_val = byte_val & mask_bits[i % len(mask_bits)]
+10 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 30, ...]', '6', '183', '21']
+11 temp_buffer[i % 8] ^= masked_val
+11 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 30, ...]', '6', '183', '21']
+9 for i, byte_val in enumerate(data_stream):
+9 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 30, ...]', '7', '99', '21']
+10 masked_val = byte_val & mask_bits[i % len(mask_bits)]
+10 ['data_stream', 'mask_bits', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[127, 58, 85, 145]', '[55, 26, 1, 144, 30, ...]', '7', '99', '1']
+11 temp_buffer[i % 8] ^= masked_val
+11 ['data_stream', 'temp_buffer', 'i', 'byte_val', 'masked_val'] ['[55, 90, 137, 242, 30, ...]', '[55, 26, 1, 144, 30, ...]', '7', '99', '1']
+9 for i, byte_val in enumerate(data_stream):
+9 ['data_stream', 'temp_buffer', 'i', 'byte_val'] ['[55, 90, 137, 242, 30, ...]', '[55, 26, 1, 144, 30, ...]', '7', '99']
+16 validation_sum = 0
+16 ['temp_buffer', 'validation_sum'] ['[55, 26, 1, 144, 30, ...]', '0']
+17 for idx, val in enumerate(temp_buffer):
+17 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '0', '0', '55']
+18 if idx % 2 == 0:
+18 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '0', '0', '55']
+19 validation_sum += (val << 1) | 0x1
+19 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '111', '0', '55']
+17 for idx, val in enumerate(temp_buffer):
+17 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '111', '1', '26']
+18 if idx % 2 == 0:
+18 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '111', '1', '26']
+21 validation_sum += val ^ 0x3A
+21 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '143', '1', '26']
+17 for idx, val in enumerate(temp_buffer):
+17 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '143', '2', '1']
+18 if idx % 2 == 0:
+18 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '143', '2', '1']
+19 validation_sum += (val << 1) | 0x1
+19 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '146', '2', '1']
+17 for idx, val in enumerate(temp_buffer):
+17 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '146', '3', '144']
+18 if idx % 2 == 0:
+18 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '146', '3', '144']
+21 validation_sum += val ^ 0x3A
+21 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '316', '3', '144']
+17 for idx, val in enumerate(temp_buffer):
+17 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '316', '4', '30']
+18 if idx % 2 == 0:
+18 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '316', '4', '30']
+19 validation_sum += (val << 1) | 0x1
+19 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '377', '4', '30']
+17 for idx, val in enumerate(temp_buffer):
+17 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '377', '5', '8']
+18 if idx % 2 == 0:
+18 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '377', '5', '8']
+21 validation_sum += val ^ 0x3A
+21 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '427', '5', '8']
+17 for idx, val in enumerate(temp_buffer):
+17 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '427', '6', '21']
+18 if idx % 2 == 0:
+18 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '427', '6', '21']
+19 validation_sum += (val << 1) | 0x1
+19 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '470', '6', '21']
+17 for idx, val in enumerate(temp_buffer):
+17 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '470', '7', '1']
+18 if idx % 2 == 0:
+18 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '470', '7', '1']
+21 validation_sum += val ^ 0x3A
+21 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '529', '7', '1']
+17 for idx, val in enumerate(temp_buffer):
+17 ['temp_buffer', 'validation_sum', 'idx', 'val'] ['[55, 26, 1, 144, 30, ...]', '529', '7', '1']
+27 if validation_sum > 100:
+27 ['validation_sum'] ['529']
+28 validation_sum = (validation_sum % 64) + 25
+28 ['validation_sum'] ['42']
+32 return validation_sum
+32 ['validation_sum'] ['42']
+FUNCTION_RETURN 32 compute_validation_score {'_type': 'int', '_value': 42}

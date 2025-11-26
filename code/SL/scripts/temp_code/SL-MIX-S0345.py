@@ -1,39 +1,36 @@
-import math
+def generate_mask(pattern_val):
+    mask_data = [pattern_val << i for i in range(4)]
+    unused_mask = [x ^ 0xFF for x in mask_data]
+    return mask_data[2] & 0x7F
 
-def modified_fibonacci_with_decay(n, decay_rate=0.1):
-    if n <= 0:
-        return 0
-    elif n == 1:
-        return 1
-    else:
-        # Dynamic programming approach to avoid redundant calculations
-        fib_cache = [0] * (n + 1)
-        fib_cache[1] = 1
-        
-        for i in range(2, n + 1):
-            # Modified Fibonacci: F(n) = F(n-1) + F(n-2) + decay_factor
-            decay_factor = math.exp(-decay_rate * i)
-            fib_cache[i] = fib_cache[i-1] + fib_cache[i-2] + decay_factor
-        
-        return fib_cache[n]
+def process_crypto_key(key_bytes, mask_gen):
+    key_hash = sum(key_bytes) % 256
+    temp_val = (key_hash ^ mask_gen) & 0x3F
+    
+    # Distractor operations
+    fake_checksum = sum([b << 2 for b in key_bytes]) % 1000
+    redundant_xor = temp_val ^ fake_checksum
+    dead_branch = redundant_xor if fake_checksum > 500 else redundant_xor + 1
+    
+    shifted_val = (temp_val << 2) | (temp_val >> 4)
+    filtered_bytes = [b for b in key_bytes if (b & 0x1) == 0]
+    byte_sum = sum(filtered_bytes) if filtered_bytes else 42
+    
+    result = (shifted_val + byte_sum) % 128
+    return result
 
-# Analysis period
-analysis_period = 15
+# Main execution with distractions
+key_data = [0x1F, 0x8C, 0x47, 0x92, 0xE3]
+mask_pattern = 0x17
 
-degradation_sequence = [modified_fibonacci_with_decay(i, 0.05) for i in range(1, analysis_period + 1)]
+# Irrelevant computations
+aux_data = [x * 3 for x in range(10)]
+aux_sum = sum(aux_data[::2])
+shadow_var = aux_sum ^ mask_pattern
 
-# Calculate cumulative impact with weighted contributions
-signal_weights = [math.log(i+2) for i in range(analysis_period)]
+# Critical execution point
+result = process_crypto_key(key_data, mask_pattern)
 
-weighted_degradations = [degradation_sequence[i] * signal_weights[i] for i in range(len(degradation_sequence))]
-
-# Apply a secondary filter to focus on significant degradation events
-significant_degradations = list(filter(lambda x: x > 5, weighted_degradations))
-
-# Calculate the cumulative impact
-from functools import reduce
-cumulative_impact = reduce(lambda acc, val: acc + val * 0.75, significant_degradations, 0)
-
-cumulative_impact = round(cumulative_impact, 2)
-
-print(f"Result: {cumulative_impact}")
+# More distractions
+final_output = result + (shadow_var % 16)
+print(f"Target result: {final_output}")

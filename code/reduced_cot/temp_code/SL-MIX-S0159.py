@@ -1,39 +1,25 @@
-import math
-
-def modified_fibonacci(n):
-    if n <= 1:
-        return n
-    else:
-        return modified_fibonacci(n-1) + modified_fibonacci(n-2)
-
-def apply_bit_mask(value, mask):
-    return value & mask
-
-class SimulationContext:
-    def __init__(self):
-        self.iterations = 10
-        self.decay_base = 1.2
-        self.mask = 0b11110000
+def calculate_text_analysis(text_samples):
+    character_counts = {}
     
-    def run(self):
-        populations = []
-        for i in range(self.iterations):
-            raw_pop = modified_fibonacci(i)
-            # Apply logarithmic dampening
-            if raw_pop > 0:
-                dampened_pop = raw_pop - int(math.log(raw_pop, self.decay_base))
-            else:
-                dampened_pop = raw_pop
-            # Apply bit mask
-            adjusted_pop = apply_bit_mask(dampened_pop, self.mask)
-            populations.append(adjusted_pop)
-        
-        # Calculate final adjusted population as sum of all adjusted populations raised to the power of 1.1
-        total = sum(populations)
-        final_adjusted_population = int(total ** 1.1)
-        return final_adjusted_population
+    for sample in text_samples:
+        for char in sample:
+            if char.isalpha():
+                character_counts[char.lower()] = character_counts.get(char.lower(), 0) + 1
+    
+    total_chars = sum(character_counts.values())
+    unique_chars = len(character_counts)
+    
+    base_score = total_chars * unique_chars
+    
+    adjustment_factor = 2
+    adjusted_sum = base_score + adjustment_factor
+    
+    normalization_factor = 3
+    final_score = adjusted_sum // normalization_factor
+    
+    print(f"Result: {final_score}")
+    return final_score
 
-# Execute simulation
-context = SimulationContext()
-final_adjusted_population = context.run()
-print(f"Result: {final_adjusted_population}")
+# Sample text data for analysis
+text_data = ["Hello", "World", "Python", "Programming"]
+calculate_text_analysis(text_data)

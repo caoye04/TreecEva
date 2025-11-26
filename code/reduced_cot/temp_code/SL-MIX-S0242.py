@@ -1,59 +1,79 @@
-from collections import defaultdict
+def parse_geodata(raw_input):
+    coordinates = []
+    temp_buffer = []
+    irrelevant_sum = 0
+    
+    # Distractor: processing that doesn't affect final result
+    for i, segment in enumerate(raw_input.split(';')):
+        if len(segment) > 0:
+            parts = segment.strip().split(',')
+            if len(parts) == 2:
+                try:
+                    x = int(parts[0])
+                    y = int(parts[1])
+                    coordinates.append((x, y))
+                    temp_buffer.append(x * y)  # Irrelevant computation
+                except ValueError:
+                    pass
+    
+    # Misleading intermediate calculation
+    intermediate_value = sum(temp_buffer) if temp_buffer else 0
+    irrelevant_sum = intermediate_value * 2  # Dead code path
+    
+    return coordinates
 
-def calculate_loading_efficiency(weights):
-    # Step 1: Initialize containers
-    weight_groups = defaultdict(list)
-    efficiency_score = 0
+def filter_quadrant(points):
+    filtered = []
+    count_unused = 0  # Misleading counter
     
-    # Step 2: Group weights by their magnitude ranges
-    for w in weights:
-        if w < 10:
-            weight_groups['light'].append(w)
-        elif 10 <= w < 50:
-            weight_groups['medium'].append(w)
+    for x, y in points:
+        # Complex conditional with dead branches
+        if x > 0 and y > 0:
+            filtered.append((x, y))
+        elif x < 0 and y < 0:
+            count_unused += 1  # This path is never taken in our data
         else:
-            weight_groups['heavy'].append(w)
+            # Distractor: complex but unused computation
+            unused_metric = abs(x) ^ abs(y)
     
-    # Step 3: Apply efficiency calculation for each group
-    for group_name, group_weights in weight_groups.items():
-        if not group_weights:
-            continue
-        
-        # Sort weights in descending order for optimal loading
-        group_weights.sort(reverse=True)
-        
-        # Calculate group efficiency using divide and conquer approach
-        def group_efficiency(sub_weights):
-            n = len(sub_weights)
-            if n == 0:
-                return 0
-            if n == 1:
-                return sub_weights[0] * 2
-            
-            mid = n // 2
-            left_eff = group_efficiency(sub_weights[:mid])
-            right_eff = group_efficiency(sub_weights[mid:])
-            
-            # Combine results with penalty for imbalance
-            balance_penalty = abs(sum(sub_weights[:mid]) - sum(sub_weights[mid:]))
-            return left_eff + right_eff - balance_penalty
-        
-        # Add group efficiency to total score
-        efficiency_score += group_efficiency(group_weights)
+    return filtered
+
+def process_coordinates(data_points):
+    from itertools import chain
     
-    # Step 4: Apply final adjustment based on loading pattern
-    light_count = len(weight_groups['light'])
-    medium_count = len(weight_groups['medium'])
-    heavy_count = len(weight_groups['heavy'])
+    # Slicing operations with complex indices
+    if len(data_points) >= 4:
+        sliced_data = data_points[1:-1:2] + data_points[::3]
+    else:
+        sliced_data = data_points
     
-    if light_count > medium_count and light_count > heavy_count:
-        efficiency_score *= 1.1
-    elif heavy_count > medium_count and heavy_count > light_count:
-        efficiency_score *= 0.9
+    # Irrelevant string manipulation
+    debug_string = "Processing " + str(len(sliced_data)) + " points"
     
-    return int(efficiency_score)
+    # Core computation with bitwise operations
+    result = 0
+    for point in sliced_data:
+        x, y = point
+        # Key calculation: XOR with modular arithmetic
+        result ^= (abs(x) % 16) | ((abs(y) % 16) << 4)
+    
+    # Final adjustment with dead code path
+    if result > 1000:
+        result = result // 2  # Never executed in our case
+    
+    return result
 
 # Main execution
-package_weights = [5, 15, 25, 35, 45, 55, 65, 75, 85, 95]
-efficiency_score = calculate_loading_efficiency(package_weights)
-print(f"Result: {efficiency_score}")
+raw_coordinates = "5,12; 8,15; 3,7; 11,9; 6,4; 14,2"
+
+# Parse and filter data
+parsed_data = parse_geodata(raw_coordinates)
+filtered_data = filter_quadrant(parsed_data)
+
+# Distractor: unused computation
+unused_calculation = sum(x + y for x, y in parsed_data) * 3
+
+# Key execution point
+final_output = process_coordinates(filtered_data)
+
+print(f"Target result: {final_output}")

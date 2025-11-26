@@ -1,45 +1,42 @@
-from collections import defaultdict
-import math
+def calculate_text_complexity(text_data):
+    word_counts = {}
+    total_letters = 0
+    uppercase_chars = 0
+    
+    # Distractor: Irrelevant vowel counting
+    vowels = 'aeiouAEIOU'
+    vowel_count = 0
+    
+    for word in text_data:
+        # Main logic: count word frequencies
+        word_counts[word.lower()] = word_counts.get(word.lower(), 0) + 1
+        
+        # Distractor: Character analysis (partially used)
+        total_letters += len(word)
+        uppercase_chars += sum(1 for char in word if char.isupper())
+        
+        # Dead code path: vowel analysis (unused result)
+        vowel_count += sum(1 for char in word if char in vowels)
+    
+    # Calculate frequency score (used in final result)
+    frequency_score = sum(count * len(word) for word, count in word_counts.items())
+    
+    # Distractor: Misleading intermediate calculations
+    complexity_index = (total_letters * 2) - (uppercase_chars // 3)
+    unused_metric = vowel_count * 0.75  # Never used
+    
+    # Core logic: normalization and adjustment
+    normalized_total = frequency_score // len(text_data)
+    adjustment_factor = (uppercase_chars % 7) * 2
+    
+    # Final calculation
+    final_score = normalized_total + adjustment_factor
+    
+    # Print result
+    print(f"Result: {final_score}")
 
-def fibonacci_mod(n, mod):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n+1):
-        a, b = b, (a + b) % mod
-    return b
+# Input data
+text_samples = ["Python", "Programming", "Benchmark", "Evaluation", "Programming", "PYTHON", "benchmark"]
 
-def calculate_geometric_key(base_points, multiplier):
-    # Calculate area of polygon formed by base_points
-    n = len(base_points)
-    area = 0
-    for i in range(n):
-        j = (i + 1) % n
-        area += base_points[i][0] * base_points[j][1]
-        area -= base_points[j][0] * base_points[i][1]
-    area = abs(area) // 2
-    return (area * multiplier) % 256
-
-# Initial seed value
-seed_value = 42
-
-# Generate Fibonacci sequence with modular arithmetic
-fib_mod_result = fibonacci_mod(15, 100)
-
-# Apply bitwise operations
-bitwise_stage_1 = (seed_value << 2) & 255  # Left shift by 2 and mask to 8 bits
-bitwise_stage_2 = bitwise_stage_1 ^ fib_mod_result  # XOR with Fibonacci result
-bitwise_stage_3 = (~bitwise_stage_2) & 255  # Bitwise NOT and mask to 8 bits
-
-# Geometry calculation for key component
-key_points = [(0, 0), (bitwise_stage_3 % 10, 5), (8, bitwise_stage_3 % 12), (2, 7)]
-geometric_factor = calculate_geometric_key(key_points, 3)
-
-# Final key derivation using modular arithmetic
-derived_key_component = (geometric_factor * 17 + (bitwise_stage_2 >> 1)) % 128
-
-# Apply ternary operation for final adjustment
-adjustment = 10 if derived_key_component > 64 else 5
-derived_key_component = (derived_key_component + adjustment) % 128
-
-print(f"Result: {derived_key_component}")
+# Execute function
+calculate_text_complexity(text_samples)

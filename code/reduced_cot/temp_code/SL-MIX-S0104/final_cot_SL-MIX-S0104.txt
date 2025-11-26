@@ -1,24 +1,10 @@
-Target: Find the value of variable processed_amplitude after [line 34] executes
+Target: Find the value of variable data_point after [line 4] executes
 
-[line 10]  data = SignalConfig(440, 44100, 16)
-Call function SignalConfig(440, 44100, 16)
-[line 11]  original_amplitude = 0x1FAB
-Assign: original_amplitude = 8107
-[line 12]  processed_amplitude = original_amplitude
-Compute: original_amplitude, where original_amplitude=8107 (defined at [line 11]) = 8107
-[line 15]  if data.base_freq % 100 == 40 and data.sampling_rate > 40000:
-Condition: True, entering 'if' block
-[line 17]  if data.bit_depth >= 16:
-Condition: True, entering 'if' block
-[line 23]  if processed_amplitude & 0x8000:
-Condition: True, entering 'if' block
-[line 24]  processed_amplitude = (processed_amplitude + 0x1000) % 0xFFFF
-Compute: (processed_amplitude + 0x1000) % 0xFFFF, where processed_amplitude=57595 (defined at [line 12]) = 61691
-[line 29]  if not (processed_amplitude & 0xF000):
-Condition: True, entering 'if' block
-[line 31]  elif processed_amplitude & 0xC000 == 0x8000:
-'elif' Condition: True, entering block
-[line 34]  processed_amplitude = processed_amplitude & 0x7FFF
-Compute: processed_amplitude & 0x7FFF, where processed_amplitude=61691 (defined at [line 24]) = 28923
+[line 1]  measurements = [34.2, 67.8, 45.1, 89.3, 23.4, 56.7, 91.2, 12.8]
+Compute: [34.2, 67.8, 45.1, 89.3, 23.4, 56.7, 91.2, 12.8] = [34.2, 67.8, 45.1, 89.3, 23.4, ...]
+[line 2]  threshold = 50.0
+Assign: threshold = 50.0
+[line 4]  data_point = [x for x in measurements if x > threshold]
+Compute: [x for x in measurements if x > threshold], where x=34.2 (an unknown source), measurements=[34.2, 67.8, 45.1, 89.3, 23.4, ...] (defined at [line 1]), threshold=50.0 (defined at [line 2]) = ?
 
-Answer: processed_amplitude = 28923 (last updated on defined at [line 34])
+Answer: data_point = [67.8, 89.3, 56.7, 91.2] (last updated on defined at [line 4])

@@ -1,65 +1,54 @@
-import re
-from collections import deque
-from dataclasses import dataclass
-from typing import List, Optional
-
-def tokenize_config(config_str: str) -> List[str]:
-    return re.findall(r'\b\w+|[/.=]', config_str)
-
-@dataclass
-class TreeNode:
-    value: str
-    left: Optional['TreeNode'] = None
-    right: Optional['TreeNode'] = None
-
-def build_decision_tree(tokens: List[str]) -> TreeNode:
-    stack = []
-    for token in tokens:
-        if token in ('AND', 'OR'):
-            node = TreeNode(token)
-            if stack:
-                node.left = stack.pop()
-            stack.append(node)
-        elif token not in ('ALLOW', 'TCP', 'FROM', 'TO', 'IF'):
-            if stack and stack[-1].right is None:
-                stack[-1].right = TreeNode(token)
-            else:
-                stack.append(TreeNode(token))
-    return stack[0] if stack else None
-
-def evaluate_tree(node: TreeNode) -> bool:
-    if not node:
-        return False
-    if node.value in ('80', '443'):
-        return True
-    if node.value == 'OR':
-        return evaluate_tree(node.left) or evaluate_tree(node.right)
-    if node.value == 'AND':
-        return evaluate_tree(node.left) and evaluate_tree(node.right)
-    return False
-
-def process_network_config(config: str) -> int:
-    tokens = tokenize_config(config)
-    decision_tree = build_decision_tree(tokens)
-    route_queue = deque(["192.168.1.1:80", "192.168.1.2:22", "10.0.0.5:443", "172.16.0.1:8080"])
-    matched_routes = 0
+def compute_product_quality(product_dict):
+    # Distractor variables and misleading computations
+    temp_adjustment = 15
+    base_factor = 7
+    weight_factor = 3
+    irrelevant_multiplier = 2
     
-    while route_queue:
-        route = route_queue.popleft()
-        port = route.split(':')[1]
-        temp_tree = TreeNode(port)
-        if decision_tree:
-            # Create a new tree with the port condition
-            condition_tree = TreeNode('OR')
-            condition_tree.left = decision_tree
-            condition_tree.right = temp_tree
-            if evaluate_tree(condition_tree):
-                matched_routes += 1
-        elif evaluate_tree(temp_tree):
-            matched_routes += 1
-            
-    return matched_routes
+    # Misleading intermediate calculation (unused)
+    misleading_total = sum(len(name) for name in product_dict.keys()) * base_factor
+    
+    # Dead code path that doesn't affect result
+    if misleading_total > 100:
+        dead_result = misleading_total // 2
+    else:
+        dead_result = misleading_total * 2
+    
+    # Main computation with list comprehension and set operations
+    quality_scores = [
+        (details['rating'] * weight_factor - temp_adjustment) 
+        for details in product_dict.values() 
+        if details.get('active', False)
+    ]
+    
+    # More distractor operations
+    distractor_set = set(range(len(quality_scores) * 2))
+    filtered_scores = {score for score in quality_scores if score > 0}
+    
+    # Irrelevant string manipulation
+    status_check = 'processed_' + str(len(product_dict))
+    
+    # Actual result computation
+    if filtered_scores:
+        final_score = sum(filtered_scores) * base_factor
+    else:
+        final_score = base_factor * weight_factor
+    
+    return final_score
 
-config_string = 'ALLOW TCP FROM 192.168.1.0/24 TO 10.0.0.0/8 IF PORT == 80 OR PORT == 443'
-matched_routes = process_network_config(config_string)
-print(f"Result: {matched_routes}")
+# Main execution
+products_data = {
+    'widget_a': {'rating': 8, 'active': True},
+    'widget_b': {'rating': 6, 'active': False},
+    'widget_c': {'rating': 9, 'active': True},
+    'widget_d': {'rating': 7, 'active': True}
+}
+
+# Distractor variable initialization
+initial_rating_sum = sum(p['rating'] for p in products_data.values())
+unused_calculation = initial_rating_sum * 3
+
+# Key statement
+final_quality_score = compute_product_quality(products_data)
+
+print(f"Result: {final_quality_score}")

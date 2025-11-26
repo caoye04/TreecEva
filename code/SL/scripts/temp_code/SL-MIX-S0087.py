@@ -1,44 +1,39 @@
 from collections import Counter
-from functools import reduce
 
-def compute_positional_weight(char_freq_map, sequence_length):
-    weighted_sum = 0
-    for char, freq in char_freq_map.items():
-        char_code = ord(char)
-        position_factor = (char_code * freq) % 7
-        weighted_sum += position_factor * (sequence_length // (freq + 1))
-    return weighted_sum
+def analyze_text_frequency(text_data):
+    # Distractor: Irrelevant character processing
+    temp_chars = [chr((ord(c) + 3) % 128) for c in text_data if c.isalpha()]
+    shifted_text = ''.join(temp_chars)
+    
+    # Main logic: Character frequency analysis
+    char_counts = Counter(text_data.lower())
+    vowels = 'aeiou'
+    vowel_counts = {v: char_counts.get(v, 0) for v in vowels}
+    
+    # Distractor: Misleading intermediate calculation
+    total_chars = sum(char_counts.values())
+    irrelevant_sum = sum(ord(c) for c in text_data[:5]) % 100
+    
+    # Core computation: Vowel-to-consonant ratio analysis
+    consonant_count = sum(char_counts[c] for c in char_counts if c.isalpha() and c not in vowels)
+    vowel_total = sum(vowel_counts.values())
+    
+    # Distractor: Unused bitwise operations
+    bit_check = vowel_total & consonant_count
+    shift_check = (vowel_total << 2) | consonant_count
+    
+    # Main result processing
+    if vowel_total > 0 and consonant_count > 0:
+        ratio_analysis = (vowel_total * 100) / consonant_count
+        processed_results = [ratio_analysis, vowel_total, consonant_count]
+    else:
+        processed_results = [0, 0, 0]
+    
+    # Final assignment
+    final_analysis = processed_results[-1]
+    print(f"Target result: {final_analysis}")
+    return final_analysis
 
-def calculate_mutation_checksum(dna_sequence):
-    # Step 1: Count nucleotide frequencies
-    nucleotide_counter = Counter(dna_sequence)
-    
-    # Step 2: Apply positional weighting
-    seq_len = len(dna_sequence)
-    position_weight = compute_positional_weight(nucleotide_counter, seq_len)
-    
-    # Step 3: Transform sequence - reverse complement simulation
-    complement_map = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
-    transformed_seq = ''.join(complement_map[nuc] for nuc in dna_sequence[::-1])
-    
-    # Step 4: Calculate transformation hash
-    transform_hash = sum(ord(c) * (i+1) for i, c in enumerate(transformed_seq)) % 1000
-    
-    # Step 5: Combine metrics with modular arithmetic
-    frequency_product = reduce(lambda x, y: (x * y) % 97, nucleotide_counter.values(), 1)
-    
-    # Step 6: Final checksum computation
-    checksum_components = [
-        position_weight % 13,
-        transform_hash % 17,
-        frequency_product % 19,
-        seq_len % 23
-    ]
-    
-    checksum_result = sum(component * (i + 11) for i, component in enumerate(checksum_components)) % 100
-    return checksum_result
-
-# Main execution
-sample_dna = "ATCGATCGATCGATCGATCG"
-checksum_result = calculate_mutation_checksum(sample_dna)
-print(f"Result: {checksum_result}")
+# Test execution
+test_text = "ProgrammingEvaluationBenchmarkComplexReasoning"
+result = analyze_text_frequency(test_text)

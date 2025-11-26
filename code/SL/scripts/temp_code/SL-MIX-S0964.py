@@ -1,55 +1,28 @@
-import math
-from functools import reduce
-from itertools import combinations
+from collections import Counter
 
-def calculate_distance(p1, p2):
-    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
+# Analyze inventory data
+inventory_data = ['A', 'B', 'C', 'A', 'A', 'B', 'D', 'E', 'A', 'C']
+category_counts = Counter(inventory_data)
 
-def coverage_variance(points):
-    if len(points) < 2:
-        return 0
-    distances = [calculate_distance(p1, p2) for p1, p2 in combinations(points, 2)]
-    mean_dist = sum(distances) / len(distances)
-    return sum((d - mean_dist)**2 for d in distances) / len(distances)
+# Initial processing - some operations are relevant, some are not
+total_items = len(inventory_data)
+processing_fee = total_items * 2  # This doesn't affect final result
 
-# Sensor coordinates (x, y)
-sensor_locations = [(0, 0), (3, 4), (6, 8), (2, 1), (7, 3), (1, 7)]
+# Filter categories with count > 1 and create processed list
+filtered_data = []
+for item, count in category_counts.items():
+    if count > 1:
+        filtered_data.append(count)
 
-# Process sensor data with context manager for resource handling
-class SensorAnalyzer:
-    def __enter__(self):
-        self.processed_points = []
-        return self
-    
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
-    
-    def filter_effective_sensors(self, locations, min_distance=2.0):
-        # Use lambda and filter to identify sensors that are sufficiently separated
-        effective = list(filter(lambda pair: calculate_distance(pair[0], pair[1]) > min_distance, 
-                              combinations(locations, 2)))
-        # Extract unique points using set comprehension
-        unique_points = list(set([point for pair in effective for point in pair]))
-        return unique_points
-    
-    def compute_coverage_metric(self, points):
-        if not points:
-            return 0
-        # Calculate geometric properties
-        centroid_x = sum(p[0] for p in points) / len(points)
-        centroid_y = sum(p[1] for p in points) / len(points)
-        
-        # Distance from origin to centroid
-        centroid_distance = math.sqrt(centroid_x**2 + centroid_y**2)
-        
-        # Statistical measure of point distribution
-        spatial_variance = coverage_variance(points)
-        
-        # Short-circuit evaluation for efficiency
-        return round(centroid_distance * (spatial_variance > 0 and math.log(spatial_variance + 1) or 1), 2)
+# Some intermediate calculations that aren't used in final answer
+intermediate_sum = sum(filtered_data)
+redundant_calc = intermediate_sum * 0.1
 
-with SensorAnalyzer() as analyzer:
-    effective_sensors = analyzer.filter_effective_sensors(sensor_locations)
-    optimal_coverage_score = analyzer.compute_coverage_metric(effective_sensors)
-    
-print(f"Result: {optimal_coverage_score}")
+# Process the filtered data further
+processed_values = [x * 2 for x in filtered_data]
+adjustment = len(processed_values) - 2
+
+# The critical execution point
+final_count = filtered_data[-1] + adjustment
+
+print(f"Result: {final_count}")

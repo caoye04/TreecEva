@@ -1,56 +1,35 @@
-import math
-import re
-from collections import deque
-from functools import reduce
+text_data = "programming language analysis framework implementation design"
+words = text_data.split()
 
-def fibonacci(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
+# Intermediate processing (somewhat relevant but not used in final calculation)
+vowel_counts = {}
+for word in words:
+    vowels = set('aeiou')
+    count = sum(1 for char in word.lower() if char in vowels)
+    vowel_counts[word] = count
 
-def compute_deviation(altitudes):
-    deviations = []
-    for i in range(1, len(altitudes)):
-        diff = abs(altitudes[i] - altitudes[i-1])
-        fib_weight = fibonacci(i)
-        deviations.append(diff * fib_weight)
-    return deviations
+# Main calculation with distraction
+word_lengths = [len(word) for word in words]
+filtered_lengths = [length for length in word_lengths if length > 7]
 
-def trig_smoothing(values):
-    smoothed = [math.sin(v) if v < 1 else math.cos(v) for v in values]
-    return smoothed
+# Distractor operation (seems relevant but doesn't affect result)
+letter_frequency = {}
+for word in words:
+    for char in word:
+        letter_frequency[char] = letter_frequency.get(char, 0) + 1
 
-def hash_filter(segments):
-    registry = {}
-    filtered = []
-    for s in segments:
-        key = hash(round(s, 4)) % 1000
-        if key not in registry:
-            registry[key] = True
-            filtered.append(s)
-    return filtered
+# Actual logic chain
+sorted_lengths = sorted(word_lengths)
+middle_index = len(sorted_lengths) // 2
+median_length = sorted_lengths[middle_index] if len(sorted_lengths) % 2 == 1 else (sorted_lengths[middle_index - 1] + sorted_lengths[middle_index]) / 2
 
-telemetry_log = "ALT:100.5,102.3,99.8,105.0,103.2,107.1"
-match = re.search(r'ALT:(.*)', telemetry_log)
-altitude_data = list(map(float, match.group(1).split(',')))
+# Final calculation with intervention
+word_set = set(words)
+unique_word_count = len(word_set)
+final_count = int(median_length * unique_word_count)
 
-# Step 1: Compute Fibonacci-weighted deviations
-weighted_deviations = compute_deviation(altitude_data)
+# Red herring calculation
+character_total = sum(len(word) for word in words)
 
-# Step 2: Apply trigonometric smoothing
-smoothed_values = trig_smoothing(weighted_deviations)
-
-# Step 3: Filter using hash-based registry
-unique_segments = hash_filter(smoothed_values)
-
-# Step 4: Aggregate into stability score using stack-like reduction
-stack = deque(unique_segments)
-aggregated = 0
-while stack:
-    val = stack.pop()
-    aggregated = math.atan2(val, aggregated) if aggregated != 0 else val
-
-# Final stability score
-final_stability_score = round(aggregated * 1000)
-print(f"Result: {final_stability_score}")
+result = final_count
+print(f"Result: {result}")

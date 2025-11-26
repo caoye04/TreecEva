@@ -1,35 +1,33 @@
-import re
-
-def process_phonemes(phoneme_corpus):
-    base_sets = [frozenset(phoneme) for phoneme in phoneme_corpus]
-    vowel_pattern = re.compile(r'[aeiou]')
+def analyze_performance(data_points):
+    baseline = 42
+    processed_data = []
     
-    # Filter phoneme sets containing vowels using regex
-    vowel_sets = [
-        ph_set for ph_set in base_sets
-        if any(vowel_pattern.match(char) for char in ph_set)
-    ]
+    for value in data_points:
+        if value % 2 == 0:
+            processed_value = value * 3 - 5
+        else:
+            processed_value = value + 7
+        processed_data.append(processed_value)
     
-    # Lambda to compute cardinality product
-    cardinality_product = lambda s1, s2: len(s1) * len(s2)
+    # Distractor operations that don't affect final result
+    temp_sum = sum(processed_data[:2])
+    average_temp = temp_sum / 2
     
-    # Short-circuit evaluation with set intersection check
-    score = 0
-    for i in range(len(vowel_sets)):
-        for j in range(i+1, len(vowel_sets)):
-            if vowel_sets[i] and vowel_sets[j] and (vowel_sets[i] & vowel_sets[j]):
-                score += cardinality_product(vowel_sets[i], vowel_sets[j])
-    return score
+    adjustment_factor = len(processed_data) // 2
+    
+    # More distractor calculations
+    max_val = max(processed_data)
+    min_val = min(processed_data)
+    range_val = max_val - min_val
+    
+    final_score = processed_data[2] * adjustment_factor
+    
+    # Final verification (distractor)
+    verification_check = final_score > 50
+    
+    print(f"Result: {final_score}")
+    return final_score
 
-# Corpus data
-phoneme_data = [
-    ['a', 'b', 'c'],
-    ['d', 'e', 'f', 'g'],
-    ['h', 'i'],
-    ['j', 'k', 'l', 'm', 'n'],
-    ['o', 'p', 'q'],
-    ['r', 's', 't', 'u']
-]
-
-metric_score = process_phonemes(phoneme_data)
-print(f"Result: {metric_score}")
+# Main execution
+performance_data = [12, 8, 15, 6, 9]
+result = analyze_performance(performance_data)

@@ -1,60 +1,57 @@
-class SignalNode:
-    def __init__(self, value=0, next_node=None):
-        self.value = value
-        self.next = next_node
+def analyze_data_patterns(input_data, target_range):
+    # Irrelevant analysis that doesn't affect final result
+    temp_sum = sum(x * 2 for x in input_data if x > 5)
+    filtered_data = [x for x in input_data if x % 2 == 0]
+    
+    # Misleading computation path
+    dummy_calc = len(input_data) * 3.14159
+    
+    # Actual relevant logic
+    valid_entries = [x for x in input_data if target_range[0] <= x <= target_range[1]]
+    weighted_sum = sum(idx * val for idx, val in enumerate(valid_entries))
+    
+    # More distractions
+    unused_result = max(input_data) - min(input_data)
+    
+    return weighted_sum
 
-def process_signal_chain(chain_head, transform_map):
-    current = chain_head
-    accumulator = 0
-    while current:
-        if current.value in transform_map:
-            transformed = transform_map[current.value]
-            if transformed & 1:
-                accumulator ^= (current.value << 1) % 17
-            else:
-                accumulator = (accumulator + transformed) & 0xFF
-        else:
-            accumulator = (accumulator * 3) % 13
-        current = current.next
-    return accumulator
-
-def build_signal_chain(values):
-    if not values:
-        return None
-    head = SignalNode(values[0])
-    current = head
-    for val in values[1:]:
-        current.next = SignalNode(val)
-        current = current.next
-    return head
-
-# Initialize transformation lookup table
-transform_lookup = {
-    5: 12,
-    10: 7,
-    3: 15,
-    8: 2,
-    12: 9
-}
-
-# Create signal chain
-signal_values = [5, 10, 3, 8, 12, 1, 7]
-signal_chain = build_signal_chain(signal_values)
-
-# Process the signal chain
-intermediate_result = process_signal_chain(signal_chain, transform_lookup)
-
-# Apply final transformation
-final_signal_strength = 0
-for i in range(4):
-    mask = (intermediate_result >> (i * 2)) & 0x3
-    if mask == 0:
-        final_signal_strength += 1 << i
-    elif mask & 0x1:
-        final_signal_strength ^= (mask << (i + 1))
+def compute_final_score(data_sequence, threshold):
+    # Setup initial parameters
+    base_score = 42
+    multiplier = 3
+    
+    # Distractor operations
+    fake_calculation = (base_score * 2) // 7
+    misleading_value = threshold * fake_calculation
+    
+    # Core logic with zip and enumerate
+    processed_data = []
+    for idx, (a, b) in enumerate(zip(data_sequence[:-1], data_sequence[1:])):
+        if a + b > threshold:
+            processed_data.append((idx, a - b))
+    
+    # More irrelevant computations
+    dead_code_path = sum(x for x in range(10) if x % 3 == 0)
+    
+    # Actual result computation
+    if processed_data:
+        final_value = sum(val * idx for idx, val in processed_data)
+        result = final_value + base_score
     else:
-        final_signal_strength &= ~(mask >> 1)
+        result = base_score * multiplier
+    
+    # Final distraction
+    unused_metric = len(data_sequence) * threshold
+    
+    return result
 
-# Apply modular correction
-final_signal_strength = (final_signal_strength ^ 0xF) % 11
-print(f"Result: {final_signal_strength}")
+# Main execution
+input_values = [8, 12, 5, 18, 3, 15, 7, 20]
+range_boundaries = (10, 25)
+threshold_value = 20
+
+# Call the main function
+final_result = compute_final_score(input_values, threshold_value)
+
+# Print the result
+print(f"Result: {final_result}")

@@ -1,173 +1,119 @@
-22
-auth_signature
+44
+final_result
 ---
-17 token_sequence = tokenize("SECURE")
-17 [] []
-4 return [ord(c) for c in message]
-4 ['message', 'c'] ["'SECURE'", "'S'"]
-4 return [ord(c) for c in message]
-4 ['message', 'c'] ["'SECURE'", "'E'"]
-4 return [ord(c) for c in message]
-4 ['message', 'c'] ["'SECURE'", "'C'"]
-4 return [ord(c) for c in message]
-4 ['message', 'c'] ["'SECURE'", "'U'"]
-4 return [ord(c) for c in message]
-4 ['message', 'c'] ["'SECURE'", "'R'"]
-4 return [ord(c) for c in message]
-4 ['message', 'c'] ["'SECURE'", "'E'"]
-4 return [ord(c) for c in message]
-4 ['message'] ["'SECURE'"]
-18 layer1_result = process_layer(token_sequence, 1)
-18 ['token_sequence'] ['[83, 69, 67, 85, 82, ...]']
-PARAM_MAPPING {'tokens': {'actual_var': 'token_sequence', 'value': [83, 69, 67, 85, 82, 69]}, 'shift_val': {'actual_var': '1', 'value': '1'}}
-FUNCTION_ENTER 9 process_layer def process_layer(tokens, shift_val):
-9 ['tokens', 'shift_val'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 83}, {'_type': 'int', '_value': 69}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 82}, {'_type': 'int', '_value': 69}], '_len': 6}, {'_type': 'int', '_value': 1}]
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '83']
-7 return (token * 31) % 256
-7 ['token'] ['83']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '69']
-7 return (token * 31) % 256
-7 ['token'] ['69']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '67']
-7 return (token * 31) % 256
-7 ['token'] ['67']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '85']
-7 return (token * 31) % 256
-7 ['token'] ['85']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '82']
-7 return (token * 31) % 256
-7 ['token'] ['82']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[83, 69, 67, 85, 82, ...]', '1', '69']
-7 return (token * 31) % 256
-7 ['token'] ['69']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 'hashed'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '0', '13']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '1', '91']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '2', '29']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '3', '75']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '4', '238']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['tokens', 'shift_val', 'hashed', 'i', 'h'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '5', '91']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['tokens', 'shift_val', 'hashed', 'shifted'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]']
-12 xor_result = 0
-12 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '0']
-13 for s in shifted:
-13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '0', '13']
-14 xor_result ^= s
-14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '13', '13']
-13 for s in shifted:
-13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '13', '182']
-14 xor_result ^= s
-14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '187', '182']
-13 for s in shifted:
-13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '187', '116']
-14 xor_result ^= s
-14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '207', '116']
-13 for s in shifted:
-13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '207', '75']
-14 xor_result ^= s
-14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '132', '75']
-13 for s in shifted:
-13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '132', '220']
-14 xor_result ^= s
-14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '88', '220']
-13 for s in shifted:
-13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '88', '108']
-14 xor_result ^= s
-14 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '52', '108']
-13 for s in shifted:
-13 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '52', '108']
-15 return xor_result >> shift_val
-15 ['tokens', 'shift_val', 'hashed', 'shifted', 'xor_result', 's'] ['[83, 69, 67, 85, 82, ...]', '1', '[13, 91, 29, 75, 238, ...]', '[13, 182, 116, 75, 220, ...]', '52', '108']
-FUNCTION_RETURN 15 process_layer {'_type': 'int', '_value': 26}
-19 layer2_result = process_layer(token_sequence[::-1], 2)
-19 ['token_sequence', 'layer1_result'] ['[83, 69, 67, 85, 82, ...]', '26']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '69']
-7 return (token * 31) % 256
-7 ['token'] ['69']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '82']
-7 return (token * 31) % 256
-7 ['token'] ['82']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '85']
-7 return (token * 31) % 256
-7 ['token'] ['85']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '67']
-7 return (token * 31) % 256
-7 ['token'] ['67']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '69']
-7 return (token * 31) % 256
-7 ['token'] ['69']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 't'] ['[69, 82, 85, 67, 69, ...]', '2', '83']
-7 return (token * 31) % 256
-7 ['token'] ['83']
-10 hashed = [hash_token(t) for t in tokens]
-10 ['tokens', 'shift_val', 'hashed'] ['[69, 82, 85, 67, 69, ...]', '2', '[91, 238, 75, 29, 91, ...]']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '0', '91']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '1', '238']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '2', '75']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '3', '29']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '4', '91']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['shift_val', 'hashed', 'i', 'h'] ['2', '[91, 238, 75, 29, 91, ...]', '5', '13']
-11 shifted = [(h << (i % 3)) & 0xFF for i, h in enumerate(hashed)]
-11 ['shift_val', 'hashed', 'shifted'] ['2', '[91, 238, 75, 29, 91, ...]', '[91, 220, 44, 29, 182, ...]']
-12 xor_result = 0
-12 ['shift_val', 'shifted', 'xor_result'] ['2', '[91, 220, 44, 29, 182, ...]', '0']
-13 for s in shifted:
-13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '0', '91']
-14 xor_result ^= s
-14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '91', '91']
-13 for s in shifted:
-13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '91', '220']
-14 xor_result ^= s
-14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '135', '220']
-13 for s in shifted:
-13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '135', '44']
-14 xor_result ^= s
-14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '171', '44']
-13 for s in shifted:
-13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '171', '29']
-14 xor_result ^= s
-14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '182', '29']
-13 for s in shifted:
-13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '182', '182']
-14 xor_result ^= s
-14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '0', '182']
-13 for s in shifted:
-13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '0', '52']
-14 xor_result ^= s
-14 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '52', '52']
-13 for s in shifted:
-13 ['shift_val', 'shifted', 'xor_result', 's'] ['2', '[91, 220, 44, 29, 182, ...]', '52', '52']
-15 return xor_result >> shift_val
-15 ['shift_val', 'xor_result'] ['2', '52']
-20 auth_signature = (layer1_result ^ layer2_result) & 0xFF
-20 ['layer1_result', 'layer2_result', 'auth_signature'] ['26', '13', '23']
-21 exp_component = int(math.log2(layer1_result + 1)) if layer1_result > 0 else 0
-21 ['layer1_result', 'auth_signature', 'exp_component'] ['26', '23', '4']
-22 auth_signature = (auth_signature << 2) | exp_component
-22 ['auth_signature', 'exp_component'] ['92', '4']
+39 primary_data = {'A': 25, 'B': 18, 'C': 32, 'D': 12}
+39 ['primary_data'] ['{A: 25, B: 18, C: 32, ...}']
+40 secondary_data = {'A': 8, 'B': 22, 'E': 45}
+40 ['primary_data', 'secondary_data'] ['{A: 25, B: 18, C: 32, ...}', '{A: 8, B: 22, E: 45}']
+41 adjustment_factor = 2
+41 ['primary_data', 'secondary_data', 'adjustment_factor'] ['{A: 25, B: 18, C: 32, ...}', '{A: 8, B: 22, E: 45}', '2']
+43 final_result = update_results(primary_data, secondary_data, adjustment_factor)
+43 ['primary_data', 'secondary_data', 'adjustment_factor'] ['{A: 25, B: 18, C: 32, ...}', '{A: 8, B: 22, E: 45}', '2']
+20 primary_processed, primary_count = process_data_set(primary, 20)
+20 ['primary', 'secondary', 'adjustment'] ['{A: 25, B: 18, C: 32, ...}', '{A: 8, B: 22, E: 45}', '2']
+7 valid_points = {}
+7 ['data_points', 'threshold', 'valid_points'] ['{A: 25, B: 18, C: 32, ...}', '20', '{}']
+8 processed_count = 0
+8 ['data_points', 'threshold', 'valid_points', 'processed_count'] ['{A: 25, B: 18, C: 32, ...}', '20', '{}', '0']
+9 for key, value in data_points.items():
+9 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{}', '0', "'A'", '25']
+10 if value > threshold:
+10 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{}', '0', "'A'", '25']
+11 valid_points[key] = value * 2
+11 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50}', '0', "'A'", '25']
+12 processed_count += 1
+12 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50}', '1', "'A'", '25']
+9 for key, value in data_points.items():
+9 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50}', '1', "'B'", '18']
+10 if value > threshold:
+10 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50}', '1', "'B'", '18']
+14 valid_points[key] = value // 3
+14 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50, B: 6}', '1', "'B'", '18']
+9 for key, value in data_points.items():
+9 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50, B: 6}', '1', "'C'", '32']
+10 if value > threshold:
+10 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50, B: 6}', '1', "'C'", '32']
+11 valid_points[key] = value * 2
+11 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50, B: 6, C: 64}', '1', "'C'", '32']
+12 processed_count += 1
+12 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50, B: 6, C: 64}', '2', "'C'", '32']
+9 for key, value in data_points.items():
+9 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50, B: 6, C: 64}', '2', "'D'", '12']
+10 if value > threshold:
+10 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50, B: 6, C: 64}', '2', "'D'", '12']
+14 valid_points[key] = value // 3
+14 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50, B: 6, C: 64, ...}', '2', "'D'", '12']
+9 for key, value in data_points.items():
+9 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50, B: 6, C: 64, ...}', '2', "'D'", '12']
+17 return valid_points, processed_count
+17 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 25, B: 18, C: 32, ...}', '20', '{A: 50, B: 6, C: 64, ...}', '2', "'D'", '12']
+21 secondary_processed, secondary_count = process_data_set(secondary, 15)
+21 ['secondary', 'adjustment', 'primary_processed', 'primary_count'] ['{A: 8, B: 22, E: 45}', '2', '{A: 50, B: 6, C: 64, ...}', '2']
+7 valid_points = {}
+7 ['data_points', 'threshold', 'valid_points'] ['{A: 8, B: 22, E: 45}', '15', '{}']
+8 processed_count = 0
+8 ['data_points', 'threshold', 'valid_points', 'processed_count'] ['{A: 8, B: 22, E: 45}', '15', '{}', '0']
+9 for key, value in data_points.items():
+9 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '15', '{}', '0', "'A'", '8']
+10 if value > threshold:
+10 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '15', '{}', '0', "'A'", '8']
+14 valid_points[key] = value // 3
+14 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '15', '{A: 2}', '0', "'A'", '8']
+9 for key, value in data_points.items():
+9 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '15', '{A: 2}', '0', "'B'", '22']
+10 if value > threshold:
+10 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '15', '{A: 2}', '0', "'B'", '22']
+11 valid_points[key] = value * 2
+11 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '15', '{A: 2, B: 44}', '0', "'B'", '22']
+12 processed_count += 1
+12 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '15', '{A: 2, B: 44}', '1', "'B'", '22']
+9 for key, value in data_points.items():
+9 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '15', '{A: 2, B: 44}', '1', "'E'", '45']
+10 if value > threshold:
+10 ['data_points', 'threshold', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '15', '{A: 2, B: 44}', '1', "'E'", '45']
+11 valid_points[key] = value * 2
+11 ['data_points', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '{A: 2, B: 44, E: 90}', '1', "'E'", '45']
+12 processed_count += 1
+12 ['data_points', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '{A: 2, B: 44, E: 90}', '2', "'E'", '45']
+9 for key, value in data_points.items():
+9 ['data_points', 'valid_points', 'processed_count', 'key', 'value'] ['{A: 8, B: 22, E: 45}', '{A: 2, B: 44, E: 90}', '2', "'E'", '45']
+17 return valid_points, processed_count
+17 ['valid_points', 'processed_count', 'key'] ['{A: 2, B: 44, E: 90}', '2', "'E'"]
+23 offset_calc = calculate_offset(primary_count, 3)
+23 ['adjustment', 'primary_processed', 'primary_count', 'secondary_processed'] ['2', '{A: 50, B: 6, C: 64, ...}', '2', '{A: 2, B: 44, E: 90}']
+2 offset = base_value * multiplier - 15
+2 ['base_value', 'multiplier', 'offset'] ['2', '3', '-9']
+3 temp_offset = offset + 7
+3 ['offset', 'temp_offset'] ['-9', '-2']
+4 return temp_offset
+4 ['temp_offset'] ['-2']
+26 combined_values = []
+26 ['adjustment', 'primary_processed', 'secondary_processed', 'offset_calc', 'combined_values'] ['2', '{A: 50, B: 6, C: 64, ...}', '{A: 2, B: 44, E: 90}', '-2', '[]']
+27 for key in primary_processed:
+27 ['adjustment', 'primary_processed', 'secondary_processed', 'offset_calc', 'combined_values', 'key'] ['2', '{A: 50, B: 6, C: 64, ...}', '{A: 2, B: 44, E: 90}', '-2', '[]', "'A'"]
+28 if key in secondary_processed:
+28 ['adjustment', 'primary_processed', 'secondary_processed', 'offset_calc', 'combined_values', 'key'] ['2', '{A: 50, B: 6, C: 64, ...}', '{A: 2, B: 44, E: 90}', '-2', '[]', "'A'"]
+27 for key in primary_processed:
+27 ['adjustment', 'primary_processed', 'secondary_processed', 'offset_calc', 'combined_values', 'key'] ['2', '{A: 50, B: 6, C: 64, ...}', '{A: 2, B: 44, E: 90}', '-2', '[52]', "'B'"]
+28 if key in secondary_processed:
+28 ['adjustment', 'primary_processed', 'secondary_processed', 'offset_calc', 'combined_values', 'key'] ['2', '{A: 50, B: 6, C: 64, ...}', '{A: 2, B: 44, E: 90}', '-2', '[52]', "'B'"]
+27 for key in primary_processed:
+27 ['adjustment', 'primary_processed', 'secondary_processed', 'offset_calc', 'combined_values', 'key'] ['2', '{A: 50, B: 6, C: 64, ...}', '{A: 2, B: 44, E: 90}', '-2', '[52, 50]', "'C'"]
+28 if key in secondary_processed:
+28 ['adjustment', 'primary_processed', 'secondary_processed', 'offset_calc', 'combined_values', 'key'] ['2', '{A: 50, B: 6, C: 64, ...}', '{A: 2, B: 44, E: 90}', '-2', '[52, 50]', "'C'"]
+27 for key in primary_processed:
+27 ['adjustment', 'primary_processed', 'secondary_processed', 'offset_calc', 'combined_values', 'key'] ['2', '{A: 50, B: 6, C: 64, ...}', '{A: 2, B: 44, E: 90}', '-2', '[52, 50]', "'D'"]
+28 if key in secondary_processed:
+28 ['adjustment', 'primary_processed', 'secondary_processed', 'offset_calc', 'combined_values', 'key'] ['2', '{A: 50, B: 6, C: 64, ...}', '{A: 2, B: 44, E: 90}', '-2', '[52, 50]', "'D'"]
+27 for key in primary_processed:
+27 ['adjustment', 'primary_processed', 'offset_calc', 'combined_values', 'key'] ['2', '{A: 50, B: 6, C: 64, ...}', '-2', '[52, 50]', "'D'"]
+31 if len(combined_values) > 0:
+31 ['adjustment', 'offset_calc', 'combined_values'] ['2', '-2', '[52, 50]']
+32 final_adjustment = sum(combined_values) * adjustment
+32 ['adjustment', 'offset_calc', 'combined_values', 'final_adjustment'] ['2', '-2', '[52, 50]', '204']
+33 result = final_adjustment - offset_calc
+33 ['offset_calc', 'final_adjustment', 'result'] ['-2', '204', '206']
+37 return result
+37 ['result'] ['206']
+44 print(f"Result: {final_result}")
+44 ['final_result'] ['206']

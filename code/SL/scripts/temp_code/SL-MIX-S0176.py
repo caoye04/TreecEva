@@ -1,47 +1,40 @@
-import math
-import statistics
-from collections import Counter
+from itertools import combinations
 
-def gcd_list(numbers):
-    result = numbers[0]
-    for num in numbers[1:]:
-        result = math.gcd(result, num)
-        if result == 1:
-            break
-    return result
+# Analyze network connection patterns
+node_connections = {'A': ['B', 'C'], 'B': ['A', 'C', 'D'], 'C': ['A', 'B'], 'D': ['B', 'E'], 'E': ['D']}
 
-def process_keystream(filename):
-    with open(filename, 'r') as f:
-        content = f.read().strip()
-    
-    # Convert to byte values
-    byte_values = [ord(c) for c in content]
-    
-    # Frequency analysis
-    freq_counter = Counter(byte_values)
-    frequencies = list(freq_counter.values())
-    
-    # Statistical measures
-    mean_freq = statistics.mean(frequencies)
-    variance_freq = statistics.variance(frequencies) if len(frequencies) > 1 else 0
-    
-    # Detect cycle candidates from frequent bytes
-    threshold = mean_freq + (variance_freq ** 0.5)
-    cycle_candidates = [byte_val for byte_val, count in freq_counter.items() if count >= threshold]
-    
-    # Apply number theory if we have candidates
-    cycle_length = gcd_list(cycle_candidates) if cycle_candidates else 0
-    
-    # Compute signature using ternary and short-circuit
-    has_high_variance = variance_freq > 10
-    is_homogeneous = len(set(frequencies)) <= 2
-    keystream_signature = (cycle_length * 100 + int(mean_freq)) if has_high_variance and not is_homogeneous else (len(byte_values) if is_homogeneous else -1)
-    
-    return keystream_signature
+# Get all unique nodes and calculate possible combinations
+all_nodes = list(node_connections.keys())
+all_combinations = list(combinations(all_nodes, 2))
 
-# Simulate file content
-with open('keystream_data.txt', 'w') as f:
-    f.write("ABABABABXYZXYZXYZABABABABXYZXYZXYZ")
+# Calculate unique connection pairs (undirected)
+unique_pairs = set()
+for node, neighbors in node_connections.items():
+    for neighbor in neighbors:
+        pair = tuple(sorted([node, neighbor]))
+        unique_pairs.add(pair)
 
-keystream_signature = process_keystream('keystream_data.txt')
-print(f"Result: {keystream_signature}")
+# Find missing potential connections
+missing_pairs = []
+for pair in all_combinations:
+    if pair not in unique_pairs:
+        missing_pairs.append(pair)
+
+# Calculate metrics
+unique_combinations = len(all_combinations)
+actual_connections = len(unique_pairs)
+missing_count = len(missing_pairs)
+
+# Distractor calculations (not used in final result)
+total_nodes = len(all_nodes)
+max_possible = (total_nodes * (total_nodes - 1)) // 2
+theoretical_density = actual_connections / max_possible
+
+# Overlap calculation (used in final result)
+overlap_count = 0
+for pair in unique_pairs:
+    if len(pair[0]) == len(pair[1]):
+        overlap_count += 1
+
+final_count = unique_combinations - overlap_count
+print(f"Result: {final_count}")

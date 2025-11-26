@@ -1,33 +1,60 @@
-from functools import reduce
+def analyze_packet_flow(packets):
+    # Distractor: network flow analysis (unused)
+    flow_rate = len(packets) * 0.25
+    max_capacity = 1000
+    utilization = (flow_rate / max_capacity) * 100
+    return utilization
 
-# Packet header values from network capture
-packet_headers = [0x1A3F, 0x7B2C, 0x4E81, 0xF056, 0x29DA]
+def filter_packets(packet_list, threshold):
+    filtered = [p for p in packet_list if p <= threshold]
+    # Distractor: misleading intermediate calculation
+    avg_size = sum(packet_list) / len(packet_list) if packet_list else 0
+    total_bandwidth = avg_size * 1.5  # Dead code path
+    return filtered
 
-# Initialize security tracking variables
-packet_risk_scores = []
-cumulative_security_score = 0
+def calculate_xor_sum(data):
+    # Relevant: XOR operation chain
+    result = 0
+    for value in data:
+        result ^= (value & 0xFF)  # Mask to byte range
+    return result
 
-# Process each packet header to compute risk scores
-for idx, header in enumerate(packet_headers):
-    # Extract relevant bit fields using masking
-    priority_bits = (header & 0xF000) >> 12  # Upper 4 bits
-    protocol_bits = (header & 0x0FF0) >> 4   # Middle 8 bits
-    flag_bits = header & 0x000F              # Lower 4 bits
+def process_network_traffic(packets, config):
+    # Distractor: configuration processing (unused)
+    base_threshold = config['base']
+    scaling_factor = config.get('scale', 1.0)
+    dynamic_threshold = base_threshold * scaling_factor
     
-    # Calculate base risk using XOR of priority and flags
-    base_risk = priority_bits ^ flag_bits
+    # Relevant: actual packet processing
+    valid_packets = filter_packets(packets, base_threshold)
     
-    # Apply protocol modifier using AND operation
-    protocol_modifier = protocol_bits & 0x07  # Only consider 3 LSBs
+    # Distractor: unused analysis
+    network_load = analyze_packet_flow(valid_packets)
     
-    # Compute enhanced risk with short-circuit evaluation
-    enhanced_risk = base_risk if protocol_modifier == 0 else (base_risk | protocol_modifier)
+    # Critical path: XOR calculation on valid packets
+    checksum = calculate_xor_sum(valid_packets)
     
-    # Add to collection
-    packet_risk_scores.append(enhanced_risk)
+    # Final computation with bit manipulation
+    final_result = (checksum << 2) | (len(valid_packets) & 0x3)
+    
+    # Distractor: misleading alternate result
+    alternate_result = final_result ^ 0x55  # Dead code path
+    
+    return final_result
 
-# Calculate cumulative score using reduction and bit shifting
-if packet_risk_scores:  # Short-circuit check
-    cumulative_security_score = reduce(lambda acc, score: (acc << 1) ^ score, packet_risk_scores, 0)
+# Main execution
+incoming_packets = [150, 80, 220, 65, 180, 95, 120, 200]
+threshold_config = {'base': 150, 'scale': 1.2}
 
-print(f"Result: {cumulative_security_score}")
+# Distractor: unused variables
+total_packets = len(incoming_packets)
+max_packet = max(incoming_packets)
+min_packet = min(incoming_packets)
+
+# Critical execution point
+result = process_network_traffic(incoming_packets, threshold_config)
+
+# Final output
+final_output = result + (total_packets % 4)  # Minor adjustment
+
+print(f"Target result: {final_output}")

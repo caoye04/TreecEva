@@ -1,22 +1,11 @@
-def circuit_test_decorator(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result
-    return wrapper
+from collections import Counter
 
-test_values = [0b11001010, 0b10101100, 0b10011101]
+inventory_list = ['laptop', 'mouse', 'keyboard', 'monitor', 'laptop', 'mouse', 'headphones']
+sold_items_list = ['laptop', 'monitor', 'webcam']
 
-@circuit_test_decorator
-def apply_circuit_operations(values):
-    accumulator = 0
-    for val in values:
-        accumulator |= val
-    return accumulator
+inventory_counter = Counter(inventory_list)
+inventory_set = set(inventory_list)
+sold_items = set(sold_items_list)
 
-with open('circuit_log.txt', 'w') as log_file:
-    initial_mask = 0b00001111
-    test_result = apply_circuit_operations(test_values)
-    verification_mask = (test_result & 0xFF) ^ initial_mask
-    log_file.write(f'Verification mask: {verification_mask}')
-
-print(f'Result: {verification_mask}')
+remaining_products = len(inventory_set - sold_items)
+print(f"Result: {remaining_products}")

@@ -1,56 +1,30 @@
-class PackageNode:
-    def __init__(self, weight, priority):
-        self.weight = weight
-        self.priority = priority
-        self.next = None
+from collections import Counter
 
-def build_package_chain(weights, priorities):
-    head = PackageNode(weights[0], priorities[0])
-    current = head
-    for i in range(1, len(weights)):
-        current.next = PackageNode(weights[i], priorities[i])
-        current = current.next
-    return head
+# Process customer order frequencies
+customer_orders = [3, 7, 2, 5, 3, 8, 2, 7, 7, 4]
+order_counter = Counter(customer_orders)
 
-def calculate_adjusted_priority(node):
-    adjustment_factor = 3
-    return (node.weight * 2 + node.priority) // adjustment_factor
+# Calculate some intermediate metrics (not all used in final result)
+unique_orders = len(order_counter)
+total_orders = sum(customer_orders)
+average_orders = total_orders / len(customer_orders)
 
-def update_chain_priorities(head):
-    current = head
-    while current:
-        current.priority = calculate_adjusted_priority(current)
-        current = current.next
+# Process data dictionary with various calculations
+process_data = {}
+for order_count in customer_orders:
+    doubled = order_count * 2
+    squared = order_count ** 2
+    process_data[order_count] = doubled - (squared // 3)
 
-# Initialize package data
-package_weights = [15, 22, 18, 30]
-package_priorities = [4, 7, 5, 9]
+# Additional unused calculations (distractor)
+max_order = max(customer_orders)
+min_order = min(customer_orders)
+range_orders = max_order - min_order
 
-# Build the linked list
-logistics_chain = build_package_chain(package_weights, package_priorities)
+# Sample keys for data access
+sample_keys = [3, 7, 2, 5]
 
-# Update priorities based on weight calculations
-update_chain_priorities(logistics_chain)
+# Key operation - accessing specific processed data
+final_result = process_data[sample_keys[2]]
 
-# Dictionary comprehension to map weights to updated priorities
-priority_mapping = {node.weight: node.priority for node in [
-    logistics_chain, 
-    logistics_chain.next, 
-    logistics_chain.next.next, 
-    logistics_chain.next.next.next
-]}
-
-# Merge with base operational factors
-base_factors = {15: 2, 22: 3, 18: 1, 30: 4}
-merged_data = {**base_factors, **priority_mapping}
-
-# Lambda to compute final score
-compute_final_score = lambda mapping: sum(
-    (weight + priority) * 2 - 1 
-    for weight, priority in mapping.items()
-    if weight > 20
-)
-
-# Calculate the final priority score
-final_priority_score = compute_final_score(merged_data)
-print(f"Result: {final_priority_score}")
+print(f"Target result: {final_result}")

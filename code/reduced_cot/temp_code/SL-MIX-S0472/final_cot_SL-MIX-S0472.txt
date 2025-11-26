@@ -1,0 +1,48 @@
+Target: Find the value of variable final_balance after [line 59] executes
+
+[line 49]  initial_capital = 15000
+Assign: initial_capital = 15000
+[line 50]  market_multiplier = 1.75
+Assign: market_multiplier = 1.75
+[line 56]  final_balance = process_funds(account_data, initial_capital, market_multiplier)
+Call function process_funds(account_data=[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}] (an unknown source), initial_capital=15000 (defined at [line 49]), market_multiplier=1.75 (defined at [line 50]))
+[line 6]  processed = []
+Compute: [] = []
+[line 7]  for account in accounts:
+Loop Start: account takes its first value {type: 'checking', amount: 2500}
+[line 16]  if capital > 1000000:
+Condition: True, entering 'if' block
+[line 7]  for account in accounts:
+Loop Iteration: account is now {type: 'savings', amount: 1800} (iteration 2)
+[line 16]  if capital > 1000000:
+Condition: True, entering 'if' block
+[line 7]  for account in accounts:
+Loop Iteration: account is now {type: 'checking', amount: 3200} (iteration 3)
+[line 16]  if capital > 1000000:
+Condition: True, entering 'if' block
+[line 7]  for account in accounts:
+Loop End: Iteration finished
+[line 27]  mask = 0b10101010
+Assign: mask = 170
+[line 28]  capital_mask = capital & mask
+Compute: capital & mask, where capital=15000 (an unknown source), mask=170 (defined at [line 27]) = 136
+[line 31]  total_processed = sum(processed)
+Call function sum(processed=[4375.0, 3150.0, 5600.0] (defined at [line 6]))
+[line 32]  final_amount = total_processed + capital
+Compute: total_processed + capital, where total_processed=13125.0 (defined at [line 31]), capital=15000 (an unknown source) = 28125.0
+[line 35]  account_str = str(len(accounts))
+Call function str(len(accounts))
+[line 36]  char_sum = sum(ord(c) for c in account_str)
+Call function sum(ord(c) for c in account_str)
+[line 36]  char_sum = sum(ord(c) for c in account_str)
+Call function sum(ord(c) for c in account_str)
+[line 36]  char_sum = sum(ord(c) for c in account_str)
+Call function sum(ord(c) for c in account_str)
+[line 39]  result = final_amount + (char_sum % 100) - capital_mask
+Compute: final_amount + (char_sum % 100) - capital_mask, where final_amount=28125.0 (defined at [line 32]), char_sum=51 (defined at [line 36]), capital_mask=136 (defined at [line 28]) = 28040.0
+[line 40]  return result
+Return: result=28040.0 (defined at [line 39])
+[line 59]  print(f"Result: {final_balance}")
+Output: f"Result: {final_balance}"
+
+Answer: final_balance = 28040.0 (last updated on defined at [line 56])

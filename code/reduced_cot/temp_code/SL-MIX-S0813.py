@@ -1,23 +1,38 @@
-from collections import defaultdict
+def analyze_student_performance():
+    # Student performance analysis with set operations
+    math_scores = [85, 92, 78, 95, 88, 90, 82]
+    science_scores = [92, 88, 85, 79, 91, 87, 90]
+    
+    # Identify top performers in each subject (distractor calculation)
+    math_threshold = sum(math_scores) / len(math_scores) + 5
+    science_threshold = sum(science_scores) / len(science_scores) + 3
+    
+    top_math_students = set(score for score in math_scores if score > math_threshold)
+    top_science_students = set(score for score in science_scores if score > science_threshold)
+    
+    # Intermediate calculations that don't affect final result
+    math_high_count = len([s for s in math_scores if s > 90])
+    science_high_count = len([s for s in science_scores if s > 90])
+    total_high_scores = math_high_count + science_high_count
+    
+    # Primary analysis - consistent high performers
+    primary_set = set(math_scores).intersection(set(science_scores))
+    primary_set = {score for score in primary_set if score >= 85}
+    
+    # Secondary analysis - overall high achievers
+    secondary_set = set()
+    for i in range(len(math_scores)):
+        if math_scores[i] > 85 and science_scores[i] > 85:
+            secondary_set.add(math_scores[i])
+            secondary_set.add(science_scores[i])
+    
+    # Final score calculation (the key variable)
+    final_score = primary_set.intersection(secondary_set)
+    final_score = sum(final_score) if final_score else 0
+    
+    # Print irrelevant statistics
+    print(f"Math high performers: {math_high_count}")
+    print(f"Science high performers: {science_high_count}")
+    print(f"Target result: {final_score}")
 
-def process_signal_segment(segment_value):
-    adjusted = (segment_value & 0xFF) | ((segment_value >> 8) & 0xFF)
-    return adjusted ^ (adjusted >> 4)
-
-signal_segments = [0x1A2B, 0x3C4D, 0x5E6F, 0x7890]
-encoding_map = defaultdict(int)
-bandwidth_accumulator = 0
-
-for idx, segment in enumerate(signal_segments):
-    if segment > 0x3000 and (segment & 0xF0F0) != 0:
-        processed = process_signal_segment(segment)
-        encoding_map[idx] = processed
-        bandwidth_accumulator += processed if processed & 1 else processed >> 1
-    else:
-        continue
-
-optimized_bandwidth = bandwidth_accumulator
-if len(encoding_map) >= 2:
-    optimized_bandwidth ^= (encoding_map[1] << 2) & 0xFFFF
-
-print(f"Result: {optimized_bandwidth}")
+analyze_student_performance()

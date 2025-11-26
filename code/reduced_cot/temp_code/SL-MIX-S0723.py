@@ -1,42 +1,25 @@
-from functools import reduce
+def calculate_game_score():
+    player_name = "ALICE_THE_GAMER"
+    base_score = 42
+    
+    # Distractor string operations
+    formatted_name = player_name.lower().replace('_', ' ').title()
+    name_length = len(formatted_name)
+    
+    # Actual scoring logic
+    level_bonus = 15
+    time_penalty = 7
+    
+    # Distractor calculations
+    bonus_check = name_length * 2
+    temp_adjustment = (bonus_check + 10) // 3
+    
+    # Core scoring
+    raw_score = base_score + level_bonus
+    final_score = raw_score - time_penalty
+    
+    # Final assignment
+    result = final_score
+    print(f"Target result: {result}")
 
-def simulate_circuit(initial_signal):
-    # Stage 1: Apply mask using bitwise AND
-    masked_signal = initial_signal & 0xFF  # Keep only lower 8 bits
-    
-    # Stage 2: XOR with a pattern
-    xor_pattern = 0b10101010
-    xored_signal = masked_signal ^ xor_pattern
-    
-    # Stage 3: Left shift by 2 positions
-    shifted_signal = xored_signal << 2
-    
-    # Stage 4: Apply another mask
-    second_mask = 0x3FF  # Keep only lower 10 bits
-    masked_shifted = shifted_signal & second_mask
-    
-    # Stage 5: Combine with original using OR
-    combined_signal = masked_shifted | (initial_signal & 0xF00)
-    
-    return combined_signal
-
-def process_signals(signals):
-    # Apply simulation to each signal and collect results
-    simulated = list(map(simulate_circuit, signals))
-    
-    # Filter out signals that are above threshold after simulation
-    threshold = 500
-    filtered_signals = list(filter(lambda x: x <= threshold, simulated))
-    
-    # Reduce using XOR to get final combined value
-    if filtered_signals:
-        final_value = reduce(lambda a, b: a ^ b, filtered_signals)
-    else:
-        final_value = 0
-    
-    return final_value
-
-# Main execution
-input_signals = [123, 456, 789, 234, 567]
-processed_signal = process_signals(input_signals)
-print(f"Result: {processed_signal}")
+calculate_game_score()

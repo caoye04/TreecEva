@@ -1,33 +1,28 @@
-def is_prime(n):
-    if n <= 1:
-        return False
-    for i in range(2, int(n**0.5)+1):
-        if n % i == 0:
-            return False
-    return True
+def transformation_func(data):
+    process_lambda = lambda x: (x * 3) // 2
+    processed = [process_lambda(val) for val in data]
+    
+    # Distractor operations
+    temp_sum = sum(processed)
+    avg_check = temp_sum // len(processed) if processed else 0
+    
+    # Intermediate unused computations
+    unused_mult = [x * 2 for x in processed]
+    verification_step = len(unused_mult) * 10
+    
+    # Key calculation
+    result = sum(processed) % 17
+    return result
 
-def count_primes_less_than(n):
-    return sum(1 for i in range(2, n) if is_prime(i))
+initial_data = [8, 15, 23, 42, 11]
 
-def sum_of_divisors(n):
-    return sum(i for i in range(1, n+1) if n % i == 0)
+# Processing chain with some irrelevant steps
+filtered_values = [x for x in initial_data if x > 10]
+intermediate_check = len(filtered_values) * 5
+placeholder_map = {x: x % 7 for x in filtered_values}
 
-# Compute base scores using dictionary comprehension
-node_base_scores = {
-    n: sum_of_divisors(n) if not is_prime(n) else count_primes_less_than(n)
-    for n in range(2, 11)
-}
+# Semi-relevant but unused calculation
+backup_calc = (intermediate_check + 3) ^ 5
 
-# Adjust scores using ternary-like logic
-adjusted_scores = [
-    score * 2 if score % 3 == 0 else
-    score + 5 if score % 3 == 1 else
-    score
-    for score in node_base_scores.values()
-]
-
-# Apply lambda filter and aggregate
-filter_and_sum = lambda scores: sum(s for s in scores if s > 10)
-aggregated_trust_score = filter_and_sum(adjusted_scores)
-
-print(f"Result: {aggregated_trust_score}")
+final_output = transformation_func(filtered_values)
+print(f"Target result: {final_output}")

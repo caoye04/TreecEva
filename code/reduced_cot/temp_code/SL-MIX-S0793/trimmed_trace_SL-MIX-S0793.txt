@@ -1,0 +1,31 @@
+11
+final_score
+---
+3 student_responses = ['A', 'B', 'C', 'A', 'B', 'A', 'D', 'C', 'A', 'B']
+3 ['student_responses'] ["['A', 'B', 'C', 'A', 'B', ...]"]
+4 response_counts = Counter(student_responses)
+4 ['student_responses', 'response_counts'] ["['A', 'B', 'C', 'A', 'B', ...]", '{A: 4, B: 3, C: 2, ...}']
+5 score_weights = {'A': 3, 'B': 2, 'C': 1, 'D': 0}
+5 ['response_counts', 'score_weights'] ['{A: 4, B: 3, C: 2, ...}', '{A: 3, B: 2, C: 1, ...}']
+6 weighted_scores = {}
+6 ['response_counts', 'score_weights', 'weighted_scores'] ['{A: 4, B: 3, C: 2, ...}', '{A: 3, B: 2, C: 1, ...}', '{}']
+8 for answer, count in response_counts.items():
+8 ['response_counts', 'score_weights', 'weighted_scores', 'answer', 'count'] ['{A: 4, B: 3, C: 2, ...}', '{A: 3, B: 2, C: 1, ...}', '{}', "'A'", '4']
+9 weighted_scores[answer] = count * score_weights[answer]
+9 ['response_counts', 'score_weights', 'weighted_scores', 'answer', 'count'] ['{A: 4, B: 3, C: 2, ...}', '{A: 3, B: 2, C: 1, ...}', '{A: 12}', "'A'", '4']
+8 for answer, count in response_counts.items():
+8 ['response_counts', 'score_weights', 'weighted_scores', 'answer', 'count'] ['{A: 4, B: 3, C: 2, ...}', '{A: 3, B: 2, C: 1, ...}', '{A: 12}', "'B'", '3']
+9 weighted_scores[answer] = count * score_weights[answer]
+9 ['response_counts', 'score_weights', 'weighted_scores', 'answer', 'count'] ['{A: 4, B: 3, C: 2, ...}', '{A: 3, B: 2, C: 1, ...}', '{A: 12, B: 6}', "'B'", '3']
+8 for answer, count in response_counts.items():
+8 ['response_counts', 'score_weights', 'weighted_scores', 'answer', 'count'] ['{A: 4, B: 3, C: 2, ...}', '{A: 3, B: 2, C: 1, ...}', '{A: 12, B: 6}', "'C'", '2']
+9 weighted_scores[answer] = count * score_weights[answer]
+9 ['response_counts', 'score_weights', 'weighted_scores', 'answer', 'count'] ['{A: 4, B: 3, C: 2, ...}', '{A: 3, B: 2, C: 1, ...}', '{A: 12, B: 6, C: 2}', "'C'", '2']
+8 for answer, count in response_counts.items():
+8 ['response_counts', 'score_weights', 'weighted_scores', 'answer', 'count'] ['{A: 4, B: 3, C: 2, ...}', '{A: 3, B: 2, C: 1, ...}', '{A: 12, B: 6, C: 2}', "'D'", '1']
+9 weighted_scores[answer] = count * score_weights[answer]
+9 ['response_counts', 'score_weights', 'weighted_scores', 'answer', 'count'] ['{A: 4, B: 3, C: 2, ...}', '{A: 3, B: 2, C: 1, ...}', '{A: 12, B: 6, C: 2, ...}', "'D'", '1']
+8 for answer, count in response_counts.items():
+8 ['response_counts', 'weighted_scores', 'answer', 'count'] ['{A: 4, B: 3, C: 2, ...}', '{A: 12, B: 6, C: 2, ...}', "'D'", '1']
+11 final_score = sum(weighted_scores.values())
+11 ['weighted_scores', 'final_score'] ['{A: 12, B: 6, C: 2, ...}', '20']

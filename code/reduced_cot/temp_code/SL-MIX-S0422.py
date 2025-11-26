@@ -1,52 +1,52 @@
-def analyze_manuscript(fragment, position=0, memo=None):
-    if memo is None:
-        memo = {}
-    
-    if position >= len(fragment):
-        return 0
-    
-    if position in memo:
-        return memo[position]
-    
-    # Check if current character forms palindrome with future characters
-    max_length = 1
-    for i in range(position + 2, min(position + 7, len(fragment) + 1)):
-        substring = fragment[position:i]
-        if substring == substring[::-1] and len(substring) > max_length:
-            max_length = len(substring)
-    
-    # Recursive exploration with backtracking
-    skip_score = analyze_manuscript(fragment, position + 1, memo)
-    take_score = max_length * (position + 1) + analyze_manuscript(fragment, position + max(1, max_length//2), memo)
-    
-    result = max(skip_score, take_score)
-    memo[position] = result
-    return result
+class HashProcessor:
+    def __init__(self, base_value):
+        self.base = base_value
+        self.temp_cache = {}
+        self.unused_counter = 0  # Distractor variable
+        
+    def process_data(self, data):
+        # Main processing logic with distractions
+        processed_set = set()
+        intermediate = 0
+        
+        # Distractor operation - never used in final calculation
+        fake_processing = lambda x: (x * 3) // 2 + 7
+        distractor_result = fake_processing(len(data))
+        
+        # Actual processing logic
+        for item in data:
+            if item % 2 == 0:
+                processed_set.add(item * 2)
+            else:
+                processed_set.add(item + self.base)
+        
+        # More distractions
+        unused_list = [i for i in range(10)]  # Dead code path
+        misleading_sum = sum(unused_list)  # Never used
+        
+        # Key computation
+        filtered_data = filter(lambda x: x > 15, processed_set)
+        mapped_values = map(lambda x: x // 3 if x % 3 == 0 else x - 1, filtered_data)
+        
+        # Final calculation with set operations
+        unique_values = set(mapped_values)
+        result = sum(unique_values) ^ (len(unique_values) * self.base)
+        
+        return result
 
-def calculate_linguistic_diversity(text):
-    char_frequencies = {c: text.count(c) for c in set(text)}
-    diversity_indices = [i for i, c in enumerate(text) if char_frequencies[c] <= 2]
-    return sum(diversity_indices) % 17
+# Main execution with distractions
+data_stream = [5, 8, 12, 3, 17, 20, 6, 11]
 
-codex_fragment = "abccbaabcddcba"
-recursive_result = analyze_manuscript(codex_fragment)
-diversity_factor = calculate_linguistic_diversity(codex_fragment)
+# Multiple irrelevant variables and operations
+aux_processor = HashProcessor(7)  # Distractor instance
+aux_result = aux_processor.process_data([1, 2, 3])  # Never used
 
-# Apply transformation rules using functional programming
-transformation_weights = list(map(lambda x: x**2 if x % 2 == 0 else x*3, range(1, 6)))
-adjusted_scores = [recursive_result >> i for i in range(len(transformation_weights))]
-combined_score = sum(filter(lambda x: x > 0, adjusted_scores))
+unrelated_calc = (8 * 3) + (15 // 4) - 2  # Dead computation
+misleading_var = unrelated_calc * 2  # Never referenced
 
-# Final calculation incorporating logical operations
-has_high_frequency_chars = any(c in codex_fragment for c in 'abc')
-is_balanced_fragment = len([c for c in codex_fragment if c in 'aeiou']) > len(codex_fragment) // 3
+# Actual processing
+hash_processor = HashProcessor(5)
+final_hash = hash_processor.process_data(data_stream)
 
-cumulative_score = combined_score
-if has_high_frequency_chars and not is_balanced_fragment:
-    cumulative_score += diversity_factor * 2
-elif is_balanced_fragment or not has_high_frequency_chars:
-    cumulative_score -= diversity_factor
-else:
-    cumulative_score = cumulative_score // 2
-
-print(f"Result: {cumulative_score}")
+# Final output
+print(f"Result: {final_hash}")

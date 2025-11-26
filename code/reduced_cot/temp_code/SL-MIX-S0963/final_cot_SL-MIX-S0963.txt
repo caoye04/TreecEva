@@ -1,0 +1,70 @@
+Target: Find the value of variable final_score after [line 61] executes
+
+[line 50]  initial_values = [45, 78, 92, 34, 67, 81, 56]
+Compute: [45, 78, 92, 34, 67, 81, 56] = [45, 78, 92, 34, 67, ...]
+[line 51]  score_weights = [2, 3, 1, 4, 2]
+Compute: [2, 3, 1, 4, 2] = [2, 3, 1, 4, 2]
+[line 58]  final_score = process_sequence(initial_values, score_weights)
+Call function process_sequence(initial_values=[45, 78, 92, 34, 67, ...] (defined at [line 50]), score_weights=[2, 3, 1, 4, 2] (defined at [line 51]))
+[line 15]  processed = []
+Compute: [] = []
+[line 19]  filtered_vals, distraction = filter_valid_scores(values)
+(Missing param: 'func_name')
+[line 9]  valid_scores = [score for score in scores if score >= threshold]
+Compute: [score for score in scores if score >= threshold], where score=45 (an unknown source), scores=[45, 78, 92, 34, 67, ...] (an unknown source), threshold=50 (an unknown source) = ?
+[line 10]  fake_result = sum(valid_scores) * 3 - 15  # Misleading computation
+Compute: sum(valid_scores) * 3 - 15  # Misleading computation, where valid_scores=[78, 92, 67, 81, 56] (defined at [line 9]) = 1107
+[line 11]  return valid_scores, fake_result
+Return: valid_scores, fake_result
+[line 22]  combos = list(itertools.combinations(filtered_vals, 2))
+Call function list(itertools.combinations(filtered_vals, 2))
+[line 23]  combo_sum = sum(sum(pair) for pair in combos[:3])  # Partial use
+Call function sum(sum(pair) for pair in combos[:3])
+[line 23]  combo_sum = sum(sum(pair) for pair in combos[:3])  # Partial use
+Call function sum(sum(pair) for pair in combos[:3])
+[line 23]  combo_sum = sum(sum(pair) for pair in combos[:3])  # Partial use
+Call function sum(sum(pair) for pair in combos[:3])
+[line 23]  combo_sum = sum(sum(pair) for pair in combos[:3])  # Partial use
+Call function sum(sum(pair) for pair in combos[:3])
+[line 23]  combo_sum = sum(sum(pair) for pair in combos[:3])  # Partial use
+Call function sum(sum(pair) for pair in combos[:3])
+[line 26]  for i, val in enumerate(filtered_vals):
+(Missing param: 'iter_var')
+[line 27]  if i < len(weights):
+Condition: True, entering 'if' block
+[line 28]  weighted_val = val * weights[i]
+Compute: val * weights[i], where val=78 (an unknown source), weights=[2, 3, 1, 4, 2] (an unknown source), i=0 (an unknown source) = 156
+[line 29]  if weighted_val > 100:
+Condition: True, entering 'if' block
+[line 26]  for i, val in enumerate(filtered_vals):
+(Missing param: 'iter_var')
+[line 27]  if i < len(weights):
+Condition: True, entering 'if' block
+[line 28]  weighted_val = val * weights[i]
+Compute: val * weights[i], where val=92 (an unknown source), weights=[2, 3, 1, 4, 2] (an unknown source), i=1 (an unknown source) = 276
+[line 29]  if weighted_val > 100:
+Condition: True, entering 'if' block
+... [Line 26] repeats 2 more times ...
+... [Line 26] repeats 2 more times ...
+... [Line 26] repeats 2 more times ...
+... [Line 26] repeats 2 more times ...
+[line 26]  for i, val in enumerate(filtered_vals):
+(Missing param: 'iter_var')
+[line 27]  if i < len(weights):
+Condition: True, entering 'if' block
+[line 28]  weighted_val = val * weights[i]
+Compute: val * weights[i], where val=56 (an unknown source), weights=[2, 3, 1, 4, 2] (an unknown source), i=4 (an unknown source) = 112
+[line 29]  if weighted_val > 100:
+Condition: True, entering 'if' block
+[line 26]  for i, val in enumerate(filtered_vals):
+Loop End: Iteration finished
+[line 37]  if len(processed) == 0:
+Condition: True, entering 'if' block
+[line 41]  result = sum(processed) - combo_sum + len(filtered_vals) * 5
+Compute: sum(processed) - combo_sum + len(filtered_vals) * 5, where processed=[78, 138, 77, 162, 56] (defined at [line 15]), combo_sum=474 (defined at [line 23]), filtered_vals=[78, 92, 67, 81, 56] (an unknown source) = 62
+[line 47]  return result
+Return: result=62 (defined at [line 41])
+[line 61]  print(f"Target result: {final_score}")
+Output: f"Target result: {final_score}"
+
+Answer: final_score = 62 (last updated on defined at [line 58])

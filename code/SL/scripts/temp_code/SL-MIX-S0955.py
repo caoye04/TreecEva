@@ -1,23 +1,31 @@
-def fibonacci_bakery_production():
-    # Day 1 and Day 2 production
-    day_1 = 10
-    day_2 = 15
+def analyze_sequence(data_sequence):
+    # Calculate sum of all elements
+    total_sum = sum(data_sequence)
     
-    # Initialize total with first two days
-    total_loaves = day_1 + day_2
+    # Extract middle portion using slicing (python feature)
+    middle_slice = data_sequence[2:5]
+    middle_sum = sum(middle_slice)
     
-    # Calculate production for days 3 through 7
-    prev_prev = day_1
-    prev = day_2
+    # XOR operations that don't affect final result
+    xor_temp = total_sum ^ middle_sum
+    xor_adjusted = xor_temp ^ 0xFF
     
-    for day in range(3, 8):
-        current = prev + prev_prev
-        total_loaves += current
-        prev_prev = prev
-        prev = current
+    # Intermediate calculation that seems relevant but isn't used
+    unused_metric = (total_sum + middle_sum) // len(middle_slice)
     
-    return total_loaves
+    # Bitwise masking operation
+    masked_sum = total_sum & 0b11111111
+    
+    # Adjustment factor based on sequence properties
+    sequence_length = len(data_sequence)
+    bit_adjustment = sequence_length | 0b100
+    
+    # Final calculation - this is what matters
+    final_result = masked_sum * bit_adjustment
+    
+    # Print the target variable
+    print(f"Target result: {final_result}")
 
-# Calculate total bread production
-production_result = fibonacci_bakery_production()
-print(f"Result: {production_result}")
+# Main execution
+input_data = [15, 23, 42, 67, 89, 12, 34]
+analyze_sequence(input_data)

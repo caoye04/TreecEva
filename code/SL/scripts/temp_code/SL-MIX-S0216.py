@@ -1,52 +1,30 @@
-import re
-from functools import reduce
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
 
-def compute_log_hash(log_entry):
-    return sum(ord(char) << (i % 8) for i, char in enumerate(log_entry))
+# Process number range with slicing and itertools
+import itertools
 
-def extract_patterns(log_batch):
-    pattern_scores = {}
-    for log in log_batch:
-        matches = re.findall(r'\b(attack|breach|malware|phishing)\b', log, re.IGNORECASE)
-        for match in matches:
-            pattern_scores[match.lower()] = pattern_scores.get(match.lower(), 0) + 1
-    return pattern_scores
+numbers = list(range(2, 50))
+prime_candidates = numbers[::2] + numbers[1::3]
+filtered_candidates = [x for x in prime_candidates if x % 3 != 0]
 
-def calculate_threat_score(pattern_dict, log_hashes):
-    base_score = sum(hash_val % 100 for hash_val in log_hashes)
-    pattern_bonus = sum(count**2 for count in pattern_dict.values())
-    return base_score + pattern_bonus
+# Distractor operations (not used in final result)
+prime_squares = [x**2 for x in filtered_candidates if x < 20]
+dummy_sum = sum(prime_squares)
 
-# Log batch processing
-log_entries = [
-    "User attempted unauthorized access - possible attack vector",
-    "Detected malware signature in network traffic",
-    "Phishing email bypassed initial filters",
-    "System breach reported from external IP",
-    "Normal system operation with no anomalies"
-]
+# Main logic with modular arithmetic
+valid_primes = []
+for num in filtered_candidates:
+    if is_prime(num) and num % 4 == 1:
+        valid_primes.append(num)
 
-# Hash computation for each log entry
-entry_hashes = list(map(compute_log_hash, log_entries))
+# Another distractor operation
+prime_pairs = list(itertools.combinations(valid_primes, 2))
 
-# Pattern extraction and frequency mapping
-threat_patterns = extract_patterns(log_entries)
-
-# Greedy selection of top threat indicators
-top_indicators = dict(sorted(threat_patterns.items(), key=lambda x: x[1], reverse=True)[:3])
-
-# Dynamic programming optimization for threat response
-response_costs = [10, 20, 30, 40, 50]
-n = len(response_costs)
-dp_table = [float('inf')] * (n+1)
-dp_table[0] = 0
-for i in range(1, n+1):
-    for j in range(i):
-        dp_table[i] = min(dp_table[i], dp_table[j] + response_costs[i-1])
-
-# Final threat calculation incorporating DP optimization
-threat_base = calculate_threat_score(top_indicators, entry_hashes)
-optimization_factor = dp_table[-1] // 10
-final_threat_score = threat_base - optimization_factor
-
-print(f"Result: {final_threat_score}")
+final_output = sum(valid_primes)
+print(f"Result: {final_output}")

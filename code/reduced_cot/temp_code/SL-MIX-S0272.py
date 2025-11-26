@@ -1,38 +1,39 @@
-import math
-from functools import reduce
 from collections import Counter
 
-network_logs = [120, 256, 97, 512, 101, 79, 300, 1024, 103, 200, 400, 89, 150, 600, 750]
+def decode_sequence(sequence, mask):
+    # Irrelevant initialization - never used
+    temp_buffer = [i * 2 for i in range(20)]
+    offset_calc = sum(x & 0xF for x in temp_buffer)
+    
+    # Actual decoding logic
+    decoded = []
+    for i, val in enumerate(sequence):
+        if i % 2 == 0:
+            masked_val = (val ^ mask[0]) & 0xFF
+        else:
+            masked_val = (val | mask[1]) & 0xFF
+        decoded.append(masked_val)
+    
+    # Misleading intermediate calculation
+    fake_sum = sum(decoded) * 3 - 150
+    
+    # Actual checksum calculation
+    freq = Counter(decoded)
+    cipher_checksum = sum(k * v for k, v in freq.items()) % 256
+    
+    # Dead code path
+    if fake_sum > 1000:
+        cipher_checksum = fake_sum % 100
+    
+    return cipher_checksum
 
-# Helper function to check if a number is prime
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+# Main execution
+mask_pattern = (0x5A, 0x3C)
+data_stream = [120, 45, 200, 89, 156, 33, 178, 67]
 
-# Calculate mean and standard deviation
-packet_count = len(network_logs)
-total_size = sum(network_logs)
-mean_size = total_size / packet_count
-variance = sum((x - mean_size) ** 2 for x in network_logs) / packet_count
-std_dev = math.sqrt(variance)
+# Distractor computations
+redundant_calc = (data_stream[0] << 2) | (data_stream[1] >> 1)
+placeholder_var = [x + 10 for x in data_stream if x > 100]
 
-# Threshold for anomaly detection
-threshold = mean_size + std_dev
-
-# Identify primes using list comprehension and filter
-prime_packets = [size for size in network_logs if is_prime(size)]
-
-# Count anomalies using short-circuit evaluation and ternary operator
-anomaly_count = sum(1 for p in prime_packets if p > threshold)
-
-print(f"Result: {anomaly_count}")
+result = decode_sequence(data_stream, mask_pattern)
+print(f"Result: {result}")

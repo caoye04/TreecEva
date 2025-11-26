@@ -1,46 +1,66 @@
-from collections import deque
-import re
+from collections import Counter
 
-def packet_analyzer():
-    # Initialize sliding window and tracking variables
-    packet_window = deque(maxlen=5)
-    duplicate_tracker = {}
-    congestion_window_size = 10
+def validate_input(data):
+    # Distractor function - not actually used
+    return sum(x * 2 for x in data if x > 0)
+
+def analyze_frequency(items):
+    # Misleading computation that looks important
+    freq = Counter(items)
+    return max(freq.values()) - min(freq.values())
+
+def process_data(stream):
+    # Core logic with intervention
+    tokens = stream.split('|')
     
-    # Packet data: (sequence_number, payload_size)
-    packet_stream = [
-        (1001, 512), (1002, 256), (1003, 1024), (1004, 128),
-        (1005, 64), (1003, 512), (1006, 2048), (1007, 32),
-        (1008, 4096), (1009, 16), (1010, 8192), (1008, 1024)
-    ]
+    # Distractor variables
+    temp_sum = sum(ord(c) for token in tokens for c in token[:2])
+    token_count = len(tokens)
     
-    # Process each packet
-    for seq_num, payload in packet_stream:
-        # Check if sequence number already exists in current window
-        is_duplicate = seq_num in [p[0] for p in packet_window]
-        
-        # Update duplicate tracker
-        if is_duplicate:
-            duplicate_tracker[seq_num] = duplicate_tracker.get(seq_num, 0) + 1
-        
-        # Add packet to sliding window
-        packet_window.append((seq_num, payload))
-        
-        # Adjust congestion window based on packet characteristics
-        if payload > 1000:
-            congestion_window_size = congestion_window_size - 1 if congestion_window_size > 1 else 1
-        elif is_duplicate:
-            congestion_window_size = congestion_window_size + 1 if congestion_window_size < 20 else 20
+    # Relevant processing with bit operations
+    processed = []
+    for i, token in enumerate(tokens):
+        if i % 2 == 0:
+            # Apply bitwise operations
+            val = len(token) ^ (i * 3)
+            processed.append(val)
         else:
-            # Apply regex pattern matching to sequence number for special handling
-            seq_str = str(seq_num)
-            if re.match(r'.*[02468]$', seq_str):  # Even ending digit
-                congestion_window_size = congestion_window_size + 1
-            else:
-                congestion_window_size = congestion_window_size - 1
+            # Alternative path with arithmetic
+            val = (len(token) * 2 + 1) % 17
+            processed.append(val)
     
-    return congestion_window_size
+    # Dead code path that looks important
+    if len(processed) > 10:
+        processed = [x & 0xFF for x in processed]
+    
+    # Main computation chain
+    result = 0
+    for i, num in enumerate(processed):
+        if i < len(processed) // 2:
+            result += num << 1
+        else:
+            result ^= num
+    
+    # Final adjustment with conditional
+    if result > 100:
+        result = result // 4
+    else:
+        result = result * 3 + 7
+    
+    return result
 
-# Execute the analyzer
-final_congestion_window = packet_analyzer()
-print(f"Result: {final_congestion_window}")
+# Main execution
+input_stream = "alpha|beta|gamma|delta|epsilon|zeta"
+
+# Misleading intermediate computations
+frequency_analysis = analyze_frequency(input_stream.split('|'))
+validation_check = validate_input([1, 2, 3, 4, 5])
+
+# Critical statement
+result = process_data(input_stream)
+
+# More distractor operations
+final_adjustment = (frequency_analysis * 2) % 13
+final_result = result + (final_adjustment // 2)
+
+print(f"Target result: {final_result}")

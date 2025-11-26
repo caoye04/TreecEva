@@ -1,0 +1,29 @@
+Target: Find the value of variable final_output after [line 43] executes
+
+[line 35]  initial_data = [3, 8, 2, 11, 5, 7, 4]
+Compute: [3, 8, 2, 11, 5, 7, 4] = [3, 8, 2, 11, 5, ...]
+[line 36]  threshold_value = 6
+Assign: threshold_value = 6
+[line 43]  final_output = process_set_operations(initial_data, threshold_value)
+Call function process_set_operations(initial_data=[3, 8, 2, 11, 5, ...] (defined at [line 35]), threshold_value=6 (defined at [line 36]))
+[line 1]  def process_set_operations(data_values, limit):
+Enter function process_set_operations: data_values=[3, 8, 2, 11, 5, ...] (initial_data defined at [line 35]), limit=6 (threshold_value defined at [line 36])
+  [line 6]  processed = [x * 2 if x > 5 else x + 1 for x in data_values]
+  Compute: [x * 2 if x > 5 else x + 1 for x in data_values], where x=3 (an unknown source), data_values=[3, 8, 2, 11, 5, ...] (parameter data_values defined at [line 35]) = ?
+  [line 9]  temp_sum = sum(processed) * 3
+  Compute: sum(processed) * 3, where processed=[4, 16, 3, 22, 6, ...] (defined at [line 6]) = 210
+  [line 12]  if temp_sum > 1000:
+  Condition: True, entering 'if' block
+  [line 16]  filtered_set = {x for x in processed if x >= limit}
+  Compute: {x for x in processed if x >= limit}, where x=4 (an unknown source), processed=[4, 16, 3, 22, 6, ...] (defined at [line 6]), limit=6 (parameter limit defined at [line 36]) = ?
+  [line 17]  complement_set = {x for x in processed if x < limit}
+  Compute: {x for x in processed if x < limit}, where x=4 (an unknown source), processed=[4, 16, 3, 22, 6, ...] (defined at [line 6]), limit=6 (parameter limit defined at [line 36]) = ?
+  [line 27]  set_difference = (filtered_set - complement_set) if len(filtered_set) > len(complement_set) else (complement_set - filtered_set)
+  Compute: (filtered_set - complement_set) if len(filtered_set) > len(complement_set) else (complement_set - filtered_set), where filtered_set={16, 14, 22, 6} (defined at [line 16]), complement_set={3, 4, 5} (defined at [line 17]) = {16, 6, 14, 22}
+  [line 30]  result = len(set_difference) * (sum(filtered_set) // len(filtered_set) if filtered_set else 1)
+  Compute: len(set_difference) * (sum(filtered_set) // len(filtered_set) if filtered_set else 1), where set_difference={16, 6, 14, 22} (defined at [line 27]), filtered_set={16, 14, 22, 6} (defined at [line 16]) = 56
+  [line 32]  return result
+  Return: result=56 (defined at [line 30])
+Function process_set_operations returns 56
+
+Answer: final_output = 56 (last updated on defined at [line 43])

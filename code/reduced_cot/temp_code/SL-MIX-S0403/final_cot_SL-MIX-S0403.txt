@@ -1,0 +1,26 @@
+Target: Find the value of variable final_score after [line 21] executes
+
+[line 2]  irrelevant_data = [i**2 for i in range(10)]
+Compute: [i**2 for i in range(10)], where i=0 (an unknown source) = ?
+[line 3]  misleading_sum = sum(irrelevant_data)
+Call function sum(irrelevant_data=[0, 1, 4, 9, 16, ...] (defined at [line 2]))
+[line 5]  temp_scores = [x for x in data if x >= cutoff]
+Compute: [x for x in data if x >= cutoff], where x=85 (an unknown source), data=[85, 92, 78, 65, 88, ...] (an unknown source), cutoff=70 (an unknown source) = ?
+[line 8]  score_filter = lambda x: x > 0
+Compute: lambda x: x > 0 = ?
+[line 9]  filtered_scores = list(filter(score_filter, temp_scores))
+Call function list(filter(score_filter, temp_scores))
+[line 12]  if len(filtered_scores) == 0:
+Condition: True, entering 'if' block
+[line 15]  average_score = sum(filtered_scores) / len(filtered_scores)
+Compute: sum(filtered_scores) / len(filtered_scores), where filtered_scores=[85, 92, 78, 88, 95, ...] (defined at [line 9]) = 85.16666666666667
+[line 17]  misleading_adjustment = (misleading_sum % 100) / 10
+Compute: (misleading_sum % 100) / 10, where misleading_sum=285 (defined at [line 3]) = 8.5
+[line 18]  intermediate = average_score + misleading_adjustment
+Compute: average_score + misleading_adjustment, where average_score=85.16666666666667 (defined at [line 15]), misleading_adjustment=8.5 (defined at [line 17]) = 93.66666666666667
+[line 20]  final_multiplier = 1.5 if len(filtered_scores) > 2 else 0.8
+Compute: 1.5 if len(filtered_scores) > 2 else 0.8, where filtered_scores=[85, 92, 78, 88, 95, ...] (defined at [line 9]) = 1.5
+[line 21]  final_score = intermediate * final_multiplier
+Compute: intermediate * final_multiplier, where intermediate=93.66666666666667 (defined at [line 18]), final_multiplier=1.5 (defined at [line 20]) = 140.5
+
+Answer: final_score = 140.5 (last updated on defined at [line 21])

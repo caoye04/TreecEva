@@ -1,0 +1,32 @@
+Target: Find the value of variable performance_score after [line 25] executes
+
+[line 16]  workload_data = {6, 9, 12, 15, 18}
+Compute: {6, 9, 12, 15, 18} = {18, 6, 9, 12, 15}
+[line 17]  initial_processing = analyze_workload(workload_data)
+Call function analyze_workload(workload_data={18, 6, 9, 12, 15} (defined at [line 16]))
+[line 3]  processed_data = {x * 2 for x in load_data}
+Compute: {x * 2 for x in load_data}, where x=18 (an unknown source), load_data={18, 6, 9, 12, 15} (an unknown source) = ?
+[line 6]  return processed_data
+Return: processed_data={36, 42, 12, 18, 30} (defined at [line 3])
+[line 18]  reference_set = {20, 25, 30, 35, 40}
+Compute: {20, 25, 30, 35, 40} = {35, 20, 40, 25, 30}
+[line 21]  adjusted_set = evaluate_metrics(initial_processing, reference_set)
+Call function evaluate_metrics(initial_processing={36, 42, 12, 18, 30} (defined at [line 17]), reference_set={35, 20, 40, 25, 30} (defined at [line 18]))
+[line 9]  common_metrics = primary_set.intersection(secondary_set)
+(Missing param: 'func_name')
+[line 10]  unique_to_primary = primary_set - secondary_set
+Compute: primary_set - secondary_set, where primary_set={36, 42, 12, 18, 30} (an unknown source), secondary_set={35, 20, 40, 25, 30} (an unknown source) = {42, 18, 36, 12}
+[line 11]  temp_result = len(common_metrics) * 5
+Compute: len(common_metrics) * 5, where common_metrics={30} (an unknown source) = 5
+[line 12]  adjusted_set = {x + temp_result for x in unique_to_primary}
+Compute: {x + temp_result for x in unique_to_primary}, where x=42 (an unknown source), temp_result=5 (defined at [line 11]), unique_to_primary={42, 18, 36, 12} (defined at [line 10]) = ?
+[line 14]  return adjusted_set
+Return: adjusted_set={17, 23, 41, 60, 47} (defined at [line 12])
+[line 22]  extra_metrics = {55, 60, 65}
+Compute: {55, 60, 65} = {65, 60, 55}
+[line 23]  final_score = adjusted_set.union(extra_metrics)
+(Missing param: 'func_name')
+[line 25]  performance_score = sum(final_score) - sum(extra_metrics)
+Compute: sum(final_score) - sum(extra_metrics), where final_score={17, 65, 55, 23, 41, ...} (an unknown source), extra_metrics={65, 60, 55} (defined at [line 22]) = 128
+
+Answer: performance_score = 128 (last updated on defined at [line 25])

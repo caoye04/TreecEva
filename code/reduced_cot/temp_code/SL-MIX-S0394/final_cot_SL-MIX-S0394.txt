@@ -1,0 +1,28 @@
+Target: Find the value of variable final_capacity after [line 36] executes
+
+[line 29]  backup_volumes = [320, 480, 210, 650]
+Compute: [320, 480, 210, 650] = [320, 480, 210, 650]
+[line 30]  active_pools = [420, 580, 310, 720, 490]
+Compute: [420, 580, 310, 720, 490] = [420, 580, 310, 720, 490]
+[line 35]  final_capacity = storage_optimizer(backup_volumes, active_pools)
+Call function storage_optimizer(backup_volumes=[320, 480, 210, 650] (defined at [line 29]), active_pools=[420, 580, 310, 720, 490] (defined at [line 30]))
+[line 3]  total_volume = sum(volumes)
+Call function sum(volumes=[320, 480, 210, 650] (an unknown source))
+[line 10]  active_threshold = 500
+Assign: active_threshold = 500
+[line 11]  qualified_pools = [p for p in pools if p > active_threshold]
+Compute: [p for p in pools if p > active_threshold], where p=420 (an unknown source), pools=[420, 580, 310, 720, 490] (an unknown source), active_threshold=500 (defined at [line 10]) = ?
+[line 17]  if qualified_pools:
+Condition: True, entering 'if' block
+[line 18]  optimal_capacity = total_volume + sum(qualified_pools[-2:])  # Last two qualified pools
+Compute: total_volume + sum(qualified_pools[-2:])  # Last two qualified pools, where total_volume=1660 (defined at [line 3]), qualified_pools=[580, 720] (defined at [line 11]) = 2960
+[line 23]  volume_ratio = volumes[-1] / volumes[0] if volumes else 1
+Compute: volumes[-1] / volumes[0] if volumes else 1, where volumes=[320, 480, 210, 650] (an unknown source) = 2.03125
+[line 24]  final_value = optimal_capacity * (0.8 if volume_ratio > 2 else 1.2)
+Compute: optimal_capacity * (0.8 if volume_ratio > 2 else 1.2), where optimal_capacity=2960 (defined at [line 18]), volume_ratio=2.03125 (defined at [line 23]) = 2368.0
+[line 26]  return round(final_value, 2)
+Return: round(final_value, 2)
+[line 36]  print(f"Result: {final_capacity}")
+Output: f"Result: {final_capacity}"
+
+Answer: final_capacity = 2368.0 (last updated on defined at [line 35])

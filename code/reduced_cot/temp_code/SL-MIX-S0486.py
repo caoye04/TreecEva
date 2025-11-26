@@ -1,34 +1,54 @@
-from collections import defaultdict
-import itertools
+def compute_quality_score(data_sequence, quality_threshold):
+    # Irrelevant data processing that doesn't affect final result
+    temp_buffer = [x * 2 for x in data_sequence if x > 0]
+    processed_data = [val // 3 for val in temp_buffer]
+    
+    # Misleading intermediate calculations
+    dummy_sum = sum(processed_data) + len(data_sequence)
+    misleading_factor = (dummy_sum % 7) * 2.5
+    
+    # Actual relevant processing with enumerate
+    valid_indices = []
+    for idx, value in enumerate(data_sequence):
+        if value >= quality_threshold:
+            valid_indices.append(idx)
+    
+    # Distractor operations that look important but aren't
+    offset_data = [x + misleading_factor for x in processed_data]
+    normalized_values = [v / 2.0 for v in offset_data]
+    
+    # Key computation using zip
+    pairs = list(zip(valid_indices, data_sequence))
+    weighted_sum = 0
+    for index, value in pairs:
+        weighted_sum += value * (index + 1)
+    
+    # Final calculation with intentional complexity
+    base_score = weighted_sum // len(pairs) if pairs else 0
+    adjustment_factor = (len(valid_indices) * 3) - (misleading_factor // 2)
+    
+    # Dead code path that never executes
+    if base_score < 0:
+        irrelevant_var = base_score * 2 + 100
+    
+    return base_score + adjustment_factor
 
-def validate_angles(angles):
-    return sum(angles) == 180 and all(angle > 0 for angle in angles)
+def analyze_data_stream(input_data):
+    # Unused helper function that serves as distraction
+    sorted_data = sorted(input_data)
+    median_val = sorted_data[len(sorted_data) // 2] if sorted_data else 0
+    return median_val * 0.75
 
-def generate_triangles(angle_pool):
-    valid_configs = set()
-    for combo in itertools.combinations_with_replacement(angle_pool, 3):
-        if validate_angles(combo):
-            valid_configs.add(tuple(sorted(combo)))
-    return valid_configs
+# Main execution with multiple distractors
+data_stream = [12, 8, 15, 6, 20, 3, 18, 9]
+threshold_value = 10
 
-# Angular measurements available for triangle formation
-angular_measurements = [30, 60, 90, 45, 120, 15]
+# Misleading variable that looks important
+preliminary_analysis = analyze_data_stream(data_stream)
+redundant_calc = sum(data_stream) * preliminary_analysis
 
-# Generate all valid triangle configurations
-triangle_configurations = generate_triangles(angular_measurements)
+# The key function call
+final_metric = compute_quality_score(data_stream, threshold_value)
 
-# Count occurrences of each angle in all valid configurations
-angle_usage = defaultdict(int)
-for config in triangle_configurations:
-    for angle in config:
-        angle_usage[angle] += 1
-
-# Determine valid_triangle_count based on angle usage frequencies
-valid_triangle_count = 0
-for config in triangle_configurations:
-    if all(angle_usage[angle] >= 2 for angle in config):
-        valid_triangle_count += 1
-    elif any(angle == 90 for angle in config):  # Right triangles given priority
-        valid_triangle_count += 1
-
-print(f"Result: {valid_triangle_count}")
+# Final print statement
+print(f"Result: {final_metric}")

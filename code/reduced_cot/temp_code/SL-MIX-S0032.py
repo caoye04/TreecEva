@@ -1,44 +1,37 @@
-from math import log2, exp
-from functools import reduce
-from collections import namedtuple
+def calculate_fees(amount, transaction_type):
+    fee_multiplier = 0.02 if transaction_type == 'transfer' else 0.015
+    processing_cost = amount * 0.008  # irrelevant calculation
+    base_fee = 1.5  # unused variable
+    return amount * fee_multiplier
 
-def transform_key_stage(key_segment):
-    return (key_segment << 2) ^ 0xF0
+def process_transactions(log_entries):
+    balance = 1000.0
+    daily_limit = 5000  # misleading variable
+    fee_tracker = []  # unused list
+    
+    for idx, entry in enumerate(log_entries):
+        amount, trans_type = entry
+        fee = calculate_fees(amount, trans_type)
+        
+        # Distractor calculations
+        temp_balance = balance - amount * 1.1  # incorrect calculation
+        rolling_sum = sum([x[0] for x in log_entries[:idx+1]]) if idx > 0 else 0
+        
+        if trans_type == 'transfer':
+            balance -= (amount + fee)
+            verification_code = (amount * 3) % 17  # irrelevant operation
+        else:
+            balance -= (amount + fee)
+            bonus_points = amount // 10  # unused calculation
+    
+    account_status = 'active' if balance > 0 else 'inactive'  # unused check
+    monthly_fee = 25.0  # misleading variable
+    
+    return round(balance, 2)
 
-def validate_checksum(fragment, target):
-    if fragment == 0:
-        return target == 0
-    if target < 0:
-        return False
-    return validate_checksum(fragment >> 1, target - (fragment & 1))
+transaction_log = [(200, 'transfer'), (150, 'purchase'), (75, 'transfer'), (300, 'purchase')]
+shadow_log = [(100, 'transfer'), (50, 'purchase')]  # irrelevant data
+account_summary = {'initial': 1000, 'transactions': 4}  # unused dict
 
-def process_encryption_key(base_key):
-    segments = [base_key >> i & 0xFF for i in range(0, 24, 8)]
-    transformed = list(map(transform_key_stage, segments))
-    aggregated = reduce(lambda x, y: x | y, transformed)
-    
-    operation_code = aggregated % 4
-    checksum_component = 0
-    
-    match operation_code:
-        case 0:
-            checksum_component = int(exp(log2(aggregated)))
-        case 1:
-            checksum_component = aggregated & 0xAA
-        case 2:
-            checksum_component = aggregated ^ 0xCC
-        case 3:
-            checksum_component = aggregated | 0xF0
-    
-    sorted_bits = sorted([int(b) for b in bin(checksum_component)[2:]])
-    bit_sum = sum(sorted_bits)
-    
-    if validate_checksum(checksum_component, bit_sum):
-        return checksum_component
-    else:
-        return checksum_component ^ 0xFF
-
-EncryptionSession = namedtuple('EncryptionSession', ['session_id', 'base_key'])
-session = EncryptionSession(session_id=12345, base_key=0x123456)
-final_checksum = process_encryption_key(session.base_key)
-print(f"Result: {final_checksum}")
+final_balance = process_transactions(transaction_log)
+print(f"Result: {final_balance}")

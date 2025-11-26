@@ -1,0 +1,106 @@
+Target: Find the value of variable final_result after [line 66] executes
+
+[line 65]  final_result = process_transactions(customer_transactions, discount_policies)
+Call function process_transactions(customer_transactions={C001: 750.0, C002: 350.0, B001: 1200.0, ...} (an unknown source), discount_policies={C001: 'standard', B001: 'premium', A005: 'standard'} (an unknown source))
+[line 16]  processed_total = 0
+Assign: processed_total = 0
+[line 17]  bonus_points = 0
+Assign: bonus_points = 0
+[line 24]  for customer, amount in transactions.items():
+(Missing param: 'iter_var')
+[line 25]  rule = discount_rules.get(customer, 'standard')
+(Missing param: 'func_name')
+[line 26]  discounted = apply_rule(amount, rule)
+Call function apply_rule(amount=750.0 (an unknown source), rule='standard' (an unknown source))
+[line 1]  def apply_rule(amount, rule_type):
+Enter function apply_rule: amount=750.0, rule_type='standard'
+  [line 6]  if rule_type == 'premium':
+  Condition: True, entering 'if' block
+  [line 8]  elif rule_type == 'standard':
+  'elif' Condition: True, entering block
+  [line 9]  return amount * 0.95
+  Return: amount * 0.95
+Function apply_rule returns 712.5
+[line 29]  if amount > 500:
+Condition: True, entering 'if' block
+[line 30]  bonus_points += int(amount * 0.02)
+Update: bonus_points changed from 0 (defined at defined at [line 17]) to 0+int(amount * 0.02) = 15
+[line 32]  processed_total += discounted
+Update: processed_total changed from 0 (defined at defined at [line 16]) to 0+discounted = 712.5
+[line 35]  if customer.startswith('C'):
+Condition: True, entering 'if' block
+[line 24]  for customer, amount in transactions.items():
+(Missing param: 'iter_var')
+[line 25]  rule = discount_rules.get(customer, 'standard')
+(Missing param: 'func_name')
+[line 26]  discounted = apply_rule(amount, rule)
+Call function apply_rule(amount=350.0 (an unknown source), rule='standard' (an unknown source))
+[line 1]  def apply_rule(amount, rule_type):
+Enter function apply_rule: amount=350.0, rule_type='standard'
+  [line 6]  if rule_type == 'premium':
+  Condition: True, entering 'if' block
+  [line 8]  elif rule_type == 'standard':
+  'elif' Condition: True, entering block
+  [line 9]  return amount * 0.95
+  Return: amount * 0.95
+Function apply_rule returns 332.5
+[line 29]  if amount > 500:
+Condition: True, entering 'if' block
+[line 32]  processed_total += discounted
+Update: processed_total changed from 712.5 (defined at defined at [line 32]) to 712.5+discounted = 1045.0
+[line 35]  if customer.startswith('C'):
+Condition: True, entering 'if' block
+[line 24]  for customer, amount in transactions.items():
+(Missing param: 'iter_var')
+[line 25]  rule = discount_rules.get(customer, 'standard')
+(Missing param: 'func_name')
+[line 26]  discounted = apply_rule(amount, rule)
+Call function apply_rule(amount=1200.0 (an unknown source), rule='premium' (an unknown source))
+[line 1]  def apply_rule(amount, rule_type):
+Enter function apply_rule: amount=1200.0, rule_type='premium'
+  [line 6]  if rule_type == 'premium':
+  Condition: True, entering 'if' block
+  [line 7]  return amount * 0.85
+  Return: amount * 0.85
+Function apply_rule returns 1020.0
+[line 29]  if amount > 500:
+Condition: True, entering 'if' block
+[line 30]  bonus_points += int(amount * 0.02)
+Update: bonus_points changed from 15 (defined at defined at [line 30]) to 15+int(amount * 0.02) = 39
+[line 32]  processed_total += discounted
+Update: processed_total changed from 1045.0 (defined at defined at [line 32]) to 1045.0+discounted = 2065.0
+[line 35]  if customer.startswith('C'):
+Condition: True, entering 'if' block
+[line 24]  for customer, amount in transactions.items():
+(Missing param: 'iter_var')
+[line 25]  rule = discount_rules.get(customer, 'standard')
+(Missing param: 'func_name')
+[line 26]  discounted = apply_rule(amount, rule)
+Call function apply_rule(amount=280.0 (an unknown source), rule='standard' (an unknown source))
+[line 1]  def apply_rule(amount, rule_type):
+Enter function apply_rule: amount=280.0, rule_type='standard'
+  [line 6]  if rule_type == 'premium':
+  Condition: True, entering 'if' block
+  [line 8]  elif rule_type == 'standard':
+  'elif' Condition: True, entering block
+  [line 9]  return amount * 0.95
+  Return: amount * 0.95
+Function apply_rule returns 266.0
+[line 29]  if amount > 500:
+Condition: True, entering 'if' block
+[line 32]  processed_total += discounted
+Update: processed_total changed from 2065.0 (defined at defined at [line 32]) to 2065.0+discounted = 2331.0
+[line 35]  if customer.startswith('C'):
+Condition: True, entering 'if' block
+[line 24]  for customer, amount in transactions.items():
+Loop End: Iteration finished
+[line 39]  adjustment_factor = (bonus_points % 13) / 100
+Compute: (bonus_points % 13) / 100, where bonus_points=39 (defined at [line 30]) = 0.0
+[line 40]  final_amount = processed_total - adjustment_factor
+Compute: processed_total - adjustment_factor, where processed_total=2331.0 (defined at [line 32]), adjustment_factor=0.0 (defined at [line 39]) = 2331.0
+[line 45]  return round(final_amount, 2)
+Return: round(final_amount, 2)
+[line 66]  print(f"Result: {final_result}")
+Output: f"Result: {final_result}"
+
+Answer: final_result = 2331.0 (last updated on defined at [line 65])

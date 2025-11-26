@@ -1,149 +1,87 @@
-38
-remaining_capacity
+57
+final_output
 ---
-17 inventory_levels = defaultdict(int)
-17 ['inventory_levels'] ['{}']
-18 max_product_capacity = {'SODA': 20, 'CHIPS': 15, 'CANDY': 25}
-18 ['inventory_levels', 'max_product_capacity'] ['{}', '{SODA: 20, CHIPS: 15, CANDY: 25}']
-19 state_machine = 'IDLE'
-19 ['inventory_levels', 'max_product_capacity', 'state_machine'] ['{}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'"]
-31 remaining_capacity = 0
-31 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity'] ['{}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '0']
-32 for event in restocking_queue:
-32 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '0', "('SODA', 8)"]
-33 state_machine = update_state_machine(state_machine, 'RESTOCK')
-33 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '0', "('SODA', 8)"]
-PARAM_MAPPING {'state': {'actual_var': 'state_machine', 'value': 'IDLE'}, 'event_type': {'actual_var': "'RESTOCK'", 'value': "'RESTOCK'"}}
-FUNCTION_ENTER 9 update_state_machine def update_state_machine(state, event_type):
-9 ['state', 'event_type'] [{'_type': 'str', '_value': 'IDLE'}, {'_type': 'str', '_value': 'RESTOCK'}]
-14 return transitions.get(state, {}).get(event_type, state)
-14 ['state', 'event_type', 'transitions'] ["'IDLE'", "'RESTOCK'", "{IDLE: {RESTOCK: 'PROCESSING', SERVE: 'IDLE'}, PROCESSING: {COMPLETE: 'IDLE', RESTOCK: 'PROCESSING'}}"]
-FUNCTION_RETURN 14 update_state_machine {'_type': 'str', '_value': 'PROCESSING'}
-34 remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
-34 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'PROCESSING'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '0', "('SODA', 8)"]
-4 product, amount = restock_event
-4 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount'] ["('SODA', 8)", '{}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'SODA'", '8']
-5 current = inventory[product]
-5 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('SODA', 8)", '{SODA: 0}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'SODA'", '8', '0']
-6 inventory[product] = min(current + amount, max_capacity[product])
-6 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('SODA', 8)", '{SODA: 8}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'SODA'", '8', '0']
-7 return max_capacity[product] - inventory[product]
-7 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('SODA', 8)", '{SODA: 8}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'SODA'", '8', '0']
-35 state_machine = update_state_machine(state_machine, 'COMPLETE')
-35 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'PROCESSING'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '12', "('SODA', 8)"]
-PARAM_MAPPING {'state': {'actual_var': 'state_machine', 'value': 'PROCESSING'}, 'event_type': {'actual_var': "'COMPLETE'", 'value': "'COMPLETE'"}}
-FUNCTION_ENTER 9 update_state_machine def update_state_machine(state, event_type):
-9 ['state', 'event_type'] [{'_type': 'str', '_value': 'PROCESSING'}, {'_type': 'str', '_value': 'COMPLETE'}]
-14 return transitions.get(state, {}).get(event_type, state)
-14 ['state', 'event_type', 'transitions'] ["'PROCESSING'", "'COMPLETE'", "{IDLE: {RESTOCK: 'PROCESSING', SERVE: 'IDLE'}, PROCESSING: {COMPLETE: 'IDLE', RESTOCK: 'PROCESSING'}}"]
-FUNCTION_RETURN 14 update_state_machine {'_type': 'str', '_value': 'IDLE'}
-32 for event in restocking_queue:
-32 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '12', "('CHIPS', 10)"]
-33 state_machine = update_state_machine(state_machine, 'RESTOCK')
-33 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '12', "('CHIPS', 10)"]
-PARAM_MAPPING {'state': {'actual_var': 'state_machine', 'value': 'IDLE'}, 'event_type': {'actual_var': "'RESTOCK'", 'value': "'RESTOCK'"}}
-FUNCTION_ENTER 9 update_state_machine def update_state_machine(state, event_type):
-9 ['state', 'event_type'] [{'_type': 'str', '_value': 'IDLE'}, {'_type': 'str', '_value': 'RESTOCK'}]
-14 return transitions.get(state, {}).get(event_type, state)
-14 ['state', 'event_type', 'transitions'] ["'IDLE'", "'RESTOCK'", "{IDLE: {RESTOCK: 'PROCESSING', SERVE: 'IDLE'}, PROCESSING: {COMPLETE: 'IDLE', RESTOCK: 'PROCESSING'}}"]
-FUNCTION_RETURN 14 update_state_machine {'_type': 'str', '_value': 'PROCESSING'}
-34 remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
-34 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'PROCESSING'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '12', "('CHIPS', 10)"]
-4 product, amount = restock_event
-4 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount'] ["('CHIPS', 10)", '{SODA: 8}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CHIPS'", '10']
-5 current = inventory[product]
-5 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('CHIPS', 10)", '{SODA: 8, CHIPS: 0}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CHIPS'", '10', '0']
-6 inventory[product] = min(current + amount, max_capacity[product])
-6 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('CHIPS', 10)", '{SODA: 8, CHIPS: 10}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CHIPS'", '10', '0']
-7 return max_capacity[product] - inventory[product]
-7 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('CHIPS', 10)", '{SODA: 8, CHIPS: 10}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CHIPS'", '10', '0']
-35 state_machine = update_state_machine(state_machine, 'COMPLETE')
-35 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8, CHIPS: 10}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'PROCESSING'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '17', "('CHIPS', 10)"]
-PARAM_MAPPING {'state': {'actual_var': 'state_machine', 'value': 'PROCESSING'}, 'event_type': {'actual_var': "'COMPLETE'", 'value': "'COMPLETE'"}}
-FUNCTION_ENTER 9 update_state_machine def update_state_machine(state, event_type):
-9 ['state', 'event_type'] [{'_type': 'str', '_value': 'PROCESSING'}, {'_type': 'str', '_value': 'COMPLETE'}]
-14 return transitions.get(state, {}).get(event_type, state)
-14 ['state', 'event_type', 'transitions'] ["'PROCESSING'", "'COMPLETE'", "{IDLE: {RESTOCK: 'PROCESSING', SERVE: 'IDLE'}, PROCESSING: {COMPLETE: 'IDLE', RESTOCK: 'PROCESSING'}}"]
-FUNCTION_RETURN 14 update_state_machine {'_type': 'str', '_value': 'IDLE'}
-32 for event in restocking_queue:
-32 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8, CHIPS: 10}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '17', "('CANDY', 5)"]
-33 state_machine = update_state_machine(state_machine, 'RESTOCK')
-33 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8, CHIPS: 10}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '17', "('CANDY', 5)"]
-PARAM_MAPPING {'state': {'actual_var': 'state_machine', 'value': 'IDLE'}, 'event_type': {'actual_var': "'RESTOCK'", 'value': "'RESTOCK'"}}
-FUNCTION_ENTER 9 update_state_machine def update_state_machine(state, event_type):
-9 ['state', 'event_type'] [{'_type': 'str', '_value': 'IDLE'}, {'_type': 'str', '_value': 'RESTOCK'}]
-14 return transitions.get(state, {}).get(event_type, state)
-14 ['state', 'event_type', 'transitions'] ["'IDLE'", "'RESTOCK'", "{IDLE: {RESTOCK: 'PROCESSING', SERVE: 'IDLE'}, PROCESSING: {COMPLETE: 'IDLE', RESTOCK: 'PROCESSING'}}"]
-FUNCTION_RETURN 14 update_state_machine {'_type': 'str', '_value': 'PROCESSING'}
-34 remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
-34 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8, CHIPS: 10}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'PROCESSING'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '17', "('CANDY', 5)"]
-4 product, amount = restock_event
-4 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount'] ["('CANDY', 5)", '{SODA: 8, CHIPS: 10}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CANDY'", '5']
-5 current = inventory[product]
-5 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('CANDY', 5)", '{SODA: 8, CHIPS: 10, CANDY: 0}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CANDY'", '5', '0']
-6 inventory[product] = min(current + amount, max_capacity[product])
-6 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('CANDY', 5)", '{SODA: 8, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CANDY'", '5', '0']
-7 return max_capacity[product] - inventory[product]
-7 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('CANDY', 5)", '{SODA: 8, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CANDY'", '5', '0']
-35 state_machine = update_state_machine(state_machine, 'COMPLETE')
-35 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'PROCESSING'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '37', "('CANDY', 5)"]
-PARAM_MAPPING {'state': {'actual_var': 'state_machine', 'value': 'PROCESSING'}, 'event_type': {'actual_var': "'COMPLETE'", 'value': "'COMPLETE'"}}
-FUNCTION_ENTER 9 update_state_machine def update_state_machine(state, event_type):
-9 ['state', 'event_type'] [{'_type': 'str', '_value': 'PROCESSING'}, {'_type': 'str', '_value': 'COMPLETE'}]
-14 return transitions.get(state, {}).get(event_type, state)
-14 ['state', 'event_type', 'transitions'] ["'PROCESSING'", "'COMPLETE'", "{IDLE: {RESTOCK: 'PROCESSING', SERVE: 'IDLE'}, PROCESSING: {COMPLETE: 'IDLE', RESTOCK: 'PROCESSING'}}"]
-FUNCTION_RETURN 14 update_state_machine {'_type': 'str', '_value': 'IDLE'}
-32 for event in restocking_queue:
-32 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '37', "('SODA', 7)"]
-33 state_machine = update_state_machine(state_machine, 'RESTOCK')
-33 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '37', "('SODA', 7)"]
-PARAM_MAPPING {'state': {'actual_var': 'state_machine', 'value': 'IDLE'}, 'event_type': {'actual_var': "'RESTOCK'", 'value': "'RESTOCK'"}}
-FUNCTION_ENTER 9 update_state_machine def update_state_machine(state, event_type):
-9 ['state', 'event_type'] [{'_type': 'str', '_value': 'IDLE'}, {'_type': 'str', '_value': 'RESTOCK'}]
-14 return transitions.get(state, {}).get(event_type, state)
-14 ['state', 'event_type', 'transitions'] ["'IDLE'", "'RESTOCK'", "{IDLE: {RESTOCK: 'PROCESSING', SERVE: 'IDLE'}, PROCESSING: {COMPLETE: 'IDLE', RESTOCK: 'PROCESSING'}}"]
-FUNCTION_RETURN 14 update_state_machine {'_type': 'str', '_value': 'PROCESSING'}
-34 remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
-34 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 8, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'PROCESSING'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '37', "('SODA', 7)"]
-4 product, amount = restock_event
-4 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount'] ["('SODA', 7)", '{SODA: 8, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'SODA'", '7']
-5 current = inventory[product]
-5 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('SODA', 7)", '{SODA: 8, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'SODA'", '7', '8']
-6 inventory[product] = min(current + amount, max_capacity[product])
-6 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('SODA', 7)", '{SODA: 15, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'SODA'", '7', '8']
-7 return max_capacity[product] - inventory[product]
-7 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount', 'current'] ["('SODA', 7)", '{SODA: 15, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'SODA'", '7', '8']
-35 state_machine = update_state_machine(state_machine, 'COMPLETE')
-35 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 15, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'PROCESSING'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '42', "('SODA', 7)"]
-PARAM_MAPPING {'state': {'actual_var': 'state_machine', 'value': 'PROCESSING'}, 'event_type': {'actual_var': "'COMPLETE'", 'value': "'COMPLETE'"}}
-FUNCTION_ENTER 9 update_state_machine def update_state_machine(state, event_type):
-9 ['state', 'event_type'] [{'_type': 'str', '_value': 'PROCESSING'}, {'_type': 'str', '_value': 'COMPLETE'}]
-14 return transitions.get(state, {}).get(event_type, state)
-14 ['state', 'event_type', 'transitions'] ["'PROCESSING'", "'COMPLETE'", "{IDLE: {RESTOCK: 'PROCESSING', SERVE: 'IDLE'}, PROCESSING: {COMPLETE: 'IDLE', RESTOCK: 'PROCESSING'}}"]
-FUNCTION_RETURN 14 update_state_machine {'_type': 'str', '_value': 'IDLE'}
-32 for event in restocking_queue:
-32 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 15, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '42', "('CHIPS', 8)"]
-33 state_machine = update_state_machine(state_machine, 'RESTOCK')
-33 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 15, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'IDLE'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '42', "('CHIPS', 8)"]
-PARAM_MAPPING {'state': {'actual_var': 'state_machine', 'value': 'IDLE'}, 'event_type': {'actual_var': "'RESTOCK'", 'value': "'RESTOCK'"}}
-FUNCTION_ENTER 9 update_state_machine def update_state_machine(state, event_type):
-9 ['state', 'event_type'] [{'_type': 'str', '_value': 'IDLE'}, {'_type': 'str', '_value': 'RESTOCK'}]
-14 return transitions.get(state, {}).get(event_type, state)
-14 ['state', 'event_type', 'transitions'] ["'IDLE'", "'RESTOCK'", "{IDLE: {RESTOCK: 'PROCESSING', SERVE: 'IDLE'}, PROCESSING: {COMPLETE: 'IDLE', RESTOCK: 'PROCESSING'}}"]
-FUNCTION_RETURN 14 update_state_machine {'_type': 'str', '_value': 'PROCESSING'}
-34 remaining_capacity += process_restock(event, inventory_levels, max_product_capacity) if state_machine == 'PROCESSING' else 0
-34 ['inventory_levels', 'max_product_capacity', 'state_machine', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 15, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'PROCESSING'", "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '42', "('CHIPS', 8)"]
-4 product, amount = restock_event
-4 ['restock_event', 'inventory', 'max_capacity', 'product', 'amount'] ["('CHIPS', 8)", '{SODA: 15, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CHIPS'", '8']
-5 current = inventory[product]
-5 ['inventory', 'max_capacity', 'product', 'amount', 'current'] ['{SODA: 15, CHIPS: 10, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CHIPS'", '8', '10']
-6 inventory[product] = min(current + amount, max_capacity[product])
-6 ['inventory', 'max_capacity', 'product', 'amount', 'current'] ['{SODA: 15, CHIPS: 15, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CHIPS'", '8', '10']
-7 return max_capacity[product] - inventory[product]
-7 ['inventory', 'max_capacity', 'product'] ['{SODA: 15, CHIPS: 15, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "'CHIPS'"]
-14 return transitions.get(state, {}).get(event_type, state)
-14 ['state', 'event_type', 'transitions'] ["'PROCESSING'", "'COMPLETE'", "{IDLE: {RESTOCK: 'PROCESSING', SERVE: 'IDLE'}, PROCESSING: {COMPLETE: 'IDLE', RESTOCK: 'PROCESSING'}}"]
-32 for event in restocking_queue:
-32 ['inventory_levels', 'max_product_capacity', 'restocking_queue', 'remaining_capacity', 'event'] ['{SODA: 15, CHIPS: 15, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', "[('SODA', 8), ('CHIPS', 10), ('CANDY', 5), ('SODA', 7), ('CHIPS', 8)]", '42', "('CHIPS', 8)"]
-38 remaining_capacity = remaining_capacity if remaining_capacity > 0 else sum(max_product_capacity.values()) - sum(inventory_levels.values())
-38 ['inventory_levels', 'max_product_capacity', 'remaining_capacity'] ['{SODA: 15, CHIPS: 15, CANDY: 5}', '{SODA: 20, CHIPS: 15, CANDY: 25}', '42']
+55 text_samples = ['algorithm', 'processing', 'benchmark', 'reasoning']
+55 ['text_samples'] ["['algorithm', 'processing', 'benchmark', 'reasoning']"]
+56 final_output = process_text_data(text_samples)
+56 ['text_samples'] ["['algorithm', 'processing', 'benchmark', 'reasoning']"]
+PARAM_MAPPING {'text_samples': {'actual_var': 'text_samples', 'value': ['algorithm', 'processing', 'benchmark', 'reasoning']}}
+FUNCTION_ENTER 1 process_text_data def process_text_data(text_samples):
+1 ['text_samples'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'algorithm'}, {'_type': 'str', '_value': 'processing'}, {'_type': 'str', '_value': 'benchmark'}, {'_type': 'str', '_value': 'reasoning'}], '_len': 4}]
+7 char_sets = []
+7 ['text_samples', 'char_sets'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", '[]']
+8 processed_values = []
+8 ['text_samples', 'char_sets', 'processed_values'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", '[]', '[]']
+10 for text in text_samples:
+10 ['text_samples', 'char_sets', 'processed_values', 'text'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", '[]', '[]', "'algorithm'"]
+15 char_set = set(text)
+15 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", '[]', '[]', "'algorithm'", "{'t', 'l', 'i', 'm', 'h', ...}"]
+22 if len(text) % 2 == 0:
+22 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}]", '[]', "'algorithm'", "{'t', 'l', 'i', 'm', 'h', ...}"]
+25 processed = len(char_set) * 5
+25 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}]", '[]', "'algorithm'", "{'t', 'l', 'i', 'm', 'h', ...}", '45']
+28 if processed > 100:
+28 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}]", '[]', "'algorithm'", "{'t', 'l', 'i', 'm', 'h', ...}", '45']
+10 for text in text_samples:
+10 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}]", '[45]', "'processing'", "{'t', 'l', 'i', 'm', 'h', ...}", '45']
+15 char_set = set(text)
+15 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}]", '[45]', "'processing'", "{'s', 'n', 'i', 'c', 'p', ...}", '45']
+22 if len(text) % 2 == 0:
+22 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}]", '[45]', "'processing'", "{'s', 'n', 'i', 'c', 'p', ...}", '45']
+23 processed = len(char_set) * 10
+23 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}]", '[45]', "'processing'", "{'s', 'n', 'i', 'c', 'p', ...}", '90']
+28 if processed > 100:
+28 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}]", '[45]', "'processing'", "{'s', 'n', 'i', 'c', 'p', ...}", '90']
+10 for text in text_samples:
+10 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}]", '[45, 90]', "'benchmark'", "{'s', 'n', 'i', 'c', 'p', ...}", '90']
+15 char_set = set(text)
+15 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}]", '[45, 90]', "'benchmark'", "{'b', 'n', 'c', 'm', 'h', ...}", '90']
+22 if len(text) % 2 == 0:
+22 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}]", '[45, 90]', "'benchmark'", "{'b', 'n', 'c', 'm', 'h', ...}", '90']
+25 processed = len(char_set) * 5
+25 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}]", '[45, 90]', "'benchmark'", "{'b', 'n', 'c', 'm', 'h', ...}", '45']
+28 if processed > 100:
+28 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}]", '[45, 90]', "'benchmark'", "{'b', 'n', 'c', 'm', 'h', ...}", '45']
+10 for text in text_samples:
+10 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}]", '[45, 90, 45]', "'reasoning'", "{'b', 'n', 'c', 'm', 'h', ...}", '45']
+15 char_set = set(text)
+15 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}]", '[45, 90, 45]', "'reasoning'", "{'s', 'n', 'i', 'r', 'a', ...}", '45']
+22 if len(text) % 2 == 0:
+22 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45]', "'reasoning'", "{'s', 'n', 'i', 'r', 'a', ...}", '45']
+25 processed = len(char_set) * 5
+25 ['text_samples', 'char_sets', 'processed_values', 'text', 'char_set', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45]', "'reasoning'", "{'s', 'n', 'i', 'r', 'a', ...}", '40']
+28 if processed > 100:
+28 ['text_samples', 'char_sets', 'processed_values', 'text', 'processed'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45]', "'reasoning'", '40']
+10 for text in text_samples:
+10 ['text_samples', 'char_sets', 'processed_values', 'text'] ["['algorithm', 'processing', 'benchmark', 'reasoning']", "[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45, 40]', "'reasoning'"]
+34 union_set = set()
+34 ['char_sets', 'processed_values', 'union_set'] ["[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45, 40]', 'set()']
+35 for cs in char_sets:
+35 ['char_sets', 'processed_values', 'union_set', 'cs'] ["[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45, 40]', 'set()', "{'t', 'l', 'i', 'm', 'h', ...}"]
+36 union_set = union_set.union(cs)
+36 ['char_sets', 'processed_values', 'union_set', 'cs'] ["[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45, 40]', "{'t', 'l', 'i', 'm', 'h', ...}", "{'t', 'l', 'i', 'm', 'h', ...}"]
+35 for cs in char_sets:
+35 ['char_sets', 'processed_values', 'union_set', 'cs'] ["[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45, 40]', "{'t', 'l', 'i', 'm', 'h', ...}", "{'s', 'n', 'i', 'c', 'p', ...}"]
+36 union_set = union_set.union(cs)
+36 ['char_sets', 'processed_values', 'union_set', 'cs'] ["[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45, 40]', "{'t', 's', 'n', 'l', 'i', ...}", "{'s', 'n', 'i', 'c', 'p', ...}"]
+35 for cs in char_sets:
+35 ['char_sets', 'processed_values', 'union_set', 'cs'] ["[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45, 40]', "{'t', 's', 'n', 'l', 'i', ...}", "{'b', 'n', 'c', 'm', 'h', ...}"]
+36 union_set = union_set.union(cs)
+36 ['char_sets', 'processed_values', 'union_set', 'cs'] ["[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45, 40]', "{'t', 'i', 'c', 'm', 'p', ...}", "{'b', 'n', 'c', 'm', 'h', ...}"]
+35 for cs in char_sets:
+35 ['char_sets', 'processed_values', 'union_set', 'cs'] ["[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45, 40]', "{'t', 'i', 'c', 'm', 'p', ...}", "{'s', 'n', 'i', 'r', 'a', ...}"]
+36 union_set = union_set.union(cs)
+36 ['char_sets', 'processed_values', 'union_set', 'cs'] ["[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45, 40]', "{'t', 'i', 'c', 'm', 'p', ...}", "{'s', 'n', 'i', 'r', 'a', ...}"]
+35 for cs in char_sets:
+35 ['char_sets', 'processed_values', 'union_set', 'cs'] ["[{'t', 'l', 'i', 'm', 'h', ...}, {'s', 'n', 'i', 'c', 'p', ...}, {'b', 'n', 'c', 'm', 'h', ...}, {'s', 'n', 'i', 'r', 'a', ...}]", '[45, 90, 45, 40]', "{'t', 'i', 'c', 'm', 'p', ...}", "{'s', 'n', 'i', 'r', 'a', ...}"]
+42 base_value = sum(processed_values)
+42 ['processed_values', 'union_set', 'base_value'] ['[45, 90, 45, 40]', "{'t', 'i', 'c', 'm', 'p', ...}", '220']
+43 unique_chars = len(union_set)
+43 ['union_set', 'base_value', 'unique_chars'] ["{'t', 'i', 'c', 'm', 'p', ...}", '220', '16']
+46 result = base_value - unique_chars * 2
+46 ['base_value', 'unique_chars', 'result'] ['220', '16', '188']
+52 return result
+52 ['result'] ['188']
+FUNCTION_RETURN 52 process_text_data {'_type': 'int', '_value': 188}
+57 print(f"Result: {final_output}")
+57 ['final_output'] ['188']

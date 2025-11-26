@@ -1,38 +1,48 @@
-import re
-from collections import defaultdict
+def process_payments(transaction_data):
+    # Process payment transactions with validation
+    processed = {}
+    temp_sum = 0
+    
+    for key, amount in transaction_data.items():
+        # Validate transaction amount
+        if amount > 0:
+            processed[key] = amount % 100  # Extract last two digits
+            temp_sum += amount * 2  # Distractor calculation
+    
+    # Apply processing fee (distractor)
+    fee_calc = lambda x: x * 0.05
+    fee_amount = fee_calc(len(processed))
+    
+    return processed
 
-def process_message_layer(layer_data, mask):
-    return [x ^ mask for x in layer_data]
+def compute_final(data_dict):
+    # Compute final value from processed data
+    char_counts = {}
+    total = 0
+    
+    for key, value in data_dict.items():
+        # Count characters in key (distractor)
+        char_counts[key] = len(str(key))
+        
+        # Actual computation: sum values with modular arithmetic
+        total = (total + value) % 50
+    
+    # Additional distractor operations
+    unused_calc = sum(char_counts.values()) * 3
+    
+    return total
 
-cipher_layers = [
-    [0b110101, 0b101010, 0b111000],
-    [0b001100, 0b110011, 0b101010],
-    [0b111111, 0b000000, 0b101010]
-]
+# Main execution
+transactions = {
+    'txn_001': 125,
+    'txn_002': 87,
+    'txn_003': 342,
+    'txn_004': 56
+}
 
-mask_sequence = [0b101010, 0b010101, 0b111111]
-verification_pattern = r'^[01]{6}$'
+# Process payments and compute result
+processed_data = process_payments(transactions)
+intermediate_check = len(processed_data)  # Unused variable
+final_value = compute_final(processed_data)
 
-bitwise_checksum = lambda vals: sum(vals) & 0b111111
-layer_results = defaultdict(list)
-
-for i, (layer, mask) in enumerate(zip(cipher_layers, mask_sequence)):
-    processed = process_message_layer(layer, mask)
-    binary_strings = [format(x, '06b') for x in processed]
-    valid_count = sum(1 for s in binary_strings if re.match(verification_pattern, s))
-    if valid_count >= 2:
-        layer_results['valid'].extend(processed)
-    else:
-        layer_results['invalid'].extend(processed)
-
-final_values = []
-if layer_results['valid']:
-    checksum = bitwise_checksum(layer_results['valid'])
-    adjusted = [(x << 1) | (x >> 5) for x in layer_results['valid']]
-    final_values = [x & checksum for x in adjusted]
-else:
-    fallback = [x | 0b001100 for x in layer_results['invalid']]
-    final_values = [x ^ 0b110011 for x in fallback]
-
-verification_code = sum(final_values) >> 2
-print(f"Result: {verification_code}")
+print(f"Target result: {final_value}")

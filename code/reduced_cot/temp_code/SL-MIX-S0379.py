@@ -1,35 +1,34 @@
-import re
-from functools import reduce
-from collections import Counter
-
-def ip_to_int(ip_str):
-    parts = list(map(int, ip_str.split('.')))
-    return reduce(lambda acc, octet: (acc << 8) + octet, parts, 0)
-
-def count_ones(n):
-    return bin(n).count('1')
-
-log_entry = "Security alert from IP 192.168.1.10 at 2023-07-15T14:30:22Z"
-ip_pattern = r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b'
-match = re.search(ip_pattern, log_entry)
-
-if match and all(0 <= int(x) <= 255 for x in match.group().split('.')):
-    ip_address = match.group()
-    ip_integer = ip_to_int(ip_address)
-    masked_ip = ip_integer & 0xFFFF0000
-    bit_count = count_ones(masked_ip)
+def analyze_sensor_data():
+    # Simulating sensor readings over time
+    raw_readings = [12, 8, 15, 23, 7, 19, 4, 27, 11, 16]
     
-    # Short-circuit evaluation in conditional assignment
-    is_even = bit_count % 2 == 0
-    adjusted_count = bit_count // 2 if is_even else (bit_count - 1) // 2
+    # Calculate threshold based on average (distractor - not used in final result)
+    average_reading = sum(raw_readings) / len(raw_readings)
+    threshold = average_reading * 1.2
     
-    # Additional check for private IP ranges
-    first_octet = int(ip_address.split('.')[0])
-    is_private = first_octet == 10 or first_octet == 172 and 16 <= int(ip_address.split('.')[1]) <= 31 or first_octet == 192 and int(ip_address.split('.')[1]) == 168
+    # Filter readings above median
+    sorted_readings = sorted(raw_readings)
+    median_index = len(sorted_readings) // 2
+    median_value = sorted_readings[median_index]
     
-    # Final score calculation with conditional modifier
-    final_score = adjusted_count + (10 if is_private else 0)
-else:
-    final_score = -1
+    # Create dictionary to track processed values
+    sensor_dict = {f'sensor_{i}': val for i, val in enumerate(raw_readings)}
+    
+    # Filter values above median (relevant operation)
+    filtered_values = [val for val in raw_readings if val > median_value]
+    
+    # Calculate unused statistics (distractor)
+    max_reading = max(raw_readings)
+    min_reading = min(raw_readings)
+    range_reading = max_reading - min_reading
+    
+    # Key processing step
+    processed_data = [item * 2 - 1 for item in filtered_values]
+    
+    # Final calculation
+    final_result = sum(processed_data) // len(processed_data)
+    
+    print(f"Target result: {final_result}")
+    return final_result
 
-print(f"Result: {final_score}")
+analyze_sensor_data()

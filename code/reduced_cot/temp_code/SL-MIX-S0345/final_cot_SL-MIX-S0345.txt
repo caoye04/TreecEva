@@ -1,0 +1,32 @@
+Target: Find the value of variable final_output after [line 35] executes
+
+[line 23]  key_data = [0x1F, 0x8C, 0x47, 0x92, 0xE3]
+Compute: [0x1F, 0x8C, 0x47, 0x92, 0xE3] = [31, 140, 71, 146, 227]
+[line 24]  mask_pattern = 0x17
+Assign: mask_pattern = 23
+[line 27]  aux_data = [x * 3 for x in range(10)]
+Compute: [x * 3 for x in range(10)], where x=0 (an unknown source) = ?
+[line 28]  aux_sum = sum(aux_data[::2])
+Call function sum(aux_data[::2])
+[line 29]  shadow_var = aux_sum ^ mask_pattern
+Compute: aux_sum ^ mask_pattern, where aux_sum=60 (defined at [line 28]), mask_pattern=23 (defined at [line 24]) = 43
+[line 32]  result = process_crypto_key(key_data, mask_pattern)
+Call function process_crypto_key(key_data=[31, 140, 71, 146, 227] (defined at [line 23]), mask_pattern=23 (defined at [line 24]))
+[line 7]  key_hash = sum(key_bytes) % 256
+Compute: sum(key_bytes) % 256, where key_bytes=[31, 140, 71, 146, 227] (an unknown source) = 103
+[line 8]  temp_val = (key_hash ^ mask_gen) & 0x3F
+Compute: (key_hash ^ mask_gen) & 0x3F, where key_hash=103 (defined at [line 7]), mask_gen=23 (an unknown source) = 48
+[line 15]  shifted_val = (temp_val << 2) | (temp_val >> 4)
+Compute: (temp_val << 2) | (temp_val >> 4), where temp_val=48 (defined at [line 8]) = 195
+[line 16]  filtered_bytes = [b for b in key_bytes if (b & 0x1) == 0]
+Compute: [b for b in key_bytes if (b & 0x1) == 0], where b=31 (an unknown source), key_bytes=[31, 140, 71, 146, 227] (an unknown source) = ?
+[line 17]  byte_sum = sum(filtered_bytes) if filtered_bytes else 42
+Compute: sum(filtered_bytes) if filtered_bytes else 42, where filtered_bytes=[140, 146] (defined at [line 16]) = 286
+[line 19]  result = (shifted_val + byte_sum) % 128
+Compute: (shifted_val + byte_sum) % 128, where shifted_val=195 (defined at [line 15]), byte_sum=286 (defined at [line 17]) = 97
+[line 20]  return result
+Return: result=97 (defined at [line 19])
+[line 35]  final_output = result + (shadow_var % 16)
+Compute: result + (shadow_var % 16), where result=97 (defined at [line 19]), shadow_var=43 (defined at [line 29]) = 108
+
+Answer: final_output = 108 (last updated on defined at [line 35])

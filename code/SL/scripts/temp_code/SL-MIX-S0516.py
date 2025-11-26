@@ -1,76 +1,53 @@
-import heapq
-import re
-
-def tokenize_config(config_str):
-    tokens = []
-    depth = 0
-    i = 0
-    while i < len(config_str):
-        if config_str[i] == '[':
-            depth += 1
-            tokens.append(('LBRACKET', depth))
-            i += 1
-        elif config_str[i] == ']':
-            if depth > 0:
-                tokens.append(('RBRACKET', depth))
-                depth -= 1
-            else:
-                # Unmatched bracket - trigger backtracking
-                return None, True
-            i += 1
-        elif config_str[i].isspace():
-            i += 1
-        else:
-            match = re.match(r'[a-zA-Z_][a-zA-Z0-9_]*', config_str[i:])
-            if match:
-                word = match.group(0)
-                tokens.append((word, depth))
-                i += len(word)
-            else:
-                i += 1
-    return tokens, False
-
-def process_with_backtracking(config_str):
-    heap = []
-    attempt = 0
-    max_attempts = 3
+def process_operations(data_set):
+    # Helper lambda for string manipulation
+    char_transform = lambda s: sum(ord(c) - 96 if c.isalpha() else 0 for c in s.lower())
     
-    while attempt < max_attempts:
-        tokens, needs_backtrack = tokenize_config(config_str)
-        if not needs_backtrack:
-            # Push tokens to heap with priority based on depth
-            for token_type, depth in tokens:
-                heapq.heappush(heap, (-depth, token_type))  # Max-heap using negative depth
-            break
-        else:
-            # Backtrack: remove last unmatched closing bracket
-            last_bracket_pos = config_str.rfind(']')
-            if last_bracket_pos != -1:
-                config_str = config_str[:last_bracket_pos] + config_str[last_bracket_pos+1:]
-                attempt += 1
-            else:
-                break
+    # Initial processing with dictionary operations
+    initial_analysis = {}
+    processed_values = []
     
-    return heap
+    # Distractor computations
+    temp_sum = 0
+    misleading_counter = 17
+    dead_code_var = 42  # Never used
+    
+    for item in data_set:
+        # Main processing path
+        if isinstance(item, str):
+            transformed = char_transform(item)
+            processed_values.append(transformed)
+            initial_analysis[item] = transformed
+        elif isinstance(item, int):
+            # Misleading branch that doesn't affect final result
+            if item % 3 == 0:
+                misleading_counter += item // 2
+            processed_values.append(item * 2)
+    
+    # Complex conditional logic with nesting
+    final_tally = 0
+    threshold_check = sum(processed_values) // len(processed_values) if processed_values else 0
+    
+    for key, value in initial_analysis.items():
+        # Nested conditions with bitwise operations
+        if len(key) > 3:
+            if value > threshold_check:
+                final_tally += value ^ (len(key) * 2)
+            else:
+                final_tally -= value | (len(key) // 2)
+        else:
+            final_tally += (value << 1) - 5
+    
+    # More distractor computations that look relevant but aren't
+    temp_sum = sum(processed_values) * misleading_counter
+    
+    # Final adjustment with linear search
+    adjustment_factor = next((x for x in processed_values if x > 20), 0)
+    final_tally = final_tally + adjustment_factor - (misleading_counter % 7)
+    
+    return {'final': final_tally, 'distractor': temp_sum}
 
 # Main execution
-config_language = "settingA [subSettingB [item1 item2] settingC] [unmatched]"
-
-priority_heap = process_with_backtracking(config_language)
-
-# Calculate final token weight
-final_token_weight = 0
-weight_multiplier = 1
-
-while priority_heap:
-    neg_depth, token = heapq.heappop(priority_heap)
-    depth = -neg_depth
-    if token in ['LBRACKET', 'RBRACKET']:
-        final_token_weight += depth * weight_multiplier
-        weight_multiplier += 1
-    else:
-        # For identifiers, add fixed value
-        final_token_weight += 10
-        
-# Execution point Z
-print(f"Result: {final_token_weight}")
+initial_data = ['python', 'code', 8, 'benchmark', 15, 'evaluation', 3]
+result_mapping = process_operations(initial_data)
+final_tally = result_mapping['final']
+print(f"Result: {final_tally}")

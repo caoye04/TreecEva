@@ -1,0 +1,46 @@
+Target: Find the value of variable final_count after [line 14] executes
+
+[line 1]  warehouse_inventory = "clean:15,dirty:8,clean:22,dirty:3,clean:9"
+Assign: warehouse_inventory = 'clean:15,dirty:8,clean:22,dirty:3,clean:9'
+[line 2]  items_list = warehouse_inventory.split(',')
+(Missing param: 'func_name')
+[line 3]  count_clean = 0
+Assign: count_clean = 0
+[line 4]  count_dirty = 0
+Assign: count_dirty = 0
+[line 6]  for item in items_list:
+Loop Start: item takes its first value 'clean:15'
+[line 7]  if item.startswith('clean:'):
+Condition: True, entering 'if' block
+[line 8]  quantity = int(item.split(':')[1])
+Call function int(item.split(':')[1])
+[line 9]  count_clean += quantity
+Update: count_clean changed from 0 (defined at defined at [line 3]) to 0+quantity = 15
+[line 6]  for item in items_list:
+Loop Iteration: item is now 'dirty:8' (iteration 2)
+[line 7]  if item.startswith('clean:'):
+Condition: True, entering 'if' block
+[line 10]  elif item.startswith('dirty:'):
+'elif' Condition: True, entering block
+[line 11]  quantity = int(item.split(':')[1])
+Call function int(item.split(':')[1])
+[line 12]  count_dirty += quantity
+Update: count_dirty changed from 0 (defined at defined at [line 4]) to 0+quantity = 8
+... [Line 6] repeats 2 more times ...
+... [Line 6] repeats 2 more times ...
+... [Line 6] repeats 2 more times ...
+... [Line 6] repeats 2 more times ...
+[line 6]  for item in items_list:
+Loop Iteration: item is now 'clean:9' (iteration 5)
+[line 7]  if item.startswith('clean:'):
+Condition: True, entering 'if' block
+[line 8]  quantity = int(item.split(':')[1])
+Call function int(item.split(':')[1])
+[line 9]  count_clean += quantity
+Update: count_clean changed from 37 (defined at defined at [line 9]) to 37+quantity = 46
+[line 6]  for item in items_list:
+Loop End: Iteration finished
+[line 14]  final_count = count_clean + count_dirty
+Compute: count_clean + count_dirty, where count_clean=46 (defined at [line 9]), count_dirty=11 (defined at [line 12]) = 57
+
+Answer: final_count = 57 (last updated on defined at [line 14])

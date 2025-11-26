@@ -1,61 +1,46 @@
-import math
-from functools import reduce
+def process_set_operations(data_values, limit):
+    # Distractor: unused lambda function
+    square_if_even = lambda x: x**2 if x % 2 == 0 else x
+    
+    # Relevant preprocessing
+    processed = [x * 2 if x > 5 else x + 1 for x in data_values]
+    
+    # Misleading intermediate operation
+    temp_sum = sum(processed) * 3
+    
+    # Distractor: dead code path
+    if temp_sum > 1000:
+        unused_var = temp_sum // 10
+    
+    # Core logic
+    filtered_set = {x for x in processed if x >= limit}
+    complement_set = {x for x in processed if x < limit}
+    
+    # More distractor operations
+    max_val = max(processed) if processed else 0
+    min_val = min(processed) if processed else 0
+    
+    # Irrelevant calculation
+    range_diff = max_val - min_val
+    
+    # Key operation with conditional expression
+    set_difference = (filtered_set - complement_set) if len(filtered_set) > len(complement_set) else (complement_set - filtered_set)
+    
+    # Final result computation
+    result = len(set_difference) * (sum(filtered_set) // len(filtered_set) if filtered_set else 1)
+    
+    return result
 
-def gcd_list(numbers):
-    return reduce(math.gcd, numbers)
+# Main execution
+initial_data = [3, 8, 2, 11, 5, 7, 4]
+threshold_value = 6
 
-def harmonic_stability_window(frequencies):
-    n = len(frequencies)
-    if n < 2:
-        return 0
-    
-    # Calculate GCD of all frequencies as baseline stability
-    base_stability = gcd_list(frequencies)
-    
-    # Find window with maximum harmonic mean adjusted by variance
-    max_stability = 0
-    optimal_window = []
-    
-    # Sliding window approach with divide and conquer concept
-    for i in range(n):
-        for j in range(i+2, min(i+6, n+1)):  # Limit window size for efficiency
-            window = frequencies[i:j]
-            harmonic_mean = len(window) / sum(1/x for x in window if x != 0)
-            variance = sum((x - harmonic_mean)**2 for x in window) / len(window)
-            
-            # Stability calculation combines harmonic properties with variance
-            window_stability = (harmonic_mean * base_stability) / (1 + variance)
-            
-            if window_stability > max_stability:
-                max_stability = window_stability
-                optimal_window = window
-    
-    # Final adjustment using prime factor analysis
-    prime_factors_count = sum(len([i for i in range(2, int(math.sqrt(x)) + 1) if x % i == 0]) for x in optimal_window)
-    
-    return max_stability * (1 + prime_factors_count/len(optimal_window) if optimal_window else 0)
+# Distractor variables
+unrelated_list = [x**2 for x in range(1, 8)]
+misleading_total = sum(unrelated_list) + threshold_value
 
-def signal_analysis_protocol(observations):
-    # Filter valid signals (non-zero and within detectable range)
-    valid_signals = [s for s in observations if 10 <= s <= 10000]
-    
-    # Apply stability analysis
-    raw_stability = harmonic_stability_window(valid_signals)
-    
-    # Apply correction factors based on signal distribution
-    even_count = sum(1 for s in valid_signals if s & 1 == 0)  # Bitwise check for even
-    odd_count = len(valid_signals) - even_count
-    
-    parity_correction = 1.0
-    if even_count > 0 and odd_count > 0:
-        parity_correction = (even_count / odd_count) if odd_count > even_count else (odd_count / even_count)
-    
-    return raw_stability * parity_correction
+# Critical execution point
+final_output = process_set_operations(initial_data, threshold_value)
 
-# Deep space observation data
-space_observations = [120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200, 1320, 1440]
-
-# Process the observations
-stability_index = signal_analysis_protocol(space_observations)
-
-print(f"Result: {int(stability_index)}")
+# Print the target result
+print(f"Result: {final_output}")

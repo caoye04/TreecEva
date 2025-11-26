@@ -1,0 +1,53 @@
+Target: Find the value of variable final_analysis_result after [line 76] executes
+
+[line 66]  sample_data = [8, 12, 8, 15, 20, 12, 25, 8, 30, 15]
+Compute: [8, 12, 8, 15, 20, 12, 25, 8, 30, 15] = [8, 12, 8, 15, 20, ...]
+[line 67]  distractor_data = [5, 10, 15, 20, 25, 30, 35, 40]
+Compute: [5, 10, 15, 20, 25, 30, 35, 40] = [5, 10, 15, 20, 25, ...]
+[line 70]  combined_data = sample_data + [x % 8 for x in distractor_data]
+Compute: sample_data + [x % 8 for x in distractor_data], where sample_data=[8, 12, 8, 15, 20, ...] (defined at [line 66]), x=5 (an unknown source), distractor_data=[5, 10, 15, 20, 25, ...] (defined at [line 67]) = ?
+[line 74]  final_analysis_result = process_data_filter(combined_data)
+Call function process_data_filter(combined_data=[8, 12, 8, 15, 20, ...] (defined at [line 70]))
+[line 38]  primary_set = set(input_data)
+Call function set(input_data=[8, 12, 8, 15, 20, ...] (an unknown source))
+[line 39]  secondary_set = {x * 2 for x in input_data}
+Compute: {x * 2 for x in input_data}, where x=8 (an unknown source), input_data=[8, 12, 8, 15, 20, ...] (an unknown source) = ?
+[line 46]  stats_result = calculate_statistics(input_data)
+Call function calculate_statistics(input_data=[8, 12, 8, 15, 20, ...] (an unknown source))
+[line 1]  def calculate_statistics(values):
+Enter function calculate_statistics: values=[8, 12, 8, 15, 20, ...]
+  [line 13]  unique_count = len(set(values))
+  Call function len(set(values))
+  [line 14]  return unique_count
+  Return: unique_count=14 (defined at [line 13])
+Function calculate_statistics returns 14
+[line 49]  filtered_stream = filter_patterns(input_data)
+Call function filter_patterns(input_data=[8, 12, 8, 15, 20, ...] (an unknown source))
+[line 18]  if len(data_stream) > 100:
+Condition: True, entering 'if' block
+[line 23]  pattern_sum = sum(data_stream)
+Call function sum(data_stream=[8, 12, 8, 15, 20, ...] (an unknown source))
+[line 24]  pattern_avg = pattern_sum / len(data_stream)
+Compute: pattern_sum / len(data_stream), where pattern_sum=181 (defined at [line 23]), data_stream=[8, 12, 8, 15, 20, ...] (an unknown source) = 10.055555555555555
+[line 27]  threshold_check = lambda x: x > pattern_avg
+Compute: lambda x: x > pattern_avg, where pattern_avg=10.055555555555555 (defined at [line 24]) = ?
+[line 28]  filtered_data = list(filter(threshold_check, data_stream))
+Call function list(filter(threshold_check, data_stream))
+[line 34]  return filtered_data
+Return: filtered_data=[12, 15, 20, 12, 25, ...] (defined at [line 28])
+[line 52]  if len(filtered_stream) > 0:
+Condition: True, entering 'if' block
+[line 53]  final_value = (stats_result * len(filtered_stream)) // 2
+Compute: (stats_result * len(filtered_stream)) // 2, where stats_result=14 (defined at [line 46]), filtered_stream=[12, 15, 20, 12, 25, ...] (defined at [line 49]) = 49
+[line 58]  if final_value > 50 and len(primary_set) < 10:
+Condition: True, entering 'if' block
+[line 60]  elif final_value <= 50 or len(secondary_set) > 15:
+'elif' Condition: True, entering block
+[line 61]  final_value -= 3
+Update: final_value changed from 49 (defined at defined at [line 53]) to 49-3 = 46
+[line 63]  return final_value
+Return: final_value=46 (defined at [line 61])
+[line 76]  print(f"Target result: {final_analysis_result}")
+Output: f"Target result: {final_analysis_result}"
+
+Answer: final_analysis_result = 46 (last updated on defined at [line 74])

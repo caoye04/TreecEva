@@ -1,64 +1,57 @@
-class TextProcessor:
-    def __init__(self):
-        self.state = 'START'
-        self.position = 0
-        self.encoded_chars = []
+def process_transaction_data(log_data):
+    # Distractor: This calculates word count but isn't used in final result
+    word_count = len(log_data.split())
     
-    def process_char(self, char):
-        if self.state == 'START':
-            if char.isalpha():
-                self.state = 'ALPHA'
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            elif char.isdigit():
-                self.state = 'DIGIT'
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            else:
-                self.state = 'OTHER'
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        elif self.state == 'ALPHA':
-            if char.isalpha():
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            elif char.isdigit():
-                self.state = 'DIGIT'
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            else:
-                self.state = 'OTHER'
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        elif self.state == 'DIGIT':
-            if char.isdigit():
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            elif char.isalpha():
-                self.state = 'ALPHA'
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            else:
-                self.state = 'OTHER'
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        elif self.state == 'OTHER':
-            if char.isalpha():
-                self.state = 'ALPHA'
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            elif char.isdigit():
-                self.state = 'DIGIT'
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            else:
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        self.position += 1
+    # Distractor: Uppercase conversion that doesn't affect numeric processing
+    processed_log = log_data.upper()
+    
+    # Main processing logic
+    transaction_set = set()
+    balance = 1000
+    
+    for line in processed_log.split(';'):
+        if line.strip():
+            parts = line.split(':')
+            if len(parts) == 2:
+                operation, amount_str = parts
+                try:
+                    amount = int(amount_str.strip())
+                    transaction_set.add(operation.strip())
+                    
+                    # Actual balance calculation
+                    if operation.strip() == 'DEPOSIT':
+                        balance += amount
+                        # Distractor: Redundant operation
+                        temp_adjust = balance | 0b1010
+                    elif operation.strip() == 'WITHDRAW':
+                        balance -= amount
+                        # Distractor: Unused bitwise operation
+                        check_bit = balance & 0xFF
+                    elif operation.strip() == 'FEE':
+                        balance = max(balance - amount, 0)
+                        # Distractor: String operation on number
+                        fee_str = str(balance)
+                except ValueError:
+                    # Distractor: Dead code path
+                    error_count = len(transaction_set)
+                    
+    # Distractor: Unused character counting
+    char_total = sum(len(op) for op in transaction_set)
+    
+    # Final adjustment based on unique operations
+    final_adjust = len(transaction_set) * 5
+    
+    # Final balance calculation
+    final_balance = balance + final_adjust
+    
+    # Distractor: Unused calculation
+    avg_transaction = balance / len(transaction_set) if transaction_set else 0
+    
+    print(f"Result: {final_balance}")
+    return final_balance
 
-# Greedy algorithm to select optimal chunk sizes for processing
-input_text = "Hello42World!"
-processor = TextProcessor()
+# Test data
+transaction_log = "DEPOSIT:500;WITHDRAW:200;FEE:50;DEPOSIT:300;WITHDRAW:150"
 
-for i, char in enumerate(input_text):
-    processor.process_char(char)
-
-# Divide and conquer approach to finalize encoding
-encoded_length = len(processor.encoded_chars)
-print(f"Result: {encoded_length}")
+# Execute main processing
+final_balance = process_transaction_data(transaction_log)

@@ -1,64 +1,41 @@
-class TextProcessor:
-    def __init__(self):
-        self.state = 'START'
-        self.position = 0
-        self.encoded_chars = []
+def process_data_records(records):
+    temp_sum = 0
+    processed_count = 0
+    adjustment_factor = 15
     
-    def process_char(self, char):
-        if self.state == 'START':
-            if char.isalpha():
-                self.state = 'ALPHA'
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            elif char.isdigit():
-                self.state = 'DIGIT'
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            else:
-                self.state = 'OTHER'
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        elif self.state == 'ALPHA':
-            if char.isalpha():
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            elif char.isdigit():
-                self.state = 'DIGIT'
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            else:
-                self.state = 'OTHER'
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        elif self.state == 'DIGIT':
-            if char.isdigit():
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            elif char.isalpha():
-                self.state = 'ALPHA'
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            else:
-                self.state = 'OTHER'
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        elif self.state == 'OTHER':
-            if char.isalpha():
-                self.state = 'ALPHA'
-                transformed = chr((ord(char.lower()) - ord('a') + 5) % 26 + ord('a'))
-                self.encoded_chars.append(transformed)
-            elif char.isdigit():
-                self.state = 'DIGIT'
-                doubled = str(int(char) * 2)
-                self.encoded_chars.extend(list(doubled))
-            else:
-                self.encoded_chars.append(chr(ord(char) ^ 0x5C))
-        self.position += 1
+    # Process each record with data validation
+    for record in records:
+        if isinstance(record, str):
+            clean_record = record.strip().lower()
+            if clean_record.isdigit():
+                temp_sum += int(clean_record)
+                processed_count += 1
+    
+    # Calculate averages and intermediate values
+    average_value = temp_sum / max(processed_count, 1)
+    intermediate_result = average_value * 2
+    
+    # Create dictionary for data tracking
+    data_metrics = {
+        'sum': temp_sum,
+        'count': processed_count,
+        'average': average_value,
+        'intermediate': intermediate_result
+    }
+    
+    # Calculate processed total (this is the target variable)
+    processed_total = data_metrics['sum'] + data_metrics['count'] * 3
+    
+    # Some intermediate calculations that don't affect final result
+    unused_calc = (intermediate_result - average_value) ** 2
+    temp_buffer = [x for x in range(5)]  # Distractor list
+    
+    # Final calculation
+    final_calculation = processed_total + adjustment_factor
+    
+    print(f"Result: {processed_total}")
+    return processed_total
 
-# Greedy algorithm to select optimal chunk sizes for processing
-input_text = "Hello42World!"
-processor = TextProcessor()
-
-for i, char in enumerate(input_text):
-    processor.process_char(char)
-
-# Divide and conquer approach to finalize encoding
-encoded_length = len(processor.encoded_chars)
-print(f"Result: {encoded_length}")
+# Input data
+records_list = [' 42 ', '17', 'invalid', ' 89 ', '5', 'test', ' 100 ']
+process_data_records(records_list)

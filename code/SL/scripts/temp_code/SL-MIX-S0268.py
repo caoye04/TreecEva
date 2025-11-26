@@ -1,20 +1,24 @@
-import statistics
-from collections import namedtuple
+def process_data(data_string, min_length):
+    # Process text data and count valid entries
+    temp_words = data_string.split(',')
+    word_list = [word.strip().lower() for word in temp_words]
+    
+    # Distractor: Unused intermediate calculation
+    total_chars = sum(len(word) for word in word_list)
+    
+    # Main processing logic
+    valid_words = [word for word in word_list if len(word) >= min_length]
+    processed_count = len(valid_words)
+    
+    # Distractor: Additional unused operation
+    avg_length = total_chars / len(word_list) if word_list else 0
+    
+    return processed_count
 
-# Define a nucleotide mapping
-Nucleotide = namedtuple('Nucleotide', ['symbol', 'value'])
+# Sample data processing
+sample_data = "python, code, benchmark, test, ai, language, model"
+threshold = 4
 
-code_map = {
-    'A': Nucleotide('Adenine', 0),
-    'T': Nucleotide('Thymine', 1),
-    'G': Nucleotide('Guanine', 2),
-    'C': Nucleotide('Cytosine', 3)
-}
-
-# Encoded DNA sequence values
-dna_values = [2, 1, 3, 0, 2, 3, 1]
-
-# Calculate variance of the encoded sequence
-encoded_variance = statistics.variance(dna_values)
-
-print(f"Result: {encoded_variance}")
+# Main execution
+final_result = process_data(sample_data, threshold)
+print(f"Result: {final_result}")

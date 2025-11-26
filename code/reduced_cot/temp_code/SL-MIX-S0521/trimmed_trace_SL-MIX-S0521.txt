@@ -1,0 +1,171 @@
+67
+final_hash
+---
+63 hash_processor = HashProcessor()
+63 ['data_blocks'] ['[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]']
+3 self.seed = 137
+3 ['self'] ['HashProcessor(seed=137)']
+4 self.cache = {}
+4 ['self'] ['HashProcessor(cache={})']
+5 self.debug_mode = False
+5 ['self'] ['HashProcessor(debug_mode=False)']
+64 final_hash = hash_processor.process(data_blocks)
+64 ['data_blocks', 'hash_processor'] ['[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', 'HashProcessor(...)']
+23 intermediate_results = []
+23 ['self', 'data_list', 'intermediate_results'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[]']
+26 for i, block in enumerate(data_list):
+26 ['self', 'data_list', 'intermediate_results', 'i', 'block'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[]', '0', '[1, 5, 9, 13]']
+27 checksum = self._calculate_checksum(block)
+27 ['self', 'data_list', 'intermediate_results', 'i', 'block'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[]', '0', '[1, 5, 9, 13]']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[1, 5, 9, 13]', '1']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[1, 5, 9, 13]', '5']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[1, 5, 9, 13]', '9']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[1, 5, 9, 13]', '13']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'temp_sum'] ['HashProcessor(...)', '[1, 5, 9, 13]', '28']
+11 return temp_sum % 256
+11 ['self', 'data', 'temp_sum'] ['HashProcessor(...)', '[1, 5, 9, 13]', '28']
+28 bit_result = self._apply_bit_operations(checksum)
+28 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[]', '0', '[1, 5, 9, 13]', '28']
+15 step1 = value & 0x0F
+15 ['self', 'value', 'step1'] ['HashProcessor(...)', '28', '12']
+16 step2 = step1 | 0x80
+16 ['self', 'value', 'step1', 'step2'] ['HashProcessor(...)', '28', '12', '140']
+17 step3 = step2 ^ 0x55
+17 ['self', 'value', 'step1', 'step2', 'step3'] ['HashProcessor(...)', '28', '12', '140', '217']
+19 return step3
+19 ['self', 'value', 'step1', 'step2', 'step3'] ['HashProcessor(...)', '28', '12', '140', '217']
+31 if i == 0:
+31 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[]', '0', '[1, 5, 9, 13]', '28', '217']
+32 current_hash = bit_result
+32 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[]', '0', '[1, 5, 9, 13]', '28', '217', '217']
+38 self.cache[f'block_{i}'] = current_hash  # Unused caching
+38 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(cache={block_0: 217})', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217]', '0', '[1, 5, 9, 13]', '28', '217', '217']
+26 for i, block in enumerate(data_list):
+26 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217]', '1', '[2, 6, 10, 14]', '28', '217', '217']
+27 checksum = self._calculate_checksum(block)
+27 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217]', '1', '[2, 6, 10, 14]', '28', '217', '217']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[2, 6, 10, 14]', '2']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[2, 6, 10, 14]', '6']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[2, 6, 10, 14]', '10']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[2, 6, 10, 14]', '14']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'temp_sum'] ['HashProcessor(...)', '[2, 6, 10, 14]', '32']
+11 return temp_sum % 256
+11 ['self', 'data', 'temp_sum'] ['HashProcessor(...)', '[2, 6, 10, 14]', '32']
+28 bit_result = self._apply_bit_operations(checksum)
+28 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217]', '1', '[2, 6, 10, 14]', '32', '217', '217']
+15 step1 = value & 0x0F
+15 ['self', 'value', 'step1'] ['HashProcessor(...)', '32', '0']
+16 step2 = step1 | 0x80
+16 ['self', 'value', 'step1', 'step2'] ['HashProcessor(...)', '32', '0', '128']
+17 step3 = step2 ^ 0x55
+17 ['self', 'value', 'step1', 'step2', 'step3'] ['HashProcessor(...)', '32', '0', '128', '213']
+19 return step3
+19 ['self', 'value', 'step1', 'step2', 'step3'] ['HashProcessor(...)', '32', '0', '128', '213']
+31 if i == 0:
+31 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217]', '1', '[2, 6, 10, 14]', '32', '213', '217']
+34 current_hash ^= bit_result
+34 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217]', '1', '[2, 6, 10, 14]', '32', '213', '12']
+38 self.cache[f'block_{i}'] = current_hash  # Unused caching
+38 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(cache={block_0: 217, block_1: 12})', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12]', '1', '[2, 6, 10, 14]', '32', '213', '12']
+26 for i, block in enumerate(data_list):
+26 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12]', '2', '[3, 7, 11, 15]', '32', '213', '12']
+27 checksum = self._calculate_checksum(block)
+27 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12]', '2', '[3, 7, 11, 15]', '32', '213', '12']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[3, 7, 11, 15]', '3']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[3, 7, 11, 15]', '7']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[3, 7, 11, 15]', '11']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[3, 7, 11, 15]', '15']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'temp_sum'] ['HashProcessor(...)', '[3, 7, 11, 15]', '36']
+11 return temp_sum % 256
+11 ['self', 'data', 'temp_sum'] ['HashProcessor(...)', '[3, 7, 11, 15]', '36']
+28 bit_result = self._apply_bit_operations(checksum)
+28 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12]', '2', '[3, 7, 11, 15]', '36', '213', '12']
+15 step1 = value & 0x0F
+15 ['self', 'value', 'step1'] ['HashProcessor(...)', '36', '4']
+16 step2 = step1 | 0x80
+16 ['self', 'value', 'step1', 'step2'] ['HashProcessor(...)', '36', '4', '132']
+17 step3 = step2 ^ 0x55
+17 ['self', 'value', 'step1', 'step2', 'step3'] ['HashProcessor(...)', '36', '4', '132', '209']
+19 return step3
+19 ['self', 'value', 'step1', 'step2', 'step3'] ['HashProcessor(...)', '36', '4', '132', '209']
+31 if i == 0:
+31 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12]', '2', '[3, 7, 11, 15]', '36', '209', '12']
+34 current_hash ^= bit_result
+34 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12]', '2', '[3, 7, 11, 15]', '36', '209', '221']
+38 self.cache[f'block_{i}'] = current_hash  # Unused caching
+38 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(cache={block_0: 217, block_1: 12, block_2: 221})', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12, 221]', '2', '[3, 7, 11, 15]', '36', '209', '221']
+26 for i, block in enumerate(data_list):
+26 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12, 221]', '3', '[4, 8, 12, 16]', '36', '209', '221']
+27 checksum = self._calculate_checksum(block)
+27 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12, 221]', '3', '[4, 8, 12, 16]', '36', '209', '221']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[4, 8, 12, 16]', '4']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[4, 8, 12, 16]', '8']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[4, 8, 12, 16]', '12']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'c'] ['HashProcessor(...)', '[4, 8, 12, 16]', '16']
+9 temp_sum = sum([ord(c) if isinstance(c, str) else c for c in data])
+9 ['self', 'data', 'temp_sum'] ['HashProcessor(...)', '[4, 8, 12, 16]', '40']
+11 return temp_sum % 256
+11 ['self', 'temp_sum'] ['HashProcessor(...)', '40']
+28 bit_result = self._apply_bit_operations(checksum)
+28 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'checksum', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12, 221]', '3', '[4, 8, 12, 16]', '40', '209', '221']
+15 step1 = value & 0x0F
+15 ['self', 'value', 'step1'] ['HashProcessor(...)', '40', '8']
+16 step2 = step1 | 0x80
+16 ['self', 'step1', 'step2'] ['HashProcessor(...)', '8', '136']
+17 step3 = step2 ^ 0x55
+17 ['self', 'step2', 'step3'] ['HashProcessor(...)', '136', '221']
+19 return step3
+19 ['self', 'step3'] ['HashProcessor(...)', '221']
+31 if i == 0:
+31 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12, 221]', '3', '[4, 8, 12, 16]', '221', '221']
+34 current_hash ^= bit_result
+34 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'bit_result', 'current_hash'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12, 221]', '3', '[4, 8, 12, 16]', '221', '0']
+38 self.cache[f'block_{i}'] = current_hash  # Unused caching
+38 ['self', 'data_list', 'intermediate_results', 'i', 'block', 'current_hash'] ['HashProcessor(cache={block_0: 217, block_1: 12, block_2: 221, ...})', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12, 221, 0]', '3', '[4, 8, 12, 16]', '0']
+26 for i, block in enumerate(data_list):
+26 ['self', 'data_list', 'intermediate_results', 'i', 'block'] ['HashProcessor(...)', '[[1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]', '[217, 12, 221, 0]', '3', '[4, 8, 12, 16]']
+41 weight_factors = {idx: (val % 8) + 1 for idx, val in enumerate(intermediate_results)}
+41 ['self', 'intermediate_results', 'i', 'idx', 'val'] ['HashProcessor(...)', '[217, 12, 221, 0]', '3', '0', '217']
+41 weight_factors = {idx: (val % 8) + 1 for idx, val in enumerate(intermediate_results)}
+41 ['self', 'intermediate_results', 'i', 'idx', 'val'] ['HashProcessor(...)', '[217, 12, 221, 0]', '3', '1', '12']
+41 weight_factors = {idx: (val % 8) + 1 for idx, val in enumerate(intermediate_results)}
+41 ['self', 'intermediate_results', 'i', 'idx', 'val'] ['HashProcessor(...)', '[217, 12, 221, 0]', '3', '2', '221']
+41 weight_factors = {idx: (val % 8) + 1 for idx, val in enumerate(intermediate_results)}
+41 ['self', 'intermediate_results', 'i', 'idx', 'val'] ['HashProcessor(...)', '[217, 12, 221, 0]', '3', '3', '0']
+41 weight_factors = {idx: (val % 8) + 1 for idx, val in enumerate(intermediate_results)}
+41 ['self', 'intermediate_results', 'i', 'weight_factors'] ['HashProcessor(...)', '[217, 12, 221, 0]', '3', '{0: 2, 1: 5, 2: 6, ...}']
+44 weighted_sum = sum([val * weight_factors[i] for i, val in enumerate(intermediate_results)])
+44 ['self', 'intermediate_results', 'i', 'weight_factors', 'val'] ['HashProcessor(...)', '[217, 12, 221, 0]', '0', '{0: 2, 1: 5, 2: 6, ...}', '217']
+44 weighted_sum = sum([val * weight_factors[i] for i, val in enumerate(intermediate_results)])
+44 ['self', 'intermediate_results', 'i', 'weight_factors', 'val'] ['HashProcessor(...)', '[217, 12, 221, 0]', '1', '{0: 2, 1: 5, 2: 6, ...}', '12']
+44 weighted_sum = sum([val * weight_factors[i] for i, val in enumerate(intermediate_results)])
+44 ['self', 'intermediate_results', 'i', 'weight_factors', 'val'] ['HashProcessor(...)', '[217, 12, 221, 0]', '2', '{0: 2, 1: 5, 2: 6, ...}', '221']
+44 weighted_sum = sum([val * weight_factors[i] for i, val in enumerate(intermediate_results)])
+44 ['self', 'intermediate_results', 'i', 'weight_factors', 'val'] ['HashProcessor(...)', '[217, 12, 221, 0]', '3', '{0: 2, 1: 5, 2: 6, ...}', '0']
+44 weighted_sum = sum([val * weight_factors[i] for i, val in enumerate(intermediate_results)])
+44 ['self', 'intermediate_results', 'i', 'weight_factors', 'weighted_sum'] ['HashProcessor(...)', '[217, 12, 221, 0]', '3', '{0: 2, 1: 5, 2: 6, ...}', '1820']
+47 final_value = (weighted_sum & 0x7F) | ((self.seed % 64) << 7)
+47 ['self', 'weighted_sum', 'final_value'] ['HashProcessor(seed=137)', '1820', '1180']
+52 return final_value
+52 ['final_value'] ['1180']
+67 print(f"Result: {final_hash}")
+67 ['final_hash'] ['1180']

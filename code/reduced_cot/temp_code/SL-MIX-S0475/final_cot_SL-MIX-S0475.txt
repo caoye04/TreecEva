@@ -1,0 +1,24 @@
+Target: Find the value of variable final_throughput after [line 44] executes
+
+[line 29]  packet_sizes = [120, 180, 90, 210, 160, 75, 195, 140]
+Compute: [120, 180, 90, 210, 160, 75, 195, 140] = [120, 180, 90, 210, 160, ...]
+[line 37]  result = analyze_network_traffic(packet_sizes, latency_threshold=150)
+Call function analyze_network_traffic(packet_sizes=[120, 180, 90, 210, 160, ...] (defined at [line 29]), latency_threshold=150)
+[line 6]  filtered_packets = [p for p in packets if p > latency_threshold]
+Compute: [p for p in packets if p > latency_threshold], where p=120 (an unknown source), packets=[120, 180, 90, 210, 160, ...] (an unknown source), latency_threshold=150 (an unknown source) = ?
+[line 12]  calc_throughput = lambda x, y: (x / y) * 1000 if y > 0 else 0
+Compute: lambda x, y: (x / y) * 1000 if y > 0 else 0 = ?
+[line 13]  throughput = calc_throughput(len(filtered_packets), len(packets))
+Call function calc_throughput(len(filtered_packets), len(packets))
+[line 16]  if len(packets) < 2:
+Condition: True, entering 'if' block
+[line 20]  efficiency_factor = 0.85 if throughput > 200 else 0.92
+Compute: 0.85 if throughput > 200 else 0.92, where throughput=500.0 (defined at [line 13]) = 0.85
+[line 21]  adjusted_throughput = throughput * efficiency_factor
+Compute: throughput * efficiency_factor, where throughput=500.0 (defined at [line 13]), efficiency_factor=0.85 (defined at [line 20]) = 425.0
+[line 26]  return adjusted_throughput
+Return: adjusted_throughput=425.0 (defined at [line 21])
+[line 44]  final_throughput = round(result, 2)
+Call function round(result=425.0 (defined at [line 37]), 2)
+
+Answer: final_throughput = 425.0 (last updated on defined at [line 44])

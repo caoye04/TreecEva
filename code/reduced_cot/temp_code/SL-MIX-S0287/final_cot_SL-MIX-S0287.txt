@@ -1,0 +1,24 @@
+Target: Find the value of variable final_score after [line 28] executes
+
+[line 10]  kill_points = player_data['kills'] * 100
+Compute: player_data['kills'] * 100, where player_data={kills: 15, assists: 8, deaths: 6, ...} (an unknown source) = 1500
+[line 11]  assist_points = player_data['assists'] * 50
+Compute: player_data['assists'] * 50, where player_data={kills: 15, assists: 8, deaths: 6, ...} (an unknown source) = 400
+[line 12]  objective_points = player_data['objectives'] * 75
+Compute: player_data['objectives'] * 75, where player_data={kills: 15, assists: 8, deaths: 6, ...} (an unknown source) = 300
+[line 19]  base_total = kill_points + assist_points + objective_points
+Compute: kill_points + assist_points + objective_points, where kill_points=1500 (defined at [line 10]), assist_points=400 (defined at [line 11]), objective_points=300 (defined at [line 12]) = 2200
+[line 20]  death_penalty = player_data['deaths'] * 25
+Compute: player_data['deaths'] * 25, where player_data={kills: 15, assists: 8, deaths: 6, ...} (an unknown source) = 150
+[line 21]  adjusted_total = base_total - death_penalty
+Compute: base_total - death_penalty, where base_total=2200 (defined at [line 19]), death_penalty=150 (defined at [line 20]) = 2050
+[line 24]  performance_tier = 'gold' if adjusted_total >= 2000 else 'silver'
+Compute: 'gold' if adjusted_total >= 2000 else 'silver', where adjusted_total=2050 (defined at [line 21]) = 'gold'
+[line 25]  bonus_multipliers = {'silver': 1.1, 'gold': 1.25, 'platinum': 1.5}
+Compute: {'silver': 1.1, 'gold': 1.25, 'platinum': 1.5} = {silver: 1.1, gold: 1.25, platinum: 1.5}
+[line 26]  bonus_factor = bonus_multipliers[performance_tier]
+Compute: bonus_multipliers[performance_tier], where bonus_multipliers={silver: 1.1, gold: 1.25, platinum: 1.5} (defined at [line 25]), performance_tier='gold' (defined at [line 24]) = 1.25
+[line 28]  final_score = adjusted_total * bonus_factor
+Compute: adjusted_total * bonus_factor, where adjusted_total=2050 (defined at [line 21]), bonus_factor=1.25 (defined at [line 26]) = 2562.5
+
+Answer: final_score = 2562.5 (last updated on defined at [line 28])

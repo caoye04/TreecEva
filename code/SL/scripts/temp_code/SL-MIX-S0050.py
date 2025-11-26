@@ -1,26 +1,24 @@
-def simulate_circuit(input_signal):
-    # Apply initial transformation using bitwise operations
-    stage1 = (input_signal << 2) & 0xFF  # Shift left by 2, mask to 8 bits
+def analyze_sensor_data(readings):
+    calibration_factor = 2.5
+    noise_threshold = 15
     
-    # Apply logical conditions
-    if (stage1 > 100) and not (stage1 & 0x0F == 0):  # Check if greater than 100 and lower nibble is non-zero
-        stage2 = stage1 ^ 0x55  # XOR with 0x55
-    else:
-        stage2 = stage1 | 0xAA  # OR with 0xAA
+    # Distractor: complex computation that doesn't affect final result
+    temp_calc = sum([r * 1.1 for r in readings if r > 10])
+    temp_offset = temp_calc * 0.8 - 25
     
-    # Apply another transformation based on parity
-    if (bin(stage2).count('1') % 2) == 0:  # Check if even parity
-        stage3 = stage2 & 0xF0  # Mask upper nibble
-    else:
-        stage3 = stage2 | 0x0F  # Set lower nibble
+    # Relevant processing with list comprehension
+    filtered_readings = [r * calibration_factor for r in readings if r < noise_threshold]
     
-    # Final adjustment using a lambda function
-    adjust = lambda x: ((x >> 1) & 0x7F) if x > 128 else (x << 1)
-    final_signal = adjust(stage3)
+    # Conditional expression with moderate nesting
+    processing_result = (sum(filtered_readings) * 1.2 if len(filtered_readings) > 2 
+                       else sum(filtered_readings) * 0.8)
     
-    return final_signal
+    # Final computation - this is the key statement
+    final_computation = processing_result - temp_offset + temp_offset
+    
+    print(f"Target result: {final_computation}")
+    return final_computation
 
-# Simulate with input signal 0b11010110 (214 in decimal)
-input_signal = 0b11010110
-final_signal = simulate_circuit(input_signal)
-print(f'Result: {final_signal}')
+# Main execution
+sensor_data = [8, 12, 5, 18, 3, 25, 9, 14]
+result = analyze_sensor_data(sensor_data)

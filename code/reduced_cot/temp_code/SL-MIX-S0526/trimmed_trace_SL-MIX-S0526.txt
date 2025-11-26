@@ -1,0 +1,33 @@
+21
+final_count
+---
+19 data_string = "item1, ITEM_A, item_b, ITEM_DATA, test, ITEM_INFO, ITEM_123"
+19 ['data_string'] ["'item1, ITEM_A, item_b, ITEM_DATA, test, ITEM_INFO, ITEM_123'"]
+20 final_count = process_data(data_string)
+20 ['data_string'] ["'item1, ITEM_A, item_b, ITEM_DATA, test, ITEM_INFO, ITEM_123'"]
+3 temp_list = text.split(',')
+3 ['text', 'temp_list'] ["'item1, ITEM_A, item_b, ITEM_DATA, test, ITEM_INFO, ITEM_123'", "['item1', ' ITEM_A', ' item_b', ' ITEM_DATA', ' test', ...]"]
+4 processed = [item.strip().upper() for item in temp_list]
+4 ['temp_list', 'item'] ["['item1', ' ITEM_A', ' item_b', ' ITEM_DATA', ' test', ...]", "'item1'"]
+4 processed = [item.strip().upper() for item in temp_list]
+4 ['temp_list', 'item'] ["['item1', ' ITEM_A', ' item_b', ' ITEM_DATA', ' test', ...]", "' ITEM_A'"]
+4 processed = [item.strip().upper() for item in temp_list]
+4 ['temp_list', 'item'] ["['item1', ' ITEM_A', ' item_b', ' ITEM_DATA', ' test', ...]", "' item_b'"]
+4 processed = [item.strip().upper() for item in temp_list]
+4 ['temp_list', 'item'] ["['item1', ' ITEM_A', ' item_b', ' ITEM_DATA', ' test', ...]", "' ITEM_DATA'"]
+4 processed = [item.strip().upper() for item in temp_list]
+4 ['temp_list', 'item'] ["['item1', ' ITEM_A', ' item_b', ' ITEM_DATA', ' test', ...]", "' test'"]
+4 processed = [item.strip().upper() for item in temp_list]
+4 ['temp_list', 'item'] ["['item1', ' ITEM_A', ' item_b', ' ITEM_DATA', ' test', ...]", "' ITEM_INFO'"]
+4 processed = [item.strip().upper() for item in temp_list]
+4 ['temp_list', 'item'] ["['item1', ' ITEM_A', ' item_b', ' ITEM_DATA', ' test', ...]", "' ITEM_123'"]
+4 processed = [item.strip().upper() for item in temp_list]
+4 ['temp_list', 'processed'] ["['item1', ' ITEM_A', ' item_b', ' ITEM_DATA', ' test', ...]", "['ITEM1', 'ITEM_A', 'ITEM_B', 'ITEM_DATA', 'TEST', ...]"]
+11 filter_func = lambda x: len(x) > 3 and x.startswith('ITEM')
+11 ['processed'] ["['ITEM1', 'ITEM_A', 'ITEM_B', 'ITEM_DATA', 'TEST', ...]"]
+12 valid_items = list(filter(filter_func, processed))
+12 ['processed'] ["['ITEM1', 'ITEM_A', 'ITEM_B', 'ITEM_DATA', 'TEST', ...]"]
+17 return len(valid_items)
+17 ['valid_items'] ["['ITEM1', 'ITEM_A', 'ITEM_B', 'ITEM_DATA', 'ITEM_INFO', ...]"]
+21 print(f"Result: {final_count}")
+21 ['final_count'] ['6']

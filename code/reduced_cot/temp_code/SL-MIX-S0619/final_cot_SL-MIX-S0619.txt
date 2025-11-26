@@ -1,0 +1,46 @@
+Target: Find the value of variable final_balance after [line 35] executes
+
+[line 27]  initial_funds = [1000, 2500, 1800, 3200, 950, 2100, 2750]
+Compute: [1000, 2500, 1800, 3200, 950, 2100, 2750] = [1000, 2500, 1800, 3200, 950, ...]
+[line 28]  active_users = [0, 2, 3, 5]
+Compute: [0, 2, 3, 5] = [0, 2, 3, 5]
+[line 29]  service_fee = 0.02
+Assign: service_fee = 0.02
+[line 34]  final_balance = process_accounts(active_users, initial_funds, service_fee)
+Call function process_accounts(active_users=[0, 2, 3, 5] (defined at [line 28]), initial_funds=[1000, 2500, 1800, 3200, 950, ...] (defined at [line 27]), service_fee=0.02 (defined at [line 29]))
+[line 14]  def process_accounts(user_indices, account_funds, service_fee):
+Enter function process_accounts: user_indices=[0, 2, 3, 5] (active_users defined at [line 28]), account_funds=[1000, 2500, 1800, 3200, 950, ...] (initial_funds defined at [line 27]), service_fee=0.02 (service_fee defined at [line 29])
+  [line 16]  active_funds = filter_active_accounts(user_indices, account_funds)
+  Call function filter_active_accounts(user_indices=[0, 2, 3, 5] (parameter user_indices defined at [line 28]), account_funds=[1000, 2500, 1800, 3200, 950, ...] (parameter account_funds defined at [line 27]))
+  [line 10]  active_accounts = [funds[i] for i in users if i < len(funds)]
+  Compute: [funds[i] for i in users if i < len(funds)], where funds=[1000, 2500, 1800, 3200, 950, ...] (an unknown source), i=0 (an unknown source), users=[0, 2, 3, 5] (an unknown source) = ?
+  [line 10]  active_accounts = [funds[i] for i in users if i < len(funds)]
+  Compute: [funds[i] for i in users if i < len(funds)], where funds=[1000, 2500, 1800, 3200, 950, ...] (an unknown source), i=2 (an unknown source), users=[0, 2, 3, 5] (an unknown source) = ?
+  [line 10]  active_accounts = [funds[i] for i in users if i < len(funds)]
+  Compute: [funds[i] for i in users if i < len(funds)], where funds=[1000, 2500, 1800, 3200, 950, ...] (an unknown source), i=3 (an unknown source), users=[0, 2, 3, 5] (an unknown source) = ?
+  [line 10]  active_accounts = [funds[i] for i in users if i < len(funds)]
+  Compute: [funds[i] for i in users if i < len(funds)], where funds=[1000, 2500, 1800, 3200, 950, ...] (an unknown source), i=5 (an unknown source), users=[0, 2, 3, 5] (an unknown source) = ?
+  [line 10]  active_accounts = [funds[i] for i in users if i < len(funds)]
+  Compute: [funds[i] for i in users if i < len(funds)], where funds=[1000, 2500, 1800, 3200, 950, ...] (an unknown source), i=5 (an unknown source), users=[0, 2, 3, 5] (an unknown source) = [1000, 1800, 3200, 2100]
+  [line 12]  return active_accounts
+  Return: active_accounts=[1000, 1800, 3200, 2100] (defined at [line 10])
+  [line 17]  total_service_fee = calculate_service_charges(active_funds, service_fee)
+  Call function calculate_service_charges(active_funds=[1000, 1800, 3200, 2100] (defined at [line 16]), service_fee=0.02 (parameter service_fee defined at [line 29]))
+  [line 1]  def calculate_service_charges(amounts, fee_rate):
+  Enter function calculate_service_charges: amounts=[1000, 1800, 3200, 2100] (active_funds defined at [line 16]), fee_rate=0.02 (service_fee defined at [line 29])
+    [line 4]  charges = [amt * fee_rate for amt in amounts]
+    Compute: [amt * fee_rate for amt in amounts], where amt=1000 (an unknown source), fee_rate=0.02 (parameter fee_rate defined at [line 29]), amounts=[1000, 1800, 3200, 2100] (parameter amounts defined at [line 16]) = ?
+    [line 5]  return sum(charges)
+    Return: sum(charges)
+  Function calculate_service_charges returns 162.0
+  [line 22]  total_active_funds = sum(active_funds)
+  Call function sum(active_funds=[1000, 1800, 3200, 2100] (defined at [line 16]))
+  [line 23]  final_amount = total_active_funds - total_service_fee
+  Compute: total_active_funds - total_service_fee, where total_active_funds=8100 (defined at [line 22]), total_service_fee=162.0 (defined at [line 17]) = 7938.0
+  [line 25]  return final_amount
+  Return: final_amount=7938.0 (defined at [line 23])
+Function process_accounts returns 7938.0
+[line 35]  print(f"Target result: {final_balance}")
+Output: f"Target result: {final_balance}"
+
+Answer: final_balance = 7938.0 (last updated on defined at [line 34])

@@ -1,106 +1,66 @@
-Target: Find the value of variable cryptographic_key after [line 33] executes
+Target: Find the value of variable computation_result after [line 7] executes
 
-[line 17]  initial_values = [12, 18, 24, 30]
-Compute: [12, 18, 24, 30] = [12, 18, 24, 30]
-[line 18]  prime_set = frozenset(generate_primes_up_to(30))
-Call function frozenset(generate_primes_up_to(30))
-[line 8]  sieve = [True] * (n + 1)
-Compute: [True] * (n + 1), where n=30 (an unknown source) = [True, True, True, True, True, ...]
-[line 9]  sieve[0] = sieve[1] = False
-(Missing param: 'var')
-[line 10]  for i in range(2, int(n**0.5) + 1):
-Loop Start: i takes its first value 2
-[line 11]  if sieve[i]:
-Condition: True, entering 'if' block
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Start: j takes its first value 4
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Iteration: j is now 6 (iteration 2)
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-... [Line 12] repeats 23 more times ...
-... [Line 12] repeats 23 more times ...
-[line 10]  for i in range(2, int(n**0.5) + 1):
-Loop Iteration: i is now 3 (iteration 2)
-[line 11]  if sieve[i]:
-Condition: True, entering 'if' block
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Iteration: j is now 9 (iteration 16)
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Iteration: j is now 12 (iteration 17)
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Iteration: j is now 15 (iteration 18)
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Iteration: j is now 18 (iteration 19)
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Iteration: j is now 21 (iteration 20)
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Iteration: j is now 24 (iteration 21)
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Iteration: j is now 27 (iteration 22)
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Iteration: j is now 30 (iteration 23)
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-[line 12]  for j in range(i*i, n + 1, i):
-Loop End: Iteration finished
-[line 10]  for i in range(2, int(n**0.5) + 1):
-Loop Iteration: i is now 4 (iteration 3)
-[line 11]  if sieve[i]:
-Condition: True, entering 'if' block
-[line 10]  for i in range(2, int(n**0.5) + 1):
-Loop Iteration: i is now 5 (iteration 4)
-[line 11]  if sieve[i]:
-Condition: True, entering 'if' block
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Iteration: j is now 25 (iteration 25)
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-[line 12]  for j in range(i*i, n + 1, i):
-Loop Iteration: j is now 30 (iteration 26)
-[line 13]  sieve[j] = False
-(Missing param: 'var')
-[line 12]  for j in range(i*i, n + 1, i):
-Loop End: Iteration finished
-[line 10]  for i in range(2, int(n**0.5) + 1):
-Loop End: Iteration finished
-[line 14]  return [i for i, is_prime in enumerate(sieve) if is_prime]
-Return: [i for i, is_prime in enumerate(sieve) if is_prime]
-[line 21]  lcm_result = reduce(lcm, initial_values)
-Call function reduce(lcm, initial_values=[12, 18, 24, 30] (defined at [line 17]))
-[line 5]  return abs(a * b) // gcd(a, b)
-Return: abs(a * b) // gcd(a, b)
-[line 5]  return abs(a * b) // gcd(a, b)
-Return: abs(a * b) // gcd(a, b)
-[line 5]  return abs(a * b) // gcd(a, b)
-Return: abs(a * b) // gcd(a, b)
-[line 24]  reference_prime = max(prime_set)
-Call function max(prime_set=frozenset({2, 3, 5, 7, 11, 13, 17, 19, 23, 29}) (defined at [line 18]))
-[line 25]  gcd_result = gcd(lcm_result, reference_prime)
-Call function gcd(lcm_result=360 (defined at [line 21]), reference_prime=29 (defined at [line 24]))
-[line 28]  modulus_base = len(prime_set) * 7
-Compute: len(prime_set) * 7, where prime_set=frozenset({2, 3, 5, 7, 11, 13, 17, 19, 23, 29}) (defined at [line 18]) = 70
-[line 29]  intermediate_mod = (lcm_result % modulus_base) + (gcd_result << 2)
-Compute: (lcm_result % modulus_base) + (gcd_result << 2), where lcm_result=360 (defined at [line 21]), modulus_base=70 (defined at [line 28]), gcd_result=1 (defined at [line 25]) = 14
-[line 32]  shift_amount = bin(intermediate_mod).count('1')  # Count set bits
-Call function bin(intermediate_mod).count('1')
-[line 33]  cryptographic_key = (intermediate_mod ^ (shift_amount * 3)) & 0xFF
-Compute: (intermediate_mod ^ (shift_amount * 3)) & 0xFF, where intermediate_mod=14 (defined at [line 29]), shift_amount=3 (defined at [line 32]) = 7
+[line 1]  text_data = "PyThOn_PrOgRaMmInG_2024"
+Assign: text_data = 'PyThOn_PrOgRaMmInG_2024'
+[line 2]  lowercase_chars = text_data.lower()
+(Missing param: 'func_name')
+[line 3]  vowel_count = sum(1 for char in lowercase_chars if char in 'aeiou')
+Call function sum(1 for char in lowercase_chars if char in 'aeiou')
+[line 4]  consonant_count = sum(1 for char in lowercase_chars if char.isalpha() and char not in 'aeiou')
+Call function sum(1 for char in lowercase_chars if char.isalpha() and char not in 'aeiou')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 5]  digit_chars = ''.join(char for char in text_data if char.isdigit())
+(Missing param: 'func_name')
+[line 6]  number_value = int(digit_chars) if digit_chars else 0
+Compute: int(digit_chars) if digit_chars else 0, where digit_chars='2024' (an unknown source) = 2024
+[line 7]  computation_result = vowel_count * consonant_count + number_value
+Compute: vowel_count * consonant_count + number_value, where vowel_count=4 (defined at [line 3]), consonant_count=13 (defined at [line 4]), number_value=2024 (defined at [line 6]) = 2076
 
-Answer: cryptographic_key = 7 (last updated on defined at [line 33])
+Answer: computation_result = 2076 (last updated on defined at [line 7])

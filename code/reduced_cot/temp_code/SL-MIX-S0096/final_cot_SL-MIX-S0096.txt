@@ -1,63 +1,16 @@
-Target: Find the value of variable final_portfolio_value after [line 58] executes
+Target: Find the value of variable final_solution after [line 13] executes
 
-[line 27]  portfolio = PortfolioManager()
-Call function PortfolioManager()
-[line 6]  self.portfolio_value = 1000.0
-(Missing param: 'var')
-[line 7]  self.risk_multiplier = 1.05
-(Missing param: 'var')
-[line 8]  self.transaction_log = []
-(Missing param: 'result')
-[line 37]  transaction_rules = "ADD:500.0;APPLY:bull;ADD:200.0;APPLY:risk_context_1.2;ADD:300.0"
-Assign: transaction_rules = 'ADD:500.0;APPLY:bull;ADD:200.0;APPLY:risk_context_1.2;ADD:300.0'
-[line 40]  tokens = transaction_rules.split(';')
-(Missing param: 'func_name')
-[line 42]  for token in tokens:
-Loop Start: token takes its first value 'ADD:500.0'
-[line 43]  operation, value = token.split(':')
-(Missing param: 'func_name')
-[line 44]  if operation == 'ADD':
-Condition: True, entering 'if' block
-[line 45]  adjustment = float(value)
-Call function float(value='500.0' (an unknown source))
-[line 46]  portfolio.portfolio_value += adjustment
-(Missing param: 'var')
-[line 42]  for token in tokens:
-Loop Iteration: token is now 'APPLY:bull' (iteration 2)
-[line 43]  operation, value = token.split(':')
-(Missing param: 'func_name')
-[line 44]  if operation == 'ADD':
-Condition: True, entering 'if' block
-[line 48]  elif operation == 'APPLY':
-'elif' Condition: True, entering block
-[line 49]  if value.startswith('risk_context_'):
-Condition: True, entering 'if' block
-[line 54]  factor = market_conditions[value]
-Compute: market_conditions[value], where market_conditions={bull: 1.12, bear: 0.92, neutral: 1.01} (an unknown source), value='bull' (an unknown source) = 1.12
-[line 55]  portfolio.portfolio_value = portfolio.apply_market_condition(factor)
-(Missing param: 'func_name')
-[line 11]  self.portfolio_value *= condition_factor
-(Missing param: 'var')
-[line 12]  return self.portfolio_value
-Return: self.portfolio_value
-... [Line 42] repeats 2 more times ...
-... [Line 42] repeats 2 more times ...
-... [Line 42] repeats 2 more times ...
-... [Line 42] repeats 2 more times ...
-... [Line 42] repeats 2 more times ...
-[line 42]  for token in tokens:
-Loop Iteration: token is now 'ADD:300.0' (iteration 5)
-[line 43]  operation, value = token.split(':')
-(Missing param: 'func_name')
-[line 44]  if operation == 'ADD':
-Condition: True, entering 'if' block
-[line 45]  adjustment = float(value)
-Call function float(value='300.0' (an unknown source))
-[line 46]  portfolio.portfolio_value += adjustment
-(Missing param: 'var')
-[line 42]  for token in tokens:
-Loop End: Iteration finished
-[line 58]  final_portfolio_value = portfolio.portfolio_value * portfolio.risk_multiplier
-Compute: portfolio.portfolio_value * portfolio.risk_multiplier, where portfolio=PortfolioManager(portfolio_value=2405.6000000000004, risk_multiplier=1.05) (defined at [line 27]) = 2525.8800000000006
+[line 2]  base_inventory = [45, 23, 67, 89, 12, 34, 56, 78, 91, 15]
+Compute: [45, 23, 67, 89, 12, 34, 56, 78, 91, 15] = [45, 23, 67, 89, 12, ...]
+[line 3]  threshold = 50
+Assign: threshold = 50
+[line 6]  high_value_items = [item for item in base_inventory if item > threshold]
+Compute: [item for item in base_inventory if item > threshold], where item=45 (an unknown source), base_inventory=[45, 23, 67, 89, 12, ...] (defined at [line 2]), threshold=50 (defined at [line 3]) = ?
+[line 9]  optimized_total = sum(high_value_items)
+Call function sum(high_value_items=[67, 89, 56, 78, 91] (defined at [line 6]))
+[line 12]  adjustment_factor = 25
+Assign: adjustment_factor = 25
+[line 13]  final_solution = optimized_total + adjustment_factor
+Compute: optimized_total + adjustment_factor, where optimized_total=381 (defined at [line 9]), adjustment_factor=25 (defined at [line 12]) = 406
 
-Answer: final_portfolio_value = 2525.8800000000006 (last updated on defined at [line 58])
+Answer: final_solution = 406 (last updated on defined at [line 13])

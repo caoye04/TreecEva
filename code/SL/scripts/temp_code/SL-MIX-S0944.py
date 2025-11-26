@@ -1,40 +1,29 @@
-import math
-from functools import reduce
-def gcd_list(lst):
-    return reduce(math.gcd, lst) if lst else 0
+def calculate_energy_flow(base_load, cycle):
+    # Distractor: This intermediate calculation is not used in final result
+    intermediate_flux = (base_load << 2) ^ (cycle * 15)
+    
+    # Relevant energy calculation with bitwise operations
+    energy_core = (base_load & 0xF) | (cycle << 4)
+    power_factor = energy_core ^ 0b1010
+    return power_factor
 
-def mean(data):
-    return sum(data) / len(data) if data else 0
+# Main energy analysis
+base_load = 25
 
-def variance(data):
-    if len(data) < 2:
-        return 0
-    m = mean(data)
-    return sum((x - m) ** 2 for x in data) / len(data)
+# Distractor: Unused variable that seems relevant
+backup_capacity = base_load * 2 + 7
 
-memo = {0: 1, 1: 2}
-def harmonic_weight(n):
-    if n in memo:
-        return memo[n]
-    hw_n_minus_1 = harmonic_weight(n-1)
-    hw_n_minus_2 = harmonic_weight(n-2)
-    previous_terms = [harmonic_weight(i) for i in range(n)]
-    m = mean(previous_terms)
-    v = variance(previous_terms)
-    result = (hw_n_minus_1 + hw_n_minus_2) * m + v
-    memo[n] = result
-    return result
+# Critical execution point with list comprehension
+energy_analysis = [calculate_energy_flow(base_load, i) for i in range(3)]
 
-# Compute up to H(6)
-for i in range(7):
-    harmonic_weight(i)
+# Final energy balance calculation
+peak_loads = {i: val for i, val in enumerate(energy_analysis)}
+min_power = min(peak_loads.values())
+max_power = max(peak_loads.values())
 
-sequence = [memo[i] for i in range(7)]
+# Distractor: Another intermediate that doesn't affect final result
+grid_stability = (min_power + max_power) // 2
 
-# Apply transformation using lambda closure
-transform = lambda seq: [seq[i] + math.gcd(i, len(seq)) for i in range(len(seq))]
-transformed_sequence = transform(sequence)
+final_energy_balance = sum(peak_loads.values()) - (max_power & min_power)
 
-# The answer is the 4th element (index 4)
-target_result = int(transformed_sequence[4])
-print(f"Target result: {target_result}")
+print(f"Result: {final_energy_balance}")

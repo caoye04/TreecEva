@@ -1,37 +1,20 @@
-from functools import reduce
+product_scores = [85, 92, 78, 95, 88, 67, 91, 84]
+quality_threshold = 80
+scaling_factor = 1.25
 
-document = "algorithm optimization requires mathematical analysis and logical reasoning"
+# Filter products above quality threshold
+filtered_products = [score for score in product_scores if score >= quality_threshold]
 
-# Tokenize and clean
-words = document.split()
-tokens = list(map(lambda w: w.strip('.').lower(), words))
+# Calculate some intermediate metrics (distractor operations)
+average_all = sum(product_scores) / len(product_scores)
+max_possible = max(product_scores) * 1.5
+score_range = max(product_scores) - min(product_scores)
 
-# Unique token set
-unique_tokens = frozenset(tokens)
+# Calculate weighted average (distractor)
+weights = [i * 0.1 for i in range(1, len(filtered_products) + 1)]
+weighted_avg = sum(f * w for f, w in zip(filtered_products, weights)) / sum(weights)
 
-# Frequency mapping
-token_freq = {token: tokens.count(token) for token in unique_tokens}
+# Final quality calculation
+final_quality_score = max(filtered_products) * scaling_factor
 
-# Apply transformation using ternary logic
-adjusted_freq = {k: v*2 if v > 1 else (v+1 if 'a' in k else v) for k, v in token_freq.items()}
-
-# Compute base metric
-frequency_sum = sum(adjusted_freq.values())
-unique_count = len(unique_tokens)
-
-# Decorator for complexity adjustment
-def complexity_adjustment_factor(func):
-    def wrapper(*args, **kwargs):
-        base_value = func(*args, **kwargs)
-        return base_value * 1.5 if base_value % 2 == 0 else base_value * 2.0
-    return wrapper
-
-@complexity_adjustment_factor
-def calculate_base_index(freq_sum, unique_cnt):
-    return freq_sum + unique_cnt
-
-# Calculate final index
-base_index = calculate_base_index(frequency_sum, unique_count)
-final_complexity_index = int(base_index) if base_index > 10 else int(base_index * 3)
-
-print(f'Result: {final_complexity_index}')
+print(f"Result: {final_quality_score}")

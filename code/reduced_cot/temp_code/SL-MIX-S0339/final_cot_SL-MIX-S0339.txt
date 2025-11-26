@@ -1,0 +1,26 @@
+Target: Find the value of variable final_score after [line 25] executes
+
+[line 2]  raw_scores = [85, 92, 78, 64, 91, 87, 95, 73]
+Compute: [85, 92, 78, 64, 91, 87, 95, 73] = [85, 92, 78, 64, 91, ...]
+[line 3]  threshold = 80
+Assign: threshold = 80
+[line 4]  bonus_points = 5
+Assign: bonus_points = 5
+[line 7]  qualifying_scores = [score + bonus_points for score in raw_scores if score > threshold]
+Compute: [score + bonus_points for score in raw_scores if score > threshold], where score=85 (an unknown source), bonus_points=5 (defined at [line 4]), raw_scores=[85, 92, 78, 64, 91, ...] (defined at [line 2]), threshold=80 (defined at [line 3]) = ?
+[line 11]  max_score = max(raw_scores)
+Call function max(raw_scores=[85, 92, 78, 64, 91, ...] (defined at [line 2]))
+[line 12]  min_score = min(raw_scores)
+Call function min(raw_scores=[85, 92, 78, 64, 91, ...] (defined at [line 2]))
+[line 15]  total_points = sum(qualifying_scores)
+Call function sum(qualifying_scores=[90, 97, 96, 92, 100] (defined at [line 7]))
+[line 18]  high_performers = len([score for score in raw_scores if score >= 90])
+Call function len([score for score in raw_scores if score >= 90])
+[line 19]  multiplier = 2 if high_performers >= 3 else 1
+Compute: 2 if high_performers >= 3 else 1, where high_performers=3 (defined at [line 18]) = 2
+[line 22]  bonus_adjust = (max_score - min_score) // 10
+Compute: (max_score - min_score) // 10, where max_score=95 (defined at [line 11]), min_score=64 (defined at [line 12]) = 3
+[line 25]  final_score = total_points * multiplier // bonus_adjust
+Compute: total_points * multiplier // bonus_adjust, where total_points=475 (defined at [line 15]), multiplier=2 (defined at [line 19]), bonus_adjust=3 (defined at [line 22]) = 316
+
+Answer: final_score = 316 (last updated on defined at [line 25])

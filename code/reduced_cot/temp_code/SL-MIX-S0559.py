@@ -1,16 +1,25 @@
-from collections import defaultdict
+import itertools
 
-# Daily sales count
-sales_count = {'croissants': 15, 'baguettes': 8, 'muffins': 20}
+# Process inventory data to find items with sufficient stock
+stock_levels = [12, 8, 15, 3, 20, 5, 18, 6]
+min_threshold = 10
 
-# Prices (in dollars)
-prices = {'croissants': 3.50, 'baguettes': 2.25, 'muffins': 1.75}
+# Identify items above minimum stock threshold
+adequate_stock = [level for level in stock_levels if level >= min_threshold]
 
-# Greedy algorithm: process highest price items first
-total_revenue = 0
-sorted_items = sorted(prices.items(), key=lambda x: x[1], reverse=True)
+# Calculate combinations of items that can be bundled
+bundling_options = []
+for r in range(1, len(adequate_stock) + 1):
+    combinations = itertools.combinations(adequate_stock, r)
+    for combo in combinations:
+        if len(combo) >= 2:
+            bundling_options.append(combo)
 
-for item, price in sorted_items:
-    total_revenue += sales_count[item] * price
-
-print(f'Result: {total_revenue}')
+# Process the first valid bundling option
+if bundling_options:
+    first_bundle = bundling_options[0]
+    result_set = set(first_bundle)
+    filtered_sum = sum(result_set)
+    print(f"Result: {filtered_sum}")
+else:
+    print("Result: 0")

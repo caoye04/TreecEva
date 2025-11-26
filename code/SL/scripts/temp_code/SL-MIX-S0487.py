@@ -1,47 +1,45 @@
-from collections import Counter
 import itertools
 
-def calculate_security_score(messages):
-    # Initialize tracking variables
-    char_pool = frozenset(''.join(messages))
-    frequency_map = Counter()
-    cumulative_shift = 0
-    
-    # Process each message with string transformations
-    for idx, msg in enumerate(messages):
-        # Apply Caesar cipher with index-based shift
-        shifted_msg = ''.join(chr((ord(c) - ord('a') + idx) % 26 + ord('a')) if c.isalpha() else c for c in msg.lower())
-        
-        # Update frequency map with transformed characters
-        frequency_map.update(shifted_msg)
-        
-        # Conditional logic with short-circuit evaluation
-        if idx > 0 and len(msg) > 5 and msg[0] != msg[-1]:
-            # Perform set intersection with character pool
-            msg_chars = set(msg.lower())
-            common_chars = msg_chars & char_pool
-            cumulative_shift += len(common_chars) * idx
-    
-    # Calculate base score from most frequent characters
-    top_chars = frequency_map.most_common(3)
-    base_score = sum(count * (ord(char) - ord('a') + 1) for char, count in top_chars)
-    
-    # Apply modular transformation
-    mod_factor = (len(messages) * 7) % 13
-    adjusted_score = (base_score * mod_factor) % 1000
-    
-    # Combine with cumulative shift using modular arithmetic
-    final_score = (adjusted_score + cumulative_shift) % 10000
-    
-    return final_score
+# Analyze data segments and calculate composite metrics
+data_segments = [12, 8, 15, 6, 9, 11]
+segment_pairs = list(itertools.combinations(data_segments, 2))
 
-# Test data representing intercepted messages
-intercepted_messages = [
-    "alpha",
-    "bravocharlie",
-    "deltaechofoxtrot",
-    "golfhotelindia"
-]
+# Calculate difference products (distractor calculation)
+diff_products = []
+for pair in segment_pairs:
+    diff = abs(pair[0] - pair[1])
+    product = diff * (pair[0] + pair[1])
+    diff_products.append(product)
 
-final_score = calculate_security_score(intercepted_messages)
-print(f"Result: {final_score}")
+# This sum is not used in final calculation (interference)
+unused_sum = sum(diff_products)
+
+# Calculate weighted segment scores
+weighted_scores = []
+for i, segment in enumerate(data_segments):
+    weight = 1.5 if segment > 10 else 0.8
+    weighted = segment * weight
+    weighted_scores.append(weighted)
+
+# Filter and process relevant scores
+filtered_scores = [score for score in weighted_scores if score > 12]
+
+# Calculate average of filtered scores (distractor)
+avg_filtered = sum(filtered_scores) / len(filtered_scores) if filtered_scores else 0
+
+# Core calculation: analyze score patterns
+pattern_sum = 0
+for score in weighted_scores:
+    if score % 2 == 0:
+        pattern_sum += score * 2
+    else:
+        pattern_sum += score * 3
+
+# Final analysis score (target variable)
+final_analysis_score = pattern_sum - (max(weighted_scores) if weighted_scores else 0)
+
+# Redundant calculation (interference)
+redundant_calc = final_analysis_score * 0.75 + avg_filtered
+
+result = final_analysis_score
+print(f"Result: {result}")

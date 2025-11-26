@@ -1,0 +1,23 @@
+28
+final_score
+---
+10 kill_points = player_data['kills'] * 100
+10 ['player_data', 'kill_points'] ['{kills: 15, assists: 8, deaths: 6, ...}', '1500']
+11 assist_points = player_data['assists'] * 50
+11 ['player_data', 'kill_points', 'assist_points'] ['{kills: 15, assists: 8, deaths: 6, ...}', '1500', '400']
+12 objective_points = player_data['objectives'] * 75
+12 ['player_data', 'kill_points', 'assist_points', 'objective_points'] ['{kills: 15, assists: 8, deaths: 6, ...}', '1500', '400', '300']
+19 base_total = kill_points + assist_points + objective_points
+19 ['player_data', 'kill_points', 'assist_points', 'objective_points', 'base_total'] ['{kills: 15, assists: 8, deaths: 6, ...}', '1500', '400', '300', '2200']
+20 death_penalty = player_data['deaths'] * 25
+20 ['player_data', 'base_total', 'death_penalty'] ['{kills: 15, assists: 8, deaths: 6, ...}', '2200', '150']
+21 adjusted_total = base_total - death_penalty
+21 ['base_total', 'death_penalty', 'adjusted_total'] ['2200', '150', '2050']
+24 performance_tier = 'gold' if adjusted_total >= 2000 else 'silver'
+24 ['adjusted_total', 'performance_tier'] ['2050', "'gold'"]
+25 bonus_multipliers = {'silver': 1.1, 'gold': 1.25, 'platinum': 1.5}
+25 ['adjusted_total', 'performance_tier', 'bonus_multipliers'] ['2050', "'gold'", '{silver: 1.1, gold: 1.25, platinum: 1.5}']
+26 bonus_factor = bonus_multipliers[performance_tier]
+26 ['adjusted_total', 'performance_tier', 'bonus_multipliers', 'bonus_factor'] ['2050', "'gold'", '{silver: 1.1, gold: 1.25, platinum: 1.5}', '1.25']
+28 final_score = adjusted_total * bonus_factor
+28 ['adjusted_total', 'bonus_factor', 'final_score'] ['2050', '1.25', '2562.5']

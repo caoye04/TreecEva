@@ -1,42 +1,25 @@
-def analyze_dna_patterns(sequences):
-    pattern_scores = {}
-    nucleotide_pairs = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
+def calculate_text_offsets():
+    text_data = "programming_evaluation_benchmark"
+    # Process the text data
+    processed_data = text_data.replace('_', '').upper()
     
-    for seq_id, sequence in enumerate(sequences):
-        complement_seq = ''.join([nucleotide_pairs.get(nuc, 'N') for nuc in sequence])
-        reverse_complement = complement_seq[::-1]
-        
-        palindromic_matches = 0
-        for i in range(len(sequence) - 2):
-            for j in range(i + 3, len(sequence) + 1):
-                substring = sequence[i:j]
-                if substring == reverse_complement[i:j]:
-                    palindromic_matches += 1
-        
-        pattern_scores[seq_id] = palindromic_matches
+    # Calculate initial offset (distractor - not used in final calculation)
+    initial_offset = len(text_data) * 2
     
-    return pattern_scores
+    # Get substring positions
+    substr_start = text_data.find('eval')
+    substr_end = text_data.rfind('mark')
+    
+    # Calculate offset adjustment using slicing
+    relevant_slice = text_data[substr_start:substr_end + 4]
+    offset_adjustment = len(relevant_slice) // 2
+    
+    # Additional unused computation (interference)
+    temp_calc = (initial_offset - substr_start) * 3
+    unused_result = temp_calc % 7
+    
+    # Final calculation
+    final_offset = offset_adjustment + len(processed_data)
+    print(f"Target result: {final_offset}")
 
-def calculate_regulatory_index(pattern_map, weight_factors):
-    regulatory_index = 0
-    for seq_id, matches in pattern_map.items():
-        if matches > 0:
-            weighted_value = matches * weight_factors.get(seq_id, 1)
-            regulatory_index += weighted_value if weighted_value % 2 == 0 else -weighted_value
-    return regulatory_index
-
-# DNA sequences under analysis
-chromosome_fragments = [
-    "ATCGATCG",
-    "GCATGCAT",
-    "TTAACGTTAA",
-    "CCGGCCGG"
-]
-
-# Weight factors for different sequence segments
-segment_weights = {0: 2, 1: 3, 2: 1, 3: 4}
-
-# Analysis pipeline
-pattern_analysis = analyze_dna_patterns(chromosome_fragments)
-regulatory_score = calculate_regulatory_index(pattern_analysis, segment_weights)
-print(f"Result: {regulatory_score}")
+calculate_text_offsets()

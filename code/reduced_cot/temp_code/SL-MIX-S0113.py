@@ -1,35 +1,35 @@
-import math
-from functools import reduce
-
-# Sensor network configuration
-sensor_readings = [[2, 4, 6], [3, 5, 7], [1, 8, 9]]
-weight_factors = [0.5, 1.5, 2.0]
-
-# Lambda function for signal adjustment
-adjust_signal = lambda base_value, weight: math.floor((base_value ** 2) * weight) & 0xFF
-
-# Initialize accumulator for processed signal strength
-processed_signal_strength = 0
-
-# Process sensor readings across multiple time intervals
-for interval_idx in range(len(sensor_readings)):
-    interval_readings = sensor_readings[interval_idx]
+def compute_storage_capacity(base_units):
+    # Initialize storage metrics
+    total_units = base_units * 2
+    allocated_units = base_units // 3
     
-    # Apply weight factors and nested processing
-    for sensor_idx in range(len(interval_readings)):
-        raw_value = interval_readings[sensor_idx]
-        weight = weight_factors[sensor_idx]
-        
-        # Apply adjustment and accumulate
-        adjusted_value = adjust_signal(raw_value, weight)
-        processed_signal_strength += adjusted_value
-        
-        # Apply additional transformation for every second interval
-        if interval_idx % 2 == 1:
-            processed_signal_strength ^= raw_value
+    # Slicing operations on data segments
+    data_segments = [10, 25, 40, 55, 70, 85]
+    primary_segment = data_segments[1:4]
+    secondary_segment = data_segments[2:5]
+    
+    # Calculate capacity metrics
+    base_capacity = sum(primary_segment) - 15
+    overflow_buffer = len(secondary_segment) * 8
+    
+    # Distractor calculations (not used in final result)
+    temp_utilization = base_capacity * 0.75
+    projected_growth = temp_utilization + overflow_buffer
+    
+    # Core logic with conditional branches
+    if base_capacity > 80:
+        current_capacity = base_capacity - 20
+        scaling_factor = 1.5
+    else:
+        current_capacity = base_capacity + 10
+        scaling_factor = 1.25
+    
+    # Final calculation
+    final_capacity = current_capacity * scaling_factor
+    
+    # Print result
+    print(f"Result: {final_capacity}")
+    return final_capacity
 
-# Final transformation using functional programming
-final_transform = list(map(lambda x: x & 0xF, [processed_signal_strength]))
-processed_signal_strength = reduce(lambda a, b: a + b, final_transform)
-
-print(f"Result: {processed_signal_strength}")
+# Execute the function
+compute_storage_capacity(15)

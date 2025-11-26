@@ -1,22 +1,9 @@
-def is_prime(n):
-    if n <= 1:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
+budget = 1000
+purchases = [125, 340, 280, 90]
+item_names = ['tools', 'materials', 'equipment', 'supplies']
 
-primes = []
-for num in range(2, 30):
-    if is_prime(num):
-        primes.append(num)
+# Calculate remaining budget after purchases
+remaining_budget = budget - sum(purchases)
 
-transform = lambda x: x * 2
-transformed_primes = list(map(transform, primes))
-
-from math import gcd
-final_sum = 0
-for p in transformed_primes:
-    final_sum += gcd(p, 15)
-
-print(f"Result: {final_sum}")
+# Print the result
+print(f"Result: {remaining_budget}")

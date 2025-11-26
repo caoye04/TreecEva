@@ -1,34 +1,21 @@
-from collections import defaultdict
-import re
+def process_data(data_string):
+    character_map = {}
+    total_chars = len(data_string)
+    
+    for char in data_string:
+        character_map[char] = character_map.get(char, 0) + 1
+    
+    # Filter characters that appear more than once
+    filtered_chars = {k: v for k, v in character_map.items() if v > 1}
+    final_count = sum(filtered_chars.values())
+    
+    # Some additional processing that doesn't affect the result
+    temp_list = list(data_string)
+    temp_list.reverse()
+    reversed_string = ''.join(temp_list)
+    
+    return final_count
 
-def tokenize(transactions):
-    tokens = []
-    for txn in transactions:
-        parts = re.split(r'[:]', txn)
-        tokens.append((parts[0], int(parts[1]), float(parts[2])))
-    return tokens
-
-scoring_fn = lambda category, count, amount: (count * 3 + int(amount)) & ~(1 << 2)
-
-raw_txns = [
-    "grocery:5:49.99",
-    "utility:2:120.75",
-    "entertainment:7:85.40",
-    "grocery:3:22.30",
-    "utility:1:95.00"
-]
-
-scores = defaultdict(int)
-tokenized = tokenize(raw_txns)
-
-for cat, cnt, amt in tokenized:
-    score = scoring_fn(cat, cnt, amt)
-    scores[cat] += score
-
-score_list = [(k, v) for k, v in scores.items()]
-score_list.sort(key=lambda x: x[1], reverse=True)
-
-weighted_scores = [value * (i + 1) for i, (key, value) in enumerate(score_list)]
-aggregated_score = sum(weighted_scores) // len(weighted_scores)
-
-print(f"Result: {aggregated_score}")
+data_sample = "programming_assessment"
+result = process_data(data_sample)
+print(f"Result: {result}")

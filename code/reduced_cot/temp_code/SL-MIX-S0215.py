@@ -1,35 +1,43 @@
-from functools import reduce
-from collections import defaultdict
+from collections import Counter
 
-# Daily market signals for portfolio adjustments
-daily_signals = [3, -1, 4, -2, 5, -3, 2]
+# Data processing simulation with bitwise operations
+data_stream = [15, 22, 37, 22, 15, 48, 15, 22, 73, 48]
+processed_data = []
 
-# Initialize adjustment tracking
-adjustment_history = defaultdict(int)
-total_impact = 0
-final_adjustment_score = 0
-
-# Process each signal with dynamic programming approach
-for idx, signal in enumerate(daily_signals):
-    # Greedy adjustment based on previous day's impact
-    if idx > 0 and adjustment_history[idx-1] > 0:
-        adjustment = signal * 2 if signal > 0 else signal
+# Initial processing with misleading intermediate calculations
+for value in data_stream:
+    temp_mask = value & 0x0F  # Irrelevant bitmask operation
+    shifted = value << 2  # Misleading shift operation
+    if value % 3 == 0:  # Dead condition path
+        processed_data.append(value * 2)  # Never executed
+    elif value > 20:
+        processed_data.append(value ^ 0x1F)  # XOR operation
     else:
-        adjustment = signal
-    
-    # Apply short-circuit logic for risk management
-    is_high_risk_day = signal < 0 and (idx > 0 and daily_signals[idx-1] > 0)
-    adjusted_signal = adjustment if not is_high_risk_day else adjustment // 2
-    
-    # Update history and accumulate impact
-    adjustment_history[idx] = adjusted_signal
-    total_impact += adjusted_signal
+        processed_data.append(value + 10)  # Additive transformation
 
-# Calculate final adjustment score using functional reduction
-final_adjustment_score = reduce(lambda acc, val: acc + (val if val > 0 else -val * 2), adjustment_history.values(), 0)
+# Counter analysis with distractor operations
+frequency_counter = Counter(processed_data)
+redundant_sum = sum(processed_data)  # Unused calculation
 
-# Apply final risk adjustment using logical operations
-if total_impact > 10 and not (len(daily_signals) % 2 == 0 or total_impact < 15):
-    final_adjustment_score *= 2
+# Complex mapping logic with nested conditions
+result_mapping = {}
+error_flag = -999  # Misleading error value
 
-print(f"Result: {final_adjustment_score}")
+for item, count in frequency_counter.items():
+    if count >= 2:
+        bit_check = item & 0x07  # Distractor bit operation
+        if item % 4 == 0:
+            result_mapping[item] = count * 3  # Relevant mapping
+        else:
+            result_mapping[item] = count * 2  # Alternative path
+    else:
+        result_mapping[item] = count + 5  # Unused branch
+
+# Key processing with multiple transformations
+base_key = max(frequency_counter.keys()) if frequency_counter else 0
+processed_key = (base_key >> 1) | 0x08  # Complex bit manipulation
+
+# Final assignment with the target variable
+final_count = result_mapping.get(processed_key, error_flag)
+
+print(f"Target result: {final_count}")

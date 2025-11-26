@@ -1,17 +1,16 @@
-import re
-from collections import defaultdict
+def process_student_scores():
+    student_scores = [85, 92, 78, 96, 88, 74, 95, 81, 89, 93]
+    passing_threshold = 80
+    
+    # Filter scores using lambda and conditional expression
+    filtered_data = list(filter(lambda x: x >= passing_threshold if x % 2 == 0 else x > passing_threshold, student_scores))
+    
+    # Simple sorting operation
+    filtered_data.sort()
+    
+    # Target computation - sum first and last filtered elements
+    final_count = filtered_data[0] + filtered_data[-1]
+    
+    print(f"Target result: {final_count}")
 
-def fibonacci(n, memo={}):
-    if n in memo:
-        return memo[n]
-    if n <= 1:
-        return n
-    memo[n] = fibonacci(n-1, memo) + fibonacci(n-2, memo)
-    return memo[n]
-
-# Generate Fibonacci numbers up to length 20 (reasonable word length limit)
-fib_set = {fibonacci(i) for i in range(20)}
-text_corpus = "The quick brown fox jumps over the lazy dog while analyzing linguistic structures"
-word_lengths = [len(word) for word in re.findall(r'\b\w+\b', text_corpus)]
-fibonacci_matched_count = sum(1 for length in word_lengths if length in fib_set)
-print(f'Result: {fibonacci_matched_count}')
+process_student_scores()

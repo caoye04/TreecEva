@@ -1,0 +1,74 @@
+18     'coding_test': 85,
+18 [] []
+19     'system_design': 92,
+19 [] []
+20     'communication': 78,
+20 [] []
+21     'problem_solving': 88
+21 [] []
+17 applicant_data = {
+17 ['applicant_data'] [{'_type': 'dict', '_items': {'coding_test': {'_type': 'int', '_value': 85}, 'system_design': {'_type': 'int', '_value': 92}, 'communication': {'_type': 'int', '_value': 78}, 'problem_solving': {'_type': 'int', '_value': 88}}, '_len': 4}]
+24 final_score = process_candidate_scores(applicant_data)
+24 ['applicant_data'] [{'_type': 'dict', '_items': {'coding_test': {'_type': 'int', '_value': 85}, 'system_design': {'_type': 'int', '_value': 92}, 'communication': {'_type': 'int', '_value': 78}, 'problem_solving': {'_type': 'int', '_value': 88}}, '_len': 4}]
+PARAM_MAPPING process_candidate_scores {'data': {'actual_var': 'applicant_data', 'value': {'coding_test': 85, 'system_design': 92, 'communication': 78, 'problem_solving': 88}}}
+FUNCTION_ENTER 7 process_candidate_scores def process_candidate_scores(data):
+7 ['data'] [{'_type': 'dict', '_items': {'coding_test': {'_type': 'int', '_value': 85}, 'system_design': {'_type': 'int', '_value': 92}, 'communication': {'_type': 'int', '_value': 78}, 'problem_solving': {'_type': 'int', '_value': 88}}, '_len': 4}]
+DEPTH_2 8     technical_scores = [data['coding_test'], data['system_design']]
+8 ['data', 'technical_scores'] [{'_type': 'dict', '_items': {'coding_test': {'_type': 'int', '_value': 85}, 'system_design': {'_type': 'int', '_value': 92}, 'communication': {'_type': 'int', '_value': 78}, 'problem_solving': {'_type': 'int', '_value': 88}}, '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}], '_len': 2}]
+DEPTH_2 9     soft_skills = [data['communication'], data['problem_solving']]
+9 ['data', 'technical_scores', 'soft_skills'] [{'_type': 'dict', '_items': {'coding_test': {'_type': 'int', '_value': 85}, 'system_design': {'_type': 'int', '_value': 92}, 'communication': {'_type': 'int', '_value': 78}, 'problem_solving': {'_type': 'int', '_value': 88}}, '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}], '_len': 2}]
+DEPTH_2 11     tech_avg = calculate_weighted_average(technical_scores)
+11 ['data', 'technical_scores', 'soft_skills'] [{'_type': 'dict', '_items': {'coding_test': {'_type': 'int', '_value': 85}, 'system_design': {'_type': 'int', '_value': 92}, 'communication': {'_type': 'int', '_value': 78}, 'problem_solving': {'_type': 'int', '_value': 88}}, '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}], '_len': 2}]
+PARAM_MAPPING calculate_weighted_average {'scores': {'actual_var': 'technical_scores', 'value': [85, 92]}}
+FUNCTION_ENTER 1 calculate_weighted_average def calculate_weighted_average(scores):
+1 ['scores'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}], '_len': 2}]
+DEPTH_3 2     weight_map = lambda x: 0.4 if x >= 90 else 0.3 if x >= 80 else 0.2
+2 ['scores'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}], '_len': 2}]
+DEPTH_3 3     weighted_sum = sum(score * weight_map(score) for score in scores)
+3 ['.0'] [{'_type': 'unknown', '_repr': '<list_iterator object at 0x00000237B43A9000>'}]
+DEPTH_3 3     weighted_sum = sum(score * weight_map(score) for score in scores)
+3 ['.0', 'score'] [{'_type': 'unknown', '_repr': '<list_iterator object at 0x00000237B43A9000>'}, {'_type': 'int', '_value': 85}]
+FUNCTION_ENTER 2 <lambda>     weight_map = lambda x: 0.4 if x >= 90 else 0.3 if x >= 80 else 0.2
+2 ['x'] [{'_type': 'int', '_value': 85}]
+DEPTH_4 2     weight_map = lambda x: 0.4 if x >= 90 else 0.3 if x >= 80 else 0.2
+2 ['x'] [{'_type': 'int', '_value': 85}]
+FUNCTION_RETURN 2 <lambda> {'_type': 'float', '_value': 0.3}
+DEPTH_3 3     weighted_sum = sum(score * weight_map(score) for score in scores)
+3 ['.0', 'score'] [{'_type': 'unknown', '_repr': '<list_iterator object at 0x00000237B43A9000>'}, {'_type': 'int', '_value': 92}]
+FUNCTION_ENTER 2 <lambda>     weight_map = lambda x: 0.4 if x >= 90 else 0.3 if x >= 80 else 0.2
+2 ['x'] [{'_type': 'int', '_value': 92}]
+DEPTH_4 2     weight_map = lambda x: 0.4 if x >= 90 else 0.3 if x >= 80 else 0.2
+2 ['x'] [{'_type': 'int', '_value': 92}]
+FUNCTION_RETURN 2 <lambda> {'_type': 'float', '_value': 0.4}
+DEPTH_3 3     weighted_sum = sum(score * weight_map(score) for score in scores)
+3 ['.0', 'score'] [{'_type': 'unknown', '_repr': '<list_iterator object at 0x00000237B43A9000>'}, {'_type': 'int', '_value': 92}]
+DEPTH_3 4     total_weight = sum(weight_map(score) for score in scores)
+4 ['.0'] [{'_type': 'unknown', '_repr': '<list_iterator object at 0x00000237B43A9000>'}]
+DEPTH_3 4     total_weight = sum(weight_map(score) for score in scores)
+4 ['.0', 'score'] [{'_type': 'unknown', '_repr': '<list_iterator object at 0x00000237B43A9000>'}, {'_type': 'int', '_value': 85}]
+FUNCTION_ENTER 2 <lambda>     weight_map = lambda x: 0.4 if x >= 90 else 0.3 if x >= 80 else 0.2
+2 ['x'] [{'_type': 'int', '_value': 85}]
+DEPTH_4 2     weight_map = lambda x: 0.4 if x >= 90 else 0.3 if x >= 80 else 0.2
+2 ['x'] [{'_type': 'int', '_value': 85}]
+FUNCTION_RETURN 2 <lambda> {'_type': 'float', '_value': 0.3}
+DEPTH_3 4     total_weight = sum(weight_map(score) for score in scores)
+4 ['.0', 'score'] [{'_type': 'unknown', '_repr': '<list_iterator object at 0x00000237B43A9000>'}, {'_type': 'int', '_value': 92}]
+FUNCTION_ENTER 2 <lambda>     weight_map = lambda x: 0.4 if x >= 90 else 0.3 if x >= 80 else 0.2
+2 ['x'] [{'_type': 'int', '_value': 92}]
+DEPTH_4 2     weight_map = lambda x: 0.4 if x >= 90 else 0.3 if x >= 80 else 0.2
+2 ['x'] [{'_type': 'int', '_value': 92}]
+FUNCTION_RETURN 2 <lambda> {'_type': 'float', '_value': 0.4}
+DEPTH_3 4     total_weight = sum(weight_map(score) for score in scores)
+4 ['.0', 'score'] [{'_type': 'unknown', '_repr': '<list_iterator object at 0x00000237B43A9000>'}, {'_type': 'int', '_value': 92}]
+DEPTH_3 5     return weighted_sum / total_weight if total_weight > 0 else 0
+5 ['scores', 'weighted_sum', 'total_weight'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}], '_len': 2}, {'_type': 'float', '_value': 62.300000000000004}, {'_type': 'float', '_value': 0.7}]
+FUNCTION_RETURN 5 calculate_weighted_average {'_type': 'float', '_value': 89.00000000000001}
+DEPTH_2 12     soft_avg = sum(soft_skills) / len(soft_skills)
+12 ['data', 'technical_scores', 'soft_skills', 'tech_avg', 'soft_avg'] [{'_type': 'dict', '_items': {'coding_test': {'_type': 'int', '_value': 85}, 'system_design': {'_type': 'int', '_value': 92}, 'communication': {'_type': 'int', '_value': 78}, 'problem_solving': {'_type': 'int', '_value': 88}}, '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}], '_len': 2}, {'_type': 'float', '_value': 89.00000000000001}, {'_type': 'float', '_value': 83.0}]
+DEPTH_2 14     final_score = (tech_avg * 0.7) + (soft_avg * 0.3)
+14 ['data', 'technical_scores', 'soft_skills', 'tech_avg', 'soft_avg', 'final_score'] [{'_type': 'dict', '_items': {'coding_test': {'_type': 'int', '_value': 85}, 'system_design': {'_type': 'int', '_value': 92}, 'communication': {'_type': 'int', '_value': 78}, 'problem_solving': {'_type': 'int', '_value': 88}}, '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}], '_len': 2}, {'_type': 'float', '_value': 89.00000000000001}, {'_type': 'float', '_value': 83.0}, {'_type': 'float', '_value': 87.2}]
+DEPTH_2 15     return round(final_score, 2)
+15 ['data', 'technical_scores', 'soft_skills', 'tech_avg', 'soft_avg', 'final_score'] [{'_type': 'dict', '_items': {'coding_test': {'_type': 'int', '_value': 85}, 'system_design': {'_type': 'int', '_value': 92}, 'communication': {'_type': 'int', '_value': 78}, 'problem_solving': {'_type': 'int', '_value': 88}}, '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 88}], '_len': 2}, {'_type': 'float', '_value': 89.00000000000001}, {'_type': 'float', '_value': 83.0}, {'_type': 'float', '_value': 87.2}]
+FUNCTION_RETURN 15 process_candidate_scores {'_type': 'float', '_value': 87.2}
+25 print(f"Final score: {final_score}")
+25 ['applicant_data', 'final_score'] [{'_type': 'dict', '_items': {'coding_test': {'_type': 'int', '_value': 85}, 'system_design': {'_type': 'int', '_value': 92}, 'communication': {'_type': 'int', '_value': 78}, 'problem_solving': {'_type': 'int', '_value': 88}}, '_len': 4}, {'_type': 'float', '_value': 87.2}]

@@ -1,61 +1,43 @@
-import math
-import heapq
-from functools import reduce
-from collections import defaultdict
+import itertools
 
-def fibonacci_mod_log(n, mod):
-    if n == 0:
-        return 0
-    elif n == 1:
-        return 1
-    a, b = 0, 1
-    for i in range(2, n+1):
-        c = (a + b) % mod
-        if i % 3 == 0:
-            log_factor = int(math.log(i) * 10) % mod
-            c = (c - log_factor) % mod
-        a, b = b, c
-    return b
+def process_data(primary, secondary):
+    # Relevant computation: filter and transform data
+    filtered = list(filter(lambda x: x % 3 == 0 or x % 5 == 0, primary))
+    transformed = [x * 2 - 1 for x in filtered]
+    
+    # Distractor: complex but unused secondary processing
+    secondary_sum = sum(secondary) * 3
+    unused_permutations = list(itertools.permutations(secondary[:3]))
+    misleading_total = len(unused_permutations) * secondary_sum
+    
+    # Core logic with early return
+    if len(transformed) == 0:
+        return misleading_total  # Dead code path
+    
+    # Relevant: pairwise combinations and final calculation
+    pairs = list(itertools.combinations(transformed, 2))
+    valid_pairs = [(a, b) for a, b in pairs if a > b and (a + b) % 4 == 0]
+    
+    if not valid_pairs:
+        return misleading_total  # Another dead path
+    
+    # Final relevant computation
+    result_values = [a * b - (a - b) for a, b in valid_pairs]
+    return sum(result_values) % 47
 
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+# Main execution with mixed relevant and distracting data
+main_values = [8, 15, 22, 30, 41, 45, 52, 60]
+secondary_data = [7, 12, 18, 25]
 
-def insert_level_order(arr, root, i, n):
-    if i < n:
-        temp = TreeNode(arr[i])
-        root = temp
-        root.left = insert_level_order(arr, root.left, 2 * i + 1, n)
-        root.right = insert_level_order(arr, root.right, 2 * i + 2, n)
-    return root
+# Distracting intermediate calculations
+unused_calculation = (sum(main_values) * len(secondary_data)) // 3
+misleading_counter = len([x for x in main_values if x < 20]) * 100
 
-def inorder_traversal(root, result):
-    if root:
-        inorder_traversal(root.left, result)
-        result.append(root.val)
-        inorder_traversal(root.right, result)
+# Key execution point
+result = process_data(main_values, secondary_data)
 
-# Generate sequence
-mod = 100
-sequence = [fibonacci_mod_log(i, mod) for i in range(7)]
+# More distractions before final output
+final_adjustment = (result * 3 + 17) % 23  # Irrelevant transformation
+final_output = result + 0  # Critical variable - answer is just result
 
-# Build binary tree
-root = None
-root = insert_level_order(sequence, root, 0, len(sequence))
-
-# Inorder traversal to get node values in list
-node_values = []
-inorder_traversal(root, node_values)
-
-# Metadata dictionary comprehension with merging
-metadata_base = {i: f"phase_{i}" for i in range(len(node_values))}
-metadata_extra = {i: {"value": val, "hash": hash(f"phase_{i}") % 1000} for i, val in enumerate(node_values)}
-merged_metadata = {k: {"name": metadata_base[k], **metadata_extra[k]} for k in metadata_base}
-
-# Cumulative sum of transformed string hashes
-hashes = [abs(hash(v["name"]) ^ v["hash"]) for v in merged_metadata.values()]
-cumulative_hash_sum = reduce(lambda x, y: (x + y) % mod, hashes, 0)
-
-print(f"Result: {cumulative_hash_sum}")
+print(f"Target result: {final_output}")

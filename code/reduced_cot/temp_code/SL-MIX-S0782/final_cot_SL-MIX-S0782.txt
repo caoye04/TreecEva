@@ -1,0 +1,69 @@
+Target: Find the value of variable final_result after [line 36] executes
+
+[line 4]  max_reading = -999
+Compute: -999 = -999
+[line 6]  debug_flag = False
+Assign: debug_flag = False
+[line 9]  for i in range(len(readings)):
+Loop Start: i takes its first value 0
+[line 11]  if readings[i] > max_reading:
+Condition: True, entering 'if' block
+[line 12]  max_reading = readings[i]
+Compute: readings[i], where readings=[12, 18, 24, 9, 15, ...] (an unknown source), i=0 (defined at [line 9]) = 12
+[line 9]  for i in range(len(readings)):
+Loop Iteration: i is now 1 (iteration 2)
+[line 11]  if readings[i] > max_reading:
+Condition: True, entering 'if' block
+[line 12]  max_reading = readings[i]
+Compute: readings[i], where readings=[12, 18, 24, 9, 15, ...] (an unknown source), i=1 (defined at [line 9]) = 18
+... [Line 9] repeats 9 more times ...
+... [Line 9] repeats 9 more times ...
+... [Line 9] repeats 9 more times ...
+[line 9]  for i in range(len(readings)):
+Loop Iteration: i is now 11 (iteration 12)
+[line 11]  if readings[i] > max_reading:
+Condition: True, entering 'if' block
+[line 9]  for i in range(len(readings)):
+Loop End: Iteration finished
+[line 15]  valid_readings = [r for r in readings if r % 3 == 0]
+Compute: [r for r in readings if r % 3 == 0], where r=12 (an unknown source), readings=[12, 18, 24, 9, 15, ...] (an unknown source) = ?
+[line 16]  processed_data = {}
+Compute: {} = {}
+[line 18]  for idx, val in enumerate(valid_readings):
+(Missing param: 'iter_var')
+[line 20]  if idx > 10 and debug_flag:
+Condition: True, entering 'if' block
+[line 24]  if val > 15:
+Condition: True, entering 'if' block
+[line 27]  processed_data[val] = val ^ 0b101010
+(Missing param: 'result')
+[line 18]  for idx, val in enumerate(valid_readings):
+(Missing param: 'iter_var')
+[line 20]  if idx > 10 and debug_flag:
+Condition: True, entering 'if' block
+[line 24]  if val > 15:
+Condition: True, entering 'if' block
+[line 25]  processed_data[val] = (val & 0x0F) | ((val >> 4) & 0x0F)
+(Missing param: 'result')
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+[line 18]  for idx, val in enumerate(valid_readings):
+(Missing param: 'iter_var')
+[line 20]  if idx > 10 and debug_flag:
+Condition: True, entering 'if' block
+[line 24]  if val > 15:
+Condition: True, entering 'if' block
+[line 25]  processed_data[val] = (val & 0x0F) | ((val >> 4) & 0x0F)
+(Missing param: 'result')
+[line 18]  for idx, val in enumerate(valid_readings):
+Loop End: Iteration finished
+[line 34]  bit_operations = [v for k, v in processed_data.items() if k % 2 == 0]
+Compute: [v for k, v in processed_data.items() if k % 2 == 0], where v=38 (an unknown source), k=12 (an unknown source), processed_data={12: 38, 18: 3, 24: 9, ...} (defined at [line 16]) = ?
+[line 35]  if bit_operations:
+Condition: True, entering 'if' block
+[line 36]  final_result = sum(bit_operations) - (len(bit_operations) * 7)
+Compute: sum(bit_operations) - (len(bit_operations) * 7), where bit_operations=[38, 3, 9, 44, 15, ...] (defined at [line 34]) = 73
+
+Answer: final_result = 73 (last updated on defined at [line 36])

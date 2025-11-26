@@ -1,45 +1,32 @@
-from collections import defaultdict
-import math
+def compute_final_score(participants):
+    # Initialize base scores and temporary calculations
+    base_points = [25, 40, 35, 30]
+    adjustment_factor = 1.5
+    preliminary_sum = sum(base_points) * adjustment_factor
+    
+    # Process participant data with list comprehension
+    valid_scores = [score for score in participants if score >= 60]
+    invalid_count = len(participants) - len(valid_scores)
+    
+    # Calculate bonus points (distractor - not used in final calculation)
+    bonus_calc = (invalid_count * 5) + adjustment_factor
+    
+    # Compute weighted average of valid scores
+    if valid_scores:
+        weighted_avg = sum(score * 0.8 for score in valid_scores) / len(valid_scores)
+        # Apply modular arithmetic for final calculation
+        final_score = int(weighted_avg) % 100
+    else:
+        final_score = preliminary_sum % 50  # This branch won't be taken
+    
+    # Intermediate step that doesn't affect final result
+    unused_calc = bonus_calc + preliminary_sum
+    
+    return final_score
 
-def fibonacci_mod(n, mod):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n+1):
-        a, b = b, (a + b) % mod
-    return b
+# Participant data with mixed valid and invalid scores
+participants_data = [72, 58, 85, 91, 45, 78, 62, 95]
 
-def calculate_geometric_key(base_points, multiplier):
-    # Calculate area of polygon formed by base_points
-    n = len(base_points)
-    area = 0
-    for i in range(n):
-        j = (i + 1) % n
-        area += base_points[i][0] * base_points[j][1]
-        area -= base_points[j][0] * base_points[i][1]
-    area = abs(area) // 2
-    return (area * multiplier) % 256
-
-# Initial seed value
-seed_value = 42
-
-# Generate Fibonacci sequence with modular arithmetic
-fib_mod_result = fibonacci_mod(15, 100)
-
-# Apply bitwise operations
-bitwise_stage_1 = (seed_value << 2) & 255  # Left shift by 2 and mask to 8 bits
-bitwise_stage_2 = bitwise_stage_1 ^ fib_mod_result  # XOR with Fibonacci result
-bitwise_stage_3 = (~bitwise_stage_2) & 255  # Bitwise NOT and mask to 8 bits
-
-# Geometry calculation for key component
-key_points = [(0, 0), (bitwise_stage_3 % 10, 5), (8, bitwise_stage_3 % 12), (2, 7)]
-geometric_factor = calculate_geometric_key(key_points, 3)
-
-# Final key derivation using modular arithmetic
-derived_key_component = (geometric_factor * 17 + (bitwise_stage_2 >> 1)) % 128
-
-# Apply ternary operation for final adjustment
-adjustment = 10 if derived_key_component > 64 else 5
-derived_key_component = (derived_key_component + adjustment) % 128
-
-print(f"Result: {derived_key_component}")
+# Execute the main computation
+final_score = compute_final_score(participants_data)
+print(f"Target result: {final_score}")

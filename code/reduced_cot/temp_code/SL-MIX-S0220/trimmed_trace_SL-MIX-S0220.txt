@@ -1,0 +1,51 @@
+49
+final_output
+---
+3 warehouse_A = {15, 22, 37, 44, 58, 66, 73, 81, 99}
+3 ['warehouse_A'] ['{66, 99, 37, 73, 44, ...}']
+4 warehouse_B = {22, 37, 51, 66, 73, 88, 99, 105}
+4 ['warehouse_A', 'warehouse_B'] ['{66, 99, 37, 73, 44, ...}', '{66, 99, 37, 73, 105, ...}']
+5 warehouse_C = {15, 37, 58, 73, 81, 99, 112, 125}
+5 ['warehouse_A', 'warehouse_B', 'warehouse_C'] ['{66, 99, 37, 73, 44, ...}', '{66, 99, 37, 73, 105, ...}', '{99, 37, 73, 15, 112, ...}']
+18 high_value_items = warehouse_A & warehouse_B & warehouse_C
+18 ['warehouse_A', 'warehouse_B', 'warehouse_C', 'high_value_items'] ['{66, 99, 37, 73, 44, ...}', '{66, 99, 37, 73, 105, ...}', '{99, 37, 73, 15, 112, ...}', '{73, 99, 37}']
+19 if len(high_value_items) > 2:
+19 ['warehouse_A', 'warehouse_B', 'warehouse_C', 'high_value_items'] ['{66, 99, 37, 73, 44, ...}', '{66, 99, 37, 73, 105, ...}', '{99, 37, 73, 15, 112, ...}', '{73, 99, 37}']
+27 common_core = warehouse_A & warehouse_B & warehouse_C
+27 ['warehouse_A', 'warehouse_B', 'warehouse_C', 'common_core'] ['{66, 99, 37, 73, 44, ...}', '{66, 99, 37, 73, 105, ...}', '{99, 37, 73, 15, 112, ...}', '{73, 99, 37}']
+28 if common_core:
+28 ['common_core'] ['{73, 99, 37}']
+29 target_metrics = []
+29 ['common_core', 'target_metrics'] ['{73, 99, 37}', '[]']
+30 for item in sorted(common_core):
+30 ['common_core', 'target_metrics', 'item'] ['{73, 99, 37}', '[]', '37']
+31 if item > 50:
+31 ['common_core', 'target_metrics', 'item'] ['{73, 99, 37}', '[]', '37']
+30 for item in sorted(common_core):
+30 ['common_core', 'target_metrics', 'item'] ['{73, 99, 37}', '[62]', '73']
+31 if item > 50:
+31 ['common_core', 'target_metrics', 'item'] ['{73, 99, 37}', '[62]', '73']
+30 for item in sorted(common_core):
+30 ['common_core', 'target_metrics', 'item'] ['{73, 99, 37}', '[62, 131]', '99']
+31 if item > 50:
+31 ['common_core', 'target_metrics', 'item'] ['{73, 99, 37}', '[62, 131]', '99']
+30 for item in sorted(common_core):
+30 ['common_core', 'target_metrics', 'item'] ['{73, 99, 37}', '[62, 131, 183]', '99']
+41 target_set_metrics = []
+41 ['target_metrics', 'target_set_metrics'] ['[62, 131, 183]', '[]']
+42 for metric in target_metrics:
+42 ['target_metrics', 'target_set_metrics', 'metric'] ['[62, 131, 183]', '[]', '62']
+43 if metric > 80:
+43 ['target_metrics', 'target_set_metrics', 'metric'] ['[62, 131, 183]', '[]', '62']
+42 for metric in target_metrics:
+42 ['target_metrics', 'target_set_metrics', 'metric'] ['[62, 131, 183]', '[50]', '131']
+43 if metric > 80:
+43 ['target_metrics', 'target_set_metrics', 'metric'] ['[62, 131, 183]', '[50]', '131']
+42 for metric in target_metrics:
+42 ['target_metrics', 'target_set_metrics', 'metric'] ['[62, 131, 183]', '[50, 50]', '183']
+43 if metric > 80:
+43 ['target_metrics', 'target_set_metrics', 'metric'] ['[62, 131, 183]', '[50, 50]', '183']
+42 for metric in target_metrics:
+42 ['target_metrics', 'target_set_metrics', 'metric'] ['[62, 131, 183]', '[50, 50, 68]', '183']
+49 final_output = target_set_metrics[-1]
+49 ['target_set_metrics', 'final_output'] ['[50, 50, 68]', '68']

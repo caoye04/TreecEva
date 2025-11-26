@@ -1,27 +1,31 @@
-from collections import deque
+from collections import Counter
 
-def compute_signal_checksum(signal_samples):
-    window = deque(maxlen=5)
-    checksum = 0
-    
-    for idx, sample in enumerate(signal_samples):
-        window.append(sample)
-        
-        # Only compute checksum when window is full
-        if len(window) == 5:
-            # Weighted sum with position-based weights
-            weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
-            # Apply modular arithmetic with floating point adjustment
-            mod_result = (weighted_sum % 17) + (idx * 0.5)
-            # Logical condition for checksum update
-            if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
-                checksum = (checksum + int(mod_result)) % 100
-            elif mod_result <= 10.0 or (idx > 10 and idx < 20):
-                checksum = (checksum ^ int(mod_result)) % 100
-    
-    return checksum
+# Network bandwidth allocation analysis
+total_bandwidth = 1000
+node_requests = [120, 85, 200, 150, 90, 180]
+bandwidth_threshold = 150
 
-# Process a sequence of signal samples
-signal_data = [12, 7, 23, 9, 15, 4, 18, 11, 6, 25, 3, 20, 8, 14, 19, 5, 22, 10, 17, 1]
-processed_checksum = compute_signal_checksum(signal_data)
-print(f"Result: {processed_checksum}")
+# Calculate approved requests
+approved_requests = [req for req in node_requests if req <= bandwidth_threshold]
+discarded_requests = [req for req in node_requests if req > bandwidth_threshold]
+
+# Distractor: Calculate frequency of requests (not used in final result)
+request_frequency = Counter(node_requests)
+most_common_request = request_frequency.most_common(1)[0][0]
+
+# Allocate bandwidth with redundancy factor
+redundancy_factor = 1.2
+base_allocation = sum(approved_requests)
+preliminary_capacity = base_allocation * redundancy_factor
+
+# Distractor: Calculate theoretical maximum (not used)
+theoretical_max = total_bandwidth * 0.8
+
+# Apply network overhead adjustment
+overhead_percentage = 0.15
+overhead_adjustment = preliminary_capacity * overhead_percentage
+network_capacity = preliminary_capacity - overhead_adjustment
+
+# Final assignment
+final_capacity = network_capacity
+print(f"Result: {final_capacity}")

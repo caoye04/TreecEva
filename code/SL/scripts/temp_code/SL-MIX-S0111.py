@@ -1,23 +1,16 @@
-from itertools import permutations
+def process_temperature(temp_data):
+    threshold_check = lambda x: x > 25
+    filtered_data = [temp for temp in temp_data if threshold_check(temp)]
+    
+    if len(filtered_data) > 0:
+        average_temp = sum(filtered_data) / len(filtered_data)
+    else:
+        average_temp = 0
+    
+    calibration_factor = 1.05
+    final_output = round(average_temp * calibration_factor, 2)
+    return final_output
 
-# Initial signal mask
-signal_mask = 15
-
-# Apply transformations
-transformed_signal = signal_mask ^ 9
-transformed_signal <<= 2
-transformed_signal &= 60
-
-# Find positions of set bits
-set_bit_positions = []
-for i in range(8):
-    if transformed_signal & (1 << i):
-        set_bit_positions.append(i)
-
-# Calculate number of 2-signal ordered combinations
-if len(set_bit_positions) >= 2:
-    test_combinations = len(list(permutations(set_bit_positions, 2)))
-else:
-    test_combinations = 0
-
-print(f"Result: {test_combinations}")
+readings = [22.5, 26.8, 24.3, 27.9, 23.1, 28.4]
+final_output = process_temperature(readings)
+print(f"Result: {final_output}")

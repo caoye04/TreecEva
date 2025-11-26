@@ -1,0 +1,22 @@
+Target: Find the value of variable final_count after [line 28] executes
+
+[line 4]  inventory_data = ["apple", "banana", "apple", "cherry", "banana", "apple", "date", "elderberry", "fig"]
+Compute: ["apple", "banana", "apple", "cherry", "banana", "apple", "date", "elderberry", "fig"] = ['apple', 'banana', 'apple', 'cherry', 'banana', ...]
+[line 5]  processed_items = [item.upper() for item in inventory_data if len(item) > 3]
+Compute: [item.upper() for item in inventory_data if len(item) > 3], where item='apple' (an unknown source), inventory_data=['apple', 'banana', 'apple', 'cherry', 'banana', ...] (defined at [line 4]) = ?
+[line 8]  item_counts = Counter(processed_items)
+Call function Counter(processed_items=['APPLE', 'BANANA', 'APPLE', 'CHERRY', 'BANANA', ...] (defined at [line 5]))
+[line 9]  primary_items = ["APPLE", "BANANA", "CHERRY"]
+Compute: ["APPLE", "BANANA", "CHERRY"] = ['APPLE', 'BANANA', 'CHERRY']
+[line 10]  secondary_items = ["DATE", "ELDERBERRY", "FIG"]
+Compute: ["DATE", "ELDERBERRY", "FIG"] = ['DATE', 'ELDERBERRY', 'FIG']
+[line 13]  valid_items = sum(item_counts[item] for item in primary_items)
+Call function sum(item_counts[item] for item in primary_items)
+[line 14]  secondary_count = sum(item_counts[item] for item in secondary_items)
+Call function sum(item_counts[item] for item in secondary_items)
+[line 25]  secondary_adjustment = secondary_count // 2 if secondary_count > 0 else 1
+Compute: secondary_count // 2 if secondary_count > 0 else 1, where secondary_count=2 (defined at [line 14]) = 1
+[line 28]  final_count = valid_items + secondary_adjustment
+Compute: valid_items + secondary_adjustment, where valid_items=6 (defined at [line 13]), secondary_adjustment=1 (defined at [line 25]) = 7
+
+Answer: final_count = 7 (last updated on defined at [line 28])

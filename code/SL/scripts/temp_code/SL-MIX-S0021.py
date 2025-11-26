@@ -1,40 +1,14 @@
-def process_corpus(documents):
-    def normalize_segment(segment):
-        return ''.join(sorted(segment.lower())).strip()
-    
-    def hash_segment(segment):
-        return hash(normalize_segment(segment))
-    
-    def divide_text(text, threshold=10):
-        if len(text) <= threshold:
-            return [text]
-        mid = len(text) // 2
-        left = divide_text(text[:mid], threshold)
-        right = divide_text(text[mid:], threshold)
-        return left + right
-    
-    segment_registry = set()
-    semantic_signatures = frozenset()
-    
-    for document in documents:
-        segments = divide_text(document)
-        normalized_segments = map(normalize_segment, segments)
-        unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-        
-        for segment in unique_segments:
-            segment_registry.add(segment)
-            semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-    
-    return len(semantic_signatures)
+from collections import Counter
 
-# Corpus for analysis
-corpus = [
-    "The quick brown fox jumps over the lazy dog",
-    "A fast auburn fox leaps above the sleepy canine",
-    "Pack my box with five dozen liquor jugs",
-    "A quick movement of the enemy will jeopardize six gunboats"
-]
-
-# Execute analysis
-semantic_signatures = process_corpus(corpus)
-print(f"Result: {semantic_signatures}")
+# Inventory tracking system for warehouse capacity planning
+base_capacity = 850
+overflow_reserve = 120
+redundancy_factor = 3
+temp_buffer = 75
+primary_storage = base_capacity + temp_buffer
+overflow_storage = overflow_reserve * 2
+storage_distribution = Counter({'main': primary_storage, 'backup': overflow_storage})
+distribution_sum = sum(storage_distribution.values())
+capacity_adjustment = distribution_sum // redundancy_factor
+final_capacity = (primary_storage + overflow_storage) // redundancy_factor
+print(f"Target result: {final_capacity}")

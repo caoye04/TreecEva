@@ -1,0 +1,40 @@
+Target: Find the value of variable final_output after [line 53] executes
+
+[line 43]  sensor_readings = [45, 67, 45, 89, 67, 23, 45, 67, 89, 45, 12, 67, 45]
+Compute: [45, 67, 45, 89, 67, 23, 45, 67, 89, 45, 12, 67, 45] = [45, 67, 45, 89, 67, ...]
+[line 3]  def calculate_sensor_baseline(readings):
+Enter function calculate_sensor_baseline: readings=[45, 67, 45, 89, 67, ...] (sensor_readings defined at [line 43])
+  [line 5]  temp_sum = sum(readings) * 2.5
+  Compute: sum(readings) * 2.5, where readings=[45, 67, 45, 89, 67, ...] (parameter readings defined at [line 43]) = 1765.0
+  [line 6]  adjusted_sum = temp_sum - len(readings) * 10
+  Compute: temp_sum - len(readings) * 10, where temp_sum=1765.0 (defined at [line 5]), readings=[45, 67, 45, 89, 67, ...] (parameter readings defined at [line 43]) = 1635.0
+  [line 7]  return adjusted_sum / 3.0
+  Return: adjusted_sum / 3.0
+Function calculate_sensor_baseline returns 545.0
+[line 50]  final_output = process_sensor_data(sensor_readings)
+Call function process_sensor_data(sensor_readings=[45, 67, 45, 89, 67, ...] (defined at [line 43]))
+[line 15]  def process_sensor_data(sensor_readings):
+Enter function process_sensor_data: sensor_readings=[45, 67, 45, 89, 67, ...] (sensor_readings defined at [line 43])
+  [line 17]  reading_counts = Counter(sensor_readings)
+  Call function Counter(sensor_readings=[45, 67, 45, 89, 67, ...] (parameter sensor_readings defined at [line 43]))
+  [line 24]  unique_readings = len(reading_counts)
+  Call function len(reading_counts={45: 5, 67: 4, 89: 2, ...} (defined at [line 17]))
+  [line 25]  total_readings = len(sensor_readings)
+  Call function len(sensor_readings=[45, 67, 45, 89, 67, ...] (parameter sensor_readings defined at [line 43]))
+  [line 26]  mode_frequency = reading_counts.most_common(1)[0][1]
+  Compute: reading_counts.most_common(1)[0][1], where reading_counts={45: 5, 67: 4, 89: 2, ...} (defined at [line 17]) = 5
+  [line 29]  base_value = (unique_readings * 15) + (mode_frequency * 8)
+  Compute: (unique_readings * 15) + (mode_frequency * 8), where unique_readings=5 (defined at [line 24]), mode_frequency=5 (defined at [line 26]) = 115
+  [line 30]  adjustment = (total_readings % 7) * 3
+  Compute: (total_readings % 7) * 3, where total_readings=13 (defined at [line 25]) = 18
+  [line 31]  intermediate = base_value - adjustment
+  Compute: base_value - adjustment, where base_value=115 (defined at [line 29]), adjustment=18 (defined at [line 30]) = 97
+  [line 34]  final_result = (intermediate // 2) + (intermediate % 4)
+  Compute: (intermediate // 2) + (intermediate % 4), where intermediate=97 (defined at [line 31]) = 49
+  [line 40]  return final_result
+  Return: final_result=49 (defined at [line 34])
+Function process_sensor_data returns 49
+[line 53]  print(f"Result: {final_output}")
+Output: f"Result: {final_output}"
+
+Answer: final_output = 49 (last updated on defined at [line 50])

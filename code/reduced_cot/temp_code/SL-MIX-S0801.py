@@ -1,57 +1,55 @@
-def call_tracker(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        wrapper.call_count += 1
-        return result
-    wrapper.call_count = 0
-    return wrapper
+def process_text_analysis(text_data):
+    # Analyze word frequency patterns in text
+    words = text_data.lower().split()
+    word_set = set(words)
+    
+    # Distractor: irrelevant frequency calculation
+    freq_distraction = {word: words.count(word) for word in word_set}
+    distraction_sum = sum(freq_distraction.values()) * 2
+    
+    # Main logic: process vowel patterns
+    vowels = {'a', 'e', 'i', 'o', 'u'}
+    vowel_counts = []
+    
+    for word in words[:8]:  # Only process first 8 words
+        if len(word) > 3:
+            vowel_count = sum(1 for char in word if char in vowels)
+            processed_val = (vowel_count * 15) - (len(word) % 4) * 3
+            vowel_counts.append(processed_val)
+        else:
+            # Dead code path - misleading calculation
+            fake_val = len(word) * 7 + 2
+            if fake_val > 20:
+                vowel_counts.append(fake_val // 2)
+    
+    # Apply slicing and set operations
+    relevant_data = vowel_counts[1:4]
+    adjustment_set = {x % 5 for x in vowel_counts}
+    adjustment_factor = len(adjustment_set) * 8
+    
+    # Misleading intermediate result
+    temp_result = sum(relevant_data) + distraction_sum // 10
+    
+    # Key processing with itertools
+    import itertools
+    data_pairs = list(itertools.combinations(relevant_data, 2))
+    pair_sums = [sum(pair) for pair in data_pairs]
+    
+    # Final calculation chain
+    base_value = max(pair_sums) if pair_sums else 0
+    processed_data = [base_value + adj for adj in range(adjustment_factor, adjustment_factor + 4)]
+    
+    # Filter valid indices
+    valid_indices = [i for i, val in enumerate(processed_data) if val % 3 == 1]
+    
+    if valid_indices:
+        final_score = processed_data[valid_indices[-1]]
+    else:
+        final_score = processed_data[0] - 10
+    
+    print(f"Result: {final_score}")
+    return final_score
 
-def gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
-
-def lcm(a, b):
-    return abs(a * b) // gcd(a, b)
-
-@call_tracker
-def compute_coprime_pairs(network_nodes):
-    coprime_count = 0
-    for i in range(len(network_nodes)):
-        for j in range(i + 1, len(network_nodes)):
-            if gcd(network_nodes[i], network_nodes[j]) == 1:
-                coprime_count += 1
-    return coprime_count
-
-@call_tracker
-def calculate_lcm_chain(numbers):
-    if not numbers:
-        return 0
-    result = numbers[0]
-    for i in range(1, len(numbers)):
-        result = lcm(result, numbers[i])
-    return result
-
-# Network simulation data
-active_nodes = [15, 28, 33, 46, 51]
-secondary_nodes = {12, 25, 35, 49}
-
-# Primary computation
-primary_coprimes = compute_coprime_pairs(active_nodes)
-
-# Secondary computation
-lcm_result = calculate_lcm_chain(list(secondary_nodes))
-
-# Topology scoring logic
-is_connected = primary_coprimes > 10
-has_redundancy = lcm_result < 10000
-final_topology_score = 0
-
-if is_connected and not has_redundancy:
-    final_topology_score = primary_coprimes * 3
-elif is_connected or has_redundancy:
-    final_topology_score = primary_coprimes + lcm_result
-else:
-    final_topology_score = abs(primary_coprimes - lcm_result)
-
-print(f"Result: {final_topology_score}")
+# Execute with sample data
+text_sample = "Programming languages provide powerful tools for data analysis and manipulation tasks"
+process_text_analysis(text_sample)

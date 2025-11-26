@@ -1,0 +1,89 @@
+42
+final_balance
+---
+12 transaction_log = log_entries
+12 ['log_entries', 'transaction_log'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", "[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]"]
+14 balance_adjustments = {'deposit': 0, 'withdrawal': 0, 'fee': 0}
+14 ['transaction_log', 'balance_adjustments'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 0, withdrawal: 0, fee: 0}']
+16 for entry in transaction_log:
+16 ['transaction_log', 'balance_adjustments', 'entry'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 0, withdrawal: 0, fee: 0}', "('deposit', 2500)"]
+17 operation, amount = entry
+17 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 0, withdrawal: 0, fee: 0}', "('deposit', 2500)", '2500']
+19 if operation == 'deposit':
+19 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 0, withdrawal: 0, fee: 0}', "('deposit', 2500)", '2500']
+20 balance_adjustments['deposit'] += amount
+20 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 2500, withdrawal: 0, fee: 0}', "('deposit', 2500)", '2500']
+16 for entry in transaction_log:
+16 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 2500, withdrawal: 0, fee: 0}', "('withdrawal', 1200)", '2500']
+17 operation, amount = entry
+17 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 2500, withdrawal: 0, fee: 0}', "('withdrawal', 1200)", '1200']
+19 if operation == 'deposit':
+19 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 2500, withdrawal: 0, fee: 0}', "('withdrawal', 1200)", '1200']
+21 elif operation == 'withdrawal':
+21 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 2500, withdrawal: 0, fee: 0}', "('withdrawal', 1200)", '1200']
+22 balance_adjustments['withdrawal'] -= amount
+22 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 2500, withdrawal: -1200, fee: 0}', "('withdrawal', 1200)", '1200']
+16 for entry in transaction_log:
+16 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 2500, withdrawal: -1200, fee: 0}', "('deposit', 1800)", '1200']
+17 operation, amount = entry
+17 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 2500, withdrawal: -1200, fee: 0}', "('deposit', 1800)", '1800']
+19 if operation == 'deposit':
+19 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 2500, withdrawal: -1200, fee: 0}', "('deposit', 1800)", '1800']
+20 balance_adjustments['deposit'] += amount
+20 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -1200, fee: 0}', "('deposit', 1800)", '1800']
+16 for entry in transaction_log:
+16 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -1200, fee: 0}', "('fee', 150)", '1800']
+17 operation, amount = entry
+17 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -1200, fee: 0}', "('fee', 150)", '150']
+19 if operation == 'deposit':
+19 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -1200, fee: 0}', "('fee', 150)", '150']
+21 elif operation == 'withdrawal':
+21 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -1200, fee: 0}', "('fee', 150)", '150']
+23 elif operation == 'fee':
+23 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -1200, fee: 0}', "('fee', 150)", '150']
+24 balance_adjustments['fee'] -= amount
+24 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -1200, fee: -150}', "('fee', 150)", '150']
+16 for entry in transaction_log:
+16 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -1200, fee: -150}', "('withdrawal', 800)", '150']
+17 operation, amount = entry
+17 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -1200, fee: -150}', "('withdrawal', 800)", '800']
+19 if operation == 'deposit':
+19 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -1200, fee: -150}', "('withdrawal', 800)", '800']
+21 elif operation == 'withdrawal':
+21 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -1200, fee: -150}', "('withdrawal', 800)", '800']
+22 balance_adjustments['withdrawal'] -= amount
+22 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -2000, fee: -150}', "('withdrawal', 800)", '800']
+16 for entry in transaction_log:
+16 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -2000, fee: -150}', "('deposit', 3200)", '800']
+17 operation, amount = entry
+17 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -2000, fee: -150}', "('deposit', 3200)", '3200']
+19 if operation == 'deposit':
+19 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 4300, withdrawal: -2000, fee: -150}', "('deposit', 3200)", '3200']
+20 balance_adjustments['deposit'] += amount
+20 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 7500, withdrawal: -2000, fee: -150}', "('deposit', 3200)", '3200']
+16 for entry in transaction_log:
+16 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 7500, withdrawal: -2000, fee: -150}', "('fee', 75)", '3200']
+17 operation, amount = entry
+17 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 7500, withdrawal: -2000, fee: -150}', "('fee', 75)", '75']
+19 if operation == 'deposit':
+19 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 7500, withdrawal: -2000, fee: -150}', "('fee', 75)", '75']
+21 elif operation == 'withdrawal':
+21 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 7500, withdrawal: -2000, fee: -150}', "('fee', 75)", '75']
+23 elif operation == 'fee':
+23 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 7500, withdrawal: -2000, fee: -150}', "('fee', 75)", '75']
+24 balance_adjustments['fee'] -= amount
+24 ['transaction_log', 'balance_adjustments', 'entry', 'amount'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 7500, withdrawal: -2000, fee: -225}', "('fee', 75)", '75']
+16 for entry in transaction_log:
+16 ['transaction_log', 'balance_adjustments', 'entry'] ["[('deposit', 2500), ('withdrawal', 1200), ('deposit', 1800), ('fee', 150), ('withdrawal', 800), ...]", '{deposit: 7500, withdrawal: -2000, fee: -225}', "('fee', 75)"]
+35 initial_balance = 10000
+35 ['balance_adjustments', 'initial_balance'] ['{deposit: 7500, withdrawal: -2000, fee: -225}', '10000']
+36 deposit_total = balance_adjustments['deposit']
+36 ['balance_adjustments', 'initial_balance', 'deposit_total'] ['{deposit: 7500, withdrawal: -2000, fee: -225}', '10000', '7500']
+37 withdrawal_total = balance_adjustments['withdrawal']
+37 ['balance_adjustments', 'initial_balance', 'deposit_total', 'withdrawal_total'] ['{deposit: 7500, withdrawal: -2000, fee: -225}', '10000', '7500', '-2000']
+38 fee_total = balance_adjustments['fee']
+38 ['balance_adjustments', 'initial_balance', 'deposit_total', 'withdrawal_total', 'fee_total'] ['{deposit: 7500, withdrawal: -2000, fee: -225}', '10000', '7500', '-2000', '-225']
+41 net_change = deposit_total + withdrawal_total + fee_total
+41 ['initial_balance', 'deposit_total', 'withdrawal_total', 'fee_total', 'net_change'] ['10000', '7500', '-2000', '-225', '5275']
+42 final_balance = initial_balance + net_change
+42 ['initial_balance', 'net_change', 'final_balance'] ['10000', '5275', '15275']

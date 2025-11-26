@@ -1,42 +1,49 @@
-class NetworkNode:
-    def __init__(self, identifier, left=None, right=None):
-        self.identifier = identifier
-        self.left = left
-        self.right = right
-        self.checksum = 0
+def process_data(text, pattern_dict):
+    # Initial setup with irrelevant computations
+    base_offset = len(text) * 3 - 7
+    temp_sum = sum([ord(c) for c in text[:5]]) if len(text) >= 5 else 100
+    
+    # Misleading intermediate calculation (dead code path)
+    if base_offset > 50:
+        misleading_count = base_offset // 2
+    else:
+        misleading_count = base_offset * 2
+    
+    # Actual processing logic with lambda and list comprehension
+    pattern_checker = lambda s, p: sum(1 for char in s if char in p)
+    relevant_chars = pattern_dict.get('target', '')
+    
+    # Distractor operations
+    char_frequency = {char: text.count(char) for char in set(text)}
+    total_unique = len(char_frequency)
+    
+    # Main computation with slicing and conditional logic
+    processed_sections = [text[i:i+3] for i in range(0, len(text), 3)]
+    valid_sections = [section for section in processed_sections 
+                     if len(section) == 3 and pattern_checker(section, relevant_chars) >= 1]
+    
+    # More irrelevant calculations
+    weighted_sum = sum(ord(c) * (i+1) for i, c in enumerate(text[:8])) if len(text) >= 8 else 0
+    
+    # Final result computation
+    final_count = len(valid_sections) * 2 - (total_unique % 3)
+    
+    # Dead code that doesn't affect final_count
+    unused_result = misleading_count + weighted_sum // 10
+    
+    return final_count
 
-# Construct network topology as binary tree
-root = NetworkNode(15)
-root.left = NetworkNode(7)
-root.right = NetworkNode(23)
-root.left.left = NetworkNode(3)
-root.left.right = NetworkNode(11)
-root.right.left = NetworkNode(19)
-root.right.right = NetworkNode(31)
+# Main execution with misleading setup
+text_input = "abracadabra_pattern_test"
+pattern_data = {'target': 'abc', 'ignore': 'xyz', 'weight': 2.5}
 
-# Greedy path selection using bitwise operations
-active_routes = {15, 7, 23, 3, 11}  # Initially active routes
-backup_routes = {19, 31}            # Backup routes
+# Irrelevant preprocessing
+input_length = len(text_input)
+pattern_length = len(pattern_data['target'])
+ratio = input_length / pattern_length if pattern_length > 0 else 0
 
-# Calculate initial checksums using XOR operations
-node_map = {node.identifier: node for node in [root, root.left, root.right, root.left.left, root.left.right, root.right.left, root.right.right]}
-for node_id in sorted(node_map.keys()):
-    node = node_map[node_id]
-    children_checksum = 0
-    if node.left:
-        children_checksum ^= node.left.identifier
-    if node.right:
-        children_checksum ^= node.right.identifier
-    node.checksum = node.identifier ^ children_checksum
+# Key statement
+result = process_data(text_input, pattern_data)
 
-# Apply route filtering using set operations
-filtered_nodes = {node_map[nid] for nid in active_routes if nid in node_map}
-filtered_nodes |= {node_map[nid] for nid in backup_routes if nid in node_map and (nid & 0x1)}  # Only odd backup routes
-
-# Aggregate checksums using greedy selection
-checksum_aggregate = 0
-for node in sorted(filtered_nodes, key=lambda x: x.identifier):
-    if (checksum_aggregate & node.identifier) == 0:  # Greedy condition
-        checksum_aggregate ^= node.checksum
-
-print(f"Result: {checksum_aggregate}")
+# Print final answer
+print(f"Result: {result}")

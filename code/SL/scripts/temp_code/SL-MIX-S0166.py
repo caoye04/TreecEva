@@ -1,5 +1,23 @@
-temperature_readings = {'day1': 0.5, 'day2': -2.3, 'day3': 1.2, 'day4': -0.8, 'day5': 3.1, 'day6': -1.5, 'day7': 0.9}
-extreme_filter = lambda temp: abs(temp) > 1.0
-extreme_temperatures = {day: temp for day, temp in temperature_readings.items() if extreme_filter(temp)}
-sorted_extreme_temps = sorted(extreme_temperatures.values())
-print(f'Result: {sorted_extreme_temps}')
+def analyze_financial_operations():
+    transaction_history = {45, 78, 23, 91, 67, 34}
+    audit_log = {23, 67, 12, 89, 45, 56}
+    
+    # Process primary transactions
+    primary_set = transaction_history - audit_log
+    intermediate_calc = sum(transaction_history) * 2
+    
+    # Process secondary operations  
+    secondary_set = audit_log - transaction_history
+    temp_adjustment = len(transaction_history) * len(audit_log)
+    
+    # Merge and finalize
+    merged_operations = primary_set | secondary_set
+    final_balance = len(merged_operations)
+    
+    # Distractor operations
+    verification_check = sum(primary_set) + sum(secondary_set)
+    unused_calculation = intermediate_calc % temp_adjustment
+    
+    print(f"Target result: {final_balance}")
+
+analyze_financial_operations()

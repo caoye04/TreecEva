@@ -1,62 +1,35 @@
-import heapq
-from collections import deque
+from collections import Counter
 
-def calculate_bundle_profit(bundle):
-    if len(bundle) <= 1:
-        return sum(bundle)
-    mid = len(bundle) // 2
-    left_profit = calculate_bundle_profit(bundle[:mid])
-    right_profit = calculate_bundle_profit(bundle[mid:])
-    return left_profit + right_profit + (bundle[mid-1] * bundle[mid] if mid > 0 and mid < len(bundle) else 0)
+# Process customer transaction categories
+transactions = ['retail', 'online', 'retail', 'wholesale', 'online', 'retail', 'service', 'online']
+category_counts = Counter(transactions)
 
-class TransactionTracker:
-    def __init__(self):
-        self.transactions = []
-    
-    def __enter__(self):
-        return self
-    
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.transactions.clear()
-    
-    def add_transaction(self, profit):
-        self.transactions.append(profit)
-    
-    def get_max_profit(self):
-        profit_heap = []
-        for profit in self.transactions:
-            heapq.heappush(profit_heap, -profit)  # Max heap
-        
-        total = 0
-        while profit_heap:
-            current = -heapq.heappop(profit_heap)
-            if current > 0:
-                total += current
-            else:
-                break
-        return total
+# Initial processing with some unnecessary intermediate steps
+retail_count = category_counts['retail']
+online_count = category_counts['online']
+wholesale_count = category_counts.get('wholesale', 0)
+service_count = category_counts.get('service', 0)
 
-def process_financial_data():
-    exchange_rates = [1.02, 0.98, 1.05, 0.95, 1.03, 0.97, 1.01]
-    profit_margins = []
-    
-    for i in range(1, len(exchange_rates)):
-        margin = round((exchange_rates[i] - exchange_rates[i-1]) * 100, 2)
-        profit_margins.append(margin)
-    
-    # Divide and conquer optimization on profit bundles
-    optimized_margin = calculate_bundle_profit(profit_margins)
-    
-    # Greedy selection with priority queue
-    with TransactionTracker() as tracker:
-        tracker.add_transaction(optimized_margin)
-        tracker.add_transaction(2.5)
-        tracker.add_transaction(-1.2)
-        tracker.add_transaction(3.7)
-        tracker.add_transaction(-0.5)
-        max_profit = tracker.get_max_profit()
-    
-    return max_profit
+# Distractor calculations that don't affect final result
+potential_revenue = retail_count * 150 + online_count * 200
+discount_factor = 0.85 if retail_count > 2 else 0.90
 
-max_profit = process_financial_data()
-print(f"Result: {max_profit}")
+# Core logic with moderate nesting
+base_tally = retail_count * 3
+if online_count > 1:
+    base_tally += online_count * 2
+    if wholesale_count > 0:
+        base_tally += 5  # This condition is never met
+
+# More distraction
+intermediate_sum = sum(category_counts.values())
+average_transactions = intermediate_sum / len(category_counts)
+
+# Final processing
+final_tally = base_tally + service_count
+adjustment_factor = 2 if retail_count >= online_count else 3
+
+# Target variable assignment
+processed_result = final_tally * adjustment_factor
+
+print(f"Target result: {processed_result}")

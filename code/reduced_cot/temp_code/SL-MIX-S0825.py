@@ -1,16 +1,10 @@
-from functools import reduce
+from collections import Counter
 
-def fibonacci_sequence(n):
-    a, b = 0, 1
-    for _ in range(n):
-        yield a
-        a, b = b, a + b
-
-cipher_segments = [x for x in fibonacci_sequence(10)][2:]
-transformed_signals = list(map(lambda x: x**2 if x % 2 == 0 else x*3, cipher_segments))
-filtered_signals = list(filter(lambda x: x > 10, transformed_signals))
-encoded_metadata = {f'sig_{i}': val for i, val in enumerate(filtered_signals)}
-decoded_keys = {k: v for k, v in encoded_metadata.items() if 'sig_' in k}
-aggregated_value = reduce(lambda acc, kv: acc + kv[1], decoded_keys.items(), 0)
-decoded_signal_strength = aggregated_value % 100 + len(decoded_keys) * 7
-print(f'Result: {decoded_signal_strength}')
+account_balance = 1500
+recent_transactions = [25, 60, 120, 45, 90, 30]
+transaction_freq = Counter(recent_transactions)
+most_common_amount = transaction_freq.most_common(1)[0][0]
+recurring_payments = [80, 45, 120]
+total_payment = sum(recurring_payments) + most_common_amount
+remaining_balance = account_balance - total_payment
+print(f"Target result: {remaining_balance}")

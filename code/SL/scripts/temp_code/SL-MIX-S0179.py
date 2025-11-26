@@ -1,17 +1,60 @@
-from collections import Counter
+def analyze_pattern(sequence):
+    # Irrelevant analysis that doesn't affect final result
+    temp_sum = sum(x * 2 for x in sequence if x % 3 == 0)
+    pattern_mask = [x & 0b1111 for x in sequence]
+    return len([x for x in pattern_mask if x > 8])
 
-def transform_word(w):
-    return w[::-1] if len(w) > 4 else w.upper()
+def validate_input(input_data):
+    # Misleading validation that returns constant
+    if len(input_data) > 5:
+        return True
+    elif input_data and input_data[0] > 0:
+        return False
+    return True
 
-paragraph = "The quick brown fox jumps over the lazy dog while the dog sleeps"
-words = paragraph.lower().split()
-transformed_words = list(map(transform_word, words))
-word_counts = Counter(transformed_words)
+def process_sequence(data):
+    # Core logic with distractions
+    threshold = 7
+    accumulator = 0
+    
+    # Dead code path - never executes
+    if len(data) < 2:
+        backup_val = data[0] * 3 + 5
+        return backup_val
+    
+    # Main processing with slicing
+    relevant_slice = data[1:-1] if len(data) > 3 else data
+    
+    # Distractor calculations
+    noise_factor = sum(x for x in data[::2]) % 10
+    shadow_count = len([x for x in data if x % 4 == 0])
+    
+    # Actual logic
+    for value in relevant_slice:
+        if value > threshold:
+            accumulator += (value - threshold) * 2
+        elif value < threshold // 2:
+            accumulator -= 1
+    
+    # More distractions
+    unused_flag = accumulator > 20
+    dummy_array = [x * x for x in data[:3]]
+    
+    return accumulator
 
-vowel_count = sum(1 for word in transformed_words if word[0] in 'aeiou')
-consonant_count = len(transformed_words) - vowel_count
+# Main execution with interference
+data_stream = [12, 5, 8, 3, 15, 9, 6, 11]
 
-score = vowel_count * 3 - consonant_count if consonant_count > vowel_count else vowel_count * 2
-final_score = score + len(word_counts) if len(word_counts) > 10 else score - len(word_counts)
+# Irrelevant function calls
+pattern_result = analyze_pattern(data_stream)
+validation_check = validate_input(data_stream)
 
-print(f"Result: {final_score}")
+# Distractor variables
+intermediate_sum = sum(data_stream[2:5])
+filtered_values = [x for x in data_stream if x % 2 == 1]
+
+# Key computation
+final_count = process_sequence(data_stream)
+
+# Print the result
+print(f"Result: {final_count}")

@@ -1,0 +1,63 @@
+29
+final_value
+---
+3 primary_sum = 0
+3 ['primary_sum'] ['0']
+4 secondary_offset = 0
+4 ['primary_sum', 'secondary_offset'] ['0', '0']
+8 packet_ids = [101, 102, 103, 104, 105]
+8 ['primary_sum', 'secondary_offset', 'packet_ids'] ['0', '0', '[101, 102, 103, 104, 105]']
+9 packet_sizes = [256, 512, 128, 1024, 768]
+9 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes'] ['0', '0', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]']
+10 flags = [1, 0, 1, 1, 0]
+10 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags'] ['0', '0', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]']
+12 for idx, (packet_id, size, flag) in enumerate(zip(packet_ids, packet_sizes, flags)):
+12 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['0', '0', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '0', '101', '256', '1']
+14 if flag == 1:
+14 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['0', '0', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '0', '101', '256', '1']
+15 primary_sum += size
+15 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['256', '0', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '0', '101', '256', '1']
+19 if idx % 2 == 0:
+19 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['256', '0', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '0', '101', '256', '1']
+20 secondary_offset += size // 8
+20 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['256', '32', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '0', '101', '256', '1']
+12 for idx, (packet_id, size, flag) in enumerate(zip(packet_ids, packet_sizes, flags)):
+12 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['256', '32', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '1', '102', '512', '0']
+14 if flag == 1:
+14 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['256', '32', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '1', '102', '512', '0']
+19 if idx % 2 == 0:
+19 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['256', '32', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '1', '102', '512', '0']
+22 secondary_offset -= size // 16  # Distractor - opposite logic
+22 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['256', '0', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '1', '102', '512', '0']
+12 for idx, (packet_id, size, flag) in enumerate(zip(packet_ids, packet_sizes, flags)):
+12 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['256', '0', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '2', '103', '128', '1']
+14 if flag == 1:
+14 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['256', '0', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '2', '103', '128', '1']
+15 primary_sum += size
+15 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['384', '0', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '2', '103', '128', '1']
+19 if idx % 2 == 0:
+19 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['384', '0', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '2', '103', '128', '1']
+20 secondary_offset += size // 8
+20 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['384', '16', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '2', '103', '128', '1']
+12 for idx, (packet_id, size, flag) in enumerate(zip(packet_ids, packet_sizes, flags)):
+12 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['384', '16', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '3', '104', '1024', '1']
+14 if flag == 1:
+14 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['384', '16', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '3', '104', '1024', '1']
+15 primary_sum += size
+15 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['1408', '16', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '3', '104', '1024', '1']
+19 if idx % 2 == 0:
+19 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['1408', '16', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '3', '104', '1024', '1']
+22 secondary_offset -= size // 16  # Distractor - opposite logic
+22 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['1408', '-48', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '3', '104', '1024', '1']
+12 for idx, (packet_id, size, flag) in enumerate(zip(packet_ids, packet_sizes, flags)):
+12 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['1408', '-48', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '4', '105', '768', '0']
+14 if flag == 1:
+14 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['1408', '-48', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '4', '105', '768', '0']
+19 if idx % 2 == 0:
+19 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['1408', '-48', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '4', '105', '768', '0']
+20 secondary_offset += size // 8
+20 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['1408', '48', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '4', '105', '768', '0']
+12 for idx, (packet_id, size, flag) in enumerate(zip(packet_ids, packet_sizes, flags)):
+12 ['primary_sum', 'secondary_offset', 'packet_ids', 'packet_sizes', 'flags', 'idx', 'packet_id', 'size', 'flag'] ['1408', '48', '[101, 102, 103, 104, 105]', '[256, 512, 128, 1024, 768]', '[1, 0, 1, 1, 0]', '4', '105', '768', '0']
+29 final_value = primary_sum + secondary_offset
+29 ['primary_sum', 'secondary_offset', 'final_value'] ['1408', '48', '1456']

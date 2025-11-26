@@ -1,869 +1,109 @@
-Target: Find the value of variable semantic_signatures after [line 39] executes
+Target: Find the value of variable final_count after [line 28] executes
 
-[line 39]  semantic_signatures = process_corpus(corpus)
-Call function process_corpus(corpus=['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats'] (an unknown source))
-[line 1]  def process_corpus(documents):
-Enter function process_corpus: documents=['The quick brown fox jumps over the lazy dog', 'A fast auburn fox leaps above the sleepy canine', 'Pack my box with five dozen liquor jugs', 'A quick movement of the enemy will jeopardize six gunboats']
-  [line 16]  segment_registry = set()
-  Call function set()
-  [line 17]  semantic_signatures = frozenset()
-  Call function frozenset()
-  [line 19]  for document in documents:
-  Loop Start: document takes its first value 'The quick brown fox jumps over the lazy dog'
-  [line 20]  segments = divide_text(document)
-  Call function divide_text(document='The quick brown fox jumps over the lazy dog' (defined at [line 19]))
-  [line 8]  def divide_text(text, threshold=10):
-  Enter function divide_text: text='The quick brown fox jumps over the lazy dog' (document defined at [line 19]), threshold=10
-    [line 9]  if len(text) <= threshold:
-    Condition: True, entering 'if' block
-    [line 11]  mid = len(text) // 2
-    Compute: len(text) // 2, where text='The quick brown fox jumps over the lazy dog' (parameter text defined at [line 19]) = 21
-    [line 12]  left = divide_text(text[:mid], threshold)
-    Call function divide_text(text[:mid], threshold=10 (an unknown source))
-    [line 8]  def divide_text(text, threshold=10):
-    Enter function divide_text: text='The quick brown fox j', threshold=10
-      [line 9]  if len(text) <= threshold:
-      Condition: True, entering 'if' block
-      [line 11]  mid = len(text) // 2
-      Compute: len(text) // 2, where text='The quick brown fox j' (parameter text) = 10
-      [line 12]  left = divide_text(text[:mid], threshold)
-      Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='The quick ', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 10]  return [text]
-        Return: [text]
-      Function divide_text returns ['The quick ']
-      [line 13]  right = divide_text(text[mid:], threshold)
-      Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='brown fox j', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 11]  mid = len(text) // 2
-        Compute: len(text) // 2, where text='brown fox j' (parameter text) = 5
-        [line 12]  left = divide_text(text[:mid], threshold)
-        Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='brown', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['brown']
-        [line 13]  right = divide_text(text[mid:], threshold)
-        Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text=' fox j', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns [' fox j']
-        [line 14]  return left + right
-        Return: left + right
-      Function divide_text returns ['brown', ' fox j']
-      [line 14]  return left + right
-      Return: left + right
-    Function divide_text returns ['The quick ', 'brown', ' fox j']
-    [line 13]  right = divide_text(text[mid:], threshold)
-    Call function divide_text(text[mid:], threshold=10 (an unknown source))
-    [line 8]  def divide_text(text, threshold=10):
-    Enter function divide_text: text='umps over the lazy dog', threshold=10
-      [line 9]  if len(text) <= threshold:
-      Condition: True, entering 'if' block
-      [line 11]  mid = len(text) // 2
-      Compute: len(text) // 2, where text='umps over the lazy dog' (parameter text) = 11
-      [line 12]  left = divide_text(text[:mid], threshold)
-      Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='umps over t', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 11]  mid = len(text) // 2
-        Compute: len(text) // 2, where text='umps over t' (parameter text) = 5
-        [line 12]  left = divide_text(text[:mid], threshold)
-        Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='umps ', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['umps ']
-        [line 13]  right = divide_text(text[mid:], threshold)
-        Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='over t', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['over t']
-        [line 14]  return left + right
-        Return: left + right
-      Function divide_text returns ['umps ', 'over t']
-      [line 13]  right = divide_text(text[mid:], threshold)
-      Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='he lazy dog', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 11]  mid = len(text) // 2
-        Compute: len(text) // 2, where text='he lazy dog' (parameter text) = 5
-        [line 12]  left = divide_text(text[:mid], threshold)
-        Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='he la', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['he la']
-        [line 13]  right = divide_text(text[mid:], threshold)
-        Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='zy dog', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['zy dog']
-        [line 14]  return left + right
-        Return: left + right
-      Function divide_text returns ['he la', 'zy dog']
-      [line 14]  return left + right
-      Return: left + right
-    Function divide_text returns ['umps ', 'over t', 'he la', 'zy dog']
-    [line 14]  return left + right
-    Return: left + right
-  Function divide_text returns ['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...]
-  [line 21]  normalized_segments = map(normalize_segment, segments)
-  Call function map(normalize_segment, segments=['The quick ', 'brown', ' fox j', 'umps ', 'over t', ...] (defined at [line 20]))
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments=<map object at 0x000001FD4AA34550> (defined at [line 21]))
-  [line 24]  for segment in unique_segments:
-  Loop Start: segment takes its first value ?
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='cehikqtu' (an unknown source) = frozenset()
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='bnorw' (defined at [line 24]) = frozenset({7887716893127613781})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='fjox' (defined at [line 24]) = frozenset({7887716893127613781, 9221694443138798685})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='mpsu' (defined at [line 24]) = frozenset({7887716893127613781, 9221694443138798685, 3553218050053687347})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='eortv' (defined at [line 24]) = frozenset({7887716893127613781, 9221694443138798685, 3553218050053687347, -5134094967252136215})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='aehl' (defined at [line 24]) = frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -5134094967252136215, 7887716893127613781})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='dgoyz' (defined at [line 24]) = frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -5134094967252136215, 7887716893127613781, -6977091359338580118})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 19]  for document in documents:
-  Loop Iteration: document is now 'A fast auburn fox leaps above the sleepy canine' (iteration 2)
-  [line 20]  segments = divide_text(document)
-  Call function divide_text(document='A fast auburn fox leaps above the sleepy canine' (defined at [line 19]))
-  [line 8]  def divide_text(text, threshold=10):
-  Enter function divide_text: text='A fast auburn fox leaps above the sleepy canine' (document defined at [line 19]), threshold=10
-    [line 9]  if len(text) <= threshold:
-    Condition: True, entering 'if' block
-    [line 11]  mid = len(text) // 2
-    Compute: len(text) // 2, where text='A fast auburn fox leaps above the sleepy canine' (parameter text defined at [line 19]) = 23
-    [line 12]  left = divide_text(text[:mid], threshold)
-    Call function divide_text(text[:mid], threshold=10 (an unknown source))
-    [line 8]  def divide_text(text, threshold=10):
-    Enter function divide_text: text='A fast auburn fox leaps', threshold=10
-      [line 9]  if len(text) <= threshold:
-      Condition: True, entering 'if' block
-      [line 11]  mid = len(text) // 2
-      Compute: len(text) // 2, where text='A fast auburn fox leaps' (parameter text) = 11
-      [line 12]  left = divide_text(text[:mid], threshold)
-      Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='A fast aubu', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 11]  mid = len(text) // 2
-        Compute: len(text) // 2, where text='A fast aubu' (parameter text) = 5
-        [line 12]  left = divide_text(text[:mid], threshold)
-        Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='A fas', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['A fas']
-        [line 13]  right = divide_text(text[mid:], threshold)
-        Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='t aubu', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['t aubu']
-        [line 14]  return left + right
-        Return: left + right
-      Function divide_text returns ['A fas', 't aubu']
-      [line 13]  right = divide_text(text[mid:], threshold)
-      Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='rn fox leaps', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 11]  mid = len(text) // 2
-        Compute: len(text) // 2, where text='rn fox leaps' (parameter text) = 6
-        [line 12]  left = divide_text(text[:mid], threshold)
-        Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='rn fox', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['rn fox']
-        [line 13]  right = divide_text(text[mid:], threshold)
-        Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text=' leaps', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns [' leaps']
-        [line 14]  return left + right
-        Return: left + right
-      Function divide_text returns ['rn fox', ' leaps']
-      [line 14]  return left + right
-      Return: left + right
-    Function divide_text returns ['A fas', 't aubu', 'rn fox', ' leaps']
-    [line 13]  right = divide_text(text[mid:], threshold)
-    Call function divide_text(text[mid:], threshold=10 (an unknown source))
-    [line 8]  def divide_text(text, threshold=10):
-    Enter function divide_text: text=' above the sleepy canine', threshold=10
-      [line 9]  if len(text) <= threshold:
-      Condition: True, entering 'if' block
-      [line 11]  mid = len(text) // 2
-      Compute: len(text) // 2, where text=' above the sleepy canine' (parameter text) = 12
-      [line 12]  left = divide_text(text[:mid], threshold)
-      Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text=' above the s', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 11]  mid = len(text) // 2
-        Compute: len(text) // 2, where text=' above the s' (parameter text) = 6
-        [line 12]  left = divide_text(text[:mid], threshold)
-        Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text=' above', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns [' above']
-        [line 13]  right = divide_text(text[mid:], threshold)
-        Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text=' the s', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns [' the s']
-        [line 14]  return left + right
-        Return: left + right
-      Function divide_text returns [' above', ' the s']
-      [line 13]  right = divide_text(text[mid:], threshold)
-      Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='leepy canine', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 11]  mid = len(text) // 2
-        Compute: len(text) // 2, where text='leepy canine' (parameter text) = 6
-        [line 12]  left = divide_text(text[:mid], threshold)
-        Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='leepy ', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['leepy ']
-        [line 13]  right = divide_text(text[mid:], threshold)
-        Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='canine', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['canine']
-        [line 14]  return left + right
-        Return: left + right
-      Function divide_text returns ['leepy ', 'canine']
-      [line 14]  return left + right
-      Return: left + right
-    Function divide_text returns [' above', ' the s', 'leepy ', 'canine']
-    [line 14]  return left + right
-    Return: left + right
-  Function divide_text returns ['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...]
-  [line 21]  normalized_segments = map(normalize_segment, segments)
-  Call function map(normalize_segment, segments=['A fas', 't aubu', 'rn fox', ' leaps', ' above', ...] (defined at [line 20]))
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments=<map object at 0x000001FD4AA36470> (defined at [line 21]))
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='aafs' (defined at [line 24]) = frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -2268788236580931740, -5134094967252136215, 7887716893127613781, -6977091359338580118})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='abtuu' (defined at [line 24]) = frozenset({9221694443138798685, 3553218050053687347, -8997937534538835769, -2268788236580931740, -5134094967252136215, 7887716893127613781, -6495432277348500856, -6977091359338580118})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='fnorx' (defined at [line 24]) = frozenset({9221694443138798685, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 3553218050053687347, 7887716893127613781, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='aelps' (defined at [line 24]) = frozenset({9221694443138798685, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, -4238269605678182581, 3553218050053687347, 7887716893127613781, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='abeov' (defined at [line 24]) = frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, -4238269605678182581, 3553218050053687347, 7887716893127613781, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='ehst' (defined at [line 24]) = frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3553218050053687347, 7887716893127613781, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='eelpy' (defined at [line 24]) = frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 3553218050053687347, 7887716893127613781, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='aceinn' (defined at [line 24]) = frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, 7887716893127613781, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 19]  for document in documents:
-  Loop Iteration: document is now 'Pack my box with five dozen liquor jugs' (iteration 3)
-  [line 20]  segments = divide_text(document)
-  Call function divide_text(document='Pack my box with five dozen liquor jugs' (defined at [line 19]))
-  [line 8]  def divide_text(text, threshold=10):
-  Enter function divide_text: text='Pack my box with five dozen liquor jugs' (document defined at [line 19]), threshold=10
-    [line 9]  if len(text) <= threshold:
-    Condition: True, entering 'if' block
-    [line 11]  mid = len(text) // 2
-    Compute: len(text) // 2, where text='Pack my box with five dozen liquor jugs' (parameter text defined at [line 19]) = 19
-    [line 12]  left = divide_text(text[:mid], threshold)
-    Call function divide_text(text[:mid], threshold=10 (an unknown source))
-    [line 8]  def divide_text(text, threshold=10):
-    Enter function divide_text: text='Pack my box with fi', threshold=10
-      [line 9]  if len(text) <= threshold:
-      Condition: True, entering 'if' block
-      [line 11]  mid = len(text) // 2
-      Compute: len(text) // 2, where text='Pack my box with fi' (parameter text) = 9
-      [line 12]  left = divide_text(text[:mid], threshold)
-      Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='Pack my b', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 10]  return [text]
-        Return: [text]
-      Function divide_text returns ['Pack my b']
-      [line 13]  right = divide_text(text[mid:], threshold)
-      Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='ox with fi', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 10]  return [text]
-        Return: [text]
-      Function divide_text returns ['ox with fi']
-      [line 14]  return left + right
-      Return: left + right
-    Function divide_text returns ['Pack my b', 'ox with fi']
-    [line 13]  right = divide_text(text[mid:], threshold)
-    Call function divide_text(text[mid:], threshold=10 (an unknown source))
-    [line 8]  def divide_text(text, threshold=10):
-    Enter function divide_text: text='ve dozen liquor jugs', threshold=10
-      [line 9]  if len(text) <= threshold:
-      Condition: True, entering 'if' block
-      [line 11]  mid = len(text) // 2
-      Compute: len(text) // 2, where text='ve dozen liquor jugs' (parameter text) = 10
-      [line 12]  left = divide_text(text[:mid], threshold)
-      Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='ve dozen l', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 10]  return [text]
-        Return: [text]
-      Function divide_text returns ['ve dozen l']
-      [line 13]  right = divide_text(text[mid:], threshold)
-      Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='iquor jugs', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 10]  return [text]
-        Return: [text]
-      Function divide_text returns ['iquor jugs']
-      [line 14]  return left + right
-      Return: left + right
-    Function divide_text returns ['ve dozen l', 'iquor jugs']
-    [line 14]  return left + right
-    Return: left + right
-  Function divide_text returns ['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs']
-  [line 21]  normalized_segments = map(normalize_segment, segments)
-  Call function map(normalize_segment, segments=['Pack my b', 'ox with fi', 've dozen l', 'iquor jugs'] (defined at [line 20]))
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments=<map object at 0x000001FD4AA368F0> (defined at [line 21]))
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='abckmpy' (defined at [line 24]) = frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, -8401663439227333161, 7887716893127613781, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='fhiiotwx' (defined at [line 24]) = frozenset({9221694443138798685, 6439393280181270496, -8997937534538835769, -2268788236580931740, -6495432277348500856, -5134094967252136215, -6977091359338580118, 8691543350663094305, -4238269605678182581, 3795894492687716293, 8153743537051065927, 3553218050053687347, -8401663439227333161, 8076362163381823572, 7887716893127613781, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='deelnovz' (defined at [line 24]) = frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -4238269605678182581, 8153743537051065927, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='gijoqrsuu' (defined at [line 24]) = frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 19]  for document in documents:
-  Loop Iteration: document is now 'A quick movement of the enemy will jeopardize six gunboats' (iteration 4)
-  [line 20]  segments = divide_text(document)
-  Call function divide_text(document='A quick movement of the enemy will jeopardize six gunboats' (defined at [line 19]))
-  [line 8]  def divide_text(text, threshold=10):
-  Enter function divide_text: text='A quick movement of the enemy will jeopardize six gunboats' (document defined at [line 19]), threshold=10
-    [line 9]  if len(text) <= threshold:
-    Condition: True, entering 'if' block
-    [line 11]  mid = len(text) // 2
-    Compute: len(text) // 2, where text='A quick movement of the enemy will jeopardize six gunboats' (parameter text defined at [line 19]) = 29
-    [line 12]  left = divide_text(text[:mid], threshold)
-    Call function divide_text(text[:mid], threshold=10 (an unknown source))
-    [line 8]  def divide_text(text, threshold=10):
-    Enter function divide_text: text='A quick movement of the enemy', threshold=10
-      [line 9]  if len(text) <= threshold:
-      Condition: True, entering 'if' block
-      [line 11]  mid = len(text) // 2
-      Compute: len(text) // 2, where text='A quick movement of the enemy' (parameter text) = 14
-      [line 12]  left = divide_text(text[:mid], threshold)
-      Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='A quick moveme', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 11]  mid = len(text) // 2
-        Compute: len(text) // 2, where text='A quick moveme' (parameter text) = 7
-        [line 12]  left = divide_text(text[:mid], threshold)
-        Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='A quick', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['A quick']
-        [line 13]  right = divide_text(text[mid:], threshold)
-        Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text=' moveme', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns [' moveme']
-        [line 14]  return left + right
-        Return: left + right
-      Function divide_text returns ['A quick', ' moveme']
-      [line 13]  right = divide_text(text[mid:], threshold)
-      Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='nt of the enemy', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 11]  mid = len(text) // 2
-        Compute: len(text) // 2, where text='nt of the enemy' (parameter text) = 7
-        [line 12]  left = divide_text(text[:mid], threshold)
-        Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='nt of t', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['nt of t']
-        [line 13]  right = divide_text(text[mid:], threshold)
-        Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='he enemy', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['he enemy']
-        [line 14]  return left + right
-        Return: left + right
-      Function divide_text returns ['nt of t', 'he enemy']
-      [line 14]  return left + right
-      Return: left + right
-    Function divide_text returns ['A quick', ' moveme', 'nt of t', 'he enemy']
-    [line 13]  right = divide_text(text[mid:], threshold)
-    Call function divide_text(text[mid:], threshold=10 (an unknown source))
-    [line 8]  def divide_text(text, threshold=10):
-    Enter function divide_text: text=' will jeopardize six gunboats', threshold=10
-      [line 9]  if len(text) <= threshold:
-      Condition: True, entering 'if' block
-      [line 11]  mid = len(text) // 2
-      Compute: len(text) // 2, where text=' will jeopardize six gunboats' (parameter text) = 14
-      [line 12]  left = divide_text(text[:mid], threshold)
-      Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text=' will jeopardi', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 11]  mid = len(text) // 2
-        Compute: len(text) // 2, where text=' will jeopardi' (parameter text) = 7
-        [line 12]  left = divide_text(text[:mid], threshold)
-        Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text=' will j', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns [' will j']
-        [line 13]  right = divide_text(text[mid:], threshold)
-        Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='eopardi', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['eopardi']
-        [line 14]  return left + right
-        Return: left + right
-      Function divide_text returns [' will j', 'eopardi']
-      [line 13]  right = divide_text(text[mid:], threshold)
-      Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-      [line 8]  def divide_text(text, threshold=10):
-      Enter function divide_text: text='ze six gunboats', threshold=10
-        [line 9]  if len(text) <= threshold:
-        Condition: True, entering 'if' block
-        [line 11]  mid = len(text) // 2
-        Compute: len(text) // 2, where text='ze six gunboats' (parameter text) = 7
-        [line 12]  left = divide_text(text[:mid], threshold)
-        Call function divide_text(text[:mid], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='ze six ', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['ze six ']
-        [line 13]  right = divide_text(text[mid:], threshold)
-        Call function divide_text(text[mid:], threshold=10 (parameter threshold))
-        [line 8]  def divide_text(text, threshold=10):
-        Enter function divide_text: text='gunboats', threshold=10
-          [line 9]  if len(text) <= threshold:
-          Condition: True, entering 'if' block
-          [line 10]  return [text]
-          Return: [text]
-        Function divide_text returns ['gunboats']
-        [line 14]  return left + right
-        Return: left + right
-      Function divide_text returns ['ze six ', 'gunboats']
-      [line 14]  return left + right
-      Return: left + right
-    Function divide_text returns [' will j', 'eopardi', 'ze six ', 'gunboats']
-    [line 14]  return left + right
-    Return: left + right
-  Function divide_text returns ['A quick', ' moveme', 'nt of t', 'he enemy', ' will j', ...]
-  [line 21]  normalized_segments = map(normalize_segment, segments)
-  Call function map(normalize_segment, segments=['A quick', ' moveme', 'nt of t', 'he enemy', ' will j', ...] (defined at [line 20]))
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments=<map object at 0x000001FD499DF6A0> (defined at [line 21]))
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='acikqu' (defined at [line 24]) = frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='eemmov' (defined at [line 24]) = frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, 3553218050053687347, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='fnott' (defined at [line 24]) = frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='eeehmny' (defined at [line 24]) = frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='ijllw' (defined at [line 24]) = frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931, 5495517590349094907})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='adeiopr' (defined at [line 24]) = frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, 986181700085551931, 5495517590349094907})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='eisxz' (defined at [line 24]) = frozenset({-8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, -2635427525928928837, 986181700085551931, 5495517590349094907})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 22]  unique_segments = filter(lambda s: s not in segment_registry, normalized_segments)
-  Call function filter(lambda s: s not in segment_registry, normalized_segments)
-  [line 26]  semantic_signatures = semantic_signatures | frozenset([hash_segment(segment)])
-  Compute: semantic_signatures | frozenset([hash_segment(segment)]), where segment='abgnostu' (defined at [line 24]) = frozenset({4114288232308591297, -8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, -2635427525928928837, 986181700085551931, 5495517590349094907})
-  [line 6]  return hash(normalize_segment(segment))
-  Return: hash(normalize_segment(segment))
-  [line 3]  return ''.join(sorted(segment.lower())).strip()
-  Return: ''.join(sorted(segment.lower())).strip()
-  [line 24]  for segment in unique_segments:
-  Loop End: Iteration finished
-  [line 19]  for document in documents:
-  Loop End: Iteration finished
-  [line 28]  return len(semantic_signatures)
-  Return: len(semantic_signatures)
-Function process_corpus returns 27
+[line 4]  committee_members = ['Alice', 'Bob', 'Charlie', 'Diana']
+Compute: ['Alice', 'Bob', 'Charlie', 'Diana'] = ['Alice', 'Bob', 'Charlie', 'Diana']
+[line 13]  pair_count = 0
+Assign: pair_count = 0
+[line 14]  for member1, member2 in combinations(committee_members, 2):
+(Missing param: 'iter_var')
+[line 16]  votes2 = voting_records[member2]
+Compute: voting_records[member2], where voting_records={Alice: {proposal_a: True, proposal_b: False}, Bob: {proposal_a: True, proposal_b: True}, Charlie: {proposal_a: False, proposal_b: False}, ...} (an unknown source), member2='Bob' (an unknown source) = {proposal_a: True, proposal_b: True}
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Start: proposal takes its first value 'proposal_a'
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_b' (iteration 2)
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+... [Line 20] repeats 14 more times ...
+[line 24]  if agreement_count == 2:
+Condition: True, entering 'if' block
+[line 14]  for member1, member2 in combinations(committee_members, 2):
+(Missing param: 'iter_var')
+[line 16]  votes2 = voting_records[member2]
+Compute: voting_records[member2], where voting_records={Alice: {proposal_a: True, proposal_b: False}, Bob: {proposal_a: True, proposal_b: True}, Charlie: {proposal_a: False, proposal_b: False}, ...} (an unknown source), member2='Charlie' (an unknown source) = {proposal_a: False, proposal_b: False}
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_a' (iteration 4)
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_b' (iteration 5)
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_b' (iteration 6)
+[line 24]  if agreement_count == 2:
+Condition: True, entering 'if' block
+[line 14]  for member1, member2 in combinations(committee_members, 2):
+(Missing param: 'iter_var')
+[line 16]  votes2 = voting_records[member2]
+Compute: voting_records[member2], where voting_records={Alice: {proposal_a: True, proposal_b: False}, Bob: {proposal_a: True, proposal_b: True}, Charlie: {proposal_a: False, proposal_b: False}, ...} (an unknown source), member2='Diana' (an unknown source) = {proposal_a: True, proposal_b: True}
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_a' (iteration 7)
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_b' (iteration 8)
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_b' (iteration 9)
+[line 24]  if agreement_count == 2:
+Condition: True, entering 'if' block
+[line 14]  for member1, member2 in combinations(committee_members, 2):
+(Missing param: 'iter_var')
+[line 16]  votes2 = voting_records[member2]
+Compute: voting_records[member2], where voting_records={Alice: {proposal_a: True, proposal_b: False}, Bob: {proposal_a: True, proposal_b: True}, Charlie: {proposal_a: False, proposal_b: False}, ...} (an unknown source), member2='Charlie' (an unknown source) = {proposal_a: False, proposal_b: False}
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_a' (iteration 10)
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_b' (iteration 11)
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_b' (iteration 12)
+[line 24]  if agreement_count == 2:
+Condition: True, entering 'if' block
+[line 14]  for member1, member2 in combinations(committee_members, 2):
+(Missing param: 'iter_var')
+[line 16]  votes2 = voting_records[member2]
+Compute: voting_records[member2], where voting_records={Alice: {proposal_a: True, proposal_b: False}, Bob: {proposal_a: True, proposal_b: True}, Charlie: {proposal_a: False, proposal_b: False}, ...} (an unknown source), member2='Diana' (an unknown source) = {proposal_a: True, proposal_b: True}
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_a' (iteration 13)
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_b' (iteration 14)
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_b' (iteration 15)
+[line 24]  if agreement_count == 2:
+Condition: True, entering 'if' block
+[line 25]  pair_count += 1
+Update: pair_count changed from 0 (defined at defined at [line 13]) to 0+1 = 1
+[line 14]  for member1, member2 in combinations(committee_members, 2):
+(Missing param: 'iter_var')
+[line 16]  votes2 = voting_records[member2]
+Compute: voting_records[member2], where voting_records={Alice: {proposal_a: True, proposal_b: False}, Bob: {proposal_a: True, proposal_b: True}, Charlie: {proposal_a: False, proposal_b: False}, ...} (an unknown source), member2='Diana' (an unknown source) = {proposal_a: True, proposal_b: True}
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_a' (iteration 16)
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_b' (iteration 17)
+[line 21]  if votes1[proposal] == votes2[proposal]:
+Condition: True, entering 'if' block
+[line 20]  for proposal in ['proposal_a', 'proposal_b']:
+Loop Iteration: proposal is now 'proposal_b' (iteration 18)
+[line 24]  if agreement_count == 2:
+Condition: True, entering 'if' block
+[line 14]  for member1, member2 in combinations(committee_members, 2):
+Loop End: Iteration finished
+[line 28]  final_count = pair_count * 3
+Compute: pair_count * 3, where pair_count=1 (defined at [line 25]) = 3
 
-Answer: semantic_signatures = frozenset({4114288232308591297, -8997937534538835769, -6495432277348500856, 3795894492687716293, -3795782642211917369, -5430109465779168631, -4238269605678182581, 8153743537051065927, -3883772486999628334, -8401663439227333161, 8076362163381823572, 7887716893127613781, 1303211305482638296, -6044735047494080614, 9221694443138798685, 80286615822339489, 6439393280181270496, -2268788236580931740, 8691543350663094305, -5134094967252136215, -6977091359338580118, -4825958258666298901, -5368689422294206551, 3553218050053687347, -2635427525928928837, 986181700085551931, 5495517590349094907}) (last updated on defined at [line 26])
+Answer: final_count = 3 (last updated on defined at [line 28])

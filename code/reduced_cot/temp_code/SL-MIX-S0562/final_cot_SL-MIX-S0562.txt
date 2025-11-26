@@ -1,0 +1,34 @@
+Target: Find the value of variable final_measurement after [line 32] executes
+
+[line 4]  raw_readings = [12, 8, 15, 6, 9, 11, 7, 14]
+Compute: [12, 8, 15, 6, 9, 11, 7, 14] = [12, 8, 15, 6, 9, ...]
+[line 5]  threshold = 10
+Assign: threshold = 10
+[line 8]  filtered_readings = [x for x in raw_readings if x > threshold]
+Compute: [x for x in raw_readings if x > threshold], where x=12 (an unknown source), raw_readings=[12, 8, 15, 6, 9, ...] (defined at [line 4]), threshold=10 (defined at [line 5]) = ?
+[line 15]  processed_metrics = []
+Compute: [] = []
+[line 18]  for i, reading in enumerate(filtered_readings):
+(Missing param: 'iter_var')
+[line 18]  for i, reading in enumerate(filtered_readings):
+Loop End: Iteration finished
+[line 18]  for i, reading in enumerate(filtered_readings):
+Loop End: Iteration finished
+[line 18]  for i, reading in enumerate(filtered_readings):
+Loop End: Iteration finished
+[line 18]  for i, reading in enumerate(filtered_readings):
+Loop End: Iteration finished
+[line 23]  reading_set = set(filtered_readings)
+Call function set(filtered_readings=[12, 15, 11, 14] (defined at [line 8]))
+[line 24]  baseline_set = {12, 15, 14}
+Compute: {12, 15, 14} = {12, 14, 15}
+[line 25]  common_elements = reading_set.intersection(baseline_set)
+(Missing param: 'func_name')
+[line 26]  uncommon_elements = reading_set.symmetric_difference(baseline_set)
+(Missing param: 'func_name')
+[line 29]  adjustment_offset = len(common_elements) * 2 - len(uncommon_elements)
+Compute: len(common_elements) * 2 - len(uncommon_elements), where common_elements={12, 14, 15} (an unknown source), uncommon_elements={11} (an unknown source) = 5
+[line 32]  final_measurement = processed_metrics[-1] + adjustment_offset
+Compute: processed_metrics[-1] + adjustment_offset, where processed_metrics=[12, 13, 12, 13] (defined at [line 15]), adjustment_offset=5 (defined at [line 29]) = 18
+
+Answer: final_measurement = 18 (last updated on defined at [line 32])

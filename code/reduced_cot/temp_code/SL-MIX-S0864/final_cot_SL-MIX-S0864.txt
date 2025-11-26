@@ -1,0 +1,14 @@
+Target: Find the value of variable final_analysis after [line 8] executes
+
+[line 1]  data_stream = [15, 8, 23, 42, 17, 31, 9, 55]
+Compute: [15, 8, 23, 42, 17, 31, 9, 55] = [15, 8, 23, 42, 17, ...]
+[line 3]  filtered_data = [x for x in data_stream if x > 20]
+Compute: [x for x in data_stream if x > 20], where x=15 (an unknown source), data_stream=[15, 8, 23, 42, 17, ...] (defined at [line 1]) = ?
+[line 5]  processed_items = [x % 10 for x in filtered_data]
+Compute: [x % 10 for x in filtered_data], where x=23 (an unknown source), filtered_data=[23, 42, 31, 55] (defined at [line 3]) = ?
+[line 6]  sorted_data = sorted(filtered_data, reverse=True)
+Call function sorted(filtered_data=[23, 42, 31, 55] (defined at [line 3]), reverse=True)
+[line 8]  final_analysis = sorted_data[-1] * 2 - processed_items[1]
+Compute: sorted_data[-1] * 2 - processed_items[1], where sorted_data=[55, 42, 31, 23] (defined at [line 6]), processed_items=[3, 2, 1, 5] (defined at [line 5]) = 44
+
+Answer: final_analysis = 44 (last updated on defined at [line 8])

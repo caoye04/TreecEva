@@ -1,53 +1,71 @@
-22
-normalized_aggregate
+41
+final_score
 ---
-4 device_readings = [1000, 2500, 4000, 8000]
-4 ['device_readings'] ['[1000, 2500, 4000, 8000]']
-5 device_ids = ['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']
-5 ['device_readings', 'device_ids'] ['[1000, 2500, 4000, 8000]', "['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']"]
-8 scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
-8 ['device_readings', 'device_ids'] ['[1000, 2500, 4000, 8000]', "['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']"]
-8 scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
-8 ['x'] ['1000']
-8 scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
-8 ['x'] ['2500']
-8 scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
-8 ['x'] ['4000']
-8 scaled_readings = list(map(lambda x: math.log(x, 10), device_readings))
-8 ['x'] ['8000']
-11 hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
-11 ['device_ids', 'scaled_readings'] ["['sensor_a', 'sensor_b', 'sensor_c', 'sensor_d']", '[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]']
-11 hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
-11 ['s'] ["'sensor_a'"]
-11 hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
-11 ['s'] ["'sensor_b'"]
-11 hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
-11 ['s'] ["'sensor_c'"]
-11 hash_weights = list(map(lambda s: hash(s) % 100 + 1, device_ids))
-11 ['s'] ["'sensor_d'"]
-14 weight_sum = sum(hash_weights)
-14 ['scaled_readings', 'hash_weights', 'weight_sum'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284']
-15 normalized_weights = [w / weight_sum for w in hash_weights]
-15 ['scaled_readings', 'hash_weights', 'weight_sum', 'w'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284', '59']
-15 normalized_weights = [w / weight_sum for w in hash_weights]
-15 ['scaled_readings', 'hash_weights', 'weight_sum', 'w'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284', '98']
-15 normalized_weights = [w / weight_sum for w in hash_weights]
-15 ['scaled_readings', 'hash_weights', 'weight_sum', 'w'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284', '50']
-15 normalized_weights = [w / weight_sum for w in hash_weights]
-15 ['scaled_readings', 'hash_weights', 'weight_sum', 'w'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284', '77']
-15 normalized_weights = [w / weight_sum for w in hash_weights]
-15 ['scaled_readings', 'hash_weights', 'weight_sum', 'normalized_weights'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[59, 98, 50, 77]', '284', '[0.20774647887323944, 0.34507042253521125, 0.176056338028169, 0.2711267605633803]']
-18 harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-18 ['scaled_readings', 'normalized_weights'] ['[2.9999999999999996, 3.397940008672037, 3.602059991327962, 3.9030899869919433]', '[0.20774647887323944, 0.34507042253521125, 0.176056338028169, 0.2711267605633803]']
-18 harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-18 ['acc', 'pair'] ['0', '(2.9999999999999996, 0.20774647887323944)']
-18 harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-18 ['acc', 'pair'] ['0.06924882629107983', '(3.397940008672037, 0.34507042253521125)']
-18 harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-18 ['acc', 'pair'] ['0.1708016558450276', '(3.602059991327962, 0.176056338028169)']
-18 harmonic_sum = reduce(lambda acc, pair: acc + pair[1] / pair[0], zip(scaled_readings, normalized_weights), 0)
-18 ['acc', 'pair'] ['0.21967822604431037', '(3.9030899869919433, 0.2711267605633803)']
-19 weighted_harmonic_mean = 1 / harmonic_sum
-19 ['harmonic_sum', 'weighted_harmonic_mean'] ['0.28914287109912085', '3.458497856781642']
-22 normalized_aggregate = math.exp(weighted_harmonic_mean)
-22 ['weighted_harmonic_mean', 'normalized_aggregate'] ['3.458497856781642', '31.769218737658147']
+30 metrics_data = [2, 5, 3, 8, 4]
+30 ['metrics_data'] ['[2, 5, 3, 8, 4]']
+38 final_score = process_results(metrics_data)
+38 ['metrics_data'] ['[2, 5, 3, 8, 4]']
+PARAM_MAPPING {'data_points': {'actual_var': 'input_data', 'value': [2, 5, 3, 8, 4]}}
+FUNCTION_ENTER 1 analyze_performance def analyze_performance(data_points):
+1 ['data_points'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 4}], '_len': 5}]
+3 temp_sum = sum([x * 2 for x in data_points if x > 5])
+3 ['data_points', 'x'] ['[2, 5, 3, 8, 4]', '2']
+3 temp_sum = sum([x * 2 for x in data_points if x > 5])
+3 ['data_points', 'x'] ['[2, 5, 3, 8, 4]', '5']
+3 temp_sum = sum([x * 2 for x in data_points if x > 5])
+3 ['data_points', 'x'] ['[2, 5, 3, 8, 4]', '3']
+3 temp_sum = sum([x * 2 for x in data_points if x > 5])
+3 ['data_points', 'x'] ['[2, 5, 3, 8, 4]', '8']
+3 temp_sum = sum([x * 2 for x in data_points if x > 5])
+3 ['data_points', 'x'] ['[2, 5, 3, 8, 4]', '4']
+3 temp_sum = sum([x * 2 for x in data_points if x > 5])
+3 ['data_points', 'temp_sum'] ['[2, 5, 3, 8, 4]', '16']
+4 offset = len(data_points) * 3.14
+4 ['data_points', 'temp_sum', 'offset'] ['[2, 5, 3, 8, 4]', '16', '15.700000000000001']
+5 adjusted = temp_sum - offset
+5 ['temp_sum', 'offset', 'adjusted'] ['16', '15.700000000000001', '0.29999999999999893']
+6 return adjusted
+6 ['adjusted'] ['0.29999999999999893']
+FUNCTION_RETURN 6 analyze_performance {'_type': 'float', '_value': 0.29999999999999893}
+19 metrics_value = calculate_metrics(input_data)
+19 ['input_data'] ['[2, 5, 3, 8, 4]']
+PARAM_MAPPING {'values': {'actual_var': 'input_data', 'value': [2, 5, 3, 8, 4]}}
+FUNCTION_ENTER 8 calculate_metrics def calculate_metrics(values):
+8 ['values'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 4}], '_len': 5}]
+10 processed = [v ** 2 if v % 2 == 0 else v * 3 for v in values]
+10 ['values', 'v'] ['[2, 5, 3, 8, 4]', '2']
+10 processed = [v ** 2 if v % 2 == 0 else v * 3 for v in values]
+10 ['values', 'v'] ['[2, 5, 3, 8, 4]', '5']
+10 processed = [v ** 2 if v % 2 == 0 else v * 3 for v in values]
+10 ['values', 'v'] ['[2, 5, 3, 8, 4]', '3']
+10 processed = [v ** 2 if v % 2 == 0 else v * 3 for v in values]
+10 ['values', 'v'] ['[2, 5, 3, 8, 4]', '8']
+10 processed = [v ** 2 if v % 2 == 0 else v * 3 for v in values]
+10 ['values', 'v'] ['[2, 5, 3, 8, 4]', '4']
+10 processed = [v ** 2 if v % 2 == 0 else v * 3 for v in values]
+10 ['values', 'processed'] ['[2, 5, 3, 8, 4]', '[4, 15, 9, 64, 16]']
+11 weighted_sum = sum([p * (i + 1) for i, p in enumerate(processed)])
+11 ['processed', 'i', 'p'] ['[4, 15, 9, 64, 16]', '0', '4']
+11 weighted_sum = sum([p * (i + 1) for i, p in enumerate(processed)])
+11 ['processed', 'i', 'p'] ['[4, 15, 9, 64, 16]', '1', '15']
+11 weighted_sum = sum([p * (i + 1) for i, p in enumerate(processed)])
+11 ['processed', 'i', 'p'] ['[4, 15, 9, 64, 16]', '2', '9']
+11 weighted_sum = sum([p * (i + 1) for i, p in enumerate(processed)])
+11 ['processed', 'i', 'p'] ['[4, 15, 9, 64, 16]', '3', '64']
+11 weighted_sum = sum([p * (i + 1) for i, p in enumerate(processed)])
+11 ['processed', 'i', 'p'] ['[4, 15, 9, 64, 16]', '4', '16']
+11 weighted_sum = sum([p * (i + 1) for i, p in enumerate(processed)])
+11 ['processed', 'weighted_sum'] ['[4, 15, 9, 64, 16]', '397']
+12 return weighted_sum
+12 ['weighted_sum'] ['397']
+FUNCTION_RETURN 12 calculate_metrics {'_type': 'int', '_value': 397}
+22 noise_factor = (len(input_data) * 2.5) - 7
+22 ['input_data', 'metrics_value', 'noise_factor'] ['[2, 5, 3, 8, 4]', '397', '5.5']
+23 interference = metrics_value + noise_factor
+23 ['metrics_value', 'noise_factor', 'interference'] ['397', '5.5', '402.5']
+26 actual_result = interference - noise_factor
+26 ['noise_factor', 'interference', 'actual_result'] ['5.5', '402.5', '397.0']
+27 return actual_result
+27 ['actual_result'] ['397.0']
+41 print(f"Result: {final_score}")
+41 ['final_score'] ['397.0']

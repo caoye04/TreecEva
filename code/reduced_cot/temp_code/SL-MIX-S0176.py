@@ -1,25 +1,40 @@
-import math
+from itertools import combinations
 
-# Baker's proprietary bread proofing parameters
-base_proofing_factor = 2.5
-humidity_coefficient = 0.7
+# Analyze network connection patterns
+node_connections = {'A': ['B', 'C'], 'B': ['A', 'C', 'D'], 'C': ['A', 'B'], 'D': ['B', 'E'], 'E': ['D']}
 
-# Calculate exponential growth component
-exponential_component = math.exp(base_proofing_factor)
+# Get all unique nodes and calculate possible combinations
+all_nodes = list(node_connections.keys())
+all_combinations = list(combinations(all_nodes, 2))
 
-# Calculate logarithmic humidity adjustment
-log_humidity_adjustment = math.log(humidity_coefficient * 10)
+# Calculate unique connection pairs (undirected)
+unique_pairs = set()
+for node, neighbors in node_connections.items():
+    for neighbor in neighbors:
+        pair = tuple(sorted([node, neighbor]))
+        unique_pairs.add(pair)
 
-# Combine components to determine optimal temperature
-optimal_proofing_temperature = exponential_component + log_humidity_adjustment
+# Find missing potential connections
+missing_pairs = []
+for pair in all_combinations:
+    if pair not in unique_pairs:
+        missing_pairs.append(pair)
 
-# Apply final adjustment using set operations on temperature ranges
-standard_ranges = {30, 35, 40, 45}
-premium_ranges = frozenset([32, 37, 42, 47])
-intersection_ranges = standard_ranges & premium_ranges
+# Calculate metrics
+unique_combinations = len(all_combinations)
+actual_connections = len(unique_pairs)
+missing_count = len(missing_pairs)
 
-# Apply adjustment based on intersecting ranges
-if len(intersection_ranges) > 0:
-    optimal_proofing_temperature += max(intersection_ranges) * 0.1
+# Distractor calculations (not used in final result)
+total_nodes = len(all_nodes)
+max_possible = (total_nodes * (total_nodes - 1)) // 2
+theoretical_density = actual_connections / max_possible
 
-print(f"Result: {optimal_proofing_temperature}")
+# Overlap calculation (used in final result)
+overlap_count = 0
+for pair in unique_pairs:
+    if len(pair[0]) == len(pair[1]):
+        overlap_count += 1
+
+final_count = unique_combinations - overlap_count
+print(f"Result: {final_count}")

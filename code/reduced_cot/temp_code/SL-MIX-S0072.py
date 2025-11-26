@@ -1,32 +1,35 @@
-from collections import namedtuple
+def analyze_network_traffic(log_entries):
+    packet_sizes = [entry.get('size', 0) for entry in log_entries if entry.get('protocol') == 'TCP']
+    processed_data = {}
+    
+    # Calculate total and average packet size
+    total_packets = len(packet_sizes)
+    if total_packets > 0:
+        total_size = sum(packet_sizes)
+        average_size = total_size / total_packets
+        processed_data['total'] = total_size
+        processed_data['average'] = average_size
+    
+    # Distractor operations that don't affect final result
+    connection_stats = {}
+    temp_sum = sum([x * 2 for x in packet_sizes])  # Unused computation
+    protocol_count = len([entry for entry in log_entries if entry.get('type') == 'incoming'])  # Red herring
+    
+    # Final assignment
+    final_count = processed_data.get('total', 0)
+    
+    # Additional unused variables
+    max_size = max(packet_sizes) if packet_sizes else 0
+    
+    print(f"Target result: {final_count}")
 
-# Define pie characteristics
-Pie = namedtuple('Pie', ['name', 'profit', 'size'])
-
-# Available pies
-available_pies = [
-    Pie('Apple', 12, 3),
-    Pie('Blueberry', 15, 5),
-    Pie('Cherry', 10, 2),
-    Pie('Pumpkin', 8, 4)
+# Sample data
+network_logs = [
+    {'protocol': 'TCP', 'size': 1500, 'type': 'incoming'},
+    {'protocol': 'TCP', 'size': 800, 'type': 'outgoing'},
+    {'protocol': 'UDP', 'size': 512, 'type': 'incoming'},
+    {'protocol': 'TCP', 'size': 1200, 'type': 'incoming'},
+    {'protocol': 'TCP', 'size': 900, 'type': 'outgoing'}
 ]
 
-display_capacity = 7
-
-# Calculate profit density and sort
-pie_densities = [(pie.profit / pie.size, pie) for pie in available_pies]
-pie_densities.sort(reverse=True, key=lambda x: x[0])
-
-# Greedy selection
-selected_pies = []
-remaining_capacity = display_capacity
-
-for density, pie in pie_densities:
-    if pie.size <= remaining_capacity:
-        selected_pies.append(pie)
-        remaining_capacity -= pie.size
-
-# Calculate total profit
-max_profit = sum(pie.profit for pie in selected_pies)
-
-print(f"Result: {max_profit}")
+analyze_network_traffic(network_logs)

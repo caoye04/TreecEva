@@ -1,51 +1,44 @@
-from collections import defaultdict
+def analyze_text_patterns(text_segments):
+    irrelevant_data = [x * 2 for x in range(10, 20)]  # Distractor computation
+    
+    # Main logic: character analysis with set operations
+    processed_segments = []
+    for segment in text_segments:
+        # Convert to set to remove duplicates and count unique characters
+        char_set = set(segment)
+        processed_segments.append(char_set)
+        
+    # Combine all character sets using union
+    combined_chars = set()
+    for segment_set in processed_segments:
+        combined_chars |= segment_set
+    
+    # Count special characters (distractor)
+    special_count = sum(1 for char in combined_chars if char in '!@#$%^&*()')
+    
+    # Calculate processed set count (relevant)
+    processed_set_count = len(processed_segments) * len(combined_chars)
+    
+    # Find remaining characters after filtering vowels
+    vowels = {'a', 'e', 'i', 'o', 'u'}
+    remaining_chars = combined_chars - vowels
+    
+    # Adjustment factor based on character types
+    alpha_count = sum(1 for char in remaining_chars if char.isalpha())
+    digit_count = sum(1 for char in remaining_chars if char.isdigit())
+    misleading_adjustment = (alpha_count * 3) - digit_count  # Distractor
+    
+    # Dead code path that's never executed
+    if len(remaining_chars) > 50:
+        unused_computation = misleading_adjustment // 2
+    
+    # Final calculation
+    adjustment_factor = (len(remaining_chars) % 7) + 1
+    final_result = processed_set_count % len(remaining_chars) + adjustment_factor
+    
+    # Print the result
+    print(f"Target result: {final_result}")
 
-class TreeNode:
-    def __init__(self, val=0, left=None, middle=None, right=None):
-        self.val = val
-        self.left = left
-        self.middle = middle
-        self.right = right
-
-def build_tree():
-    # Build a ternary tree with 3 levels
-    # Leaves (level 3)
-    leaves = [TreeNode(val=i%2) for i in range(1, 10)]  # Values: [1,0,1,0,1,0,1,0,1]
-    
-    # Level 2 nodes
-    n2_1 = TreeNode(val=0, left=leaves[0], middle=leaves[1], right=leaves[2])
-    n2_2 = TreeNode(val=0, left=leaves[3], middle=leaves[4], right=leaves[5])
-    n2_3 = TreeNode(val=0, left=leaves[6], middle=leaves[7], right=leaves[8])
-    
-    # Root node (level 1)
-    root = TreeNode(val=0, left=n2_1, middle=n2_2, right=n2_3)
-    return root
-
-def simulate_circuit(node):
-    if not node:
-        return 0
-    if not node.left and not node.middle and not node.right:  # Leaf node
-        return node.val
-    
-    # Recursively get child outputs
-    left_out = simulate_circuit(node.left)
-    middle_out = simulate_circuit(node.middle)
-    right_out = simulate_circuit(node.right)
-    
-    # Count active signals
-    active_count = sum([left_out, middle_out, right_out])
-    
-    # State machine for gate logic
-    match active_count:
-        case 1:
-            return left_out ^ middle_out ^ right_out
-        case 2:
-            return left_out & middle_out & right_out
-        case 3:
-            return left_out | middle_out | right_out
-        case _:
-            return 0
-
-tree_root = build_tree()
-root_output = simulate_circuit(tree_root)
-print(f"Result: {root_output}")
+# Execute the function
+text_input = ["python3", "programming", "challenge", "evaluation", "benchmark"]
+analyze_text_patterns(text_input)

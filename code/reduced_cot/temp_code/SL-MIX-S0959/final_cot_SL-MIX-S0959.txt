@@ -1,0 +1,32 @@
+Target: Find the value of variable final_balance after [line 34] executes
+
+[line 12]  transaction_pool = [initial_capital]
+Compute: [initial_capital], where initial_capital=5000 (an unknown source) = [5000]
+[line 13]  for i, amount in enumerate(transaction_series):
+(Missing param: 'iter_var')
+[line 14]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 13]  for i, amount in enumerate(transaction_series):
+(Missing param: 'iter_var')
+[line 14]  if i % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 13] repeats 3 more times ...
+... [Line 13] repeats 3 more times ...
+[line 13]  for i, amount in enumerate(transaction_series):
+(Missing param: 'iter_var')
+[line 14]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 13]  for i, amount in enumerate(transaction_series):
+Loop End: Iteration finished
+[line 20]  if initial_capital > 100000:
+Condition: True, entering 'if' block
+[line 26]  processed_transactions = transaction_pool[1::2]
+Compute: transaction_pool[1::2], where transaction_pool=[5000, 6440.0, 5800.0, 8800.0, 7600.0, ...] (defined at [line 12]) = [6440.0, 8800.0, 9760.0]
+[line 27]  adjusted_funds = [x * 0.95 for x in processed_transactions]
+Compute: [x * 0.95 for x in processed_transactions], where x=6440.0 (an unknown source), processed_transactions=[6440.0, 8800.0, 9760.0] (defined at [line 26]) = ?
+[line 33]  transaction_overflow = adjusted_funds[0] * 0.1 if len(adjusted_funds) > 3 else 0
+Compute: adjusted_funds[0] * 0.1 if len(adjusted_funds) > 3 else 0, where adjusted_funds=[6118.0, 8360.0, 9272.0] (defined at [line 27]) = 0
+[line 34]  final_balance = adjusted_funds[-1] + transaction_overflow
+Compute: adjusted_funds[-1] + transaction_overflow, where adjusted_funds=[6118.0, 8360.0, 9272.0] (defined at [line 27]), transaction_overflow=0 (defined at [line 33]) = 9272.0
+
+Answer: final_balance = 9272.0 (last updated on defined at [line 34])

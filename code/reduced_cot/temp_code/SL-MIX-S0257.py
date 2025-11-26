@@ -1,60 +1,25 @@
-import itertools
-from collections import deque
+def calculate_weighted_average(scores):
+    weight_map = lambda x: 0.4 if x >= 90 else 0.3 if x >= 80 else 0.2
+    weighted_sum = sum(score * weight_map(score) for score in scores)
+    total_weight = sum(weight_map(score) for score in scores)
+    return weighted_sum / total_weight if total_weight > 0 else 0
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+def process_candidate_scores(data):
+    technical_scores = [data['coding_test'], data['system_design']]
+    soft_skills = [data['communication'], data['problem_solving']]
+    
+    tech_avg = calculate_weighted_average(technical_scores)
+    soft_avg = sum(soft_skills) / len(soft_skills)
+    
+    final_score = (tech_avg * 0.7) + (soft_avg * 0.3)
+    return round(final_score, 2)
 
-def next_prime(n):
-    while True:
-        n += 1
-        if is_prime(n):
-            return n
+applicant_data = {
+    'coding_test': 85,
+    'system_design': 92,
+    'communication': 78,
+    'problem_solving': 88
+}
 
-# Audio processing parameters
-sample_rate = 44100
-bit_depth = 16
-channel_count = 2
-
-# Calculate base threshold using modular arithmetic
-base_threshold = (sample_rate * bit_depth) % 1000
-scaled_threshold = (base_threshold * channel_count + 7) % 97
-
-# Initialize processing queue with Fibonacci sequence
-fib_queue = deque()
-a, b = 1, 1
-for _ in range(10):
-    fib_queue.append(a)
-    a, b = b, (a + b) % 100
-
-# Sliding window analysis
-window_candidates = []
-for i in range(min(len(fib_queue), 8)):
-    candidate = fib_queue.popleft()
-    adjusted_candidate = (candidate * scaled_threshold) % 42
-    if adjusted_candidate > 10:
-        window_candidates.append(adjusted_candidate)
-    if len(window_candidates) >= 3:
-        break
-
-# Determine final window size
-if not window_candidates:
-    final_window_size = next_prime(20)
-else:
-    max_candidate = max(window_candidates)
-    if max_candidate % 3 == 0:
-        final_window_size = next_prime(max_candidate + 5)
-    else:
-        final_window_size = next_prime(max_candidate)
-
-print(f"Result: {final_window_size}")
+final_score = process_candidate_scores(applicant_data)
+print(f"Final score: {final_score}")

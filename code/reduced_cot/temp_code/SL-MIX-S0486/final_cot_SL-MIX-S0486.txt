@@ -1,0 +1,77 @@
+Target: Find the value of variable final_metric after [line 54] executes
+
+[line 43]  data_stream = [12, 8, 15, 6, 20, 3, 18, 9]
+Compute: [12, 8, 15, 6, 20, 3, 18, 9] = [12, 8, 15, 6, 20, ...]
+[line 44]  threshold_value = 10
+Assign: threshold_value = 10
+[line 36]  def analyze_data_stream(input_data):
+Enter function analyze_data_stream: input_data=[12, 8, 15, 6, 20, ...] (data_stream defined at [line 43])
+  [line 38]  sorted_data = sorted(input_data)
+  Call function sorted(input_data=[12, 8, 15, 6, 20, ...] (parameter input_data defined at [line 43]))
+  [line 39]  median_val = sorted_data[len(sorted_data) // 2] if sorted_data else 0
+  Compute: sorted_data[len(sorted_data) // 2] if sorted_data else 0, where sorted_data=[3, 6, 8, 9, 12, ...] (defined at [line 38]) = 12
+  [line 40]  return median_val * 0.75
+  Return: median_val * 0.75
+Function analyze_data_stream returns 9.0
+[line 51]  final_metric = compute_quality_score(data_stream, threshold_value)
+Call function compute_quality_score(data_stream=[12, 8, 15, 6, 20, ...] (defined at [line 43]), threshold_value=10 (defined at [line 44]))
+[line 3]  temp_buffer = [x * 2 for x in data_sequence if x > 0]
+Compute: [x * 2 for x in data_sequence if x > 0], where x=12 (an unknown source), data_sequence=[12, 8, 15, 6, 20, ...] (an unknown source) = ?
+[line 4]  processed_data = [val // 3 for val in temp_buffer]
+Compute: [val // 3 for val in temp_buffer], where val=24 (an unknown source), temp_buffer=[24, 16, 30, 12, 40, ...] (defined at [line 3]) = ?
+[line 7]  dummy_sum = sum(processed_data) + len(data_sequence)
+Compute: sum(processed_data) + len(data_sequence), where processed_data=[8, 5, 10, 4, 13, ...] (defined at [line 4]), data_sequence=[12, 8, 15, 6, 20, ...] (an unknown source) = 68
+[line 8]  misleading_factor = (dummy_sum % 7) * 2.5
+Compute: (dummy_sum % 7) * 2.5, where dummy_sum=68 (defined at [line 7]) = 12.5
+[line 11]  valid_indices = []
+Compute: [] = []
+[line 12]  for idx, value in enumerate(data_sequence):
+(Missing param: 'iter_var')
+[line 13]  if value >= quality_threshold:
+Condition: True, entering 'if' block
+[line 12]  for idx, value in enumerate(data_sequence):
+(Missing param: 'iter_var')
+[line 13]  if value >= quality_threshold:
+Condition: True, entering 'if' block
+... [Line 12] repeats 5 more times ...
+... [Line 12] repeats 5 more times ...
+[line 12]  for idx, value in enumerate(data_sequence):
+(Missing param: 'iter_var')
+[line 13]  if value >= quality_threshold:
+Condition: True, entering 'if' block
+[line 12]  for idx, value in enumerate(data_sequence):
+Loop End: Iteration finished
+[line 21]  pairs = list(zip(valid_indices, data_sequence))
+Call function list(zip(valid_indices, data_sequence))
+[line 22]  weighted_sum = 0
+Assign: weighted_sum = 0
+[line 23]  for index, value in pairs:
+(Missing param: 'iter_var')
+[line 24]  weighted_sum += value * (index + 1)
+Update: weighted_sum changed from 0 (defined at defined at [line 22]) to 0+value * (index + 1) = 12
+[line 23]  for index, value in pairs:
+(Missing param: 'iter_var')
+[line 24]  weighted_sum += value * (index + 1)
+Update: weighted_sum changed from 12 (defined at defined at [line 24]) to 12+value * (index + 1) = 36
+[line 23]  for index, value in pairs:
+(Missing param: 'iter_var')
+[line 24]  weighted_sum += value * (index + 1)
+Update: weighted_sum changed from 36 (defined at defined at [line 24]) to 36+value * (index + 1) = 111
+[line 23]  for index, value in pairs:
+(Missing param: 'iter_var')
+[line 24]  weighted_sum += value * (index + 1)
+Update: weighted_sum changed from 111 (defined at defined at [line 24]) to 111+value * (index + 1) = 153
+[line 23]  for index, value in pairs:
+Loop End: Iteration finished
+[line 27]  base_score = weighted_sum // len(pairs) if pairs else 0
+Compute: weighted_sum // len(pairs) if pairs else 0, where weighted_sum=153 (defined at [line 24]), pairs=[(0, 12), (2, 8), (4, 15), (6, 6)] (defined at [line 21]) = 38
+[line 28]  adjustment_factor = (len(valid_indices) * 3) - (misleading_factor // 2)
+Compute: (len(valid_indices) * 3) - (misleading_factor // 2), where valid_indices=[0, 2, 4, 6] (defined at [line 11]), misleading_factor=12.5 (defined at [line 8]) = 6.0
+[line 31]  if base_score < 0:
+Condition: True, entering 'if' block
+[line 34]  return base_score + adjustment_factor
+Return: base_score + adjustment_factor
+[line 54]  print(f"Result: {final_metric}")
+Output: f"Result: {final_metric}"
+
+Answer: final_metric = 44.0 (last updated on defined at [line 51])

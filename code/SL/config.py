@@ -23,20 +23,20 @@ AI_APIS = {
         "api_key": API_KEY,
         "model": "Qwen3-Coder-480B-A35B-Instruct"
     },
-    "minimax_text": {
+    "GLM-4.6": {
         "base_url": BASE_URL,
         "api_key": API_KEY,
-        "model": "MiniMax-Text-01"
+        "model": "GLM-4.6"
     },
-    "glm4_plus": {
+    "DeepSeek-V3.2-Exp": {
         "base_url": BASE_URL,
         "api_key": API_KEY,
-        "model": "GLM-4-Plus"
+        "model": "DeepSeek-V3.2-Exp"
     },
-    "deepseek_v3": {
+    "DeepSeek-V3.1": {
         "base_url": BASE_URL,
         "api_key": API_KEY,
-        "model": "DeepSeek-V3-250324"
+        "model": "DeepSeek-V3.1"
     }
 }
 

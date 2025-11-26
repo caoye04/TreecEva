@@ -1,32 +1,50 @@
-import heapq
-import statistics
+from collections import Counter
 
-temperature_readings = [23.5, 25.1, 22.8, 24.3, 26.7, 21.9, 25.0, 23.8, 24.9, 22.4]
-window_size = 3
-stability_heap = []
-thermal_readings = []
+def analyze_sensor_data(sensor_readings):
+    # Distractor: unused frequency analysis
+    frequency_counter = Counter(sensor_readings)
+    common_vals = frequency_counter.most_common(3)
+    
+    # Misleading intermediate calculations
+    total_sum = sum(sensor_readings)
+    average_val = total_sum / len(sensor_readings) if sensor_readings else 0
+    adjusted_avg = average_val * 2.5 - 15
+    
+    # Dead code path - never executed
+    if adjusted_avg > 1000:
+        threshold_bypass = adjusted_avg // 10
+    else:
+        threshold_bypass = 0
+    
+    # Relevant bitwise operations for data validation
+    validation_mask = 0b10101101
+    valid_count = 0
+    for reading in sensor_readings:
+        masked_value = reading & validation_mask
+        if (masked_value | 0b00100000) == 0b10101101:
+            valid_count += 1
+    
+    # More distractions with arithmetic
+    noise_reduction = len(sensor_readings) * 3 - 7
+    calibration_offset = (noise_reduction ^ 0b1111) + 12
+    
+    # Key relevant variables
+    active_tracker = valid_count * 4
+    false_positive = (len(sensor_readings) - valid_count) // 2
+    correction_factor = (active_tracker >> 2) | 0b110
+    
+    # Final calculation (this is what matters)
+    final_count = active_tracker + correction_factor - false_positive
+    
+    # Print irrelevant intermediate values for distraction
+    print(f"Debug - Total sum: {total_sum}")
+    print(f"Debug - Adjusted avg: {adjusted_avg}")
+    print(f"Debug - Calibration offset: {calibration_offset}")
+    
+    # The actual result we care about
+    print(f"Result: {final_count}")
+    return final_count
 
-# Process temperature windows and calculate stability metrics
-for i in range(len(temperature_readings) - window_size + 1):
-    window = temperature_readings[i:i+window_size]
-    mean_temp = statistics.mean(window)
-    variance_temp = statistics.variance(window) if len(window) > 1 else 0
-    stability_metric = mean_temp / (1 + variance_temp)
-    heapq.heappush(stability_heap, (-stability_metric, i))  # Max heap using negative values
-
-# Calculate thermal index from most stable periods
-thermal_weights = {i: 0.0 for i in range(len(temperature_readings))}
-top_stable_periods = min(3, len(stability_heap))
-
-for _ in range(top_stable_periods):
-    neg_metric, start_idx = heapq.heappop(stability_heap)
-    stability_value = -neg_metric
-    for j in range(window_size):
-        idx = start_idx + j
-        if idx < len(temperature_readings):
-            thermal_weights[idx] += stability_value * (window_size - j) / window_size
-
-thermal_index = sum(weight * temp for weight, temp in zip(thermal_weights.values(), temperature_readings))
-thermal_index = round(thermal_index, 2)
-
-print(f"Result: {thermal_index}")
+# Test data with mixed patterns
+sensor_data = [45, 173, 89, 237, 125, 189, 65, 173, 201]
+result = analyze_sensor_data(sensor_data)

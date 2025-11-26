@@ -1,41 +1,38 @@
-from collections import defaultdict
-import hashlib
-
-def process_genomic_segment(segment_data):
-    decoded_bytes = bytes.fromhex(segment_data)
-    masked_data = bytearray()
-    for byte_val in decoded_bytes:
-        if (byte_val & 0xF0) != 0:
-            masked_data.append(byte_val ^ 0xAA)
-        else:
-            masked_data.append(byte_val)
-    return bytes(masked_data)
-
-class GenomicValidator:
-    def __init__(self):
-        self.checksum_map = defaultdict(int)
+def process_sequence(data):
+    # Distractor variables and operations
+    temp_sum = sum(range(1, 11))  # Irrelevant sum
+    multiplier = 7
+    dummy_list = [x * 2 for x in range(5)]  # Unused list comprehension
     
-    def update_validation(self, processed_data):
-        hash_val = hashlib.sha256(processed_data).hexdigest()
-        char_sum = sum(ord(c) for c in hash_val[:8] if c.isdigit() or c.isalpha())
-        return char_sum % 100
+    # Main processing logic
+    unique_values = list(set(data))
+    filtered = [x for x in unique_values if x % 2 == 0]
+    
+    # Misleading intermediate calculation
+    misleading_total = len(filtered) * multiplier + 5
+    
+    # Actual core computation with lambda
+    process_func = lambda x: x // 2 if x > 10 else x * 3
+    processed = list(map(process_func, filtered))
+    
+    # Dead code path that never executes
+    if len(processed) > 100:
+        dead_result = sum(processed) - 50
+    
+    # Set operations with bitwise distraction
+    base_set = {2, 4, 6, 8}
+    result_set = set(processed) | base_set
+    
+    # Final count calculation
+    count_func = lambda s: len([x for x in s if x % 4 == 0])
+    final_count = count_func(result_set)
+    
+    # More distractors
+    unused_var = temp_sum - misleading_total
+    
+    return final_count
 
-segment_registry = {
-    'segA': '48656c6c6f20',
-    'segB': '576f726c6421',
-    'segC': '47656e6f6d696373'
-}
-
-validator = GenomicValidator()
-intermediate_mask = 0x0F
-validation_score = 0
-
-with open('temp_seq.tmp', 'w') as f:
-    f.write(segment_registry['segA'])
-
-for seg_id, hex_data in segment_registry.items():
-    processed = process_genomic_segment(hex_data)
-    score_part = validator.update_validation(processed)
-    validation_score += score_part if (score_part & intermediate_mask) != 0 else -1
-
-print(f"Result: {validation_score}")
+# Main execution
+input_data = [3, 7, 12, 16, 12, 8, 20, 7, 24]
+result = process_sequence(input_data)
+print(f"Result: {result}")

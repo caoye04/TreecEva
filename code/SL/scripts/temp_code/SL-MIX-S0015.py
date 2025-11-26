@@ -1,27 +1,19 @@
-from statistics import mean
+from itertools import islice
 
-def track_bakery_sales():
-    prices = {'croissant': 2.50, 'baguette': 3.00, 'muffin': 1.75}
-    inventory = {'croissant': 20, 'baguette': 15, 'muffin': 25}
-    sales_log = [
-        {'croissant': 3, 'baguette': 2, 'muffin': 5},
-        {'croissant': 2, 'baguette': 4, 'muffin': 3},
-        {'croissant': 1, 'baguette': 1, 'muffin': 7},
-        {'croissant': 4, 'baguette': 3, 'muffin': 2}
-    ]
-    
-    total_revenue = 0.0
-    
-    for day_sales in sales_log:
-        for item, quantity in day_sales.items():
-            inventory[item] -= quantity
-            total_revenue += quantity * prices[item]
-        
-        # Greedy check: restock if any item drops below 10
-        if any(count < 10 for count in inventory.values()):
-            break
-    
-    return total_revenue
+data_stream = [42, 15, 87, 23, 56, 91, 34, 78, 12, 65]
 
-result = track_bakery_sales()
-print(f"Result: {result}")
+# Process data with lambda functions and itertools
+is_even = lambda x: x % 2 == 0
+transform_data = lambda x: x * 2 - 10
+
+# Create some intermediate computations
+processed_chunk = list(islice(data_stream, 5))
+temp_sum = sum(processed_chunk)
+scaling_factor = temp_sum // 10  # This value isn't used in final calculation
+
+# Main logic chain
+filtered_items = [transform_data(x) for x in data_stream if is_even(x)]
+redundant_calc = len(data_stream) * scaling_factor  # Distractor computation
+
+final_result = sorted(filtered_items)[-1]
+print(f"Result: {final_result}")

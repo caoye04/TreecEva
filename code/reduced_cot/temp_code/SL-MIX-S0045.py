@@ -1,33 +1,6 @@
-import itertools
-
-def hash_subseq(subseq):
-    return hash(''.join(subseq)) % 1000
-
-def is_palindrome(subseq):
-    return subseq == subseq[::-1]
-
-dna_sequence = "ATGCCGTAATGC"
-target_length = 4
-unique_hashes = set()
-palindrome_count = 0
-
-for i in range(len(dna_sequence) - target_length + 1):
-    subseq = dna_sequence[i:i+target_length]
-    if is_palindrome(subseq):
-        h = hash_subseq(subseq)
-        if h in unique_hashes:
-            palindrome_count += 1
-            break
-        else:
-            unique_hashes.add(h)
-    if len(unique_hashes) > 5:
-        break
-
-# Additional processing with itertools
-for combo in itertools.combinations(unique_hashes, 2):
-    if sum(combo) % 7 == 0:
-        palindrome_count += 1
-        if palindrome_count > 3:
-            break
-
-print(f"Result: {palindrome_count}")
+data_points = ['A1', 'B2', 'C3', 'D4', 'E5', 'F6', 'G7', 'H8', 'I9', 'J0']
+cleaned_set = {item.strip().upper() for item in data_points if len(item) == 2}
+digit_chars = [char for item in data_points for char in item if char.isdigit()]
+digit_count = len(digit_chars)
+final_count = len(cleaned_set) + digit_count
+print(f"Result: {final_count}")

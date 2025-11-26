@@ -1,0 +1,89 @@
+58
+final_output
+---
+46 incoming_packets = [150, 80, 220, 65, 180, 95, 120, 200]
+46 ['incoming_packets'] ['[150, 80, 220, 65, 180, ...]']
+47 threshold_config = {'base': 150, 'scale': 1.2}
+47 ['incoming_packets', 'threshold_config'] ['[150, 80, 220, 65, 180, ...]', '{base: 150, scale: 1.2}']
+50 total_packets = len(incoming_packets)
+50 ['incoming_packets', 'threshold_config', 'total_packets'] ['[150, 80, 220, 65, 180, ...]', '{base: 150, scale: 1.2}', '8']
+55 result = process_network_traffic(incoming_packets, threshold_config)
+55 ['incoming_packets', 'threshold_config', 'total_packets'] ['[150, 80, 220, 65, 180, ...]', '{base: 150, scale: 1.2}', '8']
+24 base_threshold = config['base']
+24 ['packets', 'config', 'base_threshold'] ['[150, 80, 220, 65, 180, ...]', '{base: 150, scale: 1.2}', '150']
+29 valid_packets = filter_packets(packets, base_threshold)
+29 ['packets', 'base_threshold'] ['[150, 80, 220, 65, 180, ...]', '150']
+PARAM_MAPPING {'packet_list': {'actual_var': 'packets', 'value': [150, 80, 220, 65, 180, 95, 120, 200]}, 'threshold': {'actual_var': 'base_threshold', 'value': 150}}
+FUNCTION_ENTER 8 filter_packets def filter_packets(packet_list, threshold):
+8 ['packet_list', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 150}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 220}, {'_type': 'int', '_value': 65}, {'_type': 'int', '_value': 180}, {'_type': 'int', '_value': 95}, {'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 200}], '_len': 8}, {'_type': 'int', '_value': 150}]
+9 filtered = [p for p in packet_list if p <= threshold]
+9 ['packet_list', 'threshold', 'p'] ['[150, 80, 220, 65, 180, ...]', '150', '150']
+9 filtered = [p for p in packet_list if p <= threshold]
+9 ['packet_list', 'threshold', 'p'] ['[150, 80, 220, 65, 180, ...]', '150', '80']
+9 filtered = [p for p in packet_list if p <= threshold]
+9 ['packet_list', 'threshold', 'p'] ['[150, 80, 220, 65, 180, ...]', '150', '220']
+9 filtered = [p for p in packet_list if p <= threshold]
+9 ['packet_list', 'threshold', 'p'] ['[150, 80, 220, 65, 180, ...]', '150', '65']
+9 filtered = [p for p in packet_list if p <= threshold]
+9 ['packet_list', 'threshold', 'p'] ['[150, 80, 220, 65, 180, ...]', '150', '180']
+9 filtered = [p for p in packet_list if p <= threshold]
+9 ['packet_list', 'threshold', 'p'] ['[150, 80, 220, 65, 180, ...]', '150', '95']
+9 filtered = [p for p in packet_list if p <= threshold]
+9 ['packet_list', 'threshold', 'p'] ['[150, 80, 220, 65, 180, ...]', '150', '120']
+9 filtered = [p for p in packet_list if p <= threshold]
+9 ['packet_list', 'threshold', 'p'] ['[150, 80, 220, 65, 180, ...]', '150', '200']
+9 filtered = [p for p in packet_list if p <= threshold]
+9 ['packet_list', 'threshold', 'filtered'] ['[150, 80, 220, 65, 180, ...]', '150', '[150, 80, 65, 95, 120]']
+13 return filtered
+13 ['filtered'] ['[150, 80, 65, 95, 120]']
+FUNCTION_RETURN 13 filter_packets {'_type': 'list', '_items': [{'_type': 'int', '_value': 150}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 65}, {'_type': 'int', '_value': 95}, {'_type': 'int', '_value': 120}], '_len': 5}
+PARAM_MAPPING {'packets': {'actual_var': 'valid_packets', 'value': [150, 80, 65, 95, 120]}}
+FUNCTION_ENTER 1 analyze_packet_flow def analyze_packet_flow(packets):
+1 ['packets'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 150}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 65}, {'_type': 'int', '_value': 95}, {'_type': 'int', '_value': 120}], '_len': 5}]
+3 flow_rate = len(packets) * 0.25
+3 ['packets', 'flow_rate'] ['[150, 80, 65, 95, 120]', '1.25']
+4 max_capacity = 1000
+4 ['flow_rate', 'max_capacity'] ['1.25', '1000']
+5 utilization = (flow_rate / max_capacity) * 100
+5 ['flow_rate', 'max_capacity', 'utilization'] ['1.25', '1000', '0.125']
+6 return utilization
+6 ['utilization'] ['0.125']
+FUNCTION_RETURN 6 analyze_packet_flow {'_type': 'float', '_value': 0.125}
+35 checksum = calculate_xor_sum(valid_packets)
+35 ['valid_packets'] ['[150, 80, 65, 95, 120]']
+PARAM_MAPPING {'data': {'actual_var': 'valid_packets', 'value': [150, 80, 65, 95, 120]}}
+FUNCTION_ENTER 15 calculate_xor_sum def calculate_xor_sum(data):
+15 ['data'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 150}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 65}, {'_type': 'int', '_value': 95}, {'_type': 'int', '_value': 120}], '_len': 5}]
+17 result = 0
+17 ['data', 'result'] ['[150, 80, 65, 95, 120]', '0']
+18 for value in data:
+18 ['data', 'result', 'value'] ['[150, 80, 65, 95, 120]', '0', '150']
+19 result ^= (value & 0xFF)  # Mask to byte range
+19 ['data', 'result', 'value'] ['[150, 80, 65, 95, 120]', '150', '150']
+18 for value in data:
+18 ['data', 'result', 'value'] ['[150, 80, 65, 95, 120]', '150', '80']
+19 result ^= (value & 0xFF)  # Mask to byte range
+19 ['data', 'result', 'value'] ['[150, 80, 65, 95, 120]', '198', '80']
+18 for value in data:
+18 ['data', 'result', 'value'] ['[150, 80, 65, 95, 120]', '198', '65']
+19 result ^= (value & 0xFF)  # Mask to byte range
+19 ['data', 'result', 'value'] ['[150, 80, 65, 95, 120]', '135', '65']
+18 for value in data:
+18 ['data', 'result', 'value'] ['[150, 80, 65, 95, 120]', '135', '95']
+19 result ^= (value & 0xFF)  # Mask to byte range
+19 ['data', 'result', 'value'] ['[150, 80, 65, 95, 120]', '216', '95']
+18 for value in data:
+18 ['data', 'result', 'value'] ['[150, 80, 65, 95, 120]', '216', '120']
+19 result ^= (value & 0xFF)  # Mask to byte range
+19 ['data', 'result', 'value'] ['[150, 80, 65, 95, 120]', '160', '120']
+18 for value in data:
+18 ['data', 'result', 'value'] ['[150, 80, 65, 95, 120]', '160', '120']
+20 return result
+20 ['result'] ['160']
+FUNCTION_RETURN 20 calculate_xor_sum {'_type': 'int', '_value': 160}
+38 final_result = (checksum << 2) | (len(valid_packets) & 0x3)
+38 ['valid_packets', 'checksum', 'final_result'] ['[150, 80, 65, 95, 120]', '160', '641']
+43 return final_result
+43 ['final_result'] ['641']
+58 final_output = result + (total_packets % 4)  # Minor adjustment
+58 ['total_packets', 'result', 'final_output'] ['8', '641', '641']

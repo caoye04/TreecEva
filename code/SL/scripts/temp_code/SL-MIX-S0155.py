@@ -1,47 +1,28 @@
-from dataclasses import dataclass
-from functools import wraps
+def process_inventory_data():
+    inventory_records = [45, 78, 23, 91, 56, 34, 67, 12, 89, 44]
+    threshold = 50
+    
+    # Calculate valid items above threshold
+    valid_items = [item for item in inventory_records if item > threshold]
+    valid_sum = sum(valid_items)
+    
+    # Calculate items below threshold (distractor - not used in final result)
+    low_items = [item for item in inventory_records if item <= threshold]
+    low_count = len(low_items)
+    
+    # Process special categories (partial distractor)
+    high_value = [item for item in inventory_records if item > 75]
+    medium_value = [item for item in inventory_records if 40 <= item <= 75]
+    
+    # Calculate invalid sum from set operations
+    all_items_set = set(inventory_records)
+    processed_set = set(valid_items)
+    invalid_items = all_items_set - processed_set
+    invalid_sum = sum(invalid_items)
+    
+    # Final calculation
+    final_result = valid_sum - invalid_sum
+    
+    print(f"Result: {final_result}")
 
-def modular_transform(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result % 17
-    return wrapper
-
-@dataclass
-class ParticleState:
-    id: int
-    spin: int
-    entangled: bool = False
-
-@modular_transform
-def calculate_entanglement(particles):
-    total = 0
-    for particle in particles:
-        if particle.entangled:
-            total += particle.spin * 3
-        else:
-            total -= particle.spin * 2
-    return total
-
-particles = [
-    ParticleState(1, 5, True),
-    ParticleState(2, 3, False),
-    ParticleState(3, 7, True),
-    ParticleState(4, 2, True),
-    ParticleState(5, 4, False)
-]
-
-entanglement_index = calculate_entanglement(particles)
-
-for i in range(len(particles)):
-    if particles[i].spin > 4:
-        particles[i].entangled = not particles[i].entangled
-        if particles[i].entangled:
-            entanglement_index += particles[i].spin
-            break
-    else:
-        entanglement_index -= particles[i].spin
-
-entanglement_index = (entanglement_index * 3) % 19
-print(f"Result: {entanglement_index}")
+process_inventory_data()

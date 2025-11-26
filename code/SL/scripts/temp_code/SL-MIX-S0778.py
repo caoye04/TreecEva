@@ -1,43 +1,45 @@
-class TraderNode:
-    def __init__(self, pair, volume):
-        self.pair = pair
-        self.volume = volume
-        self.next = None
+from collections import Counter
 
-def build_trader_list():
-    head = TraderNode(('USD', 'EUR'), 1500)
-    head.next = TraderNode(('EUR', 'JPY'), 2300)
-    head.next.next = TraderNode(('JPY', 'GBP'), 800)
-    head.next.next.next = TraderNode(('GBP', 'USD'), 3100)
-    return head
+def analyze_sensor_readings(readings):
+    # Irrelevant sensor processing (distractor)
+    temp_variance = sum([(r - sum(readings)/len(readings))**2 for r in readings]) / len(readings)
+    max_reading = max(readings)
+    min_reading = min(readings)
+    return temp_variance + max_reading - min_reading  # Unused calculation
 
-def process_exchanges(trader_head):
-    max_volume = 0
-    current = trader_head
+def process_data_point(data):
+    # Main computation path with multiple steps
+    processed_values = [x * 2 if x % 3 == 0 else x + 5 for x in data]
     
-    while current and (current.pair[0] != 'INVALID' or current.volume > 0):
-        if current.volume > max_volume and current.pair[0] in ['USD', 'EUR', 'JPY']:
-            max_volume = current.volume
-        current = current.next
+    # Misleading intermediate calculations
+    irrelevant_sum = sum([x**2 for x in processed_values])  # Distractor
+    filtered_data = [x for x in processed_values if x > 15]
     
-    return max_volume
+    # Dead code path that's never executed
+    if len(filtered_data) > 100:
+        unused_result = irrelevant_sum / len(filtered_data)
+    
+    # Key computation with bitwise operations
+    bitwise_result = (processed_values[0] & 0b1111) | (processed_values[1] << 2)
+    
+    # Final relevant calculation
+    counter_data = Counter(filtered_data)
+    final_value = sum([k * v for k, v in counter_data.items()]) + bitwise_result
+    
+    return final_value
 
-from functools import wraps
-def volume_monitor(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result
-    return wrapper
+# Main execution
+sensor_data = [8, 12, 6, 18, 9, 21]
 
-@volume_monitor
-def calculate_max_volume():
-    traders = build_trader_list()
-    return process_exchanges(traders)
+# Distractor function calls and variables
+sensor_analysis = analyze_sensor_readings(sensor_data)
+redundant_calc = sensor_analysis * 2 - 15  # Never used
 
-from collections import defaultdict
-exchange_stats = defaultdict(int)
-exchange_stats['processed'] += 1
+# Critical data processing
+processed_readings = [x + 3 if x % 2 == 0 else x - 2 for x in sensor_data]
+analyzed_results = [x for x in processed_readings if x % 3 != 0]
 
-max_volume = calculate_max_volume()
-print(f"Result: {max_volume}")
+# Final key statement
+final_computation = process_data_point(analyzed_results)
+
+print(f"Target result: {final_computation}")

@@ -81,7 +81,7 @@ class CoTGenerator:
             self.dataset = json.load(f)
         print(f"✓ Loaded dataset with {len(self.dataset) - 1} tasks")
     
-    def call_api(self, prompt, api_name="qwen3_coder", system_prompt=None):
+    def call_api(self, prompt, api_name="DeepSeek-V3.2-Exp", system_prompt=None):
         """调用AI API生成CoT (线程安全)"""
         api_config = AI_APIS[api_name]
         
@@ -262,7 +262,7 @@ Your response should enable someone to apply this methodology to solve the probl
                 "raw_response": response[:500]
             }
 
-    def generate_cot_for_task(self, task_data, api_name="qwen3_coder", max_retries=3):
+    def generate_cot_for_task(self, task_data, api_name="DeepSeek-V3.2-Exp", max_retries=3):
         """
         为单个任务生成CoT (线程安全)
         
@@ -424,7 +424,7 @@ Your response should enable someone to apply this methodology to solve the probl
             with open(DATASET_PATH, 'w', encoding='utf-8') as f:
                 json.dump(self.dataset, f, indent=2, ensure_ascii=False)
 
-    def update_dataset_with_cot(self, api_name="qwen3_coder", skip_existing=True):
+    def update_dataset_with_cot(self, api_name="DeepSeek-V3.2-Exp", skip_existing=True):
         """
         并行为所有任务生成CoT并更新数据集
         
@@ -535,7 +535,7 @@ Your response should enable someone to apply this methodology to solve the probl
             "elapsed_time": elapsed_time
         }
 
-    def regenerate_specific_tasks(self, task_ids, api_name="qwen3_coder"):
+    def regenerate_specific_tasks(self, task_ids, api_name="DeepSeek-V3.2-Exp"):
         """
         并行重新生成指定任务的CoT
         
@@ -633,7 +633,7 @@ Your response should enable someone to apply this methodology to solve the probl
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Generate Chain of Thought for code reasoning tasks (with parallel processing)")
-    parser.add_argument("--api", default="qwen3_coder",
+    parser.add_argument("--api", default="DeepSeek-V3.2-Exp",
     choices=list(AI_APIS.keys()),
     help="API to use for CoT generation")
     parser.add_argument("--no-skip", action="store_true",

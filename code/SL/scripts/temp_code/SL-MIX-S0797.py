@@ -1,22 +1,9 @@
-def preparation_tracker(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result * 1.15
-    return wrapper
+def count_valid_permutations(n):
+    values = [i for i in range(1, n+1)]
+    pairs = [(x, y) for x in values for y in values if x != y]
+    filtered_pairs = [(a, b) for a, b in pairs if (a + b) % 3 == 0 and (a * b) > 8]
+    temp_check = len([p for p in filtered_pairs if p[0] < p[1]])
+    final_count = len(filtered_pairs)
+    print(f"Result: {final_count}")
 
-def get_base_time(pastry_type):
-    switcher = {
-        'croissant': 45,
-        'muffin': 20,
-        'danish': 35
-    }
-    return switcher.get(pastry_type, 0)
-
-@preparation_tracker
-def calculate_preparation_time(base_time):
-    return base_time
-
-pastry = 'croissant'
-base_preparation_time = get_base_time(pastry)
-final_preparation_time = calculate_preparation_time(base_preparation_time)
-print(f'Result: {final_preparation_time}')
+count_valid_permutations(6)

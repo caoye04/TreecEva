@@ -1,57 +1,40 @@
-import math
-from contextlib import contextmanager
-
-def log_decorator(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return result
-    return wrapper
-
-class StateMachine:
-    def __init__(self):
-        self.state = 'IDLE'
+def analyze_data_sequence(data_stream):
+    # Distractor: Calculate sum that won't be used
+    total_sum = sum(x * 2 for x in data_stream)
     
-    @log_decorator
-    def process(self, input_signal):
-        if self.state == 'IDLE' and input_signal > 0:
-            self.state = 'ACTIVE'
-            return 1
-        elif self.state == 'ACTIVE':
-            if input_signal == 0:
-                self.state = 'LATCHED'
-                return 2
-            else:
-                return (input_signal ** 2) % 7
-        elif self.state == 'LATCHED':
-            if input_signal < 0:
-                self.state = 'ERROR'
-                return -1
-            else:
-                return int(math.log(input_signal + 1)) if input_signal > 0 else 0
-        else:  # ERROR state
-            return 0
+    # Relevant: Process data with enumerate and slicing
+    processed_values = []
+    for idx, value in enumerate(data_stream):
+        if idx % 2 == 0 and value > 5:
+            processed_values.append(value // 2)
+    
+    # Distractor: Create lambda that won't be used
+    square_lambda = lambda x: x ** 2
+    
+    # Relevant: Use zip and slicing for validation
+    first_half = processed_values[:len(processed_values)//2]
+    second_half = processed_values[len(processed_values)//2:]
+    
+    validation_results = []
+    for a, b in zip(first_half, second_half):
+        if (a + b) % 3 == 0:
+            validation_results.append(a + b)
+    
+    # Distractor: Calculate average that won't be used
+    if validation_results:
+        avg_result = sum(validation_results) / len(validation_results)
+    else:
+        avg_result = 0
+    
+    # Relevant: Final count logic
+    valid_entries_counter = len(validation_results)
+    
+    # Distractor: Additional computation that won't affect result
+    temp_adjustment = valid_entries_counter * 2 - 5
+    
+    final_count = valid_entries_counter
+    print(f"Result: {final_count}")
 
-@contextmanager
-def circuit_context():
-    sm = StateMachine()
-    try:
-        yield sm
-    finally:
-        pass
-
-signals = [3, -1, 5, 0, 2, -3]
-circuit_output = 0
-
-with circuit_context() as machine:
-    for i, sig in enumerate(signals):
-        intermediate = machine.process(sig)
-        if i % 2 == 0:
-            circuit_output = circuit_output | intermediate
-        else:
-            circuit_output = circuit_output & (intermediate ^ ((sig * 3) % 5))
-        
-        # Short-circuit evaluation check
-        if circuit_output > 10 or (circuit_output < 0 and machine.state != 'ERROR'):
-            circuit_output = circuit_output ^ 0xF
-
-print(f"Result: {circuit_output}")
+# Main execution
+input_data = [8, 3, 12, 7, 9, 4, 15, 6, 11, 2]
+analyze_data_sequence(input_data)

@@ -1,0 +1,25 @@
+32
+final_metric
+---
+4 text_sample = "algorithm data structure optimization performance efficiency algorithm data structure complexity"
+4 ['text_sample'] ["'algorithm data structure optimization performance efficiency algorithm data structure complexity'"]
+5 words = text_sample.split()
+5 ['text_sample', 'words'] ["'algorithm data structure optimization performance efficiency algorithm data structure complexity'", "['algorithm', 'data', 'structure', 'optimization', 'performance', ...]"]
+8 word_counts = Counter(words)
+8 ['words', 'word_counts'] ["['algorithm', 'data', 'structure', 'optimization', 'performance', ...]", '{algorithm: 2, data: 2, structure: 2, ...}']
+9 unique_words = len(word_counts)
+9 ['words', 'word_counts', 'unique_words'] ["['algorithm', 'data', 'structure', 'optimization', 'performance', ...]", '{algorithm: 2, data: 2, structure: 2, ...}', '7']
+10 total_words = len(words)
+10 ['words', 'word_counts', 'unique_words', 'total_words'] ["['algorithm', 'data', 'structure', 'optimization', 'performance', ...]", '{algorithm: 2, data: 2, structure: 2, ...}', '7', '10']
+13 most_common_count = word_counts.most_common(1)[0][1]
+13 ['word_counts', 'unique_words', 'total_words', 'most_common_count'] ['{algorithm: 2, data: 2, structure: 2, ...}', '7', '10', '2']
+21 base_score = sum(word_counts.values()) * 2
+21 ['word_counts', 'unique_words', 'total_words', 'most_common_count', 'base_score'] ['{algorithm: 2, data: 2, structure: 2, ...}', '7', '10', '2', '20']
+22 adjusted_base = base_score - (unique_words * 3)
+22 ['unique_words', 'total_words', 'most_common_count', 'base_score', 'adjusted_base'] ['7', '10', '2', '20', '-1']
+28 processed_sum = adjusted_base + (total_words // 2)
+28 ['total_words', 'most_common_count', 'adjusted_base', 'processed_sum'] ['10', '2', '-1', '4']
+29 adjustment_factor = (most_common_count - 1) * 2
+29 ['most_common_count', 'processed_sum', 'adjustment_factor'] ['2', '4', '2']
+32 final_metric = processed_sum - adjustment_factor
+32 ['processed_sum', 'adjustment_factor', 'final_metric'] ['4', '2', '2']

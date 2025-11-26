@@ -1,62 +1,43 @@
-def fibonacci_primes(limit):
-    fib = [0, 1]
-    while len(fib) < limit:
-        fib.append(fib[-1] + fib[-2])
+def compute_data_checksum(data_points):
+    # Initial processing - irrelevant for final result
+    temp_buffer = [x * 2 for x in data_points if x % 3 == 0]
+    offset_calc = sum(temp_buffer) // len(temp_buffer) if temp_buffer else 0
     
-    def is_prime(n):
-        if n <= 1:
-            return False
-        if n <= 3:
-            return True
-        if n % 2 == 0 or n % 3 == 0:
-            return False
-        i = 5
-        while i * i <= n:
-            if n % i == 0 or n % (i + 2) == 0:
-                return False
-            i += 6
-        return True
+    # Main computation path
+    valid_entries = [x for x in data_points if x > 0]
+    checksum_candidates = []
     
-    prime_fibs = []
-    for i in range(2, len(fib)):
-        if is_prime(fib[i]):
-            prime_fibs.append(fib[i])
-    return prime_fibs[:8]  # Get first 8 prime Fibonacci numbers
-
-# Get prime Fibonacci numbers
-prime_fib_sequence = fibonacci_primes(20)
-
-# Convert to frozenset for immutable operations
-prime_set = frozenset(prime_fib_sequence)
-
-# Bitwise operations using lambda
-xor_operation = lambda x, y: x ^ y
-and_operation = lambda x, y: x & y
-or_operation = lambda x, y: x | y
-
-# Initialize key components
-key_a = 0
-key_b = 0
-
-# Process prime set with bitwise operations
-for p in sorted(prime_set)[:4]:
-    key_a = xor_operation(key_a, p << 2)  # Left shift by 2
+    for entry in valid_entries:
+        # Distractor: intermediate calculations that don't affect final result
+        parity_check = entry & 0x01
+        if parity_check:
+            checksum_candidates.append(entry * 3 - 7)
+        else:
+            checksum_candidates.append(entry + 15)
     
-for p in sorted(prime_set)[4:]:
-    key_b = or_operation(key_b, p >> 1)   # Right shift by 1
+    # Final computation
+    if checksum_candidates:
+        base_sum = sum(checksum_candidates[:len(checksum_candidates)//2])
+        adjustment = sum(checksum_candidates[len(checksum_candidates)//2:]) % 100
+        final_sum = base_sum + adjustment
+    else:
+        final_sum = -999  # Dead code path
+    
+    # More irrelevant computations
+    redundant_calc = offset_calc * 2 + 5
+    dummy_var = redundant_calc // 3
+    
+    return final_sum
 
-# Apply modular arithmetic
-modulus = 1024
-key_a = key_a % modulus
-key_b = key_b % modulus
+# Main execution
+raw_data = [12, 7, 4, 9, 15, 2, 8, 11, 6]
 
-# Combine keys using AND operation
-combined_key = and_operation(key_a, key_b)
+# Distractor: multiple variable assignments
+preliminary_sum = sum(raw_data)
+filtered_data = [x for x in raw_data if x % 2 == 1]
+processed_data = [x + 2 for x in raw_data[:5]]
 
-# Greedy selection of maximum contributing prime
-max_prime = max(prime_set)
+# Key statement
+result = compute_data_checksum(processed_data)
 
-# Final master key computation
-master_key = (combined_key ^ max_prime) % 512
-
-print(f"Result: {master_key}")
+print(f"Target result: {result}")

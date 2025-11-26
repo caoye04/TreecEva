@@ -1,12 +1,11 @@
-book_prices = {'fiction': 15, 'science': 25, 'history': 20}
-selected_categories = ['fiction', 'history']
-discount_threshold = 30
-discount_rate = 0.1
+def compute_final(data):
+    process_values = lambda x: x * 2 if x > 10 else x + 5
+    intermediate = process_values(data)
+    if intermediate > 25:
+        return intermediate - 8
+    return intermediate + 3
 
-# Calculate total bill using dictionary comprehension
-total_bill = sum({cat: book_prices[cat] for cat in selected_categories}.values())
-
-# Apply discount using short-circuit evaluation
-final_bill = total_bill * (1 - discount_rate) if total_bill >= discount_threshold else total_bill
-
-print(f'Result: {final_bill}')
+initial_value = 15
+result_data = initial_value * 2
+final_score = compute_final(result_data)
+print(f"Target result: {final_score}")

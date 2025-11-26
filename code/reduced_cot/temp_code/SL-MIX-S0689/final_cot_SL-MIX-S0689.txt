@@ -1,0 +1,49 @@
+Target: Find the value of variable final_checksum after [line 47] executes
+
+[line 47]  final_checksum = process_inventory_data(inventory_items)
+Call function process_inventory_data(inventory_items=[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}] (an unknown source))
+[line 1]  def process_inventory_data(items):
+Enter function process_inventory_data: items=[{id: 101, name: 'laptop', quantity: 15, ...}, {id: 102, name: 'monitor', quantity: 8, ...}, {id: 103, name: 'keyboard', quantity: 25, ...}, {id: 104, name: 'mouse', quantity: 30, ...}]
+  [line 11]  checksum = 0
+  Assign: checksum = 0
+  [line 12]  processed_count = 0
+  Assign: processed_count = 0
+  [line 14]  for item in items:
+  Loop Start: item takes its first value {id: 101, name: 'laptop', quantity: 15, ...}
+  [line 19]  if item['status'] == 'active':
+  Condition: True, entering 'if' block
+  [line 21]  processed_count += 1
+  Update: processed_count changed from 0 (defined at defined at [line 12]) to 0+1 = 1
+  [line 24]  if item['category'] == 'electronics':
+  Condition: True, entering 'if' block
+  [line 14]  for item in items:
+  Loop Iteration: item is now {id: 102, name: 'monitor', quantity: 8, ...} (iteration 2)
+  [line 19]  if item['status'] == 'active':
+  Condition: True, entering 'if' block
+  [line 21]  processed_count += 1
+  Update: processed_count changed from 1 (defined at defined at [line 21]) to 1+1 = 2
+  [line 24]  if item['category'] == 'electronics':
+  Condition: True, entering 'if' block
+  [line 14]  for item in items:
+  Loop Iteration: item is now {id: 103, name: 'keyboard', quantity: 25, ...} (iteration 3)
+  [line 19]  if item['status'] == 'active':
+  Condition: True, entering 'if' block
+  [line 24]  if item['category'] == 'electronics':
+  Condition: True, entering 'if' block
+  [line 14]  for item in items:
+  Loop Iteration: item is now {id: 104, name: 'mouse', quantity: 30, ...} (iteration 4)
+  [line 19]  if item['status'] == 'active':
+  Condition: True, entering 'if' block
+  [line 21]  processed_count += 1
+  Update: processed_count changed from 2 (defined at defined at [line 21]) to 2+1 = 3
+  [line 24]  if item['category'] == 'electronics':
+  Condition: True, entering 'if' block
+  [line 14]  for item in items:
+  Loop End: Iteration finished
+  [line 31]  checksum = (checksum + processed_count) & 0xFFFF
+  Compute: (checksum + processed_count) & 0xFFFF, where checksum=459 (defined at [line 11]), processed_count=3 (defined at [line 21]) = 462
+  [line 32]  return checksum
+  Return: checksum=462 (defined at [line 31])
+Function process_inventory_data returns 462
+
+Answer: final_checksum = 462 (last updated on defined at [line 47])

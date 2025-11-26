@@ -1,59 +1,49 @@
-def process_lexical_signature(documents):
-    # Tokenize and hash each word
-    token_hashes = [
-        hash(token.lower())
-        for doc in documents
-        for token in doc.replace(',', '').split()
-        if len(token) > 2
-    ]
+def process_temperature_data(sensor_readings):
+    base_temp = 20
+    calibration_offset = 3
+    debug_counter = 0
+    irrelevant_multiplier = 7
     
-    # Apply divide-and-conquer sorting
-    def merge_sort(arr):
-        if len(arr) <= 1:
-            return arr
-        mid = len(arr) // 2
-        left = merge_sort(arr[:mid])
-        right = merge_sort(arr[mid:])
-        return merge(left, right)
+    # Distractor: complex calculation that's not used
+    unused_value = (base_temp * irrelevant_multiplier) // calibration_offset + 15
     
-    def merge(left, right):
-        result = []
-        i = j = 0
-        while i < len(left) and j < len(right):
-            if left[i] <= right[j]:
-                result.append(left[i])
-                i += 1
-            else:
-                result.append(right[j])
-                j += 1
-        result.extend(left[i:])
-        result.extend(right[j:])
-        return result
+    temp_adjustments = []
+    processed_values = []
     
-    sorted_hashes = merge_sort(token_hashes)
+    for i, reading in enumerate(sensor_readings):
+        # Misleading intermediate calculation
+        temp_variance = reading % 4
+        debug_counter += temp_variance * 2
+        
+        if i % 2 == 0:
+            adjustment = reading + calibration_offset
+        else:
+            adjustment = reading - calibration_offset
+        
+        # Dead code path that never executes
+        if reading > 100:
+            emergency_adjust = reading // 2
+            processed_values.append(emergency_adjust)
+        
+        temp_adjustments.append(adjustment)
+        
+        # Conditional expression for processing
+        processed_val = adjustment * 2 if adjustment < base_temp else adjustment // 2
+        processed_values.append(processed_val)
     
-    # Create signature using set operations
-    unique_tokens = frozenset(sorted_hashes)
-    signature_elements = [
-        h for h in sorted_hashes
-        if (h % 7 == 0) and (h not in set(sorted_hashes[:-3]))
-    ]
+    # Another distractor calculation
+    total_debug = debug_counter + len(sensor_readings)
     
-    # Compute final signature hash
-    signature_hash = sum(
-        map(lambda x: x & 0xFF, signature_elements)
-    ) ^ len(unique_tokens)
+    # Zip with offsets for additional complexity
+    zipped_data = list(zip(temp_adjustments, processed_values))
     
-    return signature_hash
+    # Final calculation with integer division
+    final_temperature = temp_adjustments[-1]
+    
+    print(f"Debug total: {total_debug}")
+    print(f"Result: {final_temperature}")
+    return final_temperature
 
-# Document corpus
-archive = [
-    "The quick brown fox jumps over the lazy dog",
-    "Pack my box with five dozen liquor jugs",
-    "How vexingly quick daft zebras jump!",
-    "Bright vixens jump; dozy fowl quack"
-]
-
-# Process the documents
-signature_hash = process_lexical_signature(archive)
-print(f"Result: {signature_hash}")
+# Main execution
+sensor_data = [15, 22, 18, 25, 20, 28]
+final_temp = process_temperature_data(sensor_data)

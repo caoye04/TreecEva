@@ -1,20 +1,51 @@
-Target: Find the value of variable final_batch_cost after [line 17] executes
+Target: Find the value of variable final_balance after [line 35] executes
 
-[line 8]  return wrapper
-Return: wrapper
-[line 17]  final_batch_cost = compute_batch_expense(10.5, 5.2, 200)
-Call function compute_batch_expense(10.5, 5.2, 200)
-[line 6]  base_price = func(*args, **kwargs)
-Call function func(*args, **kwargs)
-[line 12]  flour_cost = flour_kg * 3.50
-Compute: flour_kg * 3.50, where flour_kg=10.5 (an unknown source) = 36.75
-[line 13]  butter_cost = butter_kg * 7.80
-Compute: butter_kg * 7.80, where butter_kg=5.2 (an unknown source) = 40.56
-[line 14]  yeast_cost = yeast_units * 0.15
-Compute: yeast_units * 0.15, where yeast_units=200 (an unknown source) = 30.0
-[line 15]  return flour_cost + butter_cost + yeast_cost
-Return: flour_cost + butter_cost + yeast_cost
-[line 7]  return round(base_price * 1.2, 2)
-Return: round(base_price * 1.2, 2)
+[line 9]  volume_sum = sum(abs(amt) for _, amt in trades)
+Call function sum(abs(amt) for _, amt in trades)
+[line 9]  volume_sum = sum(abs(amt) for _, amt in trades)
+Call function sum(abs(amt) for _, amt in trades)
+[line 9]  volume_sum = sum(abs(amt) for _, amt in trades)
+Call function sum(abs(amt) for _, amt in trades)
+[line 9]  volume_sum = sum(abs(amt) for _, amt in trades)
+Call function sum(abs(amt) for _, amt in trades)
+[line 9]  volume_sum = sum(abs(amt) for _, amt in trades)
+Call function sum(abs(amt) for _, amt in trades)
+[line 9]  volume_sum = sum(abs(amt) for _, amt in trades)
+Call function sum(abs(amt) for _, amt in trades)
+[line 9]  volume_sum = sum(abs(amt) for _, amt in trades)
+Call function sum(abs(amt) for _, amt in trades)
+[line 10]  temp_multiplier = (volume_sum % 17) + 3
+Compute: (volume_sum % 17) + 3, where volume_sum=5000 (defined at [line 9]) = 5
+[line 13]  if volume_sum > 10000:
+Condition: True, entering 'if' block
+[line 17]  balance = capital
+Compute: capital, where capital=10000 (an unknown source) = 10000
+[line 18]  for symbol, amount in trades:
+(Missing param: 'iter_var')
+[line 25]  if amount > 0:
+Condition: True, entering 'if' block
+[line 26]  balance += amount * (1 - 0.02)  # 2% fee on buys
+Update: balance changed from 10000 (defined at defined at [line 17]) to 10000+amount * (1 - 0.02)  # 2% fee on buys = 11470.0
+[line 18]  for symbol, amount in trades:
+(Missing param: 'iter_var')
+[line 25]  if amount > 0:
+Condition: True, entering 'if' block
+[line 28]  balance += amount * (1 + 0.01)  # 1% fee on sells
+Update: balance changed from 11470.0 (defined at defined at [line 26]) to 11470.0+amount * (1 + 0.01)  # 1% fee on sells = 10662.0
+... [Line 18] repeats 2 more times ...
+... [Line 18] repeats 2 more times ...
+... [Line 18] repeats 2 more times ...
+[line 18]  for symbol, amount in trades:
+(Missing param: 'iter_var')
+[line 25]  if amount > 0:
+Condition: True, entering 'if' block
+[line 26]  balance += amount * (1 - 0.02)  # 2% fee on buys
+Update: balance changed from 11232.0 (defined at defined at [line 28]) to 11232.0+amount * (1 - 0.02)  # 2% fee on buys = 12114.0
+[line 18]  for symbol, amount in trades:
+Loop End: Iteration finished
+[line 34]  fee_adjustment = len([amt for _, amt in trades if amt > 0]) * 5
+Compute: len([amt for _, amt in trades if amt > 0]) * 5, where amt=1500 (an unknown source), _='AAPL' (an unknown source), trades=[('AAPL', 1500), ('MSFT', -800), ('GOOGL', 1200), ('AAPL', -600), ('TSLA', 900)] (an unknown source) = ?
+[line 35]  final_balance = balance - fee_adjustment + (temp_multiplier % 7)
+Compute: balance - fee_adjustment + (temp_multiplier % 7), where balance=12114.0 (defined at [line 26]), fee_adjustment=15 (defined at [line 34]), temp_multiplier=5 (defined at [line 10]) = 12104.0
 
-Answer: final_batch_cost = ? (last updated on defined at [line 17])
+Answer: final_balance = 12104.0 (last updated on defined at [line 35])

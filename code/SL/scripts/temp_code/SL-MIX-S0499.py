@@ -1,17 +1,16 @@
-import re
+route_points = [25, 42, 18, 56, 33]
+checkpoint_times = [10, 25, 40, 55, 70]
 
-def adjust_quantities(recipe, factor):
-    if not recipe:
-        return {}
-    return {k: v * factor if isinstance(v, (int, float)) else adjust_quantities(v, factor) for k, v in recipe.items()}
+enumerate_distances = []
+for idx, point in enumerate(route_points):
+    if idx < len(route_points) - 1:
+        distance_segment = route_points[idx + 1] - point
+        enumerate_distances.append(abs(distance_segment))
 
-base_recipe = {'flour': 2, 'sugar': 1, 'eggs': 3}
-special_additions = {'chocolate_chips': 0.5, 'vanilla_extract': 0.2}
+# Calculate total distance
+auxiliary_sum = 0
+for dist in enumerate_distances:
+    auxiliary_sum += dist
 
-updated_recipe = {**base_recipe, **special_additions}
-adjusted_recipe = adjust_quantities(updated_recipe, 2)
-
-pattern = r'^(chocolate|vanilla).*'
-final_quantity = sum(v for k, v in adjusted_recipe.items() if re.match(pattern, k))
-
-print(f"Result: {final_quantity}")
+total_distance = sum(enumerate_distances)
+print(f"Result: {total_distance}")

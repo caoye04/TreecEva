@@ -1,0 +1,42 @@
+Target: Find the value of variable final_metric after [line 41] executes
+
+[line 17]  input_sequence = [15, 28, 42, 67, 91, 104]
+Compute: [15, 28, 42, 67, 91, 104] = [15, 28, 42, 67, 91, ...]
+[line 18]  base_offset = 17
+Assign: base_offset = 17
+[line 5]  char_counts = {}
+Compute: {} = {}
+[line 6]  for char in text_sample:
+Loop Start: char takes its first value 'b'
+[line 7]  char_counts[char] = char_counts.get(char, 0) + 1
+(Missing param: 'result')
+[line 6]  for char in text_sample:
+Loop Iteration: char is now 'e' (iteration 2)
+[line 7]  char_counts[char] = char_counts.get(char, 0) + 1
+(Missing param: 'result')
+... [Line 6] repeats 17 more times ...
+... [Line 6] repeats 17 more times ...
+[line 6]  for char in text_sample:
+Loop Iteration: char is now 'n' (iteration 20)
+[line 7]  char_counts[char] = char_counts.get(char, 0) + 1
+(Missing param: 'result')
+[line 6]  for char in text_sample:
+Loop End: Iteration finished
+[line 8]  return sum(char_counts.values())  # Returns length, not used
+Return: sum(char_counts.values())  # Returns length, not used
+[line 26]  filtered_data = [x for x in input_sequence if x % 4 != 0]
+Compute: [x for x in input_sequence if x % 4 != 0], where x=15 (an unknown source), input_sequence=[15, 28, 42, 67, 91, ...] (defined at [line 17]) = ?
+[line 12]  temp_sum = sum(data_values)
+Call function sum(data_values=[15, 28, 42, 67, 91, ...] (an unknown source))
+[line 14]  return temp_sum // len(data_values) if data_values else 0
+Return: temp_sum // len(data_values) if data_values else 0
+[line 31]  intermediate_result = sum(filtered_data) - base_offset
+Compute: sum(filtered_data) - base_offset, where filtered_data=[15, 42, 67, 91] (defined at [line 26]), base_offset=17 (defined at [line 18]) = 198
+[line 37]  processed_value = intermediate_result // len(filtered_data)
+Compute: intermediate_result // len(filtered_data), where intermediate_result=198 (defined at [line 31]), filtered_data=[15, 42, 67, 91] (defined at [line 26]) = 49
+[line 38]  correction_factor = (processed_value % 7) + 2
+Compute: (processed_value % 7) + 2, where processed_value=49 (defined at [line 37]) = 2
+[line 41]  final_metric = processed_value - correction_factor
+Compute: processed_value - correction_factor, where processed_value=49 (defined at [line 37]), correction_factor=2 (defined at [line 38]) = 47
+
+Answer: final_metric = 47 (last updated on defined at [line 41])

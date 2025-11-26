@@ -1,0 +1,34 @@
+Target: Find the value of variable final_score after [line 27] executes
+
+[line 2]  words = text_sample.lower().split()
+(Missing param: 'func_name')
+[line 3]  word_lengths = [len(word) for word in words if word.isalpha()]
+Compute: [len(word) for word in words if word.isalpha()], where word='the' (an unknown source), words=['the', 'quick', 'brown', 'fox', 'jumps', ...] (an unknown source) = ?
+[line 12]  for word in words:
+Loop Start: word takes its first value 'the'
+[line 13]  if word.isalpha():
+Condition: True, entering 'if' block
+[line 12]  for word in words:
+Loop Iteration: word is now 'quick' (iteration 2)
+[line 13]  if word.isalpha():
+Condition: True, entering 'if' block
+... [Line 12] repeats 11 more times ...
+... [Line 12] repeats 11 more times ...
+[line 12]  for word in words:
+Loop Iteration: word is now 'forest' (iteration 14)
+[line 13]  if word.isalpha():
+Condition: True, entering 'if' block
+[line 12]  for word in words:
+Loop End: Iteration finished
+[line 17]  filtered_lengths = [length for length in word_lengths if length >= 4]
+Compute: [length for length in word_lengths if length >= 4], where length=3 (an unknown source), word_lengths=[3, 5, 5, 3, 5, ...] (defined at [line 3]) = ?
+[line 18]  filtered_count = len(filtered_lengths)
+Call function len(filtered_lengths=[5, 5, 5, 4, 4, ...] (defined at [line 17]))
+[line 19]  filtered_avg = sum(filtered_lengths) / filtered_count if filtered_count > 0 else 0
+Compute: sum(filtered_lengths) / filtered_count if filtered_count > 0 else 0, where filtered_lengths=[5, 5, 5, 4, 4, ...] (defined at [line 17]), filtered_count=8 (defined at [line 18]) = 5.0
+[line 26]  bonus_adjustment = 2.5 if filtered_avg > 5.0 else 1.0
+Compute: 2.5 if filtered_avg > 5.0 else 1.0, where filtered_avg=5.0 (defined at [line 19]) = 1.0
+[line 27]  final_score = filtered_avg + bonus_adjustment
+Compute: filtered_avg + bonus_adjustment, where filtered_avg=5.0 (defined at [line 19]), bonus_adjustment=1.0 (defined at [line 26]) = 6.0
+
+Answer: final_score = 6.0 (last updated on defined at [line 27])

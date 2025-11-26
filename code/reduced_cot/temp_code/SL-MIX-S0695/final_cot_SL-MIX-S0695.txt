@@ -1,0 +1,28 @@
+Target: Find the value of variable final_quantum_state after [line 24] executes
+
+[line 2]  quantum_register = [0b1010, 0b1100, 0b0110, 0b1001]
+Compute: [0b1010, 0b1100, 0b0110, 0b1001] = [10, 12, 6, 9]
+[line 3]  noise_suppression = 4
+Assign: noise_suppression = 4
+[line 4]  calibration_offset = 7
+Assign: calibration_offset = 7
+[line 5]  measurement_error = 2
+Assign: measurement_error = 2
+[line 8]  qubit_a = (quantum_register[0] & quantum_register[1]) | (quantum_register[2] ^ quantum_register[3])
+Compute: (quantum_register[0] & quantum_register[1]) | (quantum_register[2] ^ quantum_register[3]), where quantum_register=[10, 12, 6, 9] (defined at [line 2]) = 15
+[line 9]  qubit_b = ((quantum_register[1] | quantum_register[2]) ^ quantum_register[0]) & 0b1111
+Compute: ((quantum_register[1] | quantum_register[2]) ^ quantum_register[0]) & 0b1111, where quantum_register=[10, 12, 6, 9] (defined at [line 2]) = 4
+[line 12]  phase_shift = (qubit_a << 2) + (qubit_b >> 1)
+Compute: (qubit_a << 2) + (qubit_b >> 1), where qubit_a=15 (defined at [line 8]), qubit_b=4 (defined at [line 9]) = 62
+[line 13]  entanglement_factor = (quantum_register[0] % 3) + 1
+Compute: (quantum_register[0] % 3) + 1, where quantum_register=[10, 12, 6, 9] (defined at [line 2]) = 2
+[line 14]  coherence_level = (qubit_a | qubit_b) + noise_suppression
+Compute: (qubit_a | qubit_b) + noise_suppression, where qubit_a=15 (defined at [line 8]), qubit_b=4 (defined at [line 9]), noise_suppression=4 (defined at [line 3]) = 19
+[line 15]  decoherence_threshold = (quantum_register[1] & 0b0111) + measurement_error
+Compute: (quantum_register[1] & 0b0111) + measurement_error, where quantum_register=[10, 12, 6, 9] (defined at [line 2]), measurement_error=2 (defined at [line 5]) = 6
+[line 16]  superposition_factor = (qubit_a ^ qubit_b) - calibration_offset
+Compute: (qubit_a ^ qubit_b) - calibration_offset, where qubit_a=15 (defined at [line 8]), qubit_b=4 (defined at [line 9]), calibration_offset=7 (defined at [line 4]) = 4
+[line 24]  final_quantum_state = (qubit_a ^ qubit_b) | (phase_shift // entanglement_factor) if coherence_level > decoherence_threshold else (qubit_a & qubit_b) ^ superposition_factor
+Compute: (qubit_a ^ qubit_b) | (phase_shift // entanglement_factor) if coherence_level > decoherence_threshold else (qubit_a & qubit_b) ^ superposition_factor, where qubit_a=15 (defined at [line 8]), qubit_b=4 (defined at [line 9]), phase_shift=62 (defined at [line 12]), entanglement_factor=2 (defined at [line 13]), coherence_level=19 (defined at [line 14]), decoherence_threshold=6 (defined at [line 15]), superposition_factor=4 (defined at [line 16]) = 31
+
+Answer: final_quantum_state = 31 (last updated on defined at [line 24])

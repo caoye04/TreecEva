@@ -1,0 +1,44 @@
+Target: Find the value of variable final_balance after [line 25] executes
+
+[line 2]  base_amount = 1000
+Assign: base_amount = 1000
+[line 3]  transaction_total = 0
+Assign: transaction_total = 0
+[line 4]  processed_count = 0
+Assign: processed_count = 0
+[line 7]  for idx, amount in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 8]  if amount > 0:
+Condition: True, entering 'if' block
+[line 9]  transaction_total += amount
+Update: transaction_total changed from 0 (defined at defined at [line 3]) to 0+amount = 150
+[line 10]  processed_count += 1
+Update: processed_count changed from 0 (defined at defined at [line 4]) to 0+1 = 1
+[line 7]  for idx, amount in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 8]  if amount > 0:
+Condition: True, entering 'if' block
+[line 9]  transaction_total += amount
+Update: transaction_total changed from 150 (defined at defined at [line 9]) to 150+amount = 225
+[line 10]  processed_count += 1
+Update: processed_count changed from 1 (defined at defined at [line 10]) to 1+1 = 2
+... [Line 7] repeats 5 more times ...
+... [Line 7] repeats 5 more times ...
+[line 7]  for idx, amount in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 8]  if amount > 0:
+Condition: True, entering 'if' block
+[line 7]  for idx, amount in enumerate(transactions):
+Loop End: Iteration finished
+[line 17]  net_amount = base_amount + transaction_total
+Compute: base_amount + transaction_total, where base_amount=1000 (defined at [line 2]), transaction_total=625 (defined at [line 9]) = 1625
+[line 20]  bonus_threshold = 5
+Assign: bonus_threshold = 5
+[line 21]  eligible_for_bonus = processed_count > bonus_threshold
+Compute: processed_count > bonus_threshold, where processed_count=6 (defined at [line 10]), bonus_threshold=5 (defined at [line 20]) = True
+[line 22]  bonus_amount = 200 if eligible_for_bonus else 100
+Compute: 200 if eligible_for_bonus else 100, where eligible_for_bonus=True (defined at [line 21]) = 200
+[line 25]  final_balance = net_amount + bonus_amount
+Compute: net_amount + bonus_amount, where net_amount=1625 (defined at [line 17]), bonus_amount=200 (defined at [line 22]) = 1825
+
+Answer: final_balance = 1825 (last updated on defined at [line 25])

@@ -1,13 +1,25 @@
-from collections import deque
+transactions = [150, -45, 200, -30, 75, -20]
+account_data = {
+    "savings": {"balance": 1000, "rate": 0.02},
+    "checking": {"balance": 500, "rate": 0.01},
+    "investment": {"balance": 2000, "rate": 0.05}
+}
 
-task_scores = [15, 3, 9, 9, 22, 7, 11, 5]
-scheduler_stack = []
+primary_account = "checking"
+processed_transactions = []
+temporary_hold = 0
 
-for idx, score in enumerate(task_scores):
-    while scheduler_stack and scheduler_stack[-1] < score:
-        scheduler_stack.pop()
-    if not scheduler_stack or scheduler_stack[-1] >= score:
-        scheduler_stack.append(score)
+for amount in transactions:
+    if amount > 0:
+        account_data[primary_account]["balance"] += amount
+    else:
+        account_data[primary_account]["balance"] -= abs(amount)
+    
+    processed_transactions.append(amount)
+    temporary_hold = amount * 0.1
 
-final_stack_depth = len(scheduler_stack)
-print(f'Result: {final_stack_depth}')
+account_data["savings"]["balance"] += account_data["savings"]["rate"] * account_data["savings"]["balance"]
+account_data["investment"]["balance"] += account_data["investment"]["rate"] * account_data["investment"]["balance"]
+
+final_balance = account_data[primary_account]["balance"]
+print(f"Result: {final_balance}")

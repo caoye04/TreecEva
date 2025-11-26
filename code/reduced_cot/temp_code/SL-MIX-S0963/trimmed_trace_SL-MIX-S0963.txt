@@ -1,0 +1,95 @@
+61
+final_score
+---
+50 initial_values = [45, 78, 92, 34, 67, 81, 56]
+50 ['initial_values'] ['[45, 78, 92, 34, 67, ...]']
+51 score_weights = [2, 3, 1, 4, 2]
+51 ['initial_values', 'score_weights'] ['[45, 78, 92, 34, 67, ...]', '[2, 3, 1, 4, 2]']
+58 final_score = process_sequence(initial_values, score_weights)
+58 ['initial_values', 'score_weights'] ['[45, 78, 92, 34, 67, ...]', '[2, 3, 1, 4, 2]']
+15 processed = []
+15 ['values', 'weights', 'processed'] ['[45, 78, 92, 34, 67, ...]', '[2, 3, 1, 4, 2]', '[]']
+19 filtered_vals, distraction = filter_valid_scores(values)
+19 ['values', 'weights', 'processed'] ['[45, 78, 92, 34, 67, ...]', '[2, 3, 1, 4, 2]', '[]']
+9 valid_scores = [score for score in scores if score >= threshold]
+9 ['scores', 'threshold', 'score'] ['[45, 78, 92, 34, 67, ...]', '50', '45']
+9 valid_scores = [score for score in scores if score >= threshold]
+9 ['scores', 'threshold', 'score'] ['[45, 78, 92, 34, 67, ...]', '50', '78']
+9 valid_scores = [score for score in scores if score >= threshold]
+9 ['scores', 'threshold', 'score'] ['[45, 78, 92, 34, 67, ...]', '50', '92']
+9 valid_scores = [score for score in scores if score >= threshold]
+9 ['scores', 'threshold', 'score'] ['[45, 78, 92, 34, 67, ...]', '50', '34']
+9 valid_scores = [score for score in scores if score >= threshold]
+9 ['scores', 'threshold', 'score'] ['[45, 78, 92, 34, 67, ...]', '50', '67']
+9 valid_scores = [score for score in scores if score >= threshold]
+9 ['scores', 'threshold', 'score'] ['[45, 78, 92, 34, 67, ...]', '50', '81']
+9 valid_scores = [score for score in scores if score >= threshold]
+9 ['scores', 'threshold', 'score'] ['[45, 78, 92, 34, 67, ...]', '50', '56']
+9 valid_scores = [score for score in scores if score >= threshold]
+9 ['scores', 'threshold', 'valid_scores'] ['[45, 78, 92, 34, 67, ...]', '50', '[78, 92, 67, 81, 56]']
+10 fake_result = sum(valid_scores) * 3 - 15  # Misleading computation
+10 ['valid_scores', 'fake_result'] ['[78, 92, 67, 81, 56]', '1107']
+11 return valid_scores, fake_result
+11 ['valid_scores', 'fake_result'] ['[78, 92, 67, 81, 56]', '1107']
+22 combos = list(itertools.combinations(filtered_vals, 2))
+22 ['weights', 'processed', 'filtered_vals', 'combos'] ['[2, 3, 1, 4, 2]', '[]', '[78, 92, 67, 81, 56]', '[(78, 92), (78, 67), (78, 81), (78, 56), (92, 67), ...]']
+23 combo_sum = sum(sum(pair) for pair in combos[:3])  # Partial use
+23 [] []
+23 combo_sum = sum(sum(pair) for pair in combos[:3])  # Partial use
+23 ['pair'] ['(78, 92)']
+23 combo_sum = sum(sum(pair) for pair in combos[:3])  # Partial use
+23 ['pair'] ['(78, 67)']
+23 combo_sum = sum(sum(pair) for pair in combos[:3])  # Partial use
+23 ['pair'] ['(78, 81)']
+23 combo_sum = sum(sum(pair) for pair in combos[:3])  # Partial use
+23 ['pair'] ['(78, 81)']
+26 for i, val in enumerate(filtered_vals):
+26 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val'] ['[2, 3, 1, 4, 2]', '[]', '[78, 92, 67, 81, 56]', '474', '0', '78']
+27 if i < len(weights):
+27 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val'] ['[2, 3, 1, 4, 2]', '[]', '[78, 92, 67, 81, 56]', '474', '0', '78']
+28 weighted_val = val * weights[i]
+28 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[]', '[78, 92, 67, 81, 56]', '474', '0', '78', '156']
+29 if weighted_val > 100:
+29 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[]', '[78, 92, 67, 81, 56]', '474', '0', '78', '156']
+26 for i, val in enumerate(filtered_vals):
+26 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78]', '[78, 92, 67, 81, 56]', '474', '1', '92', '156']
+27 if i < len(weights):
+27 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78]', '[78, 92, 67, 81, 56]', '474', '1', '92', '156']
+28 weighted_val = val * weights[i]
+28 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78]', '[78, 92, 67, 81, 56]', '474', '1', '92', '276']
+29 if weighted_val > 100:
+29 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78]', '[78, 92, 67, 81, 56]', '474', '1', '92', '276']
+26 for i, val in enumerate(filtered_vals):
+26 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78, 138]', '[78, 92, 67, 81, 56]', '474', '2', '67', '276']
+27 if i < len(weights):
+27 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78, 138]', '[78, 92, 67, 81, 56]', '474', '2', '67', '276']
+28 weighted_val = val * weights[i]
+28 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78, 138]', '[78, 92, 67, 81, 56]', '474', '2', '67', '67']
+29 if weighted_val > 100:
+29 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78, 138]', '[78, 92, 67, 81, 56]', '474', '2', '67', '67']
+26 for i, val in enumerate(filtered_vals):
+26 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78, 138, 77]', '[78, 92, 67, 81, 56]', '474', '3', '81', '67']
+27 if i < len(weights):
+27 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78, 138, 77]', '[78, 92, 67, 81, 56]', '474', '3', '81', '67']
+28 weighted_val = val * weights[i]
+28 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78, 138, 77]', '[78, 92, 67, 81, 56]', '474', '3', '81', '324']
+29 if weighted_val > 100:
+29 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78, 138, 77]', '[78, 92, 67, 81, 56]', '474', '3', '81', '324']
+26 for i, val in enumerate(filtered_vals):
+26 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78, 138, 77, 162]', '[78, 92, 67, 81, 56]', '474', '4', '56', '324']
+27 if i < len(weights):
+27 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78, 138, 77, 162]', '[78, 92, 67, 81, 56]', '474', '4', '56', '324']
+28 weighted_val = val * weights[i]
+28 ['weights', 'processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[2, 3, 1, 4, 2]', '[78, 138, 77, 162]', '[78, 92, 67, 81, 56]', '474', '4', '56', '112']
+29 if weighted_val > 100:
+29 ['processed', 'filtered_vals', 'combo_sum', 'i', 'val', 'weighted_val'] ['[78, 138, 77, 162]', '[78, 92, 67, 81, 56]', '474', '4', '56', '112']
+26 for i, val in enumerate(filtered_vals):
+26 ['processed', 'filtered_vals', 'combo_sum', 'i', 'val'] ['[78, 138, 77, 162, 56]', '[78, 92, 67, 81, 56]', '474', '4', '56']
+37 if len(processed) == 0:
+37 ['processed', 'filtered_vals', 'combo_sum'] ['[78, 138, 77, 162, 56]', '[78, 92, 67, 81, 56]', '474']
+41 result = sum(processed) - combo_sum + len(filtered_vals) * 5
+41 ['processed', 'filtered_vals', 'combo_sum', 'result'] ['[78, 138, 77, 162, 56]', '[78, 92, 67, 81, 56]', '474', '62']
+47 return result
+47 ['result'] ['62']
+61 print(f"Target result: {final_score}")
+61 ['final_score'] ['62']

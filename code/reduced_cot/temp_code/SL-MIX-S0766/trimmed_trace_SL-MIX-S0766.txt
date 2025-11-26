@@ -1,0 +1,27 @@
+30
+final_throughput
+---
+3 raw_throughput = base_rate * (1 - overhead_factor)
+3 ['base_rate', 'overhead_factor', 'buffer_size', 'raw_throughput'] ['180', '0.25', '40', '135.0']
+4 buffer_efficiency = min(buffer_size * 0.1, 1.0)
+4 ['base_rate', 'overhead_factor', 'buffer_size', 'raw_throughput', 'buffer_efficiency'] ['180', '0.25', '40', '135.0', '1.0']
+10 if buffer_size > 50:
+10 ['base_rate', 'overhead_factor', 'buffer_size', 'raw_throughput', 'buffer_efficiency'] ['180', '0.25', '40', '135.0', '1.0']
+15 adjustment = raw_throughput * 0.05
+15 ['base_rate', 'overhead_factor', 'raw_throughput', 'buffer_efficiency', 'adjustment'] ['180', '0.25', '135.0', '1.0', '6.75']
+18 optimized_rate = raw_throughput * buffer_efficiency - adjustment
+18 ['base_rate', 'overhead_factor', 'raw_throughput', 'buffer_efficiency', 'adjustment', 'optimized_rate'] ['180', '0.25', '135.0', '1.0', '6.75', '128.25']
+19 efficiency_factor = 1.2 if overhead_factor < 0.3 else 0.8
+19 ['base_rate', 'overhead_factor', 'optimized_rate', 'efficiency_factor'] ['180', '0.25', '128.25', '1.2']
+23 correction_offset = -5 if base_rate > 200 else 10
+23 ['base_rate', 'optimized_rate', 'efficiency_factor', 'correction_offset'] ['180', '128.25', '1.2', '10']
+26 for i in range(3):
+26 ['optimized_rate', 'efficiency_factor', 'correction_offset', 'i'] ['128.25', '1.2', '10', '0']
+26 for i in range(3):
+26 ['optimized_rate', 'efficiency_factor', 'correction_offset', 'i'] ['128.25', '1.2', '10', '1']
+26 for i in range(3):
+26 ['optimized_rate', 'efficiency_factor', 'correction_offset', 'i'] ['128.25', '1.2', '10', '2']
+26 for i in range(3):
+26 ['optimized_rate', 'efficiency_factor', 'correction_offset', 'i'] ['128.25', '1.2', '10', '2']
+30 final_throughput = optimized_rate * efficiency_factor + correction_offset
+30 ['optimized_rate', 'efficiency_factor', 'correction_offset', 'final_throughput'] ['128.25', '1.2', '10', '163.9']

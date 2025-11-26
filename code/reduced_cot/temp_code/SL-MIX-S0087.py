@@ -1,65 +1,39 @@
-import math
+from collections import Counter
 
-class BlockNode:
-    def __init__(self, value):
-        self.value = value
-        self.hash = 0
-        self.next = None
-
-def calculate_statistics(values):
-    if not values:
-        return 0, 0
-    mean_val = sum(values) / len(values)
-    variance = sum((x - mean_val) ** 2 for x in values) / len(values)
-    std_dev = math.sqrt(variance) if variance > 0 else 0
-    return mean_val, std_dev
-
-def hash_string(s):
-    hash_val = 0
-    for char in s:
-        hash_val = (hash_val * 31 + ord(char)) & 0xFFFFFFFF
-    return hash_val
-
-# Initialize linked list with string-hashed values
-values = [hash_string("alpha"), hash_string("beta"), hash_string("gamma"), hash_string("delta"), hash_string("epsilon")]
-head = None
-prev = None
-for val in values:
-    node = BlockNode(val)
-    if prev:
-        prev.next = node
+def analyze_text_frequency(text_data):
+    # Distractor: Irrelevant character processing
+    temp_chars = [chr((ord(c) + 3) % 128) for c in text_data if c.isalpha()]
+    shifted_text = ''.join(temp_chars)
+    
+    # Main logic: Character frequency analysis
+    char_counts = Counter(text_data.lower())
+    vowels = 'aeiou'
+    vowel_counts = {v: char_counts.get(v, 0) for v in vowels}
+    
+    # Distractor: Misleading intermediate calculation
+    total_chars = sum(char_counts.values())
+    irrelevant_sum = sum(ord(c) for c in text_data[:5]) % 100
+    
+    # Core computation: Vowel-to-consonant ratio analysis
+    consonant_count = sum(char_counts[c] for c in char_counts if c.isalpha() and c not in vowels)
+    vowel_total = sum(vowel_counts.values())
+    
+    # Distractor: Unused bitwise operations
+    bit_check = vowel_total & consonant_count
+    shift_check = (vowel_total << 2) | consonant_count
+    
+    # Main result processing
+    if vowel_total > 0 and consonant_count > 0:
+        ratio_analysis = (vowel_total * 100) / consonant_count
+        processed_results = [ratio_analysis, vowel_total, consonant_count]
     else:
-        head = node
-    prev = node
-
-# Process the blocks and compute hashes
-current = head
-previous_hashes = []
-anomaly_count = 0
-block_index = 0
-
-while current:
-    if block_index == 0:
-        current.hash = current.value & 0xFFFFFFFF
-    else:
-        current.hash = (previous_hashes[-1] ^ current.value) & 0xFFFFFFFF
+        processed_results = [0, 0, 0]
     
-    previous_hashes.append(current.hash)
-    
-    # Anomaly detection after the first block
-    if block_index > 0:
-        prev_values = []
-        temp = head
-        while temp != current:
-            prev_values.append(temp.value)
-            temp = temp.next
-        
-        if len(prev_values) > 0:
-            mean_val, std_dev = calculate_statistics(prev_values)
-            if std_dev > 0 and abs(current.value - mean_val) > 2 * std_dev:
-                anomaly_count += 1
-    
-    current = current.next
-    block_index += 1
+    # Final assignment
+    final_analysis = processed_results[-1]
+    print(f"Target result: {final_analysis}")
+    return final_analysis
 
-print(f"Result: {anomaly_count}")
+# Test execution
+test_text = "ProgrammingEvaluationBenchmarkComplexReasoning"
+result = analyze_text_frequency(test_text)

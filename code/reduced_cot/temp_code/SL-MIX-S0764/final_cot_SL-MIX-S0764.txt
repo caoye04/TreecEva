@@ -1,0 +1,38 @@
+Target: Find the value of variable final_metric after [line 33] executes
+
+[line 30]  sample_text = "DataAnalyticsPipeline"
+Assign: sample_text = 'DataAnalyticsPipeline'
+[line 31]  threshold = 25
+Assign: threshold = 25
+[line 32]  final_metric = process_data(sample_text, threshold)
+Call function process_data(sample_text='DataAnalyticsPipeline' (defined at [line 30]), threshold=25 (defined at [line 31]))
+[line 9]  v_count, c_count, factor = analyze_string(input_text)
+(Missing param: 'func_name')
+[line 2]  vowels = 'aeiouAEIOU'
+Assign: vowels = 'aeiouAEIOU'
+[line 3]  vowel_count = sum(1 for char in text if char in vowels)
+Call function sum(1 for char in text if char in vowels)
+[line 4]  consonant_count = len(text) - vowel_count
+Compute: len(text) - vowel_count, where text='DataAnalyticsPipeline' (an unknown source), vowel_count=9 (defined at [line 3]) = 12
+[line 5]  length_factor = len(text) * 0.5
+Compute: len(text) * 0.5, where text='DataAnalyticsPipeline' (an unknown source) = 10.5
+[line 6]  return vowel_count, consonant_count, length_factor
+Return: vowel_count, consonant_count, length_factor
+[line 12]  ratio = v_count / max(c_count, 1)
+Compute: v_count / max(c_count, 1), where v_count=9 (an unknown source), c_count=12 (an unknown source) = 0.75
+[line 13]  weighted_sum = v_count * 2 + c_count * 1.5
+Compute: v_count * 2 + c_count * 1.5, where v_count=9 (an unknown source), c_count=12 (an unknown source) = 36.0
+[line 19]  if ratio > 0.5:
+Condition: True, entering 'if' block
+[line 20]  result = weighted_sum * factor
+Compute: weighted_sum * factor, where weighted_sum=36.0 (defined at [line 13]), factor=10.5 (an unknown source) = 378.0
+[line 25]  if result > limit:
+Condition: True, entering 'if' block
+[line 26]  result = result - (limit * 0.2)
+Compute: result - (limit * 0.2), where result=378.0 (defined at [line 20]), limit=25 (an unknown source) = 373.0
+[line 28]  return round(result, 2)
+Return: round(result, 2)
+[line 33]  print(f"Target result: {final_metric}")
+Output: f"Target result: {final_metric}"
+
+Answer: final_metric = 373.0 (last updated on defined at [line 32])

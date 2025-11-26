@@ -1,0 +1,40 @@
+Target: Find the value of variable final_result after [line 30] executes
+
+[line 24]  x_points = [3, 7, 11]
+Compute: [3, 7, 11] = [3, 7, 11]
+[line 25]  y_points = [5, 9, 2]
+Compute: [5, 9, 2] = [5, 9, 2]
+[line 26]  threshold_map = {'critical': 50, 'warning': 30, 'irrelevant': 100}
+Compute: {'critical': 50, 'warning': 30, 'irrelevant': 100} = {critical: 50, warning: 30, irrelevant: 100}
+[line 29]  final_result = compute_final_value(transform_coordinates(x_points, y_points), threshold_map)
+Call function compute_final_value(transform_coordinates(x_points, y_points), threshold_map)
+[line 2]  coordinate_shift = 15
+Assign: coordinate_shift = 15
+[line 4]  temp_x = [x + coordinate_shift for x in x_values]
+Compute: [x + coordinate_shift for x in x_values], where x=3 (an unknown source), coordinate_shift=15 (defined at [line 2]), x_values=[3, 7, 11] (an unknown source) = ?
+[line 5]  temp_y = [y * 2 - coordinate_shift for y in y_values]
+Compute: [y * 2 - coordinate_shift for y in y_values], where y=5 (an unknown source), coordinate_shift=15 (defined at [line 2]), y_values=[5, 9, 2] (an unknown source) = ?
+[line 7]  return [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+Return: [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+[line 7]  return [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+Return: [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+[line 7]  return [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+Return: [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+[line 7]  return [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+Return: [temp_x[i] * temp_y[i] for i in range(len(temp_x))]
+[line 10]  base_multiplier = 7
+Assign: base_multiplier = 7
+[line 14]  relevant_data = [x for x in transformed_data if x > threshold_dict['critical']]
+Compute: [x for x in transformed_data if x > threshold_dict['critical']], where x=-90 (an unknown source), transformed_data=[-90, 66, -286] (an unknown source), threshold_dict={critical: 50, warning: 30, irrelevant: 100} (an unknown source) = ?
+[line 15]  if not relevant_data:
+Condition: True, entering 'if' block
+[line 19]  intermediate = (sum(relevant_data) // len(relevant_data)) if len(relevant_data) > 1 else relevant_data[0]
+Compute: (sum(relevant_data) // len(relevant_data)) if len(relevant_data) > 1 else relevant_data[0], where relevant_data=[66] (defined at [line 14]) = 66
+[line 20]  final_adjustment = intermediate - threshold_dict['warning'] if intermediate > threshold_dict['warning'] else intermediate + threshold_dict['critical']
+Compute: intermediate - threshold_dict['warning'] if intermediate > threshold_dict['warning'] else intermediate + threshold_dict['critical'], where intermediate=66 (defined at [line 19]), threshold_dict={critical: 50, warning: 30, irrelevant: 100} (an unknown source) = 36
+[line 22]  return final_adjustment * base_multiplier
+Return: final_adjustment * base_multiplier
+[line 30]  print(f"Result: {final_result}")
+Output: f"Result: {final_result}"
+
+Answer: final_result = 252 (last updated on defined at [line 29])

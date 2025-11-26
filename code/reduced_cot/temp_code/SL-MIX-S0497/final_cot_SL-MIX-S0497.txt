@@ -1,0 +1,22 @@
+Target: Find the value of variable final_computation after [line 23] executes
+
+[line 4]  inventory_counts = [15, 8, 23, 15, 8, 42, 15, 23, 8]
+Compute: [15, 8, 23, 15, 8, 42, 15, 23, 8] = [15, 8, 23, 15, 8, ...]
+[line 5]  count_freq = Counter(inventory_counts)
+Call function Counter(inventory_counts=[15, 8, 23, 15, 8, ...] (defined at [line 4]))
+[line 8]  total_items = sum(inventory_counts)
+Call function sum(inventory_counts=[15, 8, 23, 15, 8, ...] (defined at [line 4]))
+[line 13]  unique_counts = len(count_freq)
+Call function len(count_freq={15: 3, 8: 3, 23: 2, ...} (defined at [line 5]))
+[line 14]  most_common_count, most_common_freq = count_freq.most_common(1)[0]
+(Missing param: 'result')
+[line 15]  processed_count = unique_counts * most_common_freq
+Compute: unique_counts * most_common_freq, where unique_counts=4 (defined at [line 13]), most_common_freq=3 (an unknown source) = 12
+[line 18]  factor = (len(inventory_counts) + unique_counts) // 2
+Compute: (len(inventory_counts) + unique_counts) // 2, where inventory_counts=[15, 8, 23, 15, 8, ...] (defined at [line 4]), unique_counts=4 (defined at [line 13]) = 6
+[line 22]  adjustment = total_items % (unique_counts + 1)
+Compute: total_items % (unique_counts + 1), where total_items=157 (defined at [line 8]), unique_counts=4 (defined at [line 13]) = 2
+[line 23]  final_computation = (processed_count * factor) - adjustment
+Compute: (processed_count * factor) - adjustment, where processed_count=12 (defined at [line 15]), factor=6 (defined at [line 18]), adjustment=2 (defined at [line 22]) = 70
+
+Answer: final_computation = 70 (last updated on defined at [line 23])

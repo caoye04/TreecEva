@@ -1,38 +1,84 @@
-from functools import reduce
+def calculate_bonus(performance_rating, seniority):
+    # Irrelevant bonus calculation - not used in final logic
+    base_bonus = performance_rating * 100
+    multiplier = seniority // 2
+    irrelevant_result = base_bonus + multiplier * 50
+    return base_bonus + multiplier * 25
 
-def process_sensor_data(readings):
-    # Apply bit masking and shifting
-    masked_readings = [r & 0xFF for r in readings]
-    shifted_readings = [r << 2 if r < 64 else r >> 1 for r in masked_readings]
-    
-    # Conditional filtering with early return pattern
-    filtered_values = []
-    for val in shifted_readings:
-        if val > 200:
-            break
-        if val ^ 0x55 > 30:  # XOR with 0x55 then check threshold
-            filtered_values.append(val)
-    
-    # Floating point transformation using lambda
-    float_transform = lambda x: round(x * 1.25 + 0.7, 2)
-    transformed_values = list(map(float_transform, filtered_values))
-    
-    # Accumulate with bitwise adjustment
-    accumulator = 0
-    for i, val in enumerate(transformed_values):
-        if i % 2 == 0:
-            accumulator += int(val) & 0x7F
-        else:
-            accumulator |= int(val) >> 1
-    
-    # Final adjustment using reduce
-    correction_factors = [1.1, 0.95, 1.05]
-    final_adjustment = reduce(lambda acc, f: acc * f, correction_factors, 1.0)
-    
-    processed_signal_strength = int(accumulator * final_adjustment)
-    return processed_signal_strength
+def filter_candidates_by_skills(candidate_data, required_skills):
+    # Misleading function that appears important but isn't used
+    qualified = []
+    for candidate in candidate_data:
+        skill_match = sum(1 for skill in candidate['skills'] if skill in required_skills)
+        if skill_match >= 2:
+            qualified.append(candidate)
+    return qualified
 
-# Sensor readings input
-sensor_readings = [45, 120, 78, 205, 33, 160, 92]
-result_value = process_sensor_data(sensor_readings)
-print(f"Result: {result_value}")
+def compute_final_score(candidates, threshold):
+    total_candidates = len(candidates)
+    processed_scores = []
+    
+    # Main logic using enumerate and zip
+    for idx, candidate in enumerate(candidates):
+        technical_score = candidate['technical']
+        behavioral_score = candidate['behavioral']
+        
+        # Complex scoring logic
+        if technical_score >= 80 and behavioral_score >= 70:
+            base_score = (technical_score + behavioral_score) // 2
+            
+            # Bonus logic that's actually relevant
+            if idx % 2 == 0:
+                bonus = 5
+            else:
+                bonus = 3
+                
+            final_candidate_score = base_score + bonus
+            processed_scores.append(final_candidate_score)
+    
+    # Using zip with enumerate for additional processing
+    weighted_scores = []
+    scores_and_indices = list(enumerate(processed_scores))
+    pairs = list(zip(scores_and_indices, [x * 2 for x in processed_scores]))
+    
+    for (idx, score), double_score in pairs:
+        if score > threshold:
+            weighted_score = score + (idx % 3)
+            weighted_scores.append(weighted_score)
+    
+    # Dead code path - misleading calculation
+    if len(weighted_scores) == 0:
+        backup_calculation = sum(processed_scores) * 2 - 15
+        # This path is never taken but adds confusion
+        return backup_calculation
+    
+    # Final score calculation
+    if weighted_scores:
+        max_score = max(weighted_scores)
+        min_score = min(weighted_scores)
+        final_score = (max_score + min_score) // 2
+    else:
+        final_score = 0
+    
+    return final_score
+
+# Candidate data
+candidates = [
+    {'technical': 85, 'behavioral': 75, 'skills': ['python', 'sql', 'git']},
+    {'technical': 78, 'behavioral': 82, 'skills': ['java', 'c++', 'python']},
+    {'technical': 92, 'behavioral': 68, 'skills': ['python', 'javascript', 'react']},
+    {'technical': 88, 'behavioral': 79, 'skills': ['python', 'aws', 'docker']},
+    {'technical': 95, 'behavioral': 85, 'skills': ['python', 'ml', 'stats']}
+]
+
+threshold = 75
+
+# Irrelevant intermediate calculations
+temp_result = calculate_bonus(8, 3)
+unused_data = filter_candidates_by_skills(candidates, ['python', 'java'])
+misleading_value = temp_result * 2 - 50
+
+# The key execution
+final_score = compute_final_score(candidates, threshold)
+
+print(f"Result: {final_score}")

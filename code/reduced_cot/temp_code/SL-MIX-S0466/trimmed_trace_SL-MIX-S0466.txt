@@ -1,0 +1,49 @@
+56
+final_result
+---
+46 input_stream = [3, 8, 12, 5, 8, 17, 12, 20, 3, 25]
+46 ['input_stream'] ['[3, 8, 12, 5, 8, ...]']
+53 final_result = compute_final_value(input_stream)
+53 ['input_stream'] ['[3, 8, 12, 5, 8, ...]']
+22 base_value = 42
+22 ['data_sequence', 'base_value'] ['[3, 8, 12, 5, 8, ...]', '42']
+23 offset_calc = (base_value << 2) + 15  # Bit shift distraction
+23 ['data_sequence', 'base_value', 'offset_calc'] ['[3, 8, 12, 5, 8, ...]', '42', '183']
+26 if offset_calc > 200:
+26 ['data_sequence', 'offset_calc'] ['[3, 8, 12, 5, 8, ...]', '183']
+32 stage1_result = process_data_stream(data_sequence)
+32 ['data_sequence'] ['[3, 8, 12, 5, 8, ...]']
+PARAM_MAPPING {'input_data': {'actual_var': 'data_sequence', 'value': [3, 8, 12, 5, 8, 17, 12, 20, 3, 25]}}
+FUNCTION_ENTER 1 process_data_stream def process_data_stream(input_data):
+1 ['input_data'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 17}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 25}], '_len': 10}]
+8 data_set = set(input_data)
+8 ['input_data', 'data_set'] ['[3, 8, 12, 5, 8, ...]', '{3, 5, 8, 12, 17, ...}']
+9 filtered_data = {x for x in data_set if x % 2 == 0}
+9 ['data_set', 'x'] ['{3, 5, 8, 12, 17, ...}', '3']
+9 filtered_data = {x for x in data_set if x % 2 == 0}
+9 ['data_set', 'x'] ['{3, 5, 8, 12, 17, ...}', '5']
+9 filtered_data = {x for x in data_set if x % 2 == 0}
+9 ['data_set', 'x'] ['{3, 5, 8, 12, 17, ...}', '8']
+9 filtered_data = {x for x in data_set if x % 2 == 0}
+9 ['data_set', 'x'] ['{3, 5, 8, 12, 17, ...}', '12']
+9 filtered_data = {x for x in data_set if x % 2 == 0}
+9 ['data_set', 'x'] ['{3, 5, 8, 12, 17, ...}', '17']
+9 filtered_data = {x for x in data_set if x % 2 == 0}
+9 ['data_set', 'x'] ['{3, 5, 8, 12, 17, ...}', '20']
+9 filtered_data = {x for x in data_set if x % 2 == 0}
+9 ['data_set', 'x'] ['{3, 5, 8, 12, 17, ...}', '25']
+9 filtered_data = {x for x in data_set if x % 2 == 0}
+9 ['data_set', 'filtered_data'] ['{3, 5, 8, 12, 17, ...}', '{8, 12, 20}']
+15 transform_fn = lambda x: (x ** 2) - (x % 7)
+15 ['filtered_data'] ['{8, 12, 20}']
+16 transformed_data = list(map(transform_fn, filtered_data))
+16 ['filtered_data'] ['{8, 12, 20}']
+18 return sum(transformed_data) - len(transformed_data)
+18 ['transformed_data'] ['[63, 139, 394]']
+FUNCTION_RETURN 18 process_data_stream {'_type': 'int', '_value': 593}
+38 actual_result = stage1_result - (len(data_sequence) % 11) + 7
+38 ['data_sequence', 'stage1_result', 'actual_result'] ['[3, 8, 12, 5, 8, ...]', '593', '590']
+43 return actual_result
+43 ['actual_result'] ['590']
+56 print(f"Result: {final_result}")
+56 ['final_result'] ['590']

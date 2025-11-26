@@ -1,0 +1,43 @@
+24
+target_value
+---
+2 base_multiplier = 2
+2 ['items', 'base_multiplier'] ['[2, 5, 3, 7, 4]', '2']
+3 processing_fee = 15
+3 ['items', 'base_multiplier', 'processing_fee'] ['[2, 5, 3, 7, 4]', '2', '15']
+6 base_score = sum(item * base_multiplier for item in items)
+6 ['base_multiplier'] ['2']
+6 base_score = sum(item * base_multiplier for item in items)
+6 ['base_multiplier', 'item'] ['2', '2']
+6 base_score = sum(item * base_multiplier for item in items)
+6 ['base_multiplier', 'item'] ['2', '5']
+6 base_score = sum(item * base_multiplier for item in items)
+6 ['base_multiplier', 'item'] ['2', '3']
+6 base_score = sum(item * base_multiplier for item in items)
+6 ['base_multiplier', 'item'] ['2', '7']
+6 base_score = sum(item * base_multiplier for item in items)
+6 ['base_multiplier', 'item'] ['2', '4']
+6 base_score = sum(item * base_multiplier for item in items)
+6 ['base_multiplier', 'item'] ['2', '4']
+9 processing_bonus = processing_fee // 3
+9 ['items', 'processing_fee', 'base_score', 'processing_bonus'] ['[2, 5, 3, 7, 4]', '15', '42', '5']
+13 filtered_items = [item for item in items if item > 3]
+13 ['items', 'base_score', 'processing_bonus', 'item'] ['[2, 5, 3, 7, 4]', '42', '5', '2']
+13 filtered_items = [item for item in items if item > 3]
+13 ['items', 'base_score', 'processing_bonus', 'item'] ['[2, 5, 3, 7, 4]', '42', '5', '5']
+13 filtered_items = [item for item in items if item > 3]
+13 ['items', 'base_score', 'processing_bonus', 'item'] ['[2, 5, 3, 7, 4]', '42', '5', '3']
+13 filtered_items = [item for item in items if item > 3]
+13 ['items', 'base_score', 'processing_bonus', 'item'] ['[2, 5, 3, 7, 4]', '42', '5', '7']
+13 filtered_items = [item for item in items if item > 3]
+13 ['items', 'base_score', 'processing_bonus', 'item'] ['[2, 5, 3, 7, 4]', '42', '5', '4']
+13 filtered_items = [item for item in items if item > 3]
+13 ['items', 'base_score', 'processing_bonus', 'filtered_items'] ['[2, 5, 3, 7, 4]', '42', '5', '[5, 7, 4]']
+14 bonus_score = len(filtered_items) * 5
+14 ['base_score', 'processing_bonus', 'filtered_items', 'bonus_score'] ['42', '5', '[5, 7, 4]', '15']
+17 final_operation = lambda x: x + processing_bonus
+17 ['base_score', 'processing_bonus', 'bonus_score'] ['42', '5', '15']
+18 target_value = final_operation(base_score + bonus_score)
+18 ['base_score', 'bonus_score'] ['42', '15']
+24 print(f"Target result: {target_value}")
+24 ['target_value'] ['62']

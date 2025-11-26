@@ -1,44 +1,40 @@
-from itertools import combinations
-from collections import defaultdict
+import itertools
 
-# Network packet analysis for covert channel detection
-packet_sequences = [
-    [0x41, 0x2B, 0x7F, 0x3C],
-    [0x55, 0x1A, 0x6E, 0x2D],
-    [0x69, 0x09, 0x5D, 0x1E]
-]
-
-# Rotating key mask for XOR operations
-key_mask = [0xAA, 0x55, 0xCC, 0x33]
-
-# Initialize signal tracking
-signal_tracker = defaultdict(int)
-
-# Process each packet sequence
-for seq_idx, sequence in enumerate(packet_sequences):
-    # Apply XOR transformation with rotating key
-    transformed_seq = []
-    for i, byte_val in enumerate(sequence):
-        masked_byte = byte_val ^ key_mask[i % len(key_mask)]
-        transformed_seq.append(masked_byte)
+# Inventory analysis with filtering operations
+def analyze_inventory(items_list):
+    # Primary data processing
+    valid_items = [item for item in items_list if item > 0 and item % 3 != 0]
+    processed_count = len(valid_items) * 2
     
-    # Generate all 3-byte combinations from transformed sequence
-    combo_count = 0
-    for combo in combinations(transformed_seq, 3):
-        # Calculate combination signature using bitwise operations
-        combo_signature = (combo[0] & combo[1]) | (combo[1] ^ combo[2])
-        # Shift signature based on sequence position
-        shifted_signature = combo_signature << (seq_idx + 1)
-        signal_tracker[shifted_signature] += 1
-        combo_count += 1
+    # Distractor computations (irrelevant to final result)
+    temp_sum = sum(items_list[:3]) if len(items_list) >= 3 else 0
+    alternate_count = processed_count + 5
     
-    # Update tracker with sequence metrics
-    signal_tracker[seq_idx] ^= combo_count
+    # Conditional filtering using itertools
+    filtered_sequence = list(itertools.islice(valid_items, 0, min(4, len(valid_items))))
+    scale_factor = 3 if len(filtered_sequence) > 2 else 5
+    
+    # More distractor operations
+    multiplier = lambda x: x * 2 + 1
+    dummy_result = multiplier(processed_count) if processed_count > 10 else 0
+    
+    # Dead code path (never executed)
+    if len(items_list) > 20:
+        unused_value = processed_count * 10
+        print(f"Debug: {unused_value}")
+    
+    # Core calculation chain
+    adjustment_map = {2: 7, 3: 4, 4: 1}
+    adjustment_value = adjustment_map.get(len(filtered_sequence), 0)
+    excess_count = len([x for x in items_list if x < 0]) + 2
+    
+    # Final result computation
+    final_quantity = (processed_count - excess_count) * scale_factor + adjustment_value
+    
+    # Additional misleading operations
+    verification_sum = sum(filtered_sequence) + final_quantity
+    print(f"Target result: {final_quantity}")
 
-# Calculate final covert signal strength
-covert_signal_strength = 0
-for key, count in signal_tracker.items():
-    # Apply complex bitwise aggregation
-    covert_signal_strength ^= (key & 0xFF) * count
-
-print(f"Result: {covert_signal_strength}")
+# Execute with test data
+sample_items = [8, -2, 15, 22, 3, 7, -1, 14, 6]
+analyze_inventory(sample_items)

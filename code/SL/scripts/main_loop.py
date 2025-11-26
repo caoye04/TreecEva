@@ -35,13 +35,20 @@ def run_cot_only(api_name="qwen3_coder", skip_existing=True, specific_tasks=None
         print(f"✓ CoT generation completed: {result['successful']} successful, "
               f"{result['failed']} failed, {result['skipped']} skipped\n")
 
-def run_evaluation_only():
-    """只评估AI模型正确性"""
+def run_evaluation_only(evaluate_mode="unrated"):
+    """
+    只评估AI模型正确性
+    
+    Args:
+        evaluate_mode: 评估模式
+            - "all": 评估所有任务
+            - "unrated": 只评估难度为-1的未评估任务（默认）
+    """
     print("\n" + "="*70)
-    print("RUNNING AI EVALUATION ONLY")
+    print(f"RUNNING AI EVALUATION ONLY (Mode: {evaluate_mode.upper()})")
     print("="*70)
     evaluator = AIEvaluator()
-    evaluator.evaluate_all_tasks()
+    evaluator.evaluate_all_tasks(evaluate_mode=evaluate_mode)
     print("✓ AI evaluation completed\n")
 
 def run_generate_task_only(num_tasks=1):
@@ -70,8 +77,16 @@ def run_generate_task_only(num_tasks=1):
     print(f"{'='*70}\n")
     return successful_generations > 0
 
-def run_single_cycle(cot_api="qwen3_coder", cot_skip_existing=True):
-    """运行一个完整的循环"""
+def run_single_cycle(cot_api="qwen3_coder", cot_skip_existing=True, 
+                     eval_mode="unrated"):
+    """
+    运行一个完整的循环
+    
+    Args:
+        cot_api: CoT生成使用的API
+        cot_skip_existing: 是否跳过已存在的CoT
+        eval_mode: 评估模式 ("all" 或 "unrated")
+    """
     print("\n" + "="*70)
     print("STARTING NEW COMPLETE CYCLE")
     print("="*70)
@@ -92,9 +107,9 @@ def run_single_cycle(cot_api="qwen3_coder", cot_skip_existing=True):
           f"{cot_result['failed']} failed, {cot_result['skipped']} skipped")
     
     # 3. AI评估
-    print("\n[3/4] Running AI evaluation...")
+    print(f"\n[3/4] Running AI evaluation (mode: {eval_mode})...")
     evaluator = AIEvaluator()
-    evaluator.evaluate_all_tasks()
+    evaluator.evaluate_all_tasks(evaluate_mode=eval_mode)
     
     # 4. 生成新任务
     print("\n[4/4] Generating new task...")
@@ -106,8 +121,17 @@ def run_single_cycle(cot_api="qwen3_coder", cot_skip_existing=True):
     print("="*70 + "\n")
     return new_task is not None
 
-def run_multiple_cycles(num_cycles=5, cot_api="qwen3_coder", cot_skip_existing=True):
-    """运行多个循环"""
+def run_multiple_cycles(num_cycles=5, cot_api="qwen3_coder", 
+                       cot_skip_existing=True, eval_mode="unrated"):
+    """
+    运行多个循环
+    
+    Args:
+        num_cycles: 循环次数
+        cot_api: CoT生成使用的API
+        cot_skip_existing: 是否跳过已存在的CoT
+        eval_mode: 评估模式 ("all" 或 "unrated")
+    """
     print(f"\n{'='*70}")
     print(f"STARTING {num_cycles} COMPLETE CYCLES")
     print(f"{'='*70}\n")
@@ -121,7 +145,8 @@ def run_multiple_cycles(num_cycles=5, cot_api="qwen3_coder", cot_skip_existing=T
         try:
             success = run_single_cycle(
                 cot_api=cot_api,
-                cot_skip_existing=cot_skip_existing
+                cot_skip_existing=cot_skip_existing,
+                eval_mode=eval_mode
             )
             if success:
                 successful_cycles += 1
@@ -147,8 +172,11 @@ if __name__ == "__main__":
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # 运行单个完整循环
+  # 运行单个完整循环（只评估未评估的任务）
   python main_loop.py --single
+  
+  # 运行单个循环并评估所有任务
+  python main_loop.py --single --eval-all
   
   # 运行5个循环
   python main_loop.py --cycles 5
@@ -165,8 +193,11 @@ Examples:
   # 重新生成特定任务的CoT
   python main_loop.py --cot --cot-tasks SL-MIX-S001 SL-MIX-S002
   
-  # 只评估
+  # 只评估未评估的任务（默认）
   python main_loop.py --evaluate
+  
+  # 评估所有任务
+  python main_loop.py --evaluate --eval-all
   
   # 只生成10个新任务
   python main_loop.py --generate 10
@@ -184,13 +215,16 @@ Examples:
                        help="Only generate N new tasks (default=1)")
     
     # CoT相关参数
-    parser.add_argument("--cot-api", default="qwen3_coder",
-                       choices=["qwen3_235b", "qwen3_coder", "minimax_text", "glm4_plus", "deepseek_v3"],
+    parser.add_argument("--cot-api", type=str, default="qwen3_coder",
                        help="API to use for CoT generation (default: qwen3_coder)")
     parser.add_argument("--no-skip-cot", action="store_true",
                        help="Regenerate CoT even if it already exists")
     parser.add_argument("--cot-tasks", nargs='+', metavar='TASK_ID',
                        help="Specific task IDs to regenerate CoT for")
+    
+    # 评估相关参数（新增）
+    parser.add_argument("--eval-all", action="store_true",
+                       help="Evaluate ALL tasks (default: only unrated tasks with difficulty=-1)")
     
     # 完整流程选项
     parser.add_argument("--single", action="store_true", 
@@ -199,6 +233,9 @@ Examples:
                        help="Number of complete cycles to run (default=1)")
     
     args = parser.parse_args()
+    
+    # 确定评估模式
+    eval_mode = "all" if args.eval_all else "unrated"
     
     try:
         # 单独执行选项（互斥）
@@ -211,20 +248,22 @@ Examples:
                 specific_tasks=args.cot_tasks
             )
         elif args.evaluate:
-            run_evaluation_only()
+            run_evaluation_only(evaluate_mode=eval_mode)
         elif args.generate is not None:
             run_generate_task_only(args.generate)
         elif args.single:
             run_single_cycle(
                 cot_api=args.cot_api,
-                cot_skip_existing=not args.no_skip_cot
+                cot_skip_existing=not args.no_skip_cot,
+                eval_mode=eval_mode
             )
         else:
             # 默认行为：运行指定数量的完整循环
             run_multiple_cycles(
                 num_cycles=args.cycles,
                 cot_api=args.cot_api,
-                cot_skip_existing=not args.no_skip_cot
+                cot_skip_existing=not args.no_skip_cot,
+                eval_mode=eval_mode
             )
             
     except KeyboardInterrupt:

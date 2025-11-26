@@ -1,0 +1,127 @@
+37
+final_count
+---
+2 network_data = {'A': [1, 2, 3], 'B': [2, 3, 4], 'C': [3, 4, 5], 'D': [4, 5, 6]}
+2 ['network_data'] ['{A: [1, 2, 3], B: [2, 3, 4], C: [3, 4, 5], ...}']
+3 pattern_sets = {}
+3 ['network_data', 'pattern_sets'] ['{A: [1, 2, 3], B: [2, 3, 4], C: [3, 4, 5], ...}', '{}']
+6 for node, connections in network_data.items():
+6 ['network_data', 'pattern_sets', 'node', 'connections'] ['{A: [1, 2, 3], B: [2, 3, 4], C: [3, 4, 5], ...}', '{}', "'A'", '[1, 2, 3]']
+7 pattern_sets[node] = set(connections)
+7 ['network_data', 'pattern_sets', 'node', 'connections'] ['{A: [1, 2, 3], B: [2, 3, 4], C: [3, 4, 5], ...}', '{A: {1, 2, 3}}', "'A'", '[1, 2, 3]']
+6 for node, connections in network_data.items():
+6 ['network_data', 'pattern_sets', 'node', 'connections'] ['{A: [1, 2, 3], B: [2, 3, 4], C: [3, 4, 5], ...}', '{A: {1, 2, 3}}', "'B'", '[2, 3, 4]']
+7 pattern_sets[node] = set(connections)
+7 ['network_data', 'pattern_sets', 'node', 'connections'] ['{A: [1, 2, 3], B: [2, 3, 4], C: [3, 4, 5], ...}', '{A: {1, 2, 3}, B: {2, 3, 4}}', "'B'", '[2, 3, 4]']
+6 for node, connections in network_data.items():
+6 ['network_data', 'pattern_sets', 'node', 'connections'] ['{A: [1, 2, 3], B: [2, 3, 4], C: [3, 4, 5], ...}', '{A: {1, 2, 3}, B: {2, 3, 4}}', "'C'", '[3, 4, 5]']
+7 pattern_sets[node] = set(connections)
+7 ['network_data', 'pattern_sets', 'node', 'connections'] ['{A: [1, 2, 3], B: [2, 3, 4], C: [3, 4, 5], ...}', '{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}}', "'C'", '[3, 4, 5]']
+6 for node, connections in network_data.items():
+6 ['network_data', 'pattern_sets', 'node', 'connections'] ['{A: [1, 2, 3], B: [2, 3, 4], C: [3, 4, 5], ...}', '{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}}', "'D'", '[4, 5, 6]']
+7 pattern_sets[node] = set(connections)
+7 ['network_data', 'pattern_sets', 'node', 'connections'] ['{A: [1, 2, 3], B: [2, 3, 4], C: [3, 4, 5], ...}', '{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', "'D'", '[4, 5, 6]']
+6 for node, connections in network_data.items():
+6 ['network_data', 'pattern_sets', 'node', 'connections'] ['{A: [1, 2, 3], B: [2, 3, 4], C: [3, 4, 5], ...}', '{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', "'D'", '[4, 5, 6]']
+16 all_unique_patterns = set()
+16 ['pattern_sets', 'all_unique_patterns'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', 'set()']
+17 for pattern_set in pattern_sets.values():
+17 ['pattern_sets', 'all_unique_patterns', 'pattern_set'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', 'set()', '{1, 2, 3}']
+17 for pattern_set in pattern_sets.values():
+17 ['pattern_sets', 'all_unique_patterns', 'pattern_set'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3}', '{2, 3, 4}']
+17 for pattern_set in pattern_sets.values():
+17 ['pattern_sets', 'all_unique_patterns', 'pattern_set'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4}', '{3, 4, 5}']
+17 for pattern_set in pattern_sets.values():
+17 ['pattern_sets', 'all_unique_patterns', 'pattern_set'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5}', '{4, 5, 6}']
+17 for pattern_set in pattern_sets.values():
+17 ['pattern_sets', 'all_unique_patterns', 'pattern_set'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{4, 5, 6}']
+21 pattern_counts = {}
+21 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{4, 5, 6}', '{}']
+22 for pattern_set in pattern_sets.values():
+22 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{1, 2, 3}', '{}']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{1, 2, 3}', '{}', '1']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{1, 2, 3}', '{1: 1}', '1']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{1, 2, 3}', '{1: 1}', '2']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{1, 2, 3}', '{1: 1, 2: 1}', '2']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{1, 2, 3}', '{1: 1, 2: 1}', '3']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{1, 2, 3}', '{1: 1, 2: 1, 3: 1}', '3']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{1, 2, 3}', '{1: 1, 2: 1, 3: 1}', '3']
+22 for pattern_set in pattern_sets.values():
+22 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{2, 3, 4}', '{1: 1, 2: 1, 3: 1}', '3']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{2, 3, 4}', '{1: 1, 2: 1, 3: 1}', '2']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{2, 3, 4}', '{1: 1, 2: 2, 3: 1}', '2']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{2, 3, 4}', '{1: 1, 2: 2, 3: 1}', '3']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{2, 3, 4}', '{1: 1, 2: 2, 3: 2}', '3']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{2, 3, 4}', '{1: 1, 2: 2, 3: 2}', '4']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{2, 3, 4}', '{1: 1, 2: 2, 3: 2, ...}', '4']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{2, 3, 4}', '{1: 1, 2: 2, 3: 2, ...}', '4']
+22 for pattern_set in pattern_sets.values():
+22 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{3, 4, 5}', '{1: 1, 2: 2, 3: 2, ...}', '4']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{3, 4, 5}', '{1: 1, 2: 2, 3: 2, ...}', '3']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{3, 4, 5}', '{1: 1, 2: 2, 3: 3, ...}', '3']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{3, 4, 5}', '{1: 1, 2: 2, 3: 3, ...}', '4']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{3, 4, 5}', '{1: 1, 2: 2, 3: 3, ...}', '4']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{3, 4, 5}', '{1: 1, 2: 2, 3: 3, ...}', '5']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{3, 4, 5}', '{1: 1, 2: 2, 3: 3, ...}', '5']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{3, 4, 5}', '{1: 1, 2: 2, 3: 3, ...}', '5']
+22 for pattern_set in pattern_sets.values():
+22 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{4, 5, 6}', '{1: 1, 2: 2, 3: 3, ...}', '5']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{4, 5, 6}', '{1: 1, 2: 2, 3: 3, ...}', '4']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{4, 5, 6}', '{1: 1, 2: 2, 3: 3, ...}', '4']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{4, 5, 6}', '{1: 1, 2: 2, 3: 3, ...}', '5']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{4, 5, 6}', '{1: 1, 2: 2, 3: 3, ...}', '5']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{4, 5, 6}', '{1: 1, 2: 2, 3: 3, ...}', '6']
+24 pattern_counts[pattern] = pattern_counts.get(pattern, 0) + 1
+24 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{4, 5, 6}', '{1: 1, 2: 2, 3: 3, ...}', '6']
+23 for pattern in pattern_set:
+23 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{4, 5, 6}', '{1: 1, 2: 2, 3: 3, ...}', '6']
+22 for pattern_set in pattern_sets.values():
+22 ['pattern_sets', 'all_unique_patterns', 'pattern_set', 'pattern_counts', 'pattern'] ['{A: {1, 2, 3}, B: {2, 3, 4}, C: {3, 4, 5}, ...}', '{1, 2, 3, 4, 5, ...}', '{4, 5, 6}', '{1: 1, 2: 2, 3: 3, ...}', '6']
+26 redundant_patterns = {pattern for pattern, count in pattern_counts.items() if count > 1}
+26 ['all_unique_patterns', 'pattern_counts', 'pattern', 'count'] ['{1, 2, 3, 4, 5, ...}', '{1: 1, 2: 2, 3: 3, ...}', '1', '1']
+26 redundant_patterns = {pattern for pattern, count in pattern_counts.items() if count > 1}
+26 ['all_unique_patterns', 'pattern_counts', 'pattern', 'count'] ['{1, 2, 3, 4, 5, ...}', '{1: 1, 2: 2, 3: 3, ...}', '2', '2']
+26 redundant_patterns = {pattern for pattern, count in pattern_counts.items() if count > 1}
+26 ['all_unique_patterns', 'pattern_counts', 'pattern', 'count'] ['{1, 2, 3, 4, 5, ...}', '{1: 1, 2: 2, 3: 3, ...}', '3', '3']
+26 redundant_patterns = {pattern for pattern, count in pattern_counts.items() if count > 1}
+26 ['all_unique_patterns', 'pattern_counts', 'pattern', 'count'] ['{1, 2, 3, 4, 5, ...}', '{1: 1, 2: 2, 3: 3, ...}', '4', '3']
+26 redundant_patterns = {pattern for pattern, count in pattern_counts.items() if count > 1}
+26 ['all_unique_patterns', 'pattern_counts', 'pattern', 'count'] ['{1, 2, 3, 4, 5, ...}', '{1: 1, 2: 2, 3: 3, ...}', '5', '2']
+26 redundant_patterns = {pattern for pattern, count in pattern_counts.items() if count > 1}
+26 ['all_unique_patterns', 'pattern_counts', 'pattern', 'count'] ['{1, 2, 3, 4, 5, ...}', '{1: 1, 2: 2, 3: 3, ...}', '6', '1']
+26 redundant_patterns = {pattern for pattern, count in pattern_counts.items() if count > 1}
+26 ['all_unique_patterns', 'pattern_counts', 'pattern', 'redundant_patterns'] ['{1, 2, 3, 4, 5, ...}', '{1: 1, 2: 2, 3: 3, ...}', '6', '{2, 3, 4, 5}']
+33 unique_patterns = len(all_unique_patterns)
+33 ['all_unique_patterns', 'redundant_patterns', 'unique_patterns'] ['{1, 2, 3, 4, 5, ...}', '{2, 3, 4, 5}', '6']
+34 redundant_entries = len(redundant_patterns)
+34 ['redundant_patterns', 'unique_patterns', 'redundant_entries'] ['{2, 3, 4, 5}', '6', '4']
+35 adjustment_factor = 2  # Constant adjustment for network topology
+35 ['unique_patterns', 'redundant_entries', 'adjustment_factor'] ['6', '4', '2']
+37 final_count = unique_patterns - redundant_entries + adjustment_factor
+37 ['unique_patterns', 'redundant_entries', 'adjustment_factor', 'final_count'] ['6', '4', '2', '4']

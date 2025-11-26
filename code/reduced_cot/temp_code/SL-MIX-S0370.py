@@ -1,15 +1,16 @@
-import math
+def process_data_files():
+    file_status = {'config.txt': 'processed', 'data.csv': 'processed', 'logs.json': 'pending', 'backup.zip': 'processed'}
+    processed_status = {}
+    
+    for filename, status in file_status.items():
+        if status == 'processed':
+            processed_status[filename] = True
+        else:
+            processed_status[filename] = False
+    
+    temp_counter = len(file_status)
+    processing_count = sum(processed_status.values())
+    
+    print(f"Target result: {processing_count}")
 
-def count_cookies_divide_conquer(batches):
-    if len(batches) == 0:
-        return 0
-    if len(batches) == 1:
-        return batches[0]
-    mid = len(batches) // 2
-    left_sum = count_cookies_divide_conquer(batches[:mid])
-    right_sum = count_cookies_divide_conquer(batches[mid:])
-    return left_sum + right_sum
-
-cookie_batches = [12, 15, 10, 8, 20, 5, 17, 13]
-total_cookies = count_cookies_divide_conquer(cookie_batches)
-print(f"Result: {total_cookies}")
+process_data_files()

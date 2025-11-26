@@ -1,0 +1,62 @@
+Target: Find the value of variable final_rating after [line 26] executes
+
+[line 2]  base_scores = {}
+Compute: {} = {}
+[line 3]  for i, sample in enumerate(samples):
+(Missing param: 'iter_var')
+[line 4]  base_scores[f'sample_{i}'] = (sample * 2 + 5) % 15
+(Missing param: 'result')
+[line 3]  for i, sample in enumerate(samples):
+(Missing param: 'iter_var')
+[line 4]  base_scores[f'sample_{i}'] = (sample * 2 + 5) % 15
+(Missing param: 'result')
+... [Line 3] repeats 3 more times ...
+... [Line 3] repeats 3 more times ...
+[line 3]  for i, sample in enumerate(samples):
+(Missing param: 'iter_var')
+[line 4]  base_scores[f'sample_{i}'] = (sample * 2 + 5) % 15
+(Missing param: 'result')
+[line 3]  for i, sample in enumerate(samples):
+Loop End: Iteration finished
+[line 10]  adjusted_scores = {}
+Compute: {} = {}
+[line 11]  for key, value in base_scores.items():
+(Missing param: 'iter_var')
+[line 12]  adjusted_value = value + (len(key) // 2)
+Compute: value + (len(key) // 2), where value=13 (an unknown source), key='sample_0' (an unknown source) = 17
+[line 13]  if adjusted_value > 10:
+Condition: True, entering 'if' block
+[line 14]  adjusted_scores[key] = adjusted_value - 3
+(Missing param: 'result')
+[line 11]  for key, value in base_scores.items():
+(Missing param: 'iter_var')
+[line 12]  adjusted_value = value + (len(key) // 2)
+Compute: value + (len(key) // 2), where value=4 (an unknown source), key='sample_1' (an unknown source) = 8
+[line 13]  if adjusted_value > 10:
+Condition: True, entering 'if' block
+[line 16]  adjusted_scores[key] = adjusted_value + 2
+(Missing param: 'result')
+... [Line 11] repeats 3 more times ...
+... [Line 11] repeats 3 more times ...
+... [Line 11] repeats 3 more times ...
+... [Line 11] repeats 3 more times ...
+[line 11]  for key, value in base_scores.items():
+(Missing param: 'iter_var')
+[line 12]  adjusted_value = value + (len(key) // 2)
+Compute: value + (len(key) // 2), where value=2 (an unknown source), key='sample_5' (an unknown source) = 6
+[line 13]  if adjusted_value > 10:
+Condition: True, entering 'if' block
+[line 16]  adjusted_scores[key] = adjusted_value + 2
+(Missing param: 'result')
+[line 11]  for key, value in base_scores.items():
+Loop End: Iteration finished
+[line 19]  max_key = max(adjusted_scores, key=adjusted_scores.get)
+Call function max(adjusted_scores={sample_0: 14, sample_1: 10, sample_2: 15, ...} (defined at [line 10]), key=adjusted_scores.get)
+[line 22]  bonus_calc = sum([v for v in base_scores.values() if v < 8])
+Call function sum([v for v in base_scores.values() if v < 8])
+[line 23]  bonus_points = bonus_calc // 2
+Compute: bonus_calc // 2, where bonus_calc=6 (defined at [line 22]) = 3
+[line 26]  final_rating = adjusted_scores.get(max_key, 0) + bonus_points
+Compute: adjusted_scores.get(max_key, 0) + bonus_points, where adjusted_scores={sample_0: 14, sample_1: 10, sample_2: 15, ...} (defined at [line 10]), max_key='sample_2' (defined at [line 19]), bonus_points=3 (defined at [line 23]) = 18
+
+Answer: final_rating = 18 (last updated on defined at [line 26])

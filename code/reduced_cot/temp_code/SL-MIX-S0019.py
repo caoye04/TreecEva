@@ -1,46 +1,54 @@
-from functools import reduce
+def compute_data_integrity(data_stream):
+    # Initialize verification components
+    parity_bit = 0x1F
+    accumulator = 128
+    validation_mask = 0b10101010
+    
+    # Main integrity computation
+    checksum = 0
+    for byte_val in data_stream:
+        # XOR with parity and mask operations
+        processed_byte = byte_val ^ parity_bit
+        processed_byte &= validation_mask
+        checksum ^= processed_byte
+        
+        # Distractor operations (irrelevant to final result)
+        accumulator = (accumulator << 1) | (byte_val & 1)
+        parity_bit = (parity_bit + 7) % 32
+    
+    # Secondary verification (dead code path)
+    if checksum > 200:
+        backup_checksum = sum(data_stream) % 256
+        checksum = backup_checksum ^ 0xFF
+    
+    return checksum
 
-class SignalOptimizer:
-    def __init__(self, initial_state):
-        self.state = initial_state
+def transform_sensor_data(raw_readings):
+    # Apply calibration offsets
+    calibrated = [reading + 5 for reading in raw_readings]
     
-    def __enter__(self):
-        return self
+    # Filter and scale data (distractor operations)
+    filtered = [val * 2 for val in calibrated if val % 3 != 0]
+    scaled = [min(val, 100) for val in filtered]
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+    # Misleading intermediate calculation
+    temp_sum = sum(scaled) + len(raw_readings)
+    
+    return calibrated
 
-# Initial register configuration
-initial_register = 0b110101101001
+# Main execution
+sensor_samples = [45, 67, 23, 89, 12, 56, 78, 34]
 
-with SignalOptimizer(initial_register) as optimizer:
-    # Step 1: Apply greedy bit flipping for optimization
-    temp_bits = [optimizer.state >> i & 1 for i in range(12)]
-    flipped_indices = []
-    
-    # Greedy selection: flip bits that reduce overall Hamming weight
-    for idx in sorted(range(len(temp_bits)), key=lambda x: (-1 if temp_bits[x] == 1 else 1)):
-        if len(flipped_indices) < 3 and temp_bits[idx] == 1:
-            temp_bits[idx] ^= 1
-            flipped_indices.append(idx)
-    
-    # Step 2: Reconstruct intermediate register
-    intermediate_register = reduce(lambda acc, bit: (acc << 1) | bit, reversed(temp_bits), 0)
-    
-    # Step 3: Perform modular arithmetic adjustment
-    modulus_key = 0x1F
-    adjusted_register = (intermediate_register * 17 + 0x1A3) % modulus_key
-    
-    # Step 4: Apply XOR mask with sorted bit positions
-    xor_mask = reduce(lambda x, y: x | (1 << y), sorted(flipped_indices), 0)
-    masked_register = adjusted_register ^ xor_mask
-    
-    # Step 5: Bitwise shift operations
-    shifted_left = masked_register << 2
-    shifted_right = shifted_left >> 1
-    
-    # Step 6: Final register optimization using bitwise AND with pattern
-    pattern = 0b10101010
-    optimized_register = shifted_right & pattern
+# Distractor variables and computations
+temp_buffer = [sample ^ 0xAA for sample in sensor_samples]
+redundant_check = sum(temp_buffer) % 128
+validation_flag = redundant_check > 50
 
-print(f"Result: {optimized_register}")
+# Data transformation
+transformed_data = transform_sensor_data(sensor_samples)
+
+# Final integrity computation
+final_checksum = compute_data_integrity(transformed_data)
+
+# Print result
+print(f"Result: {final_checksum}")

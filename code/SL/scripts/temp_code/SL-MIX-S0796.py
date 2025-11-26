@@ -1,49 +1,33 @@
-from functools import reduce
-
-def simulate_circuit(gate_id, path_delays, visited_gates):
-    if gate_id in visited_gates:
-        return []
-    visited_gates.add(gate_id)
-    
-    # Simulate different gate behaviors using switch-case pattern
-    gate_behaviors = {
-        'AND': lambda d: d + 2,
-        'OR': lambda d: d + 1,
-        'XOR': lambda d: d + 3,
-        'NOT': lambda d: d + 1,
-        'NAND': lambda d: d + 2,
-        'BUFFER': lambda d: d + 0
+def process_warehouse_inventory():
+    inventory_data = {
+        'electronics': 45,
+        'clothing': 78,
+        'books': 32,
+        'home_goods': 56
     }
     
-    adjusted_delays = []
-    for delay in path_delays:
-        # Apply gate-specific transformation
-        behavior = gate_behaviors.get(gate_id, lambda d: d)
-        adjusted_delays.append(behavior(delay))
+    # Calculate total items and average
+    total_items = sum(inventory_data.values())
+    average_stock = total_items / len(inventory_data)
     
-    # Recursive exploration of connected gates
-    next_gates = {
-        'AND': ['OR', 'NOT'],
-        'OR': ['XOR'],
-        'XOR': ['NAND', 'BUFFER'],
-        'NOT': ['BUFFER'],
-        'NAND': [],
-        'BUFFER': []
-    }
+    # Process items (distractor: this doesn't affect final result)
+    processed_electronics = inventory_data['electronics'] * 2
     
-    # Backtrack through all possible paths
-    for next_gate in next_gates.get(gate_id, []):
-        sub_delays = simulate_circuit(next_gate, adjusted_delays, visited_gates.copy())
-        adjusted_delays.extend(sub_delays)
+    # Create filtered inventory (distractor: not used in final calculation)
+    high_stock_items = {k: v for k, v in inventory_data.items() if v > 40}
     
-    return adjusted_delays
+    # Calculate actual processed items
+    processed_items = sum([items * 0.8 for items in inventory_data.values()])
+    
+    # Calculate remaining stock after processing
+    remaining_stock = total_items - processed_items
+    
+    # Intermediate calculation (distractor: not used)
+    theoretical_capacity = total_items * 1.5
+    
+    # Final inventory count
+    final_inventory_count = processed_items + remaining_stock
+    
+    print(f"Target result: {final_inventory_count}")
 
-# Initialize simulation
-initial_delays = [1, 2, 3]
-visited = set()
-all_path_delays = simulate_circuit('AND', initial_delays, visited)
-
-# Calculate propagation skew using functional programming
-propagation_skew = reduce(lambda acc, delay: acc ^ (delay << 1), all_path_delays, 0)
-
-print(f"Result: {propagation_skew}")
+process_warehouse_inventory()

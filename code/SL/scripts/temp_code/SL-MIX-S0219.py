@@ -1,11 +1,38 @@
-monthly_celsius = [2.3, 4.1, 7.8, 12.5, 17.2, 21.0, 23.4, 22.1, 18.7, 13.3, 7.9, 3.6]
+def analyze_performance(metrics):
+    baseline = metrics.get('baseline', 0)
+    peak = metrics.get('peak', 0)
+    average = metrics.get('average', 0)
+    
+    # Distractor calculations that don't affect final result
+    temporary_adjustment = (peak - baseline) * 2
+    normalized_ratio = (average / baseline) if baseline != 0 else 0
+    
+    # Relevant processing with dictionary operations
+    processed_data = {}
+    processed_data['raw_delta'] = peak - baseline
+    processed_data['scaled_value'] = processed_data['raw_delta'] * 3
+    
+    # More distractors
+    dummy_metric = processed_data['raw_delta'] + 15
+    unused_calculation = (dummy_metric * 2) // 3
+    
+    # Key calculation chain
+    processed_data['key_metric'] = processed_data['scaled_value'] + average
+    
+    # Final assignment with lambda for intervention
+    metric_processor = lambda x: x - (x % 7)
+    final_metric = metric_processor(processed_data['key_metric'])
+    
+    # Unused lambda that looks relevant
+    alternate_processor = lambda x: x * 2 - 10
+    
+    print(f"Result: {final_metric}")
 
-celsius_to_fahrenheit = lambda c: c * 9/5 + 32
+# Input data
+performance_metrics = {
+    'baseline': 45,
+    'peak': 82,
+    'average': 63
+}
 
-monthly_fahrenheit = [celsius_to_fahrenheit(temp) for temp in monthly_celsius]
-
-sorted_fahrenheit = sorted(monthly_fahrenheit, reverse=True)
-
-average_top3_fahrenheit = sum(sorted_fahrenheit[:3]) / 3.0
-
-print(f"Result: {average_top3_fahrenheit}")
+analyze_performance(performance_metrics)

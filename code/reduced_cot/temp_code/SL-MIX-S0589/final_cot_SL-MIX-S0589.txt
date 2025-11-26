@@ -1,0 +1,20 @@
+Target: Find the value of variable final_adjustment after [line 18] executes
+
+[line 2]  base_stock = 42
+Assign: base_stock = 42
+[line 3]  temp_buffer = 15
+Assign: temp_buffer = 15
+[line 4]  seasonal_factor = 3
+Assign: seasonal_factor = 3
+[line 12]  base_value = base_stock - temp_buffer
+Compute: base_stock - temp_buffer, where base_stock=42 (defined at [line 2]), temp_buffer=15 (defined at [line 3]) = 27
+[line 13]  offset_multiplier = lambda x: x * 2
+Compute: lambda x: x * 2 = ?
+[line 14]  offset_calc = offset_multiplier(seasonal_factor)
+Call function offset_multiplier(seasonal_factor=3 (defined at [line 4]))
+[line 15]  temporary_adjustment = sum([ord(c) for c in 'test']) % 10
+Compute: sum([ord(c) for c in 'test']) % 10, where c='t' (an unknown source) = ?
+[line 18]  final_adjustment = base_value + offset_calc - temporary_adjustment
+Compute: base_value + offset_calc - temporary_adjustment, where base_value=27 (defined at [line 12]), offset_calc=6 (defined at [line 14]), temporary_adjustment=8 (defined at [line 15]) = 25
+
+Answer: final_adjustment = 25 (last updated on defined at [line 18])

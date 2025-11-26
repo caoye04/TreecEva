@@ -1,41 +1,30 @@
-import heapq
-import math
+def portfolio_calculations(holdings, prices, dividend_rate):
+    # Calculate total market value
+    market_value = sum(holdings[symbol] * prices[symbol] for symbol in holdings)
+    
+    # Calculate dividend income (distraction - not used in final result)
+    dividend_income = sum(holdings[symbol] * prices[symbol] * dividend_rate for symbol in holdings)
+    
+    # Calculate weighted average price (distraction - calculated but not used)
+    total_shares = sum(holdings.values())
+    weighted_price = sum(holdings[symbol] * prices[symbol] for symbol in holdings) / total_shares
+    
+    # Calculate portfolio adjustments
+    adjustment_factor = 0.85
+    adjusted_value = market_value * adjustment_factor
+    
+    # Apply management fee
+    management_fee = adjusted_value * 0.02
+    
+    # Final balance after fees
+    final_balance = adjusted_value - management_fee
+    return final_balance
 
-def calculate_priority(distance, weight, urgency):
-    base_score = distance * 0.5 + weight * 2.0
-    adjusted_score = base_score if urgency == 'normal' else base_score * (1.5 if urgency == 'high' else 2.0)
-    return int(adjusted_score)
+# Portfolio data
+holdings = {'AAPL': 50, 'GOOGL': 30, 'MSFT': 25}
+market_prices = {'AAPL': 150.0, 'GOOGL': 2800.0, 'MSFT': 340.0}
+dividend_yield = 0.015
 
-def process_deliveries(requests_heap):
-    processed_scores = []
-    while requests_heap:
-        priority, distance, weight, urgency = heapq.heappop(requests_heap)
-        if distance > 100 and weight < 50:
-            continue
-        score = calculate_priority(distance, weight, urgency)
-        if urgency != 'low' or score > 100:
-            processed_scores.append(score)
-    return processed_scores
-
-delivery_requests = [
-    (10, 120, 45, 'high'),
-    (5, 80, 60, 'normal'),
-    (15, 150, 30, 'low'),
-    (8, 95, 55, 'high'),
-    (12, 200, 25, 'normal')
-]
-
-# Create max heap using negative priorities
-requests_heap = [(-priority, distance, weight, urgency) for priority, distance, weight, urgency in delivery_requests]
-heapq.heapify(requests_heap)
-
-processed_scores = process_deliveries(requests_heap)
-
-# Calculate final priority score using complex aggregation
-priority_weights = {i: math.log(i+2) for i in range(len(processed_scores))}
-weighted_scores = {i: processed_scores[i] * priority_weights[i] for i in range(len(processed_scores)) if processed_scores[i] > 100}
-
-final_priority_score = sum(weighted_scores.values()) if weighted_scores else 0
-final_priority_score = int(final_priority_score) & 0xFF  # Keep only lower 8 bits
-
-print(f"Result: {final_priority_score}")
+# Execute the calculation
+final_balance = portfolio_calculations(holdings, market_prices, dividend_yield)
+print(f"Result: {final_balance}")

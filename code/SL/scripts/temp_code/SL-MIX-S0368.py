@@ -1,49 +1,70 @@
-from itertools import permutations
+from collections import Counter
 
-def transform_mask(mask, shift_ops):
-    for op in shift_ops:
-        if op > 0:
-            mask = mask << op
-        else:
-            mask = mask >> abs(op)
-        mask = mask & 0xFFFF  # 16-bit mask
-    return mask
-
-def generate_verification_sequence(base_masks, operations):
-    checksum = 0
-    perm_count = 0
+def calculate_initial_metrics(data_points):
+    # Irrelevant intermediate calculations
+    temp_sum = sum(data_points) * 2
+    irrelevant_avg = temp_sum / len(data_points) if data_points else 0
     
-    # Generate all permutations of base masks taken 3 at a time
-    for perm in permutations(base_masks, 3):
-        combined_mask = perm[0]
-        
-        # Apply XOR with subsequent masks in permutation
-        for i in range(1, len(perm)):
-            combined_mask ^= perm[i]
-        
-        # Transform the combined mask
-        transformed = transform_mask(combined_mask, operations[perm_count % len(operations)])
-        
-        # Update checksum with dynamic programming approach
-        checksum = (checksum + transformed) ^ (perm_count & 0xFF)
-        perm_count += 1
-        
-        # Early termination condition for efficiency
-        if perm_count >= 12:
-            break
+    # Actual relevant calculation
+    point_counter = Counter(data_points)
+    unique_count = len(point_counter)
+    most_common_freq = point_counter.most_common(1)[0][1] if point_counter else 0
     
-    return checksum
+    # Misleading variable
+    misleading_total = temp_sum + unique_count + most_common_freq
+    
+    return (unique_count, most_common_freq, misleading_total)
 
-# Base 16-bit bitmask configurations
-initial_masks = [0x1A3F, 0x7B2C, 0x4E5D, 0xF0A1, 0xC3B2]
+def apply_adjustments(base_values, adjustment_factors):
+    base1, base2, _ = base_values
+    factor1, factor2 = adjustment_factors
+    
+    # Dead code path
+    if factor1 > 100:
+        unused_calc = base1 * base2 * factor1
+    
+    # Relevant calculations with distractions
+    adjusted1 = base1 * factor1
+    adjusted2 = base2 * factor2
+    
+    # Irrelevant intermediate
+    temp_product = adjusted1 * adjusted2
+    
+    return (adjusted1, adjusted2, temp_product)
 
-# Shift operations sequences
-shift_sequences = [
-    [2, -1, 3],
-    [-2, 1],
-    [4, -3, 2, -1]
-]
+def calculate_final_score(metrics, adjustments, multiplier):
+    # Unpack with distraction
+    unique_count, most_common_freq, _ = metrics
+    adj1, adj2, _ = adjustments
+    
+    # Core calculation with multiple steps
+    weighted_unique = unique_count * multiplier
+    weighted_freq = most_common_freq * (multiplier // 2)
+    
+    # Irrelevant bitwise operation
+    bit_distraction = (weighted_unique ^ weighted_freq) & 0xFF
+    
+    # Actual final calculation
+    final_score = (weighted_unique + weighted_freq) - bit_distraction
+    
+    # Misleading alternative calculation
+    alternative_score = (adj1 + adj2) * multiplier
+    
+    return final_score
 
-# Execute verification process
-verification_checksum = generate_verification_sequence(initial_masks, shift_sequences)
-print(f"Result: {verification_checksum}")
+# Main execution with distractions
+data_points = [5, 3, 5, 7, 3, 2, 5, 8, 5, 2]
+adjustment_factors = (3, 2)
+multiplier = 4
+
+# Calculate metrics with irrelevant intermediate
+metrics = calculate_initial_metrics(data_points)
+print(f"Intermediate metrics: {metrics}")
+
+# Apply adjustments with distraction
+adjustments = apply_adjustments(metrics, adjustment_factors)
+print(f"Adjustments applied: {adjustments}")
+
+# Final calculation
+final_score = calculate_final_score(metrics, adjustments, multiplier)
+print(f"Result: {final_score}")

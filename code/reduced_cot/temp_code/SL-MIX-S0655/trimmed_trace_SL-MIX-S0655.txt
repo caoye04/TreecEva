@@ -1,0 +1,29 @@
+27
+net_bandwidth
+---
+1 network_devices = ['router', 'switch', 'firewall', 'load_balancer']
+1 ['network_devices'] ["['router', 'switch', 'firewall', 'load_balancer']"]
+2 device_throughput = [120, 85, 65, 95]
+2 ['network_devices', 'device_throughput'] ["['router', 'switch', 'firewall', 'load_balancer']", '[120, 85, 65, 95]']
+6 raw_throughputs = []
+6 ['network_devices', 'device_throughput', 'raw_throughputs'] ["['router', 'switch', 'firewall', 'load_balancer']", '[120, 85, 65, 95]', '[]']
+7 for i, (device, throughput) in enumerate(zip(network_devices, device_throughput)):
+7 ['network_devices', 'device_throughput', 'raw_throughputs', 'i', 'device', 'throughput'] ["['router', 'switch', 'firewall', 'load_balancer']", '[120, 85, 65, 95]', '[]', '0', "'router'", '120']
+7 for i, (device, throughput) in enumerate(zip(network_devices, device_throughput)):
+7 ['network_devices', 'device_throughput', 'raw_throughputs', 'i', 'device', 'throughput'] ["['router', 'switch', 'firewall', 'load_balancer']", '[120, 85, 65, 95]', '[144.0]', '1', "'switch'", '85']
+7 for i, (device, throughput) in enumerate(zip(network_devices, device_throughput)):
+7 ['network_devices', 'device_throughput', 'raw_throughputs', 'i', 'device', 'throughput'] ["['router', 'switch', 'firewall', 'load_balancer']", '[120, 85, 65, 95]', '[144.0, 68.0]', '2', "'firewall'", '65']
+7 for i, (device, throughput) in enumerate(zip(network_devices, device_throughput)):
+7 ['network_devices', 'device_throughput', 'raw_throughputs', 'i', 'device', 'throughput'] ["['router', 'switch', 'firewall', 'load_balancer']", '[120, 85, 65, 95]', '[144.0, 68.0, 71.5]', '3', "'load_balancer'", '95']
+7 for i, (device, throughput) in enumerate(zip(network_devices, device_throughput)):
+7 ['network_devices', 'device_throughput', 'raw_throughputs', 'i', 'device', 'throughput'] ["['router', 'switch', 'firewall', 'load_balancer']", '[120, 85, 65, 95]', '[144.0, 68.0, 71.5, 85.5]', '3', "'load_balancer'", '95']
+16 total_throughput = sum(raw_throughputs)
+16 ['raw_throughputs', 'total_throughput'] ['[144.0, 68.0, 71.5, 85.5]', '369.0']
+19 base_overhead = 25
+19 ['total_throughput', 'base_overhead'] ['369.0', '25']
+20 protocol_penalty = 8
+20 ['total_throughput', 'base_overhead', 'protocol_penalty'] ['369.0', '25', '8']
+21 network_overhead = base_overhead + protocol_penalty
+21 ['total_throughput', 'base_overhead', 'protocol_penalty', 'network_overhead'] ['369.0', '25', '8', '33']
+27 net_bandwidth = total_throughput - network_overhead
+27 ['total_throughput', 'network_overhead', 'net_bandwidth'] ['369.0', '33', '336.0']

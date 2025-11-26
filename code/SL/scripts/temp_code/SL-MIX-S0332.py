@@ -1,37 +1,30 @@
-import math
-from collections import defaultdict
+def process_transactions(transaction_list):
+    fee_calculator = lambda amount: amount * 0.02 if amount > 100 else amount * 0.01
+    processed_amounts = []
+    
+    total_before_fees = sum(transaction_list)
+    irrelevant_check = len([x for x in transaction_list if x % 2 == 0])
+    
+    for transaction in transaction_list:
+        fee = fee_calculator(transaction)
+        net_amount = transaction - fee
+        processed_amounts.append(net_amount)
+        
+    # Distractor calculation that doesn't affect final result
+    potential_bonus = sum(transaction_list) * 0.005
+    bonus_applicable = len(transaction_list) > 3
+    
+    if bonus_applicable:
+        final_net = sum(processed_amounts) + potential_bonus
+    else:
+        final_net = sum(processed_amounts)
+    
+    transaction_categories = {'high': [t for t in transaction_list if t > 200], 
+                            'medium': [t for t in transaction_list if 100 < t <= 200]}
+    high_count = len(transaction_categories['high'])
+    
+    return round(final_net, 2)
 
-def encode_point(x, y):
-    return (x << 8) | y
-
-def decode_point(encoded):
-    x = encoded >> 8
-    y = encoded & 0xFF
-    return (x, y)
-
-def calculate_centroid(vertices):
-    cx = sum(v[0] for v in vertices) / len(vertices)
-    cy = sum(v[1] for v in vertices) / len(vertices)
-    return (cx, cy)
-
-# Encoded vertex data for a triangle
-encoded_vertices = [0x0A05, 0x1E0F, 0x1419]
-
-# Decode vertices
-vertices = [decode_point(e) for e in encoded_vertices]
-
-# Calculate centroid
-centroid = calculate_centroid(vertices)
-
-# Spatial adjustment based on quadrant
-if centroid[0] >= 0 and centroid[1] >= 0:
-    adjusted_x = int(centroid[0]) + 10
-    adjusted_y = int(centroid[1]) + 20
-else:
-    adjusted_x = int(centroid[0]) - 5
-    adjusted_y = int(centroid[1]) - 5
-
-# Encode the adjusted centroid
-encoded_result = encode_point(adjusted_x, adjusted_y)
-
-print(f"Result: {encoded_result}")
+transactions = [150.0, 75.5, 300.0, 45.25, 180.75]
+final_result = process_transactions(transactions)
+print(f"Result: {final_result}")

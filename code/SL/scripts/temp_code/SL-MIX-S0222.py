@@ -1,62 +1,47 @@
-def fibonacci_primes(limit):
-    fib = [0, 1]
-    while len(fib) < limit:
-        fib.append(fib[-1] + fib[-2])
+def analyze_text_complexity(text_samples):
+    word_counts = {}
+    complexity_scores = {}
+    adjusted_ranks = {}
     
-    def is_prime(n):
-        if n <= 1:
-            return False
-        if n <= 3:
-            return True
-        if n % 2 == 0 or n % 3 == 0:
-            return False
-        i = 5
-        while i * i <= n:
-            if n % i == 0 or n % (i + 2) == 0:
-                return False
-            i += 6
-        return True
+    for sample_id, text in enumerate(text_samples):
+        words = text.split()
+        word_counts[sample_id] = len(words)
+        
+        # Distractor calculation - not used in final result
+        avg_word_length = sum(len(word) for word in words) / len(words) if words else 0
+        
+        # Main logic - complexity based on word count
+        if len(words) > 15:
+            complexity_scores[sample_id] = len(words) * 2
+        elif len(words) > 8:
+            complexity_scores[sample_id] = len(words) + 5
+        else:
+            complexity_scores[sample_id] = max(len(words) - 2, 0)
     
-    prime_fibs = []
-    for i in range(2, len(fib)):
-        if is_prime(fib[i]):
-            prime_fibs.append(fib[i])
-    return prime_fibs[:8]  # Get first 8 prime Fibonacci numbers
-
-# Get prime Fibonacci numbers
-prime_fib_sequence = fibonacci_primes(20)
-
-# Convert to frozenset for immutable operations
-prime_set = frozenset(prime_fib_sequence)
-
-# Bitwise operations using lambda
-xor_operation = lambda x, y: x ^ y
-and_operation = lambda x, y: x & y
-or_operation = lambda x, y: x | y
-
-# Initialize key components
-key_a = 0
-key_b = 0
-
-# Process prime set with bitwise operations
-for p in sorted(prime_set)[:4]:
-    key_a = xor_operation(key_a, p << 2)  # Left shift by 2
+    # Additional distractor processing
+    temp_analysis = [score * 1.5 for score in complexity_scores.values()]
     
-for p in sorted(prime_set)[4:]:
-    key_b = or_operation(key_b, p >> 1)   # Right shift by 1
+    # Core ranking logic
+    sorted_samples = sorted(complexity_scores.items(), key=lambda x: x[1], reverse=True)
+    
+    for rank, (sample_id, score) in enumerate(sorted_samples, 1):
+        adjusted_ranks[sample_id] = rank * 3 if score > 20 else rank + 1
+    
+    # Final calculation
+    final_score = sum(adjusted_ranks.values())
+    
+    # More distractor operations
+    debug_check = len(word_counts) + len(complexity_scores)
+    
+    print(f"Result: {final_score}")
 
-# Apply modular arithmetic
-modulus = 1024
-key_a = key_a % modulus
-key_b = key_b % modulus
+# Test data
+text_samples = [
+    "The quick brown fox jumps over the lazy dog",
+    "Artificial intelligence systems demonstrate remarkable capabilities",
+    "Hello world",
+    "Machine learning models require extensive training data and computational resources",
+    "Python programming language"
+]
 
-# Combine keys using AND operation
-combined_key = and_operation(key_a, key_b)
-
-# Greedy selection of maximum contributing prime
-max_prime = max(prime_set)
-
-# Final master key computation
-master_key = (combined_key ^ max_prime) % 512
-
-print(f"Result: {master_key}")
+analyze_text_complexity(text_samples)

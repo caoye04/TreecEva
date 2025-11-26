@@ -1,50 +1,47 @@
-from collections import deque
+import itertools
 
-class SignalProcessor:
-    def __init__(self):
-        self.signal_stack = []
-        self.propagation_queue = deque()
-        self.gate_operations = {
-            'AND': lambda x, y: x & y,
-            'OR': lambda x, y: x | y,
-            'XOR': lambda x, y: x ^ y,
-            'NOT': lambda x: ~x & 0xFF
-        }
+def transform_point(x, y, mask):
+    # Distractor: unused transformation matrix
+    transformation_matrix = [[2, -1], [1, 3]]
     
-    def process_circuit(self):
-        # Initialize with base signals
-        signals = [0b11001010, 0b10110101, 0b01101100]
-        
-        # Load signals onto stack
-        for signal in signals:
-            self.signal_stack.append(signal)
-        
-        # Process gate operations
-        operations = ['AND', 'OR', 'XOR']
-        for op in operations:
-            if len(self.signal_stack) >= 2 and op in self.gate_operations:
-                b = self.signal_stack.pop()
-                a = self.signal_stack.pop()
-                result = self.gate_operations[op](a, b)
-                self.signal_stack.append(result)
-                self.propagation_queue.append(result)
-        
-        # Apply NOT to remaining signal if exists
-        if self.signal_stack and len(self.signal_stack) > 0:
-            signal = self.signal_stack.pop()
-            if signal:
-                inverted = self.gate_operations['NOT'](signal)
-                self.signal_stack.append(inverted)
-                self.propagation_queue.appendleft(inverted)
-        
-        # Calculate final signal strength
-        final_signal_strength = 0
-        while self.propagation_queue:
-            signal = self.propagation_queue.popleft()
-            final_signal_strength = (final_signal_strength + signal) % 256
-        
-        return final_signal_strength
+    # Main transformation logic
+    x_rotated = (x ^ mask) + (y & 0xFF)
+    y_rotated = (y | mask) - (x % 16)
+    
+    # Distractor: misleading intermediate calculation
+    temp_sum = sum([i**2 for i in range(abs(x_rotated % 10))])
+    
+    # Actual coordinate calculation
+    result = (x_rotated * 3) - (y_rotated * 2) + (mask >> 4)
+    
+    # Dead code path that never executes
+    if result > 1000000:
+        result = -result  # Never reached with given inputs
+    
+    return result
 
-circuit = SignalProcessor()
-final_signal_strength = circuit.process_circuit()
-print(f"Result: {final_signal_strength}")
+# Initial coordinates and setup
+initial_x = 42
+initial_y = 27
+rotation_key = 0b101101
+
+# Distractor: irrelevant coordinate processing
+coordinate_pairs = list(itertools.product([initial_x, initial_y], repeat=2))
+filtered_pairs = [pair for pair in coordinate_pairs if pair[0] != pair[1]]
+
+# Process coordinates with bitwise operations
+x_processed = (initial_x << 2) | 0b11
+y_processed = (initial_y >> 1) ^ 0b10101
+
+# Distractor: misleading rotation value
+rotation_mask = rotation_key & 0b111111
+rotation_dummy = rotation_key | 0b111000  # Never used
+
+# Dead code: unused coordinate transformation
+def unused_transform(a, b):
+    return a * b + (a ^ b)
+
+# Critical execution point
+final_coordinate = transform_point(x_processed, y_processed, rotation_mask)
+
+print(f"Result: {final_coordinate}")

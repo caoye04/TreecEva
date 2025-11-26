@@ -1,44 +1,32 @@
-from collections import defaultdict
-
-def calculate_segment_scores(segment):
-    nucleotide_weights = {'A': 1, 'T': 2, 'G': 3, 'C': 4}
-    correction_factors = defaultdict(lambda: 1.0, {'AA': 1.5, 'TT': 1.2, 'GG': 1.3, 'CC': 1.4})
+def process_results(data_points, min_threshold):
+    temp_buffer = []
+    data_mapping = {}
     
-    if len(segment) == 0:
-        return 0
+    # Initialize with some irrelevant computations
+    offset_calc = (len(data_points) * 3) - 7
+    dummy_value = offset_calc % 5
     
-    if len(segment) == 1:
-        return nucleotide_weights.get(segment[0], 0)
-    
-    mid = len(segment) // 2
-    left_score = calculate_segment_scores(segment[:mid])
-    right_score = calculate_segment_scores(segment[mid:])
-    
-    # Correction for boundary
-    boundary_pair = segment[mid-1:mid+1]
-    correction = correction_factors[''.join(boundary_pair)] if len(boundary_pair) == 2 else 1.0
-    
-    total = (left_score + right_score) * correction
-    return total
-
-def adjust_for_anomalies(score_sequence):
-    adjustments = []
-    for i, s in enumerate(score_sequence):
-        if i > 0 and s > score_sequence[i-1]:
-            adjustments.append(s * 1.1)
-        elif i > 0 and s <= score_sequence[i-1]:
-            adjustments.append(s * 0.95)
+    for idx, value in enumerate(data_points):
+        if value >= min_threshold:
+            processed_val = value * 2 + dummy_value
+            temp_buffer.append(processed_val)
+            data_mapping[idx] = processed_val
         else:
-            adjustments.append(s)
-    return adjustments
+            # Distractor operation that doesn't affect final result
+            shadow_calc = value * 3 - dummy_value
+    
+    # More intermediate computations that don't contribute to final answer
+    intermediate_sum = sum(temp_buffer)
+    unused_metric = intermediate_sum // len(temp_buffer) if temp_buffer else 0
+    
+    # The critical computation chain
+    valid_entries = [data_mapping[i] for i in sorted(data_mapping.keys())]
+    final_score = sum(valid_entries) - (len(valid_entries) * dummy_value)
+    
+    print(f"Result: {final_score}")
+    return final_score
 
-# Main processing
-sequences = ['ATGCTAGCTA', 'GCTAGCTAGC', 'TAGCTAGCT']
-scores = []
-for seq in sequences:
-    raw_score = calculate_segment_scores(list(seq))
-    scores.append(raw_score)
-
-adjusted_scores = adjust_for_anomalies(scores)
-final_stability_score = sum(adjusted_scores)
-print(f"Result: {int(final_stability_score)}")
+# Main execution
+sample_data = [8, 12, 5, 15, 9, 3]
+threshold = 6
+result_analysis = process_results(sample_data, threshold)

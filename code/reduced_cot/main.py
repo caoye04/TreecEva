@@ -7,22 +7,16 @@ import argparse
 from pathlib import Path
 from dataset_processor import DatasetProcessor
 
-
-# AI API配置
+# API配置
 API_KEY = "sk-tT9Ddv4cOCl5BXW4kivhRQ"
 BASE_URL = "https://llmapi.paratera.com/v1"
 
 AI_APIS = {
-    "qwen3_235b": {
+    "DeepSeek-V3.2-Exp": {
         "base_url": BASE_URL,
         "api_key": API_KEY,
-        "model": "Qwen3-235B-A22B-Instruct-2507"
-    },
-    "qwen3_coder": {
-        "base_url": BASE_URL,
-        "api_key": API_KEY,
-        "model": "Qwen3-Coder-480B-A35B-Instruct"
-    },
+        "model": "DeepSeek-V3.2-Exp"
+    }
 }
 
 
@@ -33,6 +27,12 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 示例用法:
+  # 批量提取所有目标信息
+  python main.py --extract-targets
+  
+  # 写入所有代码文件
+  python main.py --write-code
+  
   # 处理所有cases（跳过已有COT的）
   python main.py --all
   
@@ -47,6 +47,9 @@ def main():
   
   # 调整并行数
   python main.py --all --workers 8
+  
+  # 完整流程：提取目标 -> 写入代码 -> 处理所有
+  python main.py --extract-targets --write-code --all
         """
     )
     
@@ -57,9 +60,21 @@ def main():
     )
     
     parser.add_argument(
+        '--extract-targets',
+        action='store_true',
+        help='批量提取所有cases的目标信息到all-target-info.json'
+    )
+    
+    parser.add_argument(
+        '--write-code',
+        action='store_true',
+        help='将所有cases的代码写入temp_code目录'
+    )
+    
+    parser.add_argument(
         '--all',
         action='store_true',
-        help='处理所有cases'
+        help='处理所有cases生成COT'
     )
     
     parser.add_argument(
@@ -75,10 +90,16 @@ def main():
     )
     
     parser.add_argument(
+        '--force',
+        action='store_true',
+        help='强制重新处理（用于--extract-targets和--write-code）'
+    )
+    
+    parser.add_argument(
         '--model',
-        choices=['qwen3_235b', 'qwen3_coder'],
-        default='qwen3_235b',
-        help='使用的AI模型（默认: qwen3_235b）'
+        default='DeepSeek-V3.2-Exp',
+        choices=list(AI_APIS.keys()),
+        help='使用的AI模型'
     )
     
     parser.add_argument(
@@ -91,9 +112,9 @@ def main():
     args = parser.parse_args()
     
     # 检查参数
-    if not args.all and not args.case:
+    if not any([args.extract_targets, args.write_code, args.all, args.case]):
         parser.print_help()
-        print("\n错误: 必须指定 --all 或 --case")
+        print("\n错误: 必须指定至少一个操作: --extract-targets, --write-code, --all, 或 --case")
         return
     
     # 检查数据集文件
@@ -116,11 +137,17 @@ def main():
     # 创建处理器
     processor = DatasetProcessor(
         str(dataset_path),
-        api_config,
+        api_config=api_config,
         max_workers=args.workers
     )
     
-    # 执行处理
+    # 执行操作
+    if args.extract_targets:
+        processor.extract_all_targets(force=args.force)
+    
+    if args.write_code:
+        processor.write_code_files(force=args.force)
+    
     if args.all:
         processor.process_all_cases(skip_existing=not args.no_skip)
     elif args.case:
@@ -129,3 +156,16 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+#     # 完整流程
+# python main.py --extract-targets --write-code --all
+
+# # 只提取目标
+# python main.py --extract-targets
+
+# # 处理单个case
+# python main.py --case SL-MIX-S0001
+
+# # 使用不同模型
+# python main.py --all --model qwen3_coder

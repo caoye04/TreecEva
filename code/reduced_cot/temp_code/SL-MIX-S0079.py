@@ -1,33 +1,14 @@
-from dataclasses import dataclass
-from typing import List
+data_values = [3, 7, 2, 9, 5]
+multiplier_list = [2, 1, 4, 3, 2]
 
-def calibrate(factor: float):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            result = func(*args, **kwargs)
-            return result * factor
-        return wrapper
-    return decorator
+enumerate_product = []
+for index, value in enumerate(data_values):
+    product = value * multiplier_list[index]
+    enumerate_product.append(product)
 
-@dataclass
-class SensorReading:
-    sensor_id: str
-    strength: float
+# Some additional processing that doesn't affect the result
+intermediate_sum = sum(data_values)
+temp_calc = intermediate_sum * 2
 
-readings: List[SensorReading] = [
-    SensorReading('S1', 42.7),
-    SensorReading('S2', 18.3),
-    SensorReading('S3', 73.1),
-    SensorReading('S4', 29.9),
-    SensorReading('S5', 55.5)
-]
-
-sorted_readings = sorted(readings, key=lambda x: x.strength)
-
-@calibrate(1.2)
-def get_median_strength(readings_list):
-    n = len(readings_list)
-    return readings_list[n//2].strength
-
-calibrated_median_strength = get_median_strength(sorted_readings)
-print(f'Result: {calibrated_median_strength}')
+final_result = sum(enumerate_product)
+print(f"Result: {final_result}")

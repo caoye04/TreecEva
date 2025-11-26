@@ -1,35 +1,26 @@
-import hashlib
-import heapq
+import itertools
 
-def hash_subsequence(subseq):
-    return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
+# Analyze character frequency in technical documentation
+text_sample = "algorithmic optimization requires careful complexity analysis"
 
-def is_palindrome(s):
-    return s == s[::-1]
+# Count vowels using itertools chain and filter
+vowels = 'aeiou'
+char_chain = itertools.chain.from_iterable(text_sample)
+vowel_filter = filter(lambda c: c in vowels, char_chain)
+vowel_count = sum(1 for _ in vowel_filter)
 
-dna_strand = "ATGCCGTAATGCCGTAATGCCGTAATGCCGTA"
-palindromic_hashes = set()
+# Calculate consonant count using basic operations
+total_chars = len(text_sample.replace(' ', ''))
+consonant_count = total_chars - vowel_count
 
-for i in range(len(dna_strand) - 3):
-    subseq = dna_strand[i:i+4]
-    if is_palindrome(subseq):
-        palindromic_hashes.add(hash_subsequence(subseq))
+# Character analysis metrics
+char_analysis = {
+    'vowel_ratio': vowel_count / total_chars,
+    'consonant_ratio': consonant_count / total_chars
+}
 
-# Convert to sorted list for deterministic heap operations
-sorted_hashes = sorted(list(palindromic_hashes))
+# Final character accumulation with some intermediate steps
+char_accumulator = vowel_count * 3 + consonant_count * 2
+final_count = char_accumulator
 
-# Create a max heap using negative values
-hash_heap = [-x for x in sorted_hashes]
-heapq.heapify(hash_heap)
-
-# Process heap elements
-signature_components = []
-while len(hash_heap) > 1:
-    first = -heapq.heappop(hash_heap)
-    second = -heapq.heappop(hash_heap)
-    combined = (first ^ second) & 0xFFFF  # XOR and mask to 16 bits
-    heapq.heappush(hash_heap, -combined)
-    signature_components.append(combined)
-
-final_signature = sum(signature_components) % 10000
-print(f"Result: {final_signature}")
+print(f"Target result: {final_count}")

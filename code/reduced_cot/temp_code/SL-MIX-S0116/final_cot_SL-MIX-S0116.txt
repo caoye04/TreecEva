@@ -1,53 +1,42 @@
-Target: Find the value of variable processed_checksum after [line 26] executes
+Target: Find the value of variable final_score after [line 56] executes
 
-[line 25]  signal_data = [12, 7, 23, 9, 15, 4, 18, 11, 6, 25, 3, 20, 8, 14, 19, 5, 22, 10, 17, 1]
-Compute: [12, 7, 23, 9, 15, 4, 18, 11, 6, 25, 3, 20, 8, 14, 19, 5, 22, 10, 17, 1] = [12, 7, 23, 9, 15, ...]
-[line 26]  processed_checksum = compute_signal_checksum(signal_data)
-Call function compute_signal_checksum(signal_data=[12, 7, 23, 9, 15, ...] (defined at [line 25]))
-[line 3]  def compute_signal_checksum(signal_samples):
-Enter function compute_signal_checksum: signal_samples=[12, 7, 23, 9, 15, ...] (signal_data defined at [line 25])
-  [line 4]  window = deque(maxlen=5)
-  Call function deque(maxlen=5)
-  [line 5]  checksum = 0
-  Assign: checksum = 0
-  [line 7]  for idx, sample in enumerate(signal_samples):
-  (Missing param: 'iter_var')
-  [line 11]  if len(window) == 5:
-  Condition: True, entering 'if' block
-  [line 7]  for idx, sample in enumerate(signal_samples):
-  (Missing param: 'iter_var')
-  [line 11]  if len(window) == 5:
-  Condition: True, entering 'if' block
-... [Line 7] repeats 17 more times ...
-... [Line 7] repeats 17 more times ...
-  [line 7]  for idx, sample in enumerate(signal_samples):
-  (Missing param: 'iter_var')
-  [line 11]  if len(window) == 5:
-  Condition: True, entering 'if' block
-  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
-  Call function sum((i + 1) * val for i, val in enumerate(window))
-  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
-  Call function sum((i + 1) * val for i, val in enumerate(window))
-  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
-  Call function sum((i + 1) * val for i, val in enumerate(window))
-  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
-  Call function sum((i + 1) * val for i, val in enumerate(window))
-  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
-  Call function sum((i + 1) * val for i, val in enumerate(window))
-  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
-  Call function sum((i + 1) * val for i, val in enumerate(window))
-  [line 13]  weighted_sum = sum((i + 1) * val for i, val in enumerate(window))
-  Call function sum((i + 1) * val for i, val in enumerate(window))
-  [line 15]  mod_result = (weighted_sum % 17) + (idx * 0.5)
-  Compute: (weighted_sum % 17) + (idx * 0.5), where weighted_sum=152 (defined at [line 13]), idx=19 (an unknown source) = 25.5
-  [line 17]  if mod_result > 10.0 and not (idx % 3 == 0 and idx > 15):
-  Condition: True, entering 'if' block
-  [line 18]  checksum = (checksum + int(mod_result)) % 100
-  Compute: (checksum + int(mod_result)) % 100, where checksum=1 (defined at [line 5]), mod_result=25.5 (defined at [line 15]) = 26
-  [line 7]  for idx, sample in enumerate(signal_samples):
-  Loop End: Iteration finished
-  [line 22]  return checksum
-  Return: checksum=26 (defined at [line 18])
-Function compute_signal_checksum returns 26
+[line 45]  data_points = [8, 15, 3, 12, 7, 20, 5]
+Compute: [8, 15, 3, 12, 7, 20, 5] = [8, 15, 3, 12, 7, ...]
+[line 46]  threshold = 6
+Assign: threshold = 6
+[line 53]  final_score = score_calculation(data_points, threshold)
+Call function score_calculation(data_points=[8, 15, 3, 12, 7, ...] (defined at [line 45]), threshold=6 (defined at [line 46]))
+[line 10]  relevant_set = {x for x in points if x > limit}
+Compute: {x for x in points if x > limit}, where x=8 (an unknown source), points=[8, 15, 3, 12, 7, ...] (an unknown source), limit=6 (an unknown source) = ?
+[line 14]  temp_sum = sum(points) * 2
+Compute: sum(points) * 2, where points=[8, 15, 3, 12, 7, ...] (an unknown source) = 140
+[line 15]  distractor_var = temp_sum // len(points) if points else 0
+Compute: temp_sum // len(points) if points else 0, where temp_sum=140 (defined at [line 14]), points=[8, 15, 3, 12, 7, ...] (an unknown source) = 20
+[line 5]  processed = [x * 2 for x in candidates if filter_func(x)]
+Compute: [x * 2 for x in candidates if filter_func(x)], where x=8 (an unknown source), candidates=[8, 15, 3, 12, 7, ...] (an unknown source) = ?
+[line 6]  return sum(processed) % 100
+Return: sum(processed) % 100
+[line 21]  if relevant_set:
+Condition: True, entering 'if' block
+[line 22]  min_val = min(relevant_set)
+Call function min(relevant_set={7, 8, 12, 15, 20} (defined at [line 10]))
+[line 23]  max_val = max(relevant_set)
+Call function max(relevant_set={7, 8, 12, 15, 20} (defined at [line 10]))
+[line 26]  combinations = list(itertools.combinations(relevant_set, 2))
+Call function list(itertools.combinations(relevant_set, 2))
+[line 27]  valid_pairs = [(a, b) for a, b in combinations if (a ^ b) > 2]
+Compute: [(a, b) for a, b in combinations if (a ^ b) > 2], where a=7 (an unknown source), b=8 (an unknown source), combinations=[(7, 8), (7, 12), (7, 15), (7, 20), (8, 12), ...] (defined at [line 26]) = ?
+[line 30]  if len(valid_pairs) > 10:
+Condition: True, entering 'if' block
+[line 34]  score = (min_val + max_val) * len(valid_pairs)
+Compute: (min_val + max_val) * len(valid_pairs), where min_val=7 (defined at [line 22]), max_val=20 (defined at [line 23]), valid_pairs=[(7, 8), (7, 12), (7, 15), (7, 20), (8, 12), ...] (defined at [line 27]) = 270
+[line 35]  score = score | 0b101  # Bitwise OR with 5
+Compute: score | 0b101  # Bitwise OR with 5, where score=270 (defined at [line 34]) = 271
+[line 38]  score = score - distractor_var
+Compute: score - distractor_var, where score=271 (defined at [line 35]), distractor_var=20 (defined at [line 15]) = 251
+[line 40]  return score
+Return: score=251 (defined at [line 38])
+[line 56]  print(f"Result: {final_score}")
+Output: f"Result: {final_score}"
 
-Answer: processed_checksum = ? (last updated on defined at [line 26])
+Answer: final_score = 251 (last updated on defined at [line 53])

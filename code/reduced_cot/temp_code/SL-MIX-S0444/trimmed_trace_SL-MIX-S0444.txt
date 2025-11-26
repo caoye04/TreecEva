@@ -1,0 +1,37 @@
+30
+final_metric
+---
+5 sensor_calibration = 3.14159
+5 ['raw_readings', 'sensor_calibration'] ['[8, 12, 5, 18, 7, ...]', '3.14159']
+6 redundant_factor = 42
+6 ['raw_readings', 'sensor_calibration', 'redundant_factor'] ['[8, 12, 5, 18, 7, ...]', '3.14159', '42']
+11 filtered_readings = list(itertools.islice(raw_readings, 2, len(raw_readings) - 1))
+11 ['raw_readings', 'sensor_calibration', 'redundant_factor', 'filtered_readings'] ['[8, 12, 5, 18, 7, ...]', '3.14159', '42', '[5, 18, 7, 3, 15, ...]']
+12 processed_data = [reading * 2 - 1 for reading in filtered_readings]
+12 ['sensor_calibration', 'redundant_factor', 'filtered_readings', 'reading'] ['3.14159', '42', '[5, 18, 7, 3, 15, ...]', '5']
+12 processed_data = [reading * 2 - 1 for reading in filtered_readings]
+12 ['sensor_calibration', 'redundant_factor', 'filtered_readings', 'reading'] ['3.14159', '42', '[5, 18, 7, 3, 15, ...]', '18']
+12 processed_data = [reading * 2 - 1 for reading in filtered_readings]
+12 ['sensor_calibration', 'redundant_factor', 'filtered_readings', 'reading'] ['3.14159', '42', '[5, 18, 7, 3, 15, ...]', '7']
+12 processed_data = [reading * 2 - 1 for reading in filtered_readings]
+12 ['sensor_calibration', 'redundant_factor', 'filtered_readings', 'reading'] ['3.14159', '42', '[5, 18, 7, 3, 15, ...]', '3']
+12 processed_data = [reading * 2 - 1 for reading in filtered_readings]
+12 ['sensor_calibration', 'redundant_factor', 'filtered_readings', 'reading'] ['3.14159', '42', '[5, 18, 7, 3, 15, ...]', '15']
+12 processed_data = [reading * 2 - 1 for reading in filtered_readings]
+12 ['sensor_calibration', 'redundant_factor', 'filtered_readings', 'reading'] ['3.14159', '42', '[5, 18, 7, 3, 15, ...]', '9']
+12 processed_data = [reading * 2 - 1 for reading in filtered_readings]
+12 ['sensor_calibration', 'redundant_factor', 'filtered_readings', 'reading'] ['3.14159', '42', '[5, 18, 7, 3, 15, ...]', '11']
+12 processed_data = [reading * 2 - 1 for reading in filtered_readings]
+12 ['sensor_calibration', 'redundant_factor', 'filtered_readings', 'processed_data'] ['3.14159', '42', '[5, 18, 7, 3, 15, ...]', '[9, 35, 13, 5, 29, ...]']
+15 temp_calculation = sensor_calibration * redundant_factor
+15 ['sensor_calibration', 'redundant_factor', 'filtered_readings', 'processed_data', 'temp_calculation'] ['3.14159', '42', '[5, 18, 7, 3, 15, ...]', '[9, 35, 13, 5, 29, ...]', '131.94678']
+19 processed_total = sum(processed_data)
+19 ['filtered_readings', 'processed_data', 'temp_calculation', 'processed_total'] ['[5, 18, 7, 3, 15, ...]', '[9, 35, 13, 5, 29, ...]', '131.94678', '129']
+20 adjustment_factor = len(filtered_readings) / 4.0
+20 ['filtered_readings', 'processed_data', 'temp_calculation', 'processed_total', 'adjustment_factor'] ['[5, 18, 7, 3, 15, ...]', '[9, 35, 13, 5, 29, ...]', '131.94678', '129', '1.75']
+21 correction_offset = (processed_data[0] if processed_data else 0) + 15
+21 ['processed_data', 'temp_calculation', 'processed_total', 'adjustment_factor', 'correction_offset'] ['[9, 35, 13, 5, 29, ...]', '131.94678', '129', '1.75', '24']
+24 if temp_calculation > 1000:
+24 ['temp_calculation', 'processed_total', 'adjustment_factor', 'correction_offset'] ['131.94678', '129', '1.75', '24']
+30 final_metric = processed_total * adjustment_factor - correction_offset
+30 ['processed_total', 'adjustment_factor', 'correction_offset', 'final_metric'] ['129', '1.75', '24', '201.75']

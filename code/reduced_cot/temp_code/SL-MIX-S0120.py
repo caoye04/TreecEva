@@ -1,15 +1,5 @@
-from functools import reduce
-
-def get_item_price(item_name):
-    prices = {'croissant': 2.50, 'bagel': 1.75, 'muffin': 2.00}
-    return prices.get(item_name, 0)
-
-sold_items = [('croissant', 12), ('bagel', 8), ('muffin', 15)]
-
-# Calculate revenue per item type
-revenues = list(map(lambda x: get_item_price(x[0]) * x[1], sold_items))
-
-# Sum all revenues to get total
-total_revenue = reduce(lambda a, b: a + b, revenues)
-
-print(f"Result: {total_revenue}")
+data_points = [24, 18, 35, 42, 15, 29, 8, 51, 33, 27]
+threshold = 25
+filtered_values = [x for x in data_points if x > threshold]
+processed_value = sum(filtered_values)
+print(f"Result: {processed_value}")

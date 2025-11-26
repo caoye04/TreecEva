@@ -1,35 +1,34 @@
-import math
+from collections import Counter
 
-def calculate_zone_modifier(zone_id):
-    modifiers = {1: 7, 2: 11, 3: 13, 4: 17, 5: 19}
-    return modifiers.get(zone_id, 23)
-
-def process_package(weight, zone):
-    if weight <= 0:
-        return 0
-    log_component = int(math.log2(weight)) if weight > 1 else 0
-    zone_factor = calculate_zone_modifier(zone)
-    return (log_component * zone_factor) % 32
-
-package_manifest = [
-    {'weight': 8, 'zone': 2},
-    {'weight': 16, 'zone': 4},
-    {'weight': 3, 'zone': 1},
-    {'weight': 32, 'zone': 3}
-]
-
-routing_key = 0
-for package in package_manifest:
-    weight = package['weight']
-    zone = package['zone']
+def process_text(text):
+    # Analyze character frequencies and patterns
+    char_counter = Counter(text.lower())
     
-    if weight > 10:
-        temp_key = process_package(weight, zone)
-        routing_key = (routing_key + temp_key) % 256
-        if routing_key > 100:
-            break
-    else:
-        temp_key = process_package(weight*2, zone+1)
-        routing_key = (routing_key ^ temp_key) & 0xFF
+    # Calculate vowel distribution (distractor - not used in final answer)
+    vowels = 'aeiou'
+    vowel_count = sum(char_counter[vowel] for vowel in vowels if vowel in char_counter)
+    
+    # Process consonant frequencies
+    consonants = ''.join(c for c in 'abcdefghijklmnopqrstuvwxyz' if c not in vowels)
+    consonant_freq = {c: char_counter[c] for c in consonants if c in char_counter}
+    
+    # Filter consonants with multiple occurrences (key logic)
+    filtered_consonants = {char: count for char, count in consonant_freq.items() if count > 1}
+    
+    # Calculate total count of repeated consonants
+    final_count = sum(filtered_consonants.values())
+    
+    # Additional intermediate calculations (distractors)
+    total_chars = len(text)
+    unique_consonants = len(consonant_freq)
+    
+    return final_count
 
-print(f"Result: {routing_key}")
+# Sample text data
+text_data = "Programming challenges require systematic analysis and methodical approaches"
+
+# Process the text data
+processed = process_text(text_data)
+
+# Print the target result
+print(f"Result: {processed}")

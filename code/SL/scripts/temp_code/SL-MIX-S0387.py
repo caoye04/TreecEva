@@ -1,50 +1,27 @@
-import math
-from collections import defaultdict
+data_samples = [12.5, 8.3, 15.7, 9.1, 11.4]
+threshold_check = 10.0
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+# Primary processing path
+base_value = sum(data_samples) / len(data_samples)
+scaling_factor = 1.25 if base_value > 10 else 0.8
+processed_mean = base_value * scaling_factor
 
-def calculate_harmonic_index(freq):
-    if freq <= 0:
-        return 0
-    return int(math.log(freq) * 10) + 1
+# Secondary processing path (distractor)
+max_sample = max(data_samples)
+min_sample = min(data_samples)
+range_calc = max_sample - min_sample
+normalized_range = range_calc / 2.0
 
-# Signal frequency data from deep space observations
-signal_frequencies = [23, 45, 67, 89, 101, 113, 131, 157, 179, 191]
+# Validation logic
+validation_flag = processed_mean > 12.0
+primary_score = int(processed_mean * 100)
+secondary_score = int(normalized_range * 50)
 
-# Initialize data structures
-harmonic_map = defaultdict(set)
-frequency_sets = []
+# Temporary calculations (unused)
+temp_product = base_value * max_sample
+temp_difference = max_sample - base_value
 
-# Process each frequency to build harmonic mappings
-for freq in signal_frequencies:
-    index = calculate_harmonic_index(freq)
-    if is_prime(index):
-        harmonic_map[index].add(freq)
-        
-# Apply set operations to identify unique signatures
-base_set = frozenset(signal_frequencies)
-for idx, freq_set in harmonic_map.items():
-    if idx % 2 == 1:  # Odd indices
-        intersected = base_set & freq_set
-        frequency_sets.append(intersected)
-    else:  # Even indices
-        unioned = base_set | freq_set
-        frequency_sets.append(unioned)
-        
-# Count unique signatures using lambda function
-signature_counter = lambda sets: sum(len(s) for s in sets)
-final_signature_count = signature_counter(frequency_sets)
+# Final decision point
+final_metric = primary_score if validation_flag else secondary_score
 
-print(f"Result: {final_signature_count}")
+print(f"Result: {final_metric}")

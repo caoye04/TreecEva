@@ -1,46 +1,63 @@
-from functools import reduce
+from collections import Counter
 
-def process_document_ids():
-    # Historical document identifiers
-    doc_ids = ['DOC-1923-A', 'MAN-1845-B', 'LET-1901-C']
+def analyze_inventory(items):
+    # Irrelevant inventory analysis (distractor)
+    item_counts = Counter(items)
+    max_count = max(item_counts.values()) if item_counts else 0
+    min_count = min(item_counts.values()) if item_counts else 0
     
-    # Character to integer mapping for encoding
-    char_map = {chr(i): i - 64 for i in range(65, 91)}  # A=1, B=2, ..., Z=26
-    char_map.update({str(i): i for i in range(10)})      # '0'=0, '1'=1, ..., '9'=9
-    char_map.update({'-': 27})
+    # Dead code path - never executed
+    if max_count > 100:
+        bonus_points = 50
+    else:
+        bonus_points = 25
     
-    # Encoding function
-    encode = lambda s: [char_map[c] for c in s if c in char_map]
-    
-    # Process each document ID
-    encoded_sequences = list(map(encode, doc_ids))
-    
-    # Apply modular arithmetic transformation
-    transformed = [
-        [((x * 17) + 13) % 31 for x in seq]
-        for seq in encoded_sequences
-    ]
-    
-    # Frequency analysis using dictionary comprehension
-    freq_analysis = {
-        i: len([seq for seq in transformed if i < len(seq) and seq[i] % 3 == 0])
-        for i in range(max(len(seq) for seq in transformed))
-    }
-    
-    # Merge with base frequencies using dictionary merging
-    base_freq = {i: 1 for i in range(10)}
-    merged_freq = base_freq | {k: v + 1 for k, v in freq_analysis.items()}
-    
-    # Calculate checksum using functional programming
-    checksum_components = [
-        reduce(lambda a, b: (a + b) % 29, seq, 0)
-        for seq in transformed
-    ]
-    
-    # Final encoded checksum
-    encoded_checksum = sum(checksum_components) % 100
-    
-    return encoded_checksum
+    return max_count - min_count
 
-result = process_document_ids()
-print(f"Result: {result}")
+def calculate_quality_scores(base_metrics):
+    # Misleading intermediate calculations
+    raw_total = sum(base_metrics)
+    average_score = raw_total / len(base_metrics) if base_metrics else 0
+    
+    # Irrelevant quality threshold check
+    quality_threshold = 75.0
+    if average_score > quality_threshold:
+        quality_bonus = 15
+    else:
+        quality_bonus = 5
+    
+    # Unused variable (distractor)
+    unused_calibration = quality_bonus * 2
+    
+    return average_score, quality_bonus
+
+# Main execution with multiple distractor variables
+inventory_data = ['widget', 'gadget', 'widget', 'tool', 'gadget', 'widget']
+metrics_data = [82, 76, 91, 68, 85]
+
+# Distractor function call
+inventory_range = analyze_inventory(inventory_data)
+
+# Relevant calculations mixed with distractors
+base_score, bonus = calculate_quality_scores(metrics_data)
+
+# Misleading intermediate variable
+intermediate_value = base_score * 1.1
+
+# Dead code - condition never met
+if intermediate_value > 100:
+    adjustment_factor = 12
+else:
+    adjustment_factor = 8
+
+# Another distractor calculation
+quality_variance = max(metrics_data) - min(metrics_data)
+
+# Core logic chain
+primary_score = int(base_score + bonus)
+correction_offset = quality_variance // 10
+
+# Final answer calculation
+final_metric = primary_score - adjustment_factor + correction_offset
+
+print(f"Result: {final_metric}")

@@ -1,23 +1,51 @@
-from collections import defaultdict
+def analyze_network_throughput(packets, capacity):
+    # Distractor: misleading calculation that looks important
+    total_bytes = sum(packet['size'] for packet in packets)
+    theoretical_max = capacity * 1000  # Misleading conversion
+    
+    # Distractor: unused sorting operation
+    sorted_packets = sorted(packets, key=lambda x: x['timestamp'])
+    
+    # Relevant: actual throughput calculation
+    successful_packets = [p for p in packets if p['status'] == 'delivered']
+    total_delivered = sum(p['size'] for p in successful_packets)
+    
+    # Distractor: dead code path with bitwise operations
+    if theoretical_max & 0xFF == 0:
+        unused_result = (theoretical_max >> 4) ^ 0xAB
+    
+    # Relevant: final throughput calculation
+    time_window = 60  # seconds
+    actual_throughput = total_delivered / time_window
+    
+    # Distractor: misleading intermediate result
+    efficiency_ratio = actual_throughput / capacity if capacity > 0 else 0
+    
+    return actual_throughput
 
-def compute_dynamic_price(initial_price, sales_threshold=10, increase_rate=0.1):
-    return initial_price * (1 + increase_rate) if sales_threshold else initial_price
-
-beverage_prices = {'coffee': 3.0, 'tea': 2.5, 'latte': 4.0}
-beverage_sales_log = [
-    {'coffee': 8, 'tea': 12, 'latte': 5},
-    {'coffee': 15, 'tea': 7, 'latte': 11},
-    {'coffee': 9, 'tea': 13, 'latte': 6},
-    {'coffee': 11, 'tea': 4, 'latte': 14},
-    {'coffee': 6, 'tea': 10, 'latte': 9}
+# Mock network data with distractors
+data_packets = [
+    {'size': 1500, 'status': 'delivered', 'timestamp': 100},
+    {'size': 800, 'status': 'dropped', 'timestamp': 200},
+    {'size': 1200, 'status': 'delivered', 'timestamp': 50},
+    {'size': 950, 'status': 'delivered', 'timestamp': 300},
+    {'size': 1800, 'status': 'queued', 'timestamp': 150}
 ]
 
-for day_sales in beverage_sales_log:
-    updated_prices = {}
-    for bev, sales in day_sales.items():
-        if sales > 10:
-            updated_prices[bev] = beverage_prices[bev] * 1.1
-    beverage_prices.update(updated_prices)
+bandwidth_capacity = 100  # Mbps
+redundant_capacity = bandwidth_capacity * 2  # Unused distractor
 
-latte_price_on_sixth_day = beverage_prices['latte']
-print(f"Result: {latte_price_on_sixth_day}")
+# Main execution
+throughput_analysis = analyze_network_throughput(data_packets, bandwidth_capacity)
+
+# Distractor: misleading transformation
+scaled_throughput = throughput_analysis * 1.5
+
+# Target variable calculation
+final_throughput = int(throughput_analysis)
+
+# More distractors
+optimization_factor = 0.85
+potential_improvement = final_throughput * optimization_factor
+
+print(f"Result: {final_throughput}")

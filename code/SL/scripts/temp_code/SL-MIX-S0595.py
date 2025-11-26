@@ -1,43 +1,58 @@
-from collections import defaultdict
+def calculate_throughput(nodes, packets):
+    throughput = (packets * 8) // nodes
+    redundancy_factor = nodes % 3
+    return throughput - redundancy_factor
 
-def process_cryptographic_terms(token_list, depth=0):
-    if depth > 3:
-        return {}
+def analyze_connectivity(active_nodes, error_count):
+    connectivity_score = active_nodes * 10
+    if error_count > 0:
+        penalty = error_count * 15
+        connectivity_score -= penalty
+    else:
+        connectivity_score += 5
+    return connectivity_score
+
+def final_computation(nodes, packets, errors):
+    throughput_result = calculate_throughput(nodes, packets)
+    connectivity_result = analyze_connectivity(nodes, errors)
     
-    base_frequency = defaultdict(int)
-    for token in token_list:
-        if len(token) > 3 and token.isalnum():
-            transformed_token = token[::-1].upper()
-            base_frequency[transformed_token] += 1
+    # Distractor calculations
+    packet_loss = (errors * 100) // packets if packets > 0 else 0
+    node_utilization = (packets * 10) // nodes if nodes > 0 else 0
     
-    # Recursive processing for nested structures
-    nested_tokens = [t for t in token_list if '(' in t]
-    if nested_tokens and depth < 3:
-        nested_frequency = process_cryptographic_terms(nested_tokens, depth + 1)
-        # Merge frequencies with weighting
-        for key, value in nested_frequency.items():
-            base_frequency[key] += value * 2
+    # Main computation path
+    if errors == 0:
+        efficiency = (throughput_result * connectivity_result) // 100
+    else:
+        error_penalty = errors * 8
+        efficiency = (throughput_result * connectivity_result) // 100 - error_penalty
     
-    return dict(base_frequency)
+    # More distractors (dead code)
+    theoretical_max = nodes * 100
+    optimization_factor = theoretical_max // 4
+    
+    return efficiency
 
-def calculate_weighted_score(freq_map):
-    score = 0
-    for term, count in freq_map.items():
-        # Apply cryptographic significance weighting
-        weight_factor = sum(ord(c) for c in term) % 7
-        score += count * weight_factor
-    return score
+# Main execution
+active_nodes = 12
+processed_packets = 96
+error_flags = 2
 
-document_tokens = [
-    "AES", "rsa(2048)", "SHA256", "md5(hash)", 
-    "ECC(curve)", "blake2b", "scrypt(key)", "pbkdf2",
-    "hmac(sha256)", "argon2", "bcrypt(salt)"
-]
+# Distractor variables
+network_latency = active_nodes * 3
+packet_overflow = processed_packets % 7
+protocol_overhead = network_latency + packet_overflow
 
-# Process tokens through recursive analyzer
-frequency_analysis = process_cryptographic_terms(document_tokens)
+# Dead code path (unused)
+if protocol_overhead > 20:
+    optimization_factor = protocol_overhead // 2
+else:
+    optimization_factor = protocol_overhead * 2
 
-# Calculate final cryptographic score
-final_cryptographic_score = calculate_weighted_score(frequency_analysis)
+network_efficiency = final_computation(active_nodes, processed_packets, error_flags)
 
-print(f"Result: {final_cryptographic_score}")
+# More irrelevant computations
+bandwidth_utilization = (processed_packets * 10) // active_nodes
+quality_score = bandwidth_utilization - error_flags
+
+print(f"Result: {network_efficiency}")

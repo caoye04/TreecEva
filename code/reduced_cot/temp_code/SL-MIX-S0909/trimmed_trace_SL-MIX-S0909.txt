@@ -1,0 +1,23 @@
+6
+final_count
+---
+1 data_records = {'active': 25, 'pending': 12, 'completed': 38, 'cancelled': 7}
+1 ['data_records'] ['{active: 25, pending: 12, completed: 38, ...}']
+2 status_key = 'completed'
+2 ['data_records', 'status_key'] ['{active: 25, pending: 12, completed: 38, ...}', "'completed'"]
+3 adjustment_factor = 2
+3 ['data_records', 'status_key', 'adjustment_factor'] ['{active: 25, pending: 12, completed: 38, ...}', "'completed'", '2']
+4 processed_data = {k.upper(): v for k, v in data_records.items()}
+4 ['data_records', 'status_key', 'adjustment_factor', 'k', 'v'] ['{active: 25, pending: 12, completed: 38, ...}', "'completed'", '2', "'active'", '25']
+4 processed_data = {k.upper(): v for k, v in data_records.items()}
+4 ['data_records', 'status_key', 'adjustment_factor', 'k', 'v'] ['{active: 25, pending: 12, completed: 38, ...}', "'completed'", '2', "'pending'", '12']
+4 processed_data = {k.upper(): v for k, v in data_records.items()}
+4 ['data_records', 'status_key', 'adjustment_factor', 'k', 'v'] ['{active: 25, pending: 12, completed: 38, ...}', "'completed'", '2', "'completed'", '38']
+4 processed_data = {k.upper(): v for k, v in data_records.items()}
+4 ['data_records', 'status_key', 'adjustment_factor', 'k', 'v'] ['{active: 25, pending: 12, completed: 38, ...}', "'completed'", '2', "'cancelled'", '7']
+4 processed_data = {k.upper(): v for k, v in data_records.items()}
+4 ['data_records', 'status_key', 'adjustment_factor', 'processed_data'] ['{active: 25, pending: 12, completed: 38, ...}', "'completed'", '2', '{ACTIVE: 25, PENDING: 12, COMPLETED: 38, ...}']
+5 status_key = status_key.upper()
+5 ['status_key', 'adjustment_factor', 'processed_data'] ["'COMPLETED'", '2', '{ACTIVE: 25, PENDING: 12, COMPLETED: 38, ...}']
+6 final_count = processed_data.get(status_key, 0) * adjustment_factor
+6 ['status_key', 'adjustment_factor', 'processed_data', 'final_count'] ["'COMPLETED'", '2', '{ACTIVE: 25, PENDING: 12, COMPLETED: 38, ...}', '76']

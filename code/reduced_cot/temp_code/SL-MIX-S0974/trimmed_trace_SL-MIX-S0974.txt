@@ -1,0 +1,21 @@
+14
+final_value
+---
+1 set_a = {2, 5, 8, 11, 14}
+1 ['set_a'] ['{2, 5, 8, 11, 14}']
+2 set_b = {3, 6, 9, 12, 15}
+2 ['set_a', 'set_b'] ['{2, 5, 8, 11, 14}', '{3, 6, 9, 12, 15}']
+3 set_c = {4, 7, 10, 13, 16}
+3 ['set_a', 'set_b', 'set_c'] ['{2, 5, 8, 11, 14}', '{3, 6, 9, 12, 15}', '{16, 4, 7, 10, 13}']
+6 union_ab = set_a.union(set_b)
+6 ['set_a', 'set_b', 'set_c', 'union_ab'] ['{2, 5, 8, 11, 14}', '{3, 6, 9, 12, 15}', '{16, 4, 7, 10, 13}', '{2, 3, 5, 6, 8, ...}']
+8 union_abc = union_ab.union(set_c)
+8 ['set_c', 'union_ab', 'union_abc'] ['{16, 4, 7, 10, 13}', '{2, 3, 5, 6, 8, ...}', '{2, 3, 4, 5, 6, ...}']
+9 intersection_abc = union_ab.intersection(set_c)
+9 ['set_c', 'union_ab', 'union_abc', 'intersection_abc'] ['{16, 4, 7, 10, 13}', '{2, 3, 5, 6, 8, ...}', '{2, 3, 4, 5, 6, ...}', 'set()']
+12 union_set = union_abc
+12 ['union_abc', 'intersection_abc', 'union_set'] ['{2, 3, 4, 5, 6, ...}', 'set()', '{2, 3, 4, 5, 6, ...}']
+13 intersection_set = intersection_abc
+13 ['intersection_abc', 'union_set', 'intersection_set'] ['set()', '{2, 3, 4, 5, 6, ...}', 'set()']
+14 final_value = len(union_set - intersection_set)
+14 ['union_set', 'intersection_set', 'final_value'] ['{2, 3, 4, 5, 6, ...}', 'set()', '15']

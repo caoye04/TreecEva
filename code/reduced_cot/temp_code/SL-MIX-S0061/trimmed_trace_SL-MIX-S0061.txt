@@ -1,17 +1,81 @@
-7
-total_revenue
+51
+final_hash
 ---
-3 daily_quantities = [8, 17, 12]
-3 ['daily_quantities'] ['[8, 17, 12]']
-4 prices = [2, 3, 4]
-4 ['daily_quantities', 'prices'] ['[8, 17, 12]', '[2, 3, 4]']
-5 discount_applied = daily_quantities[0] < 10 and daily_quantities[1] > 15
-5 ['daily_quantities', 'prices', 'discount_applied'] ['[8, 17, 12]', '[2, 3, 4]', 'True']
-7 total_revenue = reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0)
-7 ['daily_quantities', 'prices', 'discount_applied'] ['[8, 17, 12]', '[2, 3, 4]', 'True']
-7 total_revenue = reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0)
-7 ['acc', 'pair'] ['0', '(8, 2)']
-7 total_revenue = reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0)
-7 ['acc', 'pair'] ['16', '(17, 3)']
-7 total_revenue = reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0)
-7 ['acc', 'pair'] ['67', '(12, 4)']
+39 sample_items = [42, 17, 42, 89, 17, 23, 42, 89, 17, 42]
+39 ['sample_items'] ['[42, 17, 42, 89, 17, ...]']
+40 processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+40 ['sample_items', 'x'] ['[42, 17, 42, 89, 17, ...]', '42']
+40 processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+40 ['sample_items', 'x'] ['[42, 17, 42, 89, 17, ...]', '17']
+40 processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+40 ['sample_items', 'x'] ['[42, 17, 42, 89, 17, ...]', '42']
+40 processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+40 ['sample_items', 'x'] ['[42, 17, 42, 89, 17, ...]', '89']
+40 processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+40 ['sample_items', 'x'] ['[42, 17, 42, 89, 17, ...]', '17']
+40 processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+40 ['sample_items', 'x'] ['[42, 17, 42, 89, 17, ...]', '23']
+40 processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+40 ['sample_items', 'x'] ['[42, 17, 42, 89, 17, ...]', '42']
+40 processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+40 ['sample_items', 'x'] ['[42, 17, 42, 89, 17, ...]', '89']
+40 processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+40 ['sample_items', 'x'] ['[42, 17, 42, 89, 17, ...]', '17']
+40 processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+40 ['sample_items', 'x'] ['[42, 17, 42, 89, 17, ...]', '42']
+40 processed_items = [x * 2 if x % 2 == 0 else x + 1 for x in sample_items]
+40 ['sample_items', 'processed_items'] ['[42, 17, 42, 89, 17, ...]', '[84, 18, 84, 90, 18, ...]']
+47 final_hash = compute_data_integrity(processed_items)
+47 ['processed_items'] ['[84, 18, 84, 90, 18, ...]']
+9 frequency_map = Counter(data_entries)
+9 ['data_entries', 'frequency_map'] ['[84, 18, 84, 90, 18, ...]', '{84: 4, 18: 3, 90: 2, ...}']
+15 unique_values = sorted(set(data_entries))
+15 ['data_entries', 'frequency_map', 'unique_values'] ['[84, 18, 84, 90, 18, ...]', '{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]']
+16 hash_base = 0
+16 ['frequency_map', 'unique_values', 'hash_base'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '0']
+18 for idx, value in enumerate(unique_values):
+18 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '0', '0', '18']
+20 if value > 1000:
+20 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '0', '0', '18']
+24 hash_base = (hash_base * 31 + value) % 1000000
+24 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '18', '0', '18']
+18 for idx, value in enumerate(unique_values):
+18 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '18', '1', '24']
+20 if value > 1000:
+20 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '18', '1', '24']
+24 hash_base = (hash_base * 31 + value) % 1000000
+24 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '582', '1', '24']
+18 for idx, value in enumerate(unique_values):
+18 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '582', '2', '84']
+20 if value > 1000:
+20 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '582', '2', '84']
+24 hash_base = (hash_base * 31 + value) % 1000000
+24 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '18126', '2', '84']
+18 for idx, value in enumerate(unique_values):
+18 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '18126', '3', '90']
+20 if value > 1000:
+20 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '18126', '3', '90']
+24 hash_base = (hash_base * 31 + value) % 1000000
+24 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '561996', '3', '90']
+18 for idx, value in enumerate(unique_values):
+18 ['frequency_map', 'unique_values', 'hash_base', 'idx', 'value'] ['{84: 4, 18: 3, 90: 2, ...}', '[18, 24, 84, 90]', '561996', '3', '90']
+30 frequency_factor = sum(freq ** 2 for freq in frequency_map.values())
+30 [] []
+30 frequency_factor = sum(freq ** 2 for freq in frequency_map.values())
+30 ['freq'] ['4']
+30 frequency_factor = sum(freq ** 2 for freq in frequency_map.values())
+30 ['freq'] ['3']
+30 frequency_factor = sum(freq ** 2 for freq in frequency_map.values())
+30 ['freq'] ['2']
+30 frequency_factor = sum(freq ** 2 for freq in frequency_map.values())
+30 ['freq'] ['1']
+30 frequency_factor = sum(freq ** 2 for freq in frequency_map.values())
+30 ['freq'] ['1']
+31 integrity_hash = (hash_base ^ frequency_factor) % 10000
+31 ['hash_base', 'frequency_factor', 'integrity_hash'] ['561996', '30', '2002']
+36 return integrity_hash
+36 ['integrity_hash'] ['2002']
+50 print(f"Secondary analysis sum: {shadow_total}")
+50 ['final_hash'] ['2002']
+51 print(f"Target result: {final_hash}")
+51 ['final_hash'] ['2002']

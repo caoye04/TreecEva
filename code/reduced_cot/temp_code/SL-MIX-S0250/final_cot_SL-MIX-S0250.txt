@@ -1,0 +1,14 @@
+Target: Find the value of variable final_count after [line 9] executes
+
+[line 1]  data_records = ["user_001", "ADMIN_002", "user_003", "GUEST_004", "user_005"]
+Compute: ["user_001", "ADMIN_002", "user_003", "GUEST_004", "user_005"] = ['user_001', 'ADMIN_002', 'user_003', 'GUEST_004', 'user_005']
+[line 4]  lowercase_users = [record.lower() for record in data_records if record.startswith('user')]
+Compute: [record.lower() for record in data_records if record.startswith('user')], where record='user_001' (an unknown source), data_records=['user_001', 'ADMIN_002', 'user_003', 'GUEST_004', 'user_005'] (defined at [line 1]) = ?
+[line 5]  admin_users = [record for record in data_records if 'admin' in record.lower()]
+Compute: [record for record in data_records if 'admin' in record.lower()], where record='user_001' (an unknown source), data_records=['user_001', 'ADMIN_002', 'user_003', 'GUEST_004', 'user_005'] (defined at [line 1]) = ?
+[line 8]  processed_items = lowercase_users + admin_users
+Compute: lowercase_users + admin_users, where lowercase_users=['user_001', 'user_003', 'user_005'] (defined at [line 4]), admin_users=['ADMIN_002'] (defined at [line 5]) = ['user_001', 'user_003', 'user_005', 'ADMIN_002']
+[line 9]  final_count = len(processed_items)
+Call function len(processed_items=['user_001', 'user_003', 'user_005', 'ADMIN_002'] (defined at [line 8]))
+
+Answer: final_count = 4 (last updated on defined at [line 9])

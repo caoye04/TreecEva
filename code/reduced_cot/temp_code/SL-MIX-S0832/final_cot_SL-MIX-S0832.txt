@@ -1,0 +1,53 @@
+Target: Find the value of variable final_hash after [line 52] executes
+
+[line 19]  self.seed = 0x5A827999
+(Missing param: 'var')
+[line 20]  self.offset = 0x6ED9EBA1
+(Missing param: 'var')
+[line 21]  self.unused_counter = 100
+(Missing param: 'var')
+[line 3]  self.temp_buffer = []
+(Missing param: 'result')
+[line 4]  self.cache_hits = 0
+(Missing param: 'var')
+[line 5]  self.dummy_metric = 42
+(Missing param: 'var')
+[line 9]  processed = chunk.upper() if isinstance(chunk, str) else str(chunk)
+Compute: chunk.upper() if isinstance(chunk, str) else str(chunk), where chunk='distractor' (an unknown source) = 'DISTRACTOR'
+[line 11]  return len(processed) % 256
+Return: len(processed) % 256
+[line 38]  if isinstance(input_data, str) and input_data.strip():
+Condition: True, entering 'if' block
+[line 39]  clean_data = input_data.strip().lower()
+(Missing param: 'func_name')
+[line 42]  hash_value = self.seed
+Compute: self.seed, where self=HashProcessor(seed=1518500249) (an unknown source) = 1518500249
+[line 43]  for i, char in enumerate(clean_data):
+(Missing param: 'iter_var')
+[line 44]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 45]  hash_value = (hash_value << 1) | (hash_value >> 31)
+Compute: (hash_value << 1) | (hash_value >> 31), where hash_value=1518500249 (defined at [line 42]) = 3037000498
+[line 43]  for i, char in enumerate(clean_data):
+(Missing param: 'iter_var')
+[line 44]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 47]  hash_value = (hash_value >> 2) | (hash_value << 30)
+Compute: (hash_value >> 2) | (hash_value << 30), where hash_value=3037000529 (defined at [line 45]) = 3260954488256675028
+... [Line 43] repeats 13 more times ...
+... [Line 43] repeats 13 more times ...
+... [Line 43] repeats 13 more times ...
+... [Line 43] repeats 13 more times ...
+... [Line 43] repeats 13 more times ...
+[line 43]  for i, char in enumerate(clean_data):
+(Missing param: 'iter_var')
+[line 44]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 47]  hash_value = (hash_value >> 2) | (hash_value << 30)
+Compute: (hash_value >> 2) | (hash_value << 30), where hash_value=661260738 (defined at [line 47]) = 710023311125021296
+[line 43]  for i, char in enumerate(clean_data):
+Loop End: Iteration finished
+[line 52]  final_hash = (hash_value ^ self.offset) & 0xFFFF
+Compute: (hash_value ^ self.offset) & 0xFFFF, where hash_value=2312798788 (defined at [line 47]), self=HashProcessor(offset=1859775393) (an unknown source) = 27109
+
+Answer: final_hash = 27109 (last updated on defined at [line 52])

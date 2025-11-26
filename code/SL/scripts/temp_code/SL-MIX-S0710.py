@@ -1,43 +1,63 @@
-import math
-import statistics
+from collections import defaultdict
 
-def compute_portfolio_risk(returns):
-    n = len(returns)
-    if n == 0:
-        return 0
-    mean_return = sum(returns) / n
-    squared_deviations = [(r - mean_return) ** 2 for r in returns]
-    variance = sum(squared_deviations) / n
-    std_dev = math.sqrt(variance)
+def analyze_pattern(text_data):
+    char_freq = defaultdict(int)
+    temp_sum = 0
+    for char in text_data:
+        char_freq[char] += 1
+        temp_sum += ord(char)  # Misleading calculation
     
-    # Weighted adjustment based on return consistency
-    consistency_factor = 1.0 if std_dev < 0.05 else (0.5 if std_dev < 0.1 else 0.2)
-    adjusted_mean = mean_return * consistency_factor
+    # Irrelevant processing
+    normalized = lambda x: x * 2 - 1
+    processed = [normalized(ord(c)) for c in text_data[:3]]
     
-    # Fibonacci weighting for time decay (most recent returns have higher weight)
-    fib_weights = []
-    a, b = 1, 1
-    for _ in range(n):
-        fib_weights.append(a)
-        a, b = b, a + b
-    fib_weights.reverse()
-    
-    weighted_sum = sum(r * w for r, w in zip(returns, fib_weights))
-    weight_sum = sum(fib_weights)
-    weighted_avg = weighted_sum / weight_sum if weight_sum != 0 else 0
-    
-    # Final score combines metrics with short-circuit logic
-    volatility_penalty = 0.1 if std_dev > 0.15 else (0.05 if std_dev > 0.1 else 0)
-    final_score = (weighted_avg * (1 - volatility_penalty)) if weighted_avg > 0 else weighted_avg
-    return final_score
+    return len(char_freq), temp_sum
 
-portfolio_returns = [0.02, 0.03, -0.01, 0.04, 0.01, -0.02, 0.05]
-score_components = {
-    'raw_score': compute_portfolio_risk(portfolio_returns),
-    'benchmark': 0.025,
-}
+def validate_input(input_data):
+    checksum = 0
+    for item in input_data:
+        checksum = (checksum << 3) | (ord(item) % 8)
+    
+    # Dead code path
+    if checksum > 1000:
+        backup_calc = sum(ord(c) for c in input_data[::-1])
+        return backup_calc
+    
+    return checksum
 
-enhanced_metrics = {k: v * 1000 for k, v in score_components.items()}
-baseline_adjustment = 50.0
-final_score = enhanced_metrics['raw_score'] + baseline_adjustment if enhanced_metrics['raw_score'] > 0 else baseline_adjustment
-print(f'Result: {final_score}')
+def process_data(data_stream):
+    pattern_result, _ = analyze_pattern(data_stream)
+    validation_hash = validate_input(data_stream)
+    
+    # Misleading intermediate variables
+    interim_value = pattern_result * 7
+    adjustment = (validation_hash >> 2) & 0xF
+    
+    # Distractor calculation
+    noise_factor = sum(1 for c in data_stream if c.isupper())
+    if noise_factor > 2:
+        interim_value -= 5  # Never executed with given input
+    
+    # Key logic
+    core_metric = pattern_result + (interim_value % 13)
+    result = core_metric - adjustment
+    
+    # Final adjustment with bitwise operations
+    final_metric = (result ^ 0b1010) & 0x1F
+    
+    return final_metric
+
+# Main execution with distractor variables
+validation_set = "abc123XYZ"
+prelim_check = validate_input(validation_set[:4])
+backup_analysis = analyze_pattern(validation_set[3:])
+
+# Irrelevant processing chain
+secondary_metric = (prelim_check * 3) // 2
+if secondary_metric > 50:
+    tertiary_adjust = secondary_metric % 11
+else:
+    tertiary_adjust = secondary_metric // 3
+
+final_metric = process_data(validation_set)
+print(f"Result: {final_metric}")

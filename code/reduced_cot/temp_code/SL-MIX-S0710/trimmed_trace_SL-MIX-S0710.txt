@@ -1,0 +1,243 @@
+46
+final_metric
+---
+17 checksum = 0
+17 ['input_data', 'checksum'] ["'abc1'", '0']
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc1'", '0', "'a'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc1'", '1', "'a'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc1'", '1', "'b'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc1'", '10', "'b'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc1'", '10', "'c'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc1'", '83', "'c'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc1'", '83', "'1'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc1'", '665', "'1'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc1'", '665', "'1'"]
+22 if checksum > 1000:
+22 ['input_data', 'checksum', 'item'] ["'abc1'", '665', "'1'"]
+26 return checksum
+26 ['input_data', 'checksum', 'item'] ["'abc1'", '665', "'1'"]
+4 char_freq = defaultdict(int)
+4 ['text_data', 'char_freq'] ["'123XYZ'", '{}']
+5 temp_sum = 0
+5 ['text_data', 'char_freq', 'temp_sum'] ["'123XYZ'", '{}', '0']
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{}', '0', "'1'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1}', '0', "'1'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1}', '49', "'1'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1}', '49', "'2'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1}', '49', "'2'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1}', '99', "'2'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1}', '99', "'3'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1}', '99', "'3'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1}', '150', "'3'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1}', '150', "'X'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1, ...}', '150', "'X'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1, ...}', '238', "'X'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1, ...}', '238', "'Y'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1, ...}', '238', "'Y'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1, ...}', '327', "'Y'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1, ...}', '327', "'Z'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1, ...}', '327', "'Z'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1, ...}', '417', "'Z'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1, ...}', '417', "'Z'"]
+14 return len(char_freq), temp_sum
+14 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'123XYZ'", '{1: 1, 2: 1, 3: 1, ...}', '417', "'Z'"]
+29 pattern_result, _ = analyze_pattern(data_stream)
+29 ['data_stream'] ["'abc123XYZ'"]
+4 char_freq = defaultdict(int)
+4 ['text_data', 'char_freq'] ["'abc123XYZ'", '{}']
+5 temp_sum = 0
+5 ['text_data', 'char_freq', 'temp_sum'] ["'abc123XYZ'", '{}', '0']
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{}', '0', "'a'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1}', '0', "'a'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1}', '97', "'a'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1}', '97', "'b'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1}', '97', "'b'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1}', '195', "'b'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1}', '195', "'c'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1}', '195', "'c'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1}', '294', "'c'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1}', '294', "'1'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '294', "'1'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '343', "'1'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '343', "'2'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '343', "'2'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '393', "'2'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '393', "'3'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '393', "'3'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '444', "'3'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '444', "'X'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '444', "'X'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '532', "'X'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '532', "'Y'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '532', "'Y'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '621', "'Y'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '621', "'Z'"]
+7 char_freq[char] += 1
+7 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '621', "'Z'"]
+8 temp_sum += ord(char)  # Misleading calculation
+8 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '711', "'Z'"]
+6 for char in text_data:
+6 ['text_data', 'char_freq', 'temp_sum', 'char'] ["'abc123XYZ'", '{a: 1, b: 1, c: 1, ...}', '711', "'Z'"]
+14 return len(char_freq), temp_sum
+14 ['char_freq', 'temp_sum'] ['{a: 1, b: 1, c: 1, ...}', '711']
+30 validation_hash = validate_input(data_stream)
+30 ['data_stream', 'pattern_result'] ["'abc123XYZ'", '9']
+PARAM_MAPPING {'input_data': {'actual_var': 'data_stream', 'value': 'abc123XYZ'}}
+FUNCTION_ENTER 16 validate_input def validate_input(input_data):
+16 ['input_data'] [{'_type': 'str', '_value': 'abc123XYZ'}]
+17 checksum = 0
+17 ['input_data', 'checksum'] ["'abc123XYZ'", '0']
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '0', "'a'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '1', "'a'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '1', "'b'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '10', "'b'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '10', "'c'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '83', "'c'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '83', "'1'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '665', "'1'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '665', "'2'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '5322', "'2'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '5322', "'3'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '42579', "'3'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '42579', "'X'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '340632', "'X'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '340632', "'Y'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '2725057', "'Y'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '2725057', "'Z'"]
+19 checksum = (checksum << 3) | (ord(item) % 8)
+19 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '21800458', "'Z'"]
+18 for item in input_data:
+18 ['input_data', 'checksum', 'item'] ["'abc123XYZ'", '21800458', "'Z'"]
+22 if checksum > 1000:
+22 ['input_data', 'checksum'] ["'abc123XYZ'", '21800458']
+23 backup_calc = sum(ord(c) for c in input_data[::-1])
+23 [] []
+23 backup_calc = sum(ord(c) for c in input_data[::-1])
+23 ['c'] ["'Z'"]
+23 backup_calc = sum(ord(c) for c in input_data[::-1])
+23 ['c'] ["'Y'"]
+23 backup_calc = sum(ord(c) for c in input_data[::-1])
+23 ['c'] ["'X'"]
+23 backup_calc = sum(ord(c) for c in input_data[::-1])
+23 ['c'] ["'3'"]
+23 backup_calc = sum(ord(c) for c in input_data[::-1])
+23 ['c'] ["'2'"]
+23 backup_calc = sum(ord(c) for c in input_data[::-1])
+23 ['c'] ["'1'"]
+23 backup_calc = sum(ord(c) for c in input_data[::-1])
+23 ['c'] ["'c'"]
+23 backup_calc = sum(ord(c) for c in input_data[::-1])
+23 ['c'] ["'b'"]
+23 backup_calc = sum(ord(c) for c in input_data[::-1])
+23 ['c'] ["'a'"]
+23 backup_calc = sum(ord(c) for c in input_data[::-1])
+23 ['c'] ["'a'"]
+24 return backup_calc
+24 ['backup_calc'] ['711']
+FUNCTION_RETURN 24 validate_input {'_type': 'int', '_value': 711}
+33 interim_value = pattern_result * 7
+33 ['data_stream', 'pattern_result', 'validation_hash', 'interim_value'] ["'abc123XYZ'", '9', '711', '63']
+34 adjustment = (validation_hash >> 2) & 0xF
+34 ['data_stream', 'pattern_result', 'validation_hash', 'interim_value', 'adjustment'] ["'abc123XYZ'", '9', '711', '63', '1']
+37 noise_factor = sum(1 for c in data_stream if c.isupper())
+37 [] []
+37 noise_factor = sum(1 for c in data_stream if c.isupper())
+37 ['c'] ["'a'"]
+37 noise_factor = sum(1 for c in data_stream if c.isupper())
+37 ['c'] ["'b'"]
+37 noise_factor = sum(1 for c in data_stream if c.isupper())
+37 ['c'] ["'c'"]
+37 noise_factor = sum(1 for c in data_stream if c.isupper())
+37 ['c'] ["'1'"]
+37 noise_factor = sum(1 for c in data_stream if c.isupper())
+37 ['c'] ["'2'"]
+37 noise_factor = sum(1 for c in data_stream if c.isupper())
+37 ['c'] ["'3'"]
+37 noise_factor = sum(1 for c in data_stream if c.isupper())
+37 ['c'] ["'X'"]
+37 noise_factor = sum(1 for c in data_stream if c.isupper())
+37 ['c'] ["'Y'"]
+37 noise_factor = sum(1 for c in data_stream if c.isupper())
+37 ['c'] ["'Z'"]
+37 noise_factor = sum(1 for c in data_stream if c.isupper())
+37 ['c'] ["'Z'"]
+38 if noise_factor > 2:
+38 ['pattern_result', 'interim_value', 'adjustment', 'noise_factor'] ['9', '63', '1', '3']
+39 interim_value -= 5  # Never executed with given input
+39 ['pattern_result', 'interim_value', 'adjustment'] ['9', '58', '1']
+42 core_metric = pattern_result + (interim_value % 13)
+42 ['pattern_result', 'interim_value', 'adjustment', 'core_metric'] ['9', '58', '1', '15']
+43 result = core_metric - adjustment
+43 ['adjustment', 'core_metric', 'result'] ['1', '15', '14']
+46 final_metric = (result ^ 0b1010) & 0x1F
+46 ['result', 'final_metric'] ['14', '4']

@@ -1,0 +1,59 @@
+Target: Find the value of variable network_efficiency after [line 58] executes
+
+[line 37]  active_nodes = 12
+Assign: active_nodes = 12
+[line 38]  processed_packets = 96
+Assign: processed_packets = 96
+[line 39]  error_flags = 2
+Assign: error_flags = 2
+[line 42]  network_latency = active_nodes * 3
+Compute: active_nodes * 3, where active_nodes=12 (defined at [line 37]) = 36
+[line 43]  packet_overflow = processed_packets % 7
+Compute: processed_packets % 7, where processed_packets=96 (defined at [line 38]) = 5
+[line 44]  protocol_overhead = network_latency + packet_overflow
+Compute: network_latency + packet_overflow, where network_latency=36 (defined at [line 42]), packet_overflow=5 (defined at [line 43]) = 41
+[line 47]  if protocol_overhead > 20:
+Condition: True, entering 'if' block
+[line 52]  network_efficiency = final_computation(active_nodes, processed_packets, error_flags)
+Call function final_computation(active_nodes=12 (defined at [line 37]), processed_packets=96 (defined at [line 38]), error_flags=2 (defined at [line 39]))
+[line 15]  def final_computation(nodes, packets, errors):
+Enter function final_computation: nodes=12 (active_nodes defined at [line 37]), packets=96 (processed_packets defined at [line 38]), errors=2 (error_flags defined at [line 39])
+  [line 16]  throughput_result = calculate_throughput(nodes, packets)
+  Call function calculate_throughput(nodes=12 (parameter nodes defined at [line 37]), packets=96 (parameter packets defined at [line 38]))
+  [line 1]  def calculate_throughput(nodes, packets):
+  Enter function calculate_throughput: nodes=12, packets=96
+    [line 2]  throughput = (packets * 8) // nodes
+    Compute: (packets * 8) // nodes, where packets=96 (parameter packets), nodes=12 (parameter nodes) = 64
+    [line 3]  redundancy_factor = nodes % 3
+    Compute: nodes % 3, where nodes=12 (parameter nodes) = 0
+    [line 4]  return throughput - redundancy_factor
+    Return: throughput - redundancy_factor
+  Function calculate_throughput returns 64
+  [line 17]  connectivity_result = analyze_connectivity(nodes, errors)
+  Call function analyze_connectivity(nodes=12 (parameter nodes defined at [line 37]), errors=2 (parameter errors defined at [line 39]))
+  [line 6]  def analyze_connectivity(active_nodes, error_count):
+  Enter function analyze_connectivity: active_nodes=12, error_count=2
+    [line 7]  connectivity_score = active_nodes * 10
+    Compute: active_nodes * 10, where active_nodes=12 (parameter active_nodes) = 120
+    [line 8]  if error_count > 0:
+    Condition: True, entering 'if' block
+    [line 9]  penalty = error_count * 15
+    Compute: error_count * 15, where error_count=2 (parameter error_count) = 30
+    [line 10]  connectivity_score -= penalty
+    Update: connectivity_score changed from 120 (defined at defined at [line 7]) to 120-penalty = 90
+    [line 13]  return connectivity_score
+    Return: connectivity_score=90 (defined at [line 10])
+  Function analyze_connectivity returns 90
+  [line 24]  if errors == 0:
+  Condition: True, entering 'if' block
+  [line 27]  error_penalty = errors * 8
+  Compute: errors * 8, where errors=2 (parameter errors defined at [line 39]) = 16
+  [line 28]  efficiency = (throughput_result * connectivity_result) // 100 - error_penalty
+  Compute: (throughput_result * connectivity_result) // 100 - error_penalty, where throughput_result=64 (defined at [line 16]), connectivity_result=90 (defined at [line 17]), error_penalty=16 (defined at [line 27]) = 41
+  [line 34]  return efficiency
+  Return: efficiency=41 (defined at [line 28])
+Function final_computation returns 41
+[line 58]  print(f"Result: {network_efficiency}")
+Output: f"Result: {network_efficiency}"
+
+Answer: network_efficiency = 41 (last updated on defined at [line 52])

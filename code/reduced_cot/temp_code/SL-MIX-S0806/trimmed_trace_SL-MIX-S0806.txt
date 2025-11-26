@@ -1,0 +1,85 @@
+55
+data_quality_score
+---
+43 quality_indicator, bogus_factor = process_data_sources()
+43 [] []
+4 raw_data = [3, 7, 2, 8, 5, 3, 9, 2, 7, 8, 4, 6, 1, 5, 3]
+4 ['raw_data'] ['[3, 7, 2, 8, 5, ...]']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '3']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '7']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '2']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '8']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '5']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '3']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '9']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '2']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '7']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '8']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '4']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '6']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '1']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '5']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'x'] ['[3, 7, 2, 8, 5, ...]', '3']
+5 irrelevant_cache = [x * 2 for x in raw_data if x > 4]
+5 ['raw_data', 'irrelevant_cache'] ['[3, 7, 2, 8, 5, ...]', '[14, 16, 10, 18, 14, ...]']
+6 data_counter = collections.Counter(raw_data)
+6 ['raw_data', 'irrelevant_cache', 'data_counter'] ['[3, 7, 2, 8, 5, ...]', '[14, 16, 10, 18, 14, ...]', '{3: 3, 7: 2, 2: 2, ...}']
+9 temp_sum = sum(raw_data) + len(irrelevant_cache)
+9 ['raw_data', 'irrelevant_cache', 'data_counter', 'temp_sum'] ['[3, 7, 2, 8, 5, ...]', '[14, 16, 10, 18, 14, ...]', '{3: 3, 7: 2, 2: 2, ...}', '81']
+10 bogus_factor = temp_sum % 7
+10 ['data_counter', 'temp_sum', 'bogus_factor'] ['{3: 3, 7: 2, 2: 2, ...}', '81', '4']
+12 most_common = data_counter.most_common(2)
+12 ['data_counter', 'bogus_factor', 'most_common'] ['{3: 3, 7: 2, 2: 2, ...}', '4', '[(3, 3), (7, 2)]']
+13 if len(most_common) >= 2:
+13 ['bogus_factor', 'most_common'] ['4', '[(3, 3), (7, 2)]']
+14 primary_freq = most_common[0][1]
+14 ['bogus_factor', 'most_common', 'primary_freq'] ['4', '[(3, 3), (7, 2)]', '3']
+15 secondary_freq = most_common[1][1]
+15 ['bogus_factor', 'most_common', 'primary_freq', 'secondary_freq'] ['4', '[(3, 3), (7, 2)]', '3', '2']
+21 if bogus_factor > 3:
+21 ['bogus_factor', 'primary_freq', 'secondary_freq'] ['4', '3', '2']
+22 quality_indicator = primary_freq * 10 - secondary_freq
+22 ['bogus_factor', 'primary_freq', 'secondary_freq', 'quality_indicator'] ['4', '3', '2', '28']
+26 return quality_indicator, bogus_factor
+26 ['bogus_factor', 'quality_indicator'] ['4', '28']
+44 variance_factor, pattern_sum = analyze_patterns()
+44 ['quality_indicator', 'bogus_factor'] ['28', '4']
+29 sample_sequences = [(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+29 ['sample_sequences'] ['[(1, 4, 7), (2, 5, 8), (3, 6, 9)]']
+30 pattern_metrics = []
+30 ['sample_sequences', 'pattern_metrics'] ['[(1, 4, 7), (2, 5, 8), (3, 6, 9)]', '[]']
+32 for seq in sample_sequences:
+32 ['sample_sequences', 'pattern_metrics', 'seq'] ['[(1, 4, 7), (2, 5, 8), (3, 6, 9)]', '[]', '(1, 4, 7)']
+32 for seq in sample_sequences:
+32 ['sample_sequences', 'pattern_metrics', 'seq'] ['[(1, 4, 7), (2, 5, 8), (3, 6, 9)]', '[4.0]', '(2, 5, 8)']
+32 for seq in sample_sequences:
+32 ['sample_sequences', 'pattern_metrics', 'seq'] ['[(1, 4, 7), (2, 5, 8), (3, 6, 9)]', '[4.0, 5.0]', '(3, 6, 9)']
+32 for seq in sample_sequences:
+32 ['sample_sequences', 'pattern_metrics', 'seq'] ['[(1, 4, 7), (2, 5, 8), (3, 6, 9)]', '[4.0, 5.0, 6.0]', '(3, 6, 9)']
+37 pattern_sum = sum(pattern_metrics) * 3
+37 ['pattern_metrics', 'pattern_sum'] ['[4.0, 5.0, 6.0]', '45.0']
+38 variance_factor = max(pattern_metrics) - min(pattern_metrics)
+38 ['pattern_metrics', 'pattern_sum', 'variance_factor'] ['[4.0, 5.0, 6.0]', '45.0', '2.0']
+40 return variance_factor, pattern_sum
+40 ['pattern_sum', 'variance_factor'] ['45.0', '2.0']
+47 base_score = quality_indicator + variance_factor
+47 ['quality_indicator', 'bogus_factor', 'variance_factor', 'base_score'] ['28', '4', '2.0', '30.0']
+48 adjustment = (bogus_factor * 2) % 5
+48 ['bogus_factor', 'base_score', 'adjustment'] ['4', '30.0', '3']
+55 data_quality_score = base_score - adjustment
+55 ['base_score', 'adjustment', 'data_quality_score'] ['30.0', '3', '27.0']

@@ -1,31 +1,19 @@
-5
-final_phase
+24
+final_score
 ---
-2 phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-2 ['t'] ['1']
-2 phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-2 ['t'] ['2']
-2 phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-2 ['t'] ['3']
-2 phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-2 ['t'] ['4']
-2 phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-2 ['t'] ['5']
-2 phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-2 ['t'] ['6']
-2 phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-2 ['t'] ['7']
-2 phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-2 ['t'] ['8']
-2 phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-2 ['t'] ['9']
-2 phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-2 ['t'] ['10']
-2 phase_changes = {t: math.sin(t * 0.1) for t in range(1, 11)}
-2 ['phase_changes'] ['{1: 0.09983341664682815, 2: 0.19866933079506122, 3: 0.2955202066613396, ...}']
-3 cumulative_sum = lambda d: {k: sum(list(d.values())[:i+1]) for i, k in enumerate(d.keys())}
-3 ['phase_changes'] ['{1: 0.09983341664682815, 2: 0.19866933079506122, 3: 0.2955202066613396, ...}']
-4 cumulative_phases = cumulative_sum(phase_changes)
-4 ['phase_changes'] ['{1: 0.09983341664682815, 2: 0.19866933079506122, 3: 0.2955202066613396, ...}']
-5 final_phase = cumulative_phases[10] % (2 * math.pi)
-5 ['cumulative_phases', 'final_phase'] ['{1: 0.09983341664682815, 2: 0.29850274744188937, 3: 0.5940229541032289, ...}', '5.0138809809837115']
+2 processed_data = {}
+2 ['scores', 'processed_data'] ['[85, 92, 78, 96, 88]', '{}']
+3 total_sum = sum(scores)
+3 ['scores', 'processed_data', 'total_sum'] ['[85, 92, 78, 96, 88]', '{}', '439']
+4 score_count = len(scores)
+4 ['scores', 'processed_data', 'total_sum', 'score_count'] ['[85, 92, 78, 96, 88]', '{}', '439', '5']
+12 processed_data['average'] = total_sum / score_count
+12 ['scores', 'processed_data', 'total_sum', 'score_count'] ['[85, 92, 78, 96, 88]', '{average: 87.8}', '439', '5']
+13 processed_data['range'] = max(scores) - min(scores)
+13 ['scores', 'processed_data', 'total_sum', 'score_count'] ['[85, 92, 78, 96, 88]', '{average: 87.8, range: 18}', '439', '5']
+20 aggregate_factor = (total_sum // score_count) + (score_count % 5)
+20 ['processed_data', 'total_sum', 'score_count', 'aggregate_factor'] ['{average: 87.8, range: 18}', '439', '5', '87']
+21 processed_data['aggregate'] = aggregate_factor * 3
+21 ['processed_data', 'aggregate_factor'] ['{average: 87.8, range: 18, aggregate: 261}', '87']
+24 final_score = processed_data['aggregate']
+24 ['processed_data', 'final_score'] ['{average: 87.8, range: 18, aggregate: 261}', '261']

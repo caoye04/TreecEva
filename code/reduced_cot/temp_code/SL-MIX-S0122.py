@@ -1,23 +1,30 @@
-import re
-from collections import namedtuple
+def calculate_character_checksum(text_data):
+    # Initialize character mapping with checksum values
+    char_checksums = {'A': 15, 'B': 23, 'C': 7, 'D': 31, 'E': 12, 'F': 19}
+    
+    # Create a temporary copy for intermediate processing (not used in final result)
+    temp_checksums = char_checksums.copy()
+    temp_checksums['G'] = 42  # This addition doesn't affect the final answer
+    
+    # Process input character with modular arithmetic
+    input_char = 'D'
+    processed_char = input_char.lower()
+    
+    # Create checksum mapping with case conversion
+    checksum_map = {}
+    for char, checksum in char_checksums.items():
+        checksum_map[char.lower()] = (checksum * 2) % 37
+        checksum_map[char.upper()] = (checksum + 5) % 29  # This upper case mapping isn't used
+    
+    # Apply lambda function for final processing
+    final_transform = lambda x: (x + 8) if x < 20 else (x - 3)
+    
+    # This intermediate calculation is a distractor
+    intermediate_val = final_transform(char_checksums['B'])
+    
+    # The critical execution point
+    final_checksum = checksum_map[processed_char]
+    
+    print(f"Target result: {final_checksum}")
 
-# Define a LogEntry structure
-LogEntry = namedtuple('LogEntry', ['timestamp', 'ip_address', 'user_agent'])
-
-# Sample log entries
-log_entries = [
-    LogEntry('2023-05-15 10:23:01', '192.168.1.10', 'Mozilla/5.0'),
-    LogEntry('2023-05-15 10:25:12', '192.168.1.12', 'Chrome/90.0'),
-    LogEntry('2023-05-15 10:27:45', '10.0.0.5', 'Safari/14.0'),
-    LogEntry('2023-05-15 10:30:01', '192.168.1.10', 'Mozilla/5.0'),
-    LogEntry('2023-05-15 10:32:17', '192.168.2.15', 'Firefox/88.0'),
-    LogEntry('2023-05-15 10:35:22', '172.16.0.1', 'Edge/91.0')
-]
-
-# Extract IP addresses matching the pattern 192.168.x.x
-subnet_pattern = r'^192\.168\.\d{1,3}\.\d{1,3}$'
-suspicious_ips = {entry.ip_address for entry in log_entries if re.match(subnet_pattern, entry.ip_address)}
-
-# Count unique device IPs
-unique_device_count = len(suspicious_ips)
-print(f'Result: {unique_device_count}')
+calculate_character_checksum("sample")

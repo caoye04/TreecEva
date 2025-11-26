@@ -1,16 +1,16 @@
-import math
+def process_orders(orders, threshold):
+    # Calculate total for orders above threshold with 15% discount
+    eligible_orders = list(filter(lambda x: x > threshold, orders))
+    discounted_total = sum(map(lambda x: x * 0.85, eligible_orders))
+    
+    # Regular orders below threshold
+    regular_orders = list(filter(lambda x: x <= threshold, orders))
+    regular_total = sum(regular_orders)
+    
+    final_result = discounted_total + regular_total
+    print(f"Result: {final_result}")
+    return final_result
 
-# Define radius of flower bed and path width
-flower_bed_radius = 3
-path_width = 1.5
-
-# Calculate outer radius including the path
-outer_radius = flower_bed_radius + path_width
-
-# Using list comprehension to calculate areas
-areas = [math.pi * r**2 for r in [flower_bed_radius, outer_radius]]
-
-# Calculate total area (area of outer circle)
-total_area = areas[1]
-
-print(f"Result: {total_area}")
+orders = [120, 85, 200, 65, 180, 95]
+discount_threshold = 100
+final_result = process_orders(orders, discount_threshold)

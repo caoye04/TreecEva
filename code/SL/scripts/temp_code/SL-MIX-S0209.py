@@ -1,36 +1,58 @@
-import math
-import re
-from collections import defaultdict
+def calculate_crypto_metrics(assets, transaction_log):
+    # Distractor function - irrelevant to final calculation
+    total_volume = sum(transaction_log.values()) * 0.85
+    avg_trade = total_volume / len(transaction_log) if transaction_log else 0
+    market_cap = assets.get('bitcoin', 0) * 45000 + assets.get('ethereum', 0) * 3000
+    return market_cap + total_volume
 
-def process_sensor_data(readings_batch):
-    # Step 1: Apply logarithmic smoothing to all readings
-    smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
+def apply_crypto_operations(principal, operations, conditions):
+    # Main calculation logic
+    volatility_multiplier = conditions.get('volatility_index', 1.0)
+    leverage_factor = conditions.get('leverage', 1)
     
-    # Step 2: Identify potential outliers using a ternary condition
-    mean_val = sum(smoothed) / len(smoothed)
-    deviations = [(val - mean_val) ** 2 for val in smoothed]
-    std_dev = math.sqrt(sum(deviations) / len(deviations))
+    # Distractor variables and operations
+    temp_balance = principal * 2.5  # Misleading intermediate
+    pending_transactions = operations.get('pending', [])
+    completed_trades = operations.get('completed', {})
     
-    # Step 3: Flag values that deviate by more than 1.5 standard deviations
-    outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
+    # Actual calculation path
+    base_return = principal
+    for trade_type, amount in completed_trades.items():
+        if trade_type == 'long':
+            base_return += amount * 0.15 * leverage_factor
+        elif trade_type == 'short':
+            base_return -= amount * 0.12 * volatility_multiplier
     
-    # Step 4: Pattern matching for specific temperature signatures
-    signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
+    # More distractions
+    unrealized_gains = len(pending_transactions) * principal * 0.03
+    portfolio_diversity = len(set(operations.keys())) / 4
     
-    # Step 5: Calculate anomaly score using logical operations and exponentiation
-    base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
+    # Final balance calculation
+    final_amount = base_return * volatility_multiplier
     
-    # Step 6: Apply corrective factor using a ternary operator
-    correction_factor = 1.2 if base_score > 10 else 0.8
+    # Dead code path - never executed
+    if len(pending_transactions) > 10:
+        final_amount *= 1.1
     
-    # Step 7: Final anomaly score calculation
-    anomaly_score = round(base_score * correction_factor, 2) if base_score > 0 else 0
-    
-    return anomaly_score
+    return int(final_amount)
 
-# Sensor readings from a monitoring station
-sensor_readings = [23.45, -15.67, 0, 120.89, -98.77, 24.12, 25.00, -22.33]
+# Initial setup
+principal = 10000
+operations_data = {
+    'completed': {'long': 5000, 'short': 3000},
+    'pending': ['trade_A', 'trade_B']
+}
+market_conditions = {'volatility_index': 1.2, 'leverage': 2}
 
-# Execute processing pipeline
-anomaly_score = process_sensor_data(sensor_readings)
-print(f"Result: {anomaly_score}")
+# Distractor calculations
+portfolio_metrics = calculate_crypto_metrics({'bitcoin': 2, 'ethereum': 5}, {'BTC': 10000, 'ETH': 8000})
+market_analysis = portfolio_metrics * 0.75  # Never used
+
+# Key execution
+final_balance = apply_crypto_operations(principal, operations_data, market_conditions)
+
+# Additional irrelevant operations
+projected_growth = final_balance * 1.25
+risk_score = len(operations_data['pending']) * 15
+
+print(f"Target result: {final_balance}")

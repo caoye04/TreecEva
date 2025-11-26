@@ -1,46 +1,29 @@
-import heapq
-from collections import deque
+sensor_readings = [15.2, 18.7, 22.4, 19.8, 16.5]
+calibration_offsets = [-1.3, 0.8, -0.5, 1.2, -0.9]
 
-def process_vehicles():
-    # State machine for traffic signal
-    signal_states = {'RED': 0, 'YELLOW': 1, 'GREEN': 2}
-    current_state = 'RED'
-    
-    # Queue for vehicle arrival order
-    vehicle_queue = deque([5, 5, 2, 8, 3])
-    
-    # Heap for earliest departure times
-    departure_heap = [12, 7, 9, 4, 15]
-    heapq.heapify(departure_heap)
-    
-    # Lambda to calculate priority based on vehicle type and wait time
-    calc_priority = lambda v, t: (v * 2) + (t % 5)
-    
-    # Process vehicles using functional pipeline
-    waiting_vehicles = list(map(lambda v: calc_priority(v, heapq.heappop(departure_heap)), vehicle_queue))
-    
-    # Stack for signal transition history
-    transition_stack = []
-    
-    # Simulate signal transitions
-    for i in range(len(waiting_vehicles)):
-        priority = waiting_vehicles[i]
-        
-        # Switch-like state transition logic
-        if current_state == 'RED' and priority > 10:
-            current_state = 'GREEN'
-            transition_stack.append(2)
-        elif current_state == 'GREEN' and priority <= 10:
-            current_state = 'YELLOW'
-            transition_stack.append(1)
-        elif current_state == 'YELLOW':
-            current_state = 'RED'
-            transition_stack.append(0)
-    
-    # Calculate final signal priority
-    signal_priority = sum(transition_stack) * len(heapq.nsmallest(3, departure_heap))
-    
-    return signal_priority
+# Calculate average reading with compensation
+compensated_sum = 0
+valid_count = 0
+temp_storage = []
 
-signal_priority = process_vehicles()
-print(f"Result: {signal_priority}")
+for idx, (reading, offset) in enumerate(zip(sensor_readings, calibration_offsets)):
+    compensated = reading + offset
+    temp_storage.append(compensated * 1.1)  # Distractor calculation
+    if compensated > 17.0:
+        compensated_sum += compensated
+        valid_count += 1
+
+# Calculate target value
+if valid_count > 0:
+    target_value = compensated_sum / valid_count
+else:
+    target_value = 0.0
+
+# Calculate offset adjustment
+offset_adjustment = sum(calibration_offsets[::2]) - sum(calibration_offsets[1::2])
+redundant_adjustment = offset_adjustment * 0.75  # Unused distractor
+
+# Final calibration
+final_calibration = target_value + offset_adjustment
+
+print(f"Target result: {final_calibration}")

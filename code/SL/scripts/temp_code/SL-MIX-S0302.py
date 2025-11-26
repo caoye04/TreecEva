@@ -1,36 +1,30 @@
-def calculate_optimal_priority():
-    # Package data: (weight, priority)
-    shipment_manifest = [
-        (2, 3), (3, 4), (4, 5), (5, 6),
-        (1, 2), (6, 8), (2, 3), (3, 4),
-        (7, 9), (1, 1), (4, 4), (2, 2)
-    ]
+def portfolio_calculations(holdings, prices, dividend_rate):
+    # Calculate total market value
+    market_value = sum(holdings[symbol] * prices[symbol] for symbol in holdings)
     
-    # Remove duplicate packages using set operations
-    unique_packages = list(set(shipment_manifest))
+    # Calculate dividend income (distraction - not used in final result)
+    dividend_income = sum(holdings[symbol] * prices[symbol] * dividend_rate for symbol in holdings)
     
-    # Sort packages by priority-to-weight ratio (greedy approach)
-    unique_packages.sort(key=lambda x: x[1]/x[0], reverse=True)
+    # Calculate weighted average price (distraction - calculated but not used)
+    total_shares = sum(holdings.values())
+    weighted_price = sum(holdings[symbol] * prices[symbol] for symbol in holdings) / total_shares
     
-    # Initialize truck parameters
-    truck_capacity = 15
-    loaded_weight = 0
-    total_priority = 0
+    # Calculate portfolio adjustments
+    adjustment_factor = 0.85
+    adjusted_value = market_value * adjustment_factor
     
-    # Greedily load packages
-    for weight, priority in unique_packages:
-        if loaded_weight + weight <= truck_capacity:
-            loaded_weight += weight
-            total_priority += priority
+    # Apply management fee
+    management_fee = adjusted_value * 0.02
     
-    # Apply functional transformation to verify constraints
-    weight_check = list(map(lambda x: x[0], filter(lambda p: p[0] <= 5, unique_packages)))
-    
-    # Conditional adjustment based on special cargo rules
-    if len(weight_check) > 3:
-        total_priority += sum(weight_check[:3])
-    
-    return total_priority
+    # Final balance after fees
+    final_balance = adjusted_value - management_fee
+    return final_balance
 
-final_score = calculate_optimal_priority()
-print(f"Result: {final_score}")
+# Portfolio data
+holdings = {'AAPL': 50, 'GOOGL': 30, 'MSFT': 25}
+market_prices = {'AAPL': 150.0, 'GOOGL': 2800.0, 'MSFT': 340.0}
+dividend_yield = 0.015
+
+# Execute the calculation
+final_balance = portfolio_calculations(holdings, market_prices, dividend_yield)
+print(f"Result: {final_balance}")

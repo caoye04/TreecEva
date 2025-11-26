@@ -1,36 +1,32 @@
-Target: Find the value of variable normalized_char_count after [line 29] executes
+Target: Find the value of variable final_score after [line 30] executes
 
-[line 9]  return wrapper
-Return: wrapper
-[line 7]  tokens = func(*args, **kwargs)
-Call function func(*args, **kwargs)
-[line 13]  stop_words = {'the', 'is', 'in', 'at', 'which', 'on', 'a', 'an'}
-Compute: {'the', 'is', 'in', 'at', 'which', 'on', 'a', 'an'} = {'on', 'an', 'at', 'in', 'which', ...}
-[line 14]  tokens = text.lower().replace(',', '').replace('.', '').split()
-(Missing param: 'func_name')
-[line 15]  return [t for t in tokens if t not in stop_words]
-Return: [t for t in tokens if t not in stop_words]
-[line 8]  return [token if len(token) <= 10 else token[:10] for token in tokens]
-Return: [token if len(token) <= 10 else token[:10] for token in tokens]
-[line 8]  return [token if len(token) <= 10 else token[:10] for token in tokens]
-Return: [token if len(token) <= 10 else token[:10] for token in tokens]
-[line 8]  return [token if len(token) <= 10 else token[:10] for token in tokens]
-Return: [token if len(token) <= 10 else token[:10] for token in tokens]
-[line 8]  return [token if len(token) <= 10 else token[:10] for token in tokens]
-Return: [token if len(token) <= 10 else token[:10] for token in tokens]
-[line 8]  return [token if len(token) <= 10 else token[:10] for token in tokens]
-Return: [token if len(token) <= 10 else token[:10] for token in tokens]
-[line 8]  return [token if len(token) <= 10 else token[:10] for token in tokens]
-Return: [token if len(token) <= 10 else token[:10] for token in tokens]
-[line 8]  return [token if len(token) <= 10 else token[:10] for token in tokens]
-Return: [token if len(token) <= 10 else token[:10] for token in tokens]
-[line 8]  return [token if len(token) <= 10 else token[:10] for token in tokens]
-Return: [token if len(token) <= 10 else token[:10] for token in tokens]
-[line 8]  return [token if len(token) <= 10 else token[:10] for token in tokens]
-Return: [token if len(token) <= 10 else token[:10] for token in tokens]
-[line 8]  return [token if len(token) <= 10 else token[:10] for token in tokens]
-Return: [token if len(token) <= 10 else token[:10] for token in tokens]
-[line 29]  normalized_char_count = 0
-Assign: normalized_char_count = 0
+[line 3]  packet_values = [45, 23, 67, 89, 12, 34, 56, 78]
+Compute: [45, 23, 67, 89, 12, 34, 56, 78] = [45, 23, 67, 89, 12, ...]
+[line 4]  sequence_sum = sum(packet_values)
+Call function sum(packet_values=[45, 23, 67, 89, 12, ...] (defined at [line 3]))
+[line 9]  max_packet = max(packet_values)
+Call function max(packet_values=[45, 23, 67, 89, 12, ...] (defined at [line 3]))
+[line 12]  unique_packets = set(packet_values)
+Call function set(packet_values=[45, 23, 67, 89, 12, ...] (defined at [line 3]))
+[line 13]  unique_count = len(unique_packets)
+Call function len(unique_packets={34, 67, 12, 45, 78, ...} (defined at [line 12]))
+[line 16]  base_mask = 0b10101010
+Assign: base_mask = 170
+[line 17]  sequence_mask = sequence_sum & 0xFF
+Compute: sequence_sum & 0xFF, where sequence_sum=404 (defined at [line 4]) = 148
+[line 20]  processed_total = sequence_sum - min(packet_values)
+Compute: sequence_sum - min(packet_values), where sequence_sum=404 (defined at [line 4]), packet_values=[45, 23, 67, 89, 12, ...] (defined at [line 3]) = 392
+[line 21]  encoded_value = processed_total | base_mask
+Compute: processed_total | base_mask, where processed_total=392 (defined at [line 20]), base_mask=170 (defined at [line 16]) = 426
+[line 24]  temp_calc = (max_packet * unique_count) // 2
+Compute: (max_packet * unique_count) // 2, where max_packet=89 (defined at [line 9]), unique_count=8 (defined at [line 13]) = 356
+[line 25]  verification_code = temp_calc ^ sequence_mask
+Compute: temp_calc ^ sequence_mask, where temp_calc=356 (defined at [line 24]), sequence_mask=148 (defined at [line 17]) = 496
+[line 28]  encrypted_total = encoded_value ^ verification_code
+Compute: encoded_value ^ verification_code, where encoded_value=426 (defined at [line 21]), verification_code=496 (defined at [line 25]) = 90
+[line 29]  mask_value = 0b11110000
+Assign: mask_value = 240
+[line 30]  final_score = encrypted_total ^ mask_value
+Compute: encrypted_total ^ mask_value, where encrypted_total=90 (defined at [line 28]), mask_value=240 (defined at [line 29]) = 170
 
-Answer: normalized_char_count = 0 (last updated on defined at [line 29])
+Answer: final_score = 170 (last updated on defined at [line 30])

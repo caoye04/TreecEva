@@ -1,0 +1,41 @@
+48
+final_capacity
+---
+32 network_nodes = 4
+32 ['network_nodes'] ['4']
+33 data_packets = 7
+33 ['network_nodes', 'data_packets'] ['4', '7']
+34 redundancy_factor = 2
+34 ['network_nodes', 'data_packets', 'redundancy_factor'] ['4', '7', '2']
+2 return (throughput * 2) + latency
+2 ['throughput', 'latency'] ['280', '93']
+42 final_capacity = process_network_config(network_nodes, data_packets, redundancy_factor)
+42 ['network_nodes', 'data_packets', 'redundancy_factor'] ['4', '7', '2']
+6 temp_throughput = nodes * packets * 3
+6 ['nodes', 'packets', 'redundancy', 'temp_throughput'] ['4', '7', '2', '84']
+10 network_load = temp_throughput // redundancy if redundancy else 0
+10 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'network_load'] ['4', '7', '2', '84', '42']
+13 if network_load > 1000:
+13 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'network_load'] ['4', '7', '2', '84', '42']
+19 base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+19 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'network_load', 'i'] ['4', '7', '2', '84', '42', '0']
+19 base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+19 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'network_load', 'i'] ['4', '7', '2', '84', '42', '1']
+19 base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+19 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'network_load', 'i'] ['4', '7', '2', '84', '42', '2']
+19 base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+19 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'network_load', 'i'] ['4', '7', '2', '84', '42', '3']
+19 base_capacity = sum([packets * (i + 1) for i in range(nodes)])
+19 ['nodes', 'packets', 'redundancy', 'temp_throughput', 'network_load', 'base_capacity'] ['4', '7', '2', '84', '42', '70']
+20 adjusted_capacity = base_capacity - (redundancy * 2)
+20 ['redundancy', 'temp_throughput', 'network_load', 'base_capacity', 'adjusted_capacity'] ['2', '84', '42', '70', '66']
+23 capacity_multiplier = lambda x: x * 3 if x % 2 == 0 else x * 2
+23 ['temp_throughput', 'network_load', 'adjusted_capacity'] ['84', '42', '66']
+26 capacity_values = [adjusted_capacity, network_load, temp_throughput]
+26 ['temp_throughput', 'network_load', 'adjusted_capacity', 'capacity_values'] ['84', '42', '66', '[66, 42, 84]']
+27 final_value = capacity_multiplier(capacity_values[0:2][-1])
+27 ['capacity_values'] ['[66, 42, 84]']
+29 return final_value
+29 ['final_value'] ['126']
+48 print(f"Target result: {final_capacity}")
+48 ['final_capacity'] ['126']

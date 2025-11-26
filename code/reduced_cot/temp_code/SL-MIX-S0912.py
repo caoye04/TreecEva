@@ -1,55 +1,49 @@
-import math
-from itertools import combinations
-
-def generate_primes_up_to(n):
-    sieve = [True] * (n + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(math.sqrt(n)) + 1):
-        if sieve[i]:
-            for j in range(i*i, n + 1, i):
-                sieve[j] = False
-    return [i for i, prime in enumerate(sieve) if prime]
-
-def lcm_of_list(numbers):
-    result = numbers[0]
-    for num in numbers[1:]:
-        result = abs(result * num) // math.gcd(result, num)
-    return result
-
-# Audio processing parameters
-sample_rates = [44100, 48000, 96000]
-prime_cache = generate_primes_up_to(100)
-
-with open('temp_config.txt', 'w') as f:
-    f.write(str(sample_rates[0]))
-
-base_frequency = 0
-with open('temp_config.txt', 'r') as f:
-    base_frequency = int(f.read())
-
-# Compute masking factors using number theory
-frequency_factors = []
-for rate in sample_rates:
-    prime_factors = [p for p in prime_cache if rate % p == 0]
-    if prime_factors:
-        frequency_factors.append(lcm_of_list(prime_factors[:3]))
+def compute_quality_metric(samples):
+    # Distractor: unused quality check that looks important
+    quality_threshold = 85.5
+    temp_analysis = sum(len(str(s)) for s in samples) % 17
+    
+    # Main computation path with bitwise operations
+    processed_data = []
+    for sample in samples:
+        # Red herring: unused computation
+        fake_metric = (ord(sample[0]) << 2) & 0xFF
+        
+        # Actual processing - character analysis with case conversion
+        char_count = Counter(sample.lower())
+        vowel_weight = sum(char_count.get(v, 0) for v in 'aeiou')
+        consonant_weight = len(sample) - vowel_weight
+        
+        # Bitwise XOR for obfuscation
+        quality_factor = (vowel_weight ^ consonant_weight) & 0x1F
+        processed_data.append(quality_factor)
+    
+    # Misleading intermediate calculation
+    intermediate_sum = sum(processed_data) + temp_analysis
+    
+    # Dead code path that looks relevant
+    if intermediate_sum > 100:
+        backup_calc = intermediate_sum // 3
     else:
-        frequency_factors.append(1)
+        backup_calc = intermediate_sum * 2
+    
+    # Final computation with modular arithmetic
+    base_score = sum(processed_data)
+    adjustment = (base_score % 7) * 3
+    final_value = (base_score + adjustment) // len(processed_data)
+    
+    return final_value
 
-# Apply combinatorial selection
-selected_combinations = list(combinations(frequency_factors, 2))
-masked_signals = [math.log2(sum(c)) for c in selected_combinations]
+# Sample data setup
+from collections import Counter
+data_samples = ['QualityCheck', 'AnalysisTool', 'MetricSystem', 'EvaluationKit']
 
-# Bitwise scrambling operation
-scramble_key = 0b1010101
-processed_signals = [
-    int(signal) ^ scramble_key for signal in masked_signals
-]
+# Multiple irrelevant variables for distraction
+config_param = 42.7
+cache_size = 1024
+performance_flag = True
+validation_set = ['TestA', 'TestB']
 
-# Calculate final threshold using exponentiation
-threshold_components = [
-    pow(p, 2, 1000) for p in processed_signals
-]
-
-final_threshold = sum(threshold_components) >> 2  # Right shift by 2
-print(f"Result: {final_threshold}")
+# Main execution
+final_score = compute_quality_metric(data_samples)
+print(f"Result: {final_score}")

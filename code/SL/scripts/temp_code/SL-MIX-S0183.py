@@ -1,42 +1,29 @@
-import itertools
-import statistics
-from functools import reduce
+def calculate_student_scores():
+    student_names = ['alice', 'BOB', 'Charlie', 'Diana', 'edward']
+    raw_scores = [85, 92, 78, 96, 88]
+    
+    # Process names and scores using enumerate and zip
+    processed_data = []
+    temp_storage = []
+    
+    for idx, (name, score) in enumerate(zip(student_names, raw_scores)):
+        normalized_name = name.lower()
+        adjusted_score = score + (idx % 2)
+        processed_data.append((normalized_name, adjusted_score))
+        temp_storage.append(score * 2)  # Distractor operation
+    
+    # Calculate final results with some intermediate calculations
+    bonus_points = [5, 3, 7, 2, 6]
+    processed_results = []
+    
+    for name_score_tuple, bonus in zip(processed_data, bonus_points):
+        base_score = name_score_tuple[1]
+        intermediate_val = base_score * 0.1  # Distractor calculation
+        final_score_entry = base_score + bonus
+        processed_results.append(final_score_entry)
+    
+    # Final assignment with nested indexing
+    final_score = processed_results[-1]
+    print(f"Result: {final_score}")
 
-def char_frequency_analyzer(text):
-    freq = {}
-    for char in text:
-        freq[char] = freq.get(char, 0) + 1
-    return freq
-
-def calculate_variance_score(freq_dict):
-    frequencies = list(freq_dict.values())
-    if len(frequencies) < 2:
-        return 0
-    return statistics.variance(frequencies)
-
-cipher_segment = "ABBCDEEFFGHHIJJKKLLMMNNOOPPQQRRSSTTUUVVWWXXYYZZ"
-frequency_map = char_frequency_analyzer(cipher_segment)
-variance_score = calculate_variance_score(frequency_map)
-
-# Generate all possible 3-character permutations from unique characters
-unique_chars = list(set(cipher_segment))
-permutations = list(itertools.permutations(unique_chars, 3))
-
-# Apply greedy algorithm to select permutations with highest ASCII sum
-permutation_scores = [(perm, sum(ord(c) for c in perm)) for perm in permutations]
-permutation_scores.sort(key=lambda x: x[1], reverse=True)
-top_permutations = permutation_scores[:10]
-
-# Calculate combinatorial weight factor
-weight_factor = len(list(itertools.combinations(range(10), 3)))
-
-# Encode top permutations into numeric sequence
-encoded_sequence = []
-for perm, score in top_permutations:
-    encoded_value = reduce(lambda acc, char: acc * 256 + ord(char), perm, 0)
-    encoded_sequence.append(encoded_value)
-
-# Final cipher score combines variance, weight factor, and encoded sequence properties
-final_cipher_score = int(variance_score * weight_factor + statistics.mean(encoded_sequence) // 1000)
-
-print(f"Result: {final_cipher_score}")
+calculate_student_scores()

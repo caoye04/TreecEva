@@ -1,33 +1,38 @@
-import math
-from collections import defaultdict
-
-def gaussian_window(N, sigma):
-    return {n: math.exp(-0.5 * ((n - (N-1)/2) / sigma) ** 2) for n in range(N)}
-
-def apply_gain(window_dict, gain_factor):
-    return {k: v * gain_factor for k, v in window_dict.items()}
-
-def compute_energy(window_dict):
-    return sum(v**2 for v in window_dict.values())
-
-# Signal processing pipeline
-window_cache = {}
-signal_segments = [128, 256, 512]
-gain_schedule = [0.8, 1.2, 0.9]
-
-processed_energies = []
-for i, (segment_size, gain) in enumerate(zip(signal_segments, gain_schedule)):
-    if segment_size not in window_cache:
-        # Compute and cache window coefficients
-        window_cache[segment_size] = gaussian_window(segment_size, segment_size/8)
+def calculate_data_metrics(raw_readings):
+    import itertools
     
-    # Apply dynamic gain adjustment
-    adjusted_window = apply_gain(window_cache[segment_size], gain)
+    # Distractor variables and computations
+    sensor_calibration = 3.14159
+    redundant_factor = 42
+    unused_buffer = [i * 2 for i in range(10)]
+    misleading_sum = sum(range(1, 100))  # This won't be used
     
-    # Compute energy of processed segment
-    segment_energy = compute_energy(adjusted_window)
-    processed_energies.append(segment_energy)
+    # Actual processing logic
+    filtered_readings = list(itertools.islice(raw_readings, 2, len(raw_readings) - 1))
+    processed_data = [reading * 2 - 1 for reading in filtered_readings]
+    
+    # More distractions
+    temp_calculation = sensor_calibration * redundant_factor
+    dummy_metric = (temp_calculation + misleading_sum) / 1000  # Dead code path
+    
+    # Core computation
+    processed_total = sum(processed_data)
+    adjustment_factor = len(filtered_readings) / 4.0
+    correction_offset = (processed_data[0] if processed_data else 0) + 15
+    
+    # Dead conditional path
+    if temp_calculation > 1000:
+        irrelevant_bonus = 25
+    else:
+        irrelevant_bonus = -10
+    
+    # Final computation - THIS IS THE KEY STATEMENT
+    final_metric = processed_total * adjustment_factor - correction_offset
+    
+    # Print result for verification
+    print(f"Result: {final_metric}")
+    return final_metric
 
-# Calculate final energy metric
-final_energy = round(sum(processed_energies) * 1000)
-print(f"Result: {final_energy}")
+# Main execution with sample data
+sensor_data = [8, 12, 5, 18, 7, 3, 15, 9, 11, 6]
+result = calculate_data_metrics(sensor_data)

@@ -1,0 +1,32 @@
+Target: Find the value of variable final_output after [line 38] executes
+
+[line 33]  data_stream = [8, 3, 12, 7, 8, 15, 4, 9, 8]
+Compute: [8, 3, 12, 7, 8, 15, 4, 9, 8] = [8, 3, 12, 7, 8, ...]
+[line 37]  result = process_sequence(data_stream)
+Call function process_sequence(data_stream=[8, 3, 12, 7, 8, ...] (defined at [line 33]))
+[line 11]  if not data:
+Condition: True, entering 'if' block
+[line 14]  filtered_data = [x for x in data if x % 2 == 0]
+Compute: [x for x in data if x % 2 == 0], where x=8 (an unknown source), data=[8, 3, 12, 7, 8, ...] (an unknown source) = ?
+[line 15]  misleading_total = sum(filtered_data) * 10
+Compute: sum(filtered_data) * 10, where filtered_data=[8, 12, 8, 4, 8] (defined at [line 14]) = 400
+[line 17]  if validate_pattern(filtered_data):
+Condition: True, entering 'if' block
+[line 2]  return len(sequence) > 3 and sequence[0] == sequence[-1]
+Return: len(sequence) > 3 and sequence[0] == sequence[-1]
+[line 18]  offset = calculate_offset(filtered_data)
+Call function calculate_offset(filtered_data=[8, 12, 8, 4, 8] (defined at [line 14]))
+[line 5]  temp_sum = sum(values) * 2
+Compute: sum(values) * 2, where values=[8, 12, 8, 4, 8] (an unknown source) = 80
+[line 6]  offset_factor = temp_sum // len(values) if values else 0
+Compute: temp_sum // len(values) if values else 0, where temp_sum=80 (defined at [line 5]), values=[8, 12, 8, 4, 8] (an unknown source) = 16
+[line 8]  return offset_factor
+Return: offset_factor=16 (defined at [line 6])
+[line 19]  result = misleading_total - offset
+Compute: misleading_total - offset, where misleading_total=400 (defined at [line 15]), offset=16 (defined at [line 18]) = 384
+[line 31]  return result
+Return: result=384 (defined at [line 19])
+[line 38]  final_output = result + 5
+Compute: result + 5, where result=384 (defined at [line 19]) = 389
+
+Answer: final_output = 389 (last updated on defined at [line 38])

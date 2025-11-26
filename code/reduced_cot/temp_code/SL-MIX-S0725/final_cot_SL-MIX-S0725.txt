@@ -1,0 +1,20 @@
+Target: Find the value of variable final_output after [line 13] executes
+
+[line 2]  base_stock = 150
+Assign: base_stock = 150
+[line 3]  daily_demand = 25
+Assign: daily_demand = 25
+[line 4]  safety_stock = 40
+Assign: safety_stock = 40
+[line 5]  current_level = base_stock - daily_demand
+Compute: base_stock - daily_demand, where base_stock=150 (defined at [line 2]), daily_demand=25 (defined at [line 3]) = 125
+[line 8]  reorder_threshold = 80
+Assign: reorder_threshold = 80
+[line 9]  needs_restock = current_level <= reorder_threshold
+Compute: current_level <= reorder_threshold, where current_level=125 (defined at [line 5]), reorder_threshold=80 (defined at [line 8]) = False
+[line 12]  buffer_multiplier = 2 if needs_restock else 1
+Compute: 2 if needs_restock else 1, where needs_restock=False (defined at [line 9]) = 1
+[line 13]  final_output = (current_level + safety_stock) * buffer_multiplier
+Compute: (current_level + safety_stock) * buffer_multiplier, where current_level=125 (defined at [line 5]), safety_stock=40 (defined at [line 4]), buffer_multiplier=1 (defined at [line 12]) = 165
+
+Answer: final_output = 165 (last updated on defined at [line 13])

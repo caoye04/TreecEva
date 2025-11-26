@@ -1,0 +1,25 @@
+8 initial_value = 15
+8 ['initial_value'] [{'_type': 'int', '_value': 15}]
+9 result_data = initial_value * 2
+9 ['initial_value', 'result_data'] [{'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 30}]
+10 final_score = compute_final(result_data)
+10 ['initial_value', 'result_data'] [{'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 30}]
+PARAM_MAPPING compute_final {'data': {'actual_var': 'result_data', 'value': 30}}
+FUNCTION_ENTER 1 compute_final def compute_final(data):
+1 ['data'] [{'_type': 'int', '_value': 30}]
+DEPTH_2 2     process_values = lambda x: x * 2 if x > 10 else x + 5
+2 ['data'] [{'_type': 'int', '_value': 30}]
+DEPTH_2 3     intermediate = process_values(data)
+3 ['data'] [{'_type': 'int', '_value': 30}]
+FUNCTION_ENTER 2 <lambda>     process_values = lambda x: x * 2 if x > 10 else x + 5
+2 ['x'] [{'_type': 'int', '_value': 30}]
+DEPTH_3 2     process_values = lambda x: x * 2 if x > 10 else x + 5
+2 ['x'] [{'_type': 'int', '_value': 30}]
+FUNCTION_RETURN 2 <lambda> {'_type': 'int', '_value': 60}
+DEPTH_2 4     if intermediate > 25:
+4 ['data', 'intermediate'] [{'_type': 'int', '_value': 30}, {'_type': 'int', '_value': 60}]
+DEPTH_2 5         return intermediate - 8
+5 ['data', 'intermediate'] [{'_type': 'int', '_value': 30}, {'_type': 'int', '_value': 60}]
+FUNCTION_RETURN 5 compute_final {'_type': 'int', '_value': 52}
+11 print(f"Target result: {final_score}")
+11 ['initial_value', 'result_data', 'final_score'] [{'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 30}, {'_type': 'int', '_value': 52}]

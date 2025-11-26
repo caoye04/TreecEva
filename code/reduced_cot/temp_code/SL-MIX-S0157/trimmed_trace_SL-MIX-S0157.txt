@@ -1,73 +1,77 @@
-34
-final_score
+36
+final_result
 ---
-20 origins = frozenset(origin for origin, _ in shipments)
-20 [] []
-20 origins = frozenset(origin for origin, _ in shipments)
-20 ['origin', '_'] ["'NYC'", '10']
-20 origins = frozenset(origin for origin, _ in shipments)
-20 ['origin', '_'] ["'LA'", '15']
-20 origins = frozenset(origin for origin, _ in shipments)
-20 ['origin', '_'] ["'CHI'", '7']
-20 origins = frozenset(origin for origin, _ in shipments)
-20 ['origin', '_'] ["'SEA'", '20']
-20 origins = frozenset(origin for origin, _ in shipments)
-20 ['origin', '_'] ["'BOS'", '5']
-20 origins = frozenset(origin for origin, _ in shipments)
-20 ['origin', '_'] ["'BOS'", '5']
-23 urgency_heap = [u for _, u in shipments]
-23 ['shipments', 'origins', '_', 'u'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", "'NYC'", '10']
-23 urgency_heap = [u for _, u in shipments]
-23 ['shipments', 'origins', '_', 'u'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", "'LA'", '15']
-23 urgency_heap = [u for _, u in shipments]
-23 ['shipments', 'origins', '_', 'u'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", "'CHI'", '7']
-23 urgency_heap = [u for _, u in shipments]
-23 ['shipments', 'origins', '_', 'u'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", "'SEA'", '20']
-23 urgency_heap = [u for _, u in shipments]
-23 ['shipments', 'origins', '_', 'u'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", "'BOS'", '5']
-23 urgency_heap = [u for _, u in shipments]
-23 ['shipments', 'origins', 'urgency_heap'] ["[('NYC', 10), ('LA', 15), ('CHI', 7), ('SEA', 20), ('BOS', 5)]", "frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[10, 15, 7, 20, 5]']
-26 processed_urgencies = []
-26 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[5, 10, 7, 20, 15]', '[]']
-27 while urgency_heap:
-27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[5, 10, 7, 20, 15]', '[]']
-27 while urgency_heap:
-27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[7, 10, 15, 20]', '[5]']
-27 while urgency_heap:
-27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[10, 20, 15]', '[5, 7]']
-27 while urgency_heap:
-27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[15, 20]', '[5, 7, 10]']
-27 while urgency_heap:
-27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[20]', '[5, 7, 10, 15]']
-27 while urgency_heap:
-27 ['origins', 'urgency_heap', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[]', '[5, 7, 10, 15, 20]']
-31 route_efficiency = calculate_route_efficiency(processed_urgencies)
-31 ['origins', 'processed_urgencies'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '[5, 7, 10, 15, 20]']
-5 dp = [0] * (len(urgencies) + 1)
-5 ['urgencies', 'dp'] ['[5, 7, 10, 15, 20]', '[0, 0, 0, 0, 0, ...]']
-6 for i in range(1, len(urgencies) + 1):
-6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 0, 0, 0, 0, ...]', '1']
-7 dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
-7 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 0, 0, 0, ...]', '1']
-6 for i in range(1, len(urgencies) + 1):
-6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 0, 0, 0, ...]', '2']
-7 dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
-7 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 0, 0, ...]', '2']
-6 for i in range(1, len(urgencies) + 1):
-6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 0, 0, ...]', '3']
-7 dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
-7 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 0, ...]', '3']
-6 for i in range(1, len(urgencies) + 1):
-6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 0, ...]', '4']
-7 dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
-7 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 22, ...]', '4']
-6 for i in range(1, len(urgencies) + 1):
-6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 22, ...]', '5']
-7 dp[i] = max(dp[i-1], dp[i-2] + urgencies[i-1])
-7 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 22, ...]', '5']
-6 for i in range(1, len(urgencies) + 1):
-6 ['urgencies', 'dp', 'i'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 22, ...]', '5']
-8 return dp[len(urgencies)]
-8 ['urgencies', 'dp'] ['[5, 7, 10, 15, 20]', '[0, 5, 7, 15, 22, ...]']
-34 final_score = route_efficiency + len(origins)
-34 ['origins', 'route_efficiency', 'final_score'] ["frozenset({'CHI', 'SEA', 'NYC', 'LA', 'BOS'})", '35', '40']
+5 protocol_stats = {}
+5 ['packets', 'protocol_stats'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{}']
+9 for i, packet in enumerate(packets):
+9 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{}', '0', "{size: 200, protocol: 'TCP'}"]
+14 if i % 3 == 0:
+14 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{}', '0', "{size: 200, protocol: 'TCP'}"]
+19 if packet['size'] > 150 and packet['protocol'] == 'TCP':
+19 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{}', '0', "{size: 200, protocol: 'TCP'}"]
+20 protocol_stats['tcp_large'] = protocol_stats.get('tcp_large', 0) + 1
+20 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 1}', '0', "{size: 200, protocol: 'TCP'}"]
+9 for i, packet in enumerate(packets):
+9 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 1}', '1', "{size: 45, protocol: 'UDP'}"]
+14 if i % 3 == 0:
+14 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 1}', '1', "{size: 45, protocol: 'UDP'}"]
+19 if packet['size'] > 150 and packet['protocol'] == 'TCP':
+19 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 1}', '1', "{size: 45, protocol: 'UDP'}"]
+21 elif packet['size'] < 50:
+21 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 1}', '1', "{size: 45, protocol: 'UDP'}"]
+22 protocol_stats['small_packets'] = protocol_stats.get('small_packets', 0) + 1
+22 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 1, small_packets: 1}', '1', "{size: 45, protocol: 'UDP'}"]
+9 for i, packet in enumerate(packets):
+9 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 1, small_packets: 1}', '2', "{size: 180, protocol: 'TCP'}"]
+14 if i % 3 == 0:
+14 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 1, small_packets: 1}', '2', "{size: 180, protocol: 'TCP'}"]
+19 if packet['size'] > 150 and packet['protocol'] == 'TCP':
+19 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 1, small_packets: 1}', '2', "{size: 180, protocol: 'TCP'}"]
+20 protocol_stats['tcp_large'] = protocol_stats.get('tcp_large', 0) + 1
+20 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 2, small_packets: 1}', '2', "{size: 180, protocol: 'TCP'}"]
+9 for i, packet in enumerate(packets):
+9 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 2, small_packets: 1}', '3', "{size: 30, protocol: 'TCP'}"]
+14 if i % 3 == 0:
+14 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 2, small_packets: 1}', '3', "{size: 30, protocol: 'TCP'}"]
+19 if packet['size'] > 150 and packet['protocol'] == 'TCP':
+19 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 2, small_packets: 1}', '3', "{size: 30, protocol: 'TCP'}"]
+21 elif packet['size'] < 50:
+21 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 2, small_packets: 1}', '3', "{size: 30, protocol: 'TCP'}"]
+22 protocol_stats['small_packets'] = protocol_stats.get('small_packets', 0) + 1
+22 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 2, small_packets: 2}', '3', "{size: 30, protocol: 'TCP'}"]
+9 for i, packet in enumerate(packets):
+9 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 2, small_packets: 2}', '4', "{size: 160, protocol: 'TCP'}"]
+14 if i % 3 == 0:
+14 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 2, small_packets: 2}', '4', "{size: 160, protocol: 'TCP'}"]
+19 if packet['size'] > 150 and packet['protocol'] == 'TCP':
+19 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 2, small_packets: 2}', '4', "{size: 160, protocol: 'TCP'}"]
+20 protocol_stats['tcp_large'] = protocol_stats.get('tcp_large', 0) + 1
+20 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 3, small_packets: 2}', '4', "{size: 160, protocol: 'TCP'}"]
+9 for i, packet in enumerate(packets):
+9 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 3, small_packets: 2}', '5', "{size: 25, protocol: 'UDP'}"]
+14 if i % 3 == 0:
+14 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 3, small_packets: 2}', '5', "{size: 25, protocol: 'UDP'}"]
+19 if packet['size'] > 150 and packet['protocol'] == 'TCP':
+19 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 3, small_packets: 2}', '5', "{size: 25, protocol: 'UDP'}"]
+21 elif packet['size'] < 50:
+21 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 3, small_packets: 2}', '5', "{size: 25, protocol: 'UDP'}"]
+22 protocol_stats['small_packets'] = protocol_stats.get('small_packets', 0) + 1
+22 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 3, small_packets: 3}', '5', "{size: 25, protocol: 'UDP'}"]
+9 for i, packet in enumerate(packets):
+9 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 3, small_packets: 3}', '6', "{size: 190, protocol: 'TCP'}"]
+14 if i % 3 == 0:
+14 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 3, small_packets: 3}', '6', "{size: 190, protocol: 'TCP'}"]
+19 if packet['size'] > 150 and packet['protocol'] == 'TCP':
+19 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 3, small_packets: 3}', '6', "{size: 190, protocol: 'TCP'}"]
+20 protocol_stats['tcp_large'] = protocol_stats.get('tcp_large', 0) + 1
+20 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 4, small_packets: 3}', '6', "{size: 190, protocol: 'TCP'}"]
+9 for i, packet in enumerate(packets):
+9 ['packets', 'protocol_stats', 'i', 'packet'] ["[{size: 200, protocol: 'TCP'}, {size: 45, protocol: 'UDP'}, {size: 180, protocol: 'TCP'}, {size: 30, protocol: 'TCP'}, {size: 160, protocol: 'TCP'}, ...]", '{tcp_large: 4, small_packets: 3}', '6', "{size: 190, protocol: 'TCP'}"]
+31 base_count = protocol_stats.get('tcp_large', 0)
+31 ['protocol_stats', 'base_count'] ['{tcp_large: 4, small_packets: 3}', '4']
+32 small_count = protocol_stats.get('small_packets', 0)
+32 ['protocol_stats', 'base_count', 'small_count'] ['{tcp_large: 4, small_packets: 3}', '4', '3']
+35 result_mask = (base_count << 2) | (small_count & 0x0F)
+35 ['base_count', 'small_count', 'result_mask'] ['4', '3', '19']
+36 final_result = result_mask ^ 0b1010
+36 ['result_mask', 'final_result'] ['19', '25']

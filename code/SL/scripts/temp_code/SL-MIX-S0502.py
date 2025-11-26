@@ -1,38 +1,36 @@
-from collections import defaultdict
-import hashlib
+from collections import Counter
 
-def tokenize_and_classify(text_passage):
-    tokens = text_passage.split()
-    hash_buckets = defaultdict(int)
-    classified_count = 0
-    
-    for token in tokens:
-        # Normalize token: remove punctuation and convert to lowercase
-        clean_token = ''.join(ch for ch in token if ch.isalnum()).lower()
-        if not clean_token:
-            continue
-            
-        # Compute hash and use modular arithmetic for bucket assignment
-        token_hash = int(hashlib.md5(clean_token.encode()).hexdigest(), 16)
-        bucket_id = token_hash % 7  # 7 categories for classification
-        
-        # Apply conditional logic for classification
-        if len(clean_token) > 3 and bucket_id in [1, 3, 5]:
-            hash_buckets[bucket_id] += 1
-            classified_count += (bucket_id * len(clean_token))
-        elif len(clean_token) <= 3 and bucket_id in [0, 2, 4, 6]:
-            hash_buckets[bucket_id] += 2  # Short tokens get double count
-            classified_count -= (bucket_id + len(clean_token))
-    
-    # Post-processing adjustment based on distribution
-    if sum(hash_buckets.values()) > 10:
-        classified_count = (classified_count * 3) % 100
-    else:
-        classified_count = (classified_count + 42) % 100
-        
-    return classified_count
+initial_deposit = 1000
+monthly_fees = [25, 25, 30, 25]
+transaction_logs = ['deposit:500', 'withdraw:200', 'deposit:300', 'fee:25', 'deposit:150', 'withdraw:100']
 
-# Process the ancient manuscript passage
-manuscript_passage = "O mighty Caesar! Why dost thou conspire With thy own thoughts, that lov'st to palliate So forcibly the trespass of thy heart?"
-classified_count = tokenize_and_classify(manuscript_passage)
-print(f"Result: {classified_count}")
+# Process transactions
+account_operations = [initial_deposit]
+current_balance = initial_deposit
+
+for transaction in transaction_logs:
+    operation, amount = transaction.split(':')
+    amount = int(amount)
+    
+    # Distractor: Count transaction types but don't use the result
+    transaction_counter = Counter([t.split(':')[0] for t in transaction_logs])
+    
+    if operation == 'deposit':
+        current_balance += amount
+    elif operation == 'withdraw':
+        current_balance -= amount
+    elif operation == 'fee':
+        current_balance -= amount
+    
+    # Distractor: Calculate average but don't use it
+    avg_transaction = sum([int(t.split(':')[1]) for t in transaction_logs]) / len(transaction_logs)
+    
+    account_operations.append(current_balance)
+
+# Distractor: Process fees but result is overridden
+fee_total = sum(monthly_fees)
+temp_adjusted = account_operations[-1] - fee_total
+
+# Key statement
+final_balance = account_operations[-1]
+print(f"Result: {final_balance}")

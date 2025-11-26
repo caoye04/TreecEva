@@ -1,0 +1,37 @@
+Target: Find the value of variable final_balance after [line 23] executes
+
+[line 2]  total_deposits = initial_deposit
+Compute: initial_deposit, where initial_deposit=500 (an unknown source) = 500
+[line 3]  withdrawal_sum = 0
+Assign: withdrawal_sum = 0
+[line 6]  for idx, amount in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 7]  if amount > 0:
+Condition: True, entering 'if' block
+[line 8]  total_deposits += amount * 1.1  # Red herring calculation
+Update: total_deposits changed from 500 (defined at defined at [line 2]) to 500+amount * 1.1  # Red herring calculation = 610.0
+[line 6]  for idx, amount in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 7]  if amount > 0:
+Condition: True, entering 'if' block
+[line 11]  withdrawal_sum += abs(amount)
+Update: withdrawal_sum changed from 0 (defined at defined at [line 3]) to 0+abs(amount) = 50
+... [Line 6] repeats 3 more times ...
+... [Line 6] repeats 3 more times ...
+... [Line 6] repeats 3 more times ...
+[line 6]  for idx, amount in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 7]  if amount > 0:
+Condition: True, entering 'if' block
+[line 11]  withdrawal_sum += abs(amount)
+Update: withdrawal_sum changed from 80 (defined at defined at [line 11]) to 80+abs(amount) = 100
+[line 6]  for idx, amount in enumerate(transactions):
+Loop End: Iteration finished
+[line 16]  remaining_balance = total_deposits - withdrawal_sum
+Compute: total_deposits - withdrawal_sum, where total_deposits=995.0 (defined at [line 8]), withdrawal_sum=100 (defined at [line 11]) = 895.0
+[line 17]  interest_rate = 1.05  # 5% interest
+Assign: interest_rate = 1.05
+[line 23]  final_balance = remaining_balance * interest_rate
+Compute: remaining_balance * interest_rate, where remaining_balance=895.0 (defined at [line 16]), interest_rate=1.05 (defined at [line 17]) = 939.75
+
+Answer: final_balance = 939.75 (last updated on defined at [line 23])

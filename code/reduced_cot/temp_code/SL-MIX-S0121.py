@@ -1,63 +1,40 @@
-import heapq
-import math
-from functools import wraps
+import itertools
 
-class SignalNode:
-    def __init__(self, freq, next_node=None):
-        self.frequency = freq
-        self.next = next_node
+def compute_ranking_score(data_points):
+    # Distractor: unnecessary tuple operations
+    redundant_tuples = [(x, x*2) for x in range(5, 15)]
+    misleading_sum = sum(x[1] for x in redundant_tuples)
+    
+    # Main logic: process data with conditional expressions
+    filtered_data = [x if x % 3 != 0 else x // 2 for x in data_points]
+    sorted_data = sorted(filtered_data, reverse=True)
+    
+    # Distractor: dead code path with string operations
+    fake_metrics = "score:85,rank:3,tier:gold"
+    parsed_metrics = fake_metrics.split(',')
+    unused_score = int(parsed_metrics[0].split(':')[1])  # Dead code
+    
+    # Key computation: combinatorics with filtering
+    combinations = list(itertools.combinations(sorted_data[:4], 2))
+    valid_pairs = [pair for pair in combinations if abs(pair[0] - pair[1]) > 5]
+    
+    # Distractor: misleading intermediate calculation
+    distraction_value = len(valid_pairs) * misleading_sum // 10
+    
+    # Final score calculation
+    base_score = sum(sorted_data[:3])
+    bonus = len(valid_pairs) * 7
+    penalty = sum(1 for x in data_points if x % 4 == 0) * 3
+    
+    return base_score + bonus - penalty
 
-def call_counter(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        wrapper.calls += 1
-        return func(*args, **kwargs)
-    wrapper.calls = 0
-    return wrapper
+# Main execution
+raw_data = [12, 8, 25, 17, 9, 31, 6, 19, 14, 27]
 
-def generate_primes(limit):
-    sieve = [True] * (limit + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(math.sqrt(limit)) + 1):
-        if sieve[i]:
-            for j in range(i*i, limit + 1, i):
-                sieve[j] = False
-    return [i for i, prime in enumerate(sieve) if prime]
+# Distractor: irrelevant data processing
+processed_data = [x + 2 if x > 15 else x - 1 for x in raw_data]
+unused_calc = sum(processed_data[::2])  # Dead variable
 
-@call_counter
-def compute_gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
-
-# Create a linked list of signal frequencies
-head = SignalNode(42)
-head.next = SignalNode(70)
-head.next.next = SignalNode(98)
-head.next.next.next = SignalNode(126)
-
-# Process frequencies with a min-heap
-frequency_heap = []
-current = head
-while current:
-    heapq.heappush(frequency_heap, current.frequency)
-    current = current.next
-
-# Extract two smallest frequencies and compute GCD
-freq_a = heapq.heappop(frequency_heap)
-freq_b = heapq.heappop(frequency_heap)
-gcd_value = compute_gcd(freq_a, freq_b)
-
-# Calculate statistical measures
-remaining_frequencies = [freq for freq in frequency_heap]
-mean_frequency = sum(remaining_frequencies) / len(remaining_frequencies)
-variance = sum((x - mean_frequency) ** 2 for x in remaining_frequencies) / len(remaining_frequencies)
-
-# Determine if mean is prime using generated primes
-primes_up_to_200 = generate_primes(200)
-is_mean_prime = int(mean_frequency) in primes_up_to_200
-
-# Calculate final metric using ternary operator and multiple operations
-final_metric = (gcd_value * 3 if is_mean_prime else gcd_value * 2) + int(math.sqrt(variance)) + (compute_gcd.calls * 5)
-
-print(f"Result: {final_metric}")
+# Target computation
+final_score = compute_ranking_score(processed_data)
+print(f"Result: {final_score}")

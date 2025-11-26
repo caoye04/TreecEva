@@ -1,30 +1,15 @@
-from functools import reduce
+data_entries = [42, 18, 75, 33, 91, 27, 56, 84, 12, 65]
+threshold = 50
 
-def hash_string(s):
-    return reduce(lambda acc, char: (acc * 31 + ord(char)) % 1000007, s, 0)
+# Calculate how many entries meet the threshold requirement
+valid_entries = [x for x in data_entries if x > threshold]
+total_valid = len(valid_entries)
 
-def assign_zone(weight, destination):
-    base_zone = hash_string(destination)
-    if weight > 50:
-        return (base_zone + 7) % 13
-    return base_zone % 13
+# Some unrelated processing for intervention
+backup_copy = data_entries[:]
+temp_sum = sum(backup_copy)
 
-packages = [
-    {'weight': 45, 'destination': 'ZoneA'},
-    {'weight': 60, 'destination': 'ZoneB'},
-    {'weight': 30, 'destination': 'ZoneC'},
-    {'weight': 75, 'destination': 'ZoneA'},
-]
+# The key calculation
+final_ratio = total_valid / len(data_entries)
 
-delivery_zone_load = 0
-for pkg in packages:
-    zone = assign_zone(pkg['weight'], pkg['destination'])
-    if zone == 0:
-        delivery_zone_load += pkg['weight'] * 2
-        break
-    elif zone % 2 == 0:
-        delivery_zone_load += pkg['weight']
-    else:
-        delivery_zone_load -= pkg['weight'] // 2
-
-print(f"Result: {delivery_zone_load}")
+print(f"Result: {final_ratio}")

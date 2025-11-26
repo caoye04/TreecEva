@@ -1,36 +1,66 @@
-from functools import reduce
-import statistics
+import itertools
 
-def calculate_transaction_impact(transactions):
-    return sum(map(lambda t: abs(t) * 0.01, transactions))
+def analyze_data(data_points):
+    # Initialize tracking variables
+    primary_sum = 0
+    secondary_buffer = []
+    temp_storage = {}
+    
+    # Process each data point
+    for i, point in enumerate(data_points):
+        # Main computation path
+        if i % 3 == 0:
+            primary_sum += point * 2
+        elif i % 3 == 1:
+            primary_sum -= point
+        else:
+            # This path is misleading - not used in final result
+            secondary_buffer.append(point * 3)
+        
+        # Store intermediate (mostly irrelevant) values
+        temp_storage[f"key_{i}"] = primary_sum + len(secondary_buffer)
+    
+    # Compute checksum (distractor)
+    checksum = sum(secondary_buffer) * 2
+    
+    # Actual relevant processing
+    processed_data = []
+    for pair in itertools.combinations(data_points, 2):
+        if abs(pair[0] - pair[1]) <= 5:
+            processed_data.append(sum(pair))
+    
+    # Final computation - this is what matters
+    if len(processed_data) > 0:
+        final_value = sum(processed_data) // len(processed_data)
+    else:
+        final_value = primary_sum
+    
+    return final_value
 
-def adjusted_returns(returns, fees):
-    return list(map(lambda r, f: r - f, returns, fees))
+# Sample data processing
+sample_data = [12, 8, 15, 7, 20, 3, 18, 11, 25]
 
-portfolio_transactions = [1000, -500, 2000, -1500, 3000]
-expected_gains = [1.05, 0.98, 1.12, 0.95, 1.08]
+# Misleading intermediate computations
+backup_calc = sum(sample_data) * 2 - 50
+validation_flag = backup_calc > 100
+auxiliary_sum = 0
 
-# Calculate fee impact using functional programming
-fee_impacts = list(map(calculate_transaction_impact, [[t] for t in portfolio_transactions]))
+for num in sample_data:
+    if num % 2 == 0:
+        auxiliary_sum += num
+    else:
+        auxiliary_sum -= num // 2
 
-# Adjust expected gains with fee impacts
-adj_gains = adjusted_returns(expected_gains, fee_impacts)
+# This is the key execution
+result = analyze_data(sample_data)
 
-# Greedy selection of top performing assets
-performance_ranking = {i: adj_gains[i] for i in range(len(adj_gains))}
-sorted_assets = sorted(performance_ranking.items(), key=lambda x: x[1], reverse=True)
+# Final variable assignment
+final_analysis = result + (auxiliary_sum % 10)
 
-# Select top 3 assets using greedy approach
-selected_indices = [idx for idx, _ in sorted_assets[:3]]
-selected_returns = [adj_gains[i] for i in selected_indices]
+# Dead code path (never executed)
+if validation_flag and backup_calc < 200:
+    final_analysis += 5
+elif not validation_flag:
+    final_analysis -= 3
 
-# Statistical analysis on selected assets
-mean_return = statistics.mean(selected_returns)
-variance_return = statistics.variance(selected_returns)
-
-# Calculate optimal adjustment with closure
-adjustment_factor = 0.75
-calculate_optimal = lambda m, v: (m * 1000) / (1 + v) * adjustment_factor
-optimal_adjustment = calculate_optimal(mean_return, variance_return)
-
-print(f"Result: {round(optimal_adjustment, 2)}")
+print(f"Result: {final_analysis}")

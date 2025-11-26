@@ -1,29 +1,25 @@
-from collections import defaultdict
-from functools import reduce
+data = "apple,banana,cherry,date,elderberry"
+fruits = data.split(',')
+fruit_counts = list(map(lambda x: len(x), fruits))
+sorted_counts = sorted(fruit_counts)
 
-# Route efficiency metrics: (on_time_rate, avg_delay_minutes, customer_satisfaction)
-route_metrics = [
-    (0.85, 12, 4.2),
-    (0.92, 5, 4.7),
-    (0.78, 20, 3.9),
-    (0.95, 2, 4.9),
-    (0.88, 8, 4.4)
-]
+# Processing logic
+middle_index = len(sorted_counts) // 2
+median_length = sorted_counts[middle_index]
 
-# Step 1: Filter routes with on_time_rate >= 0.85 AND avg_delay_minutes <= 10
-filtered_routes = list(filter(lambda x: x[0] >= 0.85 and x[1] <= 10, route_metrics))
+# Distractor computations
+fruit_lengths = [len(fruit) for fruit in fruits]
+max_length = max(fruit_lengths)
+avg_length = sum(fruit_lengths) / len(fruit_lengths)
 
-# Step 2: Compute reliability score for each filtered route: on_time_rate * customer_satisfaction
-reliability_scores = list(map(lambda x: x[0] * x[2], filtered_routes))
+# Core calculation
+weighted_score = median_length * 3
+vowel_bonus = sum(1 for fruit in fruits if fruit[0] in 'aeiou')
+adjustment = vowel_bonus * 2
 
-# Step 3: Use reduce to compute weighted sum where weights are derived from index positions
-# Weight formula: (index + 1) * score
-weighted_sum = reduce(lambda acc, pair: acc + (pair[0] + 1) * pair[1], enumerate(reliability_scores), 0)
+# Redundant operations
+fruit_char_total = sum(len(fruit) for fruit in fruits)
+dummy_operation = (fruit_char_total - max_length) // 2
 
-# Step 4: Apply bonus if all filtered routes have customer satisfaction above 4.5
-bonus = 1.1 if all(route[2] > 4.5 for route in filtered_routes) else 1.0
-
-# Step 5: Calculate final reliability score
-final_reliability_score = round(weighted_sum * bonus, 2)
-
-print(f"Result: {final_reliability_score}")
+final_score = weighted_score + adjustment
+print(f"Result: {final_score}")

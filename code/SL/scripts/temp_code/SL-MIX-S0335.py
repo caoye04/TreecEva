@@ -1,36 +1,38 @@
-from itertools import permutations
-from functools import lru_cache
+def analyze_network(nodes, connections):
+    # Red herring calculations
+    total_possible_edges = nodes * (nodes - 1) // 2
+    redundant_edges = connections * 2 - total_possible_edges
+    
+    # Main logic with distractions
+    initial_capacity = nodes * 100
+    bandwidth_utilization = 0.85
+    
+    # Misleading intermediate result
+    theoretical_max = initial_capacity * 2
+    
+    # Actual relevant calculations
+    import itertools
+    node_pairs = list(itertools.combinations(range(nodes), 2))
+    network_capacity = sum(min(connection[0], connection[1]) for connection in node_pairs[:connections]) * bandwidth_utilization
+    
+    # More distractions
+    dead_code_path = theoretical_max - network_capacity
+    
+    # Key calculations
+    redundant_nodes = len(set(range(nodes)) - {0, nodes//2})
+    path_combinations = len(list(itertools.combinations(range(redundant_nodes), 2)))
+    optimized_paths = path_combinations // 3
+    
+    # Final answer computation
+    final_capacity = network_capacity - redundant_nodes + optimized_paths
+    
+    # Unused variable for interference
+    unused_calculation = redundant_edges * 10
+    
+    print(f"Result: {final_capacity}")
+    return final_capacity
 
-def is_prime(num):
-    if num < 2:
-        return False
-    if num == 2:
-        return True
-    if num % 2 == 0:
-        return False
-    for i in range(3, int(num**0.5)+1, 2):
-        if num % i == 0:
-            return False
-    return True
-
-@lru_cache(maxsize=None)
-def check_consecutive_sum_prime(a, b):
-    return is_prime(a + b)
-
-def count_resonance_sequences(n):
-    count = 0
-    nums = list(range(1, n+1))
-    for perm in permutations(nums):
-        if perm[0] != 1:
-            continue
-        valid = True
-        for i in range(len(perm)-1):
-            if not check_consecutive_sum_prime(perm[i], perm[i+1]):
-                valid = False
-                break
-        if valid:
-            count += 1
-    return count
-
-signal_count = count_resonance_sequences(6)
-print(f"Result: {signal_count}")
+# Execution
+nodes = 8
+connections = 12
+result = analyze_network(nodes, connections)

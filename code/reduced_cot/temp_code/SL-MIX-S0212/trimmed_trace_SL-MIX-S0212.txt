@@ -1,111 +1,13 @@
-35
-anomaly_score
+8
+final_balance
 ---
-32 sensor_readings = [23.45, -15.67, 0, 120.89, -98.77, 24.12, 25.00, -22.33]
-32 ['sensor_readings'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]']
-35 anomaly_score = process_sensor_data(sensor_readings)
-35 ['sensor_readings'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]']
-PARAM_MAPPING {'readings_batch': {'actual_var': 'sensor_readings', 'value': [23.45, -15.67, 0, 120.89, -98.77, 24.12, 25.0, -22.33]}}
-FUNCTION_ENTER 5 process_sensor_data def process_sensor_data(readings_batch):
-5 ['readings_batch'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 23.45}, {'_type': 'float', '_value': -15.67}, {'_type': 'int', '_value': 0}, {'_type': 'float', '_value': 120.89}, {'_type': 'float', '_value': -98.77}, {'_type': 'float', '_value': 24.12}, {'_type': 'float', '_value': 25.0}, {'_type': 'float', '_value': -22.33}], '_len': 8}]
-7 smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
-7 ['readings_batch', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '23.45']
-7 smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
-7 ['readings_batch', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '-15.67']
-7 smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
-7 ['readings_batch', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '0']
-7 smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
-7 ['readings_batch', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '120.89']
-7 smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
-7 ['readings_batch', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '-98.77']
-7 smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
-7 ['readings_batch', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '24.12']
-7 smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
-7 ['readings_batch', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '25.0']
-7 smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
-7 ['readings_batch', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '-22.33']
-7 smoothed = [math.log(abs(temp) + 1) if temp != 0 else 0 for temp in readings_batch]
-7 ['readings_batch', 'smoothed'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]']
-10 mean_val = sum(smoothed) / len(smoothed)
-10 ['readings_batch', 'smoothed', 'mean_val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457']
-11 deviations = [(val - mean_val) ** 2 for val in smoothed]
-11 ['readings_batch', 'smoothed', 'mean_val', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '3.196630215920881']
-11 deviations = [(val - mean_val) ** 2 for val in smoothed]
-11 ['readings_batch', 'smoothed', 'mean_val', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '2.813610696762703']
-11 deviations = [(val - mean_val) ** 2 for val in smoothed]
-11 ['readings_batch', 'smoothed', 'mean_val', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '0']
-11 deviations = [(val - mean_val) ** 2 for val in smoothed]
-11 ['readings_batch', 'smoothed', 'mean_val', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '4.803118998667745']
-11 deviations = [(val - mean_val) ** 2 for val in smoothed]
-11 ['readings_batch', 'smoothed', 'mean_val', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '4.602867536925416']
-11 deviations = [(val - mean_val) ** 2 for val in smoothed]
-11 ['readings_batch', 'smoothed', 'mean_val', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '3.223664341599998']
-11 deviations = [(val - mean_val) ** 2 for val in smoothed]
-11 ['readings_batch', 'smoothed', 'mean_val', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '3.258096538021482']
-11 deviations = [(val - mean_val) ** 2 for val in smoothed]
-11 ['readings_batch', 'smoothed', 'mean_val', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '3.1497400860333387']
-11 deviations = [(val - mean_val) ** 2 for val in smoothed]
-11 ['readings_batch', 'smoothed', 'mean_val', 'deviations'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '[0.0043117824573838375, 0.10071442133368391, 9.802948417157417, 2.7960954779143083, 2.1664939820867772, ...]']
-12 std_dev = math.sqrt(sum(deviations) / len(deviations))
-12 ['readings_batch', 'smoothed', 'mean_val', 'deviations', 'std_dev'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '[0.0043117824573838375, 0.10071442133368391, 9.802948417157417, 2.7960954779143083, 2.1664939820867772, ...]', '1.3645361702240464']
-15 outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
-15 ['readings_batch', 'smoothed', 'mean_val', 'std_dev', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '1.3645361702240464', '3.196630215920881']
-15 outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
-15 ['readings_batch', 'smoothed', 'mean_val', 'std_dev', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '1.3645361702240464', '2.813610696762703']
-15 outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
-15 ['readings_batch', 'smoothed', 'mean_val', 'std_dev', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '1.3645361702240464', '0']
-15 outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
-15 ['readings_batch', 'smoothed', 'mean_val', 'std_dev', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '1.3645361702240464', '4.803118998667745']
-15 outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
-15 ['readings_batch', 'smoothed', 'mean_val', 'std_dev', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '1.3645361702240464', '4.602867536925416']
-15 outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
-15 ['readings_batch', 'smoothed', 'mean_val', 'std_dev', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '1.3645361702240464', '3.223664341599998']
-15 outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
-15 ['readings_batch', 'smoothed', 'mean_val', 'std_dev', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '1.3645361702240464', '3.258096538021482']
-15 outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
-15 ['readings_batch', 'smoothed', 'mean_val', 'std_dev', 'val'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '1.3645361702240464', '3.1497400860333387']
-15 outlier_flags = [abs(val - mean_val) > 1.5 * std_dev for val in smoothed]
-15 ['readings_batch', 'smoothed', 'mean_val', 'std_dev', 'outlier_flags'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '3.1309660517414457', '1.3645361702240464', '[False, False, True, False, False, ...]']
-18 signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
-18 ['readings_batch', 'smoothed', 'outlier_flags', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '23.45']
-18 signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
-18 ['readings_batch', 'smoothed', 'outlier_flags', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '-15.67']
-18 signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
-18 ['readings_batch', 'smoothed', 'outlier_flags', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '0']
-18 signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
-18 ['readings_batch', 'smoothed', 'outlier_flags', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '120.89']
-18 signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
-18 ['readings_batch', 'smoothed', 'outlier_flags', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '-98.77']
-18 signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
-18 ['readings_batch', 'smoothed', 'outlier_flags', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '24.12']
-18 signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
-18 ['readings_batch', 'smoothed', 'outlier_flags', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '25.0']
-18 signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
-18 ['readings_batch', 'smoothed', 'outlier_flags', 'temp'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '-22.33']
-18 signature_matches = [bool(re.match(r'^-?\d+\.\d{2,}$', str(temp))) for temp in readings_batch]
-18 ['readings_batch', 'smoothed', 'outlier_flags', 'signature_matches'] ['[23.45, -15.67, 0, 120.89, -98.77, ...]', '[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '[True, True, False, True, True, ...]']
-21 base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
-21 ['smoothed', 'outlier_flags', 'signature_matches', 'i'] ['[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '[True, True, False, True, True, ...]', '0']
-21 base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
-21 ['smoothed', 'outlier_flags', 'signature_matches', 'i'] ['[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '[True, True, False, True, True, ...]', '1']
-21 base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
-21 ['smoothed', 'outlier_flags', 'signature_matches', 'i'] ['[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '[True, True, False, True, True, ...]', '2']
-21 base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
-21 ['smoothed', 'outlier_flags', 'signature_matches', 'i'] ['[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '[True, True, False, True, True, ...]', '3']
-21 base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
-21 ['smoothed', 'outlier_flags', 'signature_matches', 'i'] ['[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '[True, True, False, True, True, ...]', '4']
-21 base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
-21 ['smoothed', 'outlier_flags', 'signature_matches', 'i'] ['[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '[True, True, False, True, True, ...]', '5']
-21 base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
-21 ['smoothed', 'outlier_flags', 'signature_matches', 'i'] ['[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '[True, True, False, True, True, ...]', '6']
-21 base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
-21 ['smoothed', 'outlier_flags', 'signature_matches', 'i'] ['[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '[True, True, False, True, True, ...]', '7']
-21 base_score = sum([smoothed[i] ** 2 if outlier_flags[i] and signature_matches[i] else 0 for i in range(len(smoothed))])
-21 ['smoothed', 'outlier_flags', 'signature_matches', 'base_score'] ['[3.196630215920881, 2.813610696762703, 0, 4.803118998667745, 4.602867536925416, ...]', '[False, False, True, False, False, ...]', '[True, True, False, True, True, ...]', '0']
-24 correction_factor = 1.2 if base_score > 10 else 0.8
-24 ['base_score', 'correction_factor'] ['0', '0.8']
-27 anomaly_score = round(base_score * correction_factor, 2) if base_score > 0 else 0
-27 ['base_score', 'correction_factor', 'anomaly_score'] ['0', '0.8', '0']
-29 return anomaly_score
-29 ['anomaly_score'] ['0']
-FUNCTION_RETURN 29 process_sensor_data {'_type': 'int', '_value': 0}
+1 account_active = True
+1 ['account_active'] ['True']
+2 current_balance = 1500
+2 ['account_active', 'current_balance'] ['True', '1500']
+3 monthly_deposit = 300
+3 ['account_active', 'current_balance', 'monthly_deposit'] ['True', '1500', '300']
+4 monthly_fee = 25
+4 ['account_active', 'current_balance', 'monthly_deposit', 'monthly_fee'] ['True', '1500', '300', '25']
+8 final_balance = (current_balance + monthly_deposit - monthly_fee) if account_active else 0
+8 ['account_active', 'current_balance', 'monthly_deposit', 'monthly_fee', 'final_balance'] ['True', '1500', '300', '25', '1775']

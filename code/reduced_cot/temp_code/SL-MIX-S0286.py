@@ -1,51 +1,57 @@
-from functools import reduce
-
-def knapsack_01(weights, values, capacity):
-    n = len(weights)
-    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+def analyze_data_patterns(input_data, target_range):
+    # Irrelevant analysis that doesn't affect final result
+    temp_sum = sum(x * 2 for x in input_data if x > 5)
+    filtered_data = [x for x in input_data if x % 2 == 0]
     
-    for i in range(1, n + 1):
-        for w in range(capacity + 1):
-            if weights[i-1] <= w:
-                dp[i][w] = max(dp[i-1][w], dp[i-1][w - weights[i-1]] + values[i-1])
-            else:
-                dp[i][w] = dp[i-1][w]
+    # Misleading computation path
+    dummy_calc = len(input_data) * 3.14159
     
-    # Backtrack to find selected items
-    selected = []
-    w = capacity
-    for i in range(n, 0, -1):
-        if dp[i][w] != dp[i-1][w]:
-            selected.append(i-1)
-            w -= weights[i-1]
+    # Actual relevant logic
+    valid_entries = [x for x in input_data if target_range[0] <= x <= target_range[1]]
+    weighted_sum = sum(idx * val for idx, val in enumerate(valid_entries))
     
-    return selected
+    # More distractions
+    unused_result = max(input_data) - min(input_data)
+    
+    return weighted_sum
 
-# Package data
-package_weights = [10, 20, 30]
-package_values = [60, 100, 120]
-vehicle_capacity = 50
+def compute_final_score(data_sequence, threshold):
+    # Setup initial parameters
+    base_score = 42
+    multiplier = 3
+    
+    # Distractor operations
+    fake_calculation = (base_score * 2) // 7
+    misleading_value = threshold * fake_calculation
+    
+    # Core logic with zip and enumerate
+    processed_data = []
+    for idx, (a, b) in enumerate(zip(data_sequence[:-1], data_sequence[1:])):
+        if a + b > threshold:
+            processed_data.append((idx, a - b))
+    
+    # More irrelevant computations
+    dead_code_path = sum(x for x in range(10) if x % 3 == 0)
+    
+    # Actual result computation
+    if processed_data:
+        final_value = sum(val * idx for idx, val in processed_data)
+        result = final_value + base_score
+    else:
+        result = base_score * multiplier
+    
+    # Final distraction
+    unused_metric = len(data_sequence) * threshold
+    
+    return result
 
-# Strategy 1: Standard loading
-strategy_one_selection = knapsack_01(package_weights, package_values, vehicle_capacity)
+# Main execution
+input_values = [8, 12, 5, 18, 3, 15, 7, 20]
+range_boundaries = (10, 25)
+threshold_value = 20
 
-# Strategy 2: Priority high-value items
-high_value_packages = [i for i, v in enumerate(package_values) if v >= 100]
-strategy_two_selection = knapsack_01(
-    [package_weights[i] for i in high_value_packages], 
-    [package_values[i] for i in high_value_packages], 
-    vehicle_capacity
-)
-strategy_two_selection = [high_value_packages[i] for i in strategy_two_selection]
+# Call the main function
+final_result = compute_final_score(input_values, threshold_value)
 
-# Find common packages using set operations
-common_packages = set(strategy_one_selection) & frozenset(strategy_two_selection)
-
-# Count packages that are either in common or have high value
-high_value_indices = {i for i, v in enumerate(package_values) if v >= 100}
-qualified_packages = common_packages | high_value_indices
-
-# Final count using functional programming
-final_selection_count = reduce(lambda acc, idx: acc + 1 if idx in qualified_packages else acc, range(len(package_weights)), 0)
-
-print(f"Result: {final_selection_count}")
+# Print the result
+print(f"Result: {final_result}")

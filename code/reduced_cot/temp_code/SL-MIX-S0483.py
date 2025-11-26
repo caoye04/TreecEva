@@ -1,47 +1,36 @@
-from collections import deque
-from math import factorial as fact
+import itertools
 
-def combinatorial_selection(n, k):
-    if k > n or k < 0:
-        return 0
-    return fact(n) // (fact(k) * fact(n - k))
-
-class ForestSimulation:
-    def __init__(self, initial_pairs):
-        self.mature_pairs = initial_pairs
-        self.offspring_queue = deque([0] * 3)
-        self.genetic_scores = []
+def analyze_inventory(supply_data):
+    raw_items = ['widget_a', 'widget_b', 'widget_c', 'widget_a', 'widget_b', 'widget_d']
+    processed_stock = []
     
-    def next_generation(self):
-        # Fibonacci-like reproduction with environmental factor
-        new_offspring = self.mature_pairs + self.offspring_queue[0]
-        survival_rate = 0.7 if new_offspring > 10 else 0.9
-        
-        # Update queue and mature pairs
-        self.offspring_queue.append(new_offspring)
-        matured = self.offspring_queue.popleft()
-        self.mature_pairs += matured
-        
-        # Genetic diversity calculation using combinatorics
-        genetic_options = combinatorial_selection(self.mature_pairs, 2)
-        diversity_score = genetic_options * survival_rate
-        self.genetic_scores.append(diversity_score)
-        
-        return diversity_score
+    # Distractor: Process but don't use this list
+    temp_sorted = sorted(raw_items)
+    
+    for item in raw_items:
+        if item.startswith('widget_'):
+            processed_stock.append(item)
+    
+    # Distractor: Calculate but don't use this value
+    total_processed = len(processed_stock)
+    
+    # Key operation: Group by item type and count
+    grouped_items = {}
+    for key, group in itertools.groupby(sorted(processed_stock)):
+        grouped_items[key] = len(list(group))
+    
+    # Distractor: Intermediate calculation
+    max_quantity = max(grouped_items.values()) if grouped_items else 0
+    
+    # Main logic: Count items with quantity > 1
+    final_count = 0
+    for item, quantity in grouped_items.items():
+        if quantity > 1:
+            final_count += 1
+    
+    # Final assignment
+    result = final_count
+    print(f"Target result: {result}")
 
-# Initialize simulation
-ecosystem = ForestSimulation(3)
-simulation_cycles = 5
-survival_index = 0
-
-# Run simulation
-for cycle in range(simulation_cycles):
-    score = ecosystem.next_generation()
-    survival_index = survival_index + score if cycle % 2 == 0 else survival_index
-
-# Apply final adjustment based on total genetic health
-final_genetic_pool = sum(ecosystem.genetic_scores)
-total_mature_pairs = ecosystem.mature_pairs
-survival_index = int(survival_index * 0.5) if final_genetic_pool > total_mature_pairs * 10 else int(survival_index * 0.8)
-
-print(f"Target result: {survival_index}")
+# Execute the analysis
+analyze_inventory(['dummy_data'])

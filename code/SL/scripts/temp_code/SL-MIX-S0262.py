@@ -1,36 +1,57 @@
-import math
-from collections import defaultdict
+def analyze_crypto_patterns(transactions):
+    # Initial setup with irrelevant crypto data
+    bitcoin_price = 45000
+    ethereum_volume = 1200000
+    altcoin_fluctuation = 0.15
+    
+    # Distractor calculations that won't be used
+    market_cap = bitcoin_price * ethereum_volume
+    projected_gain = market_cap * altcoin_fluctuation
+    
+    # Actual processing with relevant data
+    processed_tx = []
+    for idx, tx in enumerate(transactions):
+        if tx % 2 == 0 and tx > 100:
+            processed_tx.append(tx * 2)
+        elif tx < 50:
+            processed_tx.append(tx + 10)  # Dead code path - never reached
+    
+    # More irrelevant crypto metrics
+    volatility_index = 25.7
+    trading_fee = 0.0025
+    network_congestion = 15
+    
+    # Core logic with bitwise operations
+    temp_result = 0
+    for val in processed_tx:
+        temp_result ^= (val & 0xFF)  # Bitwise AND then XOR
+    
+    # Misleading intermediate calculation
+    misleading_total = sum(processed_tx) * trading_fee
+    
+    # List comprehension for final processing
+    final_values = [x | 0x1F for x in processed_tx]  # Bitwise OR
+    
+    # More distractor crypto analysis
+    def calculate_yield(principal):
+        return principal * (1 + 0.08)  # Unused function
+    
+    liquidity_pool = 500000
+    staking_rewards = liquidity_pool * 0.05
+    
+    # Final computation chain
+    base_value = temp_result
+    adjustment = len(final_values) * 7
+    intermediate = (base_value << 2) + adjustment  # Bitwise shift
+    
+    # Critical execution point
+    final_total = intermediate - (misleading_total % 100)
+    crypto_sum = final_total
+    
+    # Print result for verification
+    print(f"Result: {crypto_sum}")
+    return crypto_sum
 
-# Sensor readings mapped by hex identifiers (base 16)
-sensor_grid = {
-    '0xA': 25,
-    '0xB': 16,
-    '0xC': 9,
-    '0xD': 4,
-    '0xE': 1
-}
-
-calibration_mappings = defaultdict(int)
-composite_readings = []
-
-for hex_id, reading in sensor_grid.items():
-    numeric_id = int(hex_id, 16)
-    if numeric_id % 2 == 0:
-        transformed = math.log(math.sqrt(reading)) if reading > 0 else 0
-        calibration_mappings[numeric_id] += transformed
-    else:
-        power_val = math.pow(reading, 1/3.0)
-        composite_readings.append(power_val)
-        
-intermediate_sum = sum(calibration_mappings.values())
-processed_composite = [math.exp(val) for val in composite_readings if val > 2]
-
-final_aggregate = 0
-for idx, val in enumerate(processed_composite):
-    if idx % 2 == 0 and not (val < 5):  # Logical combination
-        final_aggregate += math.floor(val)
-    elif not (idx % 2 == 0) or val >= 10:
-        final_aggregate += math.ceil(val)
-        
-calibration_factor = round(intermediate_sum + final_aggregate)
-print(f"Result: {calibration_factor}")
+# Execute with test data
+transactions = [125, 88, 200, 42, 156, 99, 180]
+analyze_crypto_patterns(transactions)

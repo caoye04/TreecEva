@@ -1,66 +1,18 @@
-Target: Find the value of variable encoded_checksum after [line 41] executes
+Target: Find the value of variable final_result after [line 11] executes
 
-[line 5]  doc_ids = ['DOC-1923-A', 'MAN-1845-B', 'LET-1901-C']
-Compute: ['DOC-1923-A', 'MAN-1845-B', 'LET-1901-C'] = ['DOC-1923-A', 'MAN-1845-B', 'LET-1901-C']
-[line 8]  char_map = {chr(i): i - 64 for i in range(65, 91)}  # A=1, B=2, ..., Z=26
-Compute: {chr(i): i - 64 for i in range(65, 91)}  # A=1, B=2, ..., Z=26, where i=65 (an unknown source) = ?
-[line 13]  encode = lambda s: [char_map[c] for c in s if c in char_map]
-Compute: lambda s: [char_map[c] for c in s if c in char_map], where char_map={A: 1, B: 2, C: 3, ...} (defined at [line 8]) = ?
-[line 16]  encoded_sequences = list(map(encode, doc_ids))
-Call function list(map(encode, doc_ids))
-[line 21]  for seq in encoded_sequences
-(Missing param: 'iter_var')
-[line 21]  for seq in encoded_sequences
-Loop End: Iteration finished
-[line 21]  for seq in encoded_sequences
-Loop End: Iteration finished
-[line 21]  for seq in encoded_sequences
-Loop End: Iteration finished
-[line 21]  for seq in encoded_sequences
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-(Missing param: 'iter_var')
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 27]  for i in range(max(len(seq) for seq in transformed))
-Loop End: Iteration finished
-[line 37]  for seq in transformed
-(Missing param: 'iter_var')
-[line 37]  for seq in transformed
-Loop End: Iteration finished
-[line 37]  for seq in transformed
-Loop End: Iteration finished
-[line 37]  for seq in transformed
-Loop End: Iteration finished
-[line 37]  for seq in transformed
-Loop End: Iteration finished
-[line 41]  encoded_checksum = sum(checksum_components) % 100
-Compute: sum(checksum_components) % 100, where checksum_components=[28, 14, 1] (an unknown source) = 43
+[line 4]  data_points = [5, 8, 12, 3, 7]
+Compute: [5, 8, 12, 3, 7] = [5, 8, 12, 3, 7]
+[line 5]  transform_data = lambda data, func: sum(func(val) for val in data[1:4])
+Compute: lambda data, func: sum(func(val) for val in data[1:4]) = ?
+[line 10]  final_result = transform_data(data_points, modifier_func)
+Call function transform_data(data_points=[5, 8, 12, 3, 7] (defined at [line 4]), modifier_func)
+[line 2]  return x * 2 - 1
+Return: x * 2 - 1
+[line 2]  return x * 2 - 1
+Return: x * 2 - 1
+[line 2]  return x * 2 - 1
+Return: x * 2 - 1
+[line 11]  print(f"Result: {final_result}")
+Output: f"Result: {final_result}"
 
-Answer: encoded_checksum = 43 (last updated on defined at [line 41])
+Answer: final_result = 43 (last updated on defined at [line 10])

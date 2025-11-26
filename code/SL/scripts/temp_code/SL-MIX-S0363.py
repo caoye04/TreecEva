@@ -1,103 +1,46 @@
-import heapq
-from collections import defaultdict
-
-def tokenize(expr):
-    tokens = []
-    i = 0
-    while i < len(expr):
-        if expr[i].isspace():
-            i += 1
-            continue
-        if expr[i] in '+-*/()':
-            tokens.append(expr[i])
-            i += 1
-        else:
-            num = ''
-            while i < len(expr) and expr[i].isdigit():
-                num += expr[i]
-                i += 1
-            tokens.append(int(num))
-    return tokens
-
-def hash_token(token):
-    if isinstance(token, int):
-        return hash(str(token)) % 1000
-    else:
-        return hash(token) % 1000
-
-# Priority queue for operators
-operator_queue = []
-# Stack for operands
-operand_stack = []
-# Accumulator for expression value
-expression_value = 0
-
-# Transformation function
-transform = lambda x: x * 2 if isinstance(x, int) else ord(x[0])
-
-# Input expression
-input_expression = "3 + 5 * ( 2 + 8 )"
-tokens = tokenize(input_expression)
-
-precedence = {'+': 1, '-': 1, '*': 2, '/': 2}
-
-for token in tokens:
-    token_hash = hash_token(token)
-    transformed_token = transform(token)
+def calculate_sensor_readings():
+    sensor_data = {
+        'temp_sensor': [22.5, 23.1, 21.8, 24.2, 22.9],
+        'humidity_sensor': [45, 47, 43, 49, 46],
+        'pressure_sensor': [1013, 1015, 1012, 1016, 1014]
+    }
     
-    if isinstance(token, int):
-        operand_stack.append(transformed_token)
-    elif token == '(':
-        heapq.heappush(operator_queue, (0, token))
-    elif token == ')':
-        while operator_queue and operator_queue[0][1] != '(':
-            op = heapq.heappop(operator_queue)[1]
-            if len(operand_stack) >= 2:
-                b = operand_stack.pop()
-                a = operand_stack.pop()
-                if op == '+':
-                    operand_stack.append(a + b)
-                elif op == '-':
-                    operand_stack.append(a - b)
-                elif op == '*':
-                    operand_stack.append(a * b)
-                elif op == '/':
-                    operand_stack.append(a // b)
-        if operator_queue:
-            heapq.heappop(operator_queue)  # Remove the '('
-    elif token in precedence:
-        while (operator_queue and 
-               operator_queue[0][1] != '(' and
-               precedence.get(operator_queue[0][1], 0) >= precedence[token]):
-            op = heapq.heappop(operator_queue)[1]
-            if len(operand_stack) >= 2:
-                b = operand_stack.pop()
-                a = operand_stack.pop()
-                if op == '+':
-                    operand_stack.append(a + b)
-                elif op == '-':
-                    operand_stack.append(a - b)
-                elif op == '*':
-                    operand_stack.append(a * b)
-                elif op == '/':
-                    operand_stack.append(a // b)
-        heapq.heappush(operator_queue, (precedence[token], token))
+    # Process temperature readings (not used in final result)
+    temp_sum = sum(sensor_data['temp_sensor'])
+    temp_avg = temp_sum / len(sensor_data['temp_sensor'])
+    
+    # Process humidity readings (not used in final result)
+    humidity_max = max(sensor_data['humidity_sensor'])
+    humidity_min = min(sensor_data['humidity_sensor'])
+    humidity_range = humidity_max - humidity_min
+    
+    # Main calculation - pressure readings
+    pressure_readings = sensor_data['pressure_sensor']
+    pressure_sum = sum(pressure_readings)
+    pressure_count = len(pressure_readings)
+    
+    # Some intermediate calculations that don't affect final result
+    normalized_temp = (temp_avg - 20) / 5
+    humidity_variance = (humidity_range ** 2) / 10
+    
+    # Core logic for result
+    base_pressure = 1010
+    adjustment_factor = (pressure_sum / pressure_count - base_pressure) * 2
+    calibrated_pressure = base_pressure + adjustment_factor
+    
+    # Create result mapping
+    result_map = {
+        'calibrated': round(calibrated_pressure, 1),
+        'raw_avg': pressure_sum / pressure_count,
+        'normalized': (pressure_sum / pressure_count) / 10
+    }
+    
+    target_key = 'calibrated'
+    default_value = 0
+    
+    # Final assignment
+    final_result = result_map.get(target_key, default_value)
+    
+    print(f"Target result: {final_result}")
 
-while operator_queue:
-    op = heapq.heappop(operator_queue)[1]
-    if len(operand_stack) >= 2:
-        b = operand_stack.pop()
-        a = operand_stack.pop()
-        if op == '+':
-            operand_stack.append(a + b)
-        elif op == '-':
-            operand_stack.append(a - b)
-        elif op == '*':
-            operand_stack.append(a * b)
-        elif op == '/':
-            operand_stack.append(a // b)
-
-if operand_stack:
-    expression_value = operand_stack[0]
-
-print(f"Result: {expression_value}")
+calculate_sensor_readings()

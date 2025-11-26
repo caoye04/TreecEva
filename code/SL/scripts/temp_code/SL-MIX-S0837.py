@@ -1,34 +1,22 @@
-from functools import reduce
+def process_score(score_data):
+    base_score = score_data.get('exam', 0)
+    bonus = score_data.get('bonus', 0)
+    penalty = score_data.get('penalty', 0)
+    temp_calc = base_score * 2 + bonus - penalty
+    intermediate = temp_calc // 2
+    adjusted = intermediate + 5 if intermediate > 50 else intermediate - 3
+    return adjusted
 
-def hex_to_binary_matrix(hex_str):
-    # Convert hex to integer, then to binary string without '0b' prefix
-    bin_str = bin(int(hex_str, 16))[2:].zfill(8)
-    # Create a 2x4 matrix from the binary string
-    return [[int(bin_str[i*4 + j]) for j in range(4)] for i in range(2)]
+student_data = {
+    'S001': {'exam': 85, 'bonus': 10, 'penalty': 5},
+    'S002': {'exam': 72, 'bonus': 8, 'penalty': 2},
+    'A003': {'exam': 90, 'bonus': 5, 'penalty': 0},
+    'S004': {'exam': 68, 'bonus': 7, 'penalty': 3}
+}
 
-def matrix_xor(m1, m2):
-    # Element-wise XOR of two 2x4 matrices
-    return [[m1[i][j] ^ m2[i][j] for j in range(4)] for i in range(2)]
+processed_scores = {k: process_score(v) for k, v in student_data.items() if k.startswith("S")}
+total_points = sum(processed_scores.values())
+average_bonus = sum(v.get('bonus', 0) for v in student_data.values()) // len(student_data)
+final_score = total_points - average_bonus
 
-def matrix_sum(matrix):
-    # Sum all elements in the matrix
-    return sum(sum(row) for row in matrix)
-
-def process_token(token):
-    base_matrix = hex_to_binary_matrix(token)
-    # Apply bitwise shift: left shift each element by its column index
-    shifted = [[base_matrix[i][j] << j for j in range(4)] for i in range(2)]
-    # Apply mask with 0xF (15 in decimal) using bitwise AND
-    masked = [[shifted[i][j] & 15 for j in range(4)] for i in range(2)]
-    return masked
-
-tokens = ['A3', '1F', 'C5', '7B']
-matrices = list(map(process_token, tokens))
-
-# Aggregate matrices using XOR
-aggregated = reduce(matrix_xor, matrices)
-
-# Calculate checksum as sum of all elements multiplied by token count
-checksum = matrix_sum(aggregated) * len(tokens)
-
-print(f"Result: {checksum}")
+print(f"Target result: {final_score}")

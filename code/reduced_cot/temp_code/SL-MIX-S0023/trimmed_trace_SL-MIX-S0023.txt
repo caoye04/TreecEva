@@ -1,65 +1,55 @@
-26
-final_efficiency
+30
+final_balance
 ---
-25 network_nodes = 12
-25 ['network_nodes'] ['12']
-26 final_efficiency = transmission_efficiency(network_nodes)
-26 ['network_nodes'] ['12']
-PARAM_MAPPING {'nodes': {'actual_var': 'network_nodes', 'value': 12}}
-FUNCTION_ENTER 3 transmission_efficiency def transmission_efficiency(nodes, depth=0):
-3 ['nodes', 'depth'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 0}]
-4 if depth > 3:
-4 ['nodes', 'depth'] ['12', '0']
-6 if nodes <= 1:
-6 ['nodes', 'depth'] ['12', '0']
-10 base = (nodes & (nodes - 1)) ^ (nodes >> 1)
-10 ['nodes', 'depth', 'base'] ['12', '0', '14']
-13 recursive_part = transmission_efficiency(nodes // 2, depth + 1)
-13 ['nodes', 'depth', 'base'] ['12', '0', '14']
-4 if depth > 3:
-4 ['nodes', 'depth'] ['6', '1']
-6 if nodes <= 1:
-6 ['nodes', 'depth'] ['6', '1']
-10 base = (nodes & (nodes - 1)) ^ (nodes >> 1)
-10 ['nodes', 'depth', 'base'] ['6', '1', '7']
-13 recursive_part = transmission_efficiency(nodes // 2, depth + 1)
-13 ['nodes', 'depth', 'base'] ['6', '1', '7']
-4 if depth > 3:
-4 ['nodes', 'depth'] ['3', '2']
-6 if nodes <= 1:
-6 ['nodes', 'depth'] ['3', '2']
-10 base = (nodes & (nodes - 1)) ^ (nodes >> 1)
-10 ['nodes', 'depth', 'base'] ['3', '2', '3']
-13 recursive_part = transmission_efficiency(nodes // 2, depth + 1)
-13 ['nodes', 'depth', 'base'] ['3', '2', '3']
-4 if depth > 3:
-4 ['nodes', 'depth'] ['1', '3']
-6 if nodes <= 1:
-6 ['nodes'] ['1']
-7 return nodes
-7 ['nodes'] ['1']
-16 combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
-16 ['nodes', 'base', 'recursive_part', 'combinations'] ['3', '3', '1', '[(0, 1), (0, 2), (1, 2)]']
-17 combo_count = len(combinations)
-17 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count'] ['3', '3', '1', '[(0, 1), (0, 2), (1, 2)]', '3']
-20 adjusted = base + combo_count if base < combo_count else base - combo_count
-20 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count', 'adjusted'] ['3', '3', '1', '[(0, 1), (0, 2), (1, 2)]', '3', '0']
-22 return adjusted + recursive_part
-22 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count', 'adjusted'] ['3', '3', '1', '[(0, 1), (0, 2), (1, 2)]', '3', '0']
-16 combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
-16 ['nodes', 'base', 'recursive_part', 'combinations'] ['6', '7', '1', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]']
-17 combo_count = len(combinations)
-17 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count'] ['6', '7', '1', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]', '6']
-20 adjusted = base + combo_count if base < combo_count else base - combo_count
-20 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count', 'adjusted'] ['6', '7', '1', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]', '6', '1']
-22 return adjusted + recursive_part
-22 ['nodes', 'base', 'recursive_part', 'combinations', 'combo_count', 'adjusted'] ['6', '7', '1', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]', '6', '1']
-16 combinations = list(itertools.combinations(range(min(nodes, 4)), 2))
-16 ['nodes', 'base', 'recursive_part', 'combinations'] ['12', '14', '2', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]']
-17 combo_count = len(combinations)
-17 ['base', 'recursive_part', 'combinations', 'combo_count'] ['14', '2', '[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), ...]', '6']
-20 adjusted = base + combo_count if base < combo_count else base - combo_count
-20 ['base', 'recursive_part', 'combo_count', 'adjusted'] ['14', '2', '6', '8']
-22 return adjusted + recursive_part
-22 ['recursive_part', 'adjusted'] ['2', '8']
-FUNCTION_RETURN 22 transmission_efficiency {'_type': 'int', '_value': 10}
+4 for rule in rules:
+4 ['transactions', 'rules', 'rule'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", "['amount_limit', 'frequency_check', 'suspicious_activity']", "'amount_limit'"]
+4 for rule in rules:
+4 ['transactions', 'rules', 'rule'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", "['amount_limit', 'frequency_check', 'suspicious_activity']", "'frequency_check'"]
+4 for rule in rules:
+4 ['transactions', 'rules', 'rule'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", "['amount_limit', 'frequency_check', 'suspicious_activity']", "'suspicious_activity'"]
+4 for rule in rules:
+4 ['transactions', 'rules', 'rule'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", "['amount_limit', 'frequency_check', 'suspicious_activity']", "'suspicious_activity'"]
+12 balance_tracker = 1000  # Starting balance
+12 ['transactions', 'balance_tracker'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1000']
+13 for operation in transactions:
+13 ['transactions', 'balance_tracker', 'operation'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1000', "'DEPOSIT_250'"]
+14 if operation.startswith('DEPOSIT_'):
+14 ['transactions', 'balance_tracker', 'operation'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1000', "'DEPOSIT_250'"]
+15 amount = int(operation.split('_')[1])
+15 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1000', "'DEPOSIT_250'", '250']
+16 balance_tracker += amount
+16 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1250', "'DEPOSIT_250'", '250']
+13 for operation in transactions:
+13 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1250', "'WITHDRAW_100'", '250']
+14 if operation.startswith('DEPOSIT_'):
+14 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1250', "'WITHDRAW_100'", '250']
+17 elif operation.startswith('WITHDRAW_'):
+17 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1250', "'WITHDRAW_100'", '250']
+18 amount = int(operation.split('_')[1])
+18 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1250', "'WITHDRAW_100'", '100']
+19 balance_tracker -= amount
+19 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1150', "'WITHDRAW_100'", '100']
+13 for operation in transactions:
+13 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1150', "'DEPOSIT_75'", '100']
+14 if operation.startswith('DEPOSIT_'):
+14 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1150', "'DEPOSIT_75'", '100']
+15 amount = int(operation.split('_')[1])
+15 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1150', "'DEPOSIT_75'", '75']
+16 balance_tracker += amount
+16 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1225', "'DEPOSIT_75'", '75']
+13 for operation in transactions:
+13 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1225', "'WITHDRAW_50'", '75']
+14 if operation.startswith('DEPOSIT_'):
+14 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1225', "'WITHDRAW_50'", '75']
+17 elif operation.startswith('WITHDRAW_'):
+17 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1225', "'WITHDRAW_50'", '75']
+18 amount = int(operation.split('_')[1])
+18 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1225', "'WITHDRAW_50'", '50']
+19 balance_tracker -= amount
+19 ['transactions', 'balance_tracker', 'operation', 'amount'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1175', "'WITHDRAW_50'", '50']
+13 for operation in transactions:
+13 ['transactions', 'balance_tracker', 'operation'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1175', "'WITHDRAW_50'"]
+29 service_fee = max(10, len(transactions) * 2)
+29 ['transactions', 'balance_tracker', 'service_fee'] ["['DEPOSIT_250', 'WITHDRAW_100', 'DEPOSIT_75', 'WITHDRAW_50']", '1175', '10']
+30 final_balance = balance_tracker - service_fee
+30 ['balance_tracker', 'service_fee', 'final_balance'] ['1175', '10', '1165']

@@ -1,0 +1,47 @@
+50
+final_solution
+---
+9 input_values = [5, 12, 8, 3, 15, 7]
+9 ['input_values'] ['[5, 12, 8, 3, 15, ...]']
+25 decoding_pairs = list(zip(input_values[::2], input_values[1::2]))  # [(5,12), (8,3), (15,7)]
+25 ['input_values', 'decoding_pairs'] ['[5, 12, 8, 3, 15, ...]', '[(5, 12), (8, 3), (15, 7)]']
+3 temp_sum = 0
+3 ['data_sequence', 'temp_sum'] ['[1, 2, 3]', '0']
+4 for i, val in enumerate(data_sequence):
+4 ['data_sequence', 'temp_sum', 'i', 'val'] ['[1, 2, 3]', '0', '0', '1']
+5 temp_sum += val * (i + 1)  # Red herring calculation
+5 ['data_sequence', 'temp_sum', 'i', 'val'] ['[1, 2, 3]', '1', '0', '1']
+4 for i, val in enumerate(data_sequence):
+4 ['data_sequence', 'temp_sum', 'i', 'val'] ['[1, 2, 3]', '1', '1', '2']
+5 temp_sum += val * (i + 1)  # Red herring calculation
+5 ['data_sequence', 'temp_sum', 'i', 'val'] ['[1, 2, 3]', '5', '1', '2']
+4 for i, val in enumerate(data_sequence):
+4 ['data_sequence', 'temp_sum', 'i', 'val'] ['[1, 2, 3]', '5', '2', '3']
+5 temp_sum += val * (i + 1)  # Red herring calculation
+5 ['data_sequence', 'temp_sum', 'i', 'val'] ['[1, 2, 3]', '14', '2', '3']
+4 for i, val in enumerate(data_sequence):
+4 ['data_sequence', 'temp_sum', 'i', 'val'] ['[1, 2, 3]', '14', '2', '3']
+6 return temp_sum  # Never used
+6 ['temp_sum'] ['14']
+31 processed_values = []
+31 ['input_values', 'decoding_pairs', 'processed_values'] ['[5, 12, 8, 3, 15, ...]', '[(5, 12), (8, 3), (15, 7)]', '[]']
+32 for idx, (a, b) in enumerate(decoding_pairs):
+32 ['input_values', 'decoding_pairs', 'processed_values', 'idx', 'a', 'b'] ['[5, 12, 8, 3, 15, ...]', '[(5, 12), (8, 3), (15, 7)]', '[]', '0', '5', '12']
+34 if a > b:
+34 ['input_values', 'decoding_pairs', 'processed_values', 'idx', 'a', 'b'] ['[5, 12, 8, 3, 15, ...]', '[(5, 12), (8, 3), (15, 7)]', '[]', '0', '5', '12']
+32 for idx, (a, b) in enumerate(decoding_pairs):
+32 ['input_values', 'decoding_pairs', 'processed_values', 'idx', 'a', 'b'] ['[5, 12, 8, 3, 15, ...]', '[(5, 12), (8, 3), (15, 7)]', '[0]', '1', '8', '3']
+34 if a > b:
+34 ['input_values', 'decoding_pairs', 'processed_values', 'idx', 'a', 'b'] ['[5, 12, 8, 3, 15, ...]', '[(5, 12), (8, 3), (15, 7)]', '[0]', '1', '8', '3']
+32 for idx, (a, b) in enumerate(decoding_pairs):
+32 ['input_values', 'decoding_pairs', 'processed_values', 'idx', 'a', 'b'] ['[5, 12, 8, 3, 15, ...]', '[(5, 12), (8, 3), (15, 7)]', '[0, 5]', '2', '15', '7']
+34 if a > b:
+34 ['input_values', 'decoding_pairs', 'processed_values', 'idx', 'a', 'b'] ['[5, 12, 8, 3, 15, ...]', '[(5, 12), (8, 3), (15, 7)]', '[0, 5]', '2', '15', '7']
+32 for idx, (a, b) in enumerate(decoding_pairs):
+32 ['input_values', 'decoding_pairs', 'processed_values', 'idx', 'a', 'b'] ['[5, 12, 8, 3, 15, ...]', '[(5, 12), (8, 3), (15, 7)]', '[0, 5, 16]', '2', '15', '7']
+40 decoded_value = sum(processed_values)  # Core value: 0 + 5 + 8 = 13
+40 ['input_values', 'processed_values', 'decoded_value'] ['[5, 12, 8, 3, 15, ...]', '[0, 5, 16]', '21']
+47 correction_factor = (len(input_values) - 2)  # 4
+47 ['input_values', 'decoded_value', 'correction_factor'] ['[5, 12, 8, 3, 15, ...]', '21', '4']
+50 final_solution = decoded_value * correction_factor  # 13 * 4 = 52
+50 ['decoded_value', 'correction_factor', 'final_solution'] ['21', '4', '84']

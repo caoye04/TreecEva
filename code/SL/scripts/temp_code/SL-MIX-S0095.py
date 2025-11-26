@@ -1,60 +1,36 @@
-from functools import reduce
-from contextlib import contextmanager
-
-class PortfolioManager:
-    def __init__(self):
-        self.portfolio_value = 1000.0
-        self.risk_multiplier = 1.05
-        self.transaction_log = []
+def analyze_network_packets(packet_sequence):
+    # Initial packet analysis
+    packet_values = [45, 23, 67, 89, 12, 34, 56, 78]
+    sequence_sum = sum(packet_values)
     
-    def apply_market_condition(self, condition_factor):
-        self.portfolio_value *= condition_factor
-        return self.portfolio_value
+    # Intermediate calculations (some irrelevant to final result)
+    packet_count = len(packet_values)
+    average_packet = sequence_sum / packet_count
+    max_packet = max(packet_values)
     
-    def log_transaction(self, amount):
-        self.transaction_log.append(amount)
+    # Set operations for unique analysis
+    unique_packets = set(packet_values)
+    unique_count = len(unique_packets)
     
-    @contextmanager
-    def risk_adjustment_context(self, risk_factor):
-        old_multiplier = self.risk_multiplier
-        self.risk_multiplier *= risk_factor
-        try:
-            yield
-        finally:
-            self.risk_multiplier = old_multiplier
+    # Bitwise operations and masking
+    base_mask = 0b10101010
+    sequence_mask = sequence_sum & 0xFF
+    
+    # Main computation chain
+    processed_total = sequence_sum - min(packet_values)
+    encoded_value = processed_total | base_mask
+    
+    # Distractor calculations
+    temp_calc = (max_packet * unique_count) // 2
+    verification_code = temp_calc ^ sequence_mask
+    
+    # Final encryption step
+    encrypted_total = encoded_value ^ verification_code
+    mask_value = 0b11110000
+    final_score = encrypted_total ^ mask_value
+    
+    # Print result
+    print(f"Target result: {final_score}")
 
-# Initialize portfolio
-portfolio = PortfolioManager()
-
-# Market data hash table
-market_conditions = {
-    'bull': 1.12,
-    'bear': 0.92,
-    'neutral': 1.01
-}
-
-# Tokenized transaction rules
-transaction_rules = "ADD:500.0;APPLY:bull;ADD:200.0;APPLY:risk_context_1.2;ADD:300.0"
-
-# Parse and process transactions
-tokens = transaction_rules.split(';')
-
-for token in tokens:
-    operation, value = token.split(':')
-    if operation == 'ADD':
-        adjustment = float(value)
-        portfolio.portfolio_value += adjustment
-        portfolio.log_transaction(adjustment)
-    elif operation == 'APPLY':
-        if value.startswith('risk_context_'):
-            factor = float(value.split('_')[2])
-            with portfolio.risk_adjustment_context(factor):
-                portfolio.portfolio_value = portfolio.apply_market_condition(market_conditions['bull'])
-        else:
-            factor = market_conditions[value]
-            portfolio.portfolio_value = portfolio.apply_market_condition(factor)
-
-# Final adjustment with risk multiplier
-final_portfolio_value = portfolio.portfolio_value * portfolio.risk_multiplier
-
-print(f"Result: {final_portfolio_value}")
+# Execute the function
+analyze_network_packets([])

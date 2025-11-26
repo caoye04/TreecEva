@@ -1,0 +1,67 @@
+37
+final_count
+---
+9 total_sum = sum(sensor_readings)
+9 ['sensor_readings', 'total_sum'] ['[45, 173, 89, 237, 125, ...]', '1297']
+10 average_val = total_sum / len(sensor_readings) if sensor_readings else 0
+10 ['sensor_readings', 'total_sum', 'average_val'] ['[45, 173, 89, 237, 125, ...]', '1297', '144.11111111111111']
+11 adjusted_avg = average_val * 2.5 - 15
+11 ['sensor_readings', 'average_val', 'adjusted_avg'] ['[45, 173, 89, 237, 125, ...]', '144.11111111111111', '345.27777777777777']
+14 if adjusted_avg > 1000:
+14 ['sensor_readings', 'adjusted_avg'] ['[45, 173, 89, 237, 125, ...]', '345.27777777777777']
+21 valid_count = 0
+21 ['sensor_readings', 'valid_count'] ['[45, 173, 89, 237, 125, ...]', '0']
+22 for reading in sensor_readings:
+22 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '0', '45']
+24 if (masked_value | 0b00100000) == 0b10101101:
+24 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '0', '45']
+22 for reading in sensor_readings:
+22 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '0', '173']
+24 if (masked_value | 0b00100000) == 0b10101101:
+24 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '0', '173']
+25 valid_count += 1
+25 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '1', '173']
+22 for reading in sensor_readings:
+22 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '1', '89']
+24 if (masked_value | 0b00100000) == 0b10101101:
+24 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '1', '89']
+22 for reading in sensor_readings:
+22 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '1', '237']
+24 if (masked_value | 0b00100000) == 0b10101101:
+24 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '1', '237']
+25 valid_count += 1
+25 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '2', '237']
+22 for reading in sensor_readings:
+22 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '2', '125']
+24 if (masked_value | 0b00100000) == 0b10101101:
+24 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '2', '125']
+22 for reading in sensor_readings:
+22 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '2', '189']
+24 if (masked_value | 0b00100000) == 0b10101101:
+24 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '2', '189']
+25 valid_count += 1
+25 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '3', '189']
+22 for reading in sensor_readings:
+22 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '3', '65']
+24 if (masked_value | 0b00100000) == 0b10101101:
+24 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '3', '65']
+22 for reading in sensor_readings:
+22 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '3', '173']
+24 if (masked_value | 0b00100000) == 0b10101101:
+24 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '3', '173']
+25 valid_count += 1
+25 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '4', '173']
+22 for reading in sensor_readings:
+22 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '4', '201']
+24 if (masked_value | 0b00100000) == 0b10101101:
+24 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '4', '201']
+22 for reading in sensor_readings:
+22 ['sensor_readings', 'valid_count', 'reading'] ['[45, 173, 89, 237, 125, ...]', '4', '201']
+32 active_tracker = valid_count * 4
+32 ['sensor_readings', 'valid_count', 'active_tracker'] ['[45, 173, 89, 237, 125, ...]', '4', '16']
+33 false_positive = (len(sensor_readings) - valid_count) // 2
+33 ['sensor_readings', 'valid_count', 'active_tracker', 'false_positive'] ['[45, 173, 89, 237, 125, ...]', '4', '16', '2']
+34 correction_factor = (active_tracker >> 2) | 0b110
+34 ['active_tracker', 'false_positive', 'correction_factor'] ['16', '2', '6']
+37 final_count = active_tracker + correction_factor - false_positive
+37 ['active_tracker', 'false_positive', 'correction_factor', 'final_count'] ['16', '2', '6', '20']

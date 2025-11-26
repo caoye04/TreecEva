@@ -1,126 +1,20 @@
-Target: Find the value of variable checksum after [line 28] executes
+Target: Find the value of variable final_result after [line 21] executes
 
-[line 7]  sensor_readings = [3.7, 5.1, 2.8, 9.3, 4.6]
-Compute: [3.7, 5.1, 2.8, 9.3, 4.6] = [3.7, 5.1, 2.8, 9.3, 4.6]
-[line 2]  if n <= 1:
+[line 2]  base_temps = {85, 92, 78, 96, 89, 91}
+Compute: {85, 92, 78, 96, 89, 91} = {96, 85, 89, 91, 92, ...}
+[line 3]  threshold_temp = 90
+Assign: threshold_temp = 90
+[line 6]  high_temps = {temp for temp in base_temps if temp > threshold_temp}
+Compute: {temp for temp in base_temps if temp > threshold_temp}, where temp=96 (an unknown source), base_temps={96, 85, 89, 91, 92, ...} (defined at [line 2]), threshold_temp=90 (defined at [line 3]) = ?
+[line 9]  if high_temps:
 Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=0 (an unknown source)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=1 (an unknown source)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 5]  return fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-Return: fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=1 (an unknown source)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=0 (an unknown source)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 5]  return fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-Return: fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 5]  return fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-Return: fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=1 (an unknown source)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=0 (an unknown source)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=1 (an unknown source)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 5]  return fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-Return: fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 5]  return fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-Return: fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 5]  return fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-Return: fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=1 (an unknown source)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=0 (an unknown source)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=1 (an unknown source)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 5]  return fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-Return: fibonacci_sequence(n-1) + fibonacci_sequence(n-2)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=1 (an unknown source)
-[line 2]  if n <= 1:
-Condition: True, entering 'if' block
-[line 3]  return n
-Return: n=0 (an unknown source)
-[line 11]  transformed_readings = []
-Compute: [] = []
-[line 12]  for i, reading in enumerate(sensor_readings):
-(Missing param: 'iter_var')
-[line 12]  for i, reading in enumerate(sensor_readings):
-Loop End: Iteration finished
-[line 12]  for i, reading in enumerate(sensor_readings):
-Loop End: Iteration finished
-[line 12]  for i, reading in enumerate(sensor_readings):
-Loop End: Iteration finished
-[line 12]  for i, reading in enumerate(sensor_readings):
-Loop End: Iteration finished
-[line 12]  for i, reading in enumerate(sensor_readings):
-Loop End: Iteration finished
-[line 16]  checksum = 0
-Assign: checksum = 0
-[line 17]  for val in transformed_readings:
-Loop Start: val takes its first value 0
-[line 17]  for val in transformed_readings:
-Loop Iteration: val is now 1 (iteration 2)
-... [Line 17] repeats 2 more times ...
-... [Line 17] repeats 2 more times ...
-[line 17]  for val in transformed_readings:
-Loop Iteration: val is now 2 (iteration 5)
-[line 17]  for val in transformed_readings:
-Loop End: Iteration finished
-[line 20]  selected_values = []
-Compute: [] = []
-[line 21]  remaining = checksum
-Compute: checksum, where checksum=3 (defined at [line 16]) = 3
-[line 22]  while remaining > 0:
-while Loop Start: Condition is true
-[line 23]  msb = 1 << (remaining.bit_length() - 1)
-Compute: 1 << (remaining.bit_length() - 1), where remaining=3 (defined at [line 21]) = 2
-[line 22]  while remaining > 0:
-while Loop Iteration: Condition is still true
-[line 23]  msb = 1 << (remaining.bit_length() - 1)
-Compute: 1 << (remaining.bit_length() - 1), where remaining=1 (defined at [line 21]) = 1
-[line 22]  while remaining > 0:
-while Loop Iteration: Condition is still true
-[line 27]  greedy_sum = sum(selected_values[:3])
-Call function sum(selected_values[:3])
-[line 28]  checksum = checksum ^ greedy_sum
-Compute: checksum ^ greedy_sum, where checksum=3 (defined at [line 16]), greedy_sum=3 (defined at [line 27]) = 0
+[line 10]  avg_high = sum(high_temps) // len(high_temps)
+Compute: sum(high_temps) // len(high_temps), where high_temps={96, 91, 92} (defined at [line 6]) = 93
+[line 19]  temp_data = {'avg_high': avg_high, 'count_high': len(high_temps)}
+Compute: {'avg_high': avg_high, 'count_high': len(high_temps)}, where avg_high=93 (defined at [line 10]), high_temps={96, 91, 92} (defined at [line 6]) = {avg_high: 93, count_high: 3}
+[line 20]  result_calculation = temp_data['avg_high'] * temp_data['count_high']
+Compute: temp_data['avg_high'] * temp_data['count_high'], where temp_data={avg_high: 93, count_high: 3} (defined at [line 19]), avg_high=93 (defined at [line 10]) = 279
+[line 21]  final_result = result_calculation
+Compute: result_calculation, where result_calculation=279 (defined at [line 20]) = 279
 
-Answer: checksum = 0 (last updated on defined at [line 28])
+Answer: final_result = 279 (last updated on defined at [line 21])

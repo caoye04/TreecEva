@@ -1,0 +1,41 @@
+53
+final_output
+---
+43 sensor_readings = [45, 67, 45, 89, 67, 23, 45, 67, 89, 45, 12, 67, 45]
+43 ['sensor_readings'] ['[45, 67, 45, 89, 67, ...]']
+PARAM_MAPPING {'readings': {'actual_var': 'sensor_readings', 'value': [45, 67, 45, 89, 67, 23, 45, 67, 89, 45, 12, 67, 45]}}
+FUNCTION_ENTER 3 calculate_sensor_baseline def calculate_sensor_baseline(readings):
+3 ['readings'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 45}], '_len': 13}]
+5 temp_sum = sum(readings) * 2.5
+5 ['readings', 'temp_sum'] ['[45, 67, 45, 89, 67, ...]', '1765.0']
+6 adjusted_sum = temp_sum - len(readings) * 10
+6 ['readings', 'temp_sum', 'adjusted_sum'] ['[45, 67, 45, 89, 67, ...]', '1765.0', '1635.0']
+7 return adjusted_sum / 3.0
+7 ['adjusted_sum'] ['1635.0']
+FUNCTION_RETURN 7 calculate_sensor_baseline {'_type': 'float', '_value': 545.0}
+50 final_output = process_sensor_data(sensor_readings)
+50 ['sensor_readings'] ['[45, 67, 45, 89, 67, ...]']
+PARAM_MAPPING {'sensor_readings': {'actual_var': 'sensor_readings', 'value': [45, 67, 45, 89, 67, 23, 45, 67, 89, 45, 12, 67, 45]}}
+FUNCTION_ENTER 15 process_sensor_data def process_sensor_data(sensor_readings):
+15 ['sensor_readings'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 45}], '_len': 13}]
+17 reading_counts = Counter(sensor_readings)
+17 ['sensor_readings', 'reading_counts'] ['[45, 67, 45, 89, 67, ...]', '{45: 5, 67: 4, 89: 2, ...}']
+24 unique_readings = len(reading_counts)
+24 ['sensor_readings', 'reading_counts', 'unique_readings'] ['[45, 67, 45, 89, 67, ...]', '{45: 5, 67: 4, 89: 2, ...}', '5']
+25 total_readings = len(sensor_readings)
+25 ['sensor_readings', 'reading_counts', 'unique_readings', 'total_readings'] ['[45, 67, 45, 89, 67, ...]', '{45: 5, 67: 4, 89: 2, ...}', '5', '13']
+26 mode_frequency = reading_counts.most_common(1)[0][1]
+26 ['reading_counts', 'unique_readings', 'total_readings', 'mode_frequency'] ['{45: 5, 67: 4, 89: 2, ...}', '5', '13', '5']
+29 base_value = (unique_readings * 15) + (mode_frequency * 8)
+29 ['unique_readings', 'total_readings', 'mode_frequency', 'base_value'] ['5', '13', '5', '115']
+30 adjustment = (total_readings % 7) * 3
+30 ['total_readings', 'base_value', 'adjustment'] ['13', '115', '18']
+31 intermediate = base_value - adjustment
+31 ['base_value', 'adjustment', 'intermediate'] ['115', '18', '97']
+34 final_result = (intermediate // 2) + (intermediate % 4)
+34 ['intermediate', 'final_result'] ['97', '49']
+40 return final_result
+40 ['final_result'] ['49']
+FUNCTION_RETURN 40 process_sensor_data {'_type': 'int', '_value': 49}
+53 print(f"Result: {final_output}")
+53 ['final_output'] ['49']

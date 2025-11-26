@@ -1,0 +1,27 @@
+Target: Find the value of variable data_verification_hash after [line 39] executes
+
+[line 15]  sensor_readings = [45, 23, 67, 23, 89, 45, 23, 12, 67, 45]
+Compute: [45, 23, 67, 23, 89, 45, 23, 12, 67, 45] = [45, 23, 67, 23, 89, ...]
+[line 22]  frequency_analysis = analyze_data_pattern(sensor_readings)
+Call function analyze_data_pattern(sensor_readings=[45, 23, 67, 23, 89, ...] (defined at [line 15]))
+[line 8]  def analyze_data_pattern(data_points):
+Enter function analyze_data_pattern: data_points=[45, 23, 67, 23, 89, ...] (sensor_readings defined at [line 15])
+  [line 9]  counter = Counter(data_points)
+  Call function Counter(data_points=[45, 23, 67, 23, 89, ...] (parameter data_points defined at [line 15]))
+  [line 12]  return counter
+  Return: counter={45: 3, 23: 3, 67: 2, ...} (defined at [line 9])
+Function analyze_data_pattern returns {45: 3, 23: 3, 67: 2, ...}
+[line 23]  most_common_value = frequency_analysis.most_common(1)[0][0]
+Compute: frequency_analysis.most_common(1)[0][0], where frequency_analysis={45: 3, 23: 3, 67: 2, ...} (defined at [line 22]) = 45
+[line 26]  verification_flag = most_common_value > 50
+Compute: most_common_value > 50, where most_common_value=45 (defined at [line 23]) = False
+[line 29]  unique_values = set(sensor_readings)
+Call function set(sensor_readings=[45, 23, 67, 23, 89, ...] (defined at [line 15]))
+[line 30]  value_modifications = [x - min(unique_values) for x in unique_values]
+Compute: [x - min(unique_values) for x in unique_values], where x=67 (an unknown source), unique_values={67, 12, 45, 23, 89} (defined at [line 29]) = ?
+[line 33]  if verification_flag:
+Condition: True, entering 'if' block
+[line 39]  data_verification_hash = sum(value_modifications) + most_common_value
+Compute: sum(value_modifications) + most_common_value, where value_modifications=[55, 0, 33, 11, 77] (defined at [line 30]), most_common_value=45 (defined at [line 23]) = 221
+
+Answer: data_verification_hash = 221 (last updated on defined at [line 39])

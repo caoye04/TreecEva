@@ -1,66 +1,29 @@
-from functools import reduce
-from contextlib import contextmanager
-import math
-
-def calculate_variance(values):
-    if len(values) < 2:
-        return 0
-    mean = sum(values) / len(values)
-    return sum((x - mean) ** 2 for x in values) / (len(values) - 1)
-
-@contextmanager
-def sensor_context(sensor_id):
-    print(f"Initializing sensor {sensor_id}")
-    try:
-        yield sensor_id
-    finally:
-        print(f"Deactivating sensor {sensor_id}")
-
-class TelemetryProcessor:
-    def __init__(self):
-        self.state = 'IDLE'
-        self.readings_buffer = []
-        self.valid_readings = []
+def process_transactions(accounts, adjustments):
+    base_accounts = {'checking': 1500, 'savings': 3200, 'investment': 5800}
+    adjustment_factors = [1.05, 0.92, 1.12, 0.88]
     
-    def process_reading(self, value):
-        if self.state == 'IDLE':
-            if value >= 0 and value <= 100:
-                self.state = 'ACTIVE'
-                self.readings_buffer.append(value)
-        elif self.state == 'ACTIVE':
-            if value < 0 or value > 100:
-                self.state = 'ERROR'
-            else:
-                self.readings_buffer.append(value)
-                if len(self.readings_buffer) >= 5:
-                    self.valid_readings.extend(self.readings_buffer)
-                    self.readings_buffer.clear()
-        elif self.state == 'ERROR':
-            if value >= 0 and value <= 100:
-                self.state = 'ACTIVE'
-                self.readings_buffer.append(value)
+    # Distractor calculations that don't affect final result
+    temp_sum = sum(base_accounts.values()) + len(adjustment_factors)
+    irrelevant_metric = temp_sum * 0.15
     
-    def get_valid_readings(self):
-        return self.valid_readings[:]
+    # Main processing logic
+    account_transactions = {}
+    for i, (acc_type, balance) in enumerate(base_accounts.items()):
+        adjustment_idx = i % len(adjustment_factors)
+        adjusted_balance = balance * adjustment_factors[adjustment_idx]
+        account_transactions[acc_type] = round(adjusted_balance, 2)
+    
+    # More distractor operations
+    processed_keys = list(account_transactions.keys())
+    processed_range = processed_keys[1:3]
+    
+    # Critical execution point
+    final_balance = account_transactions[processed_range[0]] + account_transactions[processed_range[1]]
+    
+    print(f"Target result: {final_balance}")
+    return final_balance
 
-# Main processing
-processor = TelemetryProcessor()
-sensor_data = [23.5, 45.2, -5.0, 67.8, 89.1, 12.3, 105.0, 34.7, 56.9, 78.2, 25.0, 91.4]
-
-with sensor_context('TEMP_01') as sensor:
-    for reading in sensor_data:
-        processor.process_reading(reading)
-    
-    valid_values = processor.get_valid_readings()
-    processed_mean = sum(valid_values) / len(valid_values) if valid_values else 0
-    
-    # Apply transformation using functional programming
-    transformed_values = list(map(lambda x: x * 1.8 + 32, filter(lambda x: x > processed_mean, valid_values)))
-    
-    # Calculate final statistics
-    if len(transformed_values) > 1:
-        processed_variance = calculate_variance(transformed_values)
-    else:
-        processed_variance = 0
-
-print(f"Result: {processed_variance}")
+# Execute the function
+accounts_data = ['checking', 'savings', 'investment']
+adjustment_values = [0.05, -0.08, 0.12]
+result = process_transactions(accounts_data, adjustment_values)

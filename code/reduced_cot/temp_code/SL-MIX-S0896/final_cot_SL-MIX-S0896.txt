@@ -1,0 +1,61 @@
+Target: Find the value of variable final_capacity after [line 53] executes
+
+[line 28]  data_patterns = memory_config.get('patterns', [])
+(Missing param: 'func_name')
+[line 29]  if not data_patterns:
+Condition: True, entering 'if' block
+[line 35]  base_capacity = calculate_memory_blocks(data_patterns)
+Call function calculate_memory_blocks(data_patterns=['RAMBlock1', 'CacheA2', 'MemoryUnitB3', 'StorageC4'] (an unknown source))
+[line 1]  def calculate_memory_blocks(data_patterns):
+Enter function calculate_memory_blocks: data_patterns=['RAMBlock1', 'CacheA2', 'MemoryUnitB3', 'StorageC4']
+  [line 9]  valid_blocks = 0
+  Assign: valid_blocks = 0
+  [line 10]  for pattern in data_patterns:
+  Loop Start: pattern takes its first value 'RAMBlock1'
+  [line 11]  if isinstance(pattern, str) and len(pattern) > 3:
+  Condition: True, entering 'if' block
+  [line 12]  upper_count = sum(1 for char in pattern if char.isupper())
+  Call function sum(1 for char in pattern if char.isupper())
+  [line 13]  if upper_count % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 14]  valid_blocks += upper_count
+  Update: valid_blocks changed from 0 (defined at defined at [line 9]) to 0+upper_count = 4
+  [line 10]  for pattern in data_patterns:
+  Loop Iteration: pattern is now 'CacheA2' (iteration 2)
+  [line 11]  if isinstance(pattern, str) and len(pattern) > 3:
+  Condition: True, entering 'if' block
+  [line 13]  if upper_count % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 14]  valid_blocks += upper_count
+  Update: valid_blocks changed from 4 (defined at defined at [line 14]) to 4+upper_count = 6
+  [line 10]  for pattern in data_patterns:
+  Loop Iteration: pattern is now 'MemoryUnitB3' (iteration 3)
+  [line 11]  if isinstance(pattern, str) and len(pattern) > 3:
+  Condition: True, entering 'if' block
+  [line 13]  if upper_count % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 10]  for pattern in data_patterns:
+  Loop Iteration: pattern is now 'StorageC4' (iteration 4)
+  [line 11]  if isinstance(pattern, str) and len(pattern) > 3:
+  Condition: True, entering 'if' block
+  [line 13]  if upper_count % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 14]  valid_blocks += upper_count
+  Update: valid_blocks changed from 6 (defined at defined at [line 14]) to 6+upper_count = 8
+  [line 10]  for pattern in data_patterns:
+  Loop End: Iteration finished
+  [line 20]  return valid_blocks
+  Return: valid_blocks=8 (defined at [line 14])
+Function calculate_memory_blocks returns 8
+[line 38]  scaling_factor = memory_config.get('scaling', 1.5)
+(Missing param: 'func_name')
+[line 39]  final_value = base_capacity * scaling_factor
+Compute: base_capacity * scaling_factor, where base_capacity=8 (defined at [line 35]), scaling_factor=2.0 (an unknown source) = 16.0
+[line 45]  if base_capacity > 10:
+Condition: True, entering 'if' block
+[line 48]  final_capacity = final_value - 1.0
+Compute: final_value - 1.0, where final_value=16.0 (defined at [line 39]) = 15.0
+[line 53]  return final_capacity
+Return: final_capacity=15.0 (defined at [line 48])
+
+Answer: final_capacity = 15.0 (last updated on defined at [line 48])

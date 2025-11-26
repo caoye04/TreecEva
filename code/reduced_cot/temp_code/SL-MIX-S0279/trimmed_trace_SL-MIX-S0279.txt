@@ -1,0 +1,35 @@
+59
+final_computation
+---
+39 data_nodes = [15, 22, 8, 31, 19]
+39 ['data_nodes'] ['[15, 22, 8, 31, 19]']
+40 routing_table = {22: 5, 31: 8, 15: 3}
+40 ['data_nodes', 'routing_table'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}']
+41 active_connections = [22, 31, 15]
+41 ['data_nodes', 'routing_table', 'active_connections'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}', '[22, 31, 15]']
+53 final_computation = network_analysis(data_nodes, routing_table, active_connections)
+53 ['data_nodes', 'routing_table', 'active_connections'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}', '[22, 31, 15]']
+9 node_set = set(nodes)
+9 ['nodes', 'routing', 'connections', 'node_set'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}', '[22, 31, 15]', '{8, 15, 19, 22, 31}']
+10 routing_keys = set(routing.keys())
+10 ['nodes', 'routing', 'connections', 'node_set', 'routing_keys'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}', '[22, 31, 15]', '{8, 15, 19, 22, 31}', '{15, 22, 31}']
+11 connection_set = set(connections)
+11 ['nodes', 'routing', 'connections', 'node_set', 'routing_keys', 'connection_set'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}', '[22, 31, 15]', '{8, 15, 19, 22, 31}', '{15, 22, 31}', '{15, 22, 31}']
+18 active_nodes = node_set & connection_set
+18 ['nodes', 'routing', 'node_set', 'routing_keys', 'connection_set', 'active_nodes'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}', '{8, 15, 19, 22, 31}', '{15, 22, 31}', '{15, 22, 31}', '{31, 22, 15}']
+19 routing_matches = routing_keys & connection_set
+19 ['nodes', 'routing', 'routing_keys', 'connection_set', 'active_nodes', 'routing_matches'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}', '{15, 22, 31}', '{15, 22, 31}', '{31, 22, 15}', '{31, 22, 15}']
+26 if len(active_nodes) > 2:
+26 ['nodes', 'routing', 'active_nodes', 'routing_matches'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}', '{31, 22, 15}', '{31, 22, 15}']
+27 base_value = sum(active_nodes)
+27 ['nodes', 'routing', 'active_nodes', 'routing_matches', 'base_value'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}', '{31, 22, 15}', '{31, 22, 15}', '68']
+28 routing_factor = sum(routing_matches)
+28 ['nodes', 'routing', 'routing_matches', 'base_value', 'routing_factor'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}', '{31, 22, 15}', '68', '68']
+29 scaling_factor = len(routing) / len(nodes) if nodes else 1
+29 ['nodes', 'routing', 'base_value', 'routing_factor', 'scaling_factor'] ['[15, 22, 8, 31, 19]', '{22: 5, 31: 8, 15: 3}', '68', '68', '0.6']
+30 result = base_value + routing_factor * scaling_factor
+30 ['base_value', 'routing_factor', 'scaling_factor', 'result'] ['68', '68', '0.6', '108.8']
+35 return int(result)
+35 ['result'] ['108.8']
+59 print(f"Target result: {final_computation}")
+59 ['final_computation'] ['108']

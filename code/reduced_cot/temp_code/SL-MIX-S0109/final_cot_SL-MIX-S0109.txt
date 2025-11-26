@@ -1,0 +1,12 @@
+Target: Find the value of variable final_metric after [line 5] executes
+
+[line 2]  threshold = cutoff * 2
+Compute: cutoff * 2, where cutoff=7 (an unknown source) = 14
+[line 3]  filtered_values = [v for v in values if v > threshold]
+Compute: [v for v in values if v > threshold], where v=8 (an unknown source), values=[8, 12, 5, 15, 3, ...] (an unknown source), threshold=14 (defined at [line 2]) = ?
+[line 4]  adjustment_factors = [adj * 0.5 for adj in adjustments[:len(filtered_values)]]
+Compute: [adj * 0.5 for adj in adjustments[:len(filtered_values)]], where adj=4 (an unknown source), adjustments=[4, 6, 2, 8, 1, ...] (an unknown source), filtered_values=[15, 20] (defined at [line 3]) = ?
+[line 5]  final_metric = sum([x**2 - y for x, y in zip(filtered_values, adjustment_factors) if x > threshold])
+Call function sum([x**2 - y for x, y in zip(filtered_values, adjustment_factors) if x > threshold])
+
+Answer: final_metric = 620.0 (last updated on defined at [line 5])

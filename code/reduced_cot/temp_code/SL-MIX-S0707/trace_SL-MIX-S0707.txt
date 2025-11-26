@@ -1,0 +1,24 @@
+16 input_data = 170  # 0b10101010 in decimal
+16 ['input_data'] [{'_type': 'int', '_value': 170}]
+17 security_key = 85  # 0b01010101 in decimal
+17 ['input_data', 'security_key'] [{'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}]
+18 result = secure_transform(input_data, security_key)
+18 ['input_data', 'security_key'] [{'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}]
+PARAM_MAPPING secure_transform {'data': {'actual_var': 'input_data', 'value': 170}, 'security_key': {'actual_var': 'security_key', 'value': 85}}
+FUNCTION_ENTER 1 secure_transform def secure_transform(data, security_key):
+1 ['data', 'security_key'] [{'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}]
+DEPTH_2 2     mask = 0b10101010
+2 ['data', 'security_key', 'mask'] [{'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}]
+DEPTH_2 3     key = security_key
+3 ['data', 'security_key', 'mask', 'key'] [{'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}]
+DEPTH_2 4     original_value = data
+4 ['data', 'security_key', 'mask', 'key', 'original_value'] [{'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}]
+DEPTH_2 7     encrypted_value = ((original_value & mask) | (~original_value & ~mask)) ^ key
+7 ['data', 'security_key', 'mask', 'key', 'original_value', 'encrypted_value'] [{'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': -86}]
+DEPTH_2 10     verification = encrypted_value & 0xFF
+10 ['data', 'security_key', 'mask', 'key', 'original_value', 'encrypted_value', 'verification'] [{'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': -86}, {'_type': 'int', '_value': 170}]
+DEPTH_2 12     print(f"Result: {encrypted_value}")
+12 ['data', 'security_key', 'mask', 'key', 'original_value', 'encrypted_value', 'verification'] [{'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': -86}, {'_type': 'int', '_value': 170}]
+DEPTH_2 13     return encrypted_value
+13 ['data', 'security_key', 'mask', 'key', 'original_value', 'encrypted_value', 'verification'] [{'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 170}, {'_type': 'int', '_value': -86}, {'_type': 'int', '_value': 170}]
+FUNCTION_RETURN 13 secure_transform {'_type': 'int', '_value': -86}

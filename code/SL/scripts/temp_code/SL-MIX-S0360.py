@@ -1,28 +1,50 @@
-from collections import defaultdict
-import math
+def process_transactions(transactions, fee_fn):
+    # Initialize account state
+    base_balance = 1000
+    processing_fee = 15
+    bonus_amount = 50
+    
+    # Irrelevant calculations (distractors)
+    temp_sum = sum(range(10))
+    conversion_rate = 1.15
+    pending_transfers = [25, 75, 100]
+    
+    # Actual processing logic
+    total_credits = 0
+    total_debits = 0
+    
+    for trans in transactions:
+        if trans > 0:
+            total_credits += trans
+        else:
+            total_debits += abs(trans)
+    
+    # Misleading intermediate calculation (dead code path)
+    net_flow = total_credits - total_debits
+    adjusted_net = net_flow * 0.95  # Never used
+    
+    # Apply fees using lambda
+    total_fees = fee_fn(total_credits + total_debits)
+    
+    # Main calculation
+    final_amount = base_balance + total_credits - total_debits - total_fees + bonus_amount
+    
+    # More irrelevant operations
+    currency_converted = final_amount * conversion_rate
+    pending_total = sum(pending_transfers)
+    
+    return final_amount
 
-def hamming_window(n, N):
-    return 0.54 - 0.46 * math.cos(2 * math.pi * n / (N - 1))
+# Transaction data
+account_data = [150, -25, 300, -100, -50, 200]
+fee_calculator = lambda amount: (amount // 100) * 10
 
-audio_samples = [0.1, -0.3, 0.5, -0.7, 0.9, -0.2, 0.4]
-sample_count = len(audio_samples)
-weighted_sum = 0.0
+# Irrelevant variable initialization
+dummy_counter = 0
+temp_results = []
 
-for idx in range(sample_count):
-    window_value = hamming_window(idx, sample_count)
-    weighted_sum += audio_samples[idx] * window_value
+# Critical execution point
+final_balance = process_transactions(account_data, fee_calculator)
 
-threshold = 0.1
-is_above_threshold = weighted_sum > threshold
-
-energy_map = defaultdict(float)
-for i, sample in enumerate(audio_samples):
-    energy_map[i] = sample ** 2
-
-total_energy = sum(energy_map.values())
-high_energy_flag = total_energy > 0.5
-
-# Signal detection logic combines both metrics
-signal_detected = int(is_above_threshold and high_energy_flag)
-
-print(f"Result: {signal_detected}")
+# Print result
+print(f"Result: {final_balance}")

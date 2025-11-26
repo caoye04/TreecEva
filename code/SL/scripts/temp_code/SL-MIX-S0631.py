@@ -1,48 +1,37 @@
-from math import prod
-from itertools import permutations
+from collections import Counter
 
-def sieve_of_eratosthenes(limit):
-    primes = []
-    is_prime = [True] * (limit + 1)
-    for i in range(2, limit + 1):
-        if is_prime[i]:
-            primes.append(i)
-            for j in range(i*i, limit + 1, i):
-                is_prime[j] = False
-    return primes
+# Process inventory data for warehouse optimization
+def analyze_inventory(inventory_items):
+    item_counts = Counter(inventory_items)
+    
+    # Calculate base metrics
+    total_items = len(inventory_items)
+    unique_items = len(item_counts)
+    
+    # Intermediate calculation (not directly used in final result)
+    avg_per_type = total_items / unique_items if unique_items > 0 else 0
+    
+    # Calculate processing metrics
+    high_demand_items = sum(1 for count in item_counts.values() if count >= 3)
+    low_stock_items = sum(1 for count in item_counts.values() if count <= 1)
+    
+    # Distractor calculation (appears relevant but not used)
+    excess_inventory = sum(count - 2 for count in item_counts.values() if count > 2)
+    
+    # Main processing logic
+    base_score = high_demand_items * 15 + low_stock_items * 8
+    processed_data = base_score - (unique_items * 2)
+    
+    # Adjustment calculations
+    adjustment_factor = (total_items % 7) * 3
+    temp_adjustment = (unique_items ^ high_demand_items) + 5  # Distractor
+    
+    # Final computation
+    final_result = processed_data - adjustment_factor
+    
+    print(f"Target result: {final_result}")
+    return final_result
 
-# Map letters to primes
-alphabet = 'abcdefghijklmnopqrstuvwxyz'
-primes_list = sieve_of_eratosthenes(100)[:26]
-char_to_prime = dict(zip(alphabet, primes_list))
-prime_to_char = {v: k for k, v in char_to_prime.items()}
-
-# Document signature
-signature = 2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53 * 59 * 61 * 67 * 71 * 73 * 79 * 83 * 89 * 97 * 101
-
-# Factorize the signature to get primes
-factors = []
-current_signature = signature
-for p in primes_list:
-    while current_signature % p == 0:
-        factors.append(p)
-        current_signature //= p
-    if current_signature == 1:
-        break
-
-# Decode primes back to characters
-original_chars = [prime_to_char[p] for p in factors]
-
-# Filter out vowels
-vowels_set = frozenset('aeiou')
-consonants = [c for c in original_chars if c not in vowels_set]
-
-# Sort consonants alphabetically
-sorted_consonants = sorted(consonants)
-
-# Count unique arrangements of the first 5 consonants considering duplicates
-first_five = sorted_consonants[:5]
-unique_perms = set(permutations(first_five))
-final_arrangements = len(unique_perms)
-
-print(f"Result: {final_arrangements}")
+# Sample inventory data
+inventory = ["widget", "gadget", "widget", "tool", "gadget", "widget", "part", "tool"]
+result = analyze_inventory(inventory)

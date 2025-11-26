@@ -1,0 +1,23 @@
+27
+final_output
+---
+4 packet_sizes = [512, 1024, 768, 512, 1024, 512, 768, 1024, 512, 1536]
+4 ['packet_sizes'] ['[512, 1024, 768, 512, 1024, ...]']
+5 packet_counter = Counter(packet_sizes)
+5 ['packet_sizes', 'packet_counter'] ['[512, 1024, 768, 512, 1024, ...]', '{512: 4, 1024: 3, 768: 2, ...}']
+8 total_bytes = sum(packet_sizes)
+8 ['packet_sizes', 'packet_counter', 'total_bytes'] ['[512, 1024, 768, 512, 1024, ...]', '{512: 4, 1024: 3, 768: 2, ...}', '8192']
+9 avg_packet_size = total_bytes // len(packet_sizes)
+9 ['packet_sizes', 'packet_counter', 'total_bytes', 'avg_packet_size'] ['[512, 1024, 768, 512, 1024, ...]', '{512: 4, 1024: 3, 768: 2, ...}', '8192', '819']
+13 common_size_count = packet_counter.most_common(1)[0][1]
+13 ['packet_counter', 'total_bytes', 'avg_packet_size', 'common_size_count'] ['{512: 4, 1024: 3, 768: 2, ...}', '8192', '819', '4']
+16 processed_total = total_bytes - (avg_packet_size * 2)
+16 ['total_bytes', 'avg_packet_size', 'common_size_count', 'processed_total'] ['8192', '819', '4', '6554']
+17 adjustment_factor = common_size_count * 10
+17 ['common_size_count', 'processed_total', 'adjustment_factor'] ['4', '6554', '40']
+18 modulus_base = 256
+18 ['processed_total', 'adjustment_factor', 'modulus_base'] ['6554', '40', '256']
+21 result_modulus = (processed_total + adjustment_factor) % modulus_base
+21 ['processed_total', 'adjustment_factor', 'modulus_base', 'result_modulus'] ['6554', '40', '256', '194']
+27 final_output = result_modulus
+27 ['result_modulus', 'final_output'] ['194', '194']

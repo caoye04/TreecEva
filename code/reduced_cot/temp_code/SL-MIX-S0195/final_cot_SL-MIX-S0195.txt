@@ -1,76 +1,45 @@
-Target: Find the value of variable final_packet_signature after [line 48] executes
+Target: Find the value of variable final_ratio after [line 27] executes
 
-[line 39]  packet_tracker = defaultdict(list)
-Call function defaultdict(list)
-[line 42]  for i, config in enumerate(layer_configs):
+[line 2]  processed_samples = len(sensor_readings)
+Call function len(sensor_readings=[12.8, 18.2, 9.5, 22.1, 16.7, ...] (an unknown source))
+[line 4]  threshold = 15.0
+Assign: threshold = 15.0
+[line 6]  valid_count = 0
+Assign: valid_count = 0
+[line 8]  max_reading = float('-inf')
+Call function float('-inf')
+[line 10]  for i, reading in enumerate(sensor_readings):
 (Missing param: 'iter_var')
-[line 3]  def apply_security_layer(packet_sig, layer_config):
-Enter function apply_security_layer: packet_sig=95, layer_config={op: 'XOR', mask: 60}
-  [line 5]  mask = layer_config['mask']
-  Compute: layer_config['mask'], where layer_config={op: 'XOR', mask: 60} (parameter layer_config) = 60
-  [line 6]  condition = layer_config.get('condition', None)
-  (Missing param: 'func_name')
-  [line 8]  if condition and not condition(packet_sig):
-  Condition: True, entering 'if' block
-  [line 11]  if operation == 'AND':
-  Condition: True, entering 'if' block
-  [line 13]  elif operation == 'OR':
-  'elif' Condition: True, entering block
-  [line 15]  elif operation == 'XOR':
-  'elif' Condition: True, entering block
-  [line 16]  return packet_sig ^ mask
-  Return: packet_sig ^ mask
-Function apply_security_layer returns 99
-[line 42]  for i, config in enumerate(layer_configs):
-Loop End: Iteration finished
-[line 5]  mask = layer_config['mask']
-Compute: layer_config['mask'], where layer_config={op: 'AND', mask: 240, condition: function(...)} (an unknown source) = 240
-[line 6]  condition = layer_config.get('condition', None)
-(Missing param: 'func_name')
-[line 8]  if condition and not condition(packet_sig):
+[line 16]  if reading > threshold:
 Condition: True, entering 'if' block
-[line 24]  return sig > 0x80
-Return: sig > 0x80
-[line 9]  return packet_sig
-Return: packet_sig=99 (an unknown source)
-[line 42]  for i, config in enumerate(layer_configs):
-Loop End: Iteration finished
-[line 3]  def apply_security_layer(packet_sig, layer_config):
-Enter function apply_security_layer: packet_sig=99, layer_config={op: 'LSHIFT', mask: 2}
-  [line 5]  mask = layer_config['mask']
-  Compute: layer_config['mask'], where layer_config={op: 'LSHIFT', mask: 2} (parameter layer_config) = 2
-  [line 6]  condition = layer_config.get('condition', None)
-  (Missing param: 'func_name')
-  [line 8]  if condition and not condition(packet_sig):
-  Condition: True, entering 'if' block
-  [line 11]  if operation == 'AND':
-  Condition: True, entering 'if' block
-  [line 13]  elif operation == 'OR':
-  'elif' Condition: True, entering block
-  [line 15]  elif operation == 'XOR':
-  'elif' Condition: True, entering block
-  [line 17]  elif operation == 'LSHIFT':
-  'elif' Condition: True, entering block
-  [line 18]  return (packet_sig << mask) & 0xFF
-  Return: (packet_sig << mask) & 0xFF
-Function apply_security_layer returns 140
-[line 42]  for i, config in enumerate(layer_configs):
-Loop End: Iteration finished
-[line 5]  mask = layer_config['mask']
-Compute: layer_config['mask'], where layer_config={op: 'OR', mask: 15, condition: function(...)} (an unknown source) = 15
-[line 6]  condition = layer_config.get('condition', None)
-(Missing param: 'func_name')
-[line 8]  if condition and not condition(packet_sig):
+[line 20]  if reading > max_reading:
 Condition: True, entering 'if' block
-[line 11]  if operation == 'AND':
+[line 21]  max_reading = reading
+Compute: reading, where reading=12.8 (an unknown source) = 12.8
+[line 10]  for i, reading in enumerate(sensor_readings):
+(Missing param: 'iter_var')
+[line 16]  if reading > threshold:
 Condition: True, entering 'if' block
-[line 13]  elif operation == 'OR':
-'elif' Condition: True, entering block
-[line 14]  return packet_sig | mask
-Return: packet_sig | mask
-[line 42]  for i, config in enumerate(layer_configs):
+[line 17]  valid_count += 1
+Update: valid_count changed from 0 (defined at defined at [line 6]) to 0+1 = 1
+[line 20]  if reading > max_reading:
+Condition: True, entering 'if' block
+[line 21]  max_reading = reading
+Compute: reading, where reading=18.2 (an unknown source) = 18.2
+... [Line 10] repeats 7 more times ...
+... [Line 10] repeats 7 more times ...
+... [Line 10] repeats 7 more times ...
+[line 10]  for i, reading in enumerate(sensor_readings):
+(Missing param: 'iter_var')
+[line 16]  if reading > threshold:
+Condition: True, entering 'if' block
+[line 17]  valid_count += 1
+Update: valid_count changed from 5 (defined at defined at [line 17]) to 5+1 = 6
+[line 20]  if reading > max_reading:
+Condition: True, entering 'if' block
+[line 10]  for i, reading in enumerate(sensor_readings):
 Loop End: Iteration finished
-[line 48]  final_packet_signature = packet_tracker['signatures'][-1] if len(packet_tracker['signatures']) > 0 else 0
-Compute: packet_tracker['signatures'][-1] if len(packet_tracker['signatures']) > 0 else 0, where packet_tracker={signatures: [95, 99, 99, 140, 143], layers: ['Layer_1', 'Layer_2', 'Layer_3', 'Layer_4']} (defined at [line 39]) = 143
+[line 27]  final_ratio = valid_count / processed_samples if processed_samples > 0 else 0
+Compute: valid_count / processed_samples if processed_samples > 0 else 0, where valid_count=6 (defined at [line 17]), processed_samples=10 (defined at [line 2]) = 0.6
 
-Answer: final_packet_signature = 143 (last updated on defined at [line 48])
+Answer: final_ratio = 0.6 (last updated on defined at [line 27])

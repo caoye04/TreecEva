@@ -1,58 +1,70 @@
-from functools import reduce
+from collections import defaultdict
 
-def validate_tokens(token_stream):
-    # State definitions
-    STATE_IDLE = 0
-    STATE_PROCESSING = 1
-    STATE_VALIDATED = 2
+def validate_input(data):
+    # Distractor function - not used in main flow
+    validation_flags = [True, False, True, True]
+    return sum(validation_flags) * 2
+
+def calculate_stats(values):
+    # Misleading intermediate calculations
+    temp_sum = sum(values)
+    avg = temp_sum / len(values)
+    squared_diff = [(x - avg) ** 2 for x in values]
+    variance = sum(squared_diff) / len(values)
+    return variance * 3.14  # Irrelevant scaling factor
+
+def process_data(data_items, settings):
+    # Main processing logic with distractions
+    processed_values = []
+    counter = defaultdict(int)
     
-    # System registers
-    authCounter = 0
-    currentState = STATE_IDLE
-    validationKey = 0b11010111
-    
-    # Token registry
-    validTokens = {}
-    
-    for idx, encryptedToken in enumerate(token_stream):
-        if currentState == STATE_IDLE:
-            # Transition to processing if token passes initial check
-            if encryptedToken & 0xFF != 0 and (encryptedToken >> 4) > 0:
-                currentState = STATE_PROCESSING
+    # Distractor loop with unused results
+    for i, item in enumerate(data_items):
+        counter[item % 4] += 1
+        temp = item * 2 + i  # Unused calculation
         
-        if currentState == STATE_PROCESSING:
-            # Decrypt token using XOR with rotating key
-            decrypted = encryptedToken ^ (validationKey << (idx % 3))
-            
-            # Check if decrypted token meets validation criteria
-            isValid = (decrypted & 0xF0) != 0 and bool(decrypted & 0x0F)
-            
-            if isValid and not (len(validTokens) >= 10 and idx > 5):  # Short-circuit
-                # Register valid token
-                tokenId = f"TKN{idx:02d}"
-                validTokens[tokenId] = decrypted
-                
-                # Update counter with bitwise manipulation
-                authCounter = (authCounter + 1) | (decrypted & 0x07)
-                currentState = STATE_VALIDATED
-            else:
-                # Reset state if invalid
-                currentState = STATE_IDLE
-        
-        if currentState == STATE_VALIDATED:
-            # Merge with system metrics
-            metrics = {f"metric_{k}": v & 0xFF for k, v in validTokens.items()}
-            enhancedMetrics = {**metrics, f"aggregate_{idx}": reduce(lambda x, y: x ^ y, validTokens.values(), 0)}
-            
-            # Update counter based on aggregated metrics
-            authCounter ^= enhancedMetrics[f"aggregate_{idx}"]
-            currentState = STATE_IDLE
+    # Actual relevant processing
+    filtered_data = [x for x in data_items if x % settings['filter_mod'] == 0]
     
-    return authCounter
+    # More distractions
+    redundant_stats = calculate_stats(data_items)
+    validation_score = validate_input(data_items)
+    
+    # Core logic with bitwise operations
+    if settings['use_bitwise']:
+        result = 0
+        for val in filtered_data:
+            result |= (val & 0x0F)
+        result ^= settings['xor_key']
+    else:
+        result = sum(x * settings['multiplier'] for x in filtered_data)
+    
+    # Final adjustment (actual answer depends on this)
+    return result // settings['divisor']
 
-# Encrypted token stream
-tokenStream = [0x4A, 0x73, 0x9C, 0x2F, 0xE8, 0x1D, 0xB6, 0x89, 0x55, 0xAC]
+def analyze_pattern(data):
+    # Dead code path - never called
+    pattern_sum = 0
+    for i in range(len(data) - 1):
+        pattern_sum += abs(data[i] - data[i + 1])
+    return pattern_sum
 
-# Process tokens and get result
-finalCount = validate_tokens(tokenStream)
-print(f"Result: {finalCount}")
+# Main execution
+main_data = [12, 25, 8, 17, 33, 41, 6, 19, 27, 14]
+config = {
+    'filter_mod': 3,
+    'use_bitwise': True,
+    'xor_key': 7,
+    'multiplier': 2,
+    'divisor': 4
+}
+
+# Distractor variable assignments
+backup_data = main_data[:]
+validation_check = validate_input(main_data)
+stats_analysis = calculate_stats(main_data)
+
+# Key statement
+final_result = process_data(main_data, config)
+
+print(f"Target result: {final_result}")

@@ -1,42 +1,36 @@
-import math
+def analyze_text_data(text_samples):
+    # Initialize data processing variables
+    base_count = len(text_samples)
+    char_total = sum(len(sample) for sample in text_samples)
+    
+    # Calculate character density (distractor - not used in final result)
+    density_metric = char_total / base_count if base_count > 0 else 0
+    
+    # Process each text sample
+    processed_values = []
+    for i, sample in enumerate(text_samples):
+        # Clean and process text (distractor operations)
+        cleaned = sample.strip().lower()
+        
+        # Calculate weighted score based on position and length
+        position_weight = i + 1
+        length_factor = len(cleaned) % 10
+        weighted_score = position_weight * length_factor
+        
+        processed_values.append(weighted_score)
+    
+    # Calculate main processing metrics
+    processed_data = sum(processed_values)
+    adjustment_factor = base_count * 2
+    normalization_constant = max(processed_values) if processed_values else 1
+    
+    # Final computation (this is the key statement)
+    final_result = processed_data * adjustment_factor // normalization_constant
+    
+    # Print result for verification
+    print(f"Result: {final_result}")
+    return final_result
 
-class AuthNode:
-    def __init__(self, session_id, timestamp):
-        self.session_hash = hash(session_id)
-        self.timestamp = timestamp
-        self.next = None
-
-def create_auth_chain():
-    # Create a chain of authentication events
-    head = AuthNode("admin_session_001", 1000)
-    head.next = AuthNode("user_session_202", 1030)
-    head.next.next = AuthNode("admin_session_001", 1060)  # Duplicate session
-    head.next.next.next = AuthNode("guest_session_999", 1090)
-    return head
-
-# Process authentication chain
-current = create_auth_chain()
-session_hashes = set()
-timestamp_weights = []
-
-while current:
-    session_hashes.add(current.session_hash)
-    # Apply exponential decay to timestamp weight
-    weight = math.exp(current.timestamp / 10000)
-    timestamp_weights.append(weight)
-    current = current.next
-
-# Calculate unique session factor
-unique_sessions = len(session_hashes)
-log_factor = math.log(unique_sessions + 1, 2)
-
-# Apply set operations with frozen set for security context
-security_context = frozenset([1, 2, 4, 8, 16])
-weight_flags = frozenset([int(w) for w in timestamp_weights])
-intersection_cardinality = len(security_context & weight_flags)
-
-# Compute final security index
-exponent_base = intersection_cardinality + 2
-final_security_index = int(math.pow(exponent_base, log_factor))
-
-print(f"Result: {final_security_index}")
+# Test data
+text_samples = ["Hello World", "Python Code", "Data Analysis", "Benchmark Test"]
+result = analyze_text_data(text_samples)

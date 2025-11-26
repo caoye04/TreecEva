@@ -1,66 +1,49 @@
-from collections import defaultdict, deque
+def validate_inputs(data_stream):
+    irrelevant_check = sum(x**2 for x in range(5, 15))  # Dead computation
+    validation_mask = data_stream.get('mask', 0xFF)
+    return (validation_mask & 0x0F) == 0x07
 
-class FunctionNode:
-    def __init__(self, node_id, cost):
-        self.node_id = node_id
-        self.cost = cost
-        self.children = []
-
-def build_tree():
-    # Create nodes
-    nodes = {i: FunctionNode(i, cost) for i, cost in enumerate([12, -5, 7, 20, -3, 15, 8, -10, 9, 11])}
-    # Define tree structure (parent: [children])
-    edges = {
-        0: [1, 2],
-        1: [3, 4],
-        2: [5, 6],
-        3: [7, 8],
-        5: [9]
-    }
-    for parent, children in edges.items():
-        nodes[parent].children = [nodes[child] for child in children]
-    return nodes[0]  # Return root
-
-def prune_and_calculate_max_cost(root):
-    # Prune nodes with cost < 0
-    def prune(node):
-        if not node:
-            return None
-        if node.cost < 0:
-            return None
-        node.children = [prune(child) for child in node.children]
-        node.children = [child for child in node.children if child is not None]
-        return node
+def process_sequence(base_value, modifier_dict):
+    temp_acc = base_value
+    distractor_sum = sum(modifier_dict.values())  # Irrelevant calculation
     
-    root = prune(root)
-    if not root:
-        return 0
+    for key, mod in modifier_dict.items():
+        if key % 2 == 0:
+            temp_acc = temp_acc + mod if mod > 5 else temp_acc - mod
+        else:
+            temp_acc = temp_acc * mod if mod < 10 else temp_acc // mod
     
-    # Dynamic programming to find max path cost
-    memo = {}
-    def dp(node):
-        if not node:
-            return 0
-        if node.node_id in memo:
-            return memo[node.node_id]
-        if not node.children:
-            memo[node.node_id] = node.cost
-            return node.cost
-        
-        max_child_cost = float('-inf')
-        for child in node.children:
-            child_cost = dp(child)
-            if child_cost > max_child_cost:
-                max_child_cost = child_cost
-            if child_cost < 0:  # Early termination logic
-                break
-        
-        result = node.cost + max_child_cost
-        memo[node.node_id] = result
-        return result
-    
-    return dp(root)
+    dead_branch = [x for x in range(20) if x % 3 == 0]  # Unused list
+    return temp_acc
 
-tree_root = build_tree()
-max_path_cost = prune_and_calculate_max_cost(tree_root)
-print(f"Result: {max_path_cost}")
+def final_process(value_list):
+    if not validate_inputs({'mask': 0x17}):
+        return -999  # Dead code path
+    
+    processed = []
+    misleading_intermediate = len(value_list) * 2.5  # Red herring
+    
+    for idx, val in enumerate(value_list):
+        if idx % 2 == 0:
+            processed.append(val + 8 if val < 50 else val - 12)
+        else:
+            processed.append(val * 3 if val > 20 else val // 2)
+    
+    optimization_factor = 7 if len(processed) > 3 else 11  # Conditional expression
+    result_dict = {f'opt_{i}': p * optimization_factor for i, p in enumerate(processed)}  # Dictionary operation
+    
+    final_calc = sum(result_dict.values()) // len(result_dict)
+    return final_calc
+
+# Main execution with multiple interference layers
+initial_base = 24
+modifiers = {1: 7, 2: 12, 3: 4, 4: 9, 5: 15}
+
+stage_one = process_sequence(initial_base, modifiers)
+stage_two = stage_one + 18 if stage_one % 3 == 0 else stage_one - 9
+misleading_var = stage_two * 2  # Misleading computation
+
+computed_values = [stage_one, stage_two, misleading_var, 42]
+optimized_result = final_process(computed_values)
+
+print(f"Target result: {optimized_result}")

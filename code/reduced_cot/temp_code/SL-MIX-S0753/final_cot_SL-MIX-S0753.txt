@@ -1,0 +1,35 @@
+Target: Find the value of variable final_balance after [line 24] executes
+
+[line 3]  base_amount = 1000
+Assign: base_amount = 1000
+[line 7]  processed = operations[1:-1]
+Compute: operations[1:-1], where operations=[500, -200, 300, -150, 100, ...] (an unknown source) = [-200, 300, -150, 100, -50]
+[line 8]  running_total = base_amount
+Compute: base_amount, where base_amount=1000 (defined at [line 3]) = 1000
+[line 14]  for amount in processed:
+Loop Start: amount takes its first value -200
+[line 15]  if amount > 0:
+Condition: True, entering 'if' block
+[line 18]  running_total -= abs(amount)
+Update: running_total changed from 1000 (defined at defined at [line 8]) to 1000-abs(amount) = 800
+[line 14]  for amount in processed:
+Loop Iteration: amount is now 300 (iteration 2)
+[line 15]  if amount > 0:
+Condition: True, entering 'if' block
+[line 16]  running_total += amount
+Update: running_total changed from 800 (defined at defined at [line 18]) to 800+amount = 1100
+... [Line 14] repeats 2 more times ...
+... [Line 14] repeats 2 more times ...
+... [Line 14] repeats 2 more times ...
+[line 14]  for amount in processed:
+Loop Iteration: amount is now -50 (iteration 5)
+[line 15]  if amount > 0:
+Condition: True, entering 'if' block
+[line 18]  running_total -= abs(amount)
+Update: running_total changed from 1050 (defined at defined at [line 16]) to 1050-abs(amount) = 1000
+[line 14]  for amount in processed:
+Loop End: Iteration finished
+[line 24]  final_balance = running_total
+Compute: running_total, where running_total=1000 (defined at [line 18]) = 1000
+
+Answer: final_balance = 1000 (last updated on defined at [line 24])

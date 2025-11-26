@@ -1,35 +1,52 @@
-def process_network_packet():
-    # Initial packet data as hex values
-    raw_packets = [0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
+import itertools
+
+def compute_parity_mask(bits):
+    irrelevant_mask = 0b11011010  # Distractor variable
+    temp_sum = sum((bits >> i) & 1 for i in range(8))
+    return temp_sum % 2
+
+def calculate_data_offset(values):
+    offset_accumulator = 0
+    for i, val in enumerate(values):
+        offset_accumulator ^= (val << (i % 4))  # Misleading computation
+    return offset_accumulator % 16
+
+def process_checksum(data_sequence):
+    # Main processing logic with multiple intermediate steps
+    prime_filter = lambda x: x % 2 != 0 and x % 3 != 0  # Relevant lambda
+    filtered_primes = list(filter(prime_filter, data_sequence))
     
-    # Step 1: Apply XOR chaining with rotating key
-    xor_key = 0x7F
-    chained_values = []
-    for i, packet in enumerate(raw_packets):
-        rotated_key = ((xor_key << (i % 5)) | (xor_key >> (8 - (i % 5)))) & 0xFF
-        chained_value = packet ^ rotated_key
-        chained_values.append(chained_value)
+    # Distractor operations
+    redundant_set = set(data_sequence) | {255, 128, 64}
+    unused_combo = list(itertools.combinations(redundant_set, 2))  # Unused itertools
     
-    # Step 2: Filter unique values using set operations
-    unique_packets = list(set(chained_values))
+    # Core computation chain
+    parity_results = [compute_parity_mask(x) for x in filtered_primes]
+    offset_value = calculate_data_offset(filtered_primes)
     
-    # Step 3: Apply arithmetic transformation with lambda
-    transform = lambda x: (x * 3 + 7) % 256
-    transformed_packets = [transform(p) for p in unique_packets]
+    # Misleading intermediate result
+    misleading_sum = sum(parity_results) * 2 + offset_value
     
-    # Step 4: Compute hash-based identifier for the packet group
-    packet_string = ''.join([hex(p)[2:] for p in transformed_packets])
-    hash_id = sum(ord(c) for c in packet_string) & 0xFF
+    # Final computation (actual answer path)
+    checksum_base = sum(filtered_primes) & 0xFF
+    final_checksum = (checksum_base ^ offset_value) | (misleading_sum & 0x0F)
     
-    # Step 5: Final checksum calculation using bitwise operations
-    checksum_components = [p ^ hash_id for p in transformed_packets]
-    intermediate_sum = sum(checksum_components) & 0xFFFF
-    
-    # Step 6: Apply final transformation mixing arithmetic and bitwise ops
-    final_checksum = ((intermediate_sum >> 8) & 0xFF) | ((intermediate_sum & 0xFF) << 8)
+    # Dead code path
+    if misleading_sum > 100:
+        dead_result = final_checksum + 50  # Never executed
+    else:
+        dead_result = final_checksum - 25  # Never executed
     
     return final_checksum
 
-# Execute the packet processing pipeline
-final_checksum = process_network_packet()
-print(f"Result: {final_checksum}")
+# Main execution
+initial_data = [17, 23, 29, 31, 37, 41, 43, 47, 53]
+additional_data = [61, 67, 71]  # Distractor data
+combined_stream = initial_data + additional_data
+
+# Multiple irrelevant variables
+temp_buffer = [x * 2 for x in combined_stream]
+unused_counter = len([x for x in temp_buffer if x > 80])
+
+final_result = process_checksum(initial_data)
+print(f"Result: {final_result}")

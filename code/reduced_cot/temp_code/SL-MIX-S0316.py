@@ -1,40 +1,30 @@
-from functools import reduce
+from collections import Counter
 
-def transform_identifier(traffic_id):
-    # Convert hex to integer
-    numeric_id = int(traffic_id, 16)
-    
-    # Apply bitwise transformations
-    step1 = numeric_id ^ 0xFFFF  # XOR with mask
-    step2 = (step1 >> 4) & 0x0FFF  # Right shift and mask
-    
-    # Create mapping dictionaries
-    hex_mapping = {hex(i)[-1]: i for i in range(16)}
-    transformed_mapping = {k: v*3 + 7 for k, v in hex_mapping.items()}
-    merged_dict = {**hex_mapping, **transformed_mapping}
-    
-    # Apply logical conditions
-    condition_a = (step2 & 0x0F00) != 0
-    condition_b = (step2 & 0x00F0) > 0x10
-    condition_c = not (step2 & 0x000F == 0)
-    
-    # Functional transformation
-    hex_chars = [c for c in hex(step2)[2:].upper()]
-    mapped_values = list(map(lambda x: merged_dict.get(x, 0), hex_chars))
-    filtered_values = list(filter(lambda x: x > 10, mapped_values))
-    
-    # Calculate security score
-    base_score = reduce(lambda x, y: x + y, filtered_values, 0) if filtered_values else 0
-    
-    # Apply final logical combination
-    if condition_a and (condition_b or condition_c):
-        final_security_score = base_score * 2 + 0x100
-    else:
-        final_security_score = base_score // 2 - 0x50
-    
-    return final_security_score
+# Process sensor data readings
+sensor_readings = [15, 23, 15, 42, 23, 15, 18, 42, 42, 23]
+reading_frequency = Counter(sensor_readings)
 
-# Process the network traffic
-network_identifier = '0x3A7F'
-final_security_score = transform_identifier(network_identifier)
-print(f"Result: {final_security_score}")
+# Calculate frequency metrics
+most_common_reading = reading_frequency.most_common(1)[0][0]
+frequency_sum = sum(reading_frequency.values())
+
+# Create result mapping with some redundant calculations
+result_mapping = {}
+for reading, count in reading_frequency.items():
+    # Some intermediate calculations that don't affect final result
+    temp_adjustment = reading * 2 - 10
+    redundant_check = temp_adjustment > 30
+    
+    # Actual relevant calculation
+    if count >= 2:
+        result_mapping[reading] = reading * count + 5
+
+# Find the maximum key and corresponding value
+if result_mapping:
+    max_key = max(result_mapping.keys())
+    final_output = result_mapping.get(max_key, -1)
+else:
+    final_output = -1
+
+# Print the target result
+print(f"Target result: {final_output}")

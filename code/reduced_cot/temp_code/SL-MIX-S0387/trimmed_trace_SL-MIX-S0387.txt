@@ -1,0 +1,27 @@
+25
+final_metric
+---
+1 data_samples = [12.5, 8.3, 15.7, 9.1, 11.4]
+1 ['data_samples'] ['[12.5, 8.3, 15.7, 9.1, 11.4]']
+5 base_value = sum(data_samples) / len(data_samples)
+5 ['data_samples', 'base_value'] ['[12.5, 8.3, 15.7, 9.1, 11.4]', '11.4']
+6 scaling_factor = 1.25 if base_value > 10 else 0.8
+6 ['data_samples', 'base_value', 'scaling_factor'] ['[12.5, 8.3, 15.7, 9.1, 11.4]', '11.4', '1.25']
+7 processed_mean = base_value * scaling_factor
+7 ['data_samples', 'base_value', 'scaling_factor', 'processed_mean'] ['[12.5, 8.3, 15.7, 9.1, 11.4]', '11.4', '1.25', '14.25']
+10 max_sample = max(data_samples)
+10 ['data_samples', 'processed_mean', 'max_sample'] ['[12.5, 8.3, 15.7, 9.1, 11.4]', '14.25', '15.7']
+11 min_sample = min(data_samples)
+11 ['data_samples', 'processed_mean', 'max_sample', 'min_sample'] ['[12.5, 8.3, 15.7, 9.1, 11.4]', '14.25', '15.7', '8.3']
+12 range_calc = max_sample - min_sample
+12 ['processed_mean', 'max_sample', 'min_sample', 'range_calc'] ['14.25', '15.7', '8.3', '7.399999999999999']
+13 normalized_range = range_calc / 2.0
+13 ['processed_mean', 'range_calc', 'normalized_range'] ['14.25', '7.399999999999999', '3.6999999999999993']
+16 validation_flag = processed_mean > 12.0
+16 ['processed_mean', 'normalized_range', 'validation_flag'] ['14.25', '3.6999999999999993', 'True']
+17 primary_score = int(processed_mean * 100)
+17 ['processed_mean', 'normalized_range', 'validation_flag', 'primary_score'] ['14.25', '3.6999999999999993', 'True', '1425']
+18 secondary_score = int(normalized_range * 50)
+18 ['normalized_range', 'validation_flag', 'primary_score', 'secondary_score'] ['3.6999999999999993', 'True', '1425', '184']
+25 final_metric = primary_score if validation_flag else secondary_score
+25 ['validation_flag', 'primary_score', 'secondary_score', 'final_metric'] ['True', '1425', '184', '1425']

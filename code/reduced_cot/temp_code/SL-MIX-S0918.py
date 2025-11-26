@@ -1,23 +1,41 @@
-from collections import namedtuple
-import numpy as np
+def processing_phase(analysis_data, flags):
+    temp_calc = (flags['start'] + analysis_data['base']) * 3
+    if flags['enable_filter']:
+        temp_calc -= analysis_data['offset'] // 2
+    else:
+        temp_calc += 17  # dead code path
+    
+    mask_ops = temp_calc & 0xFF
+    step_result = mask_ops if analysis_data['threshold'] > 50 else mask_ops ^ 0x7F
+    
+    intermediate = step_result << 2
+    validation_check = intermediate % 7
+    if validation_check == 0:
+        return intermediate + flags['adjustment']
+    else:
+        return intermediate - flags['adjustment'] * 2
 
-# Climate data structure
-MonthData = namedtuple('MonthData', ['precipitation', 'weight'])
+def data_analysis_phase(input_values):
+    processed_values = [x * 2 if x > 10 else x + 5 for x in input_values]
+    slice_result = processed_values[1:4]
+    aggregation = sum(slice_result) if len(slice_result) == 3 else 0
+    
+    base_value = aggregation // 3
+    threshold_check = base_value if base_value % 2 == 0 else base_value + 1
+    
+    return {'base': base_value, 'offset': aggregation, 'threshold': threshold_check}
 
-# Monthly precipitation measurements (mm) with temporal weights
-climate_readings = [
-    MonthData(precipitation=87.5, weight=1.0),
-    MonthData(precipitation=92.3, weight=1.2),
-    MonthData(precipitation=78.9, weight=1.4),
-    MonthData(precipitation=105.2, weight=1.6),
-    MonthData(precipitation=93.8, weight=1.8)
-]
+# Main execution
+input_data = [8, 15, 22, 19, 11, 25]
+config_flags = {'start': 12, 'enable_filter': True, 'adjustment': 7}
 
-# Calculate weighted sum using functional approach
-weighted_values = map(lambda reading: reading.precipitation * reading.weight, climate_readings)
-weight_sum = sum(weighted_values)
-total_weights = sum(map(lambda reading: reading.weight, climate_readings))
+# Irrelevant computations
+irrelevant_sum = sum(x ** 2 for x in input_data[:3])
+misleading_temp = irrelevant_sum // 5 + 3
+dead_code_var = misleading_temp * 2  # never used
 
-# Compute final climate index
-climate_index = round(weight_sum / total_weights, 2)
-print(f"Result: {climate_index}")
+# Actual processing
+data_analysis = data_analysis_phase(input_data)
+final_output = processing_phase(data_analysis, config_flags)
+
+print(f"Result: {final_output}")

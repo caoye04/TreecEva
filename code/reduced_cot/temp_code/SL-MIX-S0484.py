@@ -1,15 +1,13 @@
-def temperature_correction(func):
-    def wrapper(temp):
-        corrected = func(temp)
-        return corrected + 2.5
-    return wrapper
+product_categories = {
+    'electronics': {'laptop', 'phone', 'tablet'},
+    'home': {'lamp', 'chair', 'table'},
+    'office': {'desk', 'chair', 'laptop'}
+}
 
-@temperature_correction
-def raw_temperature(temp):
-    return temp
+all_products = set()
+for category_items in product_categories.values():
+    all_products.update(category_items)
 
-hourly_readings = [20, 22, 19, 25, 24]
-corrected_readings = list(map(raw_temperature, hourly_readings))
-valid_readings = list(filter(lambda x: x > 22, corrected_readings))
-corrected_average = sum(valid_readings) / len(valid_readings) if valid_readings else 0
-print(f"Result: {corrected_average}")
+unique_products = all_products
+final_count = len(unique_products)
+print(f"Result: {final_count}")

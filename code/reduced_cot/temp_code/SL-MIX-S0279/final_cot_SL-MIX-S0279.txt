@@ -1,0 +1,36 @@
+Target: Find the value of variable final_computation after [line 59] executes
+
+[line 39]  data_nodes = [15, 22, 8, 31, 19]
+Compute: [15, 22, 8, 31, 19] = [15, 22, 8, 31, 19]
+[line 40]  routing_table = {22: 5, 31: 8, 15: 3}
+Compute: {22: 5, 31: 8, 15: 3} = {22: 5, 31: 8, 15: 3}
+[line 41]  active_connections = [22, 31, 15]
+Compute: [22, 31, 15] = [22, 31, 15]
+[line 53]  final_computation = network_analysis(data_nodes, routing_table, active_connections)
+Call function network_analysis(data_nodes=[15, 22, 8, 31, 19] (defined at [line 39]), routing_table={22: 5, 31: 8, 15: 3} (defined at [line 40]), active_connections=[22, 31, 15] (defined at [line 41]))
+[line 9]  node_set = set(nodes)
+Call function set(nodes=[15, 22, 8, 31, 19] (an unknown source))
+[line 10]  routing_keys = set(routing.keys())
+Call function set(routing.keys())
+[line 11]  connection_set = set(connections)
+Call function set(connections=[22, 31, 15] (an unknown source))
+[line 18]  active_nodes = node_set & connection_set
+Compute: node_set & connection_set, where node_set={8, 15, 19, 22, 31} (defined at [line 9]), connection_set={15, 22, 31} (defined at [line 11]) = {31, 22, 15}
+[line 19]  routing_matches = routing_keys & connection_set
+Compute: routing_keys & connection_set, where routing_keys={15, 22, 31} (defined at [line 10]), connection_set={15, 22, 31} (defined at [line 11]) = {31, 22, 15}
+[line 26]  if len(active_nodes) > 2:
+Condition: True, entering 'if' block
+[line 27]  base_value = sum(active_nodes)
+Call function sum(active_nodes={31, 22, 15} (defined at [line 18]))
+[line 28]  routing_factor = sum(routing_matches)
+Call function sum(routing_matches={31, 22, 15} (defined at [line 19]))
+[line 29]  scaling_factor = len(routing) / len(nodes) if nodes else 1
+Compute: len(routing) / len(nodes) if nodes else 1, where routing={22: 5, 31: 8, 15: 3} (an unknown source), nodes=[15, 22, 8, 31, 19] (an unknown source) = 0.6
+[line 30]  result = base_value + routing_factor * scaling_factor
+Compute: base_value + routing_factor * scaling_factor, where base_value=68 (defined at [line 27]), routing_factor=68 (defined at [line 28]), scaling_factor=0.6 (defined at [line 29]) = 108.8
+[line 35]  return int(result)
+Return: int(result)
+[line 59]  print(f"Target result: {final_computation}")
+Output: f"Target result: {final_computation}"
+
+Answer: final_computation = 108 (last updated on defined at [line 53])

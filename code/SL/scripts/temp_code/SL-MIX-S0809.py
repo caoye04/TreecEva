@@ -1,3 +1,5 @@
-palette = ['FF5733', '33FF57', '3357FF', 'FF33F5', '5733FF']
-count = sum(1 for color in palette if int(color[:2], 16) > 128)
-print(f"Result: {count}")
+inventory = {'widgets': 45, 'gadgets': 78, 'tools': 23, 'parts': 91}
+threshold = 50
+filtered_items = {k: v for k, v in inventory.items() if v > threshold}
+total_inventory = sum(filtered_items.values())
+print(f"Result: {total_inventory}")

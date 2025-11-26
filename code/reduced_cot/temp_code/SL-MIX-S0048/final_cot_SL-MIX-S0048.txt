@@ -1,36 +1,27 @@
-Target: Find the value of variable portfolio_risk_score after [line 30] executes
+Target: Find the value of variable final_hash after [line 16] executes
 
-[line 17]  for asset, (value, volatility, correlation) in assets.items()
-(Missing param: 'iter_var')
-[line 17]  for asset, (value, volatility, correlation) in assets.items()
-Loop End: Iteration finished
-[line 18]  if value > 50000 and volatility > 0.2}
-Condition: True, entering 'if' block
-[line 17]  for asset, (value, volatility, correlation) in assets.items()
-(Missing param: 'iter_var')
-[line 18]  if value > 50000 and volatility > 0.2}
-Condition: True, entering 'if' block
-[line 17]  for asset, (value, volatility, correlation) in assets.items()
-(Missing param: 'iter_var')
-[line 18]  if value > 50000 and volatility > 0.2}
-Condition: True, entering 'if' block
-[line 17]  for asset, (value, volatility, correlation) in assets.items()
-(Missing param: 'iter_var')
-[line 18]  if value > 50000 and volatility > 0.2}
-Condition: True, entering 'if' block
-[line 17]  for asset, (value, volatility, correlation) in assets.items()
-Loop End: Iteration finished
-[line 21]  high_risk_flag = len([v for v in assets.values() if v[1] > 0.4]) > 0
-Compute: len([v for v in assets.values() if v[1] > 0.4]) > 0, where v=(120000, 0.25, 0.8) (an unknown source), assets={AAPL: (120000, 0.25, 0.8), GOOGL: (95000, 0.3, 0.7), TSLA: (75000, 0.45, 0.9), ...} (an unknown source) = ?
-[line 22]  market_condition_factor = 1.1 if high_risk_flag and len(assets) >= 4 else 1.0
-Compute: 1.1 if high_risk_flag and len(assets) >= 4 else 1.0, where high_risk_flag=True (defined at [line 21]), assets={AAPL: (120000, 0.25, 0.8), GOOGL: (95000, 0.3, 0.7), TSLA: (75000, 0.45, 0.9), ...} (an unknown source) = 1.1
-[line 25]  raw_risks = list(weighted_risks.values())
-Call function list(weighted_risks.values())
-[line 26]  avg_risk = statistics.mean(raw_risks)
-(Missing param: 'func_name')
-[line 27]  risk_variance = statistics.variance(raw_risks) if len(raw_risks) > 1 else 0
-Compute: statistics.variance(raw_risks) if len(raw_risks) > 1 else 0, where raw_risks=[0.24, 0.189, 0.36450000000000005, 0.252] (defined at [line 25]) = 0.0054725625000000035
-[line 30]  portfolio_risk_score = (avg_risk * market_condition_factor) + (risk_variance * 10)
-Compute: (avg_risk * market_condition_factor) + (risk_variance * 10), where avg_risk=0.261375 (an unknown source), market_condition_factor=1.1 (defined at [line 22]), risk_variance=0.0054725625000000035 (defined at [line 27]) = 0.3422381250000001
+[line 15]  data_blocks = [0xAB, 0xCD, 0xEF, 0x12]
+Compute: [0xAB, 0xCD, 0xEF, 0x12] = [171, 205, 239, 18]
+[line 16]  final_hash = compute_checksum(data_blocks)
+Call function compute_checksum(data_blocks=[171, 205, 239, 18] (defined at [line 15]))
+[line 1]  def compute_checksum(blocks):
+Enter function compute_checksum: blocks=[171, 205, 239, 18] (data_blocks defined at [line 15])
+  [line 2]  data_blocks = [0xAB, 0xCD, 0xEF, 0x12]
+  Compute: [0xAB, 0xCD, 0xEF, 0x12] = [171, 205, 239, 18]
+  [line 4]  checksum = 0
+  Assign: checksum = 0
+  [line 7]  for block in data_blocks:
+  Loop Start: block takes its first value 171
+  [line 7]  for block in data_blocks:
+  Loop Iteration: block is now 205 (iteration 2)
+  [line 7]  for block in data_blocks:
+  Loop Iteration: block is now 239 (iteration 3)
+  [line 7]  for block in data_blocks:
+  Loop Iteration: block is now 18 (iteration 4)
+  [line 7]  for block in data_blocks:
+  Loop End: Iteration finished
+  [line 13]  return checksum
+  Return: checksum=155 (defined at [line 4])
+Function compute_checksum returns 155
 
-Answer: portfolio_risk_score = 0.3422381250000001 (last updated on defined at [line 30])
+Answer: final_hash = 155 (last updated on defined at [line 16])

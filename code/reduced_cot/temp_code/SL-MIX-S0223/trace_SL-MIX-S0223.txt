@@ -1,408 +1,381 @@
-1 import hashlib
+1 import itertools
 1 [] []
-2 import heapq
-2 [] []
-10 dna_strand = "ATGCCGTAATGCCGTAATGCCGTAATGCCGTA"
-10 ['dna_strand'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}]
-11 palindromic_hashes = set()
-11 ['dna_strand', 'palindromic_hashes'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}]
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}, {'_type': 'str', '_value': 'ATGC'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 0}, {'_type': 'str', '_value': 'ATGC'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 1}, {'_type': 'str', '_value': 'ATGC'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 1}, {'_type': 'str', '_value': 'TGCC'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 1}, {'_type': 'str', '_value': 'TGCC'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'TGCC'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'GCCG'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
-16         palindromic_hashes.add(hash_subsequence(subseq))
-16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [], '_len': 0}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
-4 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
-DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
-5 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 45667}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 3}, {'_type': 'str', '_value': 'GCCG'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 3}, {'_type': 'str', '_value': 'CCGT'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 3}, {'_type': 'str', '_value': 'CCGT'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 4}, {'_type': 'str', '_value': 'CCGT'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 4}, {'_type': 'str', '_value': 'CGTA'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 4}, {'_type': 'str', '_value': 'CGTA'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 5}, {'_type': 'str', '_value': 'CGTA'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 5}, {'_type': 'str', '_value': 'GTAA'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 5}, {'_type': 'str', '_value': 'GTAA'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 6}, {'_type': 'str', '_value': 'GTAA'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 6}, {'_type': 'str', '_value': 'TAAT'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 6}, {'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
-16         palindromic_hashes.add(hash_subsequence(subseq))
-16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 45667}], '_len': 1}, {'_type': 'int', '_value': 6}, {'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
-4 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
-DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
-5 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 805730}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': 'TAAT'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': 'AATG'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 7}, {'_type': 'str', '_value': 'AATG'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'AATG'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'AATG'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 8}, {'_type': 'str', '_value': 'AATG'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 8}, {'_type': 'str', '_value': 'ATGC'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 8}, {'_type': 'str', '_value': 'ATGC'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'ATGC'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'TGCC'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 9}, {'_type': 'str', '_value': 'TGCC'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 10}, {'_type': 'str', '_value': 'TGCC'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 10}, {'_type': 'str', '_value': 'GCCG'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 10}, {'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
-16         palindromic_hashes.add(hash_subsequence(subseq))
-16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 10}, {'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
-4 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
-DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
-5 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 45667}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'GCCG'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'CCGT'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'CCGT'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 12}, {'_type': 'str', '_value': 'CCGT'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 12}, {'_type': 'str', '_value': 'CGTA'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 12}, {'_type': 'str', '_value': 'CGTA'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 13}, {'_type': 'str', '_value': 'CGTA'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 13}, {'_type': 'str', '_value': 'GTAA'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 13}, {'_type': 'str', '_value': 'GTAA'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 14}, {'_type': 'str', '_value': 'GTAA'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 14}, {'_type': 'str', '_value': 'TAAT'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 14}, {'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
-16         palindromic_hashes.add(hash_subsequence(subseq))
-16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 14}, {'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
-4 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
-DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
-5 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 805730}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 15}, {'_type': 'str', '_value': 'TAAT'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 15}, {'_type': 'str', '_value': 'AATG'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 15}, {'_type': 'str', '_value': 'AATG'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'AATG'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'AATG'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 16}, {'_type': 'str', '_value': 'AATG'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 16}, {'_type': 'str', '_value': 'ATGC'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 16}, {'_type': 'str', '_value': 'ATGC'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 17}, {'_type': 'str', '_value': 'ATGC'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 17}, {'_type': 'str', '_value': 'TGCC'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 17}, {'_type': 'str', '_value': 'TGCC'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 18}, {'_type': 'str', '_value': 'TGCC'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 18}, {'_type': 'str', '_value': 'GCCG'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 18}, {'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
-16         palindromic_hashes.add(hash_subsequence(subseq))
-16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 18}, {'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
-4 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
-DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
-5 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 45667}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 19}, {'_type': 'str', '_value': 'GCCG'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 19}, {'_type': 'str', '_value': 'CCGT'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 19}, {'_type': 'str', '_value': 'CCGT'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 20}, {'_type': 'str', '_value': 'CCGT'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 20}, {'_type': 'str', '_value': 'CGTA'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 20}, {'_type': 'str', '_value': 'CGTA'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 21}, {'_type': 'str', '_value': 'CGTA'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 21}, {'_type': 'str', '_value': 'GTAA'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 21}, {'_type': 'str', '_value': 'GTAA'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'GTAA'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 22}, {'_type': 'str', '_value': 'GTAA'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 22}, {'_type': 'str', '_value': 'TAAT'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 22}, {'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
-16         palindromic_hashes.add(hash_subsequence(subseq))
-16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 22}, {'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
-4 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
-DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
-5 ['subseq'] [{'_type': 'str', '_value': 'TAAT'}]
-FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 805730}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 23}, {'_type': 'str', '_value': 'TAAT'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 23}, {'_type': 'str', '_value': 'AATG'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 23}, {'_type': 'str', '_value': 'AATG'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'AATG'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'AATG'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 24}, {'_type': 'str', '_value': 'AATG'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 24}, {'_type': 'str', '_value': 'ATGC'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 24}, {'_type': 'str', '_value': 'ATGC'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'ATGC'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 25}, {'_type': 'str', '_value': 'ATGC'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 25}, {'_type': 'str', '_value': 'TGCC'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 25}, {'_type': 'str', '_value': 'TGCC'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'TGCC'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 26}, {'_type': 'str', '_value': 'TGCC'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 26}, {'_type': 'str', '_value': 'GCCG'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 26}, {'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': True}
-16         palindromic_hashes.add(hash_subsequence(subseq))
-16 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 26}, {'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_ENTER 4 hash_subsequence def hash_subsequence(subseq):
-4 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
-DEPTH_2 5     return int(hashlib.md5(subseq.encode()).hexdigest()[:8], 16) % 1000000
-5 ['subseq'] [{'_type': 'str', '_value': 'GCCG'}]
-FUNCTION_RETURN 5 hash_subsequence {'_type': 'int', '_value': 45667}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 27}, {'_type': 'str', '_value': 'GCCG'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 27}, {'_type': 'str', '_value': 'CCGT'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 27}, {'_type': 'str', '_value': 'CCGT'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'CCGT'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CCGT'}]
-14     subseq = dna_strand[i:i+4]
-14 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}]
-15     if is_palindrome(subseq):
-15 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}]
-FUNCTION_ENTER 7 is_palindrome def is_palindrome(s):
-7 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
-DEPTH_2 8     return s == s[::-1]
-8 ['s'] [{'_type': 'str', '_value': 'CGTA'}]
-FUNCTION_RETURN 8 is_palindrome {'_type': 'bool', '_value': False}
-13 for i in range(len(dna_strand) - 3):
-13 ['dna_strand', 'palindromic_hashes', 'i', 'subseq'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}]
-19 sorted_hashes = sorted(list(palindromic_hashes))
-19 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}]
-22 hash_heap = [-x for x in sorted_hashes]
-22 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'x'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'int', '_value': 45667}]
-22 hash_heap = [-x for x in sorted_hashes]
-22 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'x'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'int', '_value': 805730}]
-22 hash_heap = [-x for x in sorted_hashes]
-22 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -45667}, {'_type': 'int', '_value': -805730}], '_len': 2}]
-23 heapq.heapify(hash_heap)
-23 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -805730}, {'_type': 'int', '_value': -45667}], '_len': 2}]
-26 signature_components = []
-26 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -805730}, {'_type': 'int', '_value': -45667}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}]
-27 while len(hash_heap) > 1:
-27 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -805730}, {'_type': 'int', '_value': -45667}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}]
-28     first = -heapq.heappop(hash_heap)
-28 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -45667}], '_len': 1}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 805730}]
-29     second = -heapq.heappop(hash_heap)
-29 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}]
-30     combined = (first ^ second) & 0xFFFF  # XOR and mask to 16 bits
-30 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}]
-31     heapq.heappush(hash_heap, -combined)
-31 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -63745}], '_len': 1}, {'_type': 'list', '_items': [], '_len': 0}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}]
-32     signature_components.append(combined)
-32 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -63745}], '_len': 1}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 63745}], '_len': 1}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}]
-27 while len(hash_heap) > 1:
-27 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -63745}], '_len': 1}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 63745}], '_len': 1}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}]
-34 final_signature = sum(signature_components) % 10000
-34 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined', 'final_signature'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -63745}], '_len': 1}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 63745}], '_len': 1}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}, {'_type': 'int', '_value': 3745}]
-35 print(f"Result: {final_signature}")
-35 ['dna_strand', 'palindromic_hashes', 'i', 'subseq', 'sorted_hashes', 'hash_heap', 'signature_components', 'first', 'second', 'combined', 'final_signature'] [{'_type': 'str', '_value': 'ATGCCGTAATGCCGTAATGCCGTAATGCCGTA'}, {'_type': 'set', '_items': [{'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}], '_len': 2}, {'_type': 'int', '_value': 28}, {'_type': 'str', '_value': 'CGTA'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 805730}], '_len': 2}, {'_type': 'list', '_items': [{'_type': 'int', '_value': -63745}], '_len': 1}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 63745}], '_len': 1}, {'_type': 'int', '_value': 805730}, {'_type': 'int', '_value': 45667}, {'_type': 'int', '_value': 63745}, {'_type': 'int', '_value': 3745}]
+4 text_sample = "algorithmic optimization requires careful complexity analysis"
+4 ['text_sample'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}]
+7 vowels = 'aeiou'
+7 ['text_sample', 'vowels'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}, {'_type': 'str', '_value': 'aeiou'}]
+8 char_chain = itertools.chain.from_iterable(text_sample)
+8 ['text_sample', 'vowels', 'char_chain'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}, {'_type': 'str', '_value': 'aeiou'}, {'_type': 'unknown', '_repr': '<itertools.chain object at 0x00000237B30E8820>'}]
+9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['text_sample', 'vowels', 'char_chain', 'vowel_filter'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}, {'_type': 'str', '_value': 'aeiou'}, {'_type': 'unknown', '_repr': '<itertools.chain object at 0x00000237B30E8820>'}, {'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}]
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}]
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'a'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'a'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'a'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'l'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'l'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'g'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'g'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'o'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'o'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'o'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'r'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'r'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'i'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 't'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 't'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'h'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'h'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'm'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'm'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'i'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'c'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'c'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': ' '}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': ' '}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'o'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'o'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'o'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'p'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'p'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 't'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 't'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'i'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'm'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'm'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'i'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'z'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'z'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'a'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'a'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'a'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 't'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 't'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'i'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'o'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'o'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'o'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'n'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'n'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': ' '}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': ' '}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'r'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'r'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'e'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'e'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'e'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'q'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'q'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'u'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'u'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'u'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'i'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'r'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'r'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'e'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'e'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'e'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 's'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 's'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': ' '}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': ' '}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'c'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'c'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'a'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'a'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'a'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'r'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'r'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'e'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'e'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'e'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'f'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'f'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'u'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'u'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'u'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'l'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'l'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': ' '}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': ' '}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'c'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'c'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'o'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'o'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'o'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'm'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'm'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'p'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'p'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'l'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'l'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'e'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'e'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'e'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'x'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'x'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'i'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 't'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 't'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'y'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'y'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': ' '}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': ' '}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'a'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'a'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'a'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'n'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'n'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'a'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'a'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'a'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'l'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'l'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'y'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'y'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 's'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 's'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 'i'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': True}
+10 vowel_count = sum(1 for _ in vowel_filter)
+10 ['.0', '_'] [{'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'str', '_value': 'i'}]
+FUNCTION_ENTER 9 <lambda> vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 's'}]
+DEPTH_2 9 vowel_filter = filter(lambda c: c in vowels, char_chain)
+9 ['c'] [{'_type': 'str', '_value': 's'}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'bool', '_value': False}
+13 total_chars = len(text_sample.replace(' ', ''))
+13 ['text_sample', 'vowels', 'char_chain', 'vowel_filter', 'vowel_count', 'total_chars'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}, {'_type': 'str', '_value': 'aeiou'}, {'_type': 'unknown', '_repr': '<itertools.chain object at 0x00000237B30E8820>'}, {'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 56}]
+14 consonant_count = total_chars - vowel_count
+14 ['text_sample', 'vowels', 'char_chain', 'vowel_filter', 'vowel_count', 'total_chars', 'consonant_count'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}, {'_type': 'str', '_value': 'aeiou'}, {'_type': 'unknown', '_repr': '<itertools.chain object at 0x00000237B30E8820>'}, {'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 56}, {'_type': 'int', '_value': 33}]
+18     'vowel_ratio': vowel_count / total_chars,
+18 ['text_sample', 'vowels', 'char_chain', 'vowel_filter', 'vowel_count', 'total_chars', 'consonant_count'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}, {'_type': 'str', '_value': 'aeiou'}, {'_type': 'unknown', '_repr': '<itertools.chain object at 0x00000237B30E8820>'}, {'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 56}, {'_type': 'int', '_value': 33}]
+19     'consonant_ratio': consonant_count / total_chars
+19 ['text_sample', 'vowels', 'char_chain', 'vowel_filter', 'vowel_count', 'total_chars', 'consonant_count'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}, {'_type': 'str', '_value': 'aeiou'}, {'_type': 'unknown', '_repr': '<itertools.chain object at 0x00000237B30E8820>'}, {'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 56}, {'_type': 'int', '_value': 33}]
+17 char_analysis = {
+17 ['text_sample', 'vowels', 'char_chain', 'vowel_filter', 'vowel_count', 'total_chars', 'consonant_count', 'char_analysis'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}, {'_type': 'str', '_value': 'aeiou'}, {'_type': 'unknown', '_repr': '<itertools.chain object at 0x00000237B30E8820>'}, {'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 56}, {'_type': 'int', '_value': 33}, {'_type': 'dict', '_items': {'vowel_ratio': {'_type': 'float', '_value': 0.4107142857142857}, 'consonant_ratio': {'_type': 'float', '_value': 0.5892857142857143}}, '_len': 2}]
+23 char_accumulator = vowel_count * 3 + consonant_count * 2
+23 ['text_sample', 'vowels', 'char_chain', 'vowel_filter', 'vowel_count', 'total_chars', 'consonant_count', 'char_analysis', 'char_accumulator'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}, {'_type': 'str', '_value': 'aeiou'}, {'_type': 'unknown', '_repr': '<itertools.chain object at 0x00000237B30E8820>'}, {'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 56}, {'_type': 'int', '_value': 33}, {'_type': 'dict', '_items': {'vowel_ratio': {'_type': 'float', '_value': 0.4107142857142857}, 'consonant_ratio': {'_type': 'float', '_value': 0.5892857142857143}}, '_len': 2}, {'_type': 'int', '_value': 135}]
+24 final_count = char_accumulator
+24 ['text_sample', 'vowels', 'char_chain', 'vowel_filter', 'vowel_count', 'total_chars', 'consonant_count', 'char_analysis', 'char_accumulator', 'final_count'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}, {'_type': 'str', '_value': 'aeiou'}, {'_type': 'unknown', '_repr': '<itertools.chain object at 0x00000237B30E8820>'}, {'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 56}, {'_type': 'int', '_value': 33}, {'_type': 'dict', '_items': {'vowel_ratio': {'_type': 'float', '_value': 0.4107142857142857}, 'consonant_ratio': {'_type': 'float', '_value': 0.5892857142857143}}, '_len': 2}, {'_type': 'int', '_value': 135}, {'_type': 'int', '_value': 135}]
+26 print(f"Target result: {final_count}")
+26 ['text_sample', 'vowels', 'char_chain', 'vowel_filter', 'vowel_count', 'total_chars', 'consonant_count', 'char_analysis', 'char_accumulator', 'final_count'] [{'_type': 'str', '_value': 'algorithmic optimization requires careful complexity analysis'}, {'_type': 'str', '_value': 'aeiou'}, {'_type': 'unknown', '_repr': '<itertools.chain object at 0x00000237B30E8820>'}, {'_type': 'unknown', '_repr': '<filter object at 0x00000237B30E8370>'}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 56}, {'_type': 'int', '_value': 33}, {'_type': 'dict', '_items': {'vowel_ratio': {'_type': 'float', '_value': 0.4107142857142857}, 'consonant_ratio': {'_type': 'float', '_value': 0.5892857142857143}}, '_len': 2}, {'_type': 'int', '_value': 135}, {'_type': 'int', '_value': 135}]

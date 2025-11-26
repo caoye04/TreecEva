@@ -1,0 +1,42 @@
+Target: Find the value of variable encryption_checksum after [line 45] executes
+
+[line 37]  data_sequence = [45, 128, 77, 201, 63, 92, 144, 31]
+Compute: [45, 128, 77, 201, 63, 92, 144, 31] = [45, 128, 77, 201, 63, ...]
+[line 45]  encryption_checksum = encrypt_data(data_sequence)
+Call function encrypt_data(data_sequence=[45, 128, 77, 201, 63, ...] (defined at [line 37]))
+[line 3]  def encrypt_data(data_values):
+Enter function encrypt_data: data_values=[45, 128, 77, 201, 63, ...] (data_sequence defined at [line 37])
+  [line 9]  checksum = 0
+  Assign: checksum = 0
+  [line 13]  for idx, value in enumerate(data_values):
+  (Missing param: 'iter_var')
+  [line 18]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 19]  checksum += value & 0xFF
+  Update: checksum changed from 0 (defined at defined at [line 9]) to 0+value & 0xFF = 45
+  [line 13]  for idx, value in enumerate(data_values):
+  (Missing param: 'iter_var')
+  [line 18]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 21]  checksum -= value | 0x7F
+  Update: checksum changed from 45 (defined at defined at [line 19]) to 45-value | 0x7F = -210
+... [Line 13] repeats 5 more times ...
+... [Line 13] repeats 5 more times ...
+... [Line 13] repeats 5 more times ...
+  [line 13]  for idx, value in enumerate(data_values):
+  (Missing param: 'iter_var')
+  [line 18]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 21]  checksum -= value | 0x7F
+  Update: checksum changed from -308 (defined at defined at [line 21]) to -308-value | 0x7F = -435
+  [line 13]  for idx, value in enumerate(data_values):
+  Loop End: Iteration finished
+  [line 24]  if checksum > 1000:
+  Condition: True, entering 'if' block
+  [line 29]  checksum = checksum % 256
+  Compute: checksum % 256, where checksum=-435 (defined at [line 21]) = 77
+  [line 34]  return checksum
+  Return: checksum=77 (defined at [line 29])
+Function encrypt_data returns 77
+
+Answer: encryption_checksum = 77 (last updated on defined at [line 45])

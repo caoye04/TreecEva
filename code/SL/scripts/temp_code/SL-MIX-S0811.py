@@ -1,20 +1,25 @@
-from collections import deque
-from itertools import permutations
-import functools
+def process_data(data):
+    # Extract unique elements using set operations
+    unique_values = set(data)
+    
+    # Apply slicing to get subset
+    data_slice = data[2:6]
+    
+    # Simple recursion to calculate sum of unique values
+    def recursive_sum(values):
+        if not values:
+            return 0
+        return values.pop() + recursive_sum(values)
+    
+    # Calculate result
+    base_sum = sum(data_slice)
+    unique_sum = recursive_sum(unique_values.copy())
+    
+    # Final computation
+    result = (base_sum * 2) - (unique_sum // 3)
+    return result
 
-def encode_shift(value, positions):
-    return (value + positions) % 10
-
-cipher_stack = deque([1, 2, 3, 4, 5])  # Stack initialization
-perm_gen = permutations([1, 2, 3], 2)
-transform_lambda = lambda x, y: x * 2 + y
-
-for i in range(3):
-    a, b = next(perm_gen)
-    top_element = cipher_stack.pop()
-    transformed = transform_lambda(top_element, a ^ b)
-    cipher_stack.append(transformed)
-
-final_value = cipher_stack[-1]
-cipher_result = encode_shift(final_value, sum(cipher_stack))
-print(f"Target result: {cipher_result}")
+# Main execution
+initial_data = [8, 3, 5, 8, 2, 7, 5, 1]
+final_result = process_data(initial_data)
+print(f"Result: {final_result}")

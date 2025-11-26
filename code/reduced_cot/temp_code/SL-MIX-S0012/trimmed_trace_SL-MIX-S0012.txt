@@ -1,13 +1,51 @@
-14
-min_safe_distance
+15
+final_balance
 ---
-4 radius_first_bed = 5
-4 ['radius_first_bed'] ['5']
-5 radius_second_bed = 3
-5 ['radius_first_bed', 'radius_second_bed'] ['5', '3']
-6 radius_third_bed = 4
-6 ['radius_first_bed', 'radius_second_bed', 'radius_third_bed'] ['5', '3', '4']
-10 distance_first_to_second = radius_first_bed + radius_second_bed
-10 ['radius_first_bed', 'radius_second_bed', 'radius_third_bed', 'distance_first_to_second'] ['5', '3', '4', '8']
-14 min_safe_distance = distance_first_to_second + radius_third_bed
-14 ['radius_third_bed', 'distance_first_to_second', 'min_safe_distance'] ['4', '8', '12']
+1 initial_balance = 1000
+1 ['initial_balance'] ['1000']
+2 transaction_log = ["deposit:200", "withdrawal:150", "deposit:300", "withdrawal:50"]
+2 ['initial_balance', 'transaction_log'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']"]
+4 total_deposits = 0
+4 ['initial_balance', 'transaction_log', 'total_deposits'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '0']
+5 total_withdrawals = 0
+5 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '0', '0']
+7 for entry in transaction_log:
+7 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '0', '0', "'deposit:200'"]
+8 if entry.startswith("deposit:"):
+8 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '0', '0', "'deposit:200'"]
+9 amount = int(entry.split(":")[1])
+9 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '0', '0', "'deposit:200'", '200']
+10 total_deposits += amount
+10 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '200', '0', "'deposit:200'", '200']
+7 for entry in transaction_log:
+7 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '200', '0', "'withdrawal:150'", '200']
+8 if entry.startswith("deposit:"):
+8 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '200', '0', "'withdrawal:150'", '200']
+11 elif entry.startswith("withdrawal:"):
+11 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '200', '0', "'withdrawal:150'", '200']
+12 amount = int(entry.split(":")[1])
+12 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '200', '0', "'withdrawal:150'", '150']
+13 total_withdrawals += amount
+13 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '200', '150', "'withdrawal:150'", '150']
+7 for entry in transaction_log:
+7 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '200', '150', "'deposit:300'", '150']
+8 if entry.startswith("deposit:"):
+8 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '200', '150', "'deposit:300'", '150']
+9 amount = int(entry.split(":")[1])
+9 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '200', '150', "'deposit:300'", '300']
+10 total_deposits += amount
+10 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '500', '150', "'deposit:300'", '300']
+7 for entry in transaction_log:
+7 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '500', '150', "'withdrawal:50'", '300']
+8 if entry.startswith("deposit:"):
+8 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '500', '150', "'withdrawal:50'", '300']
+11 elif entry.startswith("withdrawal:"):
+11 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '500', '150', "'withdrawal:50'", '300']
+12 amount = int(entry.split(":")[1])
+12 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '500', '150', "'withdrawal:50'", '50']
+13 total_withdrawals += amount
+13 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry', 'amount'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '500', '200', "'withdrawal:50'", '50']
+7 for entry in transaction_log:
+7 ['initial_balance', 'transaction_log', 'total_deposits', 'total_withdrawals', 'entry'] ['1000', "['deposit:200', 'withdrawal:150', 'deposit:300', 'withdrawal:50']", '500', '200', "'withdrawal:50'"]
+15 final_balance = total_deposits - total_withdrawals + initial_balance
+15 ['initial_balance', 'total_deposits', 'total_withdrawals', 'final_balance'] ['1000', '500', '200', '1300']

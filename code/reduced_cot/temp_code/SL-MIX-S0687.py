@@ -1,41 +1,33 @@
-import re
-from collections import defaultdict, deque
-
-token_stream = ['[', 'SECTION', ':', 'Introduction', ']', '{', 'BOLD', '(', 'text', ')', '}', '[', '/', 'SECTION', ']']
-state_stack = deque(['ROOT'])
-nesting_depth = 0
-max_depth = 0
-state_transitions = {
-    'ROOT': {'\[': 'SECTION_TAG', '\{': 'FORMAT_TAG'},
-    'SECTION_TAG': {':': 'CONTENT_EXPECTED', '\]': 'ROOT'},
-    'CONTENT_EXPECTED': {'[^\[\{\/]+': 'CONTENT', '\[': 'SECTION_TAG', '\{': 'FORMAT_TAG', '\/': 'CLOSING_TAG'},
-    'CLOSING_TAG': {']': 'ROOT'},
-    'FORMAT_TAG': {'\(': 'FORMAT_CONTENT', '\)': 'ROOT'}
-}
-current_state = 'ROOT'
-
-for token in token_stream:
-    # State machine transition logic
-    next_state = None
-    for pattern, target_state in state_transitions.get(current_state, {}).items():
-        if re.match(pattern, token):
-            next_state = target_state
-            break
+def analyze_temperature_data(temps):
+    # Filter valid temperature readings
+    valid_temps = [t for t in temps if -50 <= t <= 50]
     
-    if next_state:
-        if next_state in ['SECTION_TAG', 'FORMAT_TAG']:
-            state_stack.append(next_state)
-            nesting_depth = len(state_stack) - 1  # Exclude ROOT
-            max_depth = max(max_depth, nesting_depth)
-        elif next_state == 'ROOT' and state_stack:
-            state_stack.pop()
-            nesting_depth = len(state_stack) - 1
-        current_state = next_state
-    else:
-        # Handle content tokens
-        if current_state == 'CONTENT_EXPECTED':
-            current_state = 'CONTENT_EXPECTED'  # Remain in same state
+    # Calculate some intermediate metrics (distractor)
+    temp_range = max(valid_temps) - min(valid_temps) if valid_temps else 0
+    avg_temp = sum(valid_temps) / len(valid_temps) if valid_temps else 0
+    
+    # Process temperatures with threshold adjustment
+    threshold = 25
+    processed_values = []
+    adjustment_factor = 2  # Not used in final calculation
+    
+    for i, temp in enumerate(valid_temps):
+        if temp > threshold:
+            # Apply cooling adjustment
+            adjusted = temp - 5
+        else:
+            # Apply heating adjustment
+            adjusted = temp + 3
+        processed_values.append(adjusted)
+    
+    # Calculate monthly averages (distractor)
+    monthly_data = [sum(valid_temps[i:i+7])/7 for i in range(0, len(valid_temps), 7) if i+7 <= len(valid_temps)]
+    
+    # Final calculation - integer average of processed values
+    final_tally = sum(processed_values) // len(processed_values)
+    
+    print(f"Target result: {final_tally}")
 
-# Finalize with maximum depth encountered
-nesting_depth = max_depth
-print(f"Result: {nesting_depth}")
+# Test data - temperature readings from environmental sensors
+sensor_readings = [22, 28, 19, 31, 24, 27, 20, 29, 23, 26]
+analyze_temperature_data(sensor_readings)

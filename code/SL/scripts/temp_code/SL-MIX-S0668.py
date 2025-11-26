@@ -1,57 +1,47 @@
-from functools import wraps
+def compute_checksum(values, adjustment):
+    # Initialize tracking variables (some are distractors)
+    temp_sum = 0
+    running_total = 100
+    checksum_candidate = -50
+    irrelevant_counter = 0
+    
+    # Process values with enumerate
+    for idx, val in enumerate(values):
+        temp_sum += val * (idx + 1)
+        irrelevant_counter += val % 3  # Distractor operation
+        
+        # Nested conditional logic
+        if val > 15:
+            checksum_candidate += val // 2
+            running_total -= 5
+        else:
+            checksum_candidate -= val
+            running_total += 3
+    
+    # More distractor operations
+    misleading_value = temp_sum ^ running_total
+    dead_code_path = checksum_candidate * 2  # Never used
+    
+    # Actual computation with bit operations
+    base_result = temp_sum & 0xFF
+    adjusted_result = base_result | adjustment
+    
+    # Final adjustment with tuple operations
+    result_tuple = (adjusted_result, running_total, checksum_candidate)
+    final_checksum = result_tuple[0] ^ result_tuple[1]
+    
+    return final_checksum
 
-def state_machine_tracker(state_transitions):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            result = func(*args, **kwargs)
-            current_state = 'START'
-            for item in result:
-                if isinstance(item, str) and item.isdigit():
-                    current_state = state_transitions.get((current_state, 'DIGIT'), current_state)
-                elif isinstance(item, str) and item.isalpha():
-                    current_state = state_transitions.get((current_state, 'ALPHA'), current_state)
-                else:
-                    current_state = state_transitions.get((current_state, 'OTHER'), current_state)
-            wrapper.final_state = current_state
-            return result
-        return wrapper
-    return decorator
+def irrelevant_helper(data):
+    # This function is never called - pure distraction
+    return sum(x * x for x in data) % 100
 
-def hex_to_binary_sum(hex_char):
-    return sum(int(b) for b in bin(int(hex_char, 16))[2:])
+# Main execution
+data_points = [8, 12, 25, 7, 18, 31, 9, 22]
+modifier = 0b10101010
+secondary_data = [5, 10, 15]  # Unused data
 
-state_rules = {
-    ('START', 'ALPHA'): 'ALPHA_SEEN',
-    ('START', 'DIGIT'): 'DIGIT_SEEN',
-    ('ALPHA_SEEN', 'DIGIT'): 'MIXED',
-    ('DIGIT_SEEN', 'ALPHA'): 'MIXED',
-    ('MIXED', 'ALPHA'): 'MIXED',
-    ('MIXED', 'DIGIT'): 'MIXED'
-}
+dummy_calc = sum(secondary_data) * 2  # Dead calculation
+final_result = compute_checksum(data_points, modifier)
 
-@state_machine_tracker(state_rules)
-def process_markers(markers):
-    processed = []
-    for m in markers:
-        val = int(m, 16) if m.isdigit() else ord(m.upper()) - ord('A') + 10
-        # Ternary operator to decide transformation
-        transformed = val >> 1 if val % 2 == 0 else (val << 1) & 0xF
-        processed.append(transformed)
-    return processed
-
-# Initial genetic markers
-initial_markers = ['A', '3', 'F', '1', 'B']
-transformed_values = list(process_markers(initial_markers))
-
-# Greedy selection of values that maximize sum without exceeding 20
-transformed_values.sort(reverse=True)
-selected_sum = 0
-for val in transformed_values:
-    selected_sum = selected_sum + val if selected_sum + val <= 20 else selected_sum
-
-# Final code calculation using state machine result
-state_factor = 2 if hasattr(process_markers, 'final_state') and process_markers.final_state == 'MIXED' else 1
-final_code = selected_sum * state_factor + (hex_to_binary_sum(initial_markers[0]) if initial_markers[0].isalpha() else int(initial_markers[0]))
-
-print(f"Result: {final_code}")
+print(f"Result: {final_result}")

@@ -1,46 +1,43 @@
-import itertools
-from collections import defaultdict
+def process_set_data(data_items, threshold):
+    # Distractor: misleading intermediate computation
+    temp_sum = sum(range(10, 20)) + len(data_items) * 5
+    
+    # Relevant processing
+    valid_items = {item for item in data_items if item > threshold}
+    
+    # More distractions
+    unused_operation = temp_sum // 3 + 7
+    secondary_set = {x * 2 for x in data_items if x % 3 == 0}
+    
+    # Dead code path that looks relevant
+    if len(valid_items) > 5:
+        redundant_calc = max(valid_items) - min(valid_items)
+    else:
+        redundant_calc = sum(valid_items) * 2
+    
+    # Key operation with set operations
+    if len(valid_items) > 0:
+        union_set = valid_items.union({threshold * 2, threshold + 1})
+        intersection_set = union_set.intersection({x for x in range(15, 25)})
+        result = sum(intersection_set) - len(union_set)
+    else:
+        result = threshold * 3 - 5
+    
+    return result
 
-def compute_variance(values):
-    if len(values) < 2:
-        return 0.0
-    mean = sum(values) / len(values)
-    return sum((x - mean) ** 2 for x in values) / (len(values) - 1)
+# Main execution with distractions
+initial_data = [8, 12, 18, 22, 25, 30, 35]
+filter_threshold = 15
 
-temperature_readings = [
-    [23.5, 24.1, 22.8, 25.0, 23.9],
-    [21.0, 22.5, 20.9, 23.3],
-    [19.8, 20.1, 19.9, 20.2, 20.0, 19.7]
-]
+# Irrelevant computations that look important
+dummy_var = (len(initial_data) ** 2) + 10
+intermediate_result = sum(initial_data[:3]) - min(initial_data)
 
-variance_threshold = 2.0
-sensor_stability_flags = []
+# The critical execution point
+final_output = process_set_data(initial_data, filter_threshold)
 
-for readings in temperature_readings:
-    var = compute_variance(readings)
-    is_stable = var <= variance_threshold
-    sensor_stability_flags.append(is_stable)
+# More distractions after the answer is computed
+post_computation = [x + 1 for x in initial_data if x < final_output]
+final_check = len(set(post_computation)) - len(initial_data)
 
-stability_counter = defaultdict(int)
-for flag in sensor_stability_flags:
-    stability_counter[flag] += 1
-
-active_sensor_combinations = list(itertools.combinations(range(len(temperature_readings)), 2))
-valid_combination_count = 0
-
-for i, j in active_sensor_combinations:
-    if sensor_stability_flags[i] and sensor_stability_flags[j]:
-        valid_combination_count += 1
-    if valid_combination_count > 3:
-        break
-
-combined_variance = 0.0
-if valid_combination_count > 0:
-    all_valid_readings = []
-    for idx, is_stable in enumerate(sensor_stability_flags):
-        if is_stable:
-            all_valid_readings.extend(temperature_readings[idx])
-    combined_variance = compute_variance(all_valid_readings)
-
-final_stability_index = round(valid_combination_count * combined_variance, 2) if combined_variance > 0 else 0.0
-print(f"Result: {final_stability_index}")
+print(f"Target result: {final_output}")

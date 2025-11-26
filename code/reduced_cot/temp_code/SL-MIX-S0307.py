@@ -1,36 +1,50 @@
-def calculate_optimal_priority():
-    # Package data: (weight, priority)
-    shipment_manifest = [
-        (2, 3), (3, 4), (4, 5), (5, 6),
-        (1, 2), (6, 8), (2, 3), (3, 4),
-        (7, 9), (1, 1), (4, 4), (2, 2)
-    ]
-    
-    # Remove duplicate packages using set operations
-    unique_packages = list(set(shipment_manifest))
-    
-    # Sort packages by priority-to-weight ratio (greedy approach)
-    unique_packages.sort(key=lambda x: x[1]/x[0], reverse=True)
-    
-    # Initialize truck parameters
-    truck_capacity = 15
-    loaded_weight = 0
-    total_priority = 0
-    
-    # Greedily load packages
-    for weight, priority in unique_packages:
-        if loaded_weight + weight <= truck_capacity:
-            loaded_weight += weight
-            total_priority += priority
-    
-    # Apply functional transformation to verify constraints
-    weight_check = list(map(lambda x: x[0], filter(lambda p: p[0] <= 5, unique_packages)))
-    
-    # Conditional adjustment based on special cargo rules
-    if len(weight_check) > 3:
-        total_priority += sum(weight_check[:3])
-    
-    return total_priority
+from collections import Counter
 
-final_score = calculate_optimal_priority()
-print(f"Result: {final_score}")
+def analyze_data_pattern(data_sequence):
+    # Distractor computations - irrelevant to final result
+    temp_sum = sum(x * 2 for x in data_sequence if x > 5)
+    pattern_score = len([x for x in data_sequence if x % 3 == 0])
+    
+    # Main logic path
+    counter = Counter(data_sequence)
+    most_common = counter.most_common(2)
+    
+    # More distractions
+    unused_value = (temp_sum * pattern_score) // 7
+    secondary_pattern = [x for x in data_sequence if x < 10]
+    
+    if len(most_common) >= 2:
+        primary, secondary = most_common[0], most_common[1]
+        # Core computation - XOR and bit manipulation
+        xor_result = primary[0] ^ secondary[0]
+        shift_value = xor_result << 2
+        
+        # Additional irrelevant operations
+        dead_branch = shift_value * 3 if xor_result > 15 else shift_value // 2
+        misleading_temp = dead_branch + pattern_score
+        
+        # The actual checksum calculation
+        checksum = (shift_value & 0b1111) | ((xor_result >> 2) & 0b1111)
+    else:
+        checksum = 255  # Dead code path
+    
+    # Result mapping with some irrelevant entries
+    result_mapper = {
+        5: 42,
+        9: 78,
+        12: 156,
+        7: 91,
+        15: 203,
+        3: 67
+    }
+    
+    # Final assignment with default case
+    final_result = result_mapper.get(checksum, -1)
+    
+    # Print verification
+    print(f"Result: {final_result}")
+    return final_result
+
+# Test execution
+data = [8, 12, 8, 15, 12, 8, 6, 12, 9, 8]
+analyze_data_pattern(data)

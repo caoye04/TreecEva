@@ -1,0 +1,47 @@
+59
+final_balance
+---
+49 initial_capital = 15000
+49 ['account_data', 'initial_capital'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000']
+50 market_multiplier = 1.75
+50 ['account_data', 'initial_capital', 'market_multiplier'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '1.75']
+56 final_balance = process_funds(account_data, initial_capital, market_multiplier)
+56 ['account_data', 'initial_capital', 'market_multiplier'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '1.75']
+6 processed = []
+6 ['accounts', 'capital', 'processed'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '[]']
+7 for account in accounts:
+7 ['accounts', 'capital', 'processed', 'account'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '[]', "{type: 'checking', amount: 2500}"]
+16 if capital > 1000000:
+16 ['accounts', 'capital', 'processed', 'account'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '[]', "{type: 'checking', amount: 2500}"]
+7 for account in accounts:
+7 ['accounts', 'capital', 'processed', 'account'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '[4375.0]', "{type: 'savings', amount: 1800}"]
+16 if capital > 1000000:
+16 ['accounts', 'capital', 'processed', 'account'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '[4375.0]', "{type: 'savings', amount: 1800}"]
+7 for account in accounts:
+7 ['accounts', 'capital', 'processed', 'account'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '[4375.0, 3150.0]', "{type: 'checking', amount: 3200}"]
+16 if capital > 1000000:
+16 ['accounts', 'capital', 'processed', 'account'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '[4375.0, 3150.0]', "{type: 'checking', amount: 3200}"]
+7 for account in accounts:
+7 ['accounts', 'capital', 'processed', 'account'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '[4375.0, 3150.0, 5600.0]', "{type: 'checking', amount: 3200}"]
+27 mask = 0b10101010
+27 ['accounts', 'capital', 'processed', 'mask'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '[4375.0, 3150.0, 5600.0]', '170']
+28 capital_mask = capital & mask
+28 ['accounts', 'capital', 'processed', 'mask', 'capital_mask'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '[4375.0, 3150.0, 5600.0]', '170', '136']
+31 total_processed = sum(processed)
+31 ['accounts', 'capital', 'processed', 'capital_mask', 'total_processed'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '[4375.0, 3150.0, 5600.0]', '136', '13125.0']
+32 final_amount = total_processed + capital
+32 ['accounts', 'capital', 'capital_mask', 'total_processed', 'final_amount'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '15000', '136', '13125.0', '28125.0']
+35 account_str = str(len(accounts))
+35 ['accounts', 'capital_mask', 'final_amount', 'account_str'] ["[{type: 'checking', amount: 2500}, {type: 'savings', amount: 1800}, {type: 'checking', amount: 3200}]", '136', '28125.0', "'3'"]
+36 char_sum = sum(ord(c) for c in account_str)
+36 [] []
+36 char_sum = sum(ord(c) for c in account_str)
+36 ['c'] ["'3'"]
+36 char_sum = sum(ord(c) for c in account_str)
+36 ['c'] ["'3'"]
+39 result = final_amount + (char_sum % 100) - capital_mask
+39 ['capital_mask', 'final_amount', 'char_sum', 'result'] ['136', '28125.0', '51', '28040.0']
+40 return result
+40 ['result'] ['28040.0']
+59 print(f"Result: {final_balance}")
+59 ['final_balance'] ['28040.0']

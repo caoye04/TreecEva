@@ -1,37 +1,34 @@
-import math
+import itertools
 
-def calculate_modified_sharpe(returns):
-    if len(returns) < 2:
-        return 0
-    mean_return = sum(returns) / len(returns)
-    squared_diffs = [(r - mean_return) ** 2 for r in returns]
-    variance = sum(squared_diffs) / (len(returns) - 1)
-    std_dev = math.sqrt(variance)
-    if std_dev == 0:
-        return 0
-    sharpe_ratio = mean_return / std_dev
-    # Apply modification: penalize negative mean returns
-    modified_sharpe = sharpe_ratio if mean_return > 0 else sharpe_ratio * -0.5
-    return modified_sharpe
+# Sensor data processing simulation
+raw_readings = [12, 8, 15, 6, 9, 11, 7, 14]
+threshold = 10
 
-# Fund quarterly returns in percentages
-fund_alpha_returns = [2.1, -1.5, 3.2, 0.8, -0.4, 1.9, 2.7, -0.3, 1.1, 0.6]
-negative_fund_returns = [-2.0, -1.5, -3.0, -0.5, -1.0]
+# Filter readings above threshold
+filtered_readings = [x for x in raw_readings if x > threshold]
 
-# Process funds using list comprehension
-sharpe_scores = [
-    calculate_modified_sharpe(returns) 
-    for returns in [fund_alpha_returns, negative_fund_returns]
-    if len(returns) > 3
-]
+# Calculate combinations of filtered readings (distractor)
+combo_calc = sum(itertools.combinations(filtered_readings, 2), ())
+combo_sum = sum(combo_calc) if combo_calc else 0
 
-# Select the highest score after filtering out negative scores
-valid_scores = {score for score in sharpe_scores if score > 0}
-best_score = max(valid_scores) if valid_scores else 0
+# Process metrics with rolling average
+processed_metrics = []
+current_avg = 0
 
-# Final adjustment based on number of positive quarters
-positive_quarters = sum(1 for r in fund_alpha_returns if r > 0)
-adjusted_modifier = 1.2 if positive_quarters > len(fund_alpha_returns) // 2 else 0.8
-modified_sharpe_ratio = best_score * adjusted_modifier
+for i, reading in enumerate(filtered_readings):
+    current_avg = (current_avg * i + reading) / (i + 1)
+    processed_metrics.append(int(current_avg))
 
-print(f"Result: {round(modified_sharpe_ratio, 4)}")
+# Calculate adjustment based on set operations (partially relevant)
+reading_set = set(filtered_readings)
+baseline_set = {12, 15, 14}
+common_elements = reading_set.intersection(baseline_set)
+uncommon_elements = reading_set.symmetric_difference(baseline_set)
+
+# Adjustment calculation
+adjustment_offset = len(common_elements) * 2 - len(uncommon_elements)
+
+# Final result calculation
+final_measurement = processed_metrics[-1] + adjustment_offset
+
+print(f"Result: {final_measurement}")

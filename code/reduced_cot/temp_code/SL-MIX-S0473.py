@@ -1,38 +1,43 @@
-from collections import defaultdict
-import hashlib
+from collections import Counter
 
-def tokenize_and_classify(text_passage):
-    tokens = text_passage.split()
-    hash_buckets = defaultdict(int)
-    classified_count = 0
+def analyze_inventory_system():
+    # Initial inventory data
+    warehouse_stock = [45, 32, 67, 89, 23, 54, 76, 31, 45, 67]
     
-    for token in tokens:
-        # Normalize token: remove punctuation and convert to lowercase
-        clean_token = ''.join(ch for ch in token if ch.isalnum()).lower()
-        if not clean_token:
-            continue
-            
-        # Compute hash and use modular arithmetic for bucket assignment
-        token_hash = int(hashlib.md5(clean_token.encode()).hexdigest(), 16)
-        bucket_id = token_hash % 7  # 7 categories for classification
-        
-        # Apply conditional logic for classification
-        if len(clean_token) > 3 and bucket_id in [1, 3, 5]:
-            hash_buckets[bucket_id] += 1
-            classified_count += (bucket_id * len(clean_token))
-        elif len(clean_token) <= 3 and bucket_id in [0, 2, 4, 6]:
-            hash_buckets[bucket_id] += 2  # Short tokens get double count
-            classified_count -= (bucket_id + len(clean_token))
+    # Process stock data (relevant processing)
+    stock_counter = Counter(warehouse_stock)
+    most_common_item = stock_counter.most_common(1)[0][0]
     
-    # Post-processing adjustment based on distribution
-    if sum(hash_buckets.values()) > 10:
-        classified_count = (classified_count * 3) % 100
-    else:
-        classified_count = (classified_count + 42) % 100
-        
-    return classified_count
+    # Calculate average stock (relevant for later use)
+    average_stock = sum(warehouse_stock) / len(warehouse_stock)
+    
+    # Distractor calculations (not used in final result)
+    total_items = len(warehouse_stock)
+    stock_variance = sum((x - average_stock) ** 2 for x in warehouse_stock) / total_items
+    
+    # Process stock adjustments
+    adjusted_stock = [item + 5 if item < average_stock else item - 3 for item in warehouse_stock]
+    
+    # More distractor operations
+    max_stock = max(warehouse_stock)
+    min_stock = min(warehouse_stock)
+    stock_range = max_stock - min_stock
+    
+    # Key processing steps
+    processed_data = {}
+    processed_data["common"] = most_common_item
+    processed_data["adjusted_avg"] = sum(adjusted_stock) / len(adjusted_stock)
+    processed_data["target"] = (most_common_item * 2) - (int(average_stock) // 3)
+    
+    # Data mapping (critical for final result)
+    data_map = {"common_key": "common", "avg_key": "adjusted_avg", "result_key": "target"}
+    
+    # Final output calculation
+    final_output = processed_data[data_map["result_key"]]
+    
+    # Print the result
+    print(f"Result: {final_output}")
+    return final_output
 
-# Process the ancient manuscript passage
-manuscript_passage = "O mighty Caesar! Why dost thou conspire With thy own thoughts, that lov'st to palliate So forcibly the trespass of thy heart?"
-classified_count = tokenize_and_classify(manuscript_passage)
-print(f"Result: {classified_count}")
+# Execute the function
+analyze_inventory_system()

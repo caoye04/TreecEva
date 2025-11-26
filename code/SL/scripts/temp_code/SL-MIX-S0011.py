@@ -1,28 +1,25 @@
-import heapq
+server_capacities = [120, 85, 200, 90, 150, 180, 75]
+maintenance_flags = [False, True, False, True, False, False, True]
 
-# Define bird point mapping
-bird_points = {'common': 1, 'rare': 3, 'endangered': 5}
+# Calculate total capacity before filtering
+total_raw_capacity = sum(server_capacities)
+print(f"Raw total capacity: {total_raw_capacity}")
 
-# Observation batch
-observations = ['common', 'rare', 'common', 'endangered', 'rare']
+# Filter out servers under maintenance
+filtered_capacities = []
+for i, (capacity, in_maintenance) in enumerate(zip(server_capacities, maintenance_flags)):
+    if not in_maintenance:
+        filtered_capacities.append(capacity)
+    # Distractor: unused calculation
+    temp_adjustment = capacity * 0.1
 
-# Calculate base score
-base_score = sum(bird_points[bird] for bird in observations)
+# Calculate average of available servers
+if filtered_capacities:
+    final_capacity = sum(filtered_capacities) // len(filtered_capacities)
+else:
+    final_capacity = 0
 
-# Determine weight using ternary operator
-weight = 2 if len(observations) > 5 else 1
+# Distractor: unused variable
+backup_threshold = max(server_capacities) - 50
 
-# Calculate weighted score
-weighted_score = base_score * weight
-
-# Heap to track minimum score
-score_heap = []
-heapq.heappush(score_heap, weighted_score)
-
-# For demonstration, let's add another dummy batch score
-heapq.heappush(score_heap, 20)
-
-# Final score is the minimum from heap
-final_score = heapq.heappop(score_heap)
-
-print(f"Result: {final_score}")
+print(f"Result: {final_capacity}")

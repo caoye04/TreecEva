@@ -1,38 +1,38 @@
-import re
-from functools import reduce
-from collections import defaultdict
+def analyze_inventory():
+    inventory_data = {
+        'electronics': {'items': 15, 'active': 12, 'pending': 3},
+        'books': {'items': 23, 'active': 20, 'pending': 3},
+        'clothing': {'items': 18, 'active': 15, 'pending': 3},
+        'furniture': {'items': 7, 'active': 5, 'pending': 2}
+    }
+    
+    # Distractor variables and calculations
+    total_items = sum(category['items'] for category in inventory_data.values())
+    processed_items = sum(category['active'] for category in inventory_data.values())
+    temp_ratio = processed_items / total_items if total_items > 0 else 0
+    
+    # Main logic - find categories with more than 15 items and count their pending items
+    inventory_categories = set(inventory_data.keys())
+    large_categories = set()
+    final_count = 0
+    
+    for category in inventory_categories:
+        if inventory_data[category]['items'] > 15:
+            large_categories.add(category)
+            # Distractor operation that doesn't affect final_count
+            temp_check = len(large_categories) * 2
+    
+    # Second iteration to calculate final result
+    for category in large_categories:
+        final_count += inventory_data[category]['pending']
+        # Another distractor calculation
+        verification_sum = final_count + len(large_categories)
+    
+    # Final distractor that looks relevant but isn't used
+    category_analysis = {cat: inventory_data[cat]['active'] for cat in large_categories}
+    
+    print(f"Result: {final_count}")
+    return final_count
 
-def hex_to_bin(hex_str):
-    return bin(int(hex_str, 16))[2:].zfill(len(hex_str)*4)
-
-def mask_bits(binary_str, mask):
-    return ''.join(b if m == '1' else '0' for b, m in zip(binary_str, mask.ljust(len(binary_str), '1')))
-
-def count_pattern(bin_str, pattern):
-    return len(re.findall(pattern, bin_str))
-
-class GeneticSegment:
-    def __init__(self, seq_id, hex_data):
-        self.seq_id = seq_id
-        self.hex_data = hex_data
-        self.bin_data = ''
-        self.masked_data = ''
-        self.pattern_counts = defaultdict(int)
-
-segments = [
-    GeneticSegment('SEG001', 'A3F1'),
-    GeneticSegment('SEG002', 'B2E4'),
-    GeneticSegment('SEG003', 'C1D5')
-]
-
-bit_mask = '11001100'
-search_pattern = r'101'
-
-final_count = 0
-for seg in segments:
-    seg.bin_data = hex_to_bin(seg.hex_data)
-    seg.masked_data = mask_bits(seg.bin_data, bit_mask)
-    seg.pattern_counts[search_pattern] = count_pattern(seg.masked_data, search_pattern)
-    final_count += seg.pattern_counts[search_pattern]
-
-print(f"Result: {final_count}")
+# Execute the function
+analyze_inventory()

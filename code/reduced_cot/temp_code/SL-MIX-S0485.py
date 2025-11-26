@@ -1,52 +1,38 @@
-from functools import wraps
-
-class TransactionNode:
-    def __init__(self, amount):
-        self.amount = amount
-        self.next = None
-
-def tax_decorator(func):
-    @wraps(func)
-    def wrapper(amount):
-        taxed_amount = func(amount)
-        return taxed_amount * 0.9  # 10% tax
-    return wrapper
-
-@tax_decorator
-def calculate_profit(amount):
-    return amount * 1.05  # 5% profit margin
-
-def process_transactions(head):
-    profit_map = {}
-    current = head
-    total = 0.0
+def process_data(data_stream):
+    temp_buffer = []
+    data_analysis = {'valid': 0, 'invalid': 0, 'total': 0}
     
-    while current:
-        profit = calculate_profit(current.amount)
-        total += profit
-        profit_map[current.amount] = profit
-        current = current.next
+    # Process incoming data points
+    for item in data_stream:
+        if item % 2 == 0:
+            temp_buffer.append(item * 2)
+            data_analysis['valid'] += 1
+        else:
+            data_analysis['invalid'] += 1
+        data_analysis['total'] += 1
     
-    # Apply bonus if more than 3 transactions
-    count = 0
-    temp = head
-    while temp:
-        count += 1
-        temp = temp.next
-        
-    if count > 3:
-        total += sum(profit_map.values()) * 0.02  # 2% bonus
+    # Intermediate calculations (distractor)
+    mean_value = sum(temp_buffer) / len(temp_buffer) if temp_buffer else 0
+    range_check = max(temp_buffer) - min(temp_buffer) if temp_buffer else 0
     
-    return total
+    # Filter relevant data using lambda and slicing
+    filter_func = lambda x: x > 10
+    filtered_data = list(filter(filter_func, temp_buffer))
+    critical_section = filtered_data[1:4] if len(filtered_data) >= 4 else filtered_data
+    
+    # Core computation
+    target_value = sum(critical_section) if critical_section else 0
+    adjustment_factor = len([x for x in critical_section if x % 3 == 0])
+    
+    # Final result (answer)
+    final_result = target_value * adjustment_factor
+    
+    # Distractor operations that don't affect final_result
+    verification_sum = sum(temp_buffer[-2:]) if len(temp_buffer) >= 2 else 0
+    duplicate_check = len(set(filtered_data))
+    
+    print(f"Result: {final_result}")
 
-# Build linked list: 100 -> 200 -> 150 -> 300
-node1 = TransactionNode(100)
-node2 = TransactionNode(200)
-node3 = TransactionNode(150)
-node4 = TransactionNode(300)
-node1.next = node2
-node2.next = node3
-node3.next = node4
-
-final_profit = process_transactions(node1)
-print(f"Result: {final_profit}")
+# Execute with test data
+data_stream = [3, 8, 5, 12, 7, 14, 9, 6, 11, 10]
+process_data(data_stream)

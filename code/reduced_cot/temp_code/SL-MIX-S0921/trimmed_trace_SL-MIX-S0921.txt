@@ -1,0 +1,65 @@
+33
+final_capacity
+---
+5 storage_units = [8, 16, 32, 64, 128, 256, 512]
+5 ['storage_units'] ['[8, 16, 32, 64, 128, ...]']
+6 capacity_log = []
+6 ['storage_units', 'capacity_log'] ['[8, 16, 32, 64, 128, ...]', '[]']
+8 for unit in storage_units:
+8 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[]', '8']
+9 if unit >= 32:
+9 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[]', '8']
+8 for unit in storage_units:
+8 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16]', '16']
+9 if unit >= 32:
+9 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16]', '16']
+8 for unit in storage_units:
+8 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16, 32]', '32']
+9 if unit >= 32:
+9 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16, 32]', '32']
+8 for unit in storage_units:
+8 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16, 32, 8]', '64']
+9 if unit >= 32:
+9 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16, 32, 8]', '64']
+8 for unit in storage_units:
+8 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16, 32, 8, 16]', '128']
+9 if unit >= 32:
+9 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16, 32, 8, 16]', '128']
+8 for unit in storage_units:
+8 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16, 32, 8, 16, 32]', '256']
+9 if unit >= 32:
+9 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16, 32, 8, 16, 32]', '256']
+8 for unit in storage_units:
+8 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16, 32, 8, 16, 32, ...]', '512']
+9 if unit >= 32:
+9 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16, 32, 8, 16, 32, ...]', '512']
+8 for unit in storage_units:
+8 ['storage_units', 'capacity_log', 'unit'] ['[8, 16, 32, 64, 128, ...]', '[16, 32, 8, 16, 32, ...]', '512']
+16 temp_buffer = sum(capacity_log) * 0.25  # Misleading intermediate
+16 ['storage_units', 'capacity_log', 'temp_buffer'] ['[8, 16, 32, 64, 128, ...]', '[16, 32, 8, 16, 32, ...]', '74.0']
+20 base_capacity = storage_units[3]  # 64
+20 ['storage_units', 'temp_buffer', 'base_capacity'] ['[8, 16, 32, 64, 128, ...]', '74.0', '64']
+21 redundancy_factor = len([x for x in storage_units if x > 100])  # 3
+21 ['storage_units', 'temp_buffer', 'base_capacity', 'x'] ['[8, 16, 32, 64, 128, ...]', '74.0', '64', '8']
+21 redundancy_factor = len([x for x in storage_units if x > 100])  # 3
+21 ['storage_units', 'temp_buffer', 'base_capacity', 'x'] ['[8, 16, 32, 64, 128, ...]', '74.0', '64', '16']
+21 redundancy_factor = len([x for x in storage_units if x > 100])  # 3
+21 ['storage_units', 'temp_buffer', 'base_capacity', 'x'] ['[8, 16, 32, 64, 128, ...]', '74.0', '64', '32']
+21 redundancy_factor = len([x for x in storage_units if x > 100])  # 3
+21 ['storage_units', 'temp_buffer', 'base_capacity', 'x'] ['[8, 16, 32, 64, 128, ...]', '74.0', '64', '64']
+21 redundancy_factor = len([x for x in storage_units if x > 100])  # 3
+21 ['storage_units', 'temp_buffer', 'base_capacity', 'x'] ['[8, 16, 32, 64, 128, ...]', '74.0', '64', '128']
+21 redundancy_factor = len([x for x in storage_units if x > 100])  # 3
+21 ['storage_units', 'temp_buffer', 'base_capacity', 'x'] ['[8, 16, 32, 64, 128, ...]', '74.0', '64', '256']
+21 redundancy_factor = len([x for x in storage_units if x > 100])  # 3
+21 ['storage_units', 'temp_buffer', 'base_capacity', 'x'] ['[8, 16, 32, 64, 128, ...]', '74.0', '64', '512']
+21 redundancy_factor = len([x for x in storage_units if x > 100])  # 3
+21 ['storage_units', 'temp_buffer', 'base_capacity', 'redundancy_factor'] ['[8, 16, 32, 64, 128, ...]', '74.0', '64', '3']
+28 effective_storage = base_capacity - (redundancy_factor * 8)
+28 ['temp_buffer', 'base_capacity', 'redundancy_factor', 'effective_storage'] ['74.0', '64', '3', '40']
+29 scaling_factor = (effective_storage % 20) + 2
+29 ['temp_buffer', 'effective_storage', 'scaling_factor'] ['74.0', '40', '2']
+30 buffer_overflow = temp_buffer // 4  # Actually relevant
+30 ['temp_buffer', 'effective_storage', 'scaling_factor', 'buffer_overflow'] ['74.0', '40', '2', '18.0']
+33 final_capacity = effective_storage * scaling_factor - buffer_overflow
+33 ['effective_storage', 'scaling_factor', 'buffer_overflow', 'final_capacity'] ['40', '2', '18.0', '62.0']

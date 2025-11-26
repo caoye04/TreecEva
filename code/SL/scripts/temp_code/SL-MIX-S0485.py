@@ -1,29 +1,38 @@
-def transform_tracker(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        wrapper.call_count += 1
-        return result
-    wrapper.call_count = 0
-    return wrapper
+def process_data(data_stream):
+    temp_buffer = []
+    data_analysis = {'valid': 0, 'invalid': 0, 'total': 0}
+    
+    # Process incoming data points
+    for item in data_stream:
+        if item % 2 == 0:
+            temp_buffer.append(item * 2)
+            data_analysis['valid'] += 1
+        else:
+            data_analysis['invalid'] += 1
+        data_analysis['total'] += 1
+    
+    # Intermediate calculations (distractor)
+    mean_value = sum(temp_buffer) / len(temp_buffer) if temp_buffer else 0
+    range_check = max(temp_buffer) - min(temp_buffer) if temp_buffer else 0
+    
+    # Filter relevant data using lambda and slicing
+    filter_func = lambda x: x > 10
+    filtered_data = list(filter(filter_func, temp_buffer))
+    critical_section = filtered_data[1:4] if len(filtered_data) >= 4 else filtered_data
+    
+    # Core computation
+    target_value = sum(critical_section) if critical_section else 0
+    adjustment_factor = len([x for x in critical_section if x % 3 == 0])
+    
+    # Final result (answer)
+    final_result = target_value * adjustment_factor
+    
+    # Distractor operations that don't affect final_result
+    verification_sum = sum(temp_buffer[-2:]) if len(temp_buffer) >= 2 else 0
+    duplicate_check = len(set(filtered_data))
+    
+    print(f"Result: {final_result}")
 
-data_segments = [15, 22, 8, 37, 45]
-segment_weights = [2, 3, 1, 4, 5]
-adjusted_values = []
-
-@transform_tracker
-def process_segment(value, weight):
-    adjusted = (value * weight) % 17 if value > 20 else (value + weight) % 13
-    return adjusted
-
-for i in range(len(data_segments)):
-    val = data_segments[i]
-    wt = segment_weights[i]
-    adjusted_val = process_segment(val, wt)
-    adjusted_values.append(adjusted_val)
-
-valid_adjustments = [x for x in adjusted_values if x > 3 and x < 12]
-transformation_count = process_segment.call_count
-aggregate_sum = sum(valid_adjustments)
-final_metric = aggregate_sum if transformation_count >= 3 else 0
-
-print(f'Result: {final_metric}')
+# Execute with test data
+data_stream = [3, 8, 5, 12, 7, 14, 9, 6, 11, 10]
+process_data(data_stream)

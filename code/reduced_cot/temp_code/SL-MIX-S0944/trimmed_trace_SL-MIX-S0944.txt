@@ -1,0 +1,45 @@
+27
+final_energy_balance
+---
+11 base_load = 25
+11 ['base_load'] ['25']
+17 energy_analysis = [calculate_energy_flow(base_load, i) for i in range(3)]
+17 ['base_load', 'i'] ['25', '0']
+6 energy_core = (base_load & 0xF) | (cycle << 4)
+6 ['base_load', 'cycle', 'energy_core'] ['25', '0', '9']
+7 power_factor = energy_core ^ 0b1010
+7 ['base_load', 'cycle', 'energy_core', 'power_factor'] ['25', '0', '9', '3']
+8 return power_factor
+8 ['base_load', 'cycle', 'energy_core', 'power_factor'] ['25', '0', '9', '3']
+17 energy_analysis = [calculate_energy_flow(base_load, i) for i in range(3)]
+17 ['base_load', 'i'] ['25', '1']
+6 energy_core = (base_load & 0xF) | (cycle << 4)
+6 ['base_load', 'cycle', 'energy_core'] ['25', '1', '25']
+7 power_factor = energy_core ^ 0b1010
+7 ['base_load', 'cycle', 'energy_core', 'power_factor'] ['25', '1', '25', '19']
+8 return power_factor
+8 ['base_load', 'cycle', 'energy_core', 'power_factor'] ['25', '1', '25', '19']
+17 energy_analysis = [calculate_energy_flow(base_load, i) for i in range(3)]
+17 ['base_load', 'i'] ['25', '2']
+6 energy_core = (base_load & 0xF) | (cycle << 4)
+6 ['base_load', 'cycle', 'energy_core'] ['25', '2', '41']
+7 power_factor = energy_core ^ 0b1010
+7 ['base_load', 'energy_core', 'power_factor'] ['25', '41', '35']
+8 return power_factor
+8 ['base_load', 'power_factor'] ['25', '35']
+17 energy_analysis = [calculate_energy_flow(base_load, i) for i in range(3)]
+17 ['base_load', 'energy_analysis'] ['25', '[3, 19, 35]']
+20 peak_loads = {i: val for i, val in enumerate(energy_analysis)}
+20 ['energy_analysis', 'i', 'val'] ['[3, 19, 35]', '0', '3']
+20 peak_loads = {i: val for i, val in enumerate(energy_analysis)}
+20 ['energy_analysis', 'i', 'val'] ['[3, 19, 35]', '1', '19']
+20 peak_loads = {i: val for i, val in enumerate(energy_analysis)}
+20 ['energy_analysis', 'i', 'val'] ['[3, 19, 35]', '2', '35']
+20 peak_loads = {i: val for i, val in enumerate(energy_analysis)}
+20 ['energy_analysis', 'peak_loads'] ['[3, 19, 35]', '{0: 3, 1: 19, 2: 35}']
+21 min_power = min(peak_loads.values())
+21 ['peak_loads', 'min_power'] ['{0: 3, 1: 19, 2: 35}', '3']
+22 max_power = max(peak_loads.values())
+22 ['peak_loads', 'min_power', 'max_power'] ['{0: 3, 1: 19, 2: 35}', '3', '35']
+27 final_energy_balance = sum(peak_loads.values()) - (max_power & min_power)
+27 ['peak_loads', 'min_power', 'max_power', 'final_energy_balance'] ['{0: 3, 1: 19, 2: 35}', '3', '35', '54']

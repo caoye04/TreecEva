@@ -1,33 +1,31 @@
-from functools import reduce
-
-# Packet header values from network capture
-packet_headers = [0x1A3F, 0x7B2C, 0x4E81, 0xF056, 0x29DA]
-
-# Initialize security tracking variables
-packet_risk_scores = []
-cumulative_security_score = 0
-
-# Process each packet header to compute risk scores
-for idx, header in enumerate(packet_headers):
-    # Extract relevant bit fields using masking
-    priority_bits = (header & 0xF000) >> 12  # Upper 4 bits
-    protocol_bits = (header & 0x0FF0) >> 4   # Middle 8 bits
-    flag_bits = header & 0x000F              # Lower 4 bits
+def process_text_data(text_samples, threshold):
+    char_frequency = {}
+    temp_counts = []
     
-    # Calculate base risk using XOR of priority and flags
-    base_risk = priority_bits ^ flag_bits
+    # Process each text sample
+    for text in text_samples:
+        upper_text = text.upper()
+        count_vowels = sum(1 for char in upper_text if char in 'AEIOU')
+        temp_counts.append(count_vowels)
+        
+        # Build character frequency (distractor operation)
+        for char in upper_text:
+            char_frequency[char] = char_frequency.get(char, 0) + 1
     
-    # Apply protocol modifier using AND operation
-    protocol_modifier = protocol_bits & 0x07  # Only consider 3 LSBs
+    # Filter based on threshold
+    filtered_counts = [count for count in temp_counts if count > threshold]
     
-    # Compute enhanced risk with short-circuit evaluation
-    enhanced_risk = base_risk if protocol_modifier == 0 else (base_risk | protocol_modifier)
+    # Calculate final result using conditional expression
+    final_count = len(filtered_counts) if len(filtered_counts) > 0 else -1
     
-    # Add to collection
-    packet_risk_scores.append(enhanced_risk)
+    # Distractor: unused calculation
+    total_chars = sum(char_frequency.values())
+    most_common_char = max(char_frequency, key=char_frequency.get)
+    
+    print(f"Result: {final_count}")
+    return final_count
 
-# Calculate cumulative score using reduction and bit shifting
-if packet_risk_scores:  # Short-circuit check
-    cumulative_security_score = reduce(lambda acc, score: (acc << 1) ^ score, packet_risk_scores, 0)
-
-print(f"Result: {cumulative_security_score}")
+# Sample data
+text_samples = ['hello', 'world', 'programming', 'test', 'example']
+result = process_text_data(text_samples, threshold=3)
+final_count = result

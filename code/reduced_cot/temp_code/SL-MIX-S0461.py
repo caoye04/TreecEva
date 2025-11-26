@@ -1,48 +1,28 @@
-import re
-from functools import reduce
-from itertools import combinations
+def calculate_performance(metrics):
+    # Calculate weighted performance score
+    weights = [0.3, 0.4, 0.3]
+    weighted_sum = sum(metric * weight for metric, weight in zip(metrics, weights))
+    
+    # Apply bonus for high performers (distractor - doesn't affect final result)
+    base_multiplier = 1.2 if max(metrics) > 85 else 1.0
+    
+    # Calculate adjusted scores with scaling
+    scaling_factor = 1.5
+    adjusted_scores = []
+    for i, metric in enumerate(metrics):
+        scaled_value = metric * scaling_factor
+        adjusted_value = scaled_value if i % 2 == 0 else metric + 10
+        adjusted_scores.append(adjusted_value)
+    
+    # Intermediate calculation that's not used (distractor)
+    temp_calculation = sum(adjusted_scores[:2]) * base_multiplier
+    
+    # Final result selection
+    final_score = adjusted_scores[-1]
+    
+    print(f"Result: {final_score}")
+    return final_score
 
-def is_prime(n):
-    if n < 2:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
-
-def fibonacci_mod(n, mod):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, (a + b) % mod
-    return a
-
-def derive_session_key(seed):
-    # Step 1: Encode seed as hexadecimal string
-    hex_seed = hex(seed)[2:]
-    
-    # Step 2: Apply regex pattern matching to extract digits
-    digits = ''.join(re.findall(r'\d', hex_seed))
-    digit_sum = sum(int(d) for d in digits)
-    
-    # Step 3: Bitwise operations
-    xor_result = seed ^ (seed << 3) & 0xFFFF
-    and_result = xor_result & ((1 << 8) - 1)
-    
-    # Step 4: Prime validation and adjustment
-    candidate = and_result + digit_sum
-    while not is_prime(candidate):
-        candidate += 1
-    
-    # Step 5: Fibonacci scrambling
-    fib_index = candidate % 20
-    fib_value = fibonacci_mod(fib_index, 256)
-    
-    # Step 6: Final key combination
-    session_key = (candidate << 8) | fib_value
-    
-    return session_key
-
-# Protocol execution
-initial_seed = 0x1A3F
-session_key = derive_session_key(initial_seed)
-print(f"Result: {session_key}")
+# Test data
+performance_metrics = [72, 88, 65, 91, 78]
+result = calculate_performance(performance_metrics)

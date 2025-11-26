@@ -1,9 +1,10 @@
-from functools import reduce
+def process_text(text):
+    words = text.lower().split()
+    word_set = set(words)
+    return word_set
 
-daily_quantities = [8, 17, 12]
-prices = [2, 3, 4]
-discount_applied = daily_quantities[0] < 10 and daily_quantities[1] > 15
-adjusted_muffin_price = prices[1] - (1 if discount_applied else 0)
-total_revenue = reduce(lambda acc, pair: acc + pair[0] * pair[1], zip(daily_quantities, prices), 0) - (daily_quantities[1] if discount_applied else 0)
-
-print(f"Result: {total_revenue}")
+sample_text = "the quick brown fox jumps over the lazy dog"
+word_collection = process_text(sample_text)
+unique_words = word_collection
+final_count = len(unique_words)
+print(f"Result: {final_count}")

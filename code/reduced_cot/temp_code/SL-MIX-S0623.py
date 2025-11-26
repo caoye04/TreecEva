@@ -1,42 +1,23 @@
-import math
+text_data = "Python programming involves various data structures and algorithms"
+vowel_count = sum(1 for char in text_data if char.lower() in 'aeiou')
+consonant_count = sum(1 for char in text_data if char.lower() not in 'aeiou' and char.isalpha())
+total_chars = len(text_data)
+space_count = text_data.count(' ')
 
-def fibonacci(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        a, b = b, a + b
-    return b
+# Some intermediate calculations that don't affect the final result
+char_ratio = vowel_count / consonant_count if consonant_count > 0 else 0
+word_count = len(text_data.split())
+avg_word_length = total_chars / word_count if word_count > 0 else 0
 
-def derive_node_value(depth, position):
-    fib_index = fibonacci(depth + position)
-    log_factor = int(math.log2(fib_index + 1)) if fib_index > 0 else 1
-    geo_adjustment = (position << depth) & 0xFF
-    return (fib_index ^ log_factor ^ geo_adjustment) & 0xFFFF
+# Main logic chain
+filtered_vowels = sum(1 for char in text_data if char.lower() in 'aeiou' and char.isupper())
+processed_count = vowel_count - filtered_vowels
+factor = 3 if processed_count > 10 else 5
+adjustment = consonant_count % 4
 
-class KeyTree:
-    def __init__(self, max_depth):
-        self.max_depth = max_depth
-        self.nodes = {}
-    
-    def build_tree(self, depth, pos):
-        if depth == self.max_depth:
-            self.nodes[(depth, pos)] = derive_node_value(depth, pos)
-        else:
-            left_child = (depth + 1, pos * 2)
-            right_child = (depth + 1, pos * 2 + 1)
-            self.build_tree(depth + 1, pos * 2)
-            self.build_tree(depth + 1, pos * 2 + 1)
-            left_val = self.nodes[left_child]
-            right_val = self.nodes[right_child]
-            xor_result = left_val ^ right_val
-            exp_factor = int(math.exp(depth / 2)) & 0xFF
-            self.nodes[(depth, pos)] = (xor_result ^ exp_factor) & 0xFFFF
-    
-    def get_root(self):
-        return self.nodes[(0, 0)]
+# Final calculation with some irrelevant operations mixed in
+base_value = processed_count * 2
+intermediate = base_value + adjustment
+final_result = processed_count * factor - adjustment
 
-tree_system = KeyTree(4)
-tree_system.build_tree(0, 0)
-root_key = tree_system.get_root()
-print(f"Result: {root_key}")
+print(f"Result: {final_result}")

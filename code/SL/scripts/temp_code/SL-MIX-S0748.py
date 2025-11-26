@@ -1,37 +1,43 @@
-import itertools
-import math
+def compute_checksum(data_stream, mask_pattern):
+    # Distractor: unused variable
+    temp_buffer = [i * 2 for i in range(10)]
+    
+    # Main computation
+    checksum = 0
+    data_bytes = [ord(c) if isinstance(c, str) else c for c in data_stream]
+    
+    # Misleading intermediate calculation
+    xor_temp = mask_pattern ^ 0xFF
+    shifted_xor = (xor_temp << 2) | (xor_temp >> 6)
+    
+    # Dead code path that looks relevant
+    if len(data_bytes) > 100:
+        checksum = sum(data_bytes) & 0xFFFF
+        return checksum
+    
+    # Actual checksum calculation
+    for i, byte_val in enumerate(data_bytes):
+        if i % 2 == 0:
+            checksum ^= (byte_val & mask_pattern)
+        else:
+            checksum ^= (byte_val | mask_pattern)
+        
+        # Red herring: unused operation
+        rotated_byte = ((byte_val << 3) | (byte_val >> 5)) & 0xFF
+    
+    # Final adjustment with string method integration
+    checksum_str = str(checksum)
+    checksum = int(checksum_str.zfill(4)[-3:]) | (mask_pattern & 0x0F)
+    
+    return checksum
 
-def calculate_triangle_area(p1, p2, p3):
-    return abs((p1[0]*(p2[1]-p3[1]) + p2[0]*(p3[1]-p1[1]) + p3[0]*(p1[1]-p2[1])) / 2.0)
+# Main execution
+mask_pattern = 0x3A
+data_stream = "K8P2Q9R"
 
-vertices_set = [
-    [(0, 0), (4, 0), (2, 3)],
-    [(1, 1), (5, 1), (3, 4)],
-    [(0, 2), (3, 5), (1, 6)]
-]
+# Irrelevant calculations that don't affect result
+unused_calc = (mask_pattern * 7) // 3
+padding_check = len(data_stream) * 2 + 5
 
-area_threshold = 3.0
-valid_triangles = [tri for tri in vertices_set if calculate_triangle_area(*tri) >= area_threshold]
-
-# Compute stability metrics using permutations of vertex coordinates
-stability_scores = []
-for triangle in valid_triangles:
-    coord_perms = list(itertools.permutations(triangle))
-    score = sum(math.sqrt(sum(abs(a-b) for a, b in zip(perm[0], perm[1]))) for perm in coord_perms)
-    stability_scores.append(score)
-
-# Apply sorting and binary search-like filtering
-stability_scores.sort()
-filtered_scores = [s for s in stability_scores if s > sum(stability_scores)/len(stability_scores) or s < min(stability_scores)*2]
-
-# Logical chain with short-circuit evaluation
-delta_check = max(filtered_scores) - min(filtered_scores)
-final_stability_index = 0
-if delta_check > 10 and len(filtered_scores) >= 2:
-    final_stability_index = round(delta_check * 1.73)
-elif delta_check <= 10 or not filtered_scores:
-    final_stability_index = round(sum(filtered_scores))
-else:
-    final_stability_index = 42
-
-print(f"Result: {final_stability_index}")
+final_result = compute_checksum(data_stream, mask_pattern)
+print(f"Result: {final_result}")

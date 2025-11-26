@@ -1,64 +1,52 @@
-from dataclasses import dataclass
-from typing import List
-
-@dataclass
-class ZoneStatus:
-    name: str
-    capacity: int
-    current_occupancy: int
-    maintenance_flag: bool
-
-# Zone configurations
-zones = [
-    ZoneStatus('thrill_mountain', 150, 142, False),
-    ZoneStatus('aquatic_cove', 200, 189, True),
-    ZoneStatus('space_station', 100, 95, False)
-]
-
-# Visitor request data
-visitor_requests = [25, 18, 33, 12, 45, 8, 22]
-weather_factor = 0.85  # Reduced capacity due to weather
-allowed_entries = 0
-safety_protocol_active = True
-max_concurrent_visitors = 600
-
-current_total_occupancy = sum(zone.current_occupancy for zone in zones)
-
-for i, request_size in enumerate(visitor_requests):
-    # Early return if safety protocol limits reached
-    if current_total_occupancy >= max_concurrent_visitors:
-        break
+def analyze_sensor_data(readings):
+    # Distractor: Initialize irrelevant tracking variables
+    temp_sum = 0
+    max_reading = -999
+    calibration_factor = 1.25
+    debug_flag = False
     
-    # Short-circuit evaluation for quick rejection
-    if request_size <= 0 or (safety_protocol_active and request_size > 30):
-        continue
+    # Distractor: Perform some unnecessary calculations
+    for i in range(len(readings)):
+        temp_sum += readings[i] * 2  # Misleading operation
+        if readings[i] > max_reading:
+            max_reading = readings[i]
     
-    # Ternary operator for adjusted request size
-    adjusted_request = int(request_size * weather_factor) if weather_factor < 1.0 else request_size
+    # Main logic: Process the actual data
+    valid_readings = [r for r in readings if r % 3 == 0]
+    processed_data = {}
     
-    # Process zone availability using switch-like logic
-    available_capacity = 0
-    for zone in zones:
-        # Skip maintenance zones
-        if zone.maintenance_flag:
-            continue
+    for idx, val in enumerate(valid_readings):
+        # Distractor: Some dead code paths
+        if idx > 10 and debug_flag:
+            print(f"Debug: {val}")  # Never executes
         
-        # Calculate available space in each zone
-        zone_available = max(0, int(zone.capacity * weather_factor) - zone.current_occupancy)
-        available_capacity += zone_available
+        # Actual processing
+        if val > 15:
+            processed_data[val] = (val & 0x0F) | ((val >> 4) & 0x0F)
+        else:
+            processed_data[val] = val ^ 0b101010
     
-    # Determine if request can be fulfilled
-    if adjusted_request <= available_capacity:
-        # Update occupancy
-        current_total_occupancy += adjusted_request
-        allowed_entries += 1 if adjusted_request > 15 else 0
-    elif i >= 4:  # After 5th request, try partial fulfillment
-        partial_entry = min(adjusted_request, available_capacity)
-        if partial_entry > 0:
-            current_total_occupancy += partial_entry
-            allowed_entries += 1
+    # More distractor operations
+    avg_temp = temp_sum / len(readings) if readings else 0
+    sensor_offset = max_reading * calibration_factor
+    
+    # Key computation: Calculate the actual result
+    bit_operations = [v for k, v in processed_data.items() if k % 2 == 0]
+    if bit_operations:
+        final_result = sum(bit_operations) - (len(bit_operations) * 7)
+    else:
+        final_result = sensor_offset  # Dead code path
+    
+    # Final adjustments
+    final_result = (final_result % 256) if final_result > 100 else final_result
+    
+    # Distractor: Unused conditional
+    if avg_temp > 50:
+        unused_var = avg_temp * 3  # Never used
+    
+    return final_result
 
-# Final adjustment based on total occupancy
-allowed_entries = allowed_entries * 2 if current_total_occupancy < 500 else allowed_entries
-
-print(f"Result: {allowed_entries}")
+# Test data
+sensor_data = [12, 18, 24, 9, 15, 21, 6, 27, 33, 30, 3, 36]
+result = analyze_sensor_data(sensor_data)
+print(f"Result: {result}")

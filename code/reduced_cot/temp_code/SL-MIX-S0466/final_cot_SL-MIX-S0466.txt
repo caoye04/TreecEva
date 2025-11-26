@@ -1,0 +1,35 @@
+Target: Find the value of variable final_result after [line 56] executes
+
+[line 46]  input_stream = [3, 8, 12, 5, 8, 17, 12, 20, 3, 25]
+Compute: [3, 8, 12, 5, 8, 17, 12, 20, 3, 25] = [3, 8, 12, 5, 8, ...]
+[line 53]  final_result = compute_final_value(input_stream)
+Call function compute_final_value(input_stream=[3, 8, 12, 5, 8, ...] (defined at [line 46]))
+[line 22]  base_value = 42
+Assign: base_value = 42
+[line 23]  offset_calc = (base_value << 2) + 15  # Bit shift distraction
+Compute: (base_value << 2) + 15  # Bit shift distraction, where base_value=42 (defined at [line 22]) = 183
+[line 26]  if offset_calc > 200:
+Condition: True, entering 'if' block
+[line 32]  stage1_result = process_data_stream(data_sequence)
+Call function process_data_stream(data_sequence=[3, 8, 12, 5, 8, ...] (an unknown source))
+[line 1]  def process_data_stream(input_data):
+Enter function process_data_stream: input_data=[3, 8, 12, 5, 8, ...]
+  [line 8]  data_set = set(input_data)
+  Call function set(input_data=[3, 8, 12, 5, 8, ...] (parameter input_data))
+  [line 9]  filtered_data = {x for x in data_set if x % 2 == 0}
+  Compute: {x for x in data_set if x % 2 == 0}, where x=3 (an unknown source), data_set={3, 5, 8, 12, 17, ...} (defined at [line 8]) = ?
+  [line 15]  transform_fn = lambda x: (x ** 2) - (x % 7)
+  Compute: lambda x: (x ** 2) - (x % 7) = ?
+  [line 16]  transformed_data = list(map(transform_fn, filtered_data))
+  Call function list(map(transform_fn, filtered_data))
+  [line 18]  return sum(transformed_data) - len(transformed_data)
+  Return: sum(transformed_data) - len(transformed_data)
+Function process_data_stream returns 593
+[line 38]  actual_result = stage1_result - (len(data_sequence) % 11) + 7
+Compute: stage1_result - (len(data_sequence) % 11) + 7, where stage1_result=593 (defined at [line 32]), data_sequence=[3, 8, 12, 5, 8, ...] (an unknown source) = 590
+[line 43]  return actual_result
+Return: actual_result=590 (defined at [line 38])
+[line 56]  print(f"Result: {final_result}")
+Output: f"Result: {final_result}"
+
+Answer: final_result = 590 (last updated on defined at [line 53])

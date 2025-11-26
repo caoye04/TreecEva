@@ -1,38 +1,61 @@
-import math
-
-def transform_sensor_data(raw_input):
-    # Stage 1: Normalize and apply exponential mapping
-    normalized = (raw_input & 0xFF) / 255.0
-    exponential_mapped = math.exp(normalized) - 1
+def data_processor(records):
+    # Initialize tracking variables
+    temp_sum = 0
+    processed_count = 0
+    validation_flag = True
+    debug_counter = 0
     
-    # Stage 2: Bitwise encoding with shifting
-    integer_part = int(exponential_mapped * 100)
-    shifted_left = integer_part << 2
-    xor_mask = 0b10101010
-    encoded_value = shifted_left ^ xor_mask
+    # Distractor operations
+    batch_size = len(records) // 2
+    capacity_check = batch_size * 3 + 7
     
-    # Stage 3: Conditional amplification using ternary logic
-    amplified = encoded_value * 3 if (encoded_value & 1) == 0 else encoded_value // 2
+    # Main processing loop
+    for record in records:
+        # Validation check (distractor)
+        if record % 2 == 0:
+            validation_flag = validation_flag and (record > 0)
+        else:
+            debug_counter += record
+            
+        # Core calculation with bitwise operations
+        if record >= 10 and record <= 50:
+            processed_value = (record ^ 15) & 31
+            temp_sum += processed_value
+            processed_count += 1
+            
+        # Unused calculation path
+        elif record > 50:
+            overflow_check = (record << 2) % 17
+            capacity_check -= overflow_check
     
-    # Stage 4: Final adjustment with logarithmic scaling
-    if amplified > 0:
-        final_result = int(math.log(amplified + 1) * 10)
+    # Final computation with slicing and set operations
+    transaction_set = set(records)
+    filtered_transactions = [x for x in records if x in range(10, 51)]
+    
+    if filtered_transactions:
+        slice_avg = sum(filtered_transactions[::2]) / len(filtered_transactions[::2])
+        base_adjustment = int(slice_avg) % 8
     else:
-        final_result = 0
+        base_adjustment = 7
+    
+    # Misleading intermediate calculation
+    intermediate_result = (temp_sum * 3) - (processed_count * 2) + debug_counter
+    
+    # Actual final computation
+    final_result = (temp_sum + base_adjustment) ^ (processed_count * 2)
+    
+    # Dead code path
+    if validation_flag and capacity_check > 100:
+        emergency_override = final_result + 50
+        return emergency_override
     
     return final_result
 
-# Sensor reading pipeline
-sensor_readings = [187, 204, 153, 221]
-processing_pipeline = lambda x: transform_sensor_data(x)
+# Input data
+transaction_data = [8, 15, 22, 37, 45, 12, 29, 51, 18, 33, 26, 41]
 
-# Apply transformation to all readings and sum them
-processed_values = list(map(processing_pipeline, sensor_readings))
-aggregated_signal = sum(processed_values)
+# Processing call
+final_output = data_processor(transaction_data)
 
-# Final encoding step with bitwise operations
-signal_mask = 0xF0F0
-masked_signal = aggregated_signal & signal_mask
-processed_signal = masked_signal >> 4 if (aggregated_signal & 0x1000) != 0 else masked_signal ^ 0xAA
-
-print(f"Result: {processed_signal}")
+# Output result
+print(f"Result: {final_output}")

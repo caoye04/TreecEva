@@ -1,149 +1,79 @@
-25
-delimiter_count
+41
+target_value
 ---
-24 token_stream = [':', 'data', ';', '\x02', '\x1f', '\x02', '\x03', '\x1e', '\x02', '\x1f', ',', ':', ';']
-24 ['token_stream'] ["[':', 'data', ';', '\x02', '\x1f', ...]"]
-25 delimiter_count, control_char_freq = analyze_protocol_stream(token_stream)
-25 ['token_stream'] ["[':', 'data', ';', '\x02', '\x1f', ...]"]
-5 delimiter_count = 0
-5 ['token_stream', 'delimiter_count'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '0']
-6 control_char_freq = {'\x02': 0, '\x03': 0, '\x1e': 0}
-6 ['token_stream', 'delimiter_count', 'control_char_freq'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '0', '{\x02: 0, \x03: 0, \x1e: 0}']
-7 header_delimiters = {':', ';', ','}
-7 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '0', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '0', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "':'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '0', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "':'"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '0', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "':'"]
-17 if state == 'header' and token in header_delimiters:
-17 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '0', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "':'"]
-18 delimiter_count += 1
-18 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '1', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "':'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '1', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'data'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '1', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'data'"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '1', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'data'"]
-17 if state == 'header' and token in header_delimiters:
-17 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '1', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'data'"]
-19 elif state == 'body' and token in control_char_freq:
-19 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '1', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'data'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '1', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "';'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '1', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "';'"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '1', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "';'"]
-17 if state == 'header' and token in header_delimiters:
-17 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '1', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "';'"]
-18 delimiter_count += 1
-18 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "';'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x02'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x02'"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x02'"]
-17 if state == 'header' and token in header_delimiters:
-17 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x02'"]
-19 elif state == 'body' and token in control_char_freq:
-19 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x02'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x1f'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x1f'"]
-12 continue
-12 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x1f'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x02'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x02'"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x02'"]
-17 if state == 'header' and token in header_delimiters:
-17 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x02'"]
-19 elif state == 'body' and token in control_char_freq:
-19 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 0, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x02'"]
-20 control_char_freq[token] += 1
-20 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x02'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x03'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x03'"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x03'"]
-17 if state == 'header' and token in header_delimiters:
-17 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x03'"]
-19 elif state == 'body' and token in control_char_freq:
-19 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 0, \x1e: 0}', "{',', ':', ';'}", "'\x03'"]
-20 control_char_freq[token] += 1
-20 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 0}', "{',', ':', ';'}", "'\x03'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 0}', "{',', ':', ';'}", "'\x1e'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 0}', "{',', ':', ';'}", "'\x1e'"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 0}', "{',', ':', ';'}", "'\x1e'"]
-17 if state == 'header' and token in header_delimiters:
-17 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 0}', "{',', ':', ';'}", "'\x1e'"]
-19 elif state == 'body' and token in control_char_freq:
-19 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 0}', "{',', ':', ';'}", "'\x1e'"]
-20 control_char_freq[token] += 1
-20 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "'\x1e'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "'\x02'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "'\x02'"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "'\x02'"]
-17 if state == 'header' and token in header_delimiters:
-17 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "'\x02'"]
-19 elif state == 'body' and token in control_char_freq:
-19 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 1, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "'\x02'"]
-20 control_char_freq[token] += 1
-20 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "'\x02'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "'\x1f'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "'\x1f'"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "'\x1f'"]
-15 continue
-15 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "'\x1f'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "','"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "','"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "','"]
-17 if state == 'header' and token in header_delimiters:
-17 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '2', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "','"]
-18 delimiter_count += 1
-18 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '3', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "','"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '3', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "':'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '3', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "':'"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '3', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "':'"]
-17 if state == 'header' and token in header_delimiters:
-17 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '3', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "':'"]
-18 delimiter_count += 1
-18 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '4', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "':'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '4', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "';'"]
-10 if state == 'header' and token == '\x1f':
-10 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '4', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "';'"]
-13 elif state == 'body' and token == '\x1f':
-13 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '4', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "';'"]
-17 if state == 'header' and token in header_delimiters:
-17 ['token_stream', 'delimiter_count', 'control_char_freq', 'header_delimiters', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '4', '{\x02: 2, \x03: 1, \x1e: 1}', "{',', ':', ';'}", "';'"]
-18 delimiter_count += 1
-18 ['token_stream', 'delimiter_count', 'control_char_freq', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '5', '{\x02: 2, \x03: 1, \x1e: 1}', "';'"]
-9 for token in token_stream:
-9 ['token_stream', 'delimiter_count', 'control_char_freq', 'token'] ["[':', 'data', ';', '\x02', '\x1f', ...]", '5', '{\x02: 2, \x03: 1, \x1e: 1}', "';'"]
-22 return delimiter_count, control_char_freq
-22 ['delimiter_count', 'control_char_freq'] ['5', '{\x02: 2, \x03: 1, \x1e: 1}']
+12 adjusted_temps = [temp + 5 for temp in measurements]
+12 ['measurements', 'temp'] ['[15, 22, 18, 25, 20, ...]', '15']
+12 adjusted_temps = [temp + 5 for temp in measurements]
+12 ['measurements', 'temp'] ['[15, 22, 18, 25, 20, ...]', '22']
+12 adjusted_temps = [temp + 5 for temp in measurements]
+12 ['measurements', 'temp'] ['[15, 22, 18, 25, 20, ...]', '18']
+12 adjusted_temps = [temp + 5 for temp in measurements]
+12 ['measurements', 'temp'] ['[15, 22, 18, 25, 20, ...]', '25']
+12 adjusted_temps = [temp + 5 for temp in measurements]
+12 ['measurements', 'temp'] ['[15, 22, 18, 25, 20, ...]', '20']
+12 adjusted_temps = [temp + 5 for temp in measurements]
+12 ['measurements', 'temp'] ['[15, 22, 18, 25, 20, ...]', '17']
+12 adjusted_temps = [temp + 5 for temp in measurements]
+12 ['measurements', 'adjusted_temps'] ['[15, 22, 18, 25, 20, ...]', '[20, 27, 23, 30, 25, ...]']
+13 filtered_temps = [temp for temp in adjusted_temps if temp > 20]
+13 ['measurements', 'adjusted_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[20, 27, 23, 30, 25, ...]', '20']
+13 filtered_temps = [temp for temp in adjusted_temps if temp > 20]
+13 ['measurements', 'adjusted_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[20, 27, 23, 30, 25, ...]', '27']
+13 filtered_temps = [temp for temp in adjusted_temps if temp > 20]
+13 ['measurements', 'adjusted_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[20, 27, 23, 30, 25, ...]', '23']
+13 filtered_temps = [temp for temp in adjusted_temps if temp > 20]
+13 ['measurements', 'adjusted_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[20, 27, 23, 30, 25, ...]', '30']
+13 filtered_temps = [temp for temp in adjusted_temps if temp > 20]
+13 ['measurements', 'adjusted_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[20, 27, 23, 30, 25, ...]', '25']
+13 filtered_temps = [temp for temp in adjusted_temps if temp > 20]
+13 ['measurements', 'adjusted_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[20, 27, 23, 30, 25, ...]', '22']
+13 filtered_temps = [temp for temp in adjusted_temps if temp > 20]
+13 ['measurements', 'adjusted_temps', 'filtered_temps'] ['[15, 22, 18, 25, 20, ...]', '[20, 27, 23, 30, 25, ...]', '[27, 23, 30, 25, 22]']
+17 for temp in measurements:
+17 ['measurements', 'filtered_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[27, 23, 30, 25, 22]', '15']
+17 for temp in measurements:
+17 ['measurements', 'filtered_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[27, 23, 30, 25, 22]', '22']
+17 for temp in measurements:
+17 ['measurements', 'filtered_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[27, 23, 30, 25, 22]', '18']
+17 for temp in measurements:
+17 ['measurements', 'filtered_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[27, 23, 30, 25, 22]', '25']
+17 for temp in measurements:
+17 ['measurements', 'filtered_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[27, 23, 30, 25, 22]', '20']
+17 for temp in measurements:
+17 ['measurements', 'filtered_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[27, 23, 30, 25, 22]', '17']
+17 for temp in measurements:
+17 ['measurements', 'filtered_temps', 'temp'] ['[15, 22, 18, 25, 20, ...]', '[27, 23, 30, 25, 22]', '17']
+21 if filtered_temps:
+21 ['filtered_temps'] ['[27, 23, 30, 25, 22]']
+36 final_metrics = {}
+36 ['metrics', 'final_metrics'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{}']
+37 for key, value in metrics.items():
+37 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{}', "'average'", '19.5']
+38 if key in ['average', 'temperature', 'variance']:
+38 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{}', "'average'", '19.5']
+39 final_metrics[key] = round(value, 2)
+39 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5}', "'average'", '19.5']
+37 for key, value in metrics.items():
+37 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5}', "'range'", '10']
+38 if key in ['average', 'temperature', 'variance']:
+38 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5}', "'range'", '10']
+37 for key, value in metrics.items():
+37 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5}', "'temperature'", '25.4']
+38 if key in ['average', 'temperature', 'variance']:
+38 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5}', "'temperature'", '25.4']
+39 final_metrics[key] = round(value, 2)
+39 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5, temperature: 25.4}', "'temperature'", '25.4']
+37 for key, value in metrics.items():
+37 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5, temperature: 25.4}', "'variance'", '10.916666666666686']
+38 if key in ['average', 'temperature', 'variance']:
+38 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5, temperature: 25.4}', "'variance'", '10.916666666666686']
+39 final_metrics[key] = round(value, 2)
+39 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5, temperature: 25.4, variance: 10.92}', "'variance'", '10.916666666666686']
+37 for key, value in metrics.items():
+37 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5, temperature: 25.4, variance: 10.92}', "'product'", '50490000']
+38 if key in ['average', 'temperature', 'variance']:
+38 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5, temperature: 25.4, variance: 10.92}', "'product'", '50490000']
+37 for key, value in metrics.items():
+37 ['metrics', 'final_metrics', 'key', 'value'] ['{average: 19.5, range: 10, temperature: 25.4, ...}', '{average: 19.5, temperature: 25.4, variance: 10.92}', "'product'", '50490000']
+41 target_value = final_metrics['temperature']
+41 ['final_metrics', 'target_value'] ['{average: 19.5, temperature: 25.4, variance: 10.92}', '25.4']

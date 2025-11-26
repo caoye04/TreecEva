@@ -1,35 +1,35 @@
-from collections import deque
-from functools import reduce
+def calculate_quality_scores(samples):
+    base_scores = {}
+    for i, sample in enumerate(samples):
+        base_scores[f'sample_{i}'] = (sample * 2 + 5) % 15
+    
+    # Calculate adjustments (distractor operations)
+    adjustment_factor = len(base_scores) * 0.75
+    temp_sum = sum(base_scores.values()) * 1.2
+    
+    adjusted_scores = {}
+    for key, value in base_scores.items():
+        adjusted_value = value + (len(key) // 2)
+        if adjusted_value > 10:
+            adjusted_scores[key] = adjusted_value - 3
+        else:
+            adjusted_scores[key] = adjusted_value + 2
+    
+    # Find maximum scoring sample
+    max_key = max(adjusted_scores, key=adjusted_scores.get)
+    
+    # Calculate bonus points (relevant but computed separately)
+    bonus_calc = sum([v for v in base_scores.values() if v < 8])
+    bonus_points = bonus_calc // 2
+    
+    # Final rating calculation
+    final_rating = adjusted_scores.get(max_key, 0) + bonus_points
+    
+    # Distractor print statements
+    print(f"Base scores: {base_scores}")
+    print(f"Adjusted scores: {adjusted_scores}")
+    print(f"Target result: {final_rating}")
 
-def compute_threat_sequence(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        a, b = b, a + b
-    return b
-
-packet_timestamps = [3, 5, 7, 11, 13]
-threat_scores = []
-window_size = 3
-
-for i in range(len(packet_timestamps)):
-    score = compute_threat_sequence(packet_timestamps[i] % 10)
-    threat_scores.append(score)
-
-sliding_window = deque(maxlen=window_size)
-window_scores = []
-
-for score in threat_scores:
-    sliding_window.append(score)
-    if len(sliding_window) == window_size:
-        window_sum = sum(sliding_window)
-        window_scores.append(window_sum)
-
-stack = []
-for score in window_scores:
-    if score > 10:
-        stack.append(score)
-
-final_threat_score = reduce(lambda x, y: x + y, stack, 0)
-print(f"Result: {final_threat_score}")
+# Sample data
+quality_samples = [4, 7, 12, 3, 9, 6]
+calculate_quality_scores(quality_samples)

@@ -1,51 +1,34 @@
-import math
+from collections import defaultdict
 
-def compute_rms(values):
-    if not values:
-        return 0
-    return math.sqrt(sum(x**2 for x in values) / len(values))
-
-def process_waveform(waveform_data, threshold=5.0):
-    # Extract amplitude values from nested structure
-    amplitudes = [amp for component in waveform_data.values() 
-                  for amp in component['amplitude_values']]
+def process_inventory_data():
+    inventory_items = ['widget_a', 'widget_b', 'widget_c', 'widget_a', 'widget_b', 'widget_a']
+    price_mapping = {'widget_a': 25, 'widget_b': 40, 'widget_c': 60}
     
-    # Filter high-amplitude components using list comprehension
-    significant_amps = [a for a in amplitudes if a > threshold]
+    item_counts = defaultdict(int)
+    for item in inventory_items:
+        item_counts[item] += 1
     
-    # Short-circuit evaluation for early exit
-    if not significant_amps or len(significant_amps) < 2:
-        return 0
+    total_revenue = 0
+    temp_calculation = 0
+    for item, count in item_counts.items():
+        total_revenue += price_mapping[item] * count
+        temp_calculation += count ** 2
     
-    # Compute weighted RMS
-    rms = compute_rms(significant_amps)
-    weight = 1.5 if len(significant_amps) > 5 else 1.2
-    return rms * weight
-
-# Audio waveform data representation
-waveforms = {
-    'bass': {
-        'f100': {'amplitude_values': [2.1, 4.3, 6.7, 8.9]},
-        'f200': {'amplitude_values': [1.2, 3.4, 5.6, 7.8, 9.1]}
-    },
-    'treble': {
-        'f1000': {'amplitude_values': [0.5, 2.3, 4.5, 6.7, 8.9, 10.1]},
-        'f2000': {'amplitude_values': [1.1, 2.2, 3.3]}
+    key_modifier = len(inventory_items) % 4
+    processed_key = f'rev_mod_{key_modifier}'
+    
+    result_mapping = {
+        'rev_mod_0': total_revenue // 2,
+        'rev_mod_1': total_revenue - 50,
+        'rev_mod_2': total_revenue * 0.75,
+        'rev_mod_3': total_revenue + 25
     }
-}
+    
+    intermediate_value = temp_calculation - 10
+    fallback_value = total_revenue // 3
+    
+    final_result = result_mapping.get(processed_key, fallback_value)
+    print(f"Result: {final_result}")
+    return final_result
 
-# Process each waveform category
-processed_scores = {}
-for category, data in waveforms.items():
-    score = process_waveform(data)
-    processed_scores[category] = score
-
-# Calculate overall quality with conditional branching
-if processed_scores.get('bass', 0) > processed_scores.get('treble', 0):
-    quality_score = processed_scores['bass'] * 1.1
-else:
-    # Dictionary comprehension for bonus calculation
-    bonuses = {k: v * 0.05 for k, v in processed_scores.items() if v > 0}
-    quality_score = sum(processed_scores.values()) + sum(bonuses.values())
-
-print(f"Result: {round(quality_score, 2)}")
+process_inventory_data()
