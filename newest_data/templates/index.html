@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TreecEva Dataset Viewer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .search-section {
+            padding: 30px 40px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 20px;
+            font-size: 16px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-btn {
+            padding: 14px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #5568d3;
+            transform: translateY(-1px);
+        }
+
+        .search-results {
+            padding: 20px 40px;
+            background: #f8f9fa;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .result-item {
+            padding: 12px 16px;
+            background: white;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e9ecef;
+        }
+
+        .result-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .content-section {
+            padding: 40px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #6c757d;
+        }
+
+        .empty-state h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 18px;
+            color: #212529;
+            font-weight: 500;
+        }
+
+        .content-block {
+            margin-bottom: 30px;
+        }
+
+        .description-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #495057;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+
+        .answer-box {
+            font-size: 20px;
+            font-weight: 600;
+            color: #28a745;
+            background: #d4edda;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #28a745;
+            text-align: center;
+        }
+
+        .code-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        pre {
+            margin: 0;
+            border-radius: 8px;
+            background: #1e1e1e !important;
+            padding: 20px !important;
+            font-size: 15px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        .cot-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: #e9ecef;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #495057;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌳 TreecEva Dataset Viewer</h1>
+            <p>Browse and analyze code reasoning evaluation data</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search by ID (e.g., SL-MIX-S0001)">
+                <button class="search-btn" onclick="searchData()">Search</button>
+            </div>
+        </div>
+
+        <div class="search-results" id="searchResults"></div>
+
+        <div class="content-section" id="contentSection">
+            <div class="empty-state">
+                <h2>👆 Search for a data item</h2>
+                <p>Enter an ID in the search box above to view details</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentData = null;
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchData();
+            }
+        });
+
+        async function searchData() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) return;
+
+            try {
+                const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+                const results = await response.json();
+                
+                const resultsDiv = document.getElementById('searchResults');
+                if (results.length === 0) {
+                    resultsDiv.innerHTML = '<p style="text-align:center;color:#6c757d;">No results found</p>';
+                    resultsDiv.style.display = 'block';
+                } else if (results.length === 1) {
+                    loadItem(results[0].id);
+                    resultsDiv.style.display = 'none';
+                } else {
+                    resultsDiv.innerHTML = results.map(item => 
+                        `<div class="result-item" onclick="loadItem('${item.id}')">
+                            <strong>${item.id}</strong> - ${item.language} (Difficulty: ${item.difficulty})
+                        </div>`
+                    ).join('');
+                    resultsDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+            }
+        }
+
+        async function loadItem(id) {
+            try {
+                const response = await fetch(`/api/data/${id}`);
+                const data = await response.json();
+                currentData = data;
+                
+                document.getElementById('searchResults').style.display = 'none';
+                renderItem(data);
+            } catch (error) {
+                console.error('Load error:', error);
+            }
+        }
+
+        function renderItem(data) {
+            const contentSection = document.getElementById('contentSection');
+            
+            const html = `
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">ID</div>
+                        <div class="info-value">${data.id}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Language</div>
+                        <div class="info-value">${data.metadata.language}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Difficulty</div>
+                        <div class="info-value">${data.metadata.difficulty}/5</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Intervention</div>
+                        <div class="info-value">${data.metadata.intervention}</div>
+                    </div>
+                </div>
+
+                <div class="content-block">
+                    <h2 class="section-title">📝 Description</h2>
+                    <div class="description-text">${data.task.description}</div>
+                </div>
+
+                <div class="content-block">
+                    <h2 class="section-title">💻 Code</h2>
+                    <div class="code-container">
+                        <pre><code class="language-python">${escapeHtml(data.task.code)}</code></pre>
+                    </div>
+                </div>
+
+                <div class="content-block">
+                    <h2 class="section-title">✅ Answer</h2>
+                    <div class="answer-box">${data.task.answer}</div>
+                </div>
+
+                <div class="content-block">
+                    <h2 class="section-title">🧠 Chain of Thought (CoT)</h2>
+                    <div class="cot-tabs">
+                        <button class="tab-btn active" onclick="switchTab(0)">Simple AI CoT</button>
+                        <button class="tab-btn" onclick="switchTab(1)">Reduced Formatted CoT</button>
+                        <button class="tab-btn" onclick="switchTab(2)">Reduced Natural CoT</button>
+                    </div>
+                    <div class="tab-content active" id="tab0">${escapeHtml(data.task.simple_ai_cot)}</div>
+                    <div class="tab-content" id="tab1">${escapeHtml(data.task.reduced_formated_cot)}</div>
+                    <div class="tab-content" id="tab2">${escapeHtml(data.task.reduced_natural_cot)}</div>
+                </div>
+            `;
+            
+            contentSection.innerHTML = html;
+            hljs.highlightAll();
+        }
+
+        function switchTab(index) {
+            document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+            document.querySelectorAll('.tab-content').forEach((content, i) => {
+                content.classList.toggle('active', i === index);
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

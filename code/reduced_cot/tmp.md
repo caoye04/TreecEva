@@ -1,28 +1,16 @@
-你好！我正在做一个处理代码推理数据集cot的框架。
 
-我现在发现了一个比较严重的问题，即我在智能回溯与剪枝这一步，不太能很好的处理函数关系，导致最终cot的太长了
-
-我似乎只会在主流程做智能剪枝，而函数不做任何剪枝全部进入了
-
-我认为我需要对函数这种做合适的剪枝处理。
-
-我们关心函数的输出，因此回溯整个函数，再做适当的剪枝，类似于主流程的思路，您觉得怎么样呢。
-
-帮我实现一下这个逻辑吧！感恩
 
 ### 背景介绍
 
-该框架构用于处理数据集“TreecEva_data_reduced_formated_cot.json”，其中一共有2025个数据，该框架由于在其中产生cot。
+下面是我的某个数据集cot生产方法，即基于python文件的执行流程与变化，然后进行智能回溯与剪枝，最后用模板化匹配的方法产出cot。
 
-具体流程如下：
+我现在想新增一个组件叫natural_cot_generator.py。
 
-1. 目前分析case n
-2. 调用AI，构建合适的提示词，并提供json中的description信息和code信息，让AI分析这个case的目标行和目标变量。并将所有case的target信息存在`all-target-info.json`中，和数据集json位于同一文件夹。
-3. 分析第二步的目标行和目标变量是否分析与定位正确，如果不对则重新分析，最多分析三次。并将错误1、2、3次的case编号，存在attention.json中，和数据集json位于同一文件夹。（如：1：case1、case2；2：case7……）
-4. 利用相关组件，对每个case进行分析，一样产出：trace_test.txt（完整追踪）、trimmed_trace_test.txt （剪枝后的追踪）、final_cot_test.txt（最终COT英文版）这三个文件。并将结果存储在`/temp_code/SL-MIX-Sn`中。
-5. 将该case的cot信息整合进`TreecEva_data_reduced_formated_cot.json`中
-6. 继续处理下一个case
-7. 主函数有以下运行方式：a. 直接分析全部case，但跳过存在cot的 b. 直接分析某一个case 
+他会调用ai（API_KEY = "sk-tT9Ddv4cOCl5BXW4kivhRQ" BASE_URL = "https://llmapi.paratera.com/v1 AI_APIS = {"DeepSeek-V3.2-Exp": {"base_url": BASE_URL,"api_key": API_KEY,"model": "DeepSeek-V3.2-Exp"}}）
+
+然后读取数据集TreecEva_data_reduced_natural_cot.json中的每个case的description和code，再读取temp_code文件夹中的数据集文件夹中的剪枝后运行流程trimmed_trace_SL-MIX-Sxxxx.txt。把这三个信息再结合适当的prompt，让ai生产cot。并填入TreecEva_data_reduced_natural_cot.json中。
+
+同时由于数据很多，我希望能做到并行处理。
 
 ### 处理思路流程
 
@@ -101,6 +89,7 @@
 ├── cot_generator.py           					# COT生成
 ├── main.py                    					# 主流程
 ├── TreecEva_data_reduced_formated_cot.json     # 数据集
+├── TreecEva_data_reduced_natural_cot.json
 ├── all-target-info.json                     # 所有case的目标信息
 ├── attention.json                           # 错误重试记录
 └── temp_code/                 # 数据集中可执行代码存储位置
@@ -121,275 +110,226 @@
 
 ```py
 """
-AI分析器 - 用于自动识别目标行和目标变量
+AI分析器 - 使用AI辅助分析目标行和变量
 """
 
 import json
 import re
-import time
+from typing import Dict, Optional
 from openai import OpenAI
-import httpx
 
 
-class AIAnalyzer:
-    """AI分析器，用于识别代码的目标行和目标变量"""
+class TargetValidator:
+    """目标验证器"""
     
-    def __init__(self, api_config, timeout=60, max_retries=3):
-        """
-        初始化AI分析器
-        
-        Args:
-            api_config: API配置字典，包含 base_url, api_key, model
-            timeout: 请求超时时间（秒）
-            max_retries: 最大重试次数
-        """
-        http_client = httpx.Client(
-            timeout=timeout,
-            verify=False,
-            follow_redirects=True
-        )
-        
-        self.client = OpenAI(
-            base_url=api_config['base_url'],
-            api_key=api_config['api_key'],
-            http_client=http_client
-        )
-        self.model = api_config['model']
-        self.max_retries = max_retries
-    
-    def analyze_target(self, description, code, case_id):
-        """
-        分析代码的目标行和目标变量
-        
-        Args:
-            description: 问题描述
-            code: Python代码
-            case_id: case的ID
-            
-        Returns:
-            dict: {'target_line': int, 'target_var': str, 'confidence': str}
-        """
-        prompt = self._build_analysis_prompt(description, code)
-        
-        for retry in range(self.max_retries):
-            try:
-                print(f"    [API调用] 尝试 {retry + 1}/{self.max_retries}...")
-                
-                response = self.client.chat.completions.create(
-                    model=self.model,
-                    messages=[
-                        {
-                            "role": "system", 
-                            "content": "You are an expert Python code analyzer. Your task is to identify the EXACT target line and target variable based on the problem description."
-                        },
-                        {
-                            "role": "user", 
-                            "content": prompt
-                        }
-                    ],
-                    temperature=0.1,
-                    max_tokens=500
-                )
-                
-                result = response.choices[0].message.content.strip()
-                print(f"    [API响应] 成功获取")
-                return self._parse_ai_response(result, case_id, code)
-                
-            except Exception as e:
-                error_msg = str(e)
-                print(f"    [API错误] {error_msg}")
-                
-                if retry < self.max_retries - 1:
-                    wait_time = 2 ** retry
-                    print(f"    [等待] {wait_time}秒后重试...")
-                    time.sleep(wait_time)
-                else:
-                    print(f"    [AI分析错误] Case {case_id}: {error_msg}")
-                    return None
-        
-        return None
-    
-    def _build_analysis_prompt(self, description, code):
-        """构建分析提示词"""
-        # 给代码添加行号
-        lines = code.split('\n')
-        numbered_code = '\n'.join([f"{i+1:3d} | {line}" for i, line in enumerate(lines)])
-        
-        prompt = f"""Given the following problem description and Python code, identify:
-1. The EXACT target line number (the line that computes or assigns the final answer)
-2. The target variable name (the variable we need to track)
-
-Problem Description:
-{description}
-
-Python Code with Line Numbers:
-{numbered_code}
-
-IMPORTANT RULES:
-1. The target variable is usually explicitly mentioned in the description (like "value of variable 'result_value'")
-2. The target line is the line where this variable gets its FINAL VALUE (last assignment)
-3. If the description mentions a specific variable name, that MUST be the target variable
-4. The target line should be BEFORE the print statement (if any)
-5. Look for the LAST assignment to the target variable
-6. Count line numbers EXACTLY as shown in the numbered code above
-
-Example:
-If description says "value of variable 'result_value'" and line 29 is "result_value = total_variance ^ product_count"
-Then target_line should be 29 and target_var should be "result_value"
-
-Please respond in the following JSON format ONLY (no other text):
-{{
-    "target_line": <exact_line_number>,
-    "target_var": "<exact_variable_name>",
-    "reasoning": "<brief explanation of why you chose this line and variable>"
-}}
-"""
-        return prompt
-    
-    def _parse_ai_response(self, response, case_id, code):
-        """解析AI响应"""
-        try:
-            # 尝试提取JSON
-            json_match = re.search(r'\{[^{}]*\}', response, re.DOTALL)
-            if json_match:
-                result = json.loads(json_match.group())
-                
-                # 验证必需字段
-                if 'target_line' in result and 'target_var' in result:
-                    target_line = int(result['target_line'])
-                    target_var = str(result['target_var'])
-                    
-                    # 基本验证
-                    if not self._quick_validate(code, target_line, target_var):
-                        print(f"    [解析警告] AI响应未通过验证")
-                        print(f"    [AI建议] Line {target_line}, Var '{target_var}'")
-                        
-                        # 尝试自动修正
-                        corrected = self._try_auto_correct(code, target_var)
-                        if corrected:
-                            print(f"    [自动修正] Line {corrected['target_line']}, Var '{corrected['target_var']}'")
-                            return corrected
-                        
-                        return None
-                    
-                    return {
-                        'target_line': target_line,
-                        'target_var': target_var,
-                        'reasoning': result.get('reasoning', ''),
-                        'confidence': 'high'
-                    }
-            
-            print(f"    [解析警告] Case {case_id}: 无法解析AI响应")
-            print(f"    [响应内容] {response[:200]}...")
-            return None
-            
-        except Exception as e:
-            print(f"    [解析错误] Case {case_id}: {e}")
-            print(f"    [响应内容] {response[:200]}...")
-            return None
-    
-    def _quick_validate(self, code, target_line, target_var):
-        """快速验证目标信息"""
-        lines = code.split('\n')
-        
-        # 检查行号范围
-        if target_line < 1 or target_line > len(lines):
-            return False
-        
-        # 检查变量是否在代码中
-        if target_var not in code:
-            return False
-        
-        # 检查目标行是否包含该变量的赋值
-        target_line_code = lines[target_line - 1].strip()
-        if not target_line_code or target_line_code.startswith('#'):
-            return False
-        
-        # 检查该行是否对目标变量进行赋值
-        if not re.search(rf'\b{re.escape(target_var)}\s*=', target_line_code):
-            return False
-        
-        return True
-    
-    def _try_auto_correct(self, code, target_var):
-        """尝试自动修正目标行"""
-        lines = code.split('\n')
-        
-        # 查找所有对目标变量的赋值
-        assignment_lines = []
-        for i, line in enumerate(lines, 1):
-            if re.search(rf'\b{re.escape(target_var)}\s*=', line):
-                assignment_lines.append(i)
-        
-        if not assignment_lines:
-            return None
-        
-        # 选择最后一个赋值行（在print之前）
-        for line_num in reversed(assignment_lines):
-            line_code = lines[line_num - 1].strip()
-            # 确保不是在循环或条件语句的深层嵌套中
-            if not line_code.startswith('print'):
-                return {
-                    'target_line': line_num,
-                    'target_var': target_var,
-                    'reasoning': 'Auto-corrected to last assignment before print',
-                    'confidence': 'medium'
-                }
-        
-        # 如果找不到，返回最后一个赋值
-        return {
-            'target_line': assignment_lines[-1],
-            'target_var': target_var,
-            'reasoning': 'Auto-corrected to last assignment',
-            'confidence': 'low'
-        }
-    
-    def validate_target(self, code, target_line, target_var):
+    @staticmethod
+    def validate_target(code: str, target_line: int, target_var: str) -> bool:
         """
         验证目标行和变量是否合理
         
         Args:
-            code: Python代码
+            code: 源代码
             target_line: 目标行号
-            target_var: 目标变量
+            target_var: 目标变量名
             
         Returns:
-            bool: 是否有效
+            bool: 是否合理
         """
-        return self._quick_validate(code, target_line, target_var)
-
-
-class TargetValidator:
-    """目标信息验证器"""
-    
-    @staticmethod
-    def validate_by_execution(code_file, target_line, target_var):
-        """通过执行代码验证目标信息"""
-        try:
-            import importlib.util
-            import sys
-            from io import StringIO
-            
-            spec = importlib.util.spec_from_file_location("test_module", code_file)
-            module = importlib.util.module_from_spec(spec)
-            
-            old_stdout = sys.stdout
-            sys.stdout = StringIO()
-            
-            try:
-                spec.loader.exec_module(module)
-                
-                if hasattr(module, target_var):
-                    return True
-                
-            finally:
-                sys.stdout = old_stdout
-            
+        lines = code.split('\n')
+        
+        # 检查行号是否在范围内
+        if target_line < 1 or target_line > len(lines):
             return False
+        
+        # 获取目标行
+        line = lines[target_line - 1]
+        
+        # 检查该行是否包含目标变量的赋值
+        # 支持各种赋值形式: var =, var+=, var[...] =, etc.
+        pattern = rf'\b{re.escape(target_var)}\s*(?:\[.*?\])?\s*[+\-*/&|^%]?='
+        if not re.search(pattern, line):
+            return False
+        
+        return True
+
+
+class AIAnalyzer:
+    """AI分析器 - 用于分析目标行和变量"""
+    
+    def __init__(self, api_config: Dict):
+        """
+        初始化AI分析器
+        
+        Args:
+            api_config: API配置，包含base_url, api_key, model
+        """
+        self.client = OpenAI(
+            api_key=api_config['api_key'],
+            base_url=api_config['base_url']
+        )
+        self.model = api_config['model']
+    
+    def analyze_target(self, description: str, code: str, case_id: str = "") -> Optional[Dict]:
+        """
+        使用AI分析目标行和变量
+        
+        Args:
+            description: 问题描述
+            code: 源代码
+            case_id: case ID（用于日志）
+            
+        Returns:
+            dict: {'target_line': int, 'target_var': str, 'reasoning': str} 或 None
+        """
+        # 给代码添加行号
+        code_lines = code.split('\n')
+        numbered_code = '\n'.join([f"{i+1:3d} | {line}" for i, line in enumerate(code_lines)])
+        
+        prompt = f"""Given this code analysis question, extract the target line number and target variable name.
+
+Question Description: {description}
+
+Code (with line numbers):
+{numbered_code}
+
+Please analyze and return ONLY a JSON object in this exact format:
+{{
+    "target_line": <line_number>,
+    "target_var": "<variable_name>",
+    "reasoning": "<brief explanation of why this is the target>"
+}}
+
+Important:
+- target_line should be the actual line number where the variable's final value is determined
+- target_var should be the exact variable name being asked about
+- Look for phrases like "after executing the statement" or "after line X" in the description
+- The target line usually contains an assignment to the target variable
+"""
+        
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are a helpful assistant that extracts information from code analysis questions. Return only valid JSON."
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+                temperature=0
+            )
+            
+            result_text = response.choices[0].message.content.strip()
+            
+            # 尝试提取JSON
+            json_match = re.search(r'\{[^}]+\}', result_text, re.DOTALL)
+            if json_match:
+                result = json.loads(json_match.group())
+                
+                # 验证必要字段
+                if 'target_line' in result and 'target_var' in result:
+                    return {
+                        'target_line': int(result['target_line']),
+                        'target_var': str(result['target_var']),
+                        'reasoning': result.get('reasoning', ''),
+                        'method': 'ai'
+                    }
+            
+            return None
             
         except Exception as e:
-            print(f"    [验证错误] 执行验证失败: {e}")
-            return False
+            print(f"AI分析异常 ({case_id}): {e}")
+            return None
+    
+    @staticmethod
+    def validate_target(code: str, target_line: int, target_var: str) -> bool:
+        """
+        验证目标行和变量是否合理
+        
+        Args:
+            code: 源代码
+            target_line: 目标行号
+            target_var: 目标变量名
+            
+        Returns:
+            bool: 是否合理
+        """
+        return TargetValidator.validate_target(code, target_line, target_var)
+
+
+class RegexTargetExtractor:
+    """正则表达式目标提取器"""
+    
+    @staticmethod
+    def extract_target(description: str, code: str) -> Optional[Dict]:
+        """
+        使用正则表达式从描述和代码中提取目标信息
+        
+        Args:
+            description: 问题描述
+            code: 源代码
+            
+        Returns:
+            dict: {'target_line': int, 'target_var': str, 'method': str} 或 None
+        """
+        # 尝试从描述中提取变量名
+        var_pattern = r"variable\s+'([^']+)'"
+        var_match = re.search(var_pattern, description)
+        
+        if not var_match:
+            return None
+        
+        target_var = var_match.group(1)
+        
+        # 尝试从描述中提取行号信息
+        line_pattern = r"line\s+(\d+)"
+        line_match = re.search(line_pattern, description, re.IGNORECASE)
+        
+        # 尝试从描述中提取语句关键词
+        stmt_pattern = r"executing\s+(?:the\s+)?(?:statement\s+)?['\"]?([^'\"]+)['\"]?"
+        stmt_match = re.search(stmt_pattern, description)
+        
+        # 在代码中查找目标行
+        code_lines = code.split('\n')
+        target_line = None
+        
+        # 如果描述中明确提到行号
+        if line_match:
+            potential_line = int(line_match.group(1))
+            if 1 <= potential_line <= len(code_lines):
+                line = code_lines[potential_line - 1]
+                if target_var in line and '=' in line:
+                    target_line = potential_line
+        
+        # 如果有语句关键词，尝试匹配
+        if target_line is None and stmt_match:
+            stmt_text = stmt_match.group(1)
+            for i, line in enumerate(code_lines, 1):
+                if target_var in line and '=' in line:
+                    # 检查是否匹配语句
+                    if any(part.strip() in line for part in stmt_text.split()):
+                        target_line = i
+                        break
+        
+        # 如果还没找到，尝试找最后一次赋值
+        if target_line is None:
+            for i in range(len(code_lines) - 1, -1, -1):
+                line = code_lines[i]
+                if re.search(rf'\b{re.escape(target_var)}\s*=', line):
+                    target_line = i + 1
+                    break
+        
+        if target_line:
+            return {
+                'target_line': target_line,
+                'target_var': target_var,
+                'method': 'regex'
+            }
+        
+        return None
 ```
 
 #### dataset_processor.py
@@ -410,7 +350,7 @@ import time
 from tracer import PythonTracer
 from pruner import TracePruner
 from cot_generator import COTGenerator
-from ai_analyzer import AIAnalyzer, TargetValidator
+from ai_analyzer import AIAnalyzer, RegexTargetExtractor
 
 
 class DatasetProcessor:
@@ -433,7 +373,11 @@ class DatasetProcessor:
         self.attention_path = self.dataset_dir / 'attention.json'
         
         self.ai_analyzer = AIAnalyzer(api_config)
+        self.regex_extractor = RegexTargetExtractor()
         self.max_workers = max_workers
+        
+        # 确保必要目录存在
+        self.temp_code_dir.mkdir(parents=True, exist_ok=True)
         
         # 加载数据集
         self.raw_dataset = self._load_dataset()
@@ -488,7 +432,7 @@ class DatasetProcessor:
         if self.attention_path.exists():
             with open(self.attention_path, 'r', encoding='utf-8') as f:
                 return json.load(f)
-        return {'1': [], '2': [], '3': []}
+        return {'regex_failed': [], 'ai_failed': []}
     
     def _save_attention(self):
         """保存错误记录"""
@@ -498,26 +442,55 @@ class DatasetProcessor:
     def analyze_target_with_retry(self, case, max_retries=3):
         """
         分析目标行和变量，支持重试
+        使用正则表达式优先，失败后使用AI
         
         Args:
             case: 数据集中的case
-            max_retries: 最大重试次数
+            max_retries: AI分析的最大重试次数
             
         Returns:
-            dict: 目标信息 {'target_line': int, 'target_var': str}
+            dict: 目标信息 {'target_line': int, 'target_var': str, 'method': str} 或 None
         """
         case_id = case['id']
         description = case['task']['description']
         code = case['task']['code']
         
+        # 步骤1: 尝试正则表达式提取
+        print(f"  [方法1] 正则表达式提取...")
+        regex_result = self.regex_extractor.extract_target(description, code)
+        
+        if regex_result:
+            # 验证正则结果
+            if self.ai_analyzer.validate_target(
+                code, 
+                regex_result['target_line'], 
+                regex_result['target_var']
+            ):
+                print(f"  ✓ 正则提取成功: line={regex_result['target_line']}, var={regex_result['target_var']}")
+                return regex_result
+            else:
+                print(f"  ✗ 正则提取的结果验证失败")
+                if 'regex_failed' not in self.attention_cases:
+                    self.attention_cases['regex_failed'] = []
+                if case_id not in self.attention_cases['regex_failed']:
+                    self.attention_cases['regex_failed'].append(case_id)
+        else:
+            print(f"  ✗ 正则提取失败")
+            if 'regex_failed' not in self.attention_cases:
+                self.attention_cases['regex_failed'] = []
+            if case_id not in self.attention_cases['regex_failed']:
+                self.attention_cases['regex_failed'].append(case_id)
+        
+        # 步骤2: 使用AI分析（带重试）
+        print(f"  [方法2] AI分析...")
         for attempt in range(1, max_retries + 1):
-            print(f"  [尝试 {attempt}/{max_retries}] 分析目标...")
+            print(f"    [AI尝试 {attempt}/{max_retries}]")
             
             # AI分析
             result = self.ai_analyzer.analyze_target(description, code, case_id)
             
             if result is None:
-                print(f"  ✗ AI分析失败")
+                print(f"    ✗ AI分析失败")
                 if attempt < max_retries:
                     time.sleep(1)
                 continue
@@ -527,27 +500,132 @@ class DatasetProcessor:
             
             # 验证
             if not self.ai_analyzer.validate_target(code, target_line, target_var):
-                print(f"  ✗ 验证失败: 目标信息不合理")
+                print(f"    ✗ 验证失败: 目标信息不合理")
                 if attempt < max_retries:
                     time.sleep(1)
-                    if str(attempt) not in self.attention_cases:
-                        self.attention_cases[str(attempt)] = []
-                    if case_id not in self.attention_cases[str(attempt)]:
-                        self.attention_cases[str(attempt)].append(case_id)
                 continue
             
-            print(f"  ✓ 分析成功: line={target_line}, var={target_var}")
-            print(f"    推理: {result.get('reasoning', '')}")
+            print(f"    ✓ AI分析成功: line={target_line}, var={target_var}")
+            if result.get('reasoning'):
+                print(f"      推理: {result['reasoning']}")
             return result
         
         # 所有尝试都失败
-        print(f"  ✗ 所有尝试都失败")
-        if str(max_retries) not in self.attention_cases:
-            self.attention_cases[str(max_retries)] = []
-        if case_id not in self.attention_cases[str(max_retries)]:
-            self.attention_cases[str(max_retries)].append(case_id)
+        print(f"  ✗ 所有方法都失败")
+        if 'ai_failed' not in self.attention_cases:
+            self.attention_cases['ai_failed'] = []
+        if case_id not in self.attention_cases['ai_failed']:
+            self.attention_cases['ai_failed'].append(case_id)
         
         return None
+    
+    def extract_all_targets(self, force=False):
+        """
+        批量提取所有cases的目标信息
+        
+        Args:
+            force: 是否强制重新提取（即使已存在）
+        """
+        print(f"\n{'='*60}")
+        print(f"批量提取目标信息")
+        print(f"{'='*60}\n")
+        
+        cases_to_extract = []
+        for case in self.dataset:
+            case_id = case['id']
+            if not force and case_id in self.all_target_info:
+                continue
+            cases_to_extract.append(case)
+        
+        if not cases_to_extract:
+            print("所有cases都已有目标信息！")
+            return
+        
+        print(f"需要提取: {len(cases_to_extract)} cases\n")
+        
+        success_count = 0
+        failure_count = 0
+        regex_success = 0
+        ai_success = 0
+        
+        for case in tqdm(cases_to_extract, desc="提取目标信息"):
+            case_id = case['id']
+            print(f"\n处理 {case_id}...")
+            
+            target_info = self.analyze_target_with_retry(case)
+            
+            if target_info:
+                self.all_target_info[case_id] = {
+                    'target_line': target_info['target_line'],
+                    'target_var': target_info['target_var']
+                }
+                success_count += 1
+                
+                # 统计方法
+                if target_info.get('method') == 'regex':
+                    regex_success += 1
+                elif target_info.get('method') == 'ai':
+                    ai_success += 1
+                
+                # 定期保存
+                if success_count % 10 == 0:
+                    self._save_all_target_info()
+                    self._save_attention()
+            else:
+                failure_count += 1
+        
+        # 最终保存
+        self._save_all_target_info()
+        self._save_attention()
+        
+        print(f"\n{'='*60}")
+        print(f"目标信息提取完成")
+        print(f"成功: {success_count} cases")
+        print(f"  - 正则提取: {regex_success} cases")
+        print(f"  - AI分析: {ai_success} cases")
+        print(f"失败: {failure_count} cases")
+        print(f"总计: {len(self.all_target_info)} cases 有目标信息")
+        print(f"{'='*60}\n")
+        
+        # 打印错误统计
+        if self.attention_cases.get('regex_failed'):
+            print(f"正则提取失败: {len(self.attention_cases['regex_failed'])} cases")
+        if self.attention_cases.get('ai_failed'):
+            print(f"AI分析失败: {len(self.attention_cases['ai_failed'])} cases")
+            print(f"  {', '.join(self.attention_cases['ai_failed'][:10])}{'...' if len(self.attention_cases['ai_failed']) > 10 else ''}")
+    
+    def write_code_files(self, force=False):
+        """
+        将所有cases的代码写入临时文件
+        
+        Args:
+            force: 是否强制重写（即使文件已存在）
+        """
+        print(f"\n{'='*60}")
+        print(f"写入代码文件")
+        print(f"{'='*60}\n")
+        
+        written_count = 0
+        skipped_count = 0
+        
+        for case in tqdm(self.dataset, desc="写入代码文件"):
+            case_id = case['id']
+            code = case['task']['code']
+            code_file = self.temp_code_dir / f"{case_id}.py"
+            
+            if code_file.exists() and not force:
+                skipped_count += 1
+                continue
+            
+            with open(code_file, 'w', encoding='utf-8') as f:
+                f.write(code)
+            
+            written_count += 1
+        
+        print(f"\n写入: {written_count} 个文件")
+        print(f"跳过: {skipped_count} 个文件")
+        print(f"总计: {len(self.dataset)} 个文件")
+        print(f"{'='*60}\n")
     
     def process_single_case(self, case):
         """
@@ -573,17 +651,21 @@ class DatasetProcessor:
         case_dir = self.temp_code_dir / case_id
         case_dir.mkdir(parents=True, exist_ok=True)
         
+        # 检查代码文件
         code_file = self.temp_code_dir / f"{case_id}.py"
         if not code_file.exists():
-            print(f"  ✗ 错误: 代码文件不存在 {code_file}")
-            return False
+            # 尝试写入代码文件
+            try:
+                with open(code_file, 'w', encoding='utf-8') as f:
+                    f.write(case['task']['code'])
+                print(f"  ✓ 创建代码文件")
+            except Exception as e:
+                print(f"  ✗ 错误: 无法创建代码文件: {e}")
+                return False
         
-        # 步骤1: 分析目标（从统一的all-target-info.json读取或分析）
-        if case_id in self.all_target_info:
-            print(f"  ⊙ 使用已有的目标信息")
-            target_info = self.all_target_info[case_id]
-        else:
-            print(f"  [步骤1/5] AI分析目标...")
+        # 步骤1: 获取目标信息
+        if case_id not in self.all_target_info:
+            print(f"  [步骤1/5] 分析目标...")
             target_info = self.analyze_target_with_retry(case)
             
             if target_info is None:
@@ -591,12 +673,19 @@ class DatasetProcessor:
                 return False
             
             # 保存到统一的all-target-info.json
-            self.all_target_info[case_id] = target_info
+            self.all_target_info[case_id] = {
+                'target_line': target_info['target_line'],
+                'target_var': target_info['target_var']
+            }
             self._save_all_target_info()
             self._save_attention()
+        else:
+            print(f"  [步骤1/5] 使用已有的目标信息")
+            target_info = self.all_target_info[case_id]
         
         target_line = target_info['target_line']
         target_var = target_info['target_var']
+        print(f"    目标: line={target_line}, var={target_var}")
         
         # 步骤2: 代码追踪
         print(f"  [步骤2/5] 代码追踪...")
@@ -708,12 +797,12 @@ class DatasetProcessor:
         print(f"失败: {failure_count} cases")
         print(f"{'='*60}\n")
         
-        if self.attention_cases and any(self.attention_cases.values()):
-            print("错误重试统计:")
-            for attempt, cases in self.attention_cases.items():
-                if cases:
-                    print(f"  第{attempt}次失败: {len(cases)} cases")
-                    print(f"    {', '.join(cases[:10])}{'...' if len(cases) > 10 else ''}")
+        # 打印错误统计
+        if self.attention_cases.get('regex_failed'):
+            print(f"正则提取失败: {len(self.attention_cases['regex_failed'])} cases")
+        if self.attention_cases.get('ai_failed'):
+            print(f"AI分析失败: {len(self.attention_cases['ai_failed'])} cases")
+            print(f"  {', '.join(self.attention_cases['ai_failed'][:10])}{'...' if len(self.attention_cases['ai_failed']) > 10 else ''}")
     
     def process_case_by_id(self, case_id):
         """处理指定ID的case"""
@@ -2094,22 +2183,16 @@ import argparse
 from pathlib import Path
 from dataset_processor import DatasetProcessor
 
-
-# AI API配置
+# API配置
 API_KEY = "sk-tT9Ddv4cOCl5BXW4kivhRQ"
 BASE_URL = "https://llmapi.paratera.com/v1"
 
 AI_APIS = {
-    "qwen3_235b": {
+    "DeepSeek-V3.2-Exp": {
         "base_url": BASE_URL,
         "api_key": API_KEY,
-        "model": "Qwen3-235B-A22B-Instruct-2507"
-    },
-    "qwen3_coder": {
-        "base_url": BASE_URL,
-        "api_key": API_KEY,
-        "model": "Qwen3-Coder-480B-A35B-Instruct"
-    },
+        "model": "DeepSeek-V3.2-Exp"
+    }
 }
 
 
@@ -2120,6 +2203,12 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 示例用法:
+  # 批量提取所有目标信息
+  python main.py --extract-targets
+  
+  # 写入所有代码文件
+  python main.py --write-code
+  
   # 处理所有cases（跳过已有COT的）
   python main.py --all
   
@@ -2134,6 +2223,9 @@ def main():
   
   # 调整并行数
   python main.py --all --workers 8
+  
+  # 完整流程：提取目标 -> 写入代码 -> 处理所有
+  python main.py --extract-targets --write-code --all
         """
     )
     
@@ -2144,9 +2236,21 @@ def main():
     )
     
     parser.add_argument(
+        '--extract-targets',
+        action='store_true',
+        help='批量提取所有cases的目标信息到all-target-info.json'
+    )
+    
+    parser.add_argument(
+        '--write-code',
+        action='store_true',
+        help='将所有cases的代码写入temp_code目录'
+    )
+    
+    parser.add_argument(
         '--all',
         action='store_true',
-        help='处理所有cases'
+        help='处理所有cases生成COT'
     )
     
     parser.add_argument(
@@ -2162,10 +2266,16 @@ def main():
     )
     
     parser.add_argument(
+        '--force',
+        action='store_true',
+        help='强制重新处理（用于--extract-targets和--write-code）'
+    )
+    
+    parser.add_argument(
         '--model',
-        choices=['qwen3_235b', 'qwen3_coder'],
-        default='qwen3_235b',
-        help='使用的AI模型（默认: qwen3_235b）'
+        default='DeepSeek-V3.2-Exp',
+        choices=list(AI_APIS.keys()),
+        help='使用的AI模型'
     )
     
     parser.add_argument(
@@ -2178,9 +2288,9 @@ def main():
     args = parser.parse_args()
     
     # 检查参数
-    if not args.all and not args.case:
+    if not any([args.extract_targets, args.write_code, args.all, args.case]):
         parser.print_help()
-        print("\n错误: 必须指定 --all 或 --case")
+        print("\n错误: 必须指定至少一个操作: --extract-targets, --write-code, --all, 或 --case")
         return
     
     # 检查数据集文件
@@ -2203,11 +2313,17 @@ def main():
     # 创建处理器
     processor = DatasetProcessor(
         str(dataset_path),
-        api_config,
+        api_config=api_config,
         max_workers=args.workers
     )
     
-    # 执行处理
+    # 执行操作
+    if args.extract_targets:
+        processor.extract_all_targets(force=args.force)
+    
+    if args.write_code:
+        processor.write_code_files(force=args.force)
+    
     if args.all:
         processor.process_all_cases(skip_existing=not args.no_skip)
     elif args.case:
@@ -2216,19 +2332,32 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+#     # 完整流程
+# python main.py --extract-targets --write-code --all
+
+# # 只提取目标
+# python main.py --extract-targets
+
+# # 处理单个case
+# python main.py --case SL-MIX-S0001
+
+# # 使用不同模型
+# python main.py --all --model qwen3_coder
 ```
 
 #### pruner.py
 
 ```py
 """
-依赖分析和智能剪枝模块 - 增强函数调用支持
+依赖分析和智能剪枝模块 - 增强函数调用支持（支持函数内部剪枝）
 """
 
 import ast
 import re
 import json
-from typing import Set, Dict, List, Tuple
+from typing import Set, Dict, List, Tuple, Optional
 from attribute_analyzer import (
     analyze_file_for_attribute_usage, 
     analyze_lines_for_attribute_usage,
@@ -2250,7 +2379,7 @@ class TraceLine:
         self.is_function_return = is_function_return
         self.func_name = func_name
         self.return_value = return_value
-        self.param_mapping = param_mapping or {}  # 参数映射 {形参: {'actual_var': 实参名, 'value': 值}}
+        self.param_mapping = param_mapping or {}
     
     def get_var_dict(self):
         """获取变量字典"""
@@ -2580,8 +2709,19 @@ class DependencyAnalyzer:
         return False
 
 
+class FunctionCallContext:
+    """函数调用上下文"""
+    def __init__(self, func_name, enter_idx, call_line_idx=None):
+        self.func_name = func_name
+        self.enter_idx = enter_idx  # 函数ENTER的索引
+        self.return_idx = None      # 函数RETURN的索引
+        self.call_line_idx = call_line_idx  # 调用该函数的行索引
+        self.function_lines = []    # 函数内部的所有行索引
+        self.kept_lines = set()     # 函数内部需要保留的行索引
+
+
 class TracePruner:
-    """追踪记录剪枝器 - 支持函数调用"""
+    """追踪记录剪枝器 - 支持函数内部剪枝"""
     
     def __init__(self, trace_file, source_file=None):
         self.trace_file = trace_file
@@ -2589,14 +2729,15 @@ class TracePruner:
         self.lines = []
         self.analyzer = DependencyAnalyzer()
         self.target_line = None
+        self.function_contexts = {}  # {func_name: [FunctionCallContext, ...]}
     
     def load_trace(self):
-        """加载追踪文件 - 支持函数调用和参数映射"""
+        """加载追踪文件"""
         with open(self.trace_file, 'r', encoding='utf-8') as f:
             content = f.readlines()
         
         i = 0
-        param_mapping = {}  # 临时存储最近的参数映射
+        param_mapping = {}
         
         while i < len(content):
             line = content[i].strip()
@@ -2604,7 +2745,6 @@ class TracePruner:
                 i += 1
                 continue
             
-            # 检查参数映射
             if line.startswith('PARAM_MAPPING'):
                 parts = line.split(' ', 2)
                 if len(parts) >= 3:
@@ -2617,7 +2757,6 @@ class TracePruner:
                 i += 1
                 continue
             
-            # 检查函数进入
             if line.startswith('FUNCTION_ENTER'):
                 parts = line.split(' ', 3)
                 if len(parts) >= 4:
@@ -2643,11 +2782,10 @@ class TracePruner:
                                          is_function_enter=True, func_name=func_name,
                                          param_mapping=param_mapping.copy())
                     self.lines.append(trace_line)
-                    param_mapping = {}  # 清空映射
+                    param_mapping = {}
                     i += 1
                     continue
             
-            # 检查函数返回
             if line.startswith('FUNCTION_RETURN'):
                 parts = line.split(' ', 3)
                 if len(parts) >= 4:
@@ -2667,7 +2805,6 @@ class TracePruner:
                     i += 1
                     continue
             
-            # 检查深度标记
             depth = 0
             if line.startswith('DEPTH_'):
                 match = re.match(r'DEPTH_(\d+)\s+(.+)', line)
@@ -2716,13 +2853,146 @@ class TracePruner:
             print(f"解析变量列表失败: {e}")
         return [], []
     
+    def _build_function_contexts(self):
+        """构建函数调用上下文"""
+        self.function_contexts = {}
+        context_stack = []  # 栈来追踪嵌套的函数调用
+        
+        for idx, line in enumerate(self.lines):
+            if line.is_function_enter:
+                # 创建新的函数上下文
+                context = FunctionCallContext(line.func_name, idx)
+                
+                if line.func_name not in self.function_contexts:
+                    self.function_contexts[line.func_name] = []
+                self.function_contexts[line.func_name].append(context)
+                
+                context_stack.append(context)
+                
+            elif line.is_function_return:
+                # 结束当前函数上下文
+                if context_stack:
+                    context = context_stack.pop()
+                    if context.func_name == line.func_name:
+                        context.return_idx = idx
+                        
+            elif context_stack:
+                # 函数内部的普通行
+                context_stack[-1].function_lines.append(idx)
+    
+    def _prune_function(self, context: FunctionCallContext, focused_vars: Set[str]):
+        """
+        对单个函数进行剪枝
+        
+        Args:
+            context: 函数调用上下文
+            focused_vars: 从调用处传入的关注变量（参数）
+        
+        Returns:
+            函数内部需要保留的行索引集合
+        """
+        print(f"\n  === 剪枝函数 {context.func_name} ===")
+        
+        if context.return_idx is None:
+            print(f"  警告: 函数 {context.func_name} 没有return")
+            return set()
+        
+        # 获取返回值相关的变量
+        return_line = self.lines[context.return_idx]
+        
+        # 如果有明确的return语句,提取返回的变量
+        return_vars = set()
+        for idx in reversed(context.function_lines):
+            line = self.lines[idx]
+            if 'return' in line.code:
+                # 提取return后的变量
+                match = re.search(r'return\s+(.+)', line.code)
+                if match:
+                    return_expr = match.group(1).strip()
+                    return_vars.update(self.analyzer.extract_dependencies(f"_ = {return_expr}"))
+                break
+        
+        # 如果没找到明确的return变量,使用focused_vars
+        if not return_vars:
+            return_vars = focused_vars.copy()
+        
+        print(f"  返回值相关变量: {return_vars}")
+        print(f"  参数传入的关注变量: {focused_vars}")
+        
+        # 合并关注变量
+        func_focused = return_vars | focused_vars
+        
+        keep_lines = set()
+        var_enter_line = {}
+        
+        # 从函数末尾向前回溯
+        for idx in reversed(context.function_lines):
+            line = self.lines[idx]
+            
+            # 控制流必须保留
+            if self.analyzer.is_control_flow(line.code):
+                keep_lines.add(idx)
+                deps = self.analyzer.extract_dependencies(line.code)
+                new_deps = deps - func_focused
+                if new_deps:
+                    print(f"  第{line.lineno}行(控制流): {line.code.strip()}")
+                    print(f"    新增依赖: {new_deps}")
+                    func_focused.update(new_deps)
+                    for dep in new_deps:
+                        var_enter_line[dep] = line.lineno
+                continue
+            
+            # print语句
+            if self.analyzer.is_print_statement(line.code):
+                deps = self.analyzer.extract_dependencies(line.code)
+                if any(self.analyzer.is_related_var(dep, fv) for dep in deps for fv in func_focused):
+                    keep_lines.add(idx)
+                    print(f"  第{line.lineno}行(print): {line.code.strip()}")
+                continue
+            
+            # 赋值语句
+            lvalues = self.analyzer.extract_lvalue(line.code)
+            
+            if any(self.analyzer.is_related_var(lv, fv) for lv in lvalues for fv in func_focused):
+                keep_lines.add(idx)
+                
+                print(f"  第{line.lineno}行(赋值): {line.code.strip()}")
+                print(f"    定义了关注变量: {set(lvalues)}")
+                
+                deps = self.analyzer.extract_dependencies(line.code)
+                new_deps = deps - func_focused
+                
+                if new_deps:
+                    print(f"    新增依赖: {new_deps}")
+                    func_focused.update(new_deps)
+                    for dep in new_deps:
+                        var_enter_line[dep] = line.lineno
+        
+        print(f"  函数 {context.func_name} 保留 {len(keep_lines)} 行")
+        
+        # 同时保留函数的ENTER和RETURN
+        keep_lines.add(context.enter_idx)
+        if context.return_idx:
+            keep_lines.add(context.return_idx)
+        
+        context.kept_lines = keep_lines
+        return keep_lines
+    
     def prune(self, target_line, target_var):
-        """执行剪枝"""
+        """执行剪枝（支持函数内部剪枝）"""
         self.target_line = target_line
         
-        print(f"\n===== 剪枝分析（支持函数调用） =====")
+        print(f"\n===== 剪枝分析（支持函数内部剪枝） =====")
         print(f"目标行: {target_line}, 目标变量: {target_var}")
         
+        # 第一步：构建函数调用上下文
+        self._build_function_contexts()
+        
+        print(f"\n发现 {sum(len(v) for v in self.function_contexts.values())} 个函数调用")
+        for func_name, contexts in self.function_contexts.items():
+            print(f"  - {func_name}: {len(contexts)} 次调用")
+        
+        # 第二步：主流程剪枝
         focused_vars = {target_var}
         keep_lines = set()
         var_enter_line = {}
@@ -2743,6 +3013,9 @@ class TracePruner:
         
         print(f"初始关注变量集合: {focused_vars}\n")
         
+        # 记录需要剪枝的函数调用
+        functions_to_prune = {}  # {context: 传入的关注变量}
+        
         # 从目标行向上回溯
         for idx in range(len(self.lines) - 1, -1, -1):
             line = self.lines[idx]
@@ -2750,25 +3023,36 @@ class TracePruner:
             if not line.is_function_enter and not line.is_function_return and line.lineno > target_line:
                 continue
             
-            # 函数返回
+            # 函数返回 - 标记为保留（稍后可能会被函数剪枝移除）
             if line.is_function_return:
+                # 先暂时保留,后面函数剪枝时会决定是否真的保留
+                pass
+            
+            # 函数进入 - 检查是否需要剪枝
+            elif line.is_function_enter:
+                # 查找对应的函数上下文
+                for context in self.function_contexts.get(line.func_name, []):
+                    if context.enter_idx == idx:
+                        # 提取函数参数对应的实参变量
+                        param_focused = set()
+                        for param_name in line.var_names:
+                            if param_name in line.param_mapping:
+                                actual_var = line.param_mapping[param_name].get('actual_var', param_name)
+                                # 检查实参是否在关注集合中
+                                if any(self.analyzer.is_related_var(actual_var, fv) for fv in focused_vars):
+                                    param_focused.add(param_name)
+                        
+                        if param_focused:
+                            print(f"\n需要剪枝函数 {line.func_name}, 关注参数: {param_focused}")
+                            functions_to_prune[context] = param_focused
+                        
+                        break
+            
+            elif line.lineno == target_line:
                 keep_lines.add(idx)
-                print(f"函数返回 {line.func_name} at line {line.lineno}")
                 continue
             
-            # 函数进入
-            if line.is_function_enter:
-                keep_lines.add(idx)
-                for var_name in line.var_names:
-                    focused_vars.add(var_name)
-                print(f"函数进入 {line.func_name} at line {line.lineno}, 参数: {line.var_names}")
-                continue
-            
-            if line.lineno == target_line:
-                keep_lines.add(idx)
-                continue
-            
-            if self.analyzer.is_control_flow(line.code):
+            elif self.analyzer.is_control_flow(line.code):
                 keep_lines.add(idx)
                 deps = self.analyzer.extract_dependencies(line.code)
                 new_deps = deps - focused_vars
@@ -2780,34 +3064,43 @@ class TracePruner:
                         var_enter_line[dep] = line.lineno
                 continue
             
-            if self.analyzer.is_print_statement(line.code):
+            elif self.analyzer.is_print_statement(line.code):
                 deps = self.analyzer.extract_dependencies(line.code)
                 if any(self.analyzer.is_related_var(dep, fv) for dep in deps for fv in focused_vars):
                     keep_lines.add(idx)
                     print(f"第{line.lineno}行(print): {line.code.strip()}")
                 continue
             
-            lvalues = self.analyzer.extract_lvalue(line.code)
-            
-            if any(self.analyzer.is_related_var(lv, fv) for lv in lvalues for fv in focused_vars):
-                keep_lines.add(idx)
+            else:
+                lvalues = self.analyzer.extract_lvalue(line.code)
                 
-                print(f"第{line.lineno}行(赋值): {line.code.strip()}")
-                print(f"  定义了关注变量: {set(lvalues)}")
-                
-                deps = self.analyzer.extract_dependencies(line.code)
-                new_deps = deps - focused_vars
-                
-                if new_deps:
-                    print(f"  新增依赖: {new_deps}")
-                    focused_vars.update(new_deps)
-                    for dep in new_deps:
-                        var_enter_line[dep] = line.lineno
+                if any(self.analyzer.is_related_var(lv, fv) for lv in lvalues for fv in focused_vars):
+                    keep_lines.add(idx)
+                    
+                    print(f"第{line.lineno}行(赋值): {line.code.strip()}")
+                    print(f"  定义了关注变量: {set(lvalues)}")
+                    
+                    deps = self.analyzer.extract_dependencies(line.code)
+                    new_deps = deps - focused_vars
+                    
+                    if new_deps:
+                        print(f"  新增依赖: {new_deps}")
+                        focused_vars.update(new_deps)
+                        for dep in new_deps:
+                            var_enter_line[dep] = line.lineno
+        
+        # 第三步：对识别出的函数进行剪枝
+        print(f"\n===== 开始函数内部剪枝 =====")
+        for context, param_vars in functions_to_prune.items():
+            func_kept = self._prune_function(context, param_vars)
+            keep_lines.update(func_kept)
         
         print(f"\n最终关注变量集合: {focused_vars}")
-        print(f"保留的行索引: {sorted(keep_lines)}\n")
+        print(f"主流程保留的行: {len(keep_lines - set().union(*[c.kept_lines for c in functions_to_prune.keys()]))}")
+        print(f"函数内保留的行: {len(set().union(*[c.kept_lines for c in functions_to_prune.keys()]))}")
+        print(f"总共保留的行: {len(keep_lines)}\n")
         
-        # 第二遍：格式化保留的行
+        # 格式化保留的行
         kept_lines = [self.lines[idx] for idx in sorted(keep_lines)]
         
         print("===== 格式化输出 =====")
@@ -2893,7 +3186,6 @@ class TracePruner:
             
             for line in pruned_lines:
                 if line.is_function_enter:
-                    # 先保存参数映射（在FUNCTION_ENTER之前）
                     if line.param_mapping:
                         f.write(f"PARAM_MAPPING {line.param_mapping}\n")
                     f.write(f"FUNCTION_ENTER {line.lineno} {line.func_name} {line.code}\n")
@@ -3241,8 +3533,8 @@ class PythonTracer:
 ```json
 [
   {
-    "background": "I am developing a comprehensive evaluation benchmark for large language models in the code reasoning domain. This benchmark specifically focuses on assessing statement-level reasoning capabilities of LLMs across multiple computational paradigms: (1) Arithmetic Operations - including basic arithmetic (addition, subtraction, multiplication, division), advanced mathematical operations (exponentiation, logarithms, trigonometric functions), bitwise operations (AND, OR, XOR, shift operations), and composite calculations combining multiple operation types; (2) Boolean Logic - encompassing comparison operations (equality, inequality, relational comparisons), logical operations (AND, OR, NOT), and short-circuit evaluation patterns; (3) API/Function Calls - covering built-in function invocations, mathematical library usage, string manipulation functions, and container/data structure operations; (4) Variable Assignment - including simple assignments, multiple simultaneous assignments, tuple unpacking, and destructuring assignments; (5) Complex Mixed Scenarios - integrating multiple reasoning types in sophisticated logical chains.",
-    "requirements": "Generate additional examples following the provided template format with these specific criteria: (1) Create significantly more complex code samples with extended logical reasoning chains requiring multiple inference steps; (2) Ensure each example has a unique, deterministic answer that can be computed through step-by-step execution; (3) Maintain strict format consistency across all generated examples, matching the exact structure and field organization of the provided samples; (4) Incorporate diverse programming languages and paradigms while maintaining code complexity at an advanced level suitable for challenging LLM reasoning capabilities."
+    "background": "I am developing a comprehensive evaluation benchmark for large language models in the code reasoning domain. This benchmark specifically focuses on assessing statement-level reasoning capabilities of LLMs across multiple computational paradigms: (1) Arithmetic Operations - including basic arithmetic (addition, subtraction, multiplication, division), advanced mathematical operations (exponentiation, logarithms, trigonometric functions), bitwise operations (AND, OR, XOR, shift operations), and composite calculations combining multiple operation types; (2) Boolean Logic - encompassing comparison operations (equality, inequality, relational comparisons), logical operations (AND, OR, NOT), and short-circuit evaluation patterns; (3) Variable Assignment - including simple assignments, multiple simultaneous assignments, tuple unpacking, and destructuring assignments; (4) Control Flow and Data Structures - covering conditional statements, loops, and basic container operations; (5) Complex Mixed Scenarios - integrating multiple reasoning types in sophisticated logical chains.",
+    "requirements": "Generate additional examples following the provided template format with these specific criteria: (1) Create significantly more complex code samples with extended logical reasoning chains requiring multiple inference steps; (2) Ensure each example has a unique, deterministic answer that can be computed through step-by-step execution; (3) Maintain strict format consistency across all generated examples, matching the exact structure and field organization of the provided samples; (4) Incorporate diverse programming languages and paradigms while maintaining code complexity at an advanced level suitable for challenging LLM reasoning capabilities; (5) Minimize reliance on external library functions and API calls, focusing instead on algorithmic reasoning with basic language constructs."
   },
   {
     "id": "SL-MIX-S0001",
@@ -3253,10 +3545,10 @@ class PythonTracer:
       "intervention": 5
     },
     "task": {
-      "description": "A data analyst is processing a sales matrix where each row represents a product and each column represents a region. They need to: (1) find products with total sales above 100, (2) calculate the variance of sales for these products, (3) apply a transformation where variance is XORed with the product count. What is the value of variable 'result_value' after all transformations?",
+      "description": "What is the value of variable 'result_value' after executing the statement 'result_value = total_variance ^ product_count'?",
       "code": "# Sales matrix: rows are products, columns are regions\nsales_matrix = [\n    [25, 30, 28, 35],\n    [15, 20, 18, 22],\n    [40, 35, 38, 42],\n    [12, 15, 10, 14]\n]\n\n# Step 1: Find products with total sales > 100\nhigh_sales_products = []\nfor product_sales in sales_matrix:\n    total_sales = sum(product_sales)\n    if total_sales > 100:\n        high_sales_products.append(product_sales)\n\n# Step 2: Calculate variance for each high-sales product\nvariances = []\nfor product_sales in high_sales_products:\n    mean = sum(product_sales) / len(product_sales)\n    squared_diffs = [(x - mean) ** 2 for x in product_sales]\n    variance = sum(squared_diffs) / len(squared_diffs)\n    variances.append(int(variance))\n\n# Step 3: XOR operation\nproduct_count = len(high_sales_products)\ntotal_variance = sum(variances)\nresult_value = total_variance ^ product_count\n\nprint(f\"Result: {result_value}\")",
       "answer": 17,
-      "cot": ""
+      "cot": "Target: Find the value of variable result_value after [line 27] executes\n\n[line 10]  high_sales_products = []\nCompute: [] = []\n[line 11]  for product_sales in sales_matrix:\nLoop Start: product_sales takes its first value [25, 30, 28, 35]\n[line 12]  total_sales = sum(product_sales)\nCall function sum(product_sales=[25, 30, 28, 35] (defined at [line 11]))\n[line 13]  if total_sales > 100:\nCondition: True, entering 'if' block\n[line 11]  for product_sales in sales_matrix:\nLoop Iteration: product_sales is now [15, 20, 18, 22] (iteration 2)\n[line 12]  total_sales = sum(product_sales)\nCall function sum(product_sales=[15, 20, 18, 22] (defined at [line 11]))\n[line 13]  if total_sales > 100:\nCondition: True, entering 'if' block\n[line 11]  for product_sales in sales_matrix:\nLoop Iteration: product_sales is now [40, 35, 38, 42] (iteration 3)\n[line 12]  total_sales = sum(product_sales)\nCall function sum(product_sales=[40, 35, 38, 42] (defined at [line 11]))\n[line 13]  if total_sales > 100:\nCondition: True, entering 'if' block\n[line 11]  for product_sales in sales_matrix:\nLoop Iteration: product_sales is now [12, 15, 10, 14] (iteration 4)\n[line 12]  total_sales = sum(product_sales)\nCall function sum(product_sales=[12, 15, 10, 14] (defined at [line 11]))\n[line 13]  if total_sales > 100:\nCondition: True, entering 'if' block\n[line 11]  for product_sales in sales_matrix:\nLoop End: Iteration finished\n[line 17]  variances = []\nCompute: [] = []\n[line 18]  for product_sales in high_sales_products:\nLoop Start: product_sales takes its first value [25, 30, 28, 35]\n[line 18]  for product_sales in high_sales_products:\nLoop End: Iteration finished\n[line 18]  for product_sales in high_sales_products:\nLoop End: Iteration finished\n[line 25]  product_count = len(high_sales_products)\nCall function len(high_sales_products=[[25, 30, 28, 35], [40, 35, 38, 42]] (defined at [line 10]))\n[line 26]  total_variance = sum(variances)\nCall function sum(variances=[13, 6] (defined at [line 17]))\n[line 27]  result_value = total_variance ^ product_count\nCompute: total_variance ^ product_count, where total_variance=19 (defined at [line 26]), product_count=2 (defined at [line 25]) = 17\n\nAnswer: result_value = 17 (last updated on defined at [line 27])"
     }
   },
   {
@@ -3264,14 +3556,14 @@ class PythonTracer:
     "metadata": {
       "category": "Statement-Level",
       "language": "python",
-      "difficulty": 4,
+      "difficulty": 5,
       "intervention": 6
     },
     "task": {
-      "description": "A password strength analyzer processes a password through multiple validation steps: (1) counts character types (uppercase, lowercase, digits), (2) calculates a base score using specific weights, (3) applies penalties for common patterns, (4) uses bitwise operations to encode the final strength level. What is the value of variable 'strength_code' after analyzing the password?",
+      "description": "What is the value of variable 'strength_code' after executing the statement 'strength_code = (strength_level << 2) | (digit_count & 0x3)'?",
       "code": "password = \"SecurePass2024\"\n\n# Step 1: Count character types\nuppercase_count = sum(1 for c in password if c.isupper())\nlowercase_count = sum(1 for c in password if c.islower())\ndigit_count = sum(1 for c in password if c.isdigit())\n\n# Step 2: Calculate base score with weights\nbase_score = uppercase_count * 3 + lowercase_count * 2 + digit_count * 4\n\n# Step 3: Check for common patterns and apply penalty\nhas_consecutive = False\nfor i in range(len(password) - 1):\n    if ord(password[i+1]) - ord(password[i]) == 1:\n        has_consecutive = True\n        break\n\npenalty = 5 if has_consecutive else 0\nadjusted_score = base_score - penalty\n\n# Step 4: Encode strength using bitwise operations\nstrength_level = adjusted_score // 10\nstrength_code = (strength_level << 2) | (digit_count & 0x3)\n\nprint(f\"Result: {strength_code}\")",
       "answer": 12,
-      "cot": ""
+      "cot": "Target: Find the value of variable strength_code after [line 23] executes\n\n[line 1]  password = \"SecurePass2024\"\nAssign: password = 'SecurePass2024'\n[line 4]  uppercase_count = sum(1 for c in password if c.isupper())\nCall function sum(1 for c in password if c.isupper())\n[line 5]  lowercase_count = sum(1 for c in password if c.islower())\nCall function sum(1 for c in password if c.islower())\n[line 6]  digit_count = sum(1 for c in password if c.isdigit())\nCall function sum(1 for c in password if c.isdigit())\n[line 9]  base_score = uppercase_count * 3 + lowercase_count * 2 + digit_count * 4\nCompute: uppercase_count * 3 + lowercase_count * 2 + digit_count * 4, where uppercase_count=2 (defined at [line 4]), lowercase_count=8 (defined at [line 5]), digit_count=4 (defined at [line 6]) = 38\n[line 12]  has_consecutive = False\nAssign: has_consecutive = False\n[line 13]  for i in range(len(password) - 1):\nLoop Start: i takes its first value 0\n[line 14]  if ord(password[i+1]) - ord(password[i]) == 1:\nCondition: True, entering 'if' block\n[line 13]  for i in range(len(password) - 1):\nLoop Iteration: i is now 1 (iteration 2)\n[line 14]  if ord(password[i+1]) - ord(password[i]) == 1:\nCondition: True, entering 'if' block\n... [Line 13] repeats 10 more times ...\n... [Line 13] repeats 10 more times ...\n[line 13]  for i in range(len(password) - 1):\nLoop Iteration: i is now 12 (iteration 13)\n[line 14]  if ord(password[i+1]) - ord(password[i]) == 1:\nCondition: True, entering 'if' block\n[line 13]  for i in range(len(password) - 1):\nLoop End: Iteration finished\n[line 18]  penalty = 5 if has_consecutive else 0\nCompute: 5 if has_consecutive else 0, where has_consecutive=False (defined at [line 12]) = 0\n[line 19]  adjusted_score = base_score - penalty\nCompute: base_score - penalty, where base_score=38 (defined at [line 9]), penalty=0 (defined at [line 18]) = 38\n[line 22]  strength_level = adjusted_score // 10\nCompute: adjusted_score // 10, where adjusted_score=38 (defined at [line 19]) = 3\n[line 23]  strength_code = (strength_level << 2) | (digit_count & 0x3)\nCompute: (strength_level << 2) | (digit_count & 0x3), where strength_level=3 (defined at [line 22]), digit_count=4 (defined at [line 6]) = 12\n\nAnswer: strength_code = 12 (last updated on defined at [line 23])"
     }
   },
   {
@@ -3282,33 +3574,4 @@ class PythonTracer:
       "difficulty": 4,
       "intervention": 8
     },
-    "task": {
-      "description": "A text processing pipeline analyzes document metadata to classify sensitivity levels. The system uses pattern matching, logical conditions, and string transformations to determine access permissions. What is the value of variable 'access_level' at the end of execution?",
-      "code": "import re\n\ndef sanitize_metadata(doc_meta):\n    return re.sub(r'[^a-zA-Z0-9_\\- ]', '', doc_meta).strip()\n\ndef evaluate_clearance(doc_meta):\n    sanitized = sanitize_metadata(doc_meta)\n    is_internal = 'INTERNAL' in sanitized\n    is_confidential = 'CONFIDENTIAL' in sanitized\n    is_public = 'PUBLIC' in sanitized\n    \n    # Short-circuit evaluation with logical operations\n    if is_public and not (is_internal or is_confidential):\n        return 1\n    elif is_internal and not is_confidential:\n        return 2\n    elif is_confidential or (is_internal and 'RESTRICTED' in sanitized):\n        return 3\n    else:\n        return 0\n\ndocuments_metadata = [\n    'PUBLIC DOCUMENT',\n    'INTERNAL USE ONLY - CONFIDENTIAL',\n    'CONFIDENTIAL - RESTRICTED ACCESS',\n    'PUBLIC RELEASE - INTERNAL REVIEW',\n    'RESTRICTED CONFIDENTIAL DOCUMENT'\n]\n\n# List comprehension with generator expression\nprocessed_levels = [evaluate_clearance(meta) for meta in documents_metadata if len(meta) > 10]\n\n# Pattern matching for final classification\naccess_level = 0\nmatch sum(processed_levels):\n    case n if n > 10:\n        access_level = 5\n    case n if n > 7:\n        access_level = 4\n    case n if n > 4:\n        access_level = 3\n    case n if n > 1:\n        access_level = 2\n    case _:\n        access_level = 1\n\nprint(f'Result: {access_level}')",
-      "answer": 5,
-      "cot": ""
-    }
-  },
-  {
-    "id": "SL-MIX-S0004",
-    "metadata": {
-      "category": "Statement-Level",
-      "language": "python",
-      "difficulty": 3,
-      "intervention": 6
-    },
-    "task": {
-      "description": "A route planner calculates the shortest path cost in a simple graph. The graph is represented as an adjacency matrix. Starting from node 0, the algorithm finds all paths to node 3 within 2 hops, calculates their costs, and applies a discount based on the number of valid paths found. What is the value of variable 'final_cost' after optimization?",
-      "code": "# Adjacency matrix: graph[i][j] = cost from node i to j (0 means no edge)\ngraph = [\n    [0, 10, 15, 0],\n    [0, 0, 0, 12],\n    [0, 8, 0, 14],\n    [0, 0, 0, 0]\n]\n\nstart_node = 0\ntarget_node = 3\nmax_hops = 2\n\n# Find all paths within max_hops\nvalid_paths = []\nfor intermediate in range(len(graph)):\n    # Direct path (1 hop)\n    if graph[start_node][intermediate] > 0 and graph[intermediate][target_node] > 0:\n        cost = graph[start_node][intermediate] + graph[intermediate][target_node]\n        valid_paths.append(cost)\n\n# Calculate minimum cost\nif valid_paths:\n    min_cost = min(valid_paths)\n    num_paths = len(valid_paths)\n    \n    # Apply discount based on number of paths\n    discount_rate = num_paths * 2\n    discount = min_cost * discount_rate // 100\n    final_cost = min_cost - discount\nelse:\n    final_cost = 0\n\nprint(f\"Result: {final_cost}\")",
-      "answer": 22,
-      "cot": ""
-    }
-  },
-  {
-    "id": "SL-MIX-S0005",
-    "metadata": {
-      "category": "Statement-Level",
-      "language": "python",
-      "difficulty": 5,
-      "intervent
 ```
