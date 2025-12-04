@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COT 逐行展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #252526;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .title {
+            color: #4ec9b0;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3e3e42;
+        }
+        
+        .line {
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .line:hover {
+            background: #2d2d30;
+            border-left-color: #007acc;
+        }
+        
+        .target {
+            color: #ce9178;
+            border-left-color: #ce9178;
+            background: #2d2d30;
+        }
+        
+        .section-header {
+            color: #569cd6;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .code {
+            color: #9cdcfe;
+        }
+        
+        .variable {
+            color: #4fc1ff;
+        }
+        
+        .operator {
+            color: #d4d4d4;
+        }
+        
+        .number {
+            color: #b5cea8;
+        }
+        
+        .arrow {
+            color: #c586c0;
+        }
+        
+        .comment {
+            color: #6a9955;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Target: root->right->allocation_size@L27 = 256</div>
+        
+        <div class="section-header">Backward trace:</div>
+        
+        <div class="line">L27: target_result = root->right->allocation_size <span class="arrow">→</span> <span class="variable">target_result</span> <span class="operator">=</span> <span class="number">256</span></div>
+        
+        <div class="line">L26: insertNode(root, 512) completes <span class="arrow">→</span> root unchanged, 512 inserted into right subtree of 256</div>
+        
+        <div class="line">L25: insertNode(root, 192) completes <span class="arrow">→</span> 192 inserted as left child of 256 (192 < 256)</div>
+        
+        <div class="line">L24: insertNode(root, 96) completes <span class="arrow">→</span> 96 inserted as right child of 64 (96 > 64)</div>
+        
+        <div class="line">L23: insertNode(root, 32) completes <span class="arrow">→</span> 32 inserted as left child of 64 (32 < 64)</div>
+        
+        <div class="line">L22: insertNode(root, 256) completes <span class="arrow">→</span> *current points to root->right (null), node with 256 created and assigned to root->right</div>
+        
+        <div class="line">L21: insertNode(root, 64) completes <span class="arrow">→</span> *current points to root->left (null), node with 64 created and assigned to root->left</div>
+        
+        <div class="line">L20: root = createNode(128) <span class="arrow">→</span> root->allocation_size = 128, root->left = NULL, root->right = NULL</div>
+        
+        <div class="section-header">At L22: insertNode(root, 256):</div>
+        
+        <div class="line">- Start at root (128), 256 >= 128 <span class="arrow">→</span> ternary operator selects &(*current)->right</div>
+        <div class="line">- *current is root->right, which is NULL <span class="arrow">→</span> loop exits</div>
+        <div class="line">- *current = createNode(256) assigns new node to root->right</div>
+        
+        <div class="line" style="margin-top: 15px;">Thus, the first insertion that affects root->right is 256. All subsequent insertions (192, 512) attach under existing nodes but do not alter root->right pointer.</div>
+        
+        <div class="section-header">Critical dependencies:</div>
+        
+        <div class="line">- The binary search tree insertion logic uses a pointer-to-pointer (TreeNode**) to traverse and update links.</div>
+        <div class="line">- Ternary operator in insertNode: (size < (*current)->allocation_size) ? left : right determines path.</div>
+        <div class="line">- Insertion order: 128 (root), then 64 (left), then 256 (right) — 256 is the first value greater than root (128).</div>
+        <div class="line">- No rebalancing occurs; tree remains static BST.</div>
+        <div class="line">- root->right is set only once — during insertion of 256 — and never modified afterward.</div>
+        
+        <div class="section-header">What determines the final result?</div>
+        
+        <div class="line">The first value inserted that is greater than the root (128) becomes the right child.</div>
+        
+        <div class="section-header">What are the control flow conditions?</div>
+        
+        <div class="line">In insertNode: while (*current != NULL) continues traversal; ternary operator directs left/right based on comparison.</div>
+        
+        <div class="section-header">What is the execution order?</div>
+        
+        <div class="line">Insertions occur sequentially: 128 <span class="arrow">→</span> 64 <span class="arrow">→</span> 256 <span class="arrow">→</span> 32 <span class="arrow">→</span> 96 <span class="arrow">→</span> 192 <span class="arrow">→</span> 512.</div>
+        
+        <div class="section-header">Any important state transformations?</div>
+        
+        <div class="line">- root->right transitions from NULL <span class="arrow">→</span> &node(256) during insertNode(root, 256).</div>
+        <div class="line">- Subsequent insertions preserve this link.</div>
+        
+        <div class="line target" style="margin-top: 20px;">Thus, root->right->allocation_size@L27 = 256</div>
+    </div>
+</body>
+</html>

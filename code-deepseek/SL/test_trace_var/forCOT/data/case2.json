@@ -1,0 +1,15 @@
+{
+  "id": "SL-MIX-S037",
+  "metadata": {
+    "category": "Statement-Level",
+    "language": "c",
+    "difficulty": 0,
+    "intervention": 8
+  },
+  "task": {
+    "description": "A memory management system tracks allocation sizes using a binary tree where each node stores the size of an allocated block. Nodes are inserted such that for any node, all left descendants are smaller and right descendants are larger. The system uses a ternary operator to decide insertion paths. After inserting blocks of sizes 128, 64, 256, 32, 96, 192, and 512 bytes, what is the value of the right child of the root node's allocation_size?",
+    "code": "#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct TreeNode {\n    int allocation_size;\n    struct TreeNode* left;\n    struct TreeNode* right;\n} TreeNode;\n\nTreeNode* createNode(int size) {\n    TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));\n    node->allocation_size = size;\n    node->left = NULL;\n    node->right = NULL;\n    return node;\n}\n\nvoid insertNode(TreeNode* root, int size) {\n    TreeNode** current = &root;\n    while (*current != NULL) {\n        current = (size < (*current)->allocation_size) ? &(*current)->left : &(*current)->right;\n    }\n    *current = createNode(size);\n}\n\nint main() {\n    TreeNode* root = createNode(128);\n    insertNode(root, 64);\n    insertNode(root, 256);\n    insertNode(root, 32);\n    insertNode(root, 96);\n    insertNode(root, 192);\n    insertNode(root, 512);\n    \n    int target_result = root->right->allocation_size;\n    printf(\"Target result: %d\\n\", target_result);\n    \n    return 0;\n}",
+    "answer": 256,
+    "cot": "Step 1: 未找到目标变量 'result'"
+  }
+}

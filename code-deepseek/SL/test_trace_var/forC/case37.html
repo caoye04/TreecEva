@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GDB代码执行流可视化</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #252526;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #323233;
+            padding: 20px;
+            border-bottom: 2px solid #007acc;
+        }
+        
+        .header h1 {
+            color: #007acc;
+            font-size: 22px;
+        }
+        
+        .controls {
+            background: #2d2d30;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .controls button {
+            background: #0e639c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .controls button:hover {
+            background: #1177bb;
+        }
+        
+        .controls .info {
+            color: #858585;
+            font-size: 12px;
+            margin-left: auto;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            height: 600px;
+        }
+        
+        .trace-panel {
+            overflow-y: auto;
+            padding: 10px;
+            background: #1e1e1e;
+            border-right: 1px solid #3e3e42;
+        }
+        
+        .trace-line {
+            display: grid;
+            grid-template-columns: 50px 1fr;
+            padding: 5px 10px;
+            margin: 1px 0;
+            background: #252526;
+            border-left: 3px solid transparent;
+            font-size: 12px;
+        }
+        
+        .trace-line.active {
+            background: #264f78;
+            border-left-color: #007acc;
+        }
+        
+        .trace-line.code {
+            border-left-color: #4ec9b0;
+        }
+        
+        .trace-line.vars {
+            background: #1e1e1e;
+            border-left-color: #c586c0;
+        }
+        
+        .line-num {
+            color: #858585;
+            text-align: right;
+            padding-right: 10px;
+        }
+        
+        .line-text {
+            color: #dcdcaa;
+        }
+        
+        .var-text {
+            color: #9cdcfe;
+        }
+        
+        .side-panel {
+            background: #252526;
+            overflow-y: auto;
+        }
+        
+        .panel-section {
+            padding: 15px;
+            border-bottom: 1px solid #3e3e42;
+        }
+        
+        .panel-header {
+            color: #cccccc;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .var-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            padding: 5px 0;
+            font-size: 11px;
+        }
+        
+        .var-name {
+            color: #9cdcfe;
+        }
+        
+        .var-value {
+            color: #ce9178;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #424242;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>GDB 代码执行流可视化</h1>
+        </div>
+        
+        <div class="controls">
+            <button onclick="play()">▶ 播放</button>
+            <button onclick="pause()">⏸ 暂停</button>
+            <button onclick="reset()">⏮ 重置</button>
+            <button onclick="step()">单步</button>
+            <div class="info">步骤: <span id="step">0</span> / <span id="total">0</span></div>
+        </div>
+        
+        <div class="content">
+            <div class="trace-panel" id="trace"></div>
+            <div class="side-panel">
+                <div class="panel-section">
+                    <div class="panel-header">当前变量</div>
+                    <div id="vars"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let data = [];
+        let currentStep = 0;
+        let timer = null;
+        let speed = 500;
+
+        // 示例数据
+        const sampleData = `1 int main() {
+1 [] []
+3 int n = 5;
+3 [n] [5]
+4 int sum = 0;
+4 [n, sum] [5, 0]
+5 for(int i=0; i<n; i++) {
+5 [n, sum, i] [5, 0, 0]
+6 sum += i;
+6 [n, sum, i] [5, 0, 0]
+5 for(int i=0; i<n; i++) {
+5 [n, sum, i] [5, 0, 1]
+6 sum += i;
+6 [n, sum, i] [5, 1, 1]
+5 for(int i=0; i<n; i++) {
+5 [n, sum, i] [5, 1, 2]
+6 sum += i;
+6 [n, sum, i] [5, 3, 2]
+5 for(int i=0; i<n; i++) {
+5 [n, sum, i] [5, 3, 3]
+6 sum += i;
+6 [n, sum, i] [5, 6, 3]
+5 for(int i=0; i<n; i++) {
+5 [n, sum, i] [5, 6, 4]
+6 sum += i;
+6 [n, sum, i] [5, 10, 4]
+8 return 0;
+8 [n, sum, i] [5, 10, 5]`;
+
+        function parseData(text) {
+            const lines = text.trim().split('\n');
+            const parsed = [];
+            for (let line of lines) {
+                const match = line.match(/^(\d+)\s+(.+)$/);
+                if (match) {
+                    const lineNum = match[1];
+                    const content = match[2];
+                    
+                    if (content.startsWith('[')) {
+                        const parts = content.split('] [');
+                        const vars = parts[0].substring(1).split(', ').filter(v => v);
+                        const vals = parts[1].substring(0, parts[1].length - 1).split(', ').filter(v => v);
+                        parsed.push({ type: 'vars', lineNum, vars, vals });
+                    } else {
+                        parsed.push({ type: 'code', lineNum, code: content });
+                    }
+                }
+            }
+            return parsed;
+        }
+
+        function render() {
+            data = parseData(sampleData);
+            document.getElementById('total').textContent = data.length;
+            
+            const trace = document.getElementById('trace');
+            trace.innerHTML = '';
+            
+            data.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = `trace-line ${item.type}`;
+                div.id = `line-${idx}`;
+                
+                const numDiv = document.createElement('div');
+                numDiv.className = 'line-num';
+                numDiv.textContent = item.lineNum;
+                
+                const textDiv = document.createElement('div');
+                if (item.type === 'code') {
+                    textDiv.className = 'line-text';
+                    textDiv.textContent = item.code;
+                } else {
+                    textDiv.className = 'var-text';
+                    textDiv.textContent = `[${item.vars.join(', ')}] [${item.vals.join(', ')}]`;
+                }
+                
+                div.appendChild(numDiv);
+                div.appendChild(textDiv);
+                trace.appendChild(div);
+            });
+        }
+
+        function updateVars() {
+            if (currentStep >= data.length) return;
+            
+            const item = data[currentStep];
+            if (item.type === 'vars') {
+                const varsDiv = document.getElementById('vars');
+                varsDiv.innerHTML = '';
+                
+                item.vars.forEach((v, i) => {
+                    const div = document.createElement('div');
+                    div.className = 'var-item';
+                    div.innerHTML = `<div class="var-name">${v}</div><div class="var-value">${item.vals[i]}</div>`;
+                    varsDiv.appendChild(div);
+                });
+            }
+        }
+
+        function highlightLine() {
+            document.querySelectorAll('.trace-line').forEach(el => el.classList.remove('active'));
+            if (currentStep < data.length) {
+                document.getElementById(`line-${currentStep}`).classList.add('active');
+                document.getElementById(`line-${currentStep}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function step() {
+            if (currentStep < data.length) {
+                currentStep++;
+                document.getElementById('step').textContent = currentStep;
+                highlightLine();
+                updateVars();
+            }
+        }
+
+        function play() {
+            if (timer) return;
+            timer = setInterval(() => {
+                step();
+                if (currentStep >= data.length) {
+                    pause();
+                }
+            }, speed);
+        }
+
+        function pause() {
+            clearInterval(timer);
+            timer = null;
+        }
+
+        function reset() {
+            pause();
+            currentStep = 0;
+            document.getElementById('step').textContent = 0;
+            document.getElementById('vars').innerHTML = '';
+            highlightLine();
+        }
+
+        render();
+    </script>
+</body>
+</html>
